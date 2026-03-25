@@ -1,0 +1,30 @@
+---
+title: 1. 概要 — 脅威ランドスケープ
+description: 2026年3月現在、サイバー攻撃は「産業化されたサイバー犯罪」へ完全移行しています。
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+2026年3月現在、サイバー攻撃は「産業化されたサイバー犯罪」へ完全移行しています。初期アクセスブローカー（IAB）、データ流出スペシャリスト、ランサムウェアオペレーターがシームレスに連携し、攻撃者間のアクセス権移行は**30秒未満**で完了します。
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 hover:border-[var(--border-2)] transition">
+    <div className="text-3xl mb-3">🤖</div>
+    <h3 className="font-display font-bold mb-2">AI悪用の加速</h3>
+    <p className="text-sm text-[var(--text-muted)] leading-6">LLMを「戦力乗数」として統合。PROMPTFLUXなどのマルウェアがEDRパターンをリアルタイム学習・回避。</p>
+  </div>
+  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 hover:border-[var(--border-2)] transition">
+    <div className="text-3xl mb-3">🔑</div>
+    <h3 className="font-display font-bold mb-2">アイデンティティが新境界</h3>
+    <p className="text-sm text-[var(--text-muted)] leading-6">攻撃者は「侵入」ではなく正規認証情報で「ログイン」。OAuthトークン・セッションCookie窃取が横行。</p>
+  </div>
+  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 hover:border-[var(--border-2)] transition">
+    <div className="text-3xl mb-3">⛓️</div>
+    <h3 className="font-display font-bold mb-2">サプライチェーン攻撃</h3>
+    <p className="text-sm text-[var(--text-muted)] leading-6">SaaSベンダー経由でハードコードされたキーやPATを奪い、顧客環境へ水平展開。</p>
+  </div>
+</div>
+
+<Callout type="info" title="パラダイムシフト">
+  セキュリティは「年に一度の監査」から「継続的なアイデンティティ検証とレジリエンス構築」へ移行しました。ゼロトラストアーキテクチャと継続的コンプライアンス監視が不可欠です。
+</Callout>

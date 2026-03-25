@@ -1,0 +1,99 @@
+---
+title: 2. セキュア SDLC
+description: シフトエブリウェアの概念とAI駆動型AppSecツール比較
+---
+
+従来の「シフトレフト」概念はさらに進化し、設計から運用・フィードバックループまでライフサイクル全体で継続検証する**「シフトエブリウェア」**へ発展しています。
+
+<div className="relative my-6">
+  <div className="absolute left-[1.25rem] top-10 bottom-10 w-px bg-gradient-to-b from-[var(--primary)] to-transparent"></div>
+  <div className="flex gap-5 py-6 relative z-10">
+    <div className="step-badge">01</div>
+    <div className="flex-1 pt-1">
+      <h3 className="font-display font-bold text-lg mb-2">要件定義・設計フェーズ</h3>
+      <p className="text-sm text-[var(--text-muted)] leading-7">セキュリティ要件を文書化し、**脅威モデリング**を実施。AI駆動型ツール（Apiiroなど）でコード存在前からリスクを防ぐ。</p>
+    </div>
+  </div>
+  <div className="flex gap-5 py-6 relative z-10">
+    <div className="step-badge">02</div>
+    <div className="flex-1 pt-1">
+      <h3 className="font-display font-bold text-lg mb-2">セキュアコーディング＋CI/CD統合</h3>
+      <p className="text-sm text-[var(--text-muted)] leading-7">コミット時にSAST（静的解析）・SCA（依存関係解析）を自動実行。SQLインジェクション、XSS、既知CVEを検出。</p>
+    </div>
+  </div>
+  <div className="flex gap-5 py-6 relative z-10">
+    <div className="step-badge">03</div>
+    <div className="flex-1 pt-1">
+      <h3 className="font-display font-bold text-lg mb-2">デプロイメント保護・動的テスト</h3>
+      <p className="text-sm text-[var(--text-muted)] leading-7">DAST（動的テスト）で実行時の認証バイパスを検出。IaCテンプレート（Terraform/K8s YAML）の設定ミスも自動スキャン。</p>
+    </div>
+  </div>
+  <div className="flex gap-5 py-6 relative z-10">
+    <div className="step-badge">04</div>
+    <div className="flex-1 pt-1">
+      <h3 className="font-display font-bold text-lg mb-2">本番環境の継続監視</h3>
+      <p className="text-sm text-[var(--text-muted)] leading-7">WAF・APIゲートウェイでフロントドア保護。新脆弱性公開時に影響サービスを即座特定し、数時間以内にパッチ適用。</p>
+    </div>
+  </div>
+</div>
+
+### AI駆動型AppSecツール比較
+
+<div className="rounded-xl border border-[var(--border)] overflow-hidden my-6">
+  <table className="w-full text-sm">
+    <thead>
+      <tr className="bg-[var(--surface-2)] border-b border-[var(--border)]">
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">ツール</th>
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">主要機能</th>
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">AI活用</th>
+      </tr>
+    </thead>
+    <tbody className="bg-[var(--surface)] divide-y divide-[var(--border)]">
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">GHAS</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">CodeQL SAST + Dependabot SCA + シークレットスキャン</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">Copilot Autofix自動修復提案</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">Veracode</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">クラウドネイティブSAST/SCA/DAST + パッケージFW</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">Veracode Fix AIパッチ生成</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">Semgrep</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">軽量高速SAST/SCA/シークレット検出</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">誤検知最大98%削減</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">GitGuardian</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">350+検出器のシークレット特化+NHIセキュリティ</td>
+        <td className="px-4 py-3 text-[var(--text-muted)]">高精度シークレット識別</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+```yaml title=".github/workflows/security-scan.yml"
+name: Security Pipeline
+on: [push, pull_request]
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep SAST
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/owasp-top-ten
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependabot / Trivy SCA
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          severity: HIGH,CRITICAL
+```

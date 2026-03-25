@@ -1,0 +1,135 @@
+---
+title: 3. OWASP Top 10:2025
+description: OWASP Top 10:2025 の構造的再編と対策例
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
+
+175,000件以上のCVEデータに基づき、新カテゴリ追加を含む根本的な改訂が行われました。
+
+<div className="rounded-xl border border-[var(--border)] overflow-hidden mb-6">
+  <table className="w-full text-sm">
+    <thead>
+      <tr className="bg-[var(--surface-2)] border-b border-[var(--border)]">
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide w-12">順位</th>
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">カテゴリ</th>
+        <th className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wide">変動</th>
+      </tr>
+    </thead>
+    <tbody className="bg-[var(--surface)] divide-y divide-[var(--border)]">
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A01</td>
+        <td className="px-4 py-3 font-medium">Broken Access Control（アクセス制御の不備）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">1位維持 — SSRFを統合</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A02</td>
+        <td className="px-4 py-3 font-medium">Security Misconfiguration（設定ミス）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">5→2位 ⬆️ IaC普及で急上昇</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A03</td>
+        <td className="px-4 py-3 font-medium">Supply Chain Failures（サプライチェーン）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">🆕 新規追加</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A04</td>
+        <td className="px-4 py-3 font-medium">Cryptographic Failures（暗号化の失敗）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">2→4位</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A05</td>
+        <td className="px-4 py-3 font-medium">Injection（インジェクション）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">3→5位</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A06</td>
+        <td className="px-4 py-3 font-medium">Insecure Design（安全でない設計）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">4→6位</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A07</td>
+        <td className="px-4 py-3 font-medium">Authentication Failures（認証の不備）</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">変動なし</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A08</td>
+        <td className="px-4 py-3 font-medium">Software/Data Integrity Failures</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">変動なし</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A09</td>
+        <td className="px-4 py-3 font-medium">Logging & Alerting Failures</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">変動なし</td>
+      </tr>
+      <tr className="hover:bg-[var(--surface-2)] transition">
+        <td className="px-4 py-3 font-mono font-bold text-[var(--primary)]">A10</td>
+        <td className="px-4 py-3 font-medium">Mishandling of Exceptions</td>
+        <td className="px-4 py-3 text-[var(--text-muted)] text-xs">🆕 新規追加</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<Tabs items={['A01: SSRF攻撃例', 'A10: 例外処理']}>
+  <Tab value="A01: SSRF攻撃例">
+    <p className="text-[var(--text-muted)] text-sm mb-4">
+      サーバーに内部リソースへのアクセスを強制するSSRF攻撃シナリオ：
+    </p>
+
+```bash title="SSRF Attack Vector"
+# 攻撃者が画像インポートURLを悪用
+# 正常: https://app.com/api/v1/load-image?url=https://example.com/photo.jpg
+# 攻撃: url=http://169.254.169.254/latest/meta-data/iam/security-credentials/
+
+# 対策: IMDSv2の強制適用（AWSの場合）
+aws ec2 modify-instance-metadata-options \
+  --instance-id i-1234567890abcdef0 \
+  --http-tokens required \
+  --http-endpoint enabled
+```
+    <Callout type="error" title="対策ポイント">URLホワイトリストの実装 + IMDSv2の強制適用で、内部メタデータへのアクセスを防止してください。</Callout>
+  </Tab>
+  <Tab value="A10: 例外処理">
+    <div className="grid md:grid-cols-2 gap-4 mb-4">
+      <div className="rounded-xl border border-green-800/40 bg-green-950/30 p-5">
+        <div className="font-mono text-xs font-bold text-green-400 uppercase tracking-wide mb-3">✅ Best Practice</div>
+        <ul className="space-y-2 text-sm text-[var(--text-muted)]">
+          <li className="flex gap-2"><span className="text-green-400 font-bold">✓</span><span>汎用エラーメッセージを表示</span></li>
+          <li className="flex gap-2"><span className="text-green-400 font-bold">✓</span><span>詳細はサーバーログにのみ記録</span></li>
+          <li className="flex gap-2"><span className="text-green-400 font-bold">✓</span><span>フェイルクローズ設計を徹底</span></li>
+        </ul>
+      </div>
+      <div className="rounded-xl border border-red-800/40 bg-red-950/30 p-5">
+        <div className="font-mono text-xs font-bold text-red-400 uppercase tracking-wide mb-3">❌ Anti-Pattern</div>
+        <ul className="space-y-2 text-sm text-[var(--text-muted)]">
+          <li className="flex gap-2"><span className="text-red-400 font-bold">✗</span><span>スタックトレースをブラウザに表示</span></li>
+          <li className="flex gap-2"><span className="text-red-400 font-bold">✗</span><span>フェイルオープン設計</span></li>
+          <li className="flex gap-2"><span className="text-red-400 font-bold">✗</span><span>リソース解放漏れ</span></li>
+        </ul>
+      </div>
+    </div>
+
+```typescript title="error-handler.ts"
+// ✅ セキュアな例外処理パターン
+export async function handleRequest(req: Request): Promise<Response> {
+  try {
+    const result = await processBusinessLogic(req);
+    return Response.json(result);
+  } catch (error) {
+    // サーバーログに詳細を記録（PIIはスクラブ）
+    logger.error('Request failed', {
+      requestId: req.headers.get('x-request-id'),
+      error: sanitize(error),  // APIキー・PII除去
+    });
+    // ユーザーには汎用メッセージのみ返却
+    return Response.json(
+      { message: '予期せぬエラーが発生しました。' },
+      { status: 500 }
+    );
+  }
+}
+```
+  </Tab>
+</Tabs>

@@ -1,0 +1,40 @@
+---
+title: 6. サプライチェーン
+description: サプライチェーンセキュリティとEU CRA
+---
+
+SBOM、SLSA、EUサイバーレジリエンス法（CRA）による法的義務化。セキュリティは「オプション」から「法的要件」へ。
+
+### EU CRA タイムライン
+
+<div className="flex flex-col gap-3 mb-6">
+  <div className="flex gap-4 items-center p-3 rounded-lg bg-[var(--surface-2)] border border-[var(--border)]">
+    <span className="font-mono text-xs font-bold text-[var(--info)] min-w-[5.5rem]">2026年6月</span>
+    <span className="text-sm text-[var(--text-muted)]">適合性評価機関の通知開始</span>
+  </div>
+  <div className="flex gap-4 items-center p-3 rounded-lg bg-[var(--surface-2)] border border-[var(--border)]">
+    <span className="font-mono text-xs font-bold text-[var(--warning)] min-w-[5.5rem]">2026年9月</span>
+    <span className="text-sm text-[var(--text-muted)]">脆弱性・インシデントの早期報告義務開始</span>
+  </div>
+  <div className="flex gap-4 items-center p-3 rounded-lg bg-[var(--surface-2)] border border-[var(--border)]">
+    <span className="font-mono text-xs font-bold text-[var(--danger)] min-w-[5.5rem]">2027年12月</span>
+    <span className="text-sm text-[var(--text-muted)]">全要件の完全適用開始</span>
+  </div>
+</div>
+
+```bash title="supply-chain-verify.sh"
+# ステップ1: 署名付きSBOMの検証
+cosign verify <spdx_sbom_file>
+
+# ステップ2: コンテナイメージの署名検証
+cosign verify $IMAGE \
+  --certificate-identity=https://github.com/my-org/my-repo/.github/workflows/build.yml@refs/heads/main \
+  --certificate-oidc-issuer=https://token.actions.githubusercontent.com
+
+# ステップ3: SLSA来歴（Provenance）の検証
+slsa-verifier verify-image "$IMAGE" \
+  --provenance-path provenance.json \
+  --source-uri github.com/my-repo/my-application \
+  --source-tag v1.2.0
+# → PASSED: Verified SLSA provenance
+```
