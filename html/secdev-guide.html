@@ -291,9 +291,14 @@ const useCopy = () => {
   const [c, setC] = useState(false);
   const tr = useRef(null);
   const copy = useCallback(async (t) => {
-    try { await navigator.clipboard.writeText(t); } catch(_) {}
-    setC(true); clearTimeout(tr.current);
-    tr.current = setTimeout(() => setC(false), 2000);
+    try {
+      await navigator.clipboard.writeText(t);
+      setC(true);
+      clearTimeout(tr.current);
+      tr.current = setTimeout(() => setC(false), 2000);
+    } catch(_) {
+      // クリップボード API 失敗時は成功表示をしない
+    }
   }, []);
   useEffect(() => () => clearTimeout(tr.current), []);
   return [c, copy];

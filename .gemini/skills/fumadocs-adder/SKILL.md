@@ -37,3 +37,8 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
 
 5. **Completion**:
    - Inform the user that the file was successfully generated and registered as a Fumadocs page.
+
+## Constraints & Safety Rules
+- **No File Deletion**: Under no circumstances should you delete or remove existing files from the workspace.
+- **Command Execution**: You are permitted to execute necessary read-only commands (e.g., listing directories or checking file contents) to gather context. However, you must NOT execute any destructive commands (like `rm` or `rmdir`) or modify files outside the explicit scope of adding a new Fumadocs page.
+- **Create/Update Only**: You may only create new `.mdx` files in `security-docs/content/docs/` and update `security-docs/content/docs/meta.json`. Existing documentation pages must never be overwritten or deleted.
