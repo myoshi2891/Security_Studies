@@ -15,20 +15,24 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    - Read the contents of the target file.
    - Determine a suitable `title` and a short `description` (around 1 sentence) based on the content.
    - Convert any HTML content into MDX. Map standard HTML tags to Markdown/MDX components. **Sanitization Requirement:** Before conversion, remove or replace dangerous tags (e.g., `<script>`, `<style>`, `<iframe>`, `<object>`, `<embed>`, `<form>`) with safe placeholders. Strip all event handler attributes (e.g., `on*`). Normalize or reject dangerous schemes in `href` and `src` attributes (e.g., `javascript:`, `vbscript:`, `data:text/html`). Follow a whitelist-based approach for allowed tags and attributes; any non-whitelisted items should be either removed or safely escaped.
+   - If the source contains local or relative references (`img` src, attachment links, local anchor hrefs, CSS url() refs, etc.), do not keep broken paths. Ask the user to provide/import those assets first, or replace them with an explicit placeholder.
 
 2. **Add YAML Frontmatter**:
    Add the following YAML frontmatter at the top of the converted MDX content:
+   - Always YAML-escape extracted values before writing them.
+   - Quote single-line strings and use a block scalar for multiline descriptions so `:`, `#`, quotes, and line breaks cannot break parsing.
 
    ```yaml
    ---
-   title: [Extracted Title]
-   description: [Extracted Description]
+   title: "[Extracted Title]"
+   description: "[Extracted Description]"
    ---
    ```
 
 3. **Save as MDX File**:
    - Determine an appropriate sequential filename: Scan the `security-docs/content/docs` directory for existing `.mdx` files to find the maximum leading number. Generate the next number in the format `NN-slug.mdx` (zero-padded, e.g., `09-new-topic.mdx`).
    - Write the finalized MDX string to a new file in `security-docs/content/docs/`.
+   - Fail closed when required assets cannot be represented within the allowed write scope (`.mdx` + `meta.json` only).
 
 4. **Update `meta.json`**:
    - Parse `security-docs/content/docs/meta.json`.
