@@ -54,10 +54,10 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
      3. Replace whitespace and punctuation with single hyphens (keep alphanumerics and hyphens).
      4. Collapse multiple hyphens and strip leading/trailing hyphens.
      5. Limit to a safe length (e.g., 60 characters).
-     6. **Collision Handling:** If the slug already exists in `security-docs/content/docs`, append a numeric suffix (`-1`, `-2`, ...) before creating `NN-slug.mdx`.
-   - **Duplicate-Slug Check:** Before creating the MDX file, parse `security-docs/content/docs/meta.json` and check the `pages` array for the target slug. Abort if an exact duplicate exists and can't be resolved with a suffix.
-   - **Sequential Filename:** Scan `security-docs/content/docs` for the maximum leading number. Generate the next number as `NN-slug.mdx` (e.g., `09-new-topic.mdx`).
-   - Write the finalized MDX string to the new file in `security-docs/content/docs/`.
+     6. **Collision Handling:** If the page ID (`NN-slug`) already exists in `security-docs/content/docs`, append a numeric suffix (`-1`, `-2`, ...) before creating `NN-slug.mdx`.
+   - **Sequential Filename:** Scan `security-docs/content/docs` for the maximum leading number. Generate the next number to form the target **page ID** as `NN-slug` (e.g., `09-new-topic`).
+   - **Duplicate-Page-ID Check:** Before creating the MDX file, parse `security-docs/content/docs/meta.json` and check the `pages` array for the target page ID (`NN-slug`). Abort if an exact duplicate page ID exists and can't be resolved with a suffix. Ensure the matching key is the page ID (`NN-slug`) and not the bare slug.
+   - Write the finalized MDX string to the new file as `NN-slug.mdx` in `security-docs/content/docs/`.
    - Fail-closed when required assets cannot be represented within the allowed write scope (`.mdx` + `meta.json` only).
 
 4. **Update `meta.json`**:
@@ -74,4 +74,5 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
 
 - **No File Deletion**: Under no circumstances should you delete or remove existing files from the workspace.
 - **Command Execution**: You are permitted to execute necessary read-only commands (e.g., listing directories or checking file contents) to gather context. However, you must NOT execute any destructive commands (like `rm` or `rmdir`) or modify files outside the explicit scope of adding a new Fumadocs page.
-- **Create/Update Only**: You may only create new `.mdx` files in `security-docs/content/docs/` and update `security-docs/content/docs/meta.json`. Existing documentation pages must never be overwritten or deleted.
+   - **Exception for Validation**: To support the validation step (`bun run types:check`), you are explicitly permitted to run its underlying subcommands. The subcommand `next typegen` is allowed to perform safe write operations (creating temporary/generated type files) as required. The subcommands `fumadocs-mdx` and `tsc --noEmit` must be executed as read-only validation.
+- **Create/Update Only**: With the exception of the `next typegen` validation step mentioned above, you may only create new `.mdx` files in `security-docs/content/docs/` and update `security-docs/content/docs/meta.json`. Existing documentation pages must never be overwritten or deleted.
