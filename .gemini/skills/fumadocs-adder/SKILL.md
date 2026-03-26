@@ -15,7 +15,14 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    - Read the contents of the target file.
    - Determine a suitable `title` and a short `description` (around 1 sentence) based on the content.
    - Convert any HTML content into MDX. Map standard HTML tags to Markdown/MDX components. **Sanitization Requirement:** Before conversion, remove or replace dangerous tags (e.g., `<script>`, `<style>`, `<iframe>`, `<object>`, `<embed>`, `<form>`) with safe placeholders. Strip all event handler attributes (e.g., `on*`). Normalize or reject dangerous schemes in `href` and `src` attributes (e.g., `javascript:`, `vbscript:`, `data:text/html`). Follow a whitelist-based approach for allowed tags and attributes; any non-whitelisted items should be either removed or safely escaped.
-   - If the source contains local or relative references (`img` src, attachment links, local anchor hrefs, CSS url() refs, etc.), do not keep broken paths. Ask the user to provide/import those assets first, or replace them with an explicit placeholder.
+   - **Asset Handling Decision Flow:** If the source contains local or relative references (`img` src, attachment links, local anchor hrefs, CSS url() refs, etc.):
+     - **Classify Assets:**
+       - **Essential:** Main content images, required attachments (e.g., PDFs, downloads mentioned in text).
+       - **Optional:** Decorative icons, background images, thumbnails.
+     - **Fallback Order:**
+       1. Request the user to provide/import the missing asset.
+       2. For **Optional** assets only, attempt safe substitution with an explicit placeholder (e.g., `[MISSING_ASSET:name]`).
+       3. If an **Essential** asset is missing or cannot be safely substituted, **fail-closed**: abort conversion and surface an error to the user.
 
 2. **Add YAML Frontmatter**:
    Add the following YAML frontmatter at the top of the converted MDX content:
@@ -29,14 +36,32 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    ---
    ```
 
+   **Multiline Description Example:**
+   ```yaml
+   ---
+   title: "Secure SDLC Lifecycle"
+   description: |
+     Detailed guide on implementing security across the Software Development Life Cycle.
+     Covers planning, implementation, testing, and deployment phases.
+   ---
+   ```
+
 3. **Save as MDX File**:
-   - Determine an appropriate sequential filename: Scan the `security-docs/content/docs` directory for existing `.mdx` files to find the maximum leading number. Generate the next number in the format `NN-slug.mdx` (zero-padded, e.g., `09-new-topic.mdx`).
-   - Write the finalized MDX string to a new file in `security-docs/content/docs/`.
-   - Fail closed when required assets cannot be represented within the allowed write scope (`.mdx` + `meta.json` only).
+   - **Slug Generation Algorithm:** Derive a slug from the title:
+     1. Trim and lowercase.
+     2. Normalize Unicode (NFKD) and transliterate to ASCII where possible. Use URL-encoding or hex codepoints for non-transliterable Unicode.
+     3. Replace whitespace and punctuation with single hyphens (keep alphanumerics and hyphens).
+     4. Collapse multiple hyphens and strip leading/trailing hyphens.
+     5. Limit to a safe length (e.g., 60 characters).
+     6. **Collision Handling:** If the slug already exists in `security-docs/content/docs`, append a numeric suffix (`-1`, `-2`, ...) before creating `NN-slug.mdx`.
+   - **Duplicate-Slug Check:** Before creating the MDX file, parse `security-docs/content/docs/meta.json` and check the `pages` array for the target slug. Abort if an exact duplicate exists and can't be resolved with a suffix.
+   - **Sequential Filename:** Scan `security-docs/content/docs` for the maximum leading number. Generate the next number as `NN-slug.mdx` (e.g., `09-new-topic.mdx`).
+   - Write the finalized MDX string to the new file in `security-docs/content/docs/`.
+   - Fail-closed when required assets cannot be represented within the allowed write scope (`.mdx` + `meta.json` only).
 
 4. **Update `meta.json`**:
    - Parse `security-docs/content/docs/meta.json`.
-   - Before adding to the `pages` array, check if the same slug (filename without extension) already exists. If it doesn't exist, add it to the end of the `pages` array.
+   - Append the new slug (from Step 3) to the end of the `pages` array if it's not already listed (confirming against the slug verified in Step 3).
    - Write the updated JSON back to `meta.json`.
 
 5. **Completion**:
