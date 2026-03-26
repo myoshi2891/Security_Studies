@@ -35,6 +35,7 @@ bun install
 ```bash
 bun run dev
 ```
+
 ブラウザで [http://localhost:3000](http://localhost:3000) を開き、結果を確認してください。
 
 ### ビルドと本番環境

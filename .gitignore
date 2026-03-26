@@ -1,8 +1,5 @@
 .markdownlint.json
-appsec_certifications_guide.md
 gen_security_html.sh
-html-doc-generation-prompt.md
 install-fumadocs.expect
-security_approach_2026.md
-security_architecture_2026.md
-security-dev-guide-2026.html
+md
+# html

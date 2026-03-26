@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AppSec 国際資格完全ガイド 2026 | CSSLP・CASE・GWEB</title>
+<meta name="description" content="CSSLP・CASE・GWEBの国際資格を初学者向けにカテゴリーごとにステップバイステップで解説する完全ガイド"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4/dist/index.global.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+<style>
+:root {
+  --bg:#06080e;--surface:#0c1018;--surface-2:#131a24;--surface-3:#1a2332;
+  --border:#1e2d40;--border-2:#2a3d54;
+  --text:#dde6f0;--text-muted:#8ba3ba;--text-dim:#4d6680;
+  --csslp:#3b82f6;--csslp-dim:rgba(59,130,246,.1);--csslp-glow:rgba(59,130,246,.25);
+  --case:#10b981;--case-dim:rgba(16,185,129,.1);--case-glow:rgba(16,185,129,.25);
+  --gweb:#a855f7;--gweb-dim:rgba(168,85,247,.1);--gweb-glow:rgba(168,85,247,.25);
+  --warn:#f59e0b;--danger:#ef4444;--info:#06b6d4;--success:#22c55e;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;line-height:1.75}
+.font-display{font-family:'Syne',sans-serif}
+.font-mono{font-family:'JetBrains Mono',monospace}
+
+/* Grid background */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+.section-wrap{position:relative;z-index:1}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;transition:border-color .25s}
+.card:hover{border-color:var(--border-2)}
+
+/* Cert badges */
+.badge-csslp{background:var(--csslp-dim);border:1px solid var(--csslp);color:var(--csslp);border-radius:9999px;padding:.2rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.badge-case{background:var(--case-dim);border:1px solid var(--case);color:var(--case);border-radius:9999px;padding:.2rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.badge-gweb{background:var(--gweb-dim);border:1px solid var(--gweb);color:var(--gweb);border-radius:9999px;padding:.2rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* Callouts */
+.callout{border-radius:.75rem;padding:1rem 1.25rem;display:flex;gap:.75rem;font-size:.875rem;line-height:1.6;border-left:3px solid}
+.callout-tip{background:rgba(34,197,94,.06);border-color:var(--success)}
+.callout-warn{background:rgba(245,158,11,.06);border-color:var(--warn)}
+.callout-danger{background:rgba(239,68,68,.06);border-color:var(--danger)}
+.callout-info{background:rgba(6,182,212,.06);border-color:var(--info)}
+
+/* TOC */
+.toc-item{display:block;padding:.3rem .875rem;border-left:2px solid transparent;font-size:.78rem;color:var(--text-dim);text-decoration:none;transition:all .2s;line-height:1.4}
+.toc-item:hover{color:var(--text-muted);border-color:var(--border-2)}
+.toc-item.active-csslp{color:var(--csslp);border-color:var(--csslp);background:var(--csslp-dim)}
+.toc-item.active-case{color:var(--case);border-color:var(--case);background:var(--case-dim)}
+.toc-item.active-gweb{color:var(--gweb);border-color:var(--gweb);background:var(--gweb-dim)}
+.toc-item.active-other{color:var(--text-muted);border-color:var(--border-2);background:var(--surface-2)}
+
+/* Domain step */
+.domain-line{position:absolute;left:1.25rem;top:3rem;bottom:1rem;width:1px}
+
+/* Tabs */
+.tab-btn{padding:.5rem 1.25rem;border-radius:.5rem;font-size:.8125rem;font-weight:600;transition:all .2s;border:1px solid transparent;cursor:pointer;font-family:'JetBrains Mono',monospace}
+
+/* Source link */
+.src-link{display:inline-flex;align-items:center;gap:.375rem;font-size:.75rem;color:var(--text-dim);text-decoration:none;padding:.2rem .6rem;border-radius:.375rem;border:1px solid var(--border);background:var(--surface-2);transition:all .2s;font-family:'JetBrains Mono',monospace}
+.src-link:hover{color:var(--text-muted);border-color:var(--border-2)}
+
+/* Progress bar */
+#pbar{position:fixed;top:0;left:0;height:2px;z-index:9999;transition:width .1s}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s ease forwards}
+
+@media(max-width:1023px){.sidebar-hide{display:none}}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+
+<!-- Nav -->
+<nav style="position:sticky;top:0;z-index:100;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(6,8,14,.88);border-bottom:1px solid var(--border)">
+  <div style="max-width:1360px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <span style="width:1.75rem;height:1.75rem;background:linear-gradient(135deg,var(--csslp),var(--gweb));border-radius:.375rem;display:flex;align-items:center;justify-content:center;font-size:.875rem">🔐</span>
+      <span class="font-display" style="font-weight:700;font-size:.9375rem">AppSec Cert Guide</span>
+      <span style="background:var(--surface-2);border:1px solid var(--border);border-radius:9999px;padding:.125rem .625rem;font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--text-dim)">2026.03</span>
+    </div>
+    <div style="display:flex;gap:.25rem">
+      <a href="#csslp" style="padding:.375rem .875rem;border-radius:.5rem;font-size:.8125rem;text-decoration:none;color:var(--csslp);background:var(--csslp-dim);border:1px solid rgba(59,130,246,.3)">CSSLP</a>
+      <a href="#case" style="padding:.375rem .875rem;border-radius:.5rem;font-size:.8125rem;text-decoration:none;color:var(--case);background:var(--case-dim);border:1px solid rgba(16,185,129,.3)">CASE</a>
+      <a href="#gweb" style="padding:.375rem .875rem;border-radius:.5rem;font-size:.8125rem;text-decoration:none;color:var(--gweb);background:var(--gweb-dim);border:1px solid rgba(168,85,247,.3)">GWEB</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header style="position:relative;overflow:hidden;z-index:1">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(59,130,246,.15),transparent),radial-gradient(ellipse 40% 40% at 80% 50%,rgba(168,85,247,.1),transparent)"></div>
+  <div style="position:relative;z-index:2;max-width:1360px;margin:0 auto;padding:5rem 1.5rem 4rem">
+    <div style="display:inline-flex;align-items:center;gap:.5rem;padding:.375rem 1rem;border-radius:9999px;border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.06);margin-bottom:1.5rem">
+      <span style="width:.4rem;height:.4rem;border-radius:50%;background:var(--csslp);display:inline-block"></span>
+      <span class="font-mono" style="font-size:.7rem;color:var(--csslp);letter-spacing:.1em;text-transform:uppercase">Application Security Certifications · International Standards</span>
+    </div>
+    <h1 class="font-display" style="font-size:clamp(2rem,5vw,3.75rem);font-weight:800;line-height:1.05;margin-bottom:1.25rem;color:white">
+      AppSec 国際資格<br/>
+      <span style="background:linear-gradient(90deg,var(--csslp),var(--gweb));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">完全ガイド 2026</span>
+    </h1>
+    <p style="font-size:1.0625rem;color:var(--text-muted);max-width:44rem;margin-bottom:2rem;line-height:1.8">
+      CSSLP・CASE・GWEBの3大国際資格を<strong style="color:var(--text)">カテゴリーごとに完全分解</strong>。
+      初学者がどこから学び始め、何を習得すれば合格に近づけるかを、公式試験アウトラインに基づいてステップバイステップで解説します。
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:.625rem">
+      <span class="badge-csslp">ISC2 · CSSLP</span>
+      <span class="badge-case">EC-Council · CASE</span>
+      <span class="badge-gweb">GIAC · GWEB</span>
+      <span style="background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);border-radius:9999px;padding:.2rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace">📅 2026-03-26</span>
+      <span style="background:var(--surface-2);border:1px solid var(--border);color:var(--text-dim);border-radius:9999px;padding:.2rem .8rem;font-size:.7rem;font-family:'JetBrains Mono',monospace">⏱️ 読了 約45分</span>
+    </div>
+
+    <!-- Quick stats -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:3rem;max-width:720px">
+      {[
+        {cert:'CSSLP',org:'ISC²',q:125,t:'3時間',pass:'700/1000',color:'var(--csslp)'},
+        {cert:'CASE',org:'EC-Council',q:50,t:'2時間',pass:'70%',color:'var(--case)'},
+        {cert:'GWEB',org:'GIAC',q:75,t:'3時間',pass:'68%',color:'var(--gweb)'},
+      ].map(s => '')}
+    </div>
+  </div>
+</header>
+
+<div id="root" style="position:relative;z-index:1"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useCallback, useRef } = React;
+
+// ── Hooks ──
+const useScrollProgress = () => {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    const u = () => {
+      const t = document.documentElement.scrollHeight - window.innerHeight;
+      setP(t > 0 ? (window.scrollY / t) * 100 : 100);
+    };
+    window.addEventListener('scroll', u, { passive: true });
+    return () => window.removeEventListener('scroll', u);
+  }, []);
+  return p;
+};
+
+const useActiveSection = () => {
+  const [id, setId] = useState('');
+  useEffect(() => {
+    const o = new IntersectionObserver(
+      es => es.forEach(e => { if (e.isIntersecting) setId(e.target.id); }),
+      { rootMargin: '-15% 0px -75% 0px' }
+    );
+    document.querySelectorAll('section[id]').forEach(s => o.observe(s));
+    return () => o.disconnect();
+  }, []);
+  return id;
+};
+
+const useCopy = () => {
+  const [copied, setCopied] = useState(false);
+  const timer = useRef();
+  const copy = useCallback(async (t) => {
+    await navigator.clipboard.writeText(t);
+    setCopied(true);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setCopied(false), 2000);
+  }, []);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  return [copied, copy];
+};
+
+// ── UI Components ──
+const Callout = ({type,title,children}) => {
+  const em = {tip:'💡',warn:'⚠️',danger:'🚨',info:'ℹ️'}[type];
+  return (
+    <div className={`callout callout-${type}`} style={{margin:'1rem 0'}}>
+      <span style={{fontSize:'1rem',flexShrink:0,marginTop:'.125rem'}}>{em}</span>
+      <div><strong style={{display:'block',marginBottom:'.2rem',color:'var(--text)'}}>{title}</strong>
+      <span style={{color:'var(--text-muted)'}}>{children}</span></div>
+    </div>
+  );
+};
+
+const SourceLink = ({href,label}) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="src-link">
+    🔗 {label}
+  </a>
+);
+
+const DomainCard = ({num,code,title,color,weight,children,sources}) => (
+  <div className="card" style={{padding:'1.5rem',marginBottom:'1rem',borderLeft:`3px solid ${color}`}}>
+    <div style={{display:'flex',alignItems:'flex-start',gap:'1rem',flexWrap:'wrap'}}>
+      <div style={{minWidth:'3rem',width:'3rem',height:'3rem',borderRadius:'.625rem',background:`${color}18`,border:`1.5px solid ${color}`,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+        <span className="font-mono" style={{fontSize:'.75rem',fontWeight:700,color}}>{num}</span>
+      </div>
+      <div style={{flex:1,minWidth:0}}>
+        <div style={{display:'flex',alignItems:'center',gap:.75+'rem',flexWrap:'wrap',marginBottom:'.5rem'}}>
+          <span className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color,textTransform:'uppercase',letterSpacing:'.06em'}}>{code}</span>
+          <span style={{background:color+'1a',color,borderRadius:'.25rem',padding:'.1rem .5rem',fontSize:'.7rem',fontFamily:'JetBrains Mono,monospace'}}>試験比率 {weight}</span>
+        </div>
+        <h3 className="font-display" style={{fontWeight:700,fontSize:'1.0625rem',color:'var(--text)',marginBottom:'.625rem'}}>{title}</h3>
+        <div style={{fontSize:'.875rem',color:'var(--text-muted)',lineHeight:1.75}}>{children}</div>
+        {sources && sources.length > 0 && (
+          <div style={{display:'flex',flexWrap:'wrap',gap:'.375rem',marginTop:'.875rem'}}>
+            {sources.map((s,i) => <SourceLink key={i} href={s.href} label={s.label} />)}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+const ExamInfoCard = ({cert,org,color,items,sources}) => (
+  <div className="card" style={{padding:'1.75rem',marginBottom:'2rem',border:`1px solid ${color}40`}}>
+    <div style={{display:'flex',alignItems:'center',gap:'.875rem',marginBottom:'1.25rem'}}>
+      <span style={{width:'2.5rem',height:'2.5rem',borderRadius:'.625rem',background:`${color}18`,border:`1.5px solid ${color}`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.25rem'}}>📋</span>
+      <div>
+        <div className="font-display" style={{fontWeight:800,fontSize:'1.25rem',color:'var(--text)'}}>{cert}</div>
+        <div style={{fontSize:'.8125rem',color:'var(--text-dim)'}}>{org}</div>
+      </div>
+    </div>
+    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:'.625rem',marginBottom:'1.25rem'}}>
+      {items.map((it,i) => (
+        <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid var(--border)'}}>
+          <div style={{fontSize:'.675rem',fontFamily:'JetBrains Mono,monospace',textTransform:'uppercase',letterSpacing:'.06em',color:'var(--text-dim)',marginBottom:'.25rem'}}>{it.label}</div>
+          <div className="font-mono" style={{fontSize:'.9375rem',fontWeight:700,color}}>{it.value}</div>
+        </div>
+      ))}
+    </div>
+    <div style={{display:'flex',flexWrap:'wrap',gap:'.375rem'}}>
+      {sources.map((s,i) => <SourceLink key={i} href={s.href} label={s.label} />)}
+    </div>
+  </div>
+);
+
+const Tabs = ({color,items}) => {
+  const [a, setA] = useState(0);
+  return (
+    <div style={{margin:'1.25rem 0'}}>
+      <div style={{display:'flex',gap:'.25rem',background:'var(--surface-2)',borderRadius:'.75rem',padding:'.25rem',overflowX:'auto',marginBottom:'1rem'}}>
+        {items.map((it,i) => (
+          <button key={i} onClick={() => setA(i)} className="tab-btn"
+            style={{color: a===i ? color : 'var(--text-dim)', background: a===i ? color+'18' : 'transparent', borderColor: a===i ? color+'50' : 'transparent'}}>
+            {it.label}
+          </button>
+        ))}
+      </div>
+      <div key={a} className="fade-up">{items[a].content}</div>
+    </div>
+  );
+};
+
+const CompareTable = () => (
+  <div style={{overflowX:'auto',borderRadius:'.75rem',border:'1px solid var(--border)'}}>
+    <table style={{width:'100%',fontSize:'.8125rem',borderCollapse:'collapse',minWidth:'640px'}}>
+      <thead>
+        <tr style={{background:'var(--surface-2)',borderBottom:'1px solid var(--border)'}}>
+          {['比較項目','CSSLP (ISC²)','CASE (EC-Council)','GWEB (GIAC)'].map((h,i) => (
+            <th key={i} style={{textAlign:'left',padding:'.75rem 1rem',fontFamily:'JetBrains Mono,monospace',fontSize:'.7rem',fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em',
+              color: i===1?'var(--csslp)':i===2?'var(--case)':i===3?'var(--gweb)':'var(--text-dim)'}}>{h}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody style={{background:'var(--surface)'}}>
+        {[
+          ['焦点','SDLCガバナンス全体','セキュアコーディング実装','Webアプリ防御・検証'],
+          ['問題数','125問','50問','75問（CyberLive含む）'],
+          ['試験時間','3時間','2時間','3時間'],
+          ['合格基準','700/1000点','70%','68%'],
+          ['実技テスト','なし','iLabs（研修のみ）','CyberLive（本番試験内）'],
+          ['試験形式','クローズドブック','クローズドブック','オープンブック'],
+          ['実務要件','4年（学位で1年免除）','2年 or 公式研修','明示なし'],
+          ['更新サイクル','3年・90 CPE','3年・ECEクレジット','4年・36 CPE'],
+          ['主要対象者','アーキテクト・PM','Java/.NET開発者','Webセキュリティエンジニア'],
+          ['難易度目安','★★★★★','★★★☆☆','★★★★☆'],
+        ].map((row,ri) => (
+          <tr key={ri} style={{borderBottom:'1px solid var(--border)',transition:'background .15s'}}>
+            {row.map((cell,ci) => (
+              <td key={ci} style={{padding:'.625rem 1rem',color: ci===0?'var(--text-muted)':ci===1?'var(--csslp)':ci===2?'var(--case)':ci===3?'var(--gweb)':'var(--text)',
+                fontFamily: ci===0?'inherit':'JetBrains Mono,monospace',fontSize: ci===0?'.8125rem':'.8125rem'}}>{cell}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+// ── TOC ──
+const tocItems = [
+  {id:'overview',label:'概要・資格比較',sub:false,cert:'other'},
+  {id:'csslp',label:'CSSLP — ISC²',sub:false,cert:'csslp'},
+  {id:'csslp-d1',label:'D1: セキュア概念',sub:true,cert:'csslp'},
+  {id:'csslp-d2',label:'D2: ライフサイクル管理',sub:true,cert:'csslp'},
+  {id:'csslp-d3',label:'D3: セキュア要件',sub:true,cert:'csslp'},
+  {id:'csslp-d4',label:'D4: アーキテクチャ設計',sub:true,cert:'csslp'},
+  {id:'csslp-d5',label:'D5: セキュア実装',sub:true,cert:'csslp'},
+  {id:'csslp-d6',label:'D6: セキュアテスト',sub:true,cert:'csslp'},
+  {id:'csslp-d7',label:'D7: デプロイ・運用',sub:true,cert:'csslp'},
+  {id:'csslp-d8',label:'D8: サプライチェーン',sub:true,cert:'csslp'},
+  {id:'case',label:'CASE — EC-Council',sub:false,cert:'case'},
+  {id:'case-d1',label:'D1: 脅威の理解',sub:true,cert:'case'},
+  {id:'case-d2',label:'D2: 要件収集',sub:true,cert:'case'},
+  {id:'case-d3',label:'D3: 設計・アーキテクチャ',sub:true,cert:'case'},
+  {id:'case-d4',label:'D4: 入力検証',sub:true,cert:'case'},
+  {id:'case-d5',label:'D5: 認証・認可',sub:true,cert:'case'},
+  {id:'case-d6',label:'D6: 暗号化実装',sub:true,cert:'case'},
+  {id:'case-d7',label:'D7: セッション管理',sub:true,cert:'case'},
+  {id:'case-d8',label:'D8: エラー処理',sub:true,cert:'case'},
+  {id:'case-d9',label:'D9: SAST & DAST',sub:true,cert:'case'},
+  {id:'case-d10',label:'D10: デプロイ・保守',sub:true,cert:'case'},
+  {id:'gweb',label:'GWEB — GIAC',sub:false,cert:'gweb'},
+  {id:'gweb-d1',label:'D1: アクセス制御',sub:true,cert:'gweb'},
+  {id:'gweb-d2',label:'D2: AJAX & API',sub:true,cert:'gweb'},
+  {id:'gweb-d3',label:'D3: 認証',sub:true,cert:'gweb'},
+  {id:'gweb-d4',label:'D4: クロスオリジン',sub:true,cert:'gweb'},
+  {id:'gweb-d5',label:'D5: CSRF',sub:true,cert:'gweb'},
+  {id:'gweb-d6',label:'D6: 暗号・機密データ',sub:true,cert:'gweb'},
+  {id:'gweb-d7',label:'D7: ファイルアップ・防御',sub:true,cert:'gweb'},
+  {id:'gweb-d8',label:'D8: 入力欠陥',sub:true,cert:'gweb'},
+  {id:'gweb-d9',label:'D9: 先端技術',sub:true,cert:'gweb'},
+  {id:'gweb-d10',label:'D10: シリアライゼーション',sub:true,cert:'gweb'},
+  {id:'gweb-d11',label:'D11: セキュリティテスト',sub:true,cert:'gweb'},
+  {id:'gweb-d12',label:'D12: セッション・ロジック',sub:true,cert:'gweb'},
+  {id:'references',label:'参考資料・公式URL',sub:false,cert:'other'},
+];
+
+const TOC = ({activeId}) => {
+  const getClass = (cert, id) => {
+    if (activeId !== id) return 'toc-item';
+    if (cert === 'csslp') return 'toc-item active-csslp';
+    if (cert === 'case') return 'toc-item active-case';
+    if (cert === 'gweb') return 'toc-item active-gweb';
+    return 'toc-item active-other';
+  };
+  return (
+    <nav className="sidebar-hide" style={{position:'sticky',top:'4rem',width:'15rem',minWidth:'15rem',maxHeight:'calc(100vh - 5rem)',overflowY:'auto',paddingTop:'1rem',paddingBottom:'2rem'}}>
+      <div className="font-mono" style={{fontSize:'.6rem',textTransform:'uppercase',letterSpacing:'.12em',color:'var(--text-dim)',padding:'0 .875rem',marginBottom:'.625rem'}}>目次</div>
+      {tocItems.map(t => (
+        <a key={t.id} href={`#${t.id}`} className={getClass(t.cert, t.id)}
+          style={{paddingLeft: t.sub ? '1.5rem' : '.875rem', fontWeight: t.sub ? 400 : 600}}>
+          {t.label}
+        </a>
+      ))}
+    </nav>
+  );
+};
+
+// ── Main App ──
+const App = () => {
+  const progress = useScrollProgress();
+  const activeId = useActiveSection();
+
+  useEffect(() => {
+    const bar = document.getElementById('pbar');
+    if (bar) {
+      bar.style.width = `${progress}%`;
+      bar.style.background = progress < 40 ? 'var(--csslp)' : progress < 72 ? 'var(--case)' : 'var(--gweb)';
+    }
+  }, [progress]);
+
+  return (
+    <div style={{maxWidth:'1360px',margin:'0 auto',padding:'2rem 1.5rem',display:'flex',gap:'2.5rem'}}>
+      <TOC activeId={activeId} />
+
+      <article style={{flex:1,minWidth:0}}>
+
+        {/* ═══ OVERVIEW ═══ */}
+        <section id="overview" className="card fade-up" style={{padding:'2rem',marginBottom:'1.5rem'}}>
+          <h2 className="font-display" style={{fontSize:'1.625rem',fontWeight:700,marginBottom:'.875rem'}}>
+            <span style={{color:'var(--text-dim)'}} className="font-mono">00 /</span> 概要 — なぜこの3資格か
+          </h2>
+          <p style={{color:'var(--text-muted)',fontSize:'.9375rem',marginBottom:'1.5rem',lineHeight:1.8}}>
+            CSSLP・CASE・GWEBはいずれも「アプリケーションセキュリティ」を扱う国際資格ですが、それぞれ<strong style={{color:'var(--text)'}}>異なる視点・深度・役割</strong>を持ちます。
+            キャリアフェーズや担当業務によって最適な資格は異なります。
+          </p>
+
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:'1rem',marginBottom:'1.5rem'}}>
+            {[
+              {cert:'CSSLP',color:'var(--csslp)',emoji:'🏛️',role:'アーキテクト・PM・チームリード',desc:'SDLCの全フェーズを俯瞰するガバナンス資格。設計前からデプロイ・廃止まで組織全体のセキュリティを指揮する「翻訳者」的ロール。'},
+              {cert:'CASE',color:'var(--case)',emoji:'💻',role:'Java/.NET 開発者・実装エンジニア',desc:'日常のコーディングでセキュアな実装を行うための戦術的資格。入力検証・暗号化・セッション管理など具体的なコード実装スキルに特化。'},
+              {cert:'GWEB',color:'var(--gweb)',emoji:'🛡️',role:'Webセキュリティエンジニア・ペンテスター',desc:'稼働中Webアプリの高度な防御・検証に特化。CyberLiveによる実機テストが特徴で、CORS・シリアライゼーション・CSRFなどの複雑な攻撃に対抗。'},
+            ].map((c,i) => (
+              <div key={i} className="card" style={{padding:'1.25rem',borderColor:`${c.color}30`}}>
+                <div style={{fontSize:'1.75rem',marginBottom:'.625rem'}}>{c.emoji}</div>
+                <div className="font-mono" style={{fontSize:'.75rem',fontWeight:700,color:c.color,marginBottom:'.25rem'}}>{c.cert}</div>
+                <div style={{fontSize:'.8125rem',fontWeight:600,color:'var(--text)',marginBottom:'.5rem'}}>{c.role}</div>
+                <p style={{fontSize:'.8125rem',color:'var(--text-muted)',lineHeight:1.7}}>{c.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="font-display" style={{fontWeight:700,fontSize:'1.125rem',marginBottom:'1rem'}}>試験仕様 比較表</h3>
+          <CompareTable />
+
+          <div style={{marginTop:'1.25rem'}}>
+            <Callout type="tip" title="学習ロードマップの考え方">
+              初学者は<strong>CASE</strong>でコードレベルの実装スキルを習得 → <strong>GWEB</strong>で防御・検証の実践力を証明 → <strong>CSSLP</strong>でSDLC全体のガバナンス力を獲得、というパスが最も効率的です。
+            </Callout>
+          </div>
+        </section>
+
+        {/* ═══ CSSLP ═══ */}
+        <section id="csslp" style={{marginBottom:'1rem'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'.875rem',padding:'1.5rem 0 1rem',borderBottom:'1px solid var(--border)',marginBottom:'1.5rem'}}>
+            <span style={{background:'var(--csslp-dim)',border:'1.5px solid var(--csslp)',borderRadius:'.625rem',width:'2.75rem',height:'2.75rem',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.25rem'}}>🏛️</span>
+            <div>
+              <div className="badge-csslp" style={{marginBottom:'.375rem'}}>ISC² · CSSLP</div>
+              <h2 className="font-display" style={{fontSize:'1.625rem',fontWeight:800,color:'var(--text)'}}>Certified Secure Software Lifecycle Professional</h2>
+            </div>
+          </div>
+
+          <ExamInfoCard
+            cert="CSSLP" org="International Information System Security Certification Consortium (ISC²)"
+            color="var(--csslp)"
+            items={[
+              {label:'問題数',value:'125問'},
+              {label:'試験時間',value:'3時間'},
+              {label:'合格点',value:'700/1000'},
+              {label:'形式',value:'多肢選択式+高度問題'},
+              {label:'実務要件',value:'4年（学位で1年免除）'},
+              {label:'更新',value:'3年・90 CPE'},
+              {label:'受験料',value:'$599 USD'},
+              {label:'プロバイダ',value:'Pearson VUE'},
+            ]}
+            sources={[
+              {href:'https://www.isc2.org/certifications/csslp',label:'ISC² 公式 CSSLP ページ'},
+              {href:'https://www.isc2.org/certifications/csslp/csslp-certification-exam-outline',label:'試験アウトライン (PDF)'},
+              {href:'https://www.isc2.org/certifications/csslp/csslp-experience-requirements',label:'経験要件詳細'},
+            ]}
+          />
+
+          <Callout type="info" title="Associate of ISC² 制度">
+            実務経験が足りない初学者でも試験に合格すれば「Associate of ISC²」として認定されます。その後5年以内に4年分の実務経験を蓄積することで正式なCSSLP認定へ昇格できます。
+          </Callout>
+
+          {/* D1 */}
+          <section id="csslp-d1" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D1" code="Domain 01" title="セキュアソフトウェアの概念 (Secure Software Concepts)" color="var(--csslp)" weight="10%"
+              sources={[
+                {href:'https://www.isc2.org/certifications/csslp/csslp-certification-exam-outline',label:'ISC² 試験アウトライン'},
+                {href:'https://owasp.org/www-community/Threat_Modeling_Process',label:'OWASP 脅威モデリング'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>セキュリティの根本原則（CIA トライアド・最小権限・多層防御）を深く理解するドメインです。初学者はまずここから学習を始めましょう。</p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'.75rem',marginBottom:'.875rem'}}>
+                {[
+                  {title:'CIA トライアド',icon:'🔺',desc:'機密性（Confidentiality）・完全性（Integrity）・可用性（Availability）の3要素。セキュリティ設計の基礎。'},
+                  {title:'最小権限の原則',icon:'🔑',desc:'ユーザー・プロセスには必要最小限の権限のみを付与。権限昇格攻撃のリスクを根本から削減。'},
+                  {title:'多層防御（Defense in Depth）',icon:'🪄',desc:'単一の防壁に頼らず、複数のセキュリティレイヤーを重ねることで一点突破を防ぐ設計思想。'},
+                  {title:'フェイルセーフ設計',icon:'🔒',desc:'障害・例外が発生した際、デフォルトで「拒否（Deny）」状態になる設計。フェイルオープンは厳禁。'},
+                ].map((item,i) => (
+                  <div key={i} style={{background:'var(--surface-2)',borderRadius:'.625rem',padding:'.875rem',border:'1px solid var(--border)'}}>
+                    <div style={{fontSize:'1.25rem',marginBottom:'.375rem'}}>{item.icon}</div>
+                    <div style={{fontWeight:600,fontSize:'.875rem',color:'var(--text)',marginBottom:'.25rem'}}>{item.title}</div>
+                    <div style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>{item.desc}</div>
+                  </div>
+                ))}
+              </div>
+              <Callout type="tip" title="初学者の学習ポイント">
+                「なぜセキュリティが必要か」の哲学的基盤を固める段階です。試験ではCIAのどの要素が侵害されているかを素早く判断する問題が頻出します。
+              </Callout>
+            </DomainCard>
+          </section>
+
+          {/* D2 */}
+          <section id="csslp-d2" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D2" code="Domain 02" title="セキュアソフトウェアライフサイクル管理 (Secure Software Lifecycle Management)" color="var(--csslp)" weight="12%"
+              sources={[
+                {href:'https://csrc.nist.gov/pubs/sp/800/218/r1/ipd',label:'NIST SSDF v1.2 (SP 800-218)'},
+                {href:'https://snyk.io/articles/secure-sdlc/',label:'Snyk — Secure SDLC ガイド'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>アジャイル・ウォーターフォールなど各種開発手法に応じたセキュリティ管理プロセスと、KPI・メトリクスの定義方法を学びます。</p>
+              <div style={{position:'relative',marginBottom:'1rem'}}>
+                <div style={{position:'absolute',left:'1.375rem',top:'2.5rem',bottom:'1rem',width:'1px',background:'linear-gradient(to bottom,var(--csslp),transparent)'}}></div>
+                {[
+                  {step:'01',title:'セキュリティ要件の文書化',desc:'開発プロジェクト開始時に、機能要件と同レベルでセキュリティ要件を文書化。NIST SSCFのプラクティスに基づく。'},
+                  {step:'02',title:'セキュリティメトリクスの定義',desc:'MTTD（平均検出時間）・MTTR（平均修復時間）・CVSSスコアなど、測定可能なKPIを設定。'},
+                  {step:'03',title:'リスクの継続的評価',desc:'リリース後も脅威ランドスケープの変化に応じてリスク評価を更新。「生きた改善バックログ」を維持する。'},
+                  {step:'04',title:'レガシー廃止プロセス',desc:'サポート終了アプリのデータを安全に移行・削除し、廃止時のデータ漏洩リスクを排除。'},
+                ].map((s,i) => (
+                  <div key={i} style={{display:'flex',gap:'1rem',padding:'1rem 0',paddingLeft:'.25rem'}}>
+                    <div style={{width:'2.75rem',height:'2.75rem',minWidth:'2.75rem',borderRadius:'50%',border:'1.5px solid var(--csslp)',background:'var(--surface)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'JetBrains Mono,monospace',fontWeight:700,fontSize:'.75rem',color:'var(--csslp)',zIndex:2}}>
+                      {s.step}
+                    </div>
+                    <div style={{flex:1,paddingTop:'.25rem'}}>
+                      <div style={{fontWeight:600,color:'var(--text)',marginBottom:'.25rem'}}>{s.title}</div>
+                      <div style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>{s.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </DomainCard>
+          </section>
+
+          {/* D3 */}
+          <section id="csslp-d3" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D3" code="Domain 03" title="セキュアソフトウェア要件 (Secure Software Requirements)" color="var(--csslp)" weight="11%"
+              sources={[
+                {href:'https://owasp.org/www-project-application-security-verification-standard/',label:'OWASP ASVS'},
+                {href:'https://www.securebydesignhandbook.com/docs/implementation/build-phase/threat-modeling',label:'Secure-by-Design Handbook'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>コードを書く前の「要件定義段階」でセキュリティを組み込む方法を習得します。</p>
+              <Tabs color="var(--csslp)" items={[
+                {label:'機能的 vs 非機能的', content: (
+                  <div>
+                    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+                      <div style={{background:'rgba(59,130,246,.06)',border:'1px solid rgba(59,130,246,.2)',borderRadius:'.625rem',padding:'1rem'}}>
+                        <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--csslp)',marginBottom:'.5rem'}}>✅ 機能的セキュリティ要件</div>
+                        <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                          {['認証フローの具体的実装','ロールベースアクセス制御（RBAC）','監査ログの記録範囲','データ暗号化の対象フィールド'].map((t,i) => (
+                            <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--csslp)'}}>→</span>{t}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div style={{background:'rgba(16,185,129,.06)',border:'1px solid rgba(16,185,129,.2)',borderRadius:'.625rem',padding:'1rem'}}>
+                        <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--case)',marginBottom:'.5rem'}}>✅ 非機能的セキュリティ要件</div>
+                        <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                          {['レスポンスタイム 200ms 以内','99.9%の可用性SLA','最大同時接続数1万','コードカバレッジ 80% 以上'].map((t,i) => (
+                            <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--case)'}}>→</span>{t}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )},
+                {label:'OWASP ASVSの活用', content: (
+                  <div>
+                    <p style={{fontSize:'.875rem',color:'var(--text-muted)',marginBottom:'1rem'}}>OWASP ASVS（Application Security Verification Standard）は、アプリのセキュリティ要件を3つのレベルで定義する国際標準です。CSSLP試験では頻出です。</p>
+                    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:'.75rem'}}>
+                      {[
+                        {lvl:'Level 1',color:'var(--success)',desc:'一般的なアプリ。自動スキャン可能な脆弱性への対処が最低ライン。'},
+                        {lvl:'Level 2',color:'var(--warn)',desc:'機密データを扱うアプリ。ほとんどの商用アプリに推奨。'},
+                        {lvl:'Level 3',color:'var(--danger)',desc:'金融・医療・重要インフラ。最高レベルの検証が必要。'},
+                      ].map((l,i) => (
+                        <div key={i} style={{background:'var(--surface-2)',border:`1px solid ${l.color}40`,borderRadius:'.625rem',padding:'.875rem'}}>
+                          <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:l.color,marginBottom:'.375rem'}}>{l.lvl}</div>
+                          <p style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>{l.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )},
+              ]} />
+            </DomainCard>
+          </section>
+
+          {/* D4 */}
+          <section id="csslp-d4" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D4" code="Domain 04" title="セキュアソフトウェアアーキテクチャと設計 (Secure Software Architecture and Design)" color="var(--csslp)" weight="14%"
+              sources={[
+                {href:'https://owasp.org/www-community/Threat_Modeling_Process',label:'OWASP 脅威モデリングプロセス'},
+                {href:'https://www.blackduck.com/blog/threat-modeling-guide.html',label:'Black Duck — 脅威モデリングガイド'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>試験で最も配点が高いドメインの一つ。<strong style={{color:'var(--text)'}}>STRIDE脅威モデリング</strong>を中心に、安全なアーキテクチャ設計の手法を習得します。</p>
+              <h4 style={{fontWeight:700,color:'var(--text)',marginBottom:'.75rem',fontSize:'.9375rem'}}>STRIDE モデル完全解説</h4>
+              <div style={{overflowX:'auto',borderRadius:'.75rem',border:'1px solid var(--border)',marginBottom:'1rem'}}>
+                <table style={{width:'100%',fontSize:'.8125rem',borderCollapse:'collapse',minWidth:'540px'}}>
+                  <thead>
+                    <tr style={{background:'var(--surface-2)',borderBottom:'1px solid var(--border)'}}>
+                      {['文字','脅威タイプ','例','緩和策'].map(h => (
+                        <th key={h} style={{textAlign:'left',padding:'.625rem .875rem',fontFamily:'JetBrains Mono,monospace',fontSize:'.675rem',textTransform:'uppercase',letterSpacing:'.05em',color:'var(--text-dim)'}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody style={{background:'var(--surface)'}}>
+                    {[
+                      {s:'S',name:'Spoofing（なりすまし）',ex:'偽のAPIキーでサービスになりすます',fix:'強MFA・mTLS・OAuth2.0',c:'var(--csslp)'},
+                      {s:'T',name:'Tampering（改ざん）',ex:'通信中のパラメータを変更',fix:'デジタル署名・HMAC・暗号化',c:'var(--warn)'},
+                      {s:'R',name:'Repudiation（否認）',ex:'ログを削除して操作を否定',fix:'イミュータブルログ・WORMストレージ',c:'var(--info)'},
+                      {s:'I',name:'Information Disclosure（情報漏洩）',ex:'スタックトレースをユーザーに表示',fix:'汎用エラーメッセージ・暗号化',c:'var(--danger)'},
+                      {s:'D',name:'Denial of Service（サービス拒否）',ex:'大量リクエストでサーバー過負荷',fix:'APIレート制限・オートスケール',c:'var(--gweb)'},
+                      {s:'E',name:'Elevation of Privilege（権限昇格）',ex:'SQLインジェクションでDB管理者権限取得',fix:'最小権限・RBAC・入力検証',c:'var(--case)'},
+                    ].map((r,i) => (
+                      <tr key={i} style={{borderBottom:'1px solid var(--border)'}}>
+                        <td style={{padding:'.5rem .875rem'}}><span className="font-mono" style={{fontSize:'1rem',fontWeight:800,color:r.c}}>{r.s}</span></td>
+                        <td style={{padding:'.5rem .875rem',fontWeight:600,color:'var(--text)',fontSize:'.8rem'}}>{r.name}</td>
+                        <td style={{padding:'.5rem .875rem',color:'var(--text-muted)'}}>{r.ex}</td>
+                        <td style={{padding:'.5rem .875rem',color:'var(--text-muted)'}}>{r.fix}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <Callout type="warn" title="試験頻出ポイント">
+                各STRIDEカテゴリと「どの技術的コントロールが対応するか」をセットで暗記しましょう。シナリオ問題でどの脅威カテゴリかを素早く特定する訓練が重要です。
+              </Callout>
+            </DomainCard>
+          </section>
+
+          {/* D5 */}
+          <section id="csslp-d5" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D5" code="Domain 05" title="セキュアソフトウェア実装 (Secure Software Implementation)" color="var(--csslp)" weight="14%"
+              sources={[
+                {href:'https://owasp.org/www-project-top-ten/',label:'OWASP Top 10'},
+                {href:'https://checkmarx.com/learn/devsecops/top-18-devsecops-tools-for-the-ai-era-securing-the-sdlc-in-2026/',label:'Checkmarx — DevSecOpsツール2026'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>防御的コーディングの実践と、SASTツールをCI/CDパイプラインに統合する方法を習得します。</p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1rem',marginBottom:'.875rem'}}>
+                <div style={{background:'rgba(34,197,94,.05)',border:'1px solid rgba(34,197,94,.2)',borderRadius:'.625rem',padding:'1rem'}}>
+                  <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem',textTransform:'uppercase'}}>✅ セキュアコーディング原則</div>
+                  <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                    {['すべての入力を信頼しない（Input Validation）','エラー処理でスタックトレースを隠蔽','ハードコードされた認証情報を使用しない','暗号アルゴリズムを自作しない（既存ライブラリを使用）','最新の非推奨API（MD5・SHA-1等）を使わない'].map((t,i) => (
+                      <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--success)',flexShrink:0}}>✓</span>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div style={{background:'rgba(239,68,68,.05)',border:'1px solid rgba(239,68,68,.2)',borderRadius:'.625rem',padding:'1rem'}}>
+                  <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem',textTransform:'uppercase'}}>❌ アンチパターン</div>
+                  <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                    {['`eval()`や`exec()`で入力を直接実行','デバッグ用コードを本番に残す','.envファイルをGitにコミット','例外をキャッチして何もしない（空のcatch）','ユーザー権限のままDB管理操作を実行'].map((t,i) => (
+                      <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--danger)',flexShrink:0}}>✗</span>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </DomainCard>
+          </section>
+
+          {/* D6 */}
+          <section id="csslp-d6" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D6" code="Domain 06" title="セキュアソフトウェアテスト (Secure Software Testing)" color="var(--csslp)" weight="10%"
+              sources={[
+                {href:'https://checkmarx.com/learn/dast/dast-tools-key-features-and-12-solutions-to-know-in-2026/',label:'Checkmarx — DAST ツール 2026'},
+                {href:'https://qodex.ai/blog/top-10-dast-tools-for-2025',label:'Qodex — Top 10 DAST Tools'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>静的・動的・インタラクティブな各テスト手法の違いと適切な使い分けを理解します。</p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.75rem'}}>
+                {[
+                  {name:'SAST',full:'静的解析',icon:'📄',when:'コミット時',desc:'ソースコードを実行せずに解析。SQL Injection・XSS・ハードコードシークレットを検出。',tools:'CodeQL・Semgrep・Veracode'},
+                  {name:'DAST',full:'動的解析',icon:'🌐',when:'デプロイ後',desc:'稼働中アプリにリクエストを送信して脆弱性を検出。認証バイパスや実行時エラーを発見。',tools:'OWASP ZAP・Burp Suite・StackHawk'},
+                  {name:'SCA',full:'コンポジション解析',icon:'📦',when:'依存関係追加時',desc:'サードパーティライブラリの既知CVEとライセンス違反を自動スキャン。',tools:'Dependabot・Trivy・Snyk'},
+                  {name:'IAST',full:'インタラクティブ解析',icon:'🔄',when:'テスト実行時',desc:'テストエージェントをアプリに組み込み、実行中の挙動をリアルタイム解析。',tools:'Contrast Security・Seeker'},
+                ].map((t,i) => (
+                  <div key={i} className="card" style={{padding:'1rem',borderColor:'rgba(59,130,246,.2)'}}>
+                    <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.5rem'}}>
+                      <span style={{fontSize:'1.25rem'}}>{t.icon}</span>
+                      <span className="font-mono" style={{fontSize:'.875rem',fontWeight:700,color:'var(--csslp)'}}>{t.name}</span>
+                      <span style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{t.full}</span>
+                    </div>
+                    <div style={{fontSize:'.75rem',fontWeight:600,color:'var(--warn)',marginBottom:'.375rem'}}>⏰ {t.when}</div>
+                    <p style={{fontSize:'.8125rem',color:'var(--text-muted)',marginBottom:'.5rem'}}>{t.desc}</p>
+                    <div style={{fontSize:'.75rem',fontFamily:'JetBrains Mono,monospace',color:'var(--text-dim)'}}>🔧 {t.tools}</div>
+                  </div>
+                ))}
+              </div>
+            </DomainCard>
+          </section>
+
+          {/* D7 */}
+          <section id="csslp-d7" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D7" code="Domain 07" title="セキュアソフトウェアのデプロイ・運用・保守 (Secure Software Deployment, Operations, Maintenance)" color="var(--csslp)" weight="11%"
+              sources={[
+                {href:'https://c4techservices.com/devsecops-2026-security-in-every-release/',label:'C4 Tech — DevSecOps 2026'},
+                {href:'https://csrc.nist.gov/projects/post-quantum-cryptography',label:'NIST PQC プロジェクト'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>本番リリース後の継続的なセキュリティ維持、パッチ管理、インシデント対応の仕組みを理解します。</p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'.75rem'}}>
+                {[
+                  {phase:'デプロイ前',icon:'🚀',items:['運用リスク分析の実施','設定ファイルの機密情報スクラブ','コンテナイメージの署名検証（Cosign）','IaCテンプレートのセキュリティスキャン']},
+                  {phase:'運用中',icon:'📊',items:['WAF・APIゲートウェイの監視','異常トラフィックのリアルタイム検知','新CVE公開時の影響サービス特定','数時間以内のパッチ適用体制']},
+                  {phase:'保守・廃止',icon:'🗑️',items:['廃止前のデータ移行・安全削除','技術的負債のセキュリティレビュー','EOL依存関係の計画的刷新','廃止後のアクセス権削除確認']},
+                ].map((p,i) => (
+                  <div key={i} style={{background:'var(--surface-2)',borderRadius:'.625rem',padding:'1rem',border:'1px solid var(--border)'}}>
+                    <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.625rem'}}>
+                      <span style={{fontSize:'1.25rem'}}>{p.icon}</span>
+                      <span style={{fontWeight:700,color:'var(--csslp)',fontSize:'.875rem'}}>{p.phase}</span>
+                    </div>
+                    <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                      {p.items.map((t,j) => (
+                        <li key={j} style={{padding:'.2rem 0',display:'flex',gap:'.5rem'}}><span style={{color:'var(--csslp)',flexShrink:0}}>·</span>{t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </DomainCard>
+          </section>
+
+          {/* D8 */}
+          <section id="csslp-d8" style={{margin:'1.5rem 0'}}>
+            <DomainCard num="D8" code="Domain 08" title="セキュアソフトウェアサプライチェーン (Secure Software Supply Chain)" color="var(--csslp)" weight="16%"
+              sources={[
+                {href:'https://slsa.dev/',label:'SLSA Framework'},
+                {href:'https://www.digicert.com/campaigns/state-of-software-supply-chain-security-2026',label:'DigiCert — Supply Chain Security 2026'},
+                {href:'https://openssf.org/blog/2026/01/08/signal-in-the-noise-an-industry-wide-perspective-on-the-state-of-vex/',label:'OpenSSF — VEX レポート 2026'},
+              ]}>
+              <p style={{marginBottom:'.875rem'}}>最高の配点（16%）を持つ最重要ドメイン。SBOMの生成・検証・VEXによるノイズ排除まで、現代のサプライチェーンセキュリティを網羅します。</p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:'1rem',marginBottom:'1rem'}}>
+                {[
+                  {name:'SBOM',icon:'📋',color:'var(--csslp)',desc:'Software Bill of Materials。すべての依存関係・バージョン・ライセンスを記録した「部品表」。SPDX・CycloneDXが標準フォーマット。EU CRAで法的義務化。'},
+                  {name:'SLSA',icon:'⛓️',color:'var(--case)',desc:'Supply-chain Levels for Software Artifacts。ビルドパイプラインの完全性を証明する来歴（Provenance）フレームワーク。Level 1〜3で段階的に強化。'},
+                  {name:'VEX',icon:'🎯',color:'var(--gweb)',desc:'Vulnerability Exploitability eXchange。SBOMと組み合わせ、脆弱性が「実際に悪用可能か」を宣言。アラート疲労を劇的に削減。'},
+                  {name:'Cosign',icon:'✍️',color:'var(--warn)',desc:'Sigstoreプロジェクトの署名ツール。コンテナイメージのキーレス署名・検証を実現。CIパイプラインでの来歴証明に不可欠。'},
+                ].map((it,i) => (
+                  <div key={i} className="card" style={{padding:'1.125rem',borderColor:`${it.color}30`}}>
+                    <div style={{display:'flex',alignItems:'center',gap:'.625rem',marginBottom:'.5rem'}}>
+                      <span style={{fontSize:'1.25rem'}}>{it.icon}</span>
+                      <span className="font-mono" style={{fontSize:'.875rem',fontWeight:700,color:it.color}}>{it.name}</span>
+                    </div>
+                    <p style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>{it.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <Callout type="danger" title="2026年 重要タイムライン — EU サイバーレジリエンス法（CRA）">
+                <strong>2026年9月：</strong>悪用脆弱性の早期報告義務開始 → <strong>2027年12月：</strong>全要件完全適用。SBOMの提供が法的必須要件となります。
+              </Callout>
+              <div style={{marginTop:'.875rem'}}>
+                <SourceLink href="https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act" label="EU CRA 公式ページ" />
+              </div>
+            </DomainCard>
+          </section>
+        </section>
+
+        {/* ═══ CASE ═══ */}
+        <section id="case" style={{marginBottom:'1rem'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'.875rem',padding:'1.5rem 0 1rem',borderBottom:'1px solid var(--border)',marginBottom:'1.5rem',marginTop:'1rem'}}>
+            <span style={{background:'var(--case-dim)',border:'1.5px solid var(--case)',borderRadius:'.625rem',width:'2.75rem',height:'2.75rem',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.25rem'}}>💻</span>
+            <div>
+              <div className="badge-case" style={{marginBottom:'.375rem'}}>EC-Council · CASE</div>
+              <h2 className="font-display" style={{fontSize:'1.625rem',fontWeight:800,color:'var(--text)'}}>Certified Application Security Engineer</h2>
+            </div>
+          </div>
+
+          <ExamInfoCard
+            cert="CASE (Java / .NET)" org="EC-Council"
+            color="var(--case)"
+            items={[
+              {label:'問題数',value:'50問'},
+              {label:'試験時間',value:'2時間'},
+              {label:'合格基準',value:'70%'},
+              {label:'形式',value:'多肢選択式'},
+              {label:'実務要件',value:'2年 or 公式研修'},
+              {label:'更新',value:'3年・ECEクレジット'},
+              {label:'受験料',value:'$250 USD'},
+              {label:'提供形式',value:'Java & .NET 2トラック'},
+            ]}
+            sources={[
+              {href:'https://www.eccouncil.org/train-certify/certified-application-security-engineer-case-java/',label:'EC-Council 公式 CASE ページ'},
+              {href:'https://cert.eccouncil.org/blog/ec-certified-application-security-engineer/',label:'CASE 詳細ブログ'},
+              {href:'https://blog.masterofproject.com/2023-ec-council-ece-policy/',label:'ECE ポリシー更新ガイド'},
+            ]}
+          />
+
+          <Callout type="info" title="iLabs — 実践的仮想ラボ環境">
+            EC-Councilの公式研修には<strong>iLabs</strong>（クラウド型仮想ラボ）が含まれます。脆弱性を含むコードを実際にデバッグし、セキュアなコードに書き換える実践的演習が試験合格に直結します。
+          </Callout>
+
+          {/* CASE D1-D10 */}
+          {[
+            {
+              id:'case-d1',num:'D1',code:'Domain 01',title:'アプリケーションセキュリティ・脅威・攻撃の理解',weight:'8%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>攻撃者の視点からアプリケーションへの攻撃経路を理解します。OWASP Top 10:2025の理解が必須。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'OWASP Top 10:2025',d:'A01〜A10の各脆弱性タイプと攻撃シナリオ'},
+                      {t:'MITRE ATT&CK for Web',d:'攻撃者のTTP（戦術・技術・手順）フレームワーク'},
+                      {t:'攻撃ライフサイクル',d:'偵察 → エクスプロイト → 横展開 → 流出の各フェーズ'},
+                      {t:'ソーシャルエンジニアリング',d:'フィッシング・ビッシング・スピアフィッシングの手法'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid var(--border)'}}>
+                        <div style={{fontWeight:600,fontSize:'.8125rem',color:'var(--case)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://owasp.org/Top10/2025/0x00_2025-Introduction/',label:'OWASP Top 10:2025 Introduction'}],
+            },
+            {
+              id:'case-d2',num:'D2',code:'Domain 02',title:'セキュリティ要件の収集',weight:'9%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>開発プロジェクト開始前に、セキュリティベースラインを策定する方法を習得します。</p>
+                  <Callout type="tip" title="セキュリティ要件チェックリスト">
+                    認証方式（MFA必須か？）・セッションタイムアウト時間・暗号化対象データ・ログ保持期間・インシデント報告先を要件定義書に明記しましょう。
+                  </Callout>
+                </div>
+              ),
+              sources:[{href:'https://www.isc2.org/certifications/csslp',label:'ISC² CSSLP（要件定義共通知識）'}],
+            },
+            {
+              id:'case-d3',num:'D3',code:'Domain 03',title:'セキュアなアプリケーション設計とアーキテクチャ',weight:'11%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>最小権限・分離・完全なる仲介の原則に基づく堅牢なアーキテクチャを設計します。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {p:'最小権限（Least Privilege）',d:'必要最小限の権限のみ付与。横展開リスクを最小化。'},
+                      {p:'完全な仲介（Complete Mediation）',d:'すべてのアクセスを毎回認可チェック。キャッシュの悪用を防ぐ。'},
+                      {p:'関心の分離（Separation of Concerns）',d:'UIロジック・ビジネスロジック・データアクセスを分離。'},
+                      {p:'オープン設計（Open Design）',d:'アルゴリズム自体は公開し、鍵のみを秘密にする設計思想。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(16,185,129,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--case)',marginBottom:'.25rem'}}>{it.p}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://www.securebydesignhandbook.com',label:'Secure-by-Design Handbook'}],
+            },
+            {
+              id:'case-d4',num:'D4',code:'Domain 04',title:'入力検証のためのセキュアコーディング実践',weight:'13%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>SQLインジェクション・XSS・コマンドインジェクションを根本から防ぐ入力検証の実装手法。</p>
+                  <Tabs color="var(--case)" items={[
+                    {label:'SQLインジェクション対策', content:(
+                      <div>
+                        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+                          <div style={{background:'rgba(239,68,68,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(239,68,68,.2)'}}>
+                            <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem'}}>❌ 脆弱なコード（PHP）</div>
+                            <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',overflow:'auto',color:'#e2e8f0'}}>{`$q = "SELECT * FROM users 
+  WHERE id='" . $_GET['id'] . "'";`}</pre>
+                          </div>
+                          <div style={{background:'rgba(34,197,94,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(34,197,94,.2)'}}>
+                            <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem'}}>✅ プリペアドステートメント</div>
+                            <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',overflow:'auto',color:'#e2e8f0'}}>{`$stmt = $pdo->prepare(
+  "SELECT * FROM users WHERE id=?");
+$stmt->execute([$_GET['id']]);`}</pre>
+                          </div>
+                        </div>
+                      </div>
+                    )},
+                    {label:'XSS 対策', content:(
+                      <div>
+                        <Callout type="warn" title="XSSの3種類を区別する">
+                          <strong>Stored XSS</strong>（DBに保存されたスクリプト）・<strong>Reflected XSS</strong>（URLパラメータに含まれる）・<strong>DOM-based XSS</strong>（クライアントサイドDOM操作）で対策が異なります。
+                        </Callout>
+                        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginTop:'.875rem'}}>
+                          <div style={{background:'rgba(239,68,68,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(239,68,68,.2)'}}>
+                            <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem'}}>❌ 危険</div>
+                            <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',overflow:'auto',color:'#e2e8f0'}}>{`// innerHTML使用は禁止
+div.innerHTML = userInput;`}</pre>
+                          </div>
+                          <div style={{background:'rgba(34,197,94,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(34,197,94,.2)'}}>
+                            <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem'}}>✅ 安全</div>
+                            <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',overflow:'auto',color:'#e2e8f0'}}>{`// textContentを使用
+div.textContent = userInput;
+// + CSPヘッダーで多層防御`}</pre>
+                          </div>
+                        </div>
+                      </div>
+                    )},
+                  ]} />
+                </div>
+              ),
+              sources:[{href:'https://owasp.org/Top10/2025/A05_2025-Injection/',label:'OWASP A05:2025 インジェクション'}],
+            },
+            {
+              id:'case-d5',num:'D5',code:'Domain 05',title:'認証と認可のためのセキュアコーディング実践',weight:'12%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>パスワードの安全な保管、ブルートフォース対策、OAuth2.0/OIDCの正しい実装を習得します。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'パスワードハッシュ',icon:'🔑',good:'bcrypt / Argon2id / scrypt（コスト係数付き）',bad:'MD5 / SHA-1 / 平文保存'},
+                      {t:'ブルートフォース対策',icon:'🚫',good:'アカウントロック・CAPTCHA・指数的バックオフ',bad:'試行回数無制限・レート制限なし'},
+                      {t:'MFA実装',icon:'📱',good:'TOTP（Google Authenticator）・WebAuthn・FIDO2',bad:'SMS OTP のみ（SIMスワップ脆弱性）'},
+                      {t:'セッションID',icon:'🎟️',good:'暗号論的乱数生成（128bit+）・ログイン後に再生成',bad:'予測可能なID（タイムスタンプ等）'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.875rem',border:'1px solid var(--border)'}}>
+                        <div style={{display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'.5rem'}}>
+                          <span style={{fontSize:'1.125rem'}}>{it.icon}</span>
+                          <span style={{fontWeight:700,fontSize:'.8125rem',color:'var(--case)'}}>{it.t}</span>
+                        </div>
+                        <div style={{fontSize:'.75rem',color:'var(--success)',marginBottom:'.25rem'}}>✅ {it.good}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--danger)'}}>❌ {it.bad}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://owasp.org/Top10/2025/A07_2025-Identification_and_Authentication_Failures/',label:'OWASP A07:2025 認証の不備'}],
+            },
+            {
+              id:'case-d6',num:'D6',code:'Domain 06',title:'暗号化のためのセキュアコーディング実践',weight:'11%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>安全な暗号アルゴリズムの選択と、TLS設定・鍵管理の正しい実装方法を学びます。</p>
+                  <div style={{overflowX:'auto',borderRadius:'.625rem',border:'1px solid var(--border)'}}>
+                    <table style={{width:'100%',fontSize:'.8125rem',borderCollapse:'collapse',minWidth:'480px'}}>
+                      <thead>
+                        <tr style={{background:'var(--surface-2)',borderBottom:'1px solid var(--border)'}}>
+                          {['用途','✅ 推奨（2026年）','❌ 非推奨・禁止'].map(h => (
+                            <th key={h} style={{textAlign:'left',padding:'.625rem .875rem',fontFamily:'JetBrains Mono,monospace',fontSize:'.675rem',textTransform:'uppercase',color:'var(--text-dim)'}}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody style={{background:'var(--surface)'}}>
+                        {[
+                          ['ハッシュ','SHA-256 / SHA-3 / BLAKE3','MD5 / SHA-1'],
+                          ['対称暗号','AES-256-GCM / ChaCha20-Poly1305','DES / 3DES / AES-ECBモード'],
+                          ['非対称暗号（古典）','RSA-4096 / ECDSA-P256 / Ed25519','RSA-1024 / RSA-2048（短期）'],
+                          ['量子耐性','ML-KEM (FIPS 203) / ML-DSA (FIPS 204)','移行期はハイブリッド（古典+PQC）'],
+                          ['TLS','TLS 1.3のみ（TLS 1.2は限定的）','SSL 3.0 / TLS 1.0 / TLS 1.1'],
+                          ['PWハッシュ','Argon2id（コスト=16MB+）','bcrypt も可（ただしコスト12以上）'],
+                        ].map((r,i) => (
+                          <tr key={i} style={{borderBottom:'1px solid var(--border)'}}>
+                            <td style={{padding:'.5rem .875rem',fontWeight:600,color:'var(--text-muted)'}}>{r[0]}</td>
+                            <td style={{padding:'.5rem .875rem',color:'var(--success)',fontFamily:'JetBrains Mono,monospace',fontSize:'.75rem'}}>{r[1]}</td>
+                            <td style={{padding:'.5rem .875rem',color:'var(--danger)',fontFamily:'JetBrains Mono,monospace',fontSize:'.75rem'}}>{r[2]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ),
+              sources:[
+                {href:'https://csrc.nist.gov/pubs/fips/204/final',label:'NIST FIPS 204 (ML-DSA)'},
+                {href:'https://paloaltonetworks.com/cyberpedia/pqc-standards',label:'Palo Alto — PQC Standards'},
+              ],
+            },
+            {
+              id:'case-d7',num:'D7',code:'Domain 07',title:'セッション管理のためのセキュアコーディング実践',weight:'10%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>セッション固定化・ハイジャック・CSRF攻撃を防ぐセッション管理の実装パターン。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:'.75rem'}}>
+                    {[
+                      {title:'セッション固定化対策',icon:'📌',desc:'ログイン成功後は必ず新しいセッションIDを発行する（Session Regeneration）。ログイン前のIDを引き継いではならない。'},
+                      {title:'Cookieセキュリティフラグ',icon:'🍪',desc:'Secure（HTTPS必須）・HttpOnly（JS非アクセス）・SameSite=Strict（CSRF防止）の3フラグをすべて設定する。'},
+                      {title:'セッションタイムアウト',icon:'⏲️',desc:'アイドルタイムアウト（非活動時）と絶対タイムアウト（最大セッション長）の両方を実装する。'},
+                    ].map((it,i) => (
+                      <div key={i} className="card" style={{padding:'1rem',borderColor:'rgba(16,185,129,.2)'}}>
+                        <div style={{fontSize:'1.25rem',marginBottom:'.375rem'}}>{it.icon}</div>
+                        <div style={{fontWeight:700,fontSize:'.875rem',color:'var(--case)',marginBottom:'.375rem'}}>{it.title}</div>
+                        <p style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>{it.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://owasp.org/Top10/2025/A07_2025-Identification_and_Authentication_Failures/',label:'OWASP — セッション管理'}],
+            },
+            {
+              id:'case-d8',num:'D8',code:'Domain 08',title:'エラー処理のためのセキュアコーディング実践',weight:'9%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>OWASP Top 10:2025に新規追加された<strong style={{color:'var(--text)'}}>A10: Mishandling of Exceptional Conditions</strong>を含む重要ドメイン。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginBottom:'.875rem'}}>
+                    <div style={{background:'rgba(34,197,94,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(34,197,94,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem',textTransform:'uppercase'}}>✅ ベストプラクティス</div>
+                      <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                        {['汎用エラーメッセージをユーザーに表示','詳細はサーバーログにのみ記録','ログにPII・APIキーを含めない（スクラブ）','フェイルクローズ設計を徹底','finallyブロックでリソースを確実に解放'].map((t,i) => (
+                          <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--success)'}}>✓</span>{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div style={{background:'rgba(239,68,68,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(239,68,68,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem',textTransform:'uppercase'}}>❌ アンチパターン</div>
+                      <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                        {['スタックトレースをブラウザに返す','空のcatch（例外を握りつぶす）','フェイルオープン（エラー時にアクセス許可）','リソース解放漏れ（ファイルハンドル等）','本番環境でデバッグモードを有効化'].map((t,i) => (
+                          <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--danger)'}}>✗</span>{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://owasp.org/Top10/2025/A10_2025-Mishandling_of_Exceptional_Conditions/',label:'OWASP A10:2025 例外処理の不備'}],
+            },
+            {
+              id:'case-d9',num:'D9',code:'Domain 09',title:'SAST & DAST の統合',weight:'9%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>CI/CDパイプラインにSAST・DASTを統合し、人間のレビュー工数を最小化しながら脆弱性を自動検出する方法。</p>
+                  <Callout type="tip" title="GitHub Actions × Semgrep の統合例">
+                    プルリクエスト時にSemgrepでSASTスキャンを自動実行。指摘された問題はPR上でコメントとして表示され、マージ前に開発者が修正できます。
+                  </Callout>
+                  <div style={{marginTop:'.875rem',display:'flex',flexWrap:'wrap',gap:'.375rem'}}>
+                    <SourceLink href="https://semgrep.dev/" label="Semgrep 公式" />
+                    <SourceLink href="https://github.com/zaproxy/zaproxy" label="OWASP ZAP (GitHub)" />
+                    <SourceLink href="https://www.stackhawk.com/" label="StackHawk DAST" />
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://helpnetsecurity.com/2026/02/26/joni-klippert-ceo-stackhawk-ai-driven-dast-testing/',label:'Help Net Security — AI DAST 2026'}],
+            },
+            {
+              id:'case-d10',num:'D10',code:'Domain 10',title:'セキュアなデプロイメントと保守',weight:'8%',
+              content: (
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>本番リリース時のセキュリティチェックと、デプロイ後の継続的な脆弱性監視体制の構築。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'IaCのセキュリティスキャン',d:'Terraform・K8s YAMLを自動チェック。Checkov・kube-benchで設定ミスを検出。'},
+                      {t:'コンテナイメージ強化',d:'非rootユーザーで実行・読み取り専用ファイルシステム・distrolessイメージの採用。'},
+                      {t:'シークレット管理',d:'HashiCorp Vault・AWS Secrets Manager等でAPI鍵・パスワードを安全に管理。'},
+                      {t:'依存関係の継続更新',d:'Dependabot・Renovateで自動PR作成。CVS公開時に影響サービスを即特定。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(16,185,129,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--case)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+              sources:[{href:'https://sysdig.com/learn-cloud-native/software-supply-chain-security-best-practices',label:'Sysdig — Supply Chain Best Practices 2026'}],
+            },
+          ].map((d) => (
+            <section key={d.id} id={d.id} style={{margin:'1.5rem 0'}}>
+              <DomainCard num={d.num} code={d.code} title={d.title} color="var(--case)" weight={d.weight} sources={d.sources}>
+                {d.content}
+              </DomainCard>
+            </section>
+          ))}
+        </section>
+
+        {/* ═══ GWEB ═══ */}
+        <section id="gweb" style={{marginBottom:'1rem'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'.875rem',padding:'1.5rem 0 1rem',borderBottom:'1px solid var(--border)',marginBottom:'1.5rem',marginTop:'1rem'}}>
+            <span style={{background:'var(--gweb-dim)',border:'1.5px solid var(--gweb)',borderRadius:'.625rem',width:'2.75rem',height:'2.75rem',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.25rem'}}>🛡️</span>
+            <div>
+              <div className="badge-gweb" style={{marginBottom:'.375rem'}}>GIAC · GWEB</div>
+              <h2 className="font-display" style={{fontSize:'1.625rem',fontWeight:800,color:'var(--text)'}}>GIAC Web Application Defender</h2>
+            </div>
+          </div>
+
+          <ExamInfoCard
+            cert="GWEB" org="Global Information Assurance Certification (GIAC)"
+            color="var(--gweb)"
+            items={[
+              {label:'問題数',value:'75問'},
+              {label:'試験時間',value:'3時間'},
+              {label:'合格基準',value:'68%'},
+              {label:'形式',value:'多肢選択+CyberLive'},
+              {label:'試験形式',value:'オープンブック'},
+              {label:'更新',value:'4年・36 CPE'},
+              {label:'受験料',value:'$949 USD'},
+              {label:'配信',value:'ProctorU / Pearson VUE'},
+            ]}
+            sources={[
+              {href:'https://www.giac.org/certifications/certified-web-application-defender-gweb/',label:'GIAC 公式 GWEB ページ'},
+              {href:'https://www.giac.org/renewal/cpe-information/',label:'GIAC CPE 更新情報'},
+              {href:'https://www.giac.org/knowledge-base/proctor/',label:'GIAC Proctor プログラム'},
+            ]}
+          />
+
+          <Callout type="warn" title="CyberLive — 実環境での実技テスト">
+            GWEBの最大の特徴が<strong>CyberLive</strong>。本番試験内で実際の仮想マシン・Webアプリ・コードにアクセスし、脆弱性を特定・修正するハンズオンタスクを解きます。オープンブックのため「考え方」と「調べ方」の訓練が重要。
+          </Callout>
+
+          {[
+            {
+              id:'gweb-d1',num:'D1',title:'アクセス制御 (Access Control)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>水平・垂直権限昇格攻撃の緩和戦略と、認可ロジックの安全な実装。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+                    <div style={{background:'var(--surface-2)',borderRadius:'.625rem',padding:'1rem',border:'1px solid var(--border)'}}>
+                      <div style={{fontWeight:700,fontSize:'.875rem',color:'var(--gweb)',marginBottom:'.5rem'}}>垂直権限昇格</div>
+                      <p style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>一般ユーザーが管理者機能にアクセスする攻撃。RBACと機能レベルアクセス制御（FLAC）で防止。</p>
+                    </div>
+                    <div style={{background:'var(--surface-2)',borderRadius:'.625rem',padding:'1rem',border:'1px solid var(--border)'}}>
+                      <div style={{fontWeight:700,fontSize:'.875rem',color:'var(--gweb)',marginBottom:'.5rem'}}>水平権限昇格</div>
+                      <p style={{fontSize:'.8125rem',color:'var(--text-muted)'}}>ユーザーAが他ユーザーBのデータにアクセスする攻撃（IDOR）。すべてのオブジェクト操作で所有権確認が必須。</p>
+                    </div>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d2',num:'D2',title:'AJAX技術とセキュリティ (AJAX Technologies and Security)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>非同期通信における攻撃面の拡大と、APIエンドポイントの保護戦略。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'API認証の強制',d:'AJAXリクエストにもJWT・セッショントークンを要求。同一オリジンポリシーに頼らない。'},
+                      {t:'Content-Type検証',d:'リクエストのContent-Typeが期待値と一致するか確認。JSON偽装攻撃を防止。'},
+                      {t:'レスポンスフィルタリング',d:'APIレスポンスから不要な機密フィールドを削除。過剰な情報開示（Mass Assignment）を防ぐ。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(168,85,247,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--gweb)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d3',num:'D3',title:'認証 (Authentication)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>Web認証フロー・SSO実装の弱点・パスキーへの移行戦略。</p>
+                  <Callout type="tip" title="2026年のトレンド — パスワードレス認証">
+                    FIDO2/WebAuthnを使用したパスキーは、フィッシング耐性があり最も安全な認証方式です。GWEB試験では最新の認証標準の理解も問われます。
+                  </Callout>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d4',num:'D4',title:'クロスオリジンポリシー攻撃と緩和 (Cross Origin Policy)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>CORS設定ミスによるSOP（同一生成元ポリシー）回避と、正しいCORSヘッダー設定。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
+                    <div style={{background:'rgba(239,68,68,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(239,68,68,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem'}}>❌ 危険な設定</div>
+                      <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',color:'#e2e8f0'}}>{`Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+# ↑ ワイルドカード+認証情報の組み合わせは
+# 最も危険なCORS設定`}</pre>
+                    </div>
+                    <div style={{background:'rgba(34,197,94,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(34,197,94,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem'}}>✅ 安全な設定</div>
+                      <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',color:'#e2e8f0'}}>{`# 明示的なオリジンホワイトリスト
+Access-Control-Allow-Origin: 
+  https://trusted.example.com
+Access-Control-Allow-Credentials: true`}</pre>
+                    </div>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d5',num:'D5',title:'CSRF — クロスサイトリクエストフォージェリ',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>攻撃の成立条件と、アンチCSRFトークン・SameSite Cookie属性を用いた多層的な緩和策。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {method:'SameSite=Strict',desc:'Cookie が同一オリジンのリクエストにのみ送信される。最も強力なCSRF防止策。',strength:'🟢 強'},
+                      {method:'CSRFトークン',desc:'サーバーが発行したランダムトークンをPOST時に検証。セッションにひも付けて予測不可能にする。',strength:'🟢 強'},
+                      {method:'Origin/Refererヘッダー検証',desc:'リクエストの発信元を確認。プロキシ環境では不完全なため補助的に使用。',strength:'🟡 中'},
+                      {method:'カスタムリクエストヘッダー',desc:'X-Requested-With等のカスタムヘッダー確認。シンプルリクエストでは回避される。',strength:'🟡 中'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(168,85,247,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--gweb)',marginBottom:'.25rem'}}>{it.method}</div>
+                        <div style={{fontSize:'.7rem',marginBottom:'.25rem'}}>{it.strength}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d6',num:'D6',title:'暗号化と機密データの保護',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>転送中・保存中のデータ保護と、PCI DSSのトークナイゼーション要件への対応。</p>
+                  <Callout type="info" title="HTTPS Everywhere の強制">
+                    HTTPSのみを許可するHSTS（HTTP Strict Transport Security）ヘッダーを設定し、max-ageを最低1年以上に設定。preload リストへの登録も推奨。
+                  </Callout>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d7',num:'D7',title:'ファイルアップロード・レスポンス・積極的防御',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>悪意あるファイルのアップロード防止と、HTTPレスポンス分割攻撃への対策。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'ファイルタイプ検証',d:'拡張子チェックではなく、マジックバイト（ファイルの先頭バイト列）でMIMEタイプを検証する。'},
+                      {t:'アップロード先の分離',d:'Webルートとは別の場所に保存し、直接URLでアクセス不可にする。CDN経由で配信する。'},
+                      {t:'ファイルサイズ制限',d:'DoS攻撃を防ぐため、最大ファイルサイズを明示的に制限する。'},
+                      {t:'マルウェアスキャン',d:'アップロードされたファイルをClam AVなどで自動スキャンしてから処理する。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(168,85,247,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--gweb)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d8',num:'D8',title:'入力関連の欠陥と入力検証 (Input Related Flaws)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>SQLインジェクション・XSS・パストラバーサルに対する多層的な防御メカニズム。GWEB最頻出領域。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'ホワイトリスト検証',d:'許可する文字種・長さ・フォーマットを厳密に定義。それ以外はすべて拒否。'},
+                      {t:'コンテキスト別エスケープ',d:'HTMLコンテキスト・JSコンテキスト・URLコンテキストで異なるエスケープを適用。'},
+                      {t:'パラメータ化クエリ',d:'ORMまたはプリペアドステートメントですべてのDB操作を実行。文字列結合は禁止。'},
+                      {t:'WAFの補助的利用',d:'WAFは最終防衛線。アプリ側の修正が主。WAFのルールはバイパスされる可能性を常に念頭に。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.75rem',border:'1px solid rgba(168,85,247,.15)'}}>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--gweb)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d9',num:'D9',title:'最新技術とWebセキュリティ (Leading Edge Technologies)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>RESTful API・GraphQL・WebSocketなど新しいWeb標準プロトコルに特有のセキュリティ課題。</p>
+                  <Callout type="warn" title="GraphQLの特有リスク">
+                    GraphQLのイントロスペクションクエリを本番環境で無効化しないと、APIスキーマが公開されます。また深くネストされたクエリによるDoS（クエリ深度制限が必要）も頻出の攻撃です。
+                  </Callout>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d10',num:'D10',title:'モダンフレームワークとシリアライゼーション',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>GWEB独自の重要ドメイン。Javaのデシリアライゼーション脆弱性（RCEに直結）とフレームワーク固有の欠陥を理解します。</p>
+                  <Callout type="danger" title="デシリアライゼーション攻撃 — 最も深刻なリスクの一つ">
+                    信頼できない送信元からシリアライズされたオブジェクト（JavaのObjectInputStream等）を受け取ることは絶対に避けてください。Apache Commons Collections等の脆弱なガジェットチェーンを通じてRCEが可能です。
+                  </Callout>
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginTop:'.875rem'}}>
+                    <div style={{background:'rgba(239,68,68,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(239,68,68,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--danger)',marginBottom:'.5rem'}}>❌ 危険：Javaデシリアライゼーション</div>
+                      <pre style={{background:'#0d1117',borderRadius:'.375rem',padding:'.75rem',fontSize:'.75rem',color:'#e2e8f0'}}>{`// 外部入力をデシリアライズ = RCEのリスク
+ObjectInputStream ois = 
+  new ObjectInputStream(request.getInputStream());
+Object obj = ois.readObject(); // ← 危険!`}</pre>
+                    </div>
+                    <div style={{background:'rgba(34,197,94,.05)',borderRadius:'.625rem',padding:'1rem',border:'1px solid rgba(34,197,94,.2)'}}>
+                      <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:'var(--success)',marginBottom:'.5rem'}}>✅ 代替アプローチ</div>
+                      <ul style={{listStyle:'none',fontSize:'.8125rem',color:'var(--text-muted)'}}>
+                        {['JSONやProtobufなどデータフォーマットのみ受け入れ','受信前にデジタル署名で完全性を検証','LookAhead デシリアライゼーション（許可クラス制限）','SerialKillerライブラリでのフィルタリング'].map((t,i) => (
+                          <li key={i} style={{padding:'.25rem 0',borderBottom:'1px solid var(--border)',display:'flex',gap:'.5rem'}}><span style={{color:'var(--success)'}}>✓</span>{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d11',num:'D11',title:'セキュリティテスト (Security Testing)',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>開発フェーズでのセキュリティテスト統合と、本番運用時の継続的な脆弱性評価プロセス。</p>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'.625rem'}}>
+                    {[
+                      {t:'ペネトレーションテスト',icon:'🔍',d:'定期的な侵入テストで実際の攻撃視点から脆弱性を発見。年1回以上の実施を推奨。'},
+                      {t:'バグバウンティ',icon:'💰',d:'外部研究者が脆弱性を報告するプログラム。Responsible Disclosureポリシーの整備が必要。'},
+                      {t:'脅威ハンティング',icon:'🎯',d:'ログとネットワークトラフィックを分析し、潜在的な侵害指標（IoC）を能動的に探索。'},
+                    ].map((it,i) => (
+                      <div key={i} style={{background:'var(--surface-2)',borderRadius:'.5rem',padding:'.875rem',border:'1px solid rgba(168,85,247,.15)'}}>
+                        <div style={{fontSize:'1.25rem',marginBottom:'.375rem'}}>{it.icon}</div>
+                        <div style={{fontWeight:700,fontSize:'.8125rem',color:'var(--gweb)',marginBottom:'.25rem'}}>{it.t}</div>
+                        <div style={{fontSize:'.75rem',color:'var(--text-muted)'}}>{it.d}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            },
+            {
+              id:'gweb-d12',num:'D12',title:'セッションセキュリティとビジネスロジック',
+              content:(
+                <div>
+                  <p style={{marginBottom:'.875rem',color:'var(--text-muted)'}}>アプリ固有のワークフロー欠陥を突くビジネスロジック攻撃は、自動スキャンでは検出不可。</p>
+                  <Callout type="warn" title="ビジネスロジック攻撃の特徴">
+                    技術的な脆弱性ではなく「アプリのルールの悪用」です。例：ショッピングカートでの数量を負数にして返金を得る、クーポンを無制限に適用する、ワークフローをスキップして未認証で次ステップへ進む。
+                  </Callout>
+                  <div style={{marginTop:'.875rem',display:'flex',flexWrap:'wrap',gap:'.375rem'}}>
+                    <SourceLink href="https://owasp.org/www-community/attacks/Business_logic_vulnerability" label="OWASP ビジネスロジック脆弱性" />
+                    <SourceLink href="https://www.giac.org/certifications/certified-web-application-defender-gweb/" label="GIAC GWEB 試験目標" />
+                  </div>
+                </div>
+              ),
+            },
+          ].map((d) => (
+            <section key={d.id} id={d.id} style={{margin:'1.5rem 0'}}>
+              <DomainCard num={d.num} code={`Domain ${d.num.replace('D','').padStart(2,'0')}`} title={d.title} color="var(--gweb)" weight="〜8%"
+                sources={[]}>
+                {d.content}
+              </DomainCard>
+            </section>
+          ))}
+        </section>
+
+        {/* ═══ REFERENCES ═══ */}
+        <section id="references" className="card" style={{padding:'2rem',marginBottom:'2rem'}}>
+          <h2 className="font-display" style={{fontSize:'1.625rem',fontWeight:700,marginBottom:'1.25rem'}}>
+            <span style={{color:'var(--text-dim)'}} className="font-mono">08 /</span> 参考資料・公式URL
+          </h2>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1rem'}}>
+            {[
+              {cat:'🏛️ CSSLP — ISC²',color:'var(--csslp)',links:[
+                {label:'ISC² 公式 CSSLP ページ',url:'https://www.isc2.org/certifications/csslp'},
+                {label:'CSSLP 試験アウトライン',url:'https://www.isc2.org/certifications/csslp/csslp-certification-exam-outline'},
+                {label:'CSSLP 経験要件',url:'https://www.isc2.org/certifications/csslp/csslp-experience-requirements'},
+                {label:'ISC² Member Policies（CPE）',url:'https://www.isc2.org/policies-procedures/member-policies'},
+                {label:'ISC² AMF（年間維持費）',url:'https://www.isc2.org/policies-procedures/amfs-overview'},
+              ]},
+              {cat:'💻 CASE — EC-Council',color:'var(--case)',links:[
+                {label:'EC-Council 公式 CASE Java ページ',url:'https://www.eccouncil.org/train-certify/certified-application-security-engineer-case-java/'},
+                {label:'CASE .NET ページ',url:'https://www.netcomlearning.com/certifications/ec-council-certified-application-security-engineer-case-.net'},
+                {label:'ECE ポリシー（資格更新）',url:'https://blog.masterofproject.com/2023-ec-council-ece-policy/'},
+                {label:'CASE 詳細ブログ (cert.eccouncil)',url:'https://cert.eccouncil.org/blog/ec-certified-application-security-engineer/'},
+              ]},
+              {cat:'🛡️ GWEB — GIAC',color:'var(--gweb)',links:[
+                {label:'GIAC 公式 GWEB ページ',url:'https://www.giac.org/certifications/certified-web-application-defender-gweb/'},
+                {label:'GIAC CPE 更新情報',url:'https://www.giac.org/renewal/cpe-information/'},
+                {label:'GIAC Proctor プログラム',url:'https://www.giac.org/knowledge-base/proctor/'},
+                {label:'DoD COOL — GWEB',url:'https://www.cool.osd.mil/usn/credential/index.html?cert=gweb6481'},
+              ]},
+              {cat:'🔐 OWASP & フレームワーク',color:'var(--text-muted)',links:[
+                {label:'OWASP Top 10:2025',url:'https://owasp.org/Top10/2025/0x00_2025-Introduction/'},
+                {label:'OWASP Top 10 for LLM 2025',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/'},
+                {label:'OWASP ASVS',url:'https://owasp.org/www-project-application-security-verification-standard/'},
+                {label:'OWASP 脅威モデリングプロセス',url:'https://owasp.org/www-community/Threat_Modeling_Process'},
+                {label:'SLSA Framework',url:'https://slsa.dev/'},
+              ]},
+              {cat:'📋 NIST & 規制',color:'var(--warn)',links:[
+                {label:'NIST SSDF v1.2 (SP 800-218)',url:'https://csrc.nist.gov/pubs/sp/800/218/r1/ipd'},
+                {label:'NIST FIPS 203 (ML-KEM)',url:'https://csrc.nist.gov/pubs/fips/203/final'},
+                {label:'NIST FIPS 204 (ML-DSA)',url:'https://csrc.nist.gov/pubs/fips/204/final'},
+                {label:'EU Cyber Resilience Act',url:'https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act'},
+                {label:'PQC Standardization — NIST',url:'https://csrc.nist.gov/projects/post-quantum-cryptography'},
+              ]},
+              {cat:'🔧 ツール・プロジェクト',color:'var(--info)',links:[
+                {label:'Sigstore / Cosign（GitHub）',url:'https://github.com/sigstore/cosign'},
+                {label:'SLSA Verifier（GitHub）',url:'https://github.com/slsa-framework/slsa-verifier'},
+                {label:'Semgrep',url:'https://semgrep.dev/'},
+                {label:'OWASP ZAP',url:'https://github.com/zaproxy/zaproxy'},
+                {label:'OpenSSF ガイダンス（AIコーディング）',url:'https://openssf.org/blog/2025/09/16/new-openssf-guidance-on-ai-code-assistant-instructions/'},
+              ]},
+            ].map((g,i) => (
+              <div key={i} style={{background:'var(--surface-2)',borderRadius:'.75rem',padding:'1.25rem',border:'1px solid var(--border)'}}>
+                <div className="font-mono" style={{fontSize:'.7rem',fontWeight:700,color:g.color,textTransform:'uppercase',letterSpacing:'.06em',marginBottom:'.875rem'}}>{g.cat}</div>
+                <ul style={{listStyle:'none'}}>
+                  {g.links.map((l,j) => (
+                    <li key={j} style={{borderBottom:'1px solid var(--border)',padding:'.3rem 0'}}>
+                      <a href={l.url} target="_blank" rel="noopener noreferrer"
+                        style={{fontSize:'.8125rem',color:'var(--text-muted)',textDecoration:'none',display:'flex',alignItems:'center',gap:'.375rem',transition:'color .15s'}}>
+                        <span style={{color:g.color,flexShrink:0,fontSize:'.7rem'}}>→</span>{l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </article>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+
+<footer style="position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;margin-top:2rem">
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.625rem;margin-bottom:.875rem">
+    <span class="badge-csslp">ISC² CSSLP</span>
+    <span class="badge-case">EC-Council CASE</span>
+    <span class="badge-gweb">GIAC GWEB</span>
+  </div>
+  <p style="font-size:.75rem;color:var(--text-dim)">AppSec 国際資格完全ガイド 2026 | v2026.03.26 | 公式試験アウトラインに基づく解説</p>
+  <p style="font-size:.6875rem;color:var(--text-dim);margin-top:.375rem">
+    本ガイドの情報は各資格発行機関の公式サイトをベースに作成されています。受験前に必ず最新の公式情報をご確認ください。
+  </p>
+</footer>
+</body>
+</html>

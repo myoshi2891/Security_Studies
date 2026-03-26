@@ -14,7 +14,7 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
 1. **Extract Content & Metadata**:
    - Read the contents of the target file.
    - Determine a suitable `title` and a short `description` (around 1 sentence) based on the content.
-   - Convert any HTML content into MDX. Map standard HTML tags to Markdown/MDX components.
+   - Convert any HTML content into MDX. Map standard HTML tags to Markdown/MDX components. **Sanitization Requirement:** Before conversion, remove or replace dangerous tags (e.g., `<script>`, `<style>`, `<iframe>`, `<object>`, `<embed>`, `<form>`) with safe placeholders. Strip all event handler attributes (e.g., `on*`). Normalize or reject dangerous schemes in `href` and `src` attributes (e.g., `javascript:`, `vbscript:`, `data:text/html`). Follow a whitelist-based approach for allowed tags and attributes; any non-whitelisted items should be either removed or safely escaped.
 
 2. **Add YAML Frontmatter**:
    Add the following YAML frontmatter at the top of the converted MDX content:
@@ -27,12 +27,12 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    ```
 
 3. **Save as MDX File**:
-   - Determine an appropriate sequential filename (e.g., if the last file is `08-references.mdx`, the next could be `09-new-topic.mdx` or just `new-topic.mdx`).
+   - Determine an appropriate sequential filename: Scan the `security-docs/content/docs` directory for existing `.mdx` files to find the maximum leading number. Generate the next number in the format `NN-slug.mdx` (zero-padded, e.g., `09-new-topic.mdx`).
    - Write the finalized MDX string to a new file in `security-docs/content/docs/`.
 
 4. **Update `meta.json`**:
    - Parse `security-docs/content/docs/meta.json`.
-   - Add the filename (without the `.mdx` extension) to the end of the `pages` array.
+   - Before adding to the `pages` array, check if the same slug (filename without extension) already exists. If it doesn't exist, add it to the end of the `pages` array.
    - Write the updated JSON back to `meta.json`.
 
 5. **Completion**:
