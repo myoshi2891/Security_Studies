@@ -37,6 +37,7 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    ```
 
    **Multiline Description Example:**
+
    ```yaml
    ---
    title: "Secure SDLC Lifecycle"
@@ -61,7 +62,7 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
 
 4. **Update `meta.json`**:
    - Parse `security-docs/content/docs/meta.json`.
-   - Append the new slug (from Step 3) to the end of the `pages` array if it's not already listed (confirming against the slug verified in Step 3).
+   - Append the new page ID (the created filename without `.mdx`, i.e., `NN-slug`) to the end of the `pages` array if it's not already listed (confirming against the ID verified in Step 3). Always use the filename stem (the part before the extension).
    - Write the updated JSON back to `meta.json`.
 
 5. **Completion**:
