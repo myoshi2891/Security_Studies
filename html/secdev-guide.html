@@ -1564,7 +1564,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Trivy — HIGH/CRITICAL 脆弱性のみブロック
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.30.0  # pinned: @master は非決定論的
         with:
           scan-type: fs
           severity: HIGH,CRITICAL
@@ -1876,7 +1876,7 @@ aws ec2 modify-instance-metadata-options \\
                                             lang="yaml"
                                             filename="trivy-iac-scan.yml — IaCスキャンCI統合"
                                             code={`- name: Trivy IaCスキャン (Terraform/K8s YAML)
-  uses: aquasecurity/trivy-action@master
+  uses: aquasecurity/trivy-action@v0.30.0  # pinned: @master は非決定論的
   with:
     scan-type: config          # IaC設定ファイルをスキャン
     hide-progress: false
