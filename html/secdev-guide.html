@@ -1,0 +1,3358 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <title>ソフトウェア開発セキュリティ完全ガイド 2026</title>
+        <meta
+            name="description"
+            content="2026年3月時点の最新セキュリティ知識を初学者向けにステップバイステップで解説"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=Fira+Code:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4/dist/index.global.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+        <script
+            crossorigin
+            src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+        <style>
+            :root {
+                --bg: #05070e;
+                --surface: #090d18;
+                --surface-2: #0e1422;
+                --surface-3: #141c2e;
+                --border: #1a2238;
+                --border-2: #243050;
+                --text: #dde4f0;
+                --text-muted: #b9cbee;
+                --text-dim: #9eb7e5;
+                --primary: #00d4ff;
+                --primary-dim: rgba(0, 212, 255, 0.08);
+                --primary-glow: rgba(0, 212, 255, 0.25);
+                --accent: #7c3aed;
+                --accent-dim: rgba(124, 58, 237, 0.1);
+                --success: #10d97e;
+                --warning: #f5a623;
+                --danger: #ff4d6d;
+                --info: #00b4d8;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: 'Noto Sans JP', sans-serif;
+                line-height: 1.8;
+                overflow-x: hidden;
+            }
+
+            /* Grid bg */
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                background-image:
+                    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+                background-size: 48px 48px;
+            }
+
+            .font-display {
+                font-family: 'Syne', sans-serif;
+            }
+            .font-mono {
+                font-family: 'Fira Code', monospace;
+            }
+
+            /* Progress bar */
+            #progress-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 2px;
+                z-index: 9999;
+                background: linear-gradient(90deg, var(--primary), var(--accent));
+                width: 0%;
+                transition: width 0.1s;
+            }
+
+            /* Nav */
+            nav.main-nav {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                backdrop-filter: blur(16px) saturate(180%);
+                background: rgba(5, 7, 14, 0.85);
+                border-bottom: 1px solid var(--border);
+            }
+
+            /* Hero */
+            .hero-bg {
+                background:
+                    radial-gradient(
+                        ellipse 80% 60% at 50% -10%,
+                        rgba(0, 212, 255, 0.12),
+                        transparent
+                    ),
+                    radial-gradient(
+                        ellipse 50% 40% at 80% 50%,
+                        rgba(124, 58, 237, 0.08),
+                        transparent
+                    ),
+                    var(--bg);
+            }
+
+            /* Cards */
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 1rem;
+                transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s;
+            }
+            .card:hover {
+                border-color: var(--border-2);
+                box-shadow: 0 0 24px rgba(0, 212, 255, 0.05);
+            }
+
+            /* Section */
+            .section-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 1.25rem;
+                padding: 2rem;
+                margin-bottom: 1.5rem;
+                position: relative;
+            }
+            .section-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+                border-radius: 1.25rem 1.25rem 0 0;
+            }
+
+            /* Step badge */
+            .step-badge {
+                width: 2.75rem;
+                height: 2.75rem;
+                min-width: 2.75rem;
+                border-radius: 50%;
+                border: 1.5px solid var(--primary);
+                background: var(--surface);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Fira Code', monospace;
+                font-weight: 600;
+                font-size: 0.8rem;
+                color: var(--primary);
+                z-index: 10;
+                box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+            }
+
+            /* TOC */
+            .toc-link {
+                display: block;
+                padding: 0.35rem 0.75rem;
+                border-left: 2px solid transparent;
+                font-size: 0.78rem;
+                color: var(--text-dim);
+                text-decoration: none;
+                transition: all 0.2s;
+                font-family: 'Fira Code', monospace;
+            }
+            .toc-link:hover,
+            .toc-link.active {
+                color: var(--primary);
+                border-color: var(--primary);
+                background: var(--primary-dim);
+            }
+
+            /* Code blocks */
+            pre[class*='language-'] {
+                background: #07090f !important;
+                margin: 0;
+                border-radius: 0;
+            }
+            code[class*='language-'] {
+                font-family: 'Fira Code', monospace;
+                font-size: 0.82rem;
+            }
+
+            /* Callout */
+            .callout {
+                border-radius: 0.75rem;
+                padding: 1rem 1.25rem;
+                margin: 1rem 0;
+                border-left: 3px solid;
+                display: flex;
+                gap: 0.875rem;
+                font-size: 0.875rem;
+                line-height: 1.7;
+            }
+            .callout-tip {
+                background: rgba(16, 217, 126, 0.07);
+                border-color: var(--success);
+            }
+            .callout-warning {
+                background: rgba(245, 166, 35, 0.07);
+                border-color: var(--warning);
+            }
+            .callout-danger {
+                background: rgba(255, 77, 109, 0.07);
+                border-color: var(--danger);
+            }
+            .callout-info {
+                background: rgba(0, 180, 216, 0.07);
+                border-color: var(--info);
+            }
+
+            /* Table */
+            .data-table {
+                width: 100%;
+                font-size: 0.82rem;
+                border-collapse: collapse;
+            }
+            .data-table th {
+                text-align: left;
+                padding: 0.625rem 0.875rem;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                font-weight: 600;
+                color: var(--text-muted);
+                background: var(--surface-2);
+                border-bottom: 1px solid var(--border);
+            }
+            .data-table td {
+                padding: 0.625rem 0.875rem;
+                border-bottom: 1px solid var(--border);
+                color: var(--text-muted);
+                vertical-align: top;
+            }
+            .data-table tr:last-child td {
+                border-bottom: 0;
+            }
+            .data-table tbody tr:hover td {
+                background: var(--surface-2);
+            }
+
+            /* Chip */
+            .chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.2rem 0.65rem;
+                border-radius: 9999px;
+                border: 1px solid var(--border-2);
+                background: var(--surface-2);
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                font-family: 'Fira Code', monospace;
+            }
+
+            /* Animations */
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(12px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+            }
+            @keyframes scanline {
+                0% {
+                    transform: translateY(-100%);
+                }
+                100% {
+                    transform: translateY(100%);
+                }
+            }
+            .animate-fadeUp {
+                animation: fadeUp 0.45s ease both;
+            }
+            .animate-pulse {
+                animation: pulse 2s ease-in-out infinite;
+            }
+
+            /* Sidebar */
+            @media (max-width: 1023px) {
+                .sidebar-toc {
+                    display: none;
+                }
+            }
+
+            /* Source links */
+            .source-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                font-size: 0.72rem;
+                color: var(--primary);
+                font-family: 'Fira Code', monospace;
+                text-decoration: none;
+                opacity: 0.8;
+                border-bottom: 1px dashed rgba(0, 212, 255, 0.3);
+                transition: opacity 0.2s;
+            }
+            .source-link:hover {
+                opacity: 1;
+            }
+
+            .sources-section {
+                margin-top: 1rem;
+                padding: 1rem 1.25rem;
+                background: var(--surface-2);
+                border-radius: 0.75rem;
+                border: 1px solid var(--border);
+            }
+            .sources-section details summary {
+                cursor: pointer;
+                font-size: 0.78rem;
+                color: var(--text-dim);
+                font-family: 'Fira Code', monospace;
+                list-style: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .sources-section details[open] summary {
+                color: var(--primary);
+            }
+
+            /* Category label */
+            .cat-label {
+                display: inline-block;
+                font-family: 'Fira Code', monospace;
+                font-size: 0.65rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 0.15rem 0.5rem;
+                border-radius: 0.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Risk badge */
+            .risk-badge {
+                display: inline-block;
+                padding: 0.15rem 0.5rem;
+                border-radius: 0.25rem;
+                font-size: 0.7rem;
+                font-weight: 700;
+                font-family: 'Fira Code', monospace;
+            }
+            .risk-critical {
+                background: rgba(255, 77, 109, 0.15);
+                color: var(--danger);
+                border: 1px solid rgba(255, 77, 109, 0.3);
+            }
+            .risk-high {
+                background: rgba(245, 166, 35, 0.12);
+                color: var(--warning);
+                border: 1px solid rgba(245, 166, 35, 0.3);
+            }
+            .risk-new {
+                background: rgba(0, 212, 255, 0.1);
+                color: var(--primary);
+                border: 1px solid rgba(0, 212, 255, 0.3);
+            }
+            .risk-medium {
+                background: rgba(124, 58, 237, 0.12);
+                color: #a78bfa;
+                border: 1px solid rgba(124, 58, 237, 0.3);
+            }
+
+            /* Timeline */
+            .timeline-item {
+                position: relative;
+                padding-left: 2rem;
+            }
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.5rem;
+                width: 0.5rem;
+                height: 0.5rem;
+                border-radius: 50%;
+                background: var(--primary);
+            }
+            .timeline-item::after {
+                content: '';
+                position: absolute;
+                left: 0.225rem;
+                top: 1.25rem;
+                bottom: -1rem;
+                width: 1px;
+                background: linear-gradient(to bottom, var(--border-2), transparent);
+            }
+            .timeline-item:last-child::after {
+                display: none;
+            }
+
+            /* Gradient text */
+            .text-gradient {
+                background: linear-gradient(135deg, var(--primary), var(--accent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="progress-bar"></div>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div
+                style="
+                    max-width: 1340px;
+                    margin: 0 auto;
+                    padding: 0.75rem 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                "
+            >
+                <div style="display: flex; align-items: center; gap: 0.75rem">
+                    <div
+                        style="
+                            width: 2rem;
+                            height: 2rem;
+                            border-radius: 0.375rem;
+                            background: linear-gradient(135deg, var(--primary), var(--accent));
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 1rem;
+                        "
+                    >
+                        🛡️
+                    </div>
+                    <span
+                        class="font-display"
+                        style="font-weight: 700; font-size: 0.95rem; color: var(--text)"
+                        >SecDev Guide</span
+                    >
+                    <span class="chip">2026.03</span>
+                </div>
+                <div style="display: flex; gap: 0.25rem; flex-wrap: wrap">
+                    <a
+                        href="#overview"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >概要</a
+                    >
+                    <a
+                        href="#sdlc"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >SDLC</a
+                    >
+                    <a
+                        href="#owasp"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >OWASP</a
+                    >
+                    <a
+                        href="#ai-sec"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >AI</a
+                    >
+                    <a
+                        href="#ai-coding"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >AIコーディング</a
+                    >
+                    <a
+                        href="#supply-chain"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >サプライチェーン</a
+                    >
+                    <a
+                        href="#pqc"
+                        style="
+                            padding: 0.3rem 0.7rem;
+                            border-radius: 0.5rem;
+                            font-size: 0.78rem;
+                            color: var(--text-dim);
+                            text-decoration: none;
+                            transition: color 0.2s;
+                        "
+                        onmouseover="this.style.color = 'var(--primary)'"
+                        onmouseout="this.style.color = 'var(--text-dim)'"
+                        >PQC</a
+                    >
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <header
+            class="hero-bg"
+            style="position: relative; overflow: hidden; padding: 5rem 1.5rem 4rem"
+        >
+            <div style="position: absolute; inset: 0; pointer-events: none; overflow: hidden">
+                <div
+                    style="
+                        position: absolute;
+                        top: -20%;
+                        right: -10%;
+                        width: 600px;
+                        height: 600px;
+                        border-radius: 50%;
+                        background: radial-gradient(
+                            circle,
+                            rgba(0, 212, 255, 0.06),
+                            transparent 70%
+                        );
+                    "
+                ></div>
+                <div
+                    style="
+                        position: absolute;
+                        bottom: -10%;
+                        left: -5%;
+                        width: 400px;
+                        height: 400px;
+                        border-radius: 50%;
+                        background: radial-gradient(
+                            circle,
+                            rgba(124, 58, 237, 0.08),
+                            transparent 70%
+                        );
+                    "
+                ></div>
+            </div>
+            <div style="position: relative; max-width: 1340px; margin: 0 auto">
+                <div
+                    style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        border-radius: 9999px;
+                        border: 1px solid rgba(0, 212, 255, 0.25);
+                        background: rgba(0, 212, 255, 0.06);
+                        padding: 0.4rem 1.1rem;
+                        margin-bottom: 1.75rem;
+                    "
+                >
+                    <span
+                        class="animate-pulse"
+                        style="
+                            width: 0.5rem;
+                            height: 0.5rem;
+                            border-radius: 50%;
+                            background: var(--primary);
+                            display: inline-block;
+                        "
+                    ></span>
+                    <span
+                        class="font-mono"
+                        style="
+                            font-size: 0.72rem;
+                            color: var(--primary);
+                            letter-spacing: 0.08em;
+                            text-transform: uppercase;
+                        "
+                        >Security Engineering | 2026 Edition | 2026-03-25</span
+                    >
+                </div>
+                <h1
+                    class="font-display"
+                    style="
+                        font-size: clamp(2.25rem, 5.5vw, 4rem);
+                        font-weight: 800;
+                        color: #fff;
+                        line-height: 1.05;
+                        margin-bottom: 1.25rem;
+                    "
+                >
+                    ソフトウェア開発<br />
+                    <span class="text-gradient">セキュリティ完全ガイド</span>
+                </h1>
+                <p
+                    style="
+                        font-size: 1.05rem;
+                        color: var(--text-muted);
+                        max-width: 48rem;
+                        margin-bottom: 2rem;
+                        line-height: 1.8;
+                    "
+                >
+                    2026年3月時点の最新脅威ランドスケープに基づき、<strong
+                        style="color: var(--text)"
+                        >SDLC・OWASP・AI・サプライチェーン・PQC</strong
+                    >の各カテゴリーを初学者にもわかりやすくステップバイステップで解説します。各セクションには根拠となる一次ソースURLを付記しています。
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+                    <span class="chip">🔒 v2026.03</span>
+                    <span class="chip">👤 初学者〜中級者</span>
+                    <span class="chip">⏱️ 読了 約45分</span>
+                    <span class="chip">📚 全7カテゴリー</span>
+                    <span class="chip">🔗 一次ソース付き</span>
+                </div>
+            </div>
+        </header>
+
+        <div id="root"></div>
+
+        <script type="text/babel" data-presets="react">
+            const { useState, useEffect, useCallback, useRef, useId } = React;
+
+            // ━━ Hooks ━━
+            const useScrollProgress = () => {
+                useEffect(() => {
+                    const bar = document.getElementById('progress-bar');
+                    let raf = 0;
+                    const u = () => {
+                        if (!bar || raf) return;
+                        raf = requestAnimationFrame(() => {
+                            const t = document.documentElement.scrollHeight - window.innerHeight;
+                            bar.style.width = `${t <= 0 ? 100 : (window.scrollY / t) * 100}%`;
+                            raf = 0;
+                        });
+                    };
+                    window.addEventListener('scroll', u, { passive: true });
+                    window.addEventListener('resize', u);
+                    u();
+                    return () => {
+                        cancelAnimationFrame(raf);
+                        window.removeEventListener('scroll', u);
+                        window.removeEventListener('resize', u);
+                    };
+                }, []);
+            };
+
+            const useCopy = () => {
+                const [c, setC] = useState(false);
+                const tr = useRef(null);
+                const copy = useCallback(async (t) => {
+                    try {
+                        await navigator.clipboard.writeText(t);
+                        setC(true);
+                        clearTimeout(tr.current);
+                        tr.current = setTimeout(() => setC(false), 2000);
+                    } catch (_) {
+                        // クリップボード API 失敗時は成功表示をしない
+                    }
+                }, []);
+                useEffect(() => () => clearTimeout(tr.current), []);
+                return [c, copy];
+            };
+
+            const useActiveToc = () => {
+                const [id, setId] = useState('');
+                useEffect(() => {
+                    const o = new IntersectionObserver(
+                        (es) =>
+                            es.forEach((e) => {
+                                if (e.isIntersecting) setId(e.target.id);
+                            }),
+                        { rootMargin: '-8% 0px -78% 0px' },
+                    );
+                    document.querySelectorAll('section[id]').forEach((s) => o.observe(s));
+                    return () => o.disconnect();
+                }, []);
+                return id;
+            };
+
+            // ━━ UI Components ━━
+            const CodeBlock = ({ code, lang, filename }) => {
+                const [copied, copy] = useCopy();
+                const ref = useRef(null);
+                useEffect(() => {
+                    if (ref.current && typeof Prism !== 'undefined')
+                        Prism.highlightElement(ref.current);
+                }, [code]);
+                return (
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            overflow: 'hidden',
+                            margin: '1.25rem 0',
+                            border: '1px solid var(--border-2)',
+                        }}
+                    >
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                padding: '.5rem 1rem',
+                                background: 'var(--surface-2)',
+                                borderBottom: '1px solid var(--border)',
+                            }}
+                        >
+                            <div style={{ display: 'flex', gap: '.375rem' }}>
+                                <span
+                                    style={{
+                                        width: '.625rem',
+                                        height: '.625rem',
+                                        borderRadius: '50%',
+                                        background: '#ff5f57',
+                                    }}
+                                />
+                                <span
+                                    style={{
+                                        width: '.625rem',
+                                        height: '.625rem',
+                                        borderRadius: '50%',
+                                        background: '#ffbd2e',
+                                    }}
+                                />
+                                <span
+                                    style={{
+                                        width: '.625rem',
+                                        height: '.625rem',
+                                        borderRadius: '50%',
+                                        background: '#28ca41',
+                                    }}
+                                />
+                            </div>
+                            {filename && (
+                                <span
+                                    className="font-mono"
+                                    style={{ fontSize: '.72rem', color: 'var(--text-dim)' }}
+                                >
+                                    {filename}
+                                </span>
+                            )}
+                            <button
+                                onClick={() => copy(code)}
+                                className="font-mono"
+                                style={{
+                                    fontSize: '.72rem',
+                                    color: copied ? 'var(--success)' : 'var(--primary)',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'color .2s',
+                                }}
+                            >
+                                {copied ? '✓ Copied!' : 'Copy'}
+                            </button>
+                        </div>
+                        <pre
+                            style={{
+                                background: '#07090f',
+                                padding: '1.25rem',
+                                overflowX: 'auto',
+                                fontSize: '.82rem',
+                                lineHeight: '1.75',
+                            }}
+                        >
+                            <code ref={ref} className={`language-${lang}`}>
+                                {code}
+                            </code>
+                        </pre>
+                    </div>
+                );
+            };
+
+            const Tabs = ({ items }) => {
+                const [a, setA] = useState(0);
+                const idPrefix = useId();
+                const refs = useRef([]);
+
+                const onKeyDown = (e, i) => {
+                    let next = -1;
+                    if (e.key === 'ArrowRight') next = (i + 1) % items.length;
+                    else if (e.key === 'ArrowLeft') next = (i - 1 + items.length) % items.length;
+                    else if (e.key === 'Home') next = 0;
+                    else if (e.key === 'End') next = items.length - 1;
+
+                    if (next !== -1) {
+                        setA(next);
+                        refs.current[next]?.focus();
+                    }
+                };
+
+                return (
+                    <div style={{ margin: '1.5rem 0' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: '.25rem',
+                                background: 'var(--surface-2)',
+                                borderRadius: '.75rem',
+                                padding: '.25rem',
+                                marginBottom: '1rem',
+                                overflowX: 'auto',
+                                flexWrap: 'wrap',
+                            }}
+                            role="tablist"
+                            aria-label="コンテンツ切り替え"
+                        >
+                            {items.map((it, i) => (
+                                <button
+                                    key={i}
+                                    id={`${idPrefix}-tab-${i}`}
+                                    role="tab"
+                                    aria-selected={a === i}
+                                    aria-controls={`${idPrefix}-panel-${i}`}
+                                    tabIndex={a === i ? 0 : -1}
+                                    ref={(el) => (refs.current[i] = el)}
+                                    onClick={() => setA(i)}
+                                    onKeyDown={(e) => onKeyDown(e, i)}
+                                    style={{
+                                        flex: '1 1 auto',
+                                        minWidth: 'fit-content',
+                                        padding: '.45rem 1rem',
+                                        borderRadius: '.5rem',
+                                        fontSize: '.82rem',
+                                        fontWeight: 500,
+                                        transition: 'all .2s',
+                                        border:
+                                            a === i
+                                                ? '1px solid var(--border-2)'
+                                                : '1px solid transparent',
+                                        background: a === i ? 'var(--surface-3)' : 'transparent',
+                                        color: a === i ? 'var(--primary)' : 'var(--text-dim)',
+                                        cursor: 'pointer',
+                                        fontFamily: 'Fira Code,monospace',
+                                    }}
+                                >
+                                    {it.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div
+                            id={`${idPrefix}-panel-${a}`}
+                            role="tabpanel"
+                            aria-labelledby={`${idPrefix}-tab-${a}`}
+                            className="animate-fadeUp"
+                        >
+                            {items[a].content}
+                        </div>
+                    </div>
+                );
+            };
+
+            const Callout = ({ type, title, children }) => {
+                const icons = { tip: '💡', warning: '⚠️', danger: '🚨', info: 'ℹ️' };
+                return (
+                    <div className={`callout callout-${type}`}>
+                        <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '.1rem' }}>
+                            {icons[type]}
+                        </span>
+                        <div>
+                            <strong
+                                style={{
+                                    display: 'block',
+                                    marginBottom: '.2rem',
+                                    color: 'var(--text)',
+                                }}
+                            >
+                                {title}
+                            </strong>
+                            <span style={{ color: 'var(--text-muted)', fontSize: '.875rem' }}>
+                                {children}
+                            </span>
+                        </div>
+                    </div>
+                );
+            };
+
+            const StepItem = ({ num, title, children }) => (
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '1.25rem',
+                        padding: '1.25rem 0',
+                        borderBottom: '1px solid var(--border)',
+                    }}
+                >
+                    <div className="step-badge font-mono">{num}</div>
+                    <div style={{ flex: 1, paddingTop: '.25rem' }}>
+                        <h3
+                            className="font-display"
+                            style={{
+                                fontWeight: 700,
+                                color: 'var(--text)',
+                                fontSize: '1.05rem',
+                                marginBottom: '.5rem',
+                            }}
+                        >
+                            {title}
+                        </h3>
+                        <div
+                            style={{
+                                fontSize: '.875rem',
+                                color: 'var(--text-muted)',
+                                lineHeight: 1.8,
+                            }}
+                        >
+                            {children}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const Sources = ({ items }) => (
+                <div className="sources-section" style={{ marginTop: '1.5rem' }}>
+                    <details>
+                        <summary>
+                            <span style={{ color: 'var(--primary)' }}>📎</span>
+                            <span>参考ソース / References ({items.length}件)</span>
+                            <span style={{ marginLeft: 'auto', fontSize: '.7rem' }}>
+                                クリックで展開
+                            </span>
+                        </summary>
+                        <div
+                            style={{
+                                marginTop: '.75rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '.35rem',
+                                paddingLeft: '1.5rem',
+                            }}
+                        >
+                            {items.map((s, i) => (
+                                <div
+                                    key={i}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '.5rem',
+                                    }}
+                                >
+                                    <span
+                                        className="font-mono"
+                                        style={{
+                                            fontSize: '.65rem',
+                                            color: 'var(--text-dim)',
+                                            minWidth: '1.5rem',
+                                            marginTop: '.1rem',
+                                        }}
+                                    >
+                                        {String(i + 1).padStart(2, '0')}
+                                    </span>
+                                    <a
+                                        href={s.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="source-link"
+                                    >
+                                        {s.title}
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </details>
+                </div>
+            );
+
+            const SectionHeader = ({ num, title, sub }) => (
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.75 + 'rem',
+                            marginBottom: '.5rem',
+                        }}
+                    >
+                        <span
+                            className="font-mono"
+                            style={{
+                                fontSize: '.75rem',
+                                fontWeight: 700,
+                                color: 'var(--primary)',
+                                letterSpacing: '.1em',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            Section {num}
+                        </span>
+                        <span
+                            style={{
+                                flex: 1,
+                                height: '1px',
+                                background: 'linear-gradient(to right,var(--border-2),transparent)',
+                            }}
+                        />
+                    </div>
+                    <h2
+                        className="font-display"
+                        style={{
+                            fontSize: '1.65rem',
+                            fontWeight: 800,
+                            color: '#fff',
+                            lineHeight: 1.1,
+                        }}
+                    >
+                        <span style={{ color: 'var(--primary)' }}>{num}.</span> {title}
+                    </h2>
+                    {sub && (
+                        <p
+                            style={{
+                                marginTop: '.625rem',
+                                color: 'var(--text-muted)',
+                                fontSize: '.9375rem',
+                            }}
+                        >
+                            {sub}
+                        </p>
+                    )}
+                </div>
+            );
+
+            // ━━ TOC ━━
+            const TOC_ITEMS = [
+                { id: 'overview', label: '01. 脅威ランドスケープ' },
+                { id: 'sdlc', label: '02. Secure SDLC' },
+                { id: 'owasp', label: '03. OWASP Top 10:2025' },
+                { id: 'ai-sec', label: '04. LLM / AIセキュリティ' },
+                { id: 'ai-coding', label: '05. AIコーディング安全利用' },
+                { id: 'supply-chain', label: '06. サプライチェーン' },
+                { id: 'pqc', label: '07. 耐量子暗号 (PQC)' },
+            ];
+
+            const TOC = ({ activeId }) => (
+                <nav
+                    className="sidebar-toc"
+                    style={{
+                        position: 'sticky',
+                        top: '3.5rem',
+                        width: '15rem',
+                        minWidth: '15rem',
+                        height: 'fit-content',
+                        paddingTop: '2rem',
+                        overflowY: 'auto',
+                        maxHeight: 'calc(100vh - 5rem)',
+                    }}
+                >
+                    <div
+                        className="font-mono"
+                        style={{
+                            fontSize: '.6rem',
+                            textTransform: 'uppercase',
+                            letterSpacing: '.12em',
+                            color: 'var(--text-dim)',
+                            padding: '0 .75rem',
+                            marginBottom: '.75rem',
+                        }}
+                    >
+                        目次
+                    </div>
+                    {TOC_ITEMS.map((t) => (
+                        <a
+                            key={t.id}
+                            href={`#${t.id}`}
+                            className={`toc-link${activeId === t.id ? ' active' : ''}`}
+                        >
+                            {t.label}
+                        </a>
+                    ))}
+                </nav>
+            );
+
+            // ━━ Sections ━━
+
+            const OverviewSection = () => (
+                <section id="overview" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="01"
+                        title="2026年の脅威ランドスケープ"
+                        sub="なぜ今セキュリティが最重要課題なのか？産業化されたサイバー犯罪の実態を理解する。"
+                    />
+
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+                            gap: '1rem',
+                            marginBottom: '1.5rem',
+                        }}
+                    >
+                        {[
+                            {
+                                emoji: '🤖',
+                                color: 'var(--danger)',
+                                title: 'AI兵器化の加速',
+                                desc: 'LLMをフォースマルチプライヤーとして悪用。PROMPTFLUXがEDRパターンをリアルタイム学習・回避。WEF調査で87%がAI関連脆弱性を最大リスクと認識。',
+                            },
+                            {
+                                emoji: '🔑',
+                                color: 'var(--warning)',
+                                title: 'アイデンティティが新境界',
+                                desc: '攻撃者は「侵入」せず正規認証で「ログイン」。初期アクセスブローカー間のアクセス権移転は30秒未満。OAuthトークン・セッションCookie窃取が横行。',
+                            },
+                            {
+                                emoji: '⛓️',
+                                color: 'var(--primary)',
+                                title: '産業化されたサプライチェーン攻撃',
+                                desc: 'SaaSベンダー経由でハードコードされたキーやPATを奪い顧客環境へ水平展開。単独ハッカーから高度分業組織へ完全移行。',
+                            },
+                            {
+                                emoji: '⚖️',
+                                color: '#a78bfa',
+                                title: '経営陣の個人責任',
+                                desc: '重大過失による漏洩で経営陣が個人的法的責任を問われるリスク増大。セキュリティが取締役会レベルの四半期デューデリジェンス事項に昇格。',
+                            },
+                        ].map((c, i) => (
+                            <div
+                                key={i}
+                                className="card"
+                                style={{ padding: '1.35rem', borderColor: `${c.color}22` }}
+                            >
+                                <div style={{ fontSize: '1.75rem', marginBottom: '.625rem' }}>
+                                    {c.emoji}
+                                </div>
+                                <div
+                                    className="cat-label"
+                                    style={{ background: `${c.color}15`, color: c.color }}
+                                >
+                                    {c.title}
+                                </div>
+                                <p
+                                    style={{
+                                        fontSize: '.82rem',
+                                        color: 'var(--text-muted)',
+                                        lineHeight: 1.7,
+                                    }}
+                                >
+                                    {c.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <Callout type="danger" title="パラダイムシフトを理解する">
+                        2026年のセキュリティは「年に一度の監査」から「
+                        <strong>継続的なアイデンティティ検証とレジリエンス構築</strong>
+                        」へ完全移行しました。境界防御モデルは崩壊しており、ゼロトラストアーキテクチャが不可欠です。
+                    </Callout>
+
+                    <div
+                        style={{
+                            background: 'var(--surface-2)',
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            marginTop: '1.25rem',
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: '1rem 1.25rem',
+                                borderBottom: '1px solid var(--border)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '.5rem',
+                            }}
+                        >
+                            <span
+                                style={{
+                                    width: 0.5 + 'rem',
+                                    height: '.5rem',
+                                    borderRadius: '50%',
+                                    background: 'var(--primary)',
+                                    display: 'inline-block',
+                                }}
+                            />
+                            <span
+                                className="font-mono"
+                                style={{
+                                    fontSize: '.72rem',
+                                    color: 'var(--text-muted)',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '.08em',
+                                }}
+                            >
+                                2026年 主要サイバーセキュリティトレンド
+                            </span>
+                        </div>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>トレンド</th>
+                                    <th>ソフトウェア開発への影響</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'Agentic AI（自律型AI）の台頭',
+                                        '人間不介入で偵察・横展開・悪用を実行。AI主導の検知・自動修復をコードレベルで組み込む必要あり。',
+                                    ],
+                                    [
+                                        'ディープフェイク・アイデンティティ欺瞞',
+                                        'リアルタイムディープフェイクで生体認証をバイパス。パスキー+継続的セッション検証への移行が必須。',
+                                    ],
+                                    [
+                                        'セキュア・バイ・デザインの義務化',
+                                        '設計段階からの脅威モデリングが標準要件化。リリース後のパッチ当てモデルは完全に破綻。',
+                                    ],
+                                    [
+                                        'Q-Day（量子コンピューター）',
+                                        '今収集・後で解読の攻撃が進行中。NISTのPQC標準（FIPS 203/204/205）への早急な移行計画が必要。',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            style={{
+                                                fontWeight: 600,
+                                                color: 'var(--text)',
+                                                width: '40%',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td>{r[1]}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'M-Trends 2026 — Google Cloud / Mandiant',
+                                url: 'https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026',
+                            },
+                            {
+                                title: 'Global Cybersecurity Outlook 2026 — WEF',
+                                url: 'https://www.weforum.org/publications/global-cybersecurity-outlook-2026/',
+                            },
+                            {
+                                title: 'PwC Annual Threat Dynamics 2026 — Industrial Cyber',
+                                url: 'https://industrialcyber.co/reports/pwc-annual-threat-dynamics-2026-discloses-that-identity-attacks-surge-as-ai-reshapes-cyber-threat-landscape/',
+                            },
+                            {
+                                title: 'The 6 Cybersecurity Trends That Will Shape 2026 — ISACA',
+                                url: 'https://www.isaca.org/resources/news-and-trends/industry-news/2026/the-6-cybersecurity-trends-that-will-shape-2026',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const SDLCSection = () => (
+                <section id="sdlc" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="02"
+                        title='Secure SDLC ─ "シフトエブリウェア"'
+                        sub="従来の「シフトレフト」からライフサイクル全体で継続検証する「シフトエブリウェア」へ。NIST SSDF 1.2に基づく実践。"
+                    />
+
+                    <Callout type="info" title="シフトエブリウェアとは？">
+                        設計から運用・フィードバックループまで
+                        <strong>全フェーズで継続的にセキュリティを検証</strong>
+                        するアプローチ。攻撃者はリリースマイルストーンを待たずAPIが公開された瞬間に攻撃を実行します。
+                    </Callout>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .75rem' }}
+                    >
+                        ステップバイステップ実践ガイド
+                    </h3>
+                    <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                left: '1.35rem',
+                                top: '3rem',
+                                bottom: '1rem',
+                                width: '1px',
+                                background: 'linear-gradient(to bottom,var(--primary),transparent)',
+                            }}
+                        />
+                        <StepItem num="01" title="要件定義・設計フェーズ ─ 脅威モデリング (STRIDE)">
+                            機能要件と同時に
+                            <strong style={{ color: 'var(--text)' }}>
+                                セキュリティ要件を文書化
+                            </strong>
+                            し、脅威モデリングを実施します。STRIDEの6カテゴリ（Spoofing・Tampering・Repudiation・Information
+                            Disclosure・DoS・Elevation of
+                            Privilege）でアーキテクチャの欠陥をコード記述前に洗い出します。2026年はApiiroなどAI駆動型ツールで自動化が進んでいます。
+                        </StepItem>
+                        <StepItem num="02" title="セキュアコーディング ─ CI/CDへのSAST/SCA統合">
+                            コミット時に
+                            <strong style={{ color: 'var(--text)' }}>SAST（静的解析）</strong>
+                            でSQLインジェクション・XSSを検出し、
+                            <strong style={{ color: 'var(--text)' }}>SCA（依存関係解析）</strong>
+                            で既知CVEをスキャン。GHAS・Semgrep・Veracodeがデファクトスタンダードです。
+                        </StepItem>
+                        <StepItem num="03" title="デプロイメント保護 ─ DAST・IaCスキャン">
+                            稼働中アプリに
+                            <strong style={{ color: 'var(--text)' }}>DAST（動的テスト）</strong>
+                            で認証バイパスを検出。Terraform・Kubernetes
+                            YAMLの設定ミス（公開S3バケット等）も自動スキャンで防止。
+                        </StepItem>
+                        <StepItem
+                            num="04"
+                            title="本番環境の継続監視 ─ 測定可能な改善（NIST SSDF PO.6）"
+                        >
+                            WAF・APIゲートウェイでフロントドアを保護。新脆弱性公開時に影響サービスを即座特定し数時間でパッチ適用。
+                            <strong style={{ color: 'var(--text)' }}>NIST SSDF 1.2</strong>
+                            は実際のシグナルに基づく「生きた改善バックログ」の維持を要求しています。
+                        </StepItem>
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .75rem' }}
+                    >
+                        STRIDEチートシート
+                    </h3>
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            marginBottom: '1.25rem',
+                        }}
+                    >
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>脅威カテゴリ</th>
+                                    <th>概要</th>
+                                    <th>主な緩和策</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'S — Spoofing（なりすまし)',
+                                        '正規ユーザーやシステムを偽装',
+                                        'MFA、OAuth 2.0、mTLS（SPIFFE/SPIRE）',
+                                    ],
+                                    [
+                                        'T — Tampering（改ざん)',
+                                        'データやコードの不正変更',
+                                        'AES-256暗号化、デジタル署名、コミット署名',
+                                    ],
+                                    [
+                                        'R — Repudiation（否認)',
+                                        '操作事実の否定',
+                                        'イミュータブル監査ログ、WORMストレージ',
+                                    ],
+                                    [
+                                        'I — Info. Disclosure（情報漏洩)',
+                                        '機密データの意図しない露出',
+                                        '行レベルセキュリティ、メモリ分離、シークレットスキャン',
+                                    ],
+                                    [
+                                        'D — Denial of Service',
+                                        'リソース枯渇によるサービス妨害',
+                                        'APIレートリミット、意味論的レート制限、オートスケール',
+                                    ],
+                                    [
+                                        'E — Elevation of Privilege（権限昇格)',
+                                        '不正な高権限取得',
+                                        '最小権限原則、RBAC、コンテナroot権限剥奪',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            className="font-mono"
+                                            style={{
+                                                color: 'var(--primary)',
+                                                fontWeight: 600,
+                                                fontSize: '.78rem',
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td>{r[1]}</td>
+                                        <td style={{ color: 'var(--success)', fontSize: '.8rem' }}>
+                                            {r[2]}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .75rem' }}
+                    >
+                        AI駆動型AppSecツール比較（2026年版）
+                    </h3>
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            marginBottom: '1.25rem',
+                        }}
+                    >
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ツール</th>
+                                    <th>主要機能</th>
+                                    <th>AI活用ポイント</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'GHAS (GitHub)',
+                                        'CodeQL SAST + Dependabot SCA + シークレットスキャン',
+                                        'Copilot Autofix — コードレベルの自動修復提案',
+                                    ],
+                                    [
+                                        'Veracode',
+                                        'クラウドネイティブSAST/SCA/DAST + パッケージFW',
+                                        'Veracode Fix — 複雑脆弱性へのAIパッチ生成',
+                                    ],
+                                    [
+                                        'Semgrep',
+                                        '軽量高速SAST/SCA/シークレット検出',
+                                        'ノイズフィルタリングで誤検知を最大98%削減',
+                                    ],
+                                    [
+                                        'GitGuardian',
+                                        '350+検出器のシークレット特化 + NHIセキュリティ',
+                                        '文脈理解による高精度シークレット識別',
+                                    ],
+                                    [
+                                        'Apiiro',
+                                        'コード前設計段階のリスクモデリング',
+                                        'AIがコードグラフを解析し設計フェーズで自動リスク検出',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            className="font-mono"
+                                            style={{
+                                                color: 'var(--primary)',
+                                                fontWeight: 600,
+                                                fontSize: '.78rem',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td>{r[1]}</td>
+                                        <td style={{ color: 'var(--success)', fontSize: '.8rem' }}>
+                                            {r[2]}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <CodeBlock
+                        lang="yaml"
+                        filename=".github/workflows/security-pipeline.yml"
+                        code={`name: Security Pipeline (GHAS + Semgrep + Trivy)
+on: [push, pull_request]
+
+jobs:
+  sast:
+    name: 静的解析 (SAST)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep SAST — OWASP Top 10 スキャン
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/owasp-top-ten
+            p/javascript
+        env:
+          SEMGREP_APP_TOKEN: \${{ secrets.SEMGREP_APP_TOKEN }}
+
+  sca:
+    name: 依存関係スキャン (SCA)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy — HIGH/CRITICAL 脆弱性のみブロック
+        uses: aquasecurity/trivy-action@v0.30.0  # pinned: @master は非決定論的
+        with:
+          scan-type: fs
+          severity: HIGH,CRITICAL
+          exit-code: 1  # ← CIを失敗させる
+
+  secret-scan:
+    name: シークレットスキャン
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: GitGuardian — APIキー・パスワード検出
+        uses: GitGuardian/ggshield-action@v1
+        env:
+          GITGUARDIAN_API_KEY: \${{ secrets.GITGUARDIAN_API_KEY }}`}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'NIST SSDF Version 1.2 (Public Comment) — NIST CSRC',
+                                url: 'https://csrc.nist.gov/pubs/sp/800/218/r1/ipd',
+                            },
+                            {
+                                title: 'Secure SDLC: A Comprehensive Guide — Snyk',
+                                url: 'https://snyk.io/articles/secure-sdlc/',
+                            },
+                            {
+                                title: 'Apiiro — Design-Phase AI Threat Modeling',
+                                url: 'https://www.globenewswire.com/news-release/2026/03/23/3260417/0/en/Apiiro-Redefines-Design-Phase-Security-with-AI-Threat-Modeling-Built-for-the-AI-Coding-Agent-Era-Preventing-Risks-Before-Code-Exists.html',
+                            },
+                            {
+                                title: 'DevSecOps 2026: Building Security Into Every Release — C4 Tech',
+                                url: 'https://c4techservices.com/devsecops-2026-security-in-every-release/',
+                            },
+                            {
+                                title: 'Threat Modeling Process — OWASP',
+                                url: 'https://owasp.org/www-community/Threat_Modeling_Process',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const OWASPSection = () => (
+                <section id="owasp" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="03"
+                        title="OWASP Top 10:2025 の構造的再編"
+                        sub="175,000件以上のCVEデータに基づく根本的改訂。新カテゴリ追加を含む2025年版の全貌を解説。"
+                    />
+
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            marginBottom: '1.5rem',
+                        }}
+                    >
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '4rem' }}>順位</th>
+                                    <th>カテゴリ</th>
+                                    <th style={{ width: '12rem' }}>変動</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'A01',
+                                        'Broken Access Control（アクセス制御の不備）',
+                                        '1位維持 — SSRFを新たに統合',
+                                        'risk-critical',
+                                    ],
+                                    [
+                                        'A02',
+                                        'Security Misconfiguration（設定ミス）',
+                                        '5位→2位 ⬆️ IaC普及で急上昇',
+                                        'risk-high',
+                                    ],
+                                    [
+                                        'A03',
+                                        'Software Supply Chain Failures（サプライチェーン）',
+                                        '🆕 新規追加 — 発生頻度は低いが最高インパクト',
+                                        'risk-new',
+                                    ],
+                                    [
+                                        'A04',
+                                        'Cryptographic Failures（暗号化の失敗）',
+                                        '2位→4位 ↘️',
+                                        'risk-medium',
+                                    ],
+                                    [
+                                        'A05',
+                                        'Injection（インジェクション）',
+                                        '3位→5位 ↘️ ORM普及で相対的脅威度が低下',
+                                        'risk-medium',
+                                    ],
+                                    [
+                                        'A06',
+                                        'Insecure Design（安全でない設計）',
+                                        '4位→6位 ↘️ コードバグでなく設計欠陥',
+                                        'risk-medium',
+                                    ],
+                                    [
+                                        'A07',
+                                        'Authentication Failures（認証の不備）',
+                                        '変動なし — アイデンティティ攻撃の激化で重要性増大',
+                                        'risk-high',
+                                    ],
+                                    [
+                                        'A08',
+                                        'Software/Data Integrity Failures',
+                                        '変動なし — CI/CDパイプラインの改ざん',
+                                        'risk-medium',
+                                    ],
+                                    [
+                                        'A09',
+                                        'Security Logging & Alerting Failures',
+                                        '変動なし — プロアクティブなアラートへシフト',
+                                        'risk-medium',
+                                    ],
+                                    [
+                                        'A10',
+                                        'Mishandling of Exceptional Conditions',
+                                        '🆕 新規追加 — 例外処理・フェイルオープン設計の欠陥',
+                                        'risk-new',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            className="font-mono"
+                                            style={{
+                                                fontWeight: 700,
+                                                color: 'var(--primary)',
+                                                fontSize: '.85rem',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td style={{ fontWeight: 500, color: 'var(--text)' }}>
+                                            {r[1]}
+                                        </td>
+                                        <td>
+                                            <span className={`risk-badge ${r[3]}`}>{r[2]}</span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <Tabs
+                        items={[
+                            {
+                                label: 'A01: SSRF攻撃シナリオ',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                                lineHeight: 1.8,
+                                            }}
+                                        >
+                                            <strong style={{ color: 'var(--text)' }}>
+                                                SSRF（サーバーサイドリクエストフォージェリ）
+                                            </strong>
+                                            はA01に統合されました。攻撃者はサーバーに内部リソースへのアクセスを強制します。AWSのメタデータサービスを狙う典型的な攻撃シナリオ：
+                                        </p>
+                                        <CodeBlock
+                                            lang="bash"
+                                            filename="SSRF Attack Vector — AWSメタデータ窃取"
+                                            code={`# ✅ 通常リクエスト（画像インポート機能）
+GET /api/v1/load-image?url=https://example.com/photo.jpg
+
+# ❌ SSRF攻撃 — 内部メタデータを狙う
+GET /api/v1/load-image?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/
+
+# 攻撃成功するとIAMの一時クレデンシャルが漏洩し、インフラ全体が侵害される
+
+# ━━ 対策1: IMDSv2の強制適用（AWSの場合）━━
+aws ec2 modify-instance-metadata-options \\
+  --instance-id i-1234567890abcdef0 \\
+  --http-tokens required \\   # セッショントークン必須 = GET一発で取得不可
+  --http-endpoint enabled
+
+# ━━ 対策2: URLホワイトリスト実装例（TypeScript）━━
+# const ALLOWED_HOSTS = ['images.example.com', 'cdn.trusted.com'];
+# const url = new URL(userInput);
+# if (!ALLOWED_HOSTS.includes(url.hostname)) throw new Error('Blocked');`}
+                                        />
+                                        <Callout type="danger" title="対策の核心">
+                                            ユーザー入力URLを直接サーバーでフェッチしてはいけません。
+                                            <strong>厳格なホワイトリスト</strong>と
+                                            <strong>IMDSv2の強制</strong>
+                                            で内部メタデータへのアクセスを物理的に遮断してください。
+                                        </Callout>
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'A02: IaC設定ミス',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                                lineHeight: 1.8,
+                                            }}
+                                        >
+                                            2025年版で5位→2位に急上昇。Kubernetesの設定ファイル1つのミスが組織全体を危険に晒します。Trivyによる自動スキャンが必須です。
+                                        </p>
+                                        <div
+                                            style={{
+                                                display: 'grid',
+                                                gridTemplateColumns:
+                                                    'repeat(auto-fit,minmax(260px,1fr))',
+                                                gap: '1rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            <div
+                                                style={{
+                                                    borderRadius: '.75rem',
+                                                    border: '1px solid rgba(255,77,109,.25)',
+                                                    background: 'rgba(255,77,109,.05)',
+                                                    padding: '1.25rem',
+                                                }}
+                                            >
+                                                <div
+                                                    className="font-mono"
+                                                    style={{
+                                                        fontSize: '.72rem',
+                                                        fontWeight: 700,
+                                                        color: 'var(--danger)',
+                                                        textTransform: 'uppercase',
+                                                        marginBottom: '.75rem',
+                                                    }}
+                                                >
+                                                    ❌ 危険な設定例
+                                                </div>
+                                                <ul
+                                                    style={{
+                                                        listStyle: 'none',
+                                                        fontSize: '.82rem',
+                                                        color: 'var(--text-muted)',
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        gap: '.4rem',
+                                                    }}
+                                                >
+                                                    <li>• S3バケットをpublicに設定</li>
+                                                    <li>• root権限でコンテナを実行</li>
+                                                    <li>• デフォルト認証情報をそのまま使用</li>
+                                                    <li>• TLSを無効化した通信エンドポイント</li>
+                                                </ul>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    borderRadius: '.75rem',
+                                                    border: '1px solid rgba(16,217,126,.25)',
+                                                    background: 'rgba(16,217,126,.05)',
+                                                    padding: '1.25rem',
+                                                }}
+                                            >
+                                                <div
+                                                    className="font-mono"
+                                                    style={{
+                                                        fontSize: '.72rem',
+                                                        fontWeight: 700,
+                                                        color: 'var(--success)',
+                                                        textTransform: 'uppercase',
+                                                        marginBottom: '.75rem',
+                                                    }}
+                                                >
+                                                    ✅ 安全な設定例
+                                                </div>
+                                                <ul
+                                                    style={{
+                                                        listStyle: 'none',
+                                                        fontSize: '.82rem',
+                                                        color: 'var(--text-muted)',
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        gap: '.4rem',
+                                                    }}
+                                                >
+                                                    <li>
+                                                        • S3: ACLをprivate + バケットポリシー明示
+                                                    </li>
+                                                    <li>
+                                                        • コンテナ: securityContext.runAsNonRoot:
+                                                        true
+                                                    </li>
+                                                    <li>
+                                                        • 強力なランダムパスワードをSecretsで管理
+                                                    </li>
+                                                    <li>• 全エンドポイントにTLS強制</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <CodeBlock
+                                            lang="yaml"
+                                            filename="trivy-iac-scan.yml — IaCスキャンCI統合"
+                                            code={`- name: Trivy IaCスキャン (Terraform/K8s YAML)
+  uses: aquasecurity/trivy-action@v0.30.0  # pinned: @master は非決定論的
+  with:
+    scan-type: config          # IaC設定ファイルをスキャン
+    hide-progress: false
+    format: sarif
+    output: trivy-results.sarif
+    severity: CRITICAL,HIGH
+    exit-code: 1               # HIGH以上で即CIブロック`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'A10: 例外処理の欠陥',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                                lineHeight: 1.8,
+                                            }}
+                                        >
+                                            2025年版で新規追加。攻撃者は意図的にエラーを引き起こしシステムの弱点を探します。24のCWEを包含する重要カテゴリです。
+                                        </p>
+                                        <div
+                                            style={{
+                                                display: 'grid',
+                                                gridTemplateColumns:
+                                                    'repeat(auto-fit,minmax(240px,1fr))',
+                                                gap: '1rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            {[
+                                                {
+                                                    cwe: 'CWE-209',
+                                                    title: 'スタックトレース漏洩',
+                                                    bad: 'エラー内容をブラウザにそのまま表示',
+                                                    good: '汎用メッセージのみ表示、詳細はサーバーログへ',
+                                                },
+                                                {
+                                                    cwe: 'CWE-636',
+                                                    title: 'フェイルオープン設計',
+                                                    bad: '認証サーバーのエラー時にアクセス許可',
+                                                    good: 'フェイルクローズ — エラー時は必ず拒否',
+                                                },
+                                                {
+                                                    cwe: 'CWE-460',
+                                                    title: 'リソース解放漏れ',
+                                                    bad: '例外時にDB接続やファイルを解放しない',
+                                                    good: 'finallyブロックで確実にリソース解放',
+                                                },
+                                            ].map((c, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="card"
+                                                    style={{
+                                                        padding: '1rem',
+                                                        borderColor: 'rgba(124,58,237,.25)',
+                                                    }}
+                                                >
+                                                    <span
+                                                        className="font-mono"
+                                                        style={{
+                                                            fontSize: '.65rem',
+                                                            color: '#a78bfa',
+                                                            fontWeight: 700,
+                                                        }}
+                                                    >
+                                                        {c.cwe}
+                                                    </span>
+                                                    <div
+                                                        style={{
+                                                            fontWeight: 600,
+                                                            color: 'var(--text)',
+                                                            margin: '.35rem 0',
+                                                            fontSize: '.875rem',
+                                                        }}
+                                                    >
+                                                        {c.title}
+                                                    </div>
+                                                    <div
+                                                        style={{
+                                                            fontSize: '.78rem',
+                                                            color: 'var(--danger)',
+                                                            marginBottom: '.35rem',
+                                                        }}
+                                                    >
+                                                        ✗ {c.bad}
+                                                    </div>
+                                                    <div
+                                                        style={{
+                                                            fontSize: '.78rem',
+                                                            color: 'var(--success)',
+                                                        }}
+                                                    >
+                                                        ✓ {c.good}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <CodeBlock
+                                            lang="typescript"
+                                            filename="secure-error-handler.ts"
+                                            code={`// ✅ セキュアな例外処理 — A10:2025対策
+export async function handleRequest(req: Request): Promise<Response> {
+  try {
+    const result = await processBusinessLogic(req);
+    return Response.json(result);
+  } catch (error) {
+    // 詳細はサーバーログにのみ記録（PIIはスクラブ）
+    logger.error('Request processing failed', {
+      requestId: req.headers.get('x-request-id'),
+      errorType: error instanceof Error ? error.constructor.name : 'Unknown',
+      // ✅ スタックトレースはログのみ — レスポンスには含めない
+    });
+
+    // ユーザーには汎用メッセージのみ返却
+    return Response.json(
+      { message: '予期せぬエラーが発生しました。しばらくしてからお試しください。' },
+      { status: 500 }
+    );
+  }
+  // finally不要: Response.json()が必ず返却されるため
+}`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                        ]}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'OWASP Top 10:2025 — OWASP Foundation',
+                                url: 'https://owasp.org/Top10/2025/0x00_2025-Introduction/',
+                            },
+                            {
+                                title: 'OWASP Top 10 2025: What Changed — GitLab Blog',
+                                url: 'https://about.gitlab.com/blog/2025-owasp-top-10-whats-changed-and-why-it-matters/',
+                            },
+                            {
+                                title: 'A10:2025 Mishandling of Exceptional Conditions — OWASP',
+                                url: 'https://owasp.org/Top10/2025/A10_2025-Mishandling_of_Exceptional_Conditions/',
+                            },
+                            {
+                                title: 'The New 2025 OWASP Top 10 — Fastly',
+                                url: 'https://www.fastly.com/blog/new-2025-owasp-top-10-list-what-changed-what-you-need-to-know',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const AISecSection = () => (
+                <section id="ai-sec" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="04"
+                        title="LLM / AI エージェントのセキュリティ"
+                        sub="OWASP Top 10 for LLM Applications 2025に基づく、AI特有の脆弱性と実装ガイド。自律型AIエージェント時代の新たな攻撃面を解説。"
+                    />
+
+                    <Callout type="warning" title="AIの進化がもたらす新しい攻撃面">
+                        2026年、AIは「応答する存在」から
+                        <strong>「自律的に行動する存在（Agentic AI）」</strong>
+                        へ進化。Gartner予測では2026年末までにエンタープライズアプリの40%がAIエージェントを搭載。攻撃対象領域が爆発的に拡大しています。
+                    </Callout>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        OWASP LLM Top 10:2025 主要脅威
+                    </h3>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+                            gap: '1rem',
+                            marginBottom: '1.5rem',
+                        }}
+                    >
+                        {[
+                            {
+                                code: 'LLM01',
+                                title: 'Prompt Injection',
+                                color: 'var(--danger)',
+                                desc: '間接的プロンプトインジェクション — PDF・画像・Webページに不可視の命令を潜ませAIを乗っ取る。2026年の最大脅威。',
+                            },
+                            {
+                                code: 'LLM04',
+                                title: 'Model DoS & Sleeper Agents',
+                                color: 'var(--warning)',
+                                desc: '学習データ汚染（データポイズニング）で、本番環境の特定トリガーで悪意ある動作を起こす「スリーパーエージェント」を埋め込む攻撃。',
+                            },
+                            {
+                                code: 'LLM06',
+                                title: 'Excessive Agency',
+                                color: 'var(--danger)',
+                                desc: 'AIエージェントへの過剰な機能・権限・自律性の付与。最小特権原則 + Human-in-the-loopの設計が必須。',
+                            },
+                            {
+                                code: 'LLM07',
+                                title: 'System Prompt Leakage',
+                                color: 'var(--info)',
+                                desc: 'システムプロンプトはセキュリティ境界として機能しない。LLMは確率的なシステムのためAPIキーを含めた瞬間「失われた」と見なすべき。',
+                            },
+                            {
+                                code: 'LLM08',
+                                title: 'Vector & Embedding Weaknesses',
+                                color: '#a78bfa',
+                                desc: 'RAGシステムのベクトルDBの数学的特性を悪用した「埋め込み反転攻撃」で元の機密情報を復元するリスク。',
+                            },
+                            {
+                                code: 'LLM09',
+                                title: 'Misinformation',
+                                color: 'var(--warning)',
+                                desc: 'AIの幻覚（ハルシネーション）を意図的に誘発し、誤った情報を出力させることでシステムの信頼性を破壊する攻撃。',
+                            },
+                        ].map((c, i) => (
+                            <div
+                                key={i}
+                                className="card"
+                                style={{ padding: '1.35rem', borderColor: `${c.color}25` }}
+                            >
+                                <span
+                                    className="font-mono"
+                                    style={{ fontSize: '.72rem', fontWeight: 700, color: c.color }}
+                                >
+                                    {c.code}
+                                </span>
+                                <h4
+                                    className="font-display"
+                                    style={{
+                                        fontWeight: 700,
+                                        margin: '.4rem 0 .5rem',
+                                        color: 'var(--text)',
+                                    }}
+                                >
+                                    {c.title}
+                                </h4>
+                                <p
+                                    style={{
+                                        fontSize: '.8rem',
+                                        color: 'var(--text-muted)',
+                                        lineHeight: 1.7,
+                                    }}
+                                >
+                                    {c.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        LLM06: Excessive Agency — ステップバイステップ対策
+                    </h3>
+                    <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                left: '1.35rem',
+                                top: '3rem',
+                                bottom: '1rem',
+                                width: '1px',
+                                background: 'linear-gradient(to bottom,var(--accent),transparent)',
+                            }}
+                        />
+                        <StepItem num="01" title="最小権限の原則 — 必要最小限の機能のみ付与">
+                            文書要約エージェントに「ファイル削除」や「外部API送信」の機能は不要です。
+                            <strong style={{ color: 'var(--text)' }}>許可リスト方式</strong>
+                            で実際に必要なアクションのみ明示的に許可します。
+                        </StepItem>
+                        <StepItem num="02" title="ユーザーコンテキストでの実行 — 特権IDの使用禁止">
+                            エージェントがダウンストリームシステムにアクセスする際は、
+                            <strong style={{ color: 'var(--text)' }}>
+                                個々のユーザーのOAuthコンテキスト
+                            </strong>
+                            を使用します。汎用「特権アカウント」での実行は禁止。
+                        </StepItem>
+                        <StepItem num="03" title="Human-in-the-loop — 高リスクアクションの承認必須">
+                            資金移動・重要メール送信・インフラ設定変更などは
+                            <strong style={{ color: 'var(--text)' }}>必ず人間の承認プロセス</strong>
+                            を経由させます。「Critical」リスクアクションのサイレント実行を設計段階で禁止。
+                        </StepItem>
+                    </div>
+
+                    <CodeBlock
+                        lang="typescript"
+                        filename="agent-guardrails.ts — AIエージェント ガードレール実装"
+                        code={`// ✅ LLM06 Excessive Agency 対策実装例
+interface AgentAction {
+  type: 'read' | 'write' | 'delete' | 'send_email' | 'external_api';
+  resource: string;
+  riskLevel: 'low' | 'medium' | 'high' | 'critical';
+}
+
+// 許可されたアクションの明示的許可リスト（デフォルト拒否）
+const ALLOWED_ACTIONS: AgentAction['type'][] = ['read', 'write'];
+
+async function executeWithGuardrails(action: AgentAction): Promise<void> {
+  // 1️⃣ 最小権限: 許可リスト外のアクションは即拒否
+  if (!ALLOWED_ACTIONS.includes(action.type)) {
+    throw new SecurityError(\`Unauthorized action type: \${action.type}\`);
+  }
+
+  // 2️⃣ ユーザーコンテキスト: 特権IDではなくユーザーのOAuthで実行
+  const userCtx = await getUserOAuthContext();
+  if (!userCtx) throw new SecurityError('No user context available');
+
+  // 3️⃣ Human-in-the-loop: high/critical は人間の承認必須
+  if (action.riskLevel === 'high' || action.riskLevel === 'critical') {
+    const approved = await requestHumanApproval({
+      action,
+      timeout: 300_000, // 5分タイムアウト
+    });
+    if (!approved) {
+      logger.warn('Action rejected by human reviewer', { action });
+      throw new SecurityError('Action rejected: human approval required');
+    }
+  }
+
+  // 4️⃣ 実行 & 監査ログ（否認防止）
+  logger.audit('Agent action executed', { action, userId: userCtx.userId });
+  await executeAction(action, userCtx);
+}
+
+// ━━ システムプロンプト — APIキーを含めない ━━
+// ❌ BAD:  "Your API key is: sk-proj-..."  ← 確率的システムは守れない
+// ✅ GOOD: APIキーは環境変数で管理し、プロンプトには絶対含めない`}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'OWASP Top 10 for LLM Applications 2025 — OWASP',
+                                url: 'https://owasp.org/www-project-top-10-for-large-language-model-applications/',
+                            },
+                            {
+                                title: 'OWASP Top 10 for Agentic Applications 2026 — genai.owasp.org',
+                                url: 'https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/',
+                            },
+                            {
+                                title: 'AI Agent Security: The Complete Enterprise Guide 2026 — MintMCP',
+                                url: 'https://www.mintmcp.com/blog/ai-agent-security',
+                            },
+                            {
+                                title: 'Securing the AI Agent Revolution (MCP Security) — CoalitionForSecureAI',
+                                url: 'https://www.coalitionforsecureai.org/securing-the-ai-agent-revolution-a-practical-guide-to-mcp-security/',
+                            },
+                            {
+                                title: 'AI Security in 2026: Enterprise Governance — Cranium AI',
+                                url: 'https://cranium.ai/resources/blog/ai-safety-and-security-in-2026-the-urgent-need-for-enterprise-cybersecurity-governance/',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const AICodingSection = () => (
+                <section id="ai-coding" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="05"
+                        title="AIコーディングアシスタントの安全な利用"
+                        sub="GitHub Copilot・Claude Code・Cursor等の普及で生産性は劇的向上。しかし38%の企業がAIツール関連インシデントを経験。"
+                    />
+
+                    <Callout
+                        type="warning"
+                        title="AIは「信頼できないジュニアエンジニア」として扱う"
+                    >
+                        AIは自信満々に脆弱なコード（時代遅れの暗号・SQLインジェクション含む実装等）を提案します。
+                        <strong>100%人間がレビューするフロー</strong>
+                        をブランチ保護ルールで強制してください。
+                    </Callout>
+
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))',
+                            gap: '1rem',
+                            margin: '1.25rem 0',
+                        }}
+                    >
+                        {[
+                            {
+                                emoji: '📦',
+                                color: 'var(--danger)',
+                                title: 'Slopsquatting（スロップスクワッティング）',
+                                desc: 'AIが実在しないパッケージ名を生成（商用モデル5%、OSS 22%の確率）。攻撃者が先にマルウェア入りで登録済みのケースがある。npm installで即侵害。',
+                            },
+                            {
+                                emoji: '🔐',
+                                color: 'var(--warning)',
+                                title: 'コンテキストウィンドウからの漏洩',
+                                desc: '.env / .pem / internal-config.yaml がAI推論コンテキストとしてクラウドへ送信されるリスク。Content Exclusion設定で物理的に遮断必須。',
+                            },
+                            {
+                                emoji: '👁️',
+                                color: 'var(--info)',
+                                title: 'IDEプロンプトインジェクション',
+                                desc: 'READMEやコメント内の不可視テキストで悪意ある指示をAIに実行させる攻撃（LOTAIL攻撃）。従来EDRでは検知困難。',
+                            },
+                            {
+                                emoji: '🤖',
+                                color: '#a78bfa',
+                                title: 'Shadow Agents（シャドーAI）',
+                                desc: '従業員が勝手に導入した個人用AIエージェントが知的財産・機密データをプロンプトとして外部へ漏洩させる「Shadow AI」の進化形。',
+                            },
+                        ].map((c, i) => (
+                            <div
+                                key={i}
+                                className="card"
+                                style={{ padding: '1.35rem', borderColor: `${c.color}25` }}
+                            >
+                                <div style={{ fontSize: '1.75rem', marginBottom: '.625rem' }}>
+                                    {c.emoji}
+                                </div>
+                                <div
+                                    className="cat-label"
+                                    style={{
+                                        background: `${c.color}15`,
+                                        color: c.color,
+                                        fontSize: '.65rem',
+                                    }}
+                                >
+                                    {c.title}
+                                </div>
+                                <p
+                                    style={{
+                                        fontSize: '.8rem',
+                                        color: 'var(--text-muted)',
+                                        lineHeight: 1.7,
+                                    }}
+                                >
+                                    {c.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        AI生成コードレビュー チェックリスト
+                    </h3>
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            marginBottom: '1.25rem',
+                        }}
+                    >
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>検証ステップ</th>
+                                    <th>確認内容</th>
+                                    <th>使用ツール</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'Functional Check（機能検証）',
+                                        'コンパイル可能か・既存ロジックを破壊しないか・要件を満たすか',
+                                        '自動テスト / CIパイプライン',
+                                    ],
+                                    [
+                                        'Context Alignment（文脈整合性）',
+                                        'ビジネス意図・アーキテクチャ設計・コーディング標準と合致するか',
+                                        '人間によるピアレビュー',
+                                    ],
+                                    [
+                                        'Edge Case Review（エッジケース）',
+                                        'エラー処理欠如・境界値チェック漏れ・A10リスクがないか特定',
+                                        '専門家による手動分析',
+                                    ],
+                                    [
+                                        'Dependency Audit（依存関係監査）',
+                                        '提案パッケージが実在するか・Slopsquatting / Typosquattingでないか',
+                                        'Dependabot / SCAスキャン',
+                                    ],
+                                    [
+                                        'Secret Scan（シークレット検査）',
+                                        'ハードコードされたAPIキー・パスワードがないか',
+                                        'GitGuardian / gitleaks',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            className="font-mono"
+                                            style={{
+                                                color: 'var(--primary)',
+                                                fontWeight: 600,
+                                                fontSize: '.78rem',
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td>{r[1]}</td>
+                                        <td style={{ color: 'var(--success)', fontSize: '.78rem' }}>
+                                            {r[2]}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <Tabs
+                        items={[
+                            {
+                                label: 'Content Exclusion設定',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            機密ファイルをAI推論コンテキストから除外する設定。これが最も重要な防御策です。
+                                        </p>
+                                        <CodeBlock
+                                            lang="yaml"
+                                            filename=".github/copilot-content-exclusion.yml"
+                                            code={`# GitHub Copilot — Content Exclusion設定
+# 機密ファイルをAI推論コンテキストから完全除外
+content_exclusion:
+  paths:
+    - "**/.env*"              # 環境変数（DBパスワード・APIキー等）
+    - "**/*.pem"              # TLS証明書・秘密鍵
+    - "**/*.key"              # 暗号鍵ファイル
+    - "**/*.p12"              # PKCS12キーストア
+    - "**/internal-config.*"  # 内部設定ファイル
+    - "**/secrets/**"         # シークレットディレクトリ
+    - "**/.aws/**"            # AWSクレデンシャル
+    - "**/credentials.*"      # 汎用クレデンシャルファイル`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'SCAによるSlopsquatting対策',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            AIが提案したパッケージが実在するかSCAツールで自動検証するCI設定例。
+                                        </p>
+                                        <CodeBlock
+                                            lang="yaml"
+                                            filename=".github/workflows/ai-code-security.yml"
+                                            code={`name: AI生成コード セキュリティ検証
+on: [pull_request]
+
+jobs:
+  verify-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Socket.dev — Slopsquatting・悪意パッケージ検出
+        uses: SocketDev/socket-security-action@v1
+        with:
+          api_key: \${{ secrets.SOCKET_API_KEY }}
+          # 実在しないパッケージ・タイポスクワッティングを検出
+
+      - name: npm audit — 既知CVEスキャン
+        run: npm audit --audit-level=high
+
+      - name: gitleaks — ハードコードシークレット検出
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'OpenSSF AIコーディングガイドライン',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            OpenSSFが2025年9月に発表したAIコーディングアシスタントの安全利用ガイドラインの要点：
+                                        </p>
+                                        <div
+                                            style={{
+                                                display: 'grid',
+                                                gridTemplateColumns:
+                                                    'repeat(auto-fit,minmax(220px,1fr))',
+                                                gap: '1rem',
+                                            }}
+                                        >
+                                            {[
+                                                {
+                                                    title: 'Do ✅',
+                                                    items: [
+                                                        'エンタープライズ版・ガバメント版のみ使用',
+                                                        'テレメトリ・トレーニングデータオプトインを無効化',
+                                                        '合成ダミーデータのみをプロンプトに入力',
+                                                        '100%コードレビューを人間が実施',
+                                                    ],
+                                                },
+                                                {
+                                                    title: "Don't ❌",
+                                                    items: [
+                                                        '個人向け・無料版ツールの使用（データ漏洩リスク）',
+                                                        '本番環境のPII・PHIデータをプロンプトへ入力',
+                                                        'AI出力をレビューなしに直接マージ',
+                                                        '.envや秘密鍵をIDEで開いたままAI使用',
+                                                    ],
+                                                },
+                                            ].map((g, i) => (
+                                                <div
+                                                    key={i}
+                                                    style={{
+                                                        borderRadius: '.75rem',
+                                                        border: `1px solid ${i === 0 ? 'rgba(16,217,126,.25)' : 'rgba(255,77,109,.25)'}`,
+                                                        background: `${i === 0 ? 'rgba(16,217,126,.05)' : 'rgba(255,77,109,.05)'}`,
+                                                        padding: '1.25rem',
+                                                    }}
+                                                >
+                                                    <div
+                                                        className="font-mono"
+                                                        style={{
+                                                            fontSize: '.72rem',
+                                                            fontWeight: 700,
+                                                            color:
+                                                                i === 0
+                                                                    ? 'var(--success)'
+                                                                    : 'var(--danger)',
+                                                            marginBottom: '.75rem',
+                                                        }}
+                                                    >
+                                                        {g.title}
+                                                    </div>
+                                                    <ul
+                                                        style={{
+                                                            listStyle: 'none',
+                                                            fontSize: '.8rem',
+                                                            color: 'var(--text-muted)',
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            gap: '.4rem',
+                                                        }}
+                                                    >
+                                                        {g.items.map((t, j) => (
+                                                            <li key={j}>• {t}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ),
+                            },
+                        ]}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'How AI Coding Tools Crushed the Endpoint Security Fortress — Dark Reading',
+                                url: 'https://www.darkreading.com/application-security/ai-coding-tools-endpoint-security',
+                            },
+                            {
+                                title: 'New OpenSSF Guidance on AI Code Assistant Instructions — OpenSSF',
+                                url: 'https://openssf.org/blog/2025/09/16/new-openssf-guidance-on-ai-code-assistant-instructions/',
+                            },
+                            {
+                                title: 'Securing the AI Frontier — ISACA Now Blog 2026',
+                                url: 'https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2026/securing-the-ai-frontier-a-practical-framework-for-assessing-ai-coding-assistant-vulnerabilities',
+                            },
+                            {
+                                title: 'AI Governance Card: AI-Powered Coding Assistants — Maryland DoIT',
+                                url: 'https://doit.maryland.gov/policies/ai/Pages/AI-powered-coding-assistants.aspx',
+                            },
+                            {
+                                title: 'Protect Your Enterprise from Shadow AI — Microsoft Edge Blog',
+                                url: 'https://blogs.windows.com/msedgedev/2026/03/23/protect-your-enterprise-from-shadow-ai-and-more-announcements-at-rsac-2026/',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const SupplyChainSection = () => (
+                <section id="supply-chain" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="06"
+                        title="ソフトウェアサプライチェーンセキュリティ"
+                        sub="SBOM・SLSA・VEX・EU CRAによる法的義務化。セキュリティは「オプション」から「法的要件」へ。OWASP A03:2025として最高インパクトカテゴリに新規追加。"
+                    />
+
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))',
+                            gap: '1rem',
+                            marginBottom: '1.5rem',
+                        }}
+                    >
+                        {[
+                            {
+                                icon: '📋',
+                                title: 'SBOM',
+                                sub: 'Software Bill of Materials',
+                                desc: '全コンポーネント・依存関係・バージョンを記録したソフトウェア部品表。CycloneDX / SPDXフォーマットが国際標準。',
+                            },
+                            {
+                                icon: '🏗️',
+                                title: 'SLSA',
+                                sub: 'Supply-chain Levels for Software Artifacts',
+                                desc: 'ビルドプロセスの完全性を暗号学的に保証するフレームワーク。Provenanceで「どこで・どのようにビルドされたか」を証明。',
+                            },
+                            {
+                                icon: '📄',
+                                title: 'VEX',
+                                sub: 'Vulnerability Exploitability eXchange',
+                                desc: 'SBOM由来の膨大な誤検知を解消。特定脆弱性が「実際に悪用可能か」を機械可読で宣言し、真の脅威のみをフィルタリング。',
+                            },
+                            {
+                                icon: '⚖️',
+                                title: 'EU CRA',
+                                sub: 'Cyber Resilience Act',
+                                desc: 'EU域内で販売するソフトウェア製品に法的サイバーセキュリティ要件を課す規制。2026年9月から重大インシデントの報告義務開始。',
+                            },
+                        ].map((c, i) => (
+                            <div key={i} className="card" style={{ padding: '1.35rem' }}>
+                                <div style={{ fontSize: '1.75rem', marginBottom: '.5rem' }}>
+                                    {c.icon}
+                                </div>
+                                <div
+                                    className="font-display"
+                                    style={{
+                                        fontWeight: 700,
+                                        color: 'var(--text)',
+                                        fontSize: '1rem',
+                                    }}
+                                >
+                                    {c.title}
+                                </div>
+                                <div
+                                    className="font-mono"
+                                    style={{
+                                        fontSize: '.62rem',
+                                        color: 'var(--text-dim)',
+                                        marginBottom: '.625rem',
+                                    }}
+                                >
+                                    {c.sub}
+                                </div>
+                                <p
+                                    style={{
+                                        fontSize: '.8rem',
+                                        color: 'var(--text-muted)',
+                                        lineHeight: 1.7,
+                                    }}
+                                >
+                                    {c.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        EU CRA コンプライアンスタイムライン
+                    </h3>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+                            marginBottom: '1.5rem',
+                            padding: '1.25rem',
+                            background: 'var(--surface-2)',
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                        }}
+                    >
+                        {[
+                            {
+                                date: '2024年12月10日',
+                                label: 'CRA発効',
+                                color: 'var(--success)',
+                                desc: 'EUサイバーレジリエンス法が正式に発効。移行期間がスタート。',
+                            },
+                            {
+                                date: '2026年6月',
+                                label: '適合性評価機関の通知開始',
+                                color: 'var(--info)',
+                                desc: '適合性評価機関に関する法的枠組みの適用開始。準備を今すぐ始める必要あり。',
+                            },
+                            {
+                                date: '2026年9月11日',
+                                label: '🚨 早期報告義務スタート',
+                                color: 'var(--warning)',
+                                desc: '悪用された脆弱性・重大インシデントのENISAへの報告義務が開始。既存製品にも適用！',
+                            },
+                            {
+                                date: '2027年12月11日',
+                                label: '完全適用',
+                                color: 'var(--danger)',
+                                desc: 'すべての要件の完全適用。非準拠製品はEU市場で販売禁止のリスク。',
+                            },
+                        ].map((t, i) => (
+                            <div
+                                key={i}
+                                className="timeline-item"
+                                style={{ paddingLeft: '1.5rem', paddingBottom: '1rem' }}
+                            >
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'flex-start',
+                                        gap: '1rem',
+                                        flexWrap: 'wrap',
+                                    }}
+                                >
+                                    <span
+                                        className="font-mono"
+                                        style={{
+                                            fontSize: '.75rem',
+                                            fontWeight: 700,
+                                            color: t.color,
+                                            minWidth: '8rem',
+                                        }}
+                                    >
+                                        {t.date}
+                                    </span>
+                                    <div style={{ flex: 1 }}>
+                                        <div
+                                            style={{
+                                                fontWeight: 600,
+                                                color: 'var(--text)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '.25rem',
+                                            }}
+                                        >
+                                            {t.label}
+                                        </div>
+                                        <div
+                                            style={{
+                                                fontSize: '.8rem',
+                                                color: 'var(--text-muted)',
+                                            }}
+                                        >
+                                            {t.desc}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        実践チュートリアル — Cosign + SLSA検証ワークフロー
+                    </h3>
+                    <Tabs
+                        items={[
+                            {
+                                label: 'Step1: SBOM署名検証',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            提供されたSBOMが信頼できる作成者によって署名・改ざんされていないかを確認：
+                                        </p>
+                                        <CodeBlock
+                                            lang="bash"
+                                            filename="supply-chain-verify.sh — Step1"
+                                            code={`# Cosignインストール（Homebrewの場合）
+brew install cosign
+
+# ステップ1: 署名付きSBOM（CycloneDX/SPDX）の検証
+cosign verify-attestation \\
+  --type cyclonedx \\
+  --certificate-identity=signer@example.com \\
+  --certificate-oidc-issuer=https://accounts.google.com \\
+  ghcr.io/my-org/my-app:v1.0.0
+
+# 出力例: ✅ Verification for ghcr.io/my-org/my-app:v1.0.0
+# {"payloadType":"application/vnd.cyclonedx+json","payload":"..."}`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'Step2: コンテナ署名検証',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            コンテナイメージが期待する発行者によって署名されているか確認（なりすまし防止）：
+                                        </p>
+                                        <CodeBlock
+                                            lang="bash"
+                                            filename="supply-chain-verify.sh — Step2"
+                                            code={`# ステップ2: コンテナイメージの署名検証
+# OIDC発行者と署名者のアイデンティティを明示的に指定（なりすまし防止）
+cosign verify $IMAGE \\
+  --certificate-identity=https://github.com/my-org/my-repo/.github/workflows/build.yml@refs/heads/main \\
+  --certificate-oidc-issuer=https://token.actions.githubusercontent.com
+
+# → GitHub Actionsのワークフローから自動発行された正当な証明書かを確認
+# → 単に署名があるだけでなく「誰が」「どこから」署名したかを検証する`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                label: 'Step3: SLSA来歴検証',
+                                content: (
+                                    <div>
+                                        <p
+                                            style={{
+                                                color: 'var(--text-muted)',
+                                                fontSize: '.875rem',
+                                                marginBottom: '1rem',
+                                            }}
+                                        >
+                                            イメージが正しいリポジトリから安全なCI/CDパイプラインを経由してビルドされたことを証明：
+                                        </p>
+                                        <CodeBlock
+                                            lang="bash"
+                                            filename="supply-chain-verify.sh — Step3"
+                                            code={`# ステップ3: SLSA Verifierによる来歴（Provenance）の検証
+# まず来歴データをレジストリから取得
+cosign download attestation $IMAGE \\
+  --predicate-type https://slsa.dev/provenance/v1 > provenance.json
+
+# SLSA来歴を検証
+slsa-verifier verify-image "$IMAGE" \\
+  --provenance-path provenance.json \\
+  --source-uri github.com/my-repo/my-application \\
+  --source-tag v1.2.0
+
+# ✅ 成功時の出力:
+# PASSED: Verified SLSA provenance
+# Builder ID: https://github.com/slsa-framework/slsa-github-generator/...
+# Source URI: github.com/my-repo/my-application
+# Source digest: sha1:abc123...`}
+                                        />
+                                    </div>
+                                ),
+                            },
+                        ]}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'Software Supply Chain Security Best Practices 2026 — Sysdig',
+                                url: 'https://www.sysdig.com/learn-cloud-native/software-supply-chain-security-best-practices',
+                            },
+                            {
+                                title: 'EU Cyber Resilience Act: Key 2026 Milestones — Hogan Lovells',
+                                url: 'https://www.hoganlovells.com/en/publications/eu-cyber-resilience-act-getting-ready-for-cra-compliance-in-2026',
+                            },
+                            {
+                                title: 'SBOM + SLSA: Accelerating SBOM Success — SLSA.dev',
+                                url: 'https://slsa.dev/blog/2022/05/slsa-sbom',
+                            },
+                            {
+                                title: 'SBOMs in 2026: Some Love, Some Hate — Dark Reading',
+                                url: 'https://www.darkreading.com/application-security/sboms-in-2026-some-love-some-hate-much-ambivalence',
+                            },
+                            {
+                                title: 'Signal in the Noise: The State of VEX — OpenSSF',
+                                url: 'https://openssf.org/blog/2026/01/08/signal-in-the-noise-an-industry-wide-perspective-on-the-state-of-vex/',
+                            },
+                            {
+                                title: 'Cosign — Sigstore GitHub',
+                                url: 'https://github.com/sigstore/cosign',
+                            },
+                            {
+                                title: 'SLSA Verifier — slsa-framework GitHub',
+                                url: 'https://github.com/slsa-framework/slsa-verifier',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            const PQCSection = () => (
+                <section id="pqc" className="section-card animate-fadeUp">
+                    <SectionHeader
+                        num="07"
+                        title="耐量子暗号（PQC）と Crypto-Agility"
+                        sub={
+                            '"Harvest now, decrypt later" 脅威は今まさに進行中。NIST FIPS 203/204/205が確定。2035年までの移行が義務化された今すぐ始めるべき対策を解説。'
+                        }
+                    />
+
+                    <Callout
+                        type="danger"
+                        title='"Harvest Now, Decrypt Later" ─ 今すぐ始めなければならない理由'
+                    >
+                        国家支援型攻撃者は
+                        <strong>現在すでに暗号化されたデータを大量に収集・保存</strong>
+                        しています。量子コンピューターが実用化された瞬間に一斉に解読されます。金融記録・医療データ・知的財産など長期機密性が必要なデータを持つ組織は「今日」から対策を開始してください。
+                    </Callout>
+
+                    <div
+                        style={{
+                            borderRadius: '.875rem',
+                            border: '1px solid var(--border)',
+                            overflow: 'hidden',
+                            margin: '1.25rem 0 1.5rem',
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: '.875rem 1.25rem',
+                                background: 'var(--surface-2)',
+                                borderBottom: '1px solid var(--border)',
+                            }}
+                        >
+                            <span
+                                className="font-mono"
+                                style={{
+                                    fontSize: '.72rem',
+                                    color: 'var(--text-muted)',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '.08em',
+                                }}
+                            >
+                                NIST PQC標準アルゴリズム（2024年8月13日 正式確定）
+                            </span>
+                        </div>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>FIPS番号</th>
+                                    <th>アルゴリズム名</th>
+                                    <th>用途</th>
+                                    <th>ベースとなる数学的困難性</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    [
+                                        'FIPS 203',
+                                        'ML-KEM (Kyber)',
+                                        '鍵カプセル化 — TLSセッションキー共有',
+                                        '格子暗号（MLWE問題）',
+                                    ],
+                                    [
+                                        'FIPS 204',
+                                        'ML-DSA (Dilithium)',
+                                        'デジタル署名 — コード署名・証明書',
+                                        '格子暗号（MSIS/MLWE問題）',
+                                    ],
+                                    [
+                                        'FIPS 205',
+                                        'SLH-DSA (SPHINCS+)',
+                                        'ハッシュベース署名（バックアップ）',
+                                        'ハッシュ関数の安全性',
+                                    ],
+                                ].map((r, i) => (
+                                    <tr key={i}>
+                                        <td
+                                            className="font-mono"
+                                            style={{
+                                                color: 'var(--primary)',
+                                                fontWeight: 700,
+                                                fontSize: '.85rem',
+                                            }}
+                                        >
+                                            {r[0]}
+                                        </td>
+                                        <td style={{ fontWeight: 600, color: 'var(--text)' }}>
+                                            {r[1]}
+                                        </td>
+                                        <td>{r[2]}</td>
+                                        <td
+                                            style={{ color: 'var(--text-dim)', fontSize: '.78rem' }}
+                                        >
+                                            {r[3]}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        グローバルPQC移行タイムライン
+                    </h3>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+                            gap: '.875rem',
+                            marginBottom: '1.5rem',
+                        }}
+                    >
+                        {[
+                            {
+                                country: '🇺🇸 米国 (CNSA 2.0)',
+                                items: [
+                                    '2025: ソフトウェア・クラウド署名にPQC採用',
+                                    '2026: VPN・ルーター等のネットワーク機器移行開始',
+                                    '2030: レガシーシステム段階的廃止',
+                                    '2035: 国家安全保障システム（NSS）完全耐量子化',
+                                ],
+                            },
+                            {
+                                country: '🇪🇺 欧州 (ENISA)',
+                                items: [
+                                    '2026年末: 国家移行ロードマップ確立',
+                                    '2030年末: 高リスクユースケースでPQCをデフォルト化',
+                                    '2035年末: 可能な限りの完全移行完了',
+                                ],
+                            },
+                            {
+                                country: '🇬🇧 英国 (NCSC)',
+                                items: [
+                                    '2028: システム発見・計画立案完了',
+                                    '2028-31: 重要システムでのパイロット・移行',
+                                    '2035: 全システム・サービスでの完全採用',
+                                ],
+                            },
+                            {
+                                country: '🇦🇺 豪州 (ASD)',
+                                items: [
+                                    '2026年末: 移行計画策定義務化',
+                                    '2028年末: 重要データの移行開始',
+                                    '2030以降: RSA/ECC等の従来暗号の全面禁止',
+                                ],
+                            },
+                        ].map((g, i) => (
+                            <div key={i} className="card" style={{ padding: '1.25rem' }}>
+                                <div
+                                    className="font-display"
+                                    style={{
+                                        fontWeight: 700,
+                                        color: 'var(--text)',
+                                        marginBottom: '.75rem',
+                                        fontSize: '.9rem',
+                                    }}
+                                >
+                                    {g.country}
+                                </div>
+                                <ul
+                                    style={{
+                                        listStyle: 'none',
+                                        fontSize: '.78rem',
+                                        color: 'var(--text-muted)',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '.35rem',
+                                    }}
+                                >
+                                    {g.items.map((t, j) => (
+                                        <li key={j} style={{ display: 'flex', gap: '.4rem' }}>
+                                            <span
+                                                style={{ color: 'var(--primary)', flexShrink: 0 }}
+                                            >
+                                                →
+                                            </span>
+                                            {t}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h3
+                        className="font-display"
+                        style={{ fontWeight: 700, fontSize: '1.1rem', margin: '1.5rem 0 .875rem' }}
+                    >
+                        ステップバイステップ実装ガイド
+                    </h3>
+                    <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                left: '1.35rem',
+                                top: '3rem',
+                                bottom: '1rem',
+                                width: '1px',
+                                background: 'linear-gradient(to bottom,var(--primary),transparent)',
+                            }}
+                        />
+                        <StepItem num="01" title="暗号資産インベントリの作成">
+                            組織内の
+                            <strong style={{ color: 'var(--text)' }}>
+                                全公開鍵暗号使用箇所をマッピング
+                            </strong>
+                            します。TLS・VPN・S/MIME・ファームウェア署名・コード署名・PKIを洗い出し、長期機密性が必要なデータ（"long-secrecy"データ）を特定して優先順位を決定します。
+                        </StepItem>
+                        <StepItem num="02" title="Crypto-Agility（暗号の俊敏性）基盤構築">
+                            ソースコード内の暗号アルゴリズムのハードコードを
+                            <strong style={{ color: 'var(--text)' }}>完全に排除</strong>
+                            します。設定ファイルや鍵管理システムから動的にアルゴリズムを切り替えられる抽象化レイヤーを設計します。これがPQCへの円滑な移行を可能にする最重要基盤です。
+                        </StepItem>
+                        <StepItem num="03" title="ハイブリッドモードでパイロットテスト">
+                            従来アルゴリズム（ECDHE等）とPQCアルゴリズム（ML-KEM等）を
+                            <strong style={{ color: 'var(--text)' }}>
+                                同時に使用するハイブリッド鍵交換
+                            </strong>
+                            をテスト実施。両方を破らないと解読できないため安全性が保証されます。TLSハンドシェイク遅延・CPU負荷を計測してランブックを文書化します。
+                        </StepItem>
+                        <StepItem num="04" title="デュアルスタックPKIとサプライヤー更新">
+                            PQC証明書とECC証明書を両方発行できる
+                            <strong style={{ color: 'var(--text)' }}>デュアルスタックPKI</strong>
+                            を構築します。サードパーティとの調達要件に「NIST FIPS
+                            203/204/205のサポート」「Crypto-Agilityの具備」を契約条件として明記します。
+                        </StepItem>
+                    </div>
+
+                    <CodeBlock
+                        lang="typescript"
+                        filename="crypto-agility.ts — アルゴリズムをハードコードしない設計"
+                        code={`// ✅ Crypto-Agility: 暗号アルゴリズムを設定ファイルから動的に読み込む
+interface CryptoConfig {
+  // 鍵交換: 従来 / PQC単体 / ハイブリッド（推奨）
+  kex: 'X25519' | 'ML-KEM-768' | 'X25519_ML-KEM-768';
+  // デジタル署名: 従来 / PQC単体 / ハイブリッド（推奨）
+  sig: 'Ed25519' | 'ML-DSA-65' | 'Ed25519_ML-DSA-65';
+  // フォールバック: PQCに欠陥発見時の自動切り替え先
+  fallback: 'X25519' | 'Ed25519';
+}
+
+// 設定ファイル（crypto.yml）から動的に読み込み — コード変更不要
+const config: CryptoConfig = loadConfig('crypto.yml');
+
+// ハイブリッドモード: 従来暗号とPQCを同時使用（移行期推奨）
+const session = await tls.connect({
+  host: 'api.example.com',
+  keyExchange: config.kex,    // ← ハードコード禁止
+  signature: config.sig,      // ← ハードコード禁止
+  // 攻撃者はX25519とML-KEM-768の「両方」を破る必要がある
+});
+
+// ❌ NG: アルゴリズムをハードコード
+// const session = await tls.connect({ keyExchange: 'X25519' }); // 将来変更が困難
+
+// ✅ crypto.yml の例（将来はコード変更なしにMLIに切り替え可能）
+// kex: "X25519_ML-KEM-768"   # Phase 1: ハイブリッド（現在推奨）
+// sig: "Ed25519_ML-DSA-65"   # Phase 1: ハイブリッド
+// — 2030年以降: kex: "ML-KEM-768" のみに変更`}
+                    />
+
+                    <Sources
+                        items={[
+                            {
+                                title: 'NIST FIPS 203 (ML-KEM) — NIST CSRC',
+                                url: 'https://csrc.nist.gov/pubs/fips/203/final',
+                            },
+                            {
+                                title: 'PQC Standardization Process — NIST CSRC',
+                                url: 'https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization',
+                            },
+                            {
+                                title: 'The Rise of Quantum-Resistant Cryptography — Ian Khan',
+                                url: 'https://the-undisrupted-future-with-ian-khan.ghost.io/the-rise-of-quantum-resistant-cryptography-why-your-2026-security-strategy-1769805946981/',
+                            },
+                            {
+                                title: 'Post-Quantum Cryptography: 12 Month Playbook — ISACA',
+                                url: 'https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2026/post-quantum-cryptography-a-12-month-playbook-for-digital-trust-professionals',
+                            },
+                            {
+                                title: 'Migrating to Post-Quantum Cryptography — Wiley Connect',
+                                url: 'https://www.wileyconnect.com/migrating-from-traditional-algorithms-to-post-quantum-cryptography-what-your-organization-needs-to-know',
+                            },
+                            {
+                                title: 'Our Post-Quantum Cryptography Journey — Comcast',
+                                url: 'https://corporate.comcast.com/stories/our-postquantum-cryptography-journey-from-awareness-to-action',
+                            },
+                            {
+                                title: '6 Practical Steps to Crypto-Agile PQC — Cryptomathic',
+                                url: 'https://www.cryptomathic.com/blog/how-banks-can-prepare-for-post-quantum-cryptography-in-2026',
+                            },
+                        ]}
+                    />
+                </section>
+            );
+
+            // ━━ TOC & App ━━
+            const App = () => {
+                useScrollProgress();
+                const activeId = useActiveToc();
+
+                return (
+                    <div
+                        style={{
+                            display: 'flex',
+                            maxWidth: '1340px',
+                            margin: '0 auto',
+                            padding: '2rem 1.5rem',
+                            gap: '2.5rem',
+                            position: 'relative',
+                            zIndex: 1,
+                        }}
+                    >
+                        <TOC activeId={activeId} />
+                        <article style={{ flex: 1, minWidth: 0 }}>
+                            <OverviewSection />
+                            <SDLCSection />
+                            <OWASPSection />
+                            <AISecSection />
+                            <AICodingSection />
+                            <SupplyChainSection />
+                            <PQCSection />
+
+                            {/* Summary */}
+                            <section
+                                id="summary"
+                                className="section-card animate-fadeUp"
+                                style={{
+                                    background:
+                                        'linear-gradient(135deg,rgba(0,212,255,.05),rgba(124,58,237,.05))',
+                                }}
+                            >
+                                <SectionHeader
+                                    num="∞"
+                                    title="総括 ─ セキュリティをビジネスのイネーブラーへ"
+                                    sub="2026年のセキュリティは開発の「ブロッカー」ではなく、安全な高速開発を可能にする「イネーブラー」です。"
+                                />
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))',
+                                        gap: '1rem',
+                                        marginBottom: '1.25rem',
+                                    }}
+                                >
+                                    {[
+                                        {
+                                            num: '01',
+                                            title: 'アイデンティティ管理',
+                                            desc: '最小権限 + Human-in-the-loop。AIエージェントにも人間と同等の厳格なIAMを適用。',
+                                        },
+                                        {
+                                            num: '02',
+                                            title: 'サプライチェーン透明性',
+                                            desc: 'SBOM + SLSA + Cosignで全コンポーネントの完全性を暗号学的に証明。EU CRA準拠も同時に達成。',
+                                        },
+                                        {
+                                            num: '03',
+                                            title: 'Crypto-Agility',
+                                            desc: 'アルゴリズムのハードコードを今すぐ排除。PQCへのシームレスな移行基盤を今日から構築開始。',
+                                        },
+                                        {
+                                            num: '04',
+                                            title: '継続的改善',
+                                            desc: 'NIST SSDF 1.2の要求通り、実際のシグナルに基づく「生きた改善バックログ」を維持。測定可能な進捗を経営陣に証明。',
+                                        },
+                                    ].map((c, i) => (
+                                        <div
+                                            key={i}
+                                            className="card"
+                                            style={{
+                                                padding: '1.25rem',
+                                                display: 'flex',
+                                                gap: '1rem',
+                                            }}
+                                        >
+                                            <span
+                                                className="font-mono"
+                                                style={{
+                                                    fontSize: '1.5rem',
+                                                    fontWeight: 800,
+                                                    color: 'var(--primary)',
+                                                    opacity: 0.4,
+                                                    lineHeight: 1,
+                                                }}
+                                            >
+                                                {c.num}
+                                            </span>
+                                            <div>
+                                                <div
+                                                    className="font-display"
+                                                    style={{
+                                                        fontWeight: 700,
+                                                        color: 'var(--text)',
+                                                        marginBottom: '.35rem',
+                                                    }}
+                                                >
+                                                    {c.title}
+                                                </div>
+                                                <p
+                                                    style={{
+                                                        fontSize: '.8rem',
+                                                        color: 'var(--text-muted)',
+                                                        lineHeight: 1.7,
+                                                    }}
+                                                >
+                                                    {c.desc}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <Callout type="tip" title="初学者への最後のメッセージ">
+                                    本ガイドで解説した各カテゴリーの実践ステップを、一つずつ日常のエンジニアリングプラクティスに組み込んでください。完璧なセキュリティは存在しませんが、
+                                    <strong>継続的な改善と学習こそが最強の防御</strong>です。
+                                </Callout>
+                            </section>
+                        </article>
+                    </div>
+                );
+            };
+
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+        </script>
+
+        <!-- Footer -->
+        <footer
+            style="
+                position: relative;
+                z-index: 1;
+                border-top: 1px solid var(--border);
+                padding: 2rem 1.5rem;
+                text-align: center;
+                background: var(--surface);
+            "
+        >
+            <p
+                style="
+                    font-size: 0.75rem;
+                    color: var(--text-dim);
+                    font-family: 'Fira Code', monospace;
+                "
+            >
+                ソフトウェア開発セキュリティ完全ガイド 2026 | v2026.03.25 | Built with React 18 +
+                Tailwind CSS v4
+            </p>
+            <p style="font-size: 0.68rem; color: var(--text-dim); margin-top: 0.375rem">
+                本ガイドは2026年3月25日時点の情報に基づきます。セキュリティ情報は常に変化するため、各一次ソースの最新情報を定期的に確認してください。
+            </p>
+        </footer>
+    </body>
+</html>
