@@ -5,6 +5,7 @@
 This is a Next.js-based documentation application focused on security studies, leveraging the Fumadocs framework and MDX for content authoring. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, and PQC (Post-Quantum Cryptography).
 
 ### Key Technologies
+
 - **Framework:** Next.js (App Router)
 - **UI Library:** React
 - **Language:** TypeScript
@@ -13,6 +14,7 @@ This is a Next.js-based documentation application focused on security studies, l
 - **Package Manager:** Bun
 
 ### Architecture
+
 - `security-docs/content/docs/`: Contains the actual documentation content written in Markdown and MDX formats.
 - `security-docs/src/app/`: The Next.js App Router directory, which includes page layouts, documentation routes (`app/docs`), the landing page route (`app/(home)`), and API routes such as the search handler (`app/api/search/route.ts`).
 - `security-docs/src/lib/`: Houses shared configuration and content source adapters (e.g., `source.ts` configures how Fumadocs accesses your content).
