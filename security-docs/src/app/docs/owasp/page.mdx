@@ -1,0 +1,94 @@
+---
+title: "OWASP Top 10:2025 完全解説"
+description: "175,000件以上のCVEデータに基づく大幅改訂。クラウド・AI・サプライチェーンの現実を反映した全10カテゴリを徹底解説。2026年3月版。"
+---
+
+# OWASP Top 10:2025 完全解説
+
+**OWASP Top 10** は、世界中のセキュリティ専門家が収集した175,000件以上のCVEデータと実際のインシデントデータに基づき、*Webアプリケーションにおける最も重大なセキュリティリスク*をランキング化したものです。
+
+---
+
+## 概要 — 2025年版の全体像
+
+2025年版は単なる順位の入れ替えではなく、**構造的な再編**が行われました。旧来の「コードバグ」中心から、*クラウドネイティブ・AI・サプライチェーン*の現実を反映した設計思想の変革が行われ、「サプライチェーン（A03）」と「例外処理不備（A10）」が新規追加されています。
+
+### 全10カテゴリ一覧
+
+| 順位 | カテゴリ | 状態 |
+| :--- | :--- | :--- |
+| **A01** | **Broken Access Control** | 1位維持。SSRFを統合。 |
+| **A02** | **Security Misconfiguration** | 5位→2位 ⬆️ IaC普及で急上昇。 |
+| **A03** | **Software Supply Chain Failures** | 🆕 新規追加。最高インパクト。 |
+| **A04** | **Cryptographic Failures** | 2位→4位 ↘️ TLS普及で後退。 |
+| **A05** | **Injection** | 3位→5位 ↘️ ORM普及で後退。 |
+| **A06** | **Insecure Design** | 4位→6位 ↘️ 設計欠陥へのフォーカス。 |
+| **A07** | **Authentication Failures** | 変動なし。アイデンティティ攻撃激化。 |
+| **A08** | **Software and Data Integrity Failures** | 変動なし。CI/CD改ざん等。 |
+| **A09** | **Security Logging and Alerting Failures** | 変動なし。プロアクティブな検知へ。 |
+| **A10** | **Mishandling of Exceptional Conditions** | 🆕 新規追加。例外処理の不備。 |
+
+---
+
+## A01: Broken Access Control（アクセス制御の不備）
+
+最多発生カテゴリ。ユーザーAがユーザーBのデータにアクセスできてしまう問題全般。
+
+### ⚠ 攻撃シナリオ
+- **IDOR**: URLのIDを変えて他人の注文履歴を閲覧する。
+- **SSRF**: 画像インポート機能を使い、サーバー内部のメタデータ（169.254.169.254）を窃取する。
+
+### ✅ 防御の鉄則
+- オブジェクトアクセス時は**必ずサーバー側で所有権を検証**。
+- **Deny by Default**: 明示的に許可したもの以外はすべて拒否。
+- 推測可能な連番IDではなく **UUIDやランダムトークン** を使用。
+
+---
+
+## A02: Security Misconfiguration（設定ミス）
+
+IaC・クラウドの普及で設定ファイル1つのミスが致命的になります。
+
+### ✅ 対策
+- CI/CDに **IaCスキャン（Trivy config等）** を統合。
+- デフォルト認証情報（admin/admin等）を必ず変更。
+- 本番環境でのデバッグ情報表示（`NODE_ENV=production`）を徹底。
+
+---
+
+## A03: Software Supply Chain Failures（サプライチェーン）
+
+2025年版の目玉カテゴリ。他者のコード（OSS等）に起因するリスク。
+
+### ✅ 対策
+- **SBOM (Software Bill of Materials)** の生成と追跡。
+- パッケージのハッシュ固定（`npm ci` 等）。
+- **Slopsquatting対策**: AIが提案したパッケージ名は必ず公式レジストリで照合。
+
+---
+
+## A10: Mishandling of Exceptional Conditions（例外処理）
+
+攻撃者は意図的にエラーを起こし、スタックトレースからシステムの弱点を探します。
+
+### ✅ 対策
+- **フェイルクローズ**: 認証エラー時は必ず拒否し、デフォルトでアクセスを許可しない。
+- ユーザーには汎用エラーメッセージのみ返し、詳細はサーバーログへ。
+- `finally` ブロックでリソース（DB接続等）を確実に解放。
+
+---
+
+## 実践アクションプラン
+
+1.  **シークレットスキャン導入**: `gitleaks` 等でAPIキー漏洩を防止。
+2.  **依存関係スキャン**: `npm audit` で既知脆弱性を即日対応。
+3.  **パスワードハッシュ更新**: MD5/SHA-1を廃止し `bcrypt` (cost≥12) へ。
+4.  **HTTPヘッダー設定**: `helmet` 等でCSP・HSTSを有効化。
+5.  **MFAの強化**: SMSを廃止し **FIDO2パスキー** へアップグレード。
+
+---
+
+## 参考文献
+- [OWASP Top 10 Project](https://owasp.org/www-project-top-ten/)
+- [OWASP Top 10:2025 Full Release](https://owasp.org/Top10/2025/)
+- [OWASP Cheat Sheet Series](https://owasp.org/www-project-cheat-sheets/)

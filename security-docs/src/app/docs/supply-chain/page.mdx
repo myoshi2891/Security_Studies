@@ -1,0 +1,144 @@
+---
+title: "ソフトウェアサプライチェーンセキュリティ 2026 完全ガイド"
+description: "SBOM・SLSA・VEX・EU CRA・Cosign・SLSA検証を初学者向けに徹底解説。2026年3月版。"
+---
+
+# ソフトウェアサプライチェーンセキュリティ 2026 完全ガイド
+
+**現代のアプリケーションコードのうち、開発者が自ら書く行数はわずか10〜20%と言われています。** 残りはOSS、ライブラリ、CI/CDパイプライン、コンテナイメージで構成されています。この「外部から持ち込まれる要素」の安全性をいかに確保するかが、2026年の最重要課題です。
+
+## Section 01 — 概要・なぜ重要なのか
+
+なぜ今、サプライチェーンセキュリティがこれほどまでに注目されているのでしょうか。
+
+### サプライチェーン攻撃の定義
+ソフトウェアサプライチェーン攻撃とは、ソフトウェアの開発・ビルド・配布プロセスの「どこか」に悪意あるコードを混入させる攻撃です。一度成功すれば、そのソフトウェアを使用する数万、数百万のユーザーを一斉に侵害できるため、攻撃者にとって極めて効率が良い攻撃手法です。
+
+### 2026年の現実
+- **OWASP Top 10:2025 新規追加**: 175,000件以上のCVE分析の結果、A03 (Software Supply Chain Failures) が新規追加されました。
+- **インパクト最高カテゴリ**: 発生頻度は他のカテゴリより低いものの、一度発生した際の「平均的なインパクトスコア」が全10カテゴリ中で最高となっています。
+- **法規制の義務化**: 米国大統領令 EO 14028 や EU サイバーレジリエンス法（CRA）により、SBOM（部品表）の提供が法的義務へとシフトしています。
+
+| 統計・データ | 意味 | 出典 |
+| :--- | :--- | :--- |
+| **A03** | OWASP Top 10:2025 新規追加。最高インパクト。 | OWASP Foundation |
+| **11%** | 完全なSBOMを動的に提供できている成熟組織の割合。 | DigiCert 2026 |
+| **30秒未満** | 侵入から横展開までの時間。AIによる加速。 | M-Trends 2026 |
+
+---
+
+## Section 02 — 主要な攻撃ベクター
+
+攻撃者がサプライチェーンを狙う際の3つの主要なアプローチを理解しましょう。
+
+### 1. 依存関係の汚染 (Dependency Confusion / Typosquatting)
+- **メカニズム**: 実在しない、あるいは内部パッケージと同名のマルウェア入りパッケージを公式レジストリ（npm/PyPI等）に登録します。
+- **2026年の傾向**: AIコーディングツールが「ハルシネーション（幻覚）」で提案した実在しないパッケージ名を逆手に取る **Slopsquatting** 攻撃が急増しています。
+
+### 2. CI/CDパイプラインの侵害
+- **メカニズム**: ソースコードは安全でも、ビルドを行うサーバー（GitHub Actions, GitLab CI等）が侵害され、ビルド中にバックドアが埋め込まれます。
+- **事例**: 2020年の SolarWinds 事件がこの典型です。
+
+### 3. メンテナーアカウントの乗っ取り / ソーシャルエンジニアリング
+- **メカニズム**: 人気のOSSメンテナーに親切なパッチを送り続け、信頼を得てから権限を奪い、悪意あるコードを注入します。
+- **事例**: 2024年の XZ Utils 事件（Jia Tanによる長期的な工作）。
+
+---
+
+## Section 03 — SBOM（ソフトウェア部品表）
+
+### SBOMとは — 一言定義
+**SBOM（Software Bill of Materials：ソフトウェア部品表）**とは、食品の「原材料表示ラベル」のソフトウェア版です。アプリケーションを構成するすべてのコンポーネント・ライブラリ・バージョン・ライセンス・依存関係（推移的な依存も含む）を機械可読な形式で記録したリストです。
+
+### SBOMの2大フォーマット
+
+1.  **CycloneDX（OWASP推奨）**
+    - OWASPが開発・管理する軽量フォーマット。
+    - セキュリティ用途（脆弱性・ライセンス）に最適化。
+    - VEX（脆弱性悪用可能性）の直接埋め込みに対応。
+    - 2026年時点で最も普及しているフォーマット。
+
+2.  **SPDX（Linux Foundation）**
+    - Linux Foundationが開発・管理。
+    - ライセンスコンプライアンスに強み。
+    - ISO/IEC 5962:2021として国際標準化済み。
+
+### SBOMの生成方法（実践）
+
+```bash
+# ━━ Node.js / npm プロジェクト（CycloneDX形式） ━━
+npm install -g @cyclonedx/cyclonedx-npm
+cyclonedx-npm --output-format JSON --output-file sbom.json
+
+# ━━ コンテナイメージ（Trivy使用） ━━
+trivy image --format cyclonedx --output sbom-image.json myapp:v1.0.0
+
+# ━━ 生成したSBOMで既知CVEをスキャン（Grype使用） ━━
+grype sbom:./sbom.json
+```
+
+---
+
+## Section 04 — SLSA（スルサ）─ ビルドの完全性を証明する
+
+### SLSAとは — SBOMとの違い
+SBOMが「何が入っているか（部品表）」を記録するのに対し、SLSAは「**どのように作られたか（製造プロセスの証明）**」を暗号学的に証明します。具体的には「来歴（Provenance）」という文書を生成します。
+
+| レベル | 要件 | 何が防げるか | 難易度 |
+| :--- | :--- | :--- | :--- |
+| **Level 1** | プロセスをドキュメント化し来歴を生成 | 偶発的なビルドエラー | 低 |
+| **Level 2** | ビルドサービスが来歴を自動署名 | 手動での改ざん検出 | 中 |
+| **Level 3** | 分離されたビルド環境・強力な署名 | 侵害されたビルドシステム | 高 |
+
+---
+
+## Section 05 — VEX（脆弱性悪用可能性交換）
+
+### VEXの4つのステータス
+SBOMを導入すると大量のCVEが検出されます。VEXはそのノイズを排除するための仕組みです。
+
+- **Affected**: この脆弱性は当製品で実際に悪用可能（要パッチ）。
+- **Not Affected**: 脆弱なコードは含まれるが、当製品では悪用不可能（ノイズ）。
+- **Fixed**: 既に修正済み。
+- **Under Investigation**: 現在調査中。
+
+---
+
+## Section 06 — Cosign & Sigstore ─ キーレス署名
+
+Sigstoreは、開発者が秘密鍵を管理せずに署名できる「コードの Let's Encrypt」です。
+
+### GitHub Actions でのキーレス署名例
+```yaml
+run: |
+  cosign sign --yes ghcr.io/my-org/my-app@${{ steps.build.outputs.digest }}
+```
+※ GitHub OIDC を利用して自動認証されます。
+
+---
+
+## Section 07 — EU サイバーレジリエンス法（CRA）
+
+2026年、セキュリティは法的義務になりました。
+
+- **2026年9月11日**: 悪用された脆弱性および重大インシデントのENISAへの報告義務が開始。
+- **罰金**: 最大1500万ユーロ（または売上高の2.5%）。
+- **対象**: EU域内で販売されるすべてのデジタル製品。
+
+---
+
+## Section 08 — ツールガイド
+
+- **Trivy**: SBOM生成・IaCスキャン・脆弱性検出。まず最初に導入すべきOSS。
+- **Cosign**: コンテナイメージやSBOMへの署名。
+- **Socket.dev**: マルウェア入りパッケージの検出に特化。
+- **SLSA Verifier**: ビルド来歴の検証。
+
+---
+
+## 参考文献
+- [OWASP A03:2025 Software Supply Chain Failures](https://owasp.org/Top10/2025/A03_2025-Software_Supply_Chain_Failures/)
+- [SLSA Framework](https://slsa.dev/)
+- [CycloneDX Standard](https://cyclonedx.org/)
+- [EU Cyber Resilience Act (EC公式)](https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act)
+- [PwC Annual Threat Dynamics 2026](https://www.pwc.com/gx/en/services/sustainability/cybersecurity/publications/threat-dynamics.html)

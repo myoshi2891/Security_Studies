@@ -1,0 +1,95 @@
+---
+title: "ソフトウェア開発セキュリティ完全ガイド 2026"
+description: "2026年3月時点の最新セキュリティ知識を初学者向けにステップバイステップで解説。SDLC・OWASP・AI・サプライチェーン・PQCを網羅。"
+---
+
+# ソフトウェア開発セキュリティ完全ガイド 2026
+
+2026年3月時点の最新脅威ランドスケープに基づき、**SDLC・OWASP・AI・サプライチェーン・PQC**の各カテゴリーを初学者にもわかりやすくステップバイステップで解説します。
+
+---
+
+## Section 01 — 2026年の脅威ランドスケープ
+
+なぜ今セキュリティが最重要課題なのか？産業化されたサイバー犯罪の実態を理解する必要があります。
+
+### 主要な4つの潮流
+- **AI兵器化の加速**: LLMをフォースマルチプライヤーとして悪用。PROMPTFLUXがEDRパターンをリアルタイム学習・回避。WEF調査で87%がAI関連脆弱性を最大リスクと認識。
+- **アイデンティティが新境界**: 攻撃者は「侵入」せず正規認証で「ログイン」。初期アクセスブローカー間のアクセス権移転は30秒未満。OAuthトークン窃取が横行。
+- **産業化されたサプライチェーン攻撃**: SaaSベンダー経由でハードコードされたキーやPATを奪い、顧客環境へ水平展開。
+- **経営陣の個人責任**: 重大過失による漏洩で経営陣が個人的法的責任を問われるリスクが増大。
+
+---
+
+## Section 02 — Secure SDLC ─ "シフトエブリウェア"
+
+従来の「シフトレフト」から、ライフサイクル全体で継続検証する**「シフトエブリウェア」**へ進化しました。
+
+### 実践ガイド 4ステップ
+1.  **要件定義・設計**: 脅威モデリング (STRIDE) の実施。ApiiroなどAI駆動型ツールでの自動化。
+2.  **開発**: CI/CDへのSAST/SCA統合。GHAS・Semgrep・Veracodeによるコミット時スキャン。
+3.  **デプロイ**: DAST・IaCスキャンの実施。TerraformやK8s設定のミスをTrivy等で防止。
+4.  **運用**: 継続監視と測定可能な改善。NIST SSDF 1.2 PO.6に基づく改善バックログの維持。
+
+---
+
+## Section 03 — OWASP Top 10:2025 の構造的再編
+
+175,000件以上のCVEデータに基づく根本的改訂が行われました。
+
+| 順位 | カテゴリ | 特徴 |
+| :--- | :--- | :--- |
+| **A01** | **Broken Access Control** | 1位維持。SSRFを統合。 |
+| **A02** | **Security Misconfiguration** | 2位に上昇。IaC設定ミスが主因。 |
+| **A03** | **Software Supply Chain Failures** | 【新規】最高インパクト。 |
+| **A07** | **Authentication Failures** | アイデンティティ攻撃の激化により重要性増大。 |
+| **A10** | **Mishandling of Exceptional Conditions** | 【新規】例外処理・フェイルオープン設計の欠陥。 |
+
+---
+
+## Section 04 — LLM / AI エージェントのセキュリティ
+
+2026年、AIは自律的に行動するエージェント（Agentic AI）へ進化し、攻撃対象領域が爆発的に拡大しました。
+
+### 主要脅威と対策
+- **LLM01: Prompt Injection**: 間接的インジェクションへの対策として入力境界マーカーを使用。
+- **LLM06: Excessive Agency**: AIエージェントへの過剰権限付与を避け、Human-in-the-loop（人間の承認）を設計。
+- **MCP保護**: AIとツールの通信プロトコル（MCP）をゲートウェイで検査。
+
+---
+
+## Section 05 — AIコーディングアシスタントの安全な利用
+
+GitHub Copilot・Cursor等の利用におけるリスク管理。
+
+- **Slopsquatting**: AIが実在しないパッケージ名を幻覚で生成するリスク。公式レジストリでの照合が必須。
+- **Content Exclusion**: `.env`等の機密ファイルをAI推論コンテキストから物理的に遮断。
+- **OpenSSF準拠**: エンタープライズ版の使用、テレメトリ無効化、100%人間によるコードレビュー。
+
+---
+
+## Section 06 — ソフトウェアサプライチェーンセキュリティ
+
+SBOM・SLSA・VEXによる法的義務化への対応。
+
+- **SBOM**: 全コンポーネントのリスト化（CycloneDX/SPDX）。
+- **SLSA**: ビルドプロセスの完全性をProvenance（来歴）で暗号学的に証明。
+- **EU CRA**: 2026年9月から脆弱性報告が法的義務に。
+
+---
+
+## Section 07 — 耐量子暗号（PQC）
+
+"Harvest now, decrypt later" 脅威への今すぐの備え。
+
+- **NIST標準**: FIPS 203 (ML-KEM), 204 (ML-DSA), 205 (SLH-DSA)への移行計画。
+- **Crypto-Agility**: アルゴリズムをハードコードせず、設定で動的に切り替えられる抽象化レイヤーの設計。
+- **ハイブリッド暗号**: 既存の暗号（X25519等）とPQCを同時に使用する構成。
+
+---
+
+## 参考文献
+- [M-Trends 2026 — Google Cloud / Mandiant](https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026)
+- [NIST SSDF Version 1.2 — NIST CSRC](https://csrc.nist.gov/pubs/sp/800/218/r1/ipd)
+- [OWASP Top 10 Project](https://owasp.org/www-project-top-ten/)
+- [Global Cybersecurity Outlook 2026 — WEF](https://www.weforum.org/publications/global-cybersecurity-outlook-2026/)

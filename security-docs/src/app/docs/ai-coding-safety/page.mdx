@@ -1,0 +1,152 @@
+---
+title: "AIコーディング安全利用 2026 完全ガイド"
+description: "GitHub Copilot・Claude Code・Cursor等AIコーディングツールの安全利用ガイド2026。Slopsquatting・コンテキスト漏洩・Shadow AI・OpenSSFガイドライン準拠。初学者向け完全解説。"
+---
+
+# AIコーディング安全利用 2026 完全ガイド
+
+AIコーディングアシスタント（GitHub Copilot, Claude Code, Cursor等）は生産性を劇的に向上させる一方、**38%の企業がAIツール関連インシデントを経験**しています。本ガイドでは、Slopsquatting・コンテキスト漏洩・Shadow AI・IDEインジェクションなどAI特有の新リスクと、OpenSSFガイドラインに基づく安全利用の全てを解説します。
+
+---
+
+## Section 01 — 概要・なぜセキュリティが問題になるのか
+
+### AIコーディングツールとは何か
+**AIコーディングアシスタント**とは、開発者のコードを読み取り、次に書くべきコードを予測・提案するAIツールです。*IDE内でリアルタイムに動作*し、開発速度を40〜55%向上させると報告されています。しかし、このツールが機能するためには**あなたのソースコード・環境変数・設定ファイルへの高いアクセス権限**が必要であり、これが新たなセキュリティリスクを生み出します。
+
+### 主要ツール一覧
+| 主要ツール | 提供元 | 動作方式 | 主なリスク |
+| :--- | :--- | :--- | :--- |
+| **GitHub Copilot** | Microsoft/GitHub | VSCode/JetBrains統合。コード全体をコンテキストに | コンテキスト内のシークレット送信リスク |
+| **Claude Code** | Anthropic | CLIエージェント。ファイル操作・コマンド実行が可能 | Agentic実行による意図しない操作 |
+| **Cursor** | Anysphere | AIネイティブIDEとして丸ごと置き換え | IDE全体へのアクセス権限の広さ |
+| **Windsurf** | Codeium | AIフロー機能でマルチステップタスクを自動化 | 自動実行範囲が広い |
+| **GitHub Copilot Workspace** | GitHub | Issue→コードの全自動化（Agentic） | 自律的なPR作成・コード変更 |
+
+### なぜ今セキュリティが問題なのか（統計データ）
+| 統計・データ | 出典 | 意味 |
+| :--- | :--- | :--- |
+| **38%の企業**がAIツール関連インシデントを経験 | ISACA 2026 | AI導入 = リスク込みのパッケージ |
+| Slopsquatting発生率 **約5-22%** | セキュリティ研究 2025 | AIの提案をそのまま使うのは危険 |
+| AI生成コードの**65%以上**に少なくとも1つの潜在的脆弱性 | Veracode 2024 | AIは「信頼できないジュニアエンジニア」 |
+
+> **核心的なパラダイム転換**: Dark Readingは2026年3月に報告しています: **「AIコーディングツールは20年かけて構築したエンドポイントセキュリティの要塞を内部から崩壊させた」**。EDR・サンドボックス・OSハードニングがすべて、AIツールが「正規の開発作業」としてアクセスするために迂回されます。
+
+---
+
+## Section 02 — AIコーディングツールの5大脅威マップ
+
+1.  **Slopsquatting (スロップスクワッティング)**: [CRITICAL] AIが実在しないパッケージ名を幻覚で生成。攻撃者が先にそのパッケージ名でマルウェアを登録。開発者がそのままインストールして即侵害。
+2.  **コンテキスト漏洩**: [CRITICAL] IDEで開いている.env・.pem・credentialsがAI推論コンテキストとしてクラウドへ送信されるリスク。
+3.  **IDEプロンプトインジェクション**: [HIGH] READMEやコメントに不可視テキストで悪意ある指示を埋め込む攻撃（LOTAIL）。AIが「コードの一部」として読み込み実行。
+4.  **Shadow AI**: [HIGH] 従業員が未承認の個人用AIツールを業務に使用。機密コードが無許可のクラウドへ送信。
+5.  **自動化バイアス**: [HIGH] AIの出力を盲目的に信頼し、脆弱なコードをレビューなしでマージしてしまう傾向。
+
+---
+
+## Section 03 — 最重要脅威：Slopsquatting（スロップスクワッティング）
+
+### 概要
+AIコーディングアシスタントが**実在しないが「いかにもありそうな」パッケージ名を生成**（例: `fast-json-parser-v2`）し、攻撃者がそのパッケージ名を先に取得してマルウェアを登録しておく攻撃です。
+
+### Attack Chain — 完全攻撃フロー
+- **Step 1 [攻撃者の準備]**: 攻撃者が提案されやすい架空のパッケージ名リストを収集。
+- **Step 2 [罠の設置]**: そのパッケージ名でマルウェアを含むパッケージを公式レジストリに登録。
+- **Step 3 [開発者の誘導]**: 開発者がAIに質問。AIが幻覚で架空パッケージを提案。
+- **Step 4 [侵害実行]**: 開発者がインストールを実行。**環境変数が即座に攻撃者へ送信**される。
+
+### 防御ステップ
+- AIが提案したパッケージ名は**必ず公式ドキュメントで照合してから**インストールする。
+- スペルミス（typo）に注意。
+- CI/CDに **Socket.dev または npm audit** を統合する。
+- package.json への追加を **PRレビュー必須** にする。
+
+---
+
+## Section 04 — コンテキスト漏洩 ＆ IDEプロンプトインジェクション
+
+### コンテキストからのシークレット漏洩
+AIはIDEで開いているファイルをサーバーへ送信します。**.envファイルや秘密鍵が同一ウィンドウで開かれていると**、これらも送信される可能性があります。
+
+#### 対策：Content Exclusion設定 (`.github/copilot-content-exclusion.yml`)
+```yaml
+content_exclusion:
+  paths:
+    - "**/.env"
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/credentials.json"
+```
+
+### IDEプロンプトインジェクション（LOTAIL攻撃）
+README等の不可視テキストに指示を埋め込み、AIに悪意あるコードを生成させる攻撃です。
+- **対策**: 外部リポジトリをクローンしたらAIを使う前にコードをレビューする。不可視文字を表示する設定にする。
+
+---
+
+## Section 05 — Shadow AI ─ 未承認AIツールの組織リスク
+
+個人版ChatGPT等を業務で使用すると、知的財産がAI学習に利用され、実質的に外部へ漏洩します。
+
+### 組織的対策 5ステップ
+1.  **AIツールのインベントリ作成**: ネットワーク通信を可視化する。
+2.  **ポリシー策定と教育**: 承認済みリスト（Green/Yellow/Red）を公開。
+3.  **安全な代替ツールの提供**: エンタープライズ版を用意する。
+4.  **DLPの実装**: 機密データの貼り付けをブロック。
+5.  **エージェントへのゼロトラスト**: アクションログの記録と承認制。
+
+---
+
+## Section 06 — OpenSSF公式ガイドライン（Do's and Don'ts）
+
+### ✅ Do
+- エンタープライズ版・ガバメント版のみ使用。
+- テレメトリへのオプトインを無効化。
+- AIには合成ダミーデータのみ入力。
+- プロンプトにセキュリティ要件を明示。
+
+### ❌ Don't
+- 無料版を業務で使用。
+- 本番のPII情報を入力。
+- 提案パッケージを確認なくインストール。
+- レビューなしでのマージ。
+
+---
+
+## Section 07 — AI生成コードのセキュリティレビュー方法
+
+AIは「スキルはあるが判断を信頼しきれない**ジュニア開発者**」として扱います。
+
+### 5観点チェック
+1.  **Functional**: エッジケースの処理漏れはないか。
+2.  **Context**: プロジェクト固有ルールに合致するか。
+3.  **Security**: OWASP Top 10の脆弱性はないか（MD5等）。
+4.  **Dependency**: 提案パッケージは実在し安全か。
+5.  **Secrets**: 認証情報のハードコードはないか。
+
+---
+
+## Section 08 — ツール別セキュア設定
+
+- **GitHub Copilot**: Content Exclusion を Organization レベルで設定。
+- **VSCode**: `markdown` ファイルでのCopilotを無効化（LOTAIL対策）。
+- **CI/CD**: `gitleaks` と `Semgrep` による自動スキャンゲートを設置。
+
+---
+
+## Section 09 — 実践チェックリスト
+
+- [ ] .env等の機密ファイルをAIコンテキストから除外設定した
+- [ ] プレコミットフック（gitleaks）を導入した
+- [ ] AI提案パッケージを公式レジストリで照合した
+- [ ] ブランチ保護ルールで「人間の承認」を必須化した
+- [ ] エンタープライズ版のオプトアウト設定を完了した
+
+---
+
+## 参考文献
+- [OpenSSF: AI Code Assistant Guidance](https://openssf.org/blog/2025/09/16/new-openssf-guidance-on-ai-code-assistant-instructions/)
+- [ISACA: Securing the AI Frontier 2026](https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2026/securing-the-ai-frontier-a-practical-framework-for-assessing-ai-coding-assistant-vulnerabilities)
+- [Dark Reading: How AI Coding Tools Crushed Endpoint Security](https://www.darkreading.com/application-security/ai-coding-tools-endpoint-security)
+- [Maryland DoIT: AI Governance Card](https://doit.maryland.gov/policies/ai/Pages/AI-powered-coding-assistants.aspx)
+- [Microsoft Edge Blog: Protect from Shadow AI (RSAC 2026)](https://blogs.windows.com/msedgedev/2026/03/23/protect-your-enterprise-from-shadow-ai-and-more-announcements-at-rsac-2026/)
