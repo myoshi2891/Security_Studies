@@ -3,53 +3,66 @@ import { docsConfig } from "@/config/docs";
 
 export default function HomePage() {
   return (
-    <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50">
-      <header className="sticky top-0 z-40 w-full border-b bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between px-8 mx-auto">
-          <div className="font-bold text-xl tracking-tighter">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <header>
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'between', height: '4rem' }}>
+          <div style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>
             Security Studies 2026
           </div>
-          <nav className="flex gap-6 text-sm font-medium">
-            <Link href="/docs/approach" className="hover:text-zinc-500 transition-colors">
+          <nav style={{ display: 'flex', gap: '1.5rem' }}>
+            <Link href="/docs/approach" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'inherit', textDecoration: 'none' }}>
               Documentation
             </Link>
           </nav>
         </div>
       </header>
 
-      <main className="flex-1">
-        <section className="py-24 md:py-32">
-          <div className="container px-8 mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-zinc-50 dark:to-zinc-500 bg-clip-text text-transparent">
-              Master Software Security <br /> for the 2026 Landscape.
+      <main style={{ flex: 1 }}>
+        <section style={{ padding: '8rem 0', textAlign: 'center' }}>
+          <div className="container">
+            <h1 style={{ fontSize: '4.5rem', fontWeight: 900, letterSpacing: '-0.05em', marginBottom: '1.5rem', lineHeight: 1 }}>
+              Master Software Security <br /> for 2026.
             </h1>
-            <p className="text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p style={{ fontSize: '1.25rem', color: 'var(--zinc-500)', maxWidth: '42rem', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
               高度に産業化されたサイバー脅威、AIの兵器化、耐量子計算機暗号。
-              現代のエンジニアが知るべき、セキュア開発のすべてを体系化した完全ガイド。
+              現代のエンジニアが知るべき、セキュア開発のすべてを体系化した完全版ガイドブック。
             </p>
-            <div className="flex gap-4 justify-center">
-              <Link
-                href="/docs/approach"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 dark:bg-zinc-50 px-8 text-sm font-medium text-zinc-50 dark:text-zinc-900 hover:opacity-90 transition-opacity shadow-lg"
-              >
-                Get Started
-              </Link>
-            </div>
+            <Link
+              href="/docs/approach"
+              style={{
+                display: 'inline-flex',
+                height: '3.5rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '9999px',
+                backgroundColor: 'var(--fg)',
+                color: 'var(--bg)',
+                padding: '0 2.5rem',
+                fontSize: '1rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                transition: 'opacity 0.2s'
+              }}
+            >
+              Get Started
+            </Link>
           </div>
         </section>
 
-        <section className="py-24 border-t bg-zinc-50/50 dark:bg-zinc-900/50">
-          <div className="container px-8 mx-auto">
-            <h2 className="text-3xl font-bold tracking-tight mb-12 text-center">Documentation Categories</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section style={{ padding: '6rem 0', backgroundColor: 'var(--zinc-50)' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, textAlign: 'center', marginBottom: '4rem' }}>
+              Documentation Categories
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
               {docsConfig.sidebarNav.map((section) => (
-                <div key={section.title} className="p-8 rounded-2xl border bg-white dark:bg-zinc-950 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="text-xl font-bold mb-4">{section.title}</h3>
-                  <ul className="space-y-3">
+                <div key={section.title} style={{ padding: '2.5rem', backgroundColor: 'var(--bg)', borderRadius: '1rem', border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>{section.title}</h3>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.75rem' }}>
                     {section.items.map((item) => (
                       <li key={item.href}>
-                        <Link href={item.href} className="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors flex items-center gap-2">
-                          <span className="h-1.5 w-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+                        <Link href={item.href} style={{ color: 'var(--zinc-500)', textDecoration: 'none', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--zinc-300)' }} />
                           {item.title}
                         </Link>
                       </li>
@@ -62,10 +75,8 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="border-t py-12 bg-white dark:bg-zinc-950">
-        <div className="container px-8 mx-auto text-center text-sm text-zinc-500">
-          <p>© 2026 Security Studies Project. Advanced Security Guidance.</p>
-        </div>
+      <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--border)', textAlign: 'center', color: 'var(--zinc-500)', fontSize: '0.875rem' }}>
+        <p>© 2026 Security Studies Project. Advanced Security Guidance.</p>
       </footer>
     </div>
   );

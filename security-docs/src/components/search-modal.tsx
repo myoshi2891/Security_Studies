@@ -54,52 +54,74 @@ export function SearchModal() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm text-zinc-500 border rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          padding: '0.5rem 1rem',
+          fontSize: '0.875rem',
+          color: 'var(--zinc-500)',
+          backgroundColor: 'transparent',
+          border: '1px solid var(--border)',
+          borderRadius: '0.375rem',
+          cursor: 'pointer'
+        }}
       >
-        <Search className="w-4 h-4" />
+        <Search size={16} />
         <span>Search...</span>
-        <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-zinc-50 px-1.5 font-mono text-[10px] font-medium text-zinc-500 opacity-100 dark:bg-zinc-900">
-          <span className="text-xs">⌘</span>K
-        </kbd>
+        <span style={{ marginLeft: '1rem', fontSize: '0.75rem', opacity: 0.6 }}>⌘K</span>
       </button>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 bg-zinc-950/50 backdrop-blur-sm">
-      <div className="w-full max-w-xl bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="flex items-center gap-3 p-4 border-b dark:border-zinc-800">
-          <Search className="w-5 h-5 text-zinc-400" />
+    <div className="search-modal-backdrop" onClick={() => setIsOpen(false)}>
+      <div className="search-modal" onClick={(e) => e.stopPropagation()}>
+        <div style={{ display: 'flex', alignItems: 'center', padding: '1rem', borderBottom: '1px solid var(--border)', gap: '1rem' }}>
+          <Search size={20} color="var(--zinc-400)" />
           <input
             autoFocus
             placeholder="Search documentation..."
-            className="flex-1 bg-transparent outline-none text-zinc-900 dark:text-zinc-50"
+            style={{
+              flex: 1,
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              fontSize: '1rem',
+              color: 'var(--fg)'
+            }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded">
-            <X className="w-5 h-5 text-zinc-400" />
+          <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--zinc-400)' }}>
+            <X size={20} />
           </button>
         </div>
-        <div className="max-h-[400px] overflow-y-auto p-2">
+        <div style={{ padding: '0.5rem', overflowY: 'auto', maxHeight: '400px' }}>
           {results.length > 0 ? (
             results.map((result) => (
-              <button
+              <div
                 key={result.href}
                 onClick={() => onSelect(result.href)}
-                className="w-full flex flex-col items-start gap-1 p-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left transition-colors"
+                style={{
+                  padding: '1rem',
+                  borderRadius: '0.5rem',
+                  cursor: 'pointer',
+                  borderBottom: '1px solid var(--zinc-100)'
+                }}
+                className="search-result-item"
               >
-                <div className="flex items-center gap-2 text-sm font-bold text-zinc-900 dark:text-zinc-50">
-                  <FileText className="w-4 h-4 text-zinc-400" />
+                <div style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <FileText size={14} />
                   {result.title}
                 </div>
-                <div className="text-xs text-zinc-500 line-clamp-1">{result.description}</div>
-              </button>
+                <div style={{ fontSize: '0.75rem', color: 'var(--zinc-500)' }}>{result.description}</div>
+              </div>
             ))
-          ) : query ? (
-            <div className="p-8 text-center text-zinc-500 text-sm">No results found for &quot;{query}&quot;</div>
           ) : (
-            <div className="p-8 text-center text-zinc-500 text-sm">Type to start searching...</div>
+            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--zinc-500)', fontSize: '0.875rem' }}>
+              {query ? `No results for "${query}"` : "Type to start searching..."}
+            </div>
           )}
         </div>
       </div>
