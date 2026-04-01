@@ -16,90 +16,75 @@
 }
 
 :root {
-  background-color: #ffffff;
-  color: #09090b;
+  --background: #ffffff;
+  --foreground: #09090b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    background-color: #09090b;
-    color: #fafafa;
+    --background: #09090b;
+    --foreground: #fafafa;
   }
 }
 
-/* ━━ MDX Styling (Prose Replacement for v4) ━━ */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* ━━ MDX Styling (Typography Implementation) ━━ */
 .prose {
-  max-width: 65ch;
-  color: var(--color-zinc-700);
+  @apply max-w-none text-zinc-700 dark:text-zinc-300 leading-relaxed;
 }
 
 .prose h1 {
-  font-size: 2.25rem;
-  font-weight: 800;
-  margin-top: 0;
-  margin-bottom: 0.8888889em;
-  line-height: 1.1111111;
+  @apply text-4xl font-extrabold tracking-tight lg:text-5xl mt-8 mb-6 text-zinc-900 dark:text-zinc-50;
 }
 
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: 2em;
-  margin-bottom: 1em;
-  line-height: 1.3333333;
-  border-bottom: 1px solid var(--color-zinc-200);
-  padding-bottom: 0.3em;
+  @apply text-2xl font-bold tracking-tight mt-12 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50;
+}
+
+.prose h3 {
+  @apply text-xl font-bold mt-8 mb-4 text-zinc-900 dark:text-zinc-50;
 }
 
 .prose p {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
+  @apply my-5;
 }
 
 .prose ul {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-  padding-left: 1.625em;
-  list-style-type: disc;
+  @apply my-6 ml-6 list-disc;
 }
 
 .prose li {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  @apply mt-2;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 font-mono text-sm font-semibold text-zinc-900 dark:text-zinc-50;
+}
+
+.prose pre {
+  @apply my-6 p-4 rounded-lg bg-zinc-950 overflow-x-auto border border-zinc-800;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 font-normal text-zinc-300;
 }
 
 .prose table {
-  width: 100%;
-  table-layout: auto;
-  text-align: left;
-  margin-top: 2em;
-  margin-bottom: 2em;
-  font-size: 0.875em;
-  line-height: 1.7142857;
-}
-
-.prose thead {
-  border-bottom: 1px solid var(--color-zinc-300);
+  @apply w-full my-8 text-left border-collapse;
 }
 
 .prose th {
-  font-weight: 600;
-  padding: 0.5em;
+  @apply py-2 px-4 border-b-2 border-zinc-200 dark:border-zinc-800 font-bold;
 }
 
 .prose td {
-  padding: 0.5em;
-  border-bottom: 1px solid var(--color-zinc-100);
+  @apply py-2 px-4 border-b border-zinc-100 dark:border-zinc-800 align-top;
 }
 
-.dark .prose {
-  color: var(--color-zinc-300);
-}
-
-.dark .prose h2 {
-  border-color: var(--color-zinc-800);
-}
-
-.dark .prose td {
-  border-color: var(--color-zinc-800);
+.prose blockquote {
+  @apply pl-4 border-l-4 border-zinc-300 dark:border-zinc-700 italic text-zinc-600 dark:text-zinc-400;
 }
