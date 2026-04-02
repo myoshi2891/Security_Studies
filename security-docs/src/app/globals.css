@@ -160,17 +160,17 @@ body {
 }
 
 /* ━━ Utility Components ━━ */
-header {
+.docs-layout header {
   border-bottom: 1px solid var(--border);
   padding: 1rem 0;
 }
 
-aside {
+.docs-layout aside {
   border-right: 1px solid var(--border);
   padding-right: 2rem;
 }
 
-nav a {
+.docs-layout nav a {
   display: block;
   padding: 0.5rem 1rem;
   text-decoration: none;
@@ -180,13 +180,13 @@ nav a {
   font-size: 0.875rem;
 }
 
-nav a:hover {
+.docs-layout nav a:hover {
   background-color: var(--zinc-100);
   color: var(--fg);
 }
 
 @media (prefers-color-scheme: dark) {
-  nav a:hover { background-color: var(--zinc-800); }
+  .docs-layout nav a:hover { background-color: var(--zinc-800); }
 }
 
 /* ━━ Search Modal UI ━━ */

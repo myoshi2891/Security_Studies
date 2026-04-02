@@ -80,6 +80,7 @@ export function SearchModal() {
           <Search size={20} className="text-zinc-400" />
           <input
             autoFocus
+            aria-label="Search documentation"
             placeholder="Search documentation..."
             className="flex-1 bg-transparent border-none outline-none text-base text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-400"
             value={query}

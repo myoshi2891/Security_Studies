@@ -1,4 +1,4 @@
-## Includes / Directives
+# Includes / Directives
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 

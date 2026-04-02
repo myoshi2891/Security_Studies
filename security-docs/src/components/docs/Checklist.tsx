@@ -18,6 +18,16 @@ export interface ChecklistProps {
 export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
   const [checkedItems, setCheckedItems] = React.useState<boolean[]>(new Array(items.length).fill(false));
 
+  React.useEffect(() => {
+    setCheckedItems(prev => {
+      const newArray = new Array(items.length).fill(false);
+      for (let i = 0; i < Math.min(prev.length, items.length); i++) {
+        newArray[i] = prev[i];
+      }
+      return newArray;
+    });
+  }, [items]);
+
   const toggleItem = (index: number) => {
     const newChecked = [...checkedItems];
     newChecked[index] = !newChecked[index];

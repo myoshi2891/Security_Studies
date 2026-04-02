@@ -20,10 +20,8 @@ describe('Checklist', () => {
     // Check toggle
     const checkboxButton = item1.closest('button');
     expect(checkboxButton).toBeInTheDocument();
-    if (checkboxButton) {
-      fireEvent.click(checkboxButton);
-      // Status change should be reflected in aria-pressed
-      expect(checkboxButton).toHaveAttribute('aria-pressed', 'true');
-    }
+    fireEvent.click(checkboxButton!);
+    // Status change should be reflected in aria-pressed
+    expect(checkboxButton).toHaveAttribute('aria-pressed', 'true');
   });
 });
