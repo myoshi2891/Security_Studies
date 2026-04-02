@@ -52,7 +52,7 @@ This project aims to build a high-performance, secure, and modern documentation 
     - [ ] Extract clean Markdown from `html/software-supply-chain-security-2026-guide.html`.
     - [ ] Extract clean Markdown from `html/post-quantum-cryptography-2026-guide.html`.
     - [ ] Extract clean Markdown from `html/owasp-top-10-2025-guide.html`.
-    - [x] Extract clean Markdown from `html/threat-landscape-2026.html`.
+    - [x] Extract clean Markdown from `html/threat-landscape-2026.html`. (Completed with 100% fidelity)
 3. **TDD:** Run `bun run build` to ensure no broken links or missing frontmatter.
 4. **Commit:** `docs: migrate core security documents and initial ai guides to mdx`
 
