@@ -1,166 +1,111 @@
 ---
 title: "耐量子計算機暗号（PQC）2026 完全ガイド"
-description: "NIST FIPS 203/204/205確定版・Harvest Now Decrypt Later・Crypto-Agility・ハイブリッドアプローチを初学者向けに徹底解説。2026年3月版。"
+description: "量子コンピュータによる暗号崩壊「Q-Day」への備え。NIST標準アルゴリズム（ML-KEM/ML-DSA）とCrypto-Agility設計を初学者向けに徹底解説。2026年3月版。"
 ---
 
 <HeroSection
   section="07"
-  title={<>耐量子<br/>計算機<br/><span className="text-violet-400">暗号</span>（PQC）</>}
-  description="量子コンピュータの登場で現在の暗号（RSA・ECC）は解読される。「今すでに収集され、後で解読される」Harvest Now Decrypt Later攻撃は進行中。NIST FIPS 203/204/205が確定した2026年、移行は義務であり緊急事項です。"
+  title={<>耐量子計算機暗号<br/><span className="text-purple-400">PQC / Post-Quantum Cryptography</span></>}
+  description="量子コンピュータが現代の暗号（RSA/ECC）を突破する「Q-Day」。2026年、NISTによる標準化アルゴリズム（FIPS 203/204/205）が確定し、すべてのソフトウェア開発者に「Crypto-Agility（暗号アジリティ）」が求められています。その背景と実装戦略を解説します。"
   chips={[
     "📅 2026-03-25",
     "👤 初学者〜中級者",
-    "⏱ 読了 約30分",
-    "🔗 一次ソース付き",
-    "💻 実装コード付き",
-    "🔐 NIST FIPS 確定版"
+    "⏱ 読了 約25分",
+    "🔗 NIST FIPS 準拠",
+    "🛡️ Q-Day 対策",
+    "💻 実装例付き"
   ]}
 />
 
 <SectionCard
   eyebrow="Section 01 — Overview"
-  title={<>PQCとは何か<br/>なぜ「今すぐ」始めなければならないのか</>}
-  sub="耐量子計算機暗号（Post-Quantum Cryptography）は、量子コンピュータでも解読できない次世代暗号アルゴリズム群。2026年は移行の「始まり」ではなく「すでに遅れている」段階です。"
+  title="Q-Day と「今収集・後で解読」攻撃"
+  sub="量子コンピュータが実用化されるその日は、明日かもしれないし、10年後かもしれません。しかし、攻撃は「今日」行われています。"
 >
-  <HighlightBox type="violet">
-    **耐量子計算機暗号（PQC）**とは、現在広く使われているRSA・ECC（楕円曲線暗号）が量子コンピュータによって解読されることを見越して設計された、*格子ベース・ハッシュベース・符号ベース等の新しい数学的問題*に基づく暗号アルゴリズム群です。NISTが2024年8月に3つの標準（FIPS 203/204/205）を正式公開し、世界の政府・企業が移行を始めています。
+  <HighlightBox color="red">
+    **"Harvest Now, Decrypt Later"（今収集・後で解読）攻撃**
+    攻撃者は、量子コンピュータが完成していない**今日**、暗号化された通信データを大量に収集・蓄積しています。数年後に強力な量子コンピュータが登場した瞬間に、過去の機密データがすべて解読されます。**「将来も機密性を維持すべきデータ」は、今日からPQCで保護する必要があります。**
   </HighlightBox>
 
-  ### 現在の暗号が「なぜ」量子コンピュータに破られるのか
+  ### 量子コンピュータが壊す暗号、壊さない暗号
 
   <DataTable
-    headers={["現在の暗号", "安全性の根拠", "量子アルゴリズム", "突破速度"]}
+    headers={["暗号の種類", "具体例", "量子コンピュータの影響", "対策"]}
     rows={[
-      [<Tag type="violet">RSA-2048</Tag>, "大きな数の素因数分解が困難", "Shorのアルゴリズム", <Tag type="red">指数関数的短縮（数時間〜）</Tag>],
-      [<Tag type="violet">ECC（P-256等）</Tag>, "楕円曲線上の離散対数問題", "Shorのアルゴリズム", <Tag type="red">RSA同様に破られる</Tag>],
-      [<Tag type="violet">DH鍵交換</Tag>, "離散対数問題", "Shorのアルゴリズム", <Tag type="red">同様に無効化</Tag>],
-      [<Tag type="violet">AES-256（対称）</Tag>, "鍵空間の広さ", "Groverのアルゴリズム", <Tag type="amber">セキュリティ半減（128bit相当）</Tag>],
-      [<Tag type="violet">SHA-256（ハッシュ）</Tag>, "一方向性・衝突耐性", "Groverの影響小", <Tag type="green">SHA-384/512で十分対応可能</Tag>]
+      ["公開鍵暗号（署名・鍵交換）", "RSA, ECC (Elliptic Curve), Diffie-Hellman", <Tag color="red">完全に崩壊</Tag>, "PQCアルゴリズムへの移行"],
+      ["共通鍵暗号（秘匿）", "AES-128, AES-256", <Tag color="yellow">安全性が半減（Groverのアルゴリズム）</Tag>, "鍵長を2倍（AES-256）にする"],
+      ["ハッシュ関数", "SHA-2, SHA-3", <Tag color="green">影響は軽微</Tag>, "ハッシュ長を増やす（SHA-384/512）"]
     ]}
   />
-
-  <Callout type="red" title="重要な認識：量子コンピュータは「まだない」が問題はすでに起きている">
-    Shorのアルゴリズムを実行できる大規模量子コンピュータ（CRQC）は現時点で存在しません。しかし**国家レベルの攻撃者はすでに暗号化されたデータを大量に記録・保存**しています。10年後にCRQCが完成した瞬間、今日収集したデータがすべて解読されます。これが「Harvest Now, Decrypt Later（今収集し、後で解読）」攻撃の本質です。
-  </Callout>
 
   <SourceReferences
     sources={[
-      {
-        title: "Post-Quantum Cryptography — NIST CSRC",
-        url: "https://csrc.nist.gov/projects/post-quantum-cryptography",
-        description: "NISTのPQC標準化プロジェクト公式ページ（一次ソース）"
-      },
-      {
-        title: "The Rise of Quantum-Resistant Cryptography — Ian Khan",
-        url: "https://the-undisrupted-future-with-ian-khan.ghost.io/the-rise-of-quantum-resistant-cryptography/",
-        description: "2026年セキュリティ戦略とPQC移行の緊急性の解説"
-      }
+      { title: "NIST Post-Quantum Cryptography Standardization", url: "https://csrc.nist.gov/projects/post-quantum-cryptography-standardization" },
+      { title: "The Quantum Menace: Why We Need PQC Today — Cloudflare", url: "https://blog.cloudflare.com/post-quantum-crypto-ga/" }
     ]}
   />
 </SectionCard>
 
 <SectionCard
-  eyebrow="Section 02 — 最重要脅威"
-  title={<>Harvest Now, Decrypt Later<br/>― すでに進行中の攻撃を理解する</>}
-  sub="HNDL攻撃は未来の脅威ではない。国家支援型攻撃者は今この瞬間もデータを収集している。長期秘匿が必要なすべてのデータが今すぐ危険にさらされている。"
+  eyebrow="Section 02 — Standards"
+  title="NIST PQC 標準アルゴリズム（2026年最新）"
+  sub="2024年にFIPS規格として正式採用された、世界標準の耐量子暗号アルゴリズム。"
 >
-  <AttackFlow
-    title="HARVEST NOW, DECRYPT LATER 攻撃フロー"
-    steps={[
-      {
-        title: "Phase 1（現在 — 継続中）",
-        description: "国家支援型攻撃者が政府・金融・医療の暗号化通信（VPN・TLS等）を大量に傍受・保存。ストレージに蓄積し続ける。",
-        isWarning: false
-      },
-      {
-        title: "Phase 2（5〜15年後 — Q-Day）",
-        description: "量子コンピュータ実用化。収集済みのすべての過去データを一括解読。10〜30年の機密保持が必要な情報が流出する。",
-        isWarning: true
-      }
-    ]}
-  />
-
-  ### どのシステムが優先的に脅威にさらされるか
-
   <DataTable
-    headers={["システム種別", "機密保持期間", "PQC移行の緊急度", "理由"]}
+    headers={["FIPS規格番号", "アルゴリズム名（通称）", "主な用途", "技術的背景"]}
     rows={[
-      ["政府・国防・外交", "50年以上", <Tag type="red">極めて高い</Tag>, "国家安全保障への甚大な影響"],
-      ["医療記録・ゲノムデータ", "生涯〜数十年", <Tag type="red">極めて高い</Tag>, "個人への永続的な被害"],
-      ["金融取引・決済インフラ", "10〜30年", <Tag type="red">極めて高い</Tag>, "記録の改ざん・否認が可能に"],
-      ["知的財産・R&Dデータ", "10〜25年", <Tag type="amber">高い</Tag>, "競合他社への長期秘密流出"],
-      ["一般的なWebサービス", "1〜5年", <Tag type="blue">中程度</Tag>, "短期秘匿データへの影響は相対的に低い"]
+      [<Tag color="purple">FIPS 203</Tag>, <span className="font-bold text-[#f0f6ff]">ML-KEM (Kyber)</span>, "鍵交換 (TLS等)", "格子暗号に基づく。高速で鍵サイズが小さい。"],
+      [<Tag color="purple">FIPS 204</Tag>, <span className="font-bold text-[#f0f6ff]">ML-DSA (Dilithium)</span>, "デジタル署名 (証明書)", "格子暗号に基づく。高い信頼性と効率性。"],
+      [<Tag color="purple">FIPS 205</Tag>, <span className="font-bold text-[#f0f6ff]">SLH-DSA (SPHINCS+)</span>, "ハッシュベース署名", "ハッシュ関数のみに依存。格子暗号が破られた際のバックアップ。"]
     ]}
   />
 
-  <Callout type="amber" title="「量子コンピュータはまだない」が対策を遅らせる理由にならない理由">
-    PQC移行には通常**5〜10年のリードタイム**が必要です。10年後にCRQCが実用化されるなら、*今すぐ移行を開始しなければ間に合いません。* 専門家は「Q-Day」を2030〜2035年頃と見積もっています。
+  <Callout type="info" title="格子暗号（Lattice-based Cryptography）">
+    PQCの主流である格子暗号は、多次元空間における「最短ベクトル問題」という、量子コンピュータでも効率的に解けない非常に難しい数学的問題に基づいています。
   </Callout>
 </SectionCard>
 
 <SectionCard
-  eyebrow="Section 03 — NIST 標準アルゴリズム"
-  title={<>NIST FIPS 203 / 204 / 205<br/>― 2024年8月正式確定の3標準</>}
-  sub="長年の選考プロセスを経て2024年8月13日に正式公開。これが世界の移行基準となるPQC標準アルゴリズム。"
+  eyebrow="Section 03 — Hybrid Strategy"
+  title="ハイブリッド鍵交換：現実的な移行の第一歩"
+  sub="いきなりPQCに完全に切り替えるのではなく、既存の暗号と組み合わせて安全性を担保する戦略。"
 >
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-    <ThreatCard title="FIPS 203: ML-KEM" severity="info">
-      **鍵交換 / TLS用**。格子暗号ベース。ML-KEM-768（192bit相当）が推奨設定。
-    </ThreatCard>
-    <ThreatCard title="FIPS 204: ML-DSA" severity="high">
-      **デジタル署名 / 認証用**。コード署名・証明書に使用。ML-DSA-65が推奨。
-    </ThreatCard>
-    <ThreatCard title="FIPS 205: SLH-DSA" severity="medium">
-      **ハッシュベース署名**。格子暗号の欠陥に備えた保険。長期保存データ向き。
-    </ThreatCard>
-  </div>
+  <p className="mb-6">
+    PQCアルゴリズムは比較的新しいため、実装上のバグや未知の数学的脆弱性が発見されるリスクがゼロではありません。これを防ぐために、**既存のECCとPQCを同時に使用する「ハイブリッド方式」**が推奨されています。
+  </p>
 
-  <Callout type="violet" title="候補4: FN-DSA（FALCON）について">
-    FALCON（FIPS 206）も選定されています。署名サイズが小さくIoT向きですが、実装難易度が高いため、まずは **ML-DSAでの実装を推奨** します。
-  </Callout>
+  <AttackFlow label="ハイブリッド鍵交換の仕組み">
+    <strong>Step 1:</strong> 従来のX25519（楕円曲線）で共有鍵Aを生成。<br/><br/>
+    <strong>Step 2:</strong> PQCのML-KEM（格子暗号）で共有鍵Bを生成。<br/><br/>
+    <strong>Step 3:</strong> 鍵Aと鍵Bを結合（KDF）して最終的なセッション鍵を作成。<br/><br/>
+    <strong>結果:</strong> 量子コンピュータがECCを破っても、PQCが守る。万一PQCに脆弱性があっても、従来のECCが守る。
+  </AttackFlow>
 
-  ### 現在の暗号 vs PQC 比較
-
-  <DataTable
-    headers={["アルゴリズム", "種別", "公開鍵サイズ", "署名/暗号文サイズ", "量子耐性"]}
-    rows={[
-      ["RSA-2048", "署名/KEM", "256 bytes", "256 bytes", <Tag type="red">なし</Tag>],
-      ["ECDSA P-256", "署名", "64 bytes", "64 bytes", <Tag type="red">なし</Tag>],
-      ["ML-KEM-768", "KEM", "1,184 bytes", "1,088 bytes", <Tag type="green">✓ あり</Tag>],
-      ["ML-DSA-65", "署名", "1,952 bytes", "3,309 bytes", <Tag type="green">✓ あり</Tag>],
-      ["SLH-DSA-128f", "署名", "32 bytes", "17,088 bytes", <Tag type="green">✓ あり</Tag>]
+  <SourceReferences
+    sources={[
+      { title: "Hybrid Post-Quantum Key Exchange in TLS — IETF", url: "https://datatracker.ietf.org/doc/html/draft-ietf-tls-hybrid-design" }
     ]}
   />
-
-  <Callout type="amber" title="PQCの最大の課題：鍵・署名サイズの増大">
-    PQCは現在の暗号と比較して**鍵・署名サイズが数10倍〜100倍**になります。TLSハンドシェイクの遅延や、証明書チェーンのサイズ増大を引き起こすため、アーキテクチャ設計段階での評価が必須です。
-  </Callout>
 </SectionCard>
 
 <SectionCard
-  eyebrow="Section 04 — 各国移行タイムライン"
-  title={<>グローバル規制ロードマップ<br/>― あなたの組織が従うべき期限</>}
-  sub="米国CNSA 2.0・EU ENISA・英国NCSC等が明確な期限を定義。2035年までの完全移行が世界標準となっています。"
+  eyebrow="Section 04 — Timeline"
+  title="PQC移行ロードマップ"
+  sub="米国CNSA 2.0に基づく、政府および重要インフラの移行期限。"
 >
-  ### 米国 CNSA 2.0（国家安全保障アルゴリズム スイート）
-
   <StepTimeline
     steps={[
       {
-        title: "2025年: ソフトウェア・クラウド署名",
-        description: "ソフトウェア配布やクラウドサービスの署名にML-DSAを採用開始。"
+        title: "2024〜2026年: 評価とテスト",
+        content: "NIST FIPSの正式発行。ブラウザ（Chrome/Edge）やライブラリでの実験的サポート開始。"
       },
       {
-        title: "2026年: ネットワーク機器の移行 (現在)",
-        description: "VPN・ルーター・スイッチ等でPQCサポートを開始。ハイブリッドモードでの段階的移行期間。"
-      },
-      {
-        title: "2030年: レガシーシステムの段階的廃止",
-        description: "RSA・ECCを使用したシステムの段階的廃止開始。"
+        title: "2030年: デフォルト化",
+        content: "新しいWebトラフィック・VPN・署名インフラでPQCハイブリッドが標準設定になる。"
       },
       {
         title: "2035年: NSS完全量子耐性化",
-        description: "国家安全保障システムでのRSA・ECC等の使用を完全禁止。"
+        content: "国家安全保障システムでのRSA・ECC等の使用を完全禁止。"
       }
     ]}
   />
@@ -170,36 +115,34 @@ description: "NIST FIPS 203/204/205確定版・Harvest Now Decrypt Later・Crypt
   <DataTable
     headers={["機関・地域", "2026年", "2028〜30年", "2033〜35年"]}
     rows={[
-      ["米国 CNSA 2.0", "ネットワーク機器対応開始", "レガシー暗号の廃止", <Tag type="red">RSA/ECC完全禁止</Tag>],
+      ["米国 CNSA 2.0", "ネットワーク機器対応開始", "レガシー暗号の廃止", <Tag color="red">RSA/ECC完全禁止</Tag>],
       ["EU ENISA", "国家移行マップ確立", "高リスク用途でデフォルト化", "可能な限り完全移行"],
       ["英国 NCSC", "システム発見・計画立案", "優先システムのパイロット移行", "全サービスの完全採用"]
     ]}
   />
 
   <Callout type="red" title="企業への影響：政府調達要件・コンプライアンス">
-    米国政府との取引にはNIST準拠が調達条件となり、EUではGDPR・CRAと組み合わせてPQC対応が実質要件化しています。2026年から「PQCロードマップの有無」が取締役会への説明責任に含まれるようになっています。
+    米国政府との取引にはNIST準拠が調達条件となり、EUではGDPR・CRAと組み合わせてPQC対応が実質要件化しています。
   </Callout>
 </SectionCard>
 
 <SectionCard
   eyebrow="Section 05 — 設計原則"
   title={<>Crypto-Agility（暗号の俊敏性）<br/>― アルゴリズムをハードコードしない設計</>}
-  sub="特定の暗号アルゴリズムをコードに埋め込まず、設定変更だけで切り替えられる設計。PQC移行を成功させる唯一の持続可能なアーキテクチャ。"
+  sub="特定の暗号アルゴリズムをコードに埋め込まず、設定変更だけで切り替えられる設計。"
 >
-  <HighlightBox type="violet">
+  <HighlightBox color="blue">
     **Crypto-Agilityとは？** — 暗号アルゴリズムをシステムの他の部分から分離し、コードを変更せずに設定・モジュール交換だけで暗号方式を変更できる設計思想です。
   </HighlightBox>
 
   <CompareGrid
-    leftTitle="❌ Crypto-Agility なし"
-    leftItems={[
+    bad={[
       "アルゴリズム名（RSA/AES）をコードに埋め込み",
       "鍵サイズを定数で管理",
       "暗号ライブラリを直接各所でimport",
       "変更時に全コードの修正と再テストが必要"
     ]}
-    rightTitle="✅ Crypto-Agility あり"
-    rightItems={[
+    good={[
       "暗号アルゴリズムを設定ファイルで管理",
       "抽象インターフェースを通じて実行",
       "プロバイダーをDI（依存性注入）で交換可能",
@@ -207,130 +150,35 @@ description: "NIST FIPS 203/204/205確定版・Harvest Now Decrypt Later・Crypt
     ]}
   />
 
-  <Terminal
-    title="crypto-agility.ts — 抽象インターフェースによる設計"
-    code={`// 設定から動的に読み込む設計
-interface CryptoProvider {
-  generateKeyPair(): Promise<KeyPair>;
-  sign(data: Uint8Array, privateKey: Uint8Array): Promise<Uint8Array>;
-  encapsulate(publicKey: Uint8Array): Promise<EncapsulatedSecret>;
-}
+  <Terminal title="crypto-agility-example.ts">
+{`// ❌ Bad: ハードコード
+const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
 
-// 移行期のハイブリッドプロバイダー例
-class HybridKEMProvider implements CryptoProvider {
-  constructor(
-    private classical: CryptoProvider, // X25519
-    private pqc: CryptoProvider,       // ML-KEM-768
-  ) {}
-
-  async encapsulate(publicKey: Uint8Array) {
-    const c = await this.classical.encapsulate(publicKey);
-    const p = await this.pqc.encapsulate(publicKey);
-    return {
-      sharedSecret: xor(c.sharedSecret, p.sharedSecret),
-      ciphertext: concat(c.ciphertext, p.ciphertext)
-    };
-  }
-}`}
-  />
-
-  <Terminal
-    title="crypto.yml — アルゴリズム設定"
-    code={`# ハイブリッドモード（2026年）
-crypto:
-  kex: "X25519+ML-KEM-768"
-  sig: "Ed25519+ML-DSA-65"
-  sym: "AES-256-GCM"`}
-  />
+// ✅ Good: Crypto-Agility
+const algorithm = process.env.ENCRYPTION_ALGORITHM || 'ML-KEM-768';
+const cipher = cryptoProvider.getEncryptionInstance(algorithm, key);`}
+  </Terminal>
 </SectionCard>
 
 <SectionCard
-  eyebrow="Section 06 — 移行戦略"
-  title={<>ハイブリッドアプローチ<br/>― 安全に移行するための現実的な戦略</>}
-  sub="旧来の暗号とPQCを同時に使用することで、従来型・量子両方の攻撃に対して堅牢性を維持します。"
->
-  <HighlightBox type="teal">
-    **なぜハイブリッドか？** — PQCは歴史が浅く、未知の数学的欠陥が発見されるリスクがゼロではありません。ハイブリッド（旧暗号 + PQC）なら、**両方同時に破られない限り安全**という設計になります。
-  </HighlightBox>
-
-  ### ハイブリッドTLS 1.3 の仕組み（X25519 + ML-KEM-768）
-  クライアントとサーバーは両方の鍵交換を独立して実行し、それぞれの共有秘密をKDF（鍵導出関数）で結合します。
-
-  <Terminal
-    title="nginx-pqc.conf — NGINXでの設定例"
-    code={`# OQS-OpenSSL を使用したハイブリッドKEM指定
-server {
-    listen 443 ssl;
-    # X25519MLKEM768 = X25519 + ML-KEM-768 のハイブリッド
-    ssl_conf_command Groups X25519MLKEM768:X25519:P-256;
-    ssl_protocols TLSv1.3;
-}`}
-  />
-</SectionCard>
-
-<SectionCard
-  eyebrow="Section 07 — 実践ステップ"
-  title={<>PQC移行 4ステップ<br/>― 今日から始める実践ロードマップ</>}
-  sub="開発者・セキュリティチームが今週から実行できる具体的なアクション。"
->
-  <StepTimeline
-    steps={[
-      {
-        title: "暗号資産インベントリ（CBOM）の作成",
-        description: "TLS証明書・VPN・SSH・JWT等で公開鍵暗号が使われている箇所をリスト化します。"
-      },
-      {
-        title: "Crypto-Agility基盤の構築",
-        description: "アルゴリズムのハードコードを特定し、抽象レイヤーと設定による管理へ移行します。"
-      },
-      {
-        title: "ハイブリッドモードのパイロットテスト",
-        description: "テスト環境でハイブリッドTLSを構成し、ハンドシェイク遅延やCPU負荷を計測します。"
-      },
-      {
-        title: "デュアルスタックPKI構築とベンダー管理",
-        description: "PQCと従来暗号の両方を発行できるPKIを構築し、SaaSベンダーのPQC対応状況を確認します。"
-      }
-    ]}
-  />
-
-  ### PQC対応ライブラリ・ツール（2026年）
-
-  <DataTable
-    headers={["ツール", "言語", "サポートアルゴリズム", "用途"]}
-    rows={[
-      ["liboqs", "C/Python/Go/Rust", "ML-KEM, ML-DSA等", "リファレンス実装・実験向け"],
-      ["Bouncy Castle", "Java/Kotlin", "ML-KEM, ML-DSA", "エンタープライズJava用"],
-      ["AWS KMS", "マネージド", "ML-KEM-768", "PQCハイブリッド鍵管理"],
-      ["pqcrypto (Rust)", "Rust", "ML-KEM-512/768/1024", "高性能Rustアプリ向け"]
-    ]}
-  />
-</SectionCard>
-
-<SectionCard
-  eyebrow="Section 08 — チェックリスト"
-  title="PQC移行 実践チェックリスト"
+  eyebrow="Checklist"
+  title="PQC対応 準備状況チェックリスト"
 >
   <Checklist
-    title="移行準備状況"
     items={[
-      { text: "組織内でRSA・ECCを使用しているシステムをCBOMとしてリスト化している", checked: true },
-      { text: "長期秘匿が必要なデータ（10年以上）を特定し、優先保護対象としている", checked: true },
-      { text: "暗号アルゴリズムを設定ファイルで管理する抽象レイヤーを導入した", checked: true },
-      { text: "テスト環境でML-KEM-768のハンドシェイク性能を計測・評価した", checked: true },
-      { text: "主要クラウドプロバイダーのPQC対応状況を追跡している", checked: true },
-      { text: "Harvest Now Decrypt Later攻撃への対策を経営層に報告した", checked: true }
+      { text: "暗号資産インベントリ（どこでどの暗号を使っているか）を作成している", tag: "REQUIRED" },
+      { text: "依存ライブラリ（OpenSSL, BoringSSL等）がPQC対応版か確認している", tag: "HIGH" },
+      { text: "新しいシステムでアルゴリズムをハードコードせず設定可能にしている", tag: "CRITICAL" },
+      { text: "10年以上の機密保持が必要なデータに対しPQC適用の検討を始めた", tag: "HIGH" }
     ]}
   />
 </SectionCard>
 
 <SectionCard
-  eyebrow="総括"
-  title="「始めた者だけが間に合う」― PQC移行は今から"
+  eyebrow="Summary"
+  title="開発者が今日からすべきこと"
 >
-  量子コンピュータの実用化を待つことはできません。**移行には5〜10年のリードタイムが必要**であり、HNDL攻撃によって*今日の暗号化データはすでに危険にさらされています*。NIST FIPS標準が確定した今、技術的根拠は揃いました。あとは組織として行動を起こすだけです。
-
-  <Callout type="violet" title="セキュリティシリーズ 完結">
-    これをもって「01. 脅威ランドスケープ」から「07. 耐量子計算機暗号（PQC）」まで、2026年のソフトウェア開発セキュリティの全体像を網羅しました。継続的なセキュリティ改善サイクルを組織に組み込んでください。
-  </Callout>
+  <p className="mb-6">
+    PQCへの移行はマラソンです。今すぐすべてを切り替える必要はありませんが、**「将来切り替え可能なように作っておくこと（Crypto-Agility）」**は、2026年のエンジニアにとって必須の義務です。
+  </p>
 </SectionCard>

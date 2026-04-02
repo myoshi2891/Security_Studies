@@ -6,17 +6,17 @@ describe('DataTable', () => {
   test('renders headers and data', () => {
     render(
       <DataTable 
-        headers={["Tool", "Risk"]}
+        headers={["UniqueTool", "UniqueRisk"]}
         rows={[
-          ["Copilot", "Medium"],
-          ["Cursor", "Low"]
+          ["UniqueCopilot", "UniqueMedium"],
+          ["UniqueCursor", "UniqueLow"]
         ]}
       />
     );
 
-    expect(screen.getByText('Tool')).toBeInTheDocument();
-    expect(screen.getByText('Risk')).toBeInTheDocument();
-    expect(screen.getByText('Copilot')).toBeInTheDocument();
-    expect(screen.getByText('Medium')).toBeInTheDocument();
+    expect(screen.getByText('UniqueTool')).toBeInTheDocument();
+    expect(screen.getByText('UniqueRisk')).toBeInTheDocument();
+    expect(screen.getByText('UniqueCopilot')).toBeInTheDocument();
+    expect(screen.getByText('UniqueMedium')).toBeInTheDocument();
   });
 });

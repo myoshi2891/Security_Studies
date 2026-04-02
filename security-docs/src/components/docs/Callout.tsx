@@ -1,18 +1,22 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Info, AlertTriangle, AlertCircle, CheckCircle } from 'lucide-react';
+import { Info, AlertTriangle, AlertCircle, CheckCircle, Flame } from 'lucide-react';
 
 export interface CalloutProps {
-  type: 'info' | 'warning' | 'danger' | 'success';
+  type: 'info' | 'warning' | 'danger' | 'success' | 'toxic' | 'red' | 'amber' | 'lime' | 'blue';
   title?: string;
   children: React.ReactNode;
   className?: string;
 }
 
 export const Callout: React.FC<CalloutProps> = ({ type, title, children, className }) => {
-  const styles = {
+  const styles: Record<string, { container: string; icon: React.ReactNode }> = {
     info: {
+      container: "bg-blue-400/10 border-l-blue-400",
+      icon: <Info className="w-4 h-4 text-blue-400" />,
+    },
+    blue: {
       container: "bg-blue-400/10 border-l-blue-400",
       icon: <Info className="w-4 h-4 text-blue-400" />,
     },
@@ -20,17 +24,33 @@ export const Callout: React.FC<CalloutProps> = ({ type, title, children, classNa
       container: "bg-yellow-400/10 border-l-yellow-400",
       icon: <AlertTriangle className="w-4 h-4 text-yellow-400" />,
     },
+    amber: {
+      container: "bg-yellow-400/10 border-l-yellow-400",
+      icon: <AlertTriangle className="w-4 h-4 text-yellow-400" />,
+    },
     danger: {
       container: "bg-red-400/10 border-l-red-400",
       icon: <AlertCircle className="w-4 h-4 text-red-400" />,
+    },
+    red: {
+      container: "bg-red-400/10 border-l-red-400",
+      icon: <AlertCircle className="w-4 h-4 text-red-400" />,
+    },
+    toxic: {
+      container: "bg-purple-400/10 border-l-purple-400",
+      icon: <Flame className="w-4 h-4 text-purple-400" />,
     },
     success: {
       container: "bg-emerald-400/10 border-l-emerald-400",
       icon: <CheckCircle className="w-4 h-4 text-emerald-400" />,
     },
+    lime: {
+      container: "bg-emerald-400/10 border-l-emerald-400",
+      icon: <CheckCircle className="w-4 h-4 text-emerald-400" />,
+    },
   };
 
-  const style = styles[type];
+  const style = styles[type] || styles.info;
 
   return (
     <div className={twMerge(clsx("flex gap-3.5 p-4 rounded-md my-5 border-l-[3px] font-sans text-[0.875rem] leading-[1.78]", style.container, className))}>
