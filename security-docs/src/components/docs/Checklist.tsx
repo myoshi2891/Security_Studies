@@ -25,7 +25,7 @@ export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
   };
 
   const completedCount = checkedItems.filter(Boolean).length;
-  const progressPercent = (completedCount / items.length) * 100;
+  const progressPercent = items.length === 0 ? 0 : (completedCount / items.length) * 100;
 
   return (
     <div className={twMerge(clsx("my-5 space-y-4", className))}>
@@ -44,11 +44,13 @@ export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
 
       <div className="space-y-1.5">
         {items.map((item, index) => (
-          <div 
+          <button 
             key={index}
+            type="button"
             onClick={() => toggleItem(index)}
+            aria-pressed={checkedItems[index]}
             className={clsx(
-              "flex items-start gap-3 px-3.5 py-2.5 rounded-md border cursor-pointer transition-all duration-150 select-none",
+              "w-full text-left flex items-start gap-3 px-3.5 py-2.5 rounded-md border cursor-pointer transition-all duration-150 select-none",
               checkedItems[index] 
                 ? "bg-emerald-500/5 border-emerald-500/30 text-[#e2e8f4]" 
                 : "bg-[#0d1117] border-[#2a3548] text-[#94a3b8] hover:border-[#374860]"
@@ -66,11 +68,11 @@ export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
               {item.text}
             </span>
             {item.tag && (
-              <span className="font-mono text-[0.6rem] font-bold px-1.5 py-0.5 rounded bg-[#1c2333] text-[#5a7090] uppercase tracking-wider ml-auto shrink-0">
+              <span className="font-mono text-[0.6rem] font-bold px-1.5 py-0.5 rounded bg-[#1c2333] text-[#5a7090] uppercase tracking-wider ml-auto shrink-0 mt-[2px]">
                 {item.tag}
               </span>
             )}
-          </div>
+          </button>
         ))}
       </div>
     </div>

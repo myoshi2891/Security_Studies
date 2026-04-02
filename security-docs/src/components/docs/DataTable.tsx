@@ -18,6 +18,7 @@ export const DataTable: React.FC<DataTableProps> = ({ headers, rows, className }
               {headers.map((header, index) => (
                 <th 
                   key={index} 
+                  scope="col"
                   className="px-4 py-2.5 text-left font-mono font-bold text-[#94a3b8] uppercase tracking-wider text-[0.65rem]"
                 >
                   {header}

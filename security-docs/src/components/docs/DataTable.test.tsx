@@ -18,5 +18,7 @@ describe('DataTable', () => {
     expect(screen.getByText('UniqueRisk')).toBeInTheDocument();
     expect(screen.getByText('UniqueCopilot')).toBeInTheDocument();
     expect(screen.getByText('UniqueMedium')).toBeInTheDocument();
+    expect(screen.getByText('UniqueCursor')).toBeInTheDocument();
+    expect(screen.getByText('UniqueLow')).toBeInTheDocument();
   });
 });

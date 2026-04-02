@@ -17,7 +17,7 @@ export const CompareGrid: React.FC<CompareGridProps> = ({ bad, good, className }
         <span className="font-mono text-[0.65rem] font-bold tracking-[0.08em] uppercase text-red-400 mb-3.5 block">
           BAD PRACTICE
         </span>
-        <ul className={clsx(commonUlClass, "[&>li::before]:content-['✗'] [&>li::before]:text-red-500")}>
+        <ul aria-label="Bad practices list" className={clsx(commonUlClass, "[&>li::before]:content-['✗'] [&>li::before]:text-red-500")}>
           {bad.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
@@ -27,7 +27,7 @@ export const CompareGrid: React.FC<CompareGridProps> = ({ bad, good, className }
         <span className="font-mono text-[0.65rem] font-bold tracking-[0.08em] uppercase text-emerald-400 mb-3.5 block">
           GOOD PRACTICE
         </span>
-        <ul className={clsx(commonUlClass, "[&>li::before]:content-['✓'] [&>li::before]:text-emerald-500")}>
+        <ul aria-label="Good practices list" className={clsx(commonUlClass, "[&>li::before]:content-['✓'] [&>li::before]:text-emerald-500")}>
           {good.map((item, index) => (
             <li key={index}>{item}</li>
           ))}

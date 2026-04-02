@@ -18,10 +18,12 @@ describe('Checklist', () => {
     expect(screen.getByText('REQUIRED')).toBeInTheDocument();
     
     // Check toggle
-    const checkbox = item1.parentElement?.querySelector('div[class*="border"]');
-    if (checkbox) {
-      fireEvent.click(item1);
-      // Status change should be reflected in class or icon (check implementation)
+    const checkboxButton = item1.closest('button');
+    expect(checkboxButton).toBeInTheDocument();
+    if (checkboxButton) {
+      fireEvent.click(checkboxButton);
+      // Status change should be reflected in aria-pressed
+      expect(checkboxButton).toHaveAttribute('aria-pressed', 'true');
     }
   });
 });
