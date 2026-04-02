@@ -12,6 +12,7 @@ export function SearchModal() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [fuse, setFuse] = useState<Fuse<SearchResult> | null>(null);
   const [isError, setIsError] = useState(false);
+  const [shortcutLabel, setShortcutLabel] = useState("Ctrl+K");
   const router = useRouter();
 
   useEffect(() => {
@@ -44,6 +45,14 @@ export function SearchModal() {
   }, []);
 
   useEffect(() => {
+    // Detect Mac platform for accurate shortcut rendering client-side
+    const isMac = typeof window !== "undefined" && /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
+    if (isMac) {
+      setShortcutLabel("⌘K");
+    }
+  }, []);
+
+  useEffect(() => {
     if (fuse && query) {
       const searchResults = fuse.search(query).map(r => r.item);
       setResults(searchResults);
@@ -67,7 +76,11 @@ export function SearchModal() {
         <Search size={16} />
         <span className="flex-1 text-left">Search...</span>
         <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 px-1.5 font-mono text-[10px] font-medium text-zinc-500 opacity-100">
-          <span className="text-xs">⌘</span>K
+          {shortcutLabel === "⌘K" ? (
+            <><span className="text-xs">⌘</span>K</>
+          ) : (
+            <>{shortcutLabel}</>
+          )}
         </kbd>
       </button>
     );
