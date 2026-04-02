@@ -1,4 +1,5 @@
 import type { MDXComponents } from 'mdx/types';
+import * as Docs from './components/docs';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -9,6 +10,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ul: ({ children }) => <ul className="my-6 ml-6 list-disc [&>li]:mt-2">{children}</ul>,
     li: ({ children }) => <li>{children}</li>,
     code: ({ children }) => <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">{children}</code>,
+    // Custom Components
+    HeroSection: Docs.HeroSection,
+    SectionCard: Docs.SectionCard,
+    RiskBadge: Docs.RiskBadge,
+    ThreatCard: Docs.ThreatCard,
+    AttackFlow: Docs.AttackFlow,
+    DefenseList: Docs.DefenseList,
+    Terminal: Docs.Terminal,
+    CompareGrid: Docs.CompareGrid,
+    StepTimeline: Docs.StepTimeline,
+    Callout: Docs.Callout,
+    HighlightBox: Docs.HighlightBox,
+    SourceReferences: Docs.SourceReferences,
+    Checklist: Docs.Checklist,
+    DataTable: Docs.DataTable,
+    Tag: Docs.Tag,
     ...components,
   };
 }
