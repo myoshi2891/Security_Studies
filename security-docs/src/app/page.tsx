@@ -3,66 +3,53 @@ import { docsConfig } from "@/config/docs";
 
 export default function HomePage() {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <header>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'between', height: '4rem' }}>
-          <div style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>
+    <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950">
+      <header className="border-b dark:border-zinc-800">
+        <div className="container flex items-center justify-between h-16">
+          <div className="font-black text-xl tracking-tight text-zinc-900 dark:text-zinc-50">
             Security Studies 2026
           </div>
-          <nav style={{ display: 'flex', gap: '1.5rem' }}>
-            <Link href="/docs/approach" style={{ fontSize: '0.875rem', fontWeight: 500, color: 'inherit', textDecoration: 'none' }}>
+          <nav className="flex gap-6">
+            <Link href="/docs/approach" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50 transition-colors no-underline">
               Documentation
             </Link>
           </nav>
         </div>
       </header>
 
-      <main style={{ flex: 1 }}>
-        <section style={{ padding: '8rem 0', textAlign: 'center' }}>
-          <div className="container">
-            <h1 style={{ fontSize: '4.5rem', fontWeight: 900, letterSpacing: '-0.05em', marginBottom: '1.5rem', lineHeight: 1 }}>
+      <main className="flex-1">
+        <section className="py-32 text-center bg-zinc-50 dark:bg-zinc-900/50">
+          <div className="container max-w-5xl">
+            <h1 className="text-6xl md:text-7xl font-black tracking-tighter mb-6 leading-[1.1] text-zinc-900 dark:text-zinc-50">
               Master Software Security <br /> for 2026.
             </h1>
-            <p style={{ fontSize: '1.25rem', color: 'var(--zinc-500)', maxWidth: '42rem', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
+            <p className="text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
               高度に産業化されたサイバー脅威、AIの兵器化、耐量子計算機暗号。
               現代のエンジニアが知るべき、セキュア開発のすべてを体系化した完全版ガイドブック。
             </p>
             <Link
               href="/docs/approach"
-              style={{
-                display: 'inline-flex',
-                height: '3.5rem',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '9999px',
-                backgroundColor: 'var(--fg)',
-                color: 'var(--bg)',
-                padding: '0 2.5rem',
-                fontSize: '1rem',
-                fontWeight: 600,
-                textDecoration: 'none',
-                transition: 'opacity 0.2s'
-              }}
+              className="inline-flex h-14 items-center justify-center rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 px-10 text-base font-bold transition-transform hover:scale-105 no-underline"
             >
               Get Started
             </Link>
           </div>
         </section>
 
-        <section style={{ padding: '6rem 0', backgroundColor: 'var(--zinc-50)' }}>
+        <section className="py-24">
           <div className="container">
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-zinc-900 dark:text-zinc-50">
               Documentation Categories
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {docsConfig.sidebarNav.map((section) => (
-                <div key={section.title} style={{ padding: '2.5rem', backgroundColor: 'var(--bg)', borderRadius: '1rem', border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>{section.title}</h3>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.75rem' }}>
+                <div key={section.title} className="p-8 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="text-lg font-bold mb-6 text-zinc-900 dark:text-zinc-50">{section.title}</h3>
+                  <ul className="grid gap-3 list-none p-0">
                     {section.items.map((item) => (
                       <li key={item.href}>
-                        <Link href={item.href} style={{ color: 'var(--zinc-500)', textDecoration: 'none', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--zinc-300)' }} />
+                        <Link href={item.href} className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors no-underline text-sm flex items-center gap-3 group">
+                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700 group-hover:bg-zinc-900 dark:group-hover:bg-zinc-50 transition-colors" />
                           {item.title}
                         </Link>
                       </li>
@@ -75,7 +62,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer style={{ padding: '4rem 0', borderTop: '1px solid var(--border)', textAlign: 'center', color: 'var(--zinc-500)', fontSize: '0.875rem' }}>
+      <footer className="py-16 border-t border-zinc-200 dark:border-zinc-800 text-center text-zinc-500 dark:text-zinc-400 text-sm bg-zinc-50 dark:bg-zinc-900/50">
         <p>© 2026 Security Studies Project. Advanced Security Guidance.</p>
       </footer>
     </div>

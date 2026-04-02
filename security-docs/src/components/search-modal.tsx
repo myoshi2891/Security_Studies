@@ -11,16 +11,24 @@ export function SearchModal() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [fuse, setFuse] = useState<Fuse<SearchResult> | null>(null);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     fetch("/api/search")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch search index");
+        return res.json();
+      })
       .then((data) => {
         setFuse(new Fuse(data, {
           keys: ["title", "description", "content"],
           threshold: 0.4,
         }));
+      })
+      .catch((err) => {
+        console.error("Search index fetch error:", err);
+        setIsError(true);
       });
   }, []);
 
@@ -54,22 +62,13 @@ export function SearchModal() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          padding: '0.5rem 1rem',
-          fontSize: '0.875rem',
-          color: 'var(--zinc-500)',
-          backgroundColor: 'transparent',
-          border: '1px solid var(--border)',
-          borderRadius: '0.375rem',
-          cursor: 'pointer'
-        }}
+        className="flex items-center gap-3 px-4 py-2 text-sm text-zinc-500 bg-transparent border border-zinc-200 dark:border-zinc-800 rounded-md cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors w-full md:w-64"
       >
         <Search size={16} />
-        <span>Search...</span>
-        <span style={{ marginLeft: '1rem', fontSize: '0.75rem', opacity: 0.6 }}>⌘K</span>
+        <span className="flex-1 text-left">Search...</span>
+        <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800 px-1.5 font-mono text-[10px] font-medium text-zinc-500 opacity-100">
+          <span className="text-xs">⌘</span>K
+        </kbd>
       </button>
     );
   }
@@ -77,49 +76,43 @@ export function SearchModal() {
   return (
     <div className="search-modal-backdrop" onClick={() => setIsOpen(false)}>
       <div className="search-modal" onClick={(e) => e.stopPropagation()}>
-        <div style={{ display: 'flex', alignItems: 'center', padding: '1rem', borderBottom: '1px solid var(--border)', gap: '1rem' }}>
-          <Search size={20} color="var(--zinc-400)" />
+        <div className="flex items-center p-4 border-b border-zinc-200 dark:border-zinc-800 gap-4">
+          <Search size={20} className="text-zinc-400" />
           <input
             autoFocus
             placeholder="Search documentation..."
-            style={{
-              flex: 1,
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              fontSize: '1rem',
-              color: 'var(--fg)'
-            }}
+            className="flex-1 bg-transparent border-none outline-none text-base text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-400"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--zinc-400)' }}>
+          <button 
+            onClick={() => setIsOpen(false)} 
+            className="bg-transparent border-none cursor-pointer text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
+          >
             <X size={20} />
           </button>
         </div>
-        <div style={{ padding: '0.5rem', overflowY: 'auto', maxHeight: '400px' }}>
-          {results.length > 0 ? (
+        <div className="p-2 overflow-y-auto max-h-[400px]">
+          {isError ? (
+            <div className="p-8 text-center text-red-500 text-sm">
+              Failed to load search index. Please try again later.
+            </div>
+          ) : results.length > 0 ? (
             results.map((result) => (
               <div
                 key={result.href}
                 onClick={() => onSelect(result.href)}
-                style={{
-                  padding: '1rem',
-                  borderRadius: '0.5rem',
-                  cursor: 'pointer',
-                  borderBottom: '1px solid var(--zinc-100)'
-                }}
-                className="search-result-item"
+                className="p-4 rounded-lg cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors border-b border-zinc-50 dark:border-zinc-900 last:border-0"
               >
-                <div style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <FileText size={14} />
+                <div className="font-bold text-sm mb-1 flex items-center gap-2 text-zinc-900 dark:text-zinc-50">
+                  <FileText size={14} className="text-zinc-400" />
                   {result.title}
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--zinc-500)' }}>{result.description}</div>
+                <div className="text-xs text-zinc-500 line-clamp-1">{result.description}</div>
               </div>
             ))
           ) : (
-            <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--zinc-500)', fontSize: '0.875rem' }}>
+            <div className="p-8 text-center text-zinc-500 text-sm">
               {query ? `No results for "${query}"` : "Type to start searching..."}
             </div>
           )}

@@ -1,5 +1,9 @@
 <!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Next.js 16.2.2 (App Router) Guidelines
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+This project uses Next.js 16.2.2 with the App Router. Please refer to the official documentation for APIs and conventions.
+
+- **Docs**: [https://nextjs.org/docs](https://nextjs.org/docs)
+- **Local Content**: MDX files are located in `security-docs/src/app/docs/` (transitional) or `security-docs/content/docs/`.
+- **Styling**: Tailwind CSS v4 is used.
 <!-- END:nextjs-agent-rules -->
