@@ -20,6 +20,12 @@ describe('SourceReferences', () => {
     
     // Open accordion
     fireEvent.click(button);
-    expect(screen.getByText('OpenSSF Guide')).toBeInTheDocument();
+    
+    const link = screen.getByRole('link', { name: /OpenSSF Guide/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', 'https://openssf.org');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link.getAttribute('rel')).toMatch(/noopener/);
+    expect(link.getAttribute('rel')).toMatch(/noreferrer/);
   });
 });

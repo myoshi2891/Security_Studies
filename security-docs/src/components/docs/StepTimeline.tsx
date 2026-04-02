@@ -17,8 +17,7 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({ steps, className }) 
     <div className={twMerge(clsx("relative my-5", className))}>
       {/* Vertical Line */}
       <div 
-        className="absolute left-[1.35rem] top-[2.75rem] bottom-0 w-[1px]" 
-        style={{ background: 'linear-gradient(to bottom, #3b82f6, transparent)' }} 
+        className="absolute left-[1.35rem] top-[2.75rem] bottom-0 w-[1px] bg-gradient-to-b from-blue-500 to-transparent" 
       />
       
       <div className="flex flex-col">

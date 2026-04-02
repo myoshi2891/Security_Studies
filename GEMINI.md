@@ -15,23 +15,23 @@ This is a Next.js-based documentation application focused on security studies, l
 
 ### Architecture
 
-- `security-docs/content/docs/`: Contains the actual documentation content written in Markdown and MDX formats.
-- `security-docs/src/app/`: The Next.js App Router directory, which includes page layouts, documentation routes (`app/docs`), the landing page route (`app/(home)`), and API routes such as the search handler (`app/api/search/route.ts`).
-- `security-docs/src/lib/`: Houses shared configuration and content source adapters (e.g., `source.ts` configures how Fumadocs accesses your content).
-- `security-docs/source.config.ts`: Configuration file for Fumadocs MDX, allowing customization of things like the frontmatter schema.
+- `security-docs/src/app/docs/`: Contains the documentation content in Next.js App Router MDX format.
+- `security-docs/src/app/api/search/`: Contains the search handler.
+- `security-docs/src/lib/search.ts`: Logic for generating the search index.
 
 ## Building and Running
 
-Commands should be executed within the `security-docs` directory, as that's where the `package.json` and `bun.lock` reside.
+Commands should be executed within the `security-docs` directory.
 
 - **Install dependencies:** `bun install`
-- **Start development server:** `bun run dev` (Accessible at `http://localhost:3000`)
+- **Start development server:** `bun run dev`
 - **Create production build:** `bun run build`
 - **Start production server:** `bun run start`
-- **Type checking and generation:** `bun run types:check` (Runs fumadocs-mdx typegen and tsc)
+- **Testing:** `bun test`
+- **Type checking:** `bun run types:check`
 
 ## Development Conventions
 
-- **Content Authoring:** All new documentation content should be authored in MDX and placed within the `security-docs/content/docs/` directory. Use the existing files (like `02-sdlc.mdx`) as a structural reference.
-- **Styling:** The project uses Tailwind CSS. When adding styles to custom components or MDX wrappers, utilize Tailwind's utility classes.
-- **Type Safety:** Ensure type safety across the project, making use of `bun run types:check` before committing.
+- **Content Authoring:** All new documentation content should be authored in MDX and placed within the `security-docs/src/app/docs/` directory. Each page is a `page.mdx` file within its own subdirectory. Use custom UI components from `src/components/docs/`.
+- **Styling:** The project uses Tailwind CSS v4. Utilize utility classes for styling.
+- **Type Safety:** Ensure type safety across the project.

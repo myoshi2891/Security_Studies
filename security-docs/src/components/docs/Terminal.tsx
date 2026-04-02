@@ -14,9 +14,9 @@ export const Terminal: React.FC<TerminalProps> = ({ title, children, className }
       {title && (
         <div className="flex items-center justify-between px-4 py-2 bg-[#222d40] border-b border-[#2a3548]">
           <div className="flex gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
+            <div aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+            <div aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+            <div aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-emerald-500/50" />
           </div>
           <span className="font-mono text-[0.7rem] text-[#5a7090] truncate px-4">
             {title}

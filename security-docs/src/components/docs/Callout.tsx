@@ -8,9 +8,10 @@ export interface CalloutProps {
   title?: string;
   children: React.ReactNode;
   className?: string;
+  role?: string;
 }
 
-export const Callout: React.FC<CalloutProps> = ({ type, title, children, className }) => {
+export const Callout: React.FC<CalloutProps> = ({ type, title, children, className, role }) => {
   const styles: Record<string, { container: string; icon: React.ReactNode }> = {
     info: {
       container: "bg-blue-400/10 border-l-blue-400",
@@ -52,8 +53,11 @@ export const Callout: React.FC<CalloutProps> = ({ type, title, children, classNa
 
   const style = styles[type] || styles.info;
 
+  const defaultRole = ['danger', 'warning', 'red', 'amber', 'toxic'].includes(type) ? 'alert' : 'status';
+  const computedRole = role || defaultRole;
+
   return (
-    <div className={twMerge(clsx("flex gap-3.5 p-4 rounded-md my-5 border-l-[3px] font-sans text-[0.875rem] leading-[1.78]", style.container, className))}>
+    <div role={computedRole} className={twMerge(clsx("flex gap-3.5 p-4 rounded-md my-5 border-l-[3px] font-sans text-[0.875rem] leading-[1.78]", style.container, className))}>
       <div className="shrink-0 mt-0.5">
         {style.icon}
       </div>

@@ -2,8 +2,10 @@ import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+export type RiskLevel = 'critical' | 'high' | 'medium' | 'info';
+
 export interface RiskBadgeProps {
-  level: 'critical' | 'high' | 'medium' | 'info';
+  level: RiskLevel;
   children: React.ReactNode;
   className?: string;
 }

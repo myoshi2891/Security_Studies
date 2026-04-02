@@ -23,4 +23,26 @@ describe('Callout', () => {
 
     expect(screen.getByText('Warning content')).toBeInTheDocument();
   });
+
+  test('renders danger variant', () => {
+    render(
+      <Callout type="danger" title="Error">
+        <p>Danger content</p>
+      </Callout>
+    );
+
+    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(screen.getByText('Danger content')).toBeInTheDocument();
+  });
+
+  test('renders success variant', () => {
+    render(
+      <Callout type="success" title="Success">
+        <p>Success content</p>
+      </Callout>
+    );
+
+    expect(screen.getByText('Success')).toBeInTheDocument();
+    expect(screen.getByText('Success content')).toBeInTheDocument();
+  });
 });

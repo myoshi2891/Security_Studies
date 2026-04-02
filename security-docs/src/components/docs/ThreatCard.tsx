@@ -1,11 +1,11 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { RiskBadge } from './RiskBadge';
+import { RiskBadge, RiskLevel } from './RiskBadge';
 
 export interface ThreatCardProps {
   title: React.ReactNode;
-  severity: 'critical' | 'high' | 'medium' | 'info';
+  severity: RiskLevel;
   children: React.ReactNode;
   className?: string;
 }
