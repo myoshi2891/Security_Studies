@@ -1,3 +1,45 @@
-export const SectionCard = ({ eyebrow, title, children }: any) => {
-  return null;
+import React from 'react';
+
+export interface SectionCardProps {
+  eyebrow?: string;
+  title: React.ReactNode;
+  sub?: React.ReactNode;
+  children: React.ReactNode;
+}
+
+export const SectionCard: React.FC<SectionCardProps> = ({ eyebrow, title, sub, children }) => {
+  return (
+    <div className="relative bg-[#161b27] border border-[#2a3548] rounded-[0.625rem] mb-7 overflow-hidden">
+      {/* Top Gradient Bar */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-[2px]" 
+        style={{ background: 'linear-gradient(90deg, #3b82f6, #38bdf8 60%, transparent)' }} 
+      />
+      {/* Left Accent Bar */}
+      <div 
+        className="absolute top-0 bottom-0 left-0 w-[3px]" 
+        style={{ background: 'linear-gradient(to bottom, #3b82f6, transparent)' }} 
+      />
+      
+      <div className="p-5 md:pt-6 md:px-8 md:pb-5 border-b border-[#2a3548] relative">
+        {eyebrow && (
+          <div className="font-mono text-[0.65rem] font-semibold tracking-[0.1em] uppercase text-blue-400 flex items-center gap-2 mb-2.5">
+            {eyebrow}
+          </div>
+        )}
+        <h2 className="font-sans font-extrabold text-[1.5rem] text-[#f0f6ff] leading-[1.15] tracking-[-0.02em] mb-2.5">
+          {title}
+        </h2>
+        {sub && (
+          <div className="text-[0.9rem] text-[#94a3b8] leading-[1.82]">
+            {sub}
+          </div>
+        )}
+      </div>
+
+      <div className="p-5 md:pt-7 md:px-8 md:pb-7">
+        {children}
+      </div>
+    </div>
+  );
 };
