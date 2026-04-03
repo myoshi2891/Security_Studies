@@ -1,15 +1,15 @@
 ---
-name: fumadocs-adder
-description: Converts HTML/MD files to MDX, adds Fumadocs frontmatter, places them in security-docs/src/app/docs, and updates the application. Use when adding HTML or MD files as Fumadocs pages.
+name: mdx-page-adder
+description: Converts HTML/MD files to MDX, adds frontmatter, places them in security-docs/src/app/docs, and updates the application. Use when adding HTML or MD files as Next.js MDX pages.
 ---
 
-# Fumadocs Page Generator (Antigravity)
+# MDX Page Generator
 
-This skill converts provided HTML or MD file content into Fumadocs MDX pages and adds them to the Next.js `security-docs` application.
+This skill converts provided HTML or MD file content into MDX pages and adds them to the Next.js App Router application.
 
 ## Instructions
 
-When the user provides an HTML or MD file (or its content) and asks to add it as a Fumadocs page:
+When the user provides an HTML or MD file (or its content) and asks to add it as an MDX page:
 
 1. **Extract Content & Metadata**:
    - Read the contents of the target file.
@@ -62,11 +62,12 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
 4. **Completion**:
    - Run validation in `security-docs`: `bun run types:check`.
    - If validation fails, report the errors and do not claim completion.
-   - If validation succeeds, inform the user that the file was successfully generated and registered as a Fumadocs page.
+   - If validation succeeds, inform the user that the file was successfully generated and registered as an MDX page.
+   - **Sidebar Navigation Update:** Explicitly inform the user that the generated `page.mdx` is not automatically added to the sidebar. Advise the user to manually add an entry (e.g., `{ title: "[Extracted Title]", href: "/docs/slug" }`) to the `docsConfig.sidebarNav` array in `security-docs/src/config/docs.ts`, or instruct them to execute an automated registration script.
 
 ## Constraints & Safety Rules
 
 - **No File Deletion**: Under no circumstances should you delete or remove existing files from the workspace.
-- **Command Execution**: You are permitted to execute necessary read-only commands (e.g., listing directories or checking file contents) to gather context. However, you must NOT execute any destructive commands (like `rm` or `rmdir`) or modify files outside the explicit scope of adding a new Fumadocs page.
-  - **Exception for Validation**: To support the validation step (`bun run types:check`), you are explicitly permitted to run its underlying subcommands. The subcommand `next typegen` is allowed to perform safe write operations (creating temporary/generated type files) as required. The subcommands `fumadocs-mdx` and `tsc --noEmit` must be executed as read-only validation.
+- **Command Execution**: You are permitted to execute necessary read-only commands (e.g., listing directories or checking file contents) to gather context. However, you must NOT execute any destructive commands (like `rm` or `rmdir`) or modify files outside the explicit scope of adding a new MDX page.
+  - **Exception for Validation**: To support the validation step (`bun run types:check`), you are explicitly permitted to run its underlying subcommands. The subcommand `next typegen` is allowed to perform safe write operations (creating temporary/generated type files) as required. The subcommand `tsc --noEmit` must be executed as read-only validation. (Note: `fumadocs-mdx` is not present in this project's dependencies).
 - **Create/Update Only**: Except for the `next typegen` validation step mentioned above, you may only create new topic directories under `security-docs/src/app/docs/` and add a new `page.mdx` inside them. Existing documentation pages must never be overwritten or deleted.
