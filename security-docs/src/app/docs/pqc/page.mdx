@@ -1,0 +1,185 @@
+---
+title: "耐量子計算機暗号（PQC）2026 完全ガイド"
+description: "量子コンピュータによる暗号崩壊「Q-Day」への備え。NIST標準アルゴリズム（ML-KEM/ML-DSA）とCrypto-Agility設計を初学者向けに徹底解説。2026年3月版。"
+---
+
+<HeroSection
+  section="07"
+  title={<>耐量子計算機暗号<br/><span className="text-purple-400">PQC / Post-Quantum Cryptography</span></>}
+  description="量子コンピュータが現代の暗号（RSA/ECC）を突破する「Q-Day」。2026年、NISTによる標準化アルゴリズム（FIPS 203/204/205）が確定し、すべてのソフトウェア開発者に「Crypto-Agility（暗号アジリティ）」が求められています。その背景と実装戦略を解説します。"
+  chips={[
+    "📅 2026-03-25",
+    "👤 初学者〜中級者",
+    "⏱ 読了 約25分",
+    "🔗 NIST FIPS 準拠",
+    "🛡️ Q-Day 対策",
+    "💻 実装例付き"
+  ]}
+/>
+
+<SectionCard
+  eyebrow="Section 01 — Overview"
+  title="Q-Day と「今収集・後で解読」攻撃"
+  sub="量子コンピュータが実用化されるその日は、明日かもしれないし、10年後かもしれません。しかし、攻撃は「今日」行われています。"
+>
+  <HighlightBox color="red">
+    **"Harvest Now, Decrypt Later"（今収集・後で解読）攻撃**
+    攻撃者は、量子コンピュータが完成していない**今日**、暗号化された通信データを大量に収集・蓄積しています。数年後に強力な量子コンピュータが登場した瞬間に、過去の機密データがすべて解読されます。**「将来も機密性を維持すべきデータ」は、今日からPQCで保護する必要があります。**
+  </HighlightBox>
+
+  ### 量子コンピュータが壊す暗号、壊さない暗号
+
+  <DataTable
+    headers={["暗号の種類", "具体例", "量子コンピュータの影響", "対策"]}
+    rows={[
+      ["公開鍵暗号（署名・鍵交換）", "RSA, ECC (Elliptic Curve), Diffie-Hellman", <Tag color="red">完全に崩壊</Tag>, "PQCアルゴリズムへの移行"],
+      ["共通鍵暗号（秘匿）", "AES-128, AES-256", <Tag color="yellow">安全性が半減（Groverのアルゴリズム）</Tag>, "鍵長を2倍（AES-256）にする"],
+      ["ハッシュ関数", "SHA-2, SHA-3", <Tag color="green">影響は軽微</Tag>, "ハッシュ長を増やす（SHA-384/512）"]
+    ]}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "NIST Post-Quantum Cryptography Standardization", url: "https://csrc.nist.gov/projects/post-quantum-cryptography-standardization" },
+      { title: "The Quantum Menace: Why We Need PQC Today — Cloudflare", url: "https://blog.cloudflare.com/post-quantum-crypto-ga/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 02 — Standards"
+  title="NIST PQC 標準アルゴリズム（2026年最新）"
+  sub="2024年にFIPS規格として正式採用された、世界標準の耐量子暗号アルゴリズム。"
+>
+  <DataTable
+    headers={["FIPS規格番号", "アルゴリズム名（通称）", "主な用途", "技術的背景"]}
+    rows={[
+      [<Tag color="purple">FIPS 203</Tag>, <span className="font-bold text-[#f0f6ff]">ML-KEM (Kyber)</span>, "鍵交換 (TLS等)", "格子暗号に基づく。高速で鍵サイズが小さい。"],
+      [<Tag color="purple">FIPS 204</Tag>, <span className="font-bold text-[#f0f6ff]">ML-DSA (Dilithium)</span>, "デジタル署名 (証明書)", "格子暗号に基づく。高い信頼性と効率性。"],
+      [<Tag color="purple">FIPS 205</Tag>, <span className="font-bold text-[#f0f6ff]">SLH-DSA (SPHINCS+)</span>, "ハッシュベース署名", "ハッシュ関数のみに依存。格子暗号が破られた際のバックアップ。"]
+    ]}
+  />
+
+  <Callout type="info" title="格子暗号（Lattice-based Cryptography）">
+    PQCの主流である格子暗号は、多次元空間における「最短ベクトル問題」という、量子コンピュータでも効率的に解けない非常に難しい数学的問題に基づいています。
+  </Callout>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 03 — Hybrid Strategy"
+  title="ハイブリッド鍵交換：現実的な移行の第一歩"
+  sub="いきなりPQCに完全に切り替えるのではなく、既存の暗号と組み合わせて安全性を担保する戦略。"
+>
+  <p className="mb-6">
+    PQCアルゴリズムは比較的新しいため、実装上のバグや未知の数学的脆弱性が発見されるリスクがゼロではありません。これを防ぐために、**既存のECCとPQCを同時に使用する「ハイブリッド方式」**が推奨されています。
+  </p>
+
+  <AttackFlow label="ハイブリッド鍵交換の仕組み">
+    <strong>Step 1:</strong> 従来のX25519（楕円曲線）で共有鍵Aを生成。<br/><br/>
+    <strong>Step 2:</strong> PQCのML-KEM（格子暗号）で共有鍵Bを生成。<br/><br/>
+    <strong>Step 3:</strong> 鍵Aと鍵Bを結合（KDF）して最終的なセッション鍵を作成。<br/><br/>
+    <strong>結果:</strong> 量子コンピュータがECCを破っても、PQCが守る。万一PQCに脆弱性があっても、従来のECCが守る。
+  </AttackFlow>
+
+  <SourceReferences
+    sources={[
+      { title: "Hybrid Post-Quantum Key Exchange in TLS — IETF", url: "https://datatracker.ietf.org/doc/html/draft-ietf-tls-hybrid-design" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 04 — Timeline"
+  title="PQC移行ロードマップ"
+  sub="米国CNSA 2.0に基づく、政府および重要インフラの移行期限。"
+>
+  <StepTimeline
+    steps={[
+      {
+        title: "2024〜2026年: 評価とテスト",
+        content: "NIST FIPSの正式発行。ブラウザ（Chrome/Edge）やライブラリでの実験的サポート開始。"
+      },
+      {
+        title: "2030年: デフォルト化",
+        content: "新しいWebトラフィック・VPN・署名インフラでPQCハイブリッドが標準設定になる。"
+      },
+      {
+        title: "2035年: NSS完全量子耐性化",
+        content: "国家安全保障システムでのRSA・ECC等の使用を完全禁止。"
+      }
+    ]}
+  />
+
+  ### 各国・地域の移行タイムライン比較
+
+  <DataTable
+    headers={["機関・地域", "2026年", "2028〜30年", "2033〜35年"]}
+    rows={[
+      ["米国 CNSA 2.0", "ネットワーク機器対応開始", "レガシー暗号の廃止", <Tag color="red">RSA/ECC完全禁止</Tag>],
+      ["EU ENISA", "国家移行マップ確立", "高リスク用途でデフォルト化", "可能な限り完全移行"],
+      ["英国 NCSC", "システム発見・計画立案", "優先システムのパイロット移行", "全サービスの完全採用"]
+    ]}
+  />
+
+  <Callout type="red" title="企業への影響：政府調達要件・コンプライアンス">
+    米国政府との取引にはNIST準拠が調達条件となり、EUではGDPR・CRAと組み合わせてPQC対応が実質要件化しています。
+  </Callout>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 05 — 設計原則"
+  title={<>Crypto-Agility（暗号の俊敏性）<br/>― アルゴリズムをハードコードしない設計</>}
+  sub="特定の暗号アルゴリズムをコードに埋め込まず、設定変更だけで切り替えられる設計。"
+>
+  <HighlightBox color="blue">
+    **Crypto-Agilityとは？** — 暗号アルゴリズムをシステムの他の部分から分離し、コードを変更せずに設定・モジュール交換だけで暗号方式を変更できる設計思想です。
+  </HighlightBox>
+
+  <CompareGrid
+    bad={[
+      "アルゴリズム名（RSA/AES）をコードに埋め込み",
+      "鍵サイズを定数で管理",
+      "暗号ライブラリを直接各所でimport",
+      "変更時に全コードの修正と再テストが必要"
+    ]}
+    good={[
+      "暗号アルゴリズムを設定ファイルで管理",
+      "抽象インターフェースを通じて実行",
+      "プロバイダーをDI（依存性注入）で交換可能",
+      "設定1行の変更のみでアルゴリズム切り替え可能"
+    ]}
+  />
+
+  <Terminal title="crypto-provider-pattern.ts">
+{`// ❌ Bad: ハードコードされたアルゴリズム
+const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', { modBits: 2048 });
+
+// ✅ Good: プロバイダー抽象化による Crypto-Agility
+const algorithm = loadConfig('crypto.yml').algorithm; // 'rsa' | 'ml-kem' 等
+const provider = getCryptoProvider(algorithm);
+const { publicKey, privateKey } = provider.generateKeyPair();`}
+  </Terminal>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Checklist"
+  title="PQC対応 準備状況チェックリスト"
+>
+  <Checklist
+    items={[
+      { text: "暗号資産インベントリ（どこでどの暗号を使っているか）を作成している", tag: "REQUIRED" },
+      { text: "依存ライブラリ（OpenSSL, BoringSSL等）がPQC対応版か確認している", tag: "HIGH" },
+      { text: "新しいシステムでアルゴリズムをハードコードせず設定可能にしている", tag: "CRITICAL" },
+      { text: "10年以上の機密保持が必要なデータに対しPQC適用の検討を始めた", tag: "HIGH" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Summary"
+  title="開発者が今日からすべきこと"
+>
+  <p className="mb-6">
+    PQCへの移行はマラソンです。今すぐすべてを切り替える必要はありませんが、**「将来切り替え可能なように作っておくこと（Crypto-Agility）」**は、2026年のエンジニアにとって必須の義務です。
+  </p>
+</SectionCard>

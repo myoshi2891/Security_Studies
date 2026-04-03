@@ -1,0 +1,554 @@
+---
+title: "ソフトウェア開発セキュリティ完全ガイド 2026"
+description: "2026年3月時点の最新セキュリティ知識を初学者向けにステップバイステップで解説。SDLC・OWASP・AI・サプライチェーン・PQCを網羅。"
+---
+
+<HeroSection
+  section="GUIDE"
+  title={<>ソフトウェア開発<br/><span className="text-blue-400">セキュリティ完全ガイド</span></>}
+  description="2026年3月時点の最新脅威ランドスケープに基づき、SDLC・OWASP・AI・サプライチェーン・PQCの各カテゴリーを初学者にもわかりやすくステップバイステップで解説します。各セクションには根拠となる一次ソースURLを付記しています。"
+  chips={[
+    "🔒 v2026.03",
+    "📅 2026-03-25",
+    "👤 初学者〜中級者",
+    "⏱️ 読了 約45分",
+    "🔗 一次ソース付き"
+  ]}
+/>
+
+<SectionCard
+  eyebrow="Section 01 — Overview"
+  title="2026年の脅威ランドスケープ"
+  sub="なぜ今セキュリティが最重要課題なのか？産業化されたサイバー犯罪の実態を理解する。"
+>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <ThreatCard title="🤖 AI兵器化の加速" severity="critical">
+      LLMをフォースマルチプライヤーとして悪用。PROMPTFLUXがEDRパターンをリアルタイム学習・回避。WEF調査で87%がAI関連脆弱性を最大リスクと認識。
+    </ThreatCard>
+    <ThreatCard title="🔑 アイデンティティが新境界" severity="high">
+      攻撃者は「侵入」せず正規認証で「ログイン」。初期アクセスブローカー間のアクセス権移転は30秒未満。OAuthトークン・セッションCookie窃取が横行。
+    </ThreatCard>
+    <ThreatCard title="⛓️ 産業化されたサプライチェーン攻撃" severity="high">
+      SaaSベンダー経由でハードコードされたキーやPATを奪い顧客環境へ水平展開。単独ハッカーから高度分業組織へ完全移行。
+    </ThreatCard>
+    <ThreatCard title="⚖️ 経営陣の個人責任" severity="medium">
+      重大過失による漏洩で経営陣が個人的法的責任を問われるリスク増大。セキュリティが取締役会レベルの四半期デューデリジェンス事項に昇格。
+    </ThreatCard>
+  </div>
+
+  <Callout type="red" title="パラダイムシフトを理解する">
+    2026年のセキュリティは「年に一度の監査」から「**継続的なアイデンティティ検証とレジリエンス構築**」へ完全移行しました。境界防御モデルは崩壊しており、ゼロトラストアーキテクチャが不可欠です。
+  </Callout>
+
+  <HighlightBox color="blue">
+    ### 2026年 主要サイバーセキュリティトレンド
+    <DataTable
+      headers={["トレンド", "ソフトウェア開発への影響"]}
+      rows={[
+        ["Agentic AI（自律型AI）の台頭", "人間不介入で偵察・横展開・悪用を実行。AI主導の検知・自動修復をコードレベルで組み込む必要あり。"],
+        ["ディープフェイク・アイデンティティ欺瞞", "リアルタイムディープフェイクで生体認証をバイパス。パスキー+継続的セッション検証への移行が必須。"],
+        ["セキュア・バイ・デザインの義務化", "設計段階からの脅威モデリングが標準要件化。リリース後のパッチ当てモデルは完全に破綻。"],
+        ["Q-Day（量子コンピューター）", "今収集・後で解読の攻撃が進行中。NISTのPQC標準（FIPS 203/204/205）への早急な移行計画が必要。"]
+      ]}
+    />
+  </HighlightBox>
+
+  <SourceReferences
+    sources={[
+      { title: "M-Trends 2026 — Google Cloud / Mandiant", url: "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026" },
+      { title: "Global Cybersecurity Outlook 2026 — WEF", url: "https://www.weforum.org/publications/global-cybersecurity-outlook-2026/" },
+      { title: "PwC Annual Threat Dynamics 2026 — Industrial Cyber", url: "https://industrialcyber.co/reports/pwc-annual-threat-dynamics-2026-discloses-that-identity-attacks-surge-as-ai-reshapes-cyber-threat-landscape/" },
+      { title: "The 6 Cybersecurity Trends That Will Shape 2026 — ISACA", url: "https://www.isaca.org/resources/news-and-trends/industry-news/2026/the-6-cybersecurity-trends-that-will-shape-2026" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 02 — Secure SDLC"
+  title={<>Secure SDLC ─ "シフトエブリウェア"</>}
+  sub="従来の「シフトレフト」からライフサイクル全体で継続検証する「シフトエブリウェア」へ。NIST SSDF 1.2に基づく実践。"
+>
+  <Callout type="blue" title="シフトエブリウェアとは？">
+    設計から運用・フィードバックループまで**全フェーズで継続的にセキュリティを検証**するアプローチ。攻撃者はリリースマイルストーンを待たずAPIが公開された瞬間に攻撃を実行します。
+  </Callout>
+
+  ### ステップバイステップ実践ガイド
+
+  <StepTimeline
+    steps={[
+      {
+        title: "要件定義・設計フェーズ ─ 脅威モデリング (STRIDE)",
+        content: "機能要件と同時にセキュリティ要件を文書化し、脅威モデリングを実施します。STRIDEの6カテゴリでアーキテクチャの欠陥をコード記述前に洗い出します。2026年はApiiroなどAI駆動型ツールで自動化が進んでいます。"
+      },
+      {
+        title: "セキュアコーディング ─ CI/CDへのSAST/SCA統合",
+        content: "コミット時にSAST（静的解析）でSQLインジェクション・XSSを検出し、SCA（依存関係解析）で既知CVEをスキャン。GHAS・Semgrep・Veracodeがデファクトスタンダードです。"
+      },
+      {
+        title: "デプロイメント保護 ─ DAST・IaCスキャン",
+        content: "稼働中アプリにDAST（動的テスト）で認証バイパスを検出。Terraform・Kubernetes YAMLの設定ミス（公開S3バケット等）も自動スキャンで防止。"
+      },
+      {
+        title: "本番環境の継続監視 ─ 測定可能な改善（NIST SSDF PO.6）",
+        content: "WAF・APIゲートウェイでフロントドアを保護。新脆弱性公開時に影響サービスを即座特定し数時間でパッチ適用。NIST SSDF 1.2は実際のシグナルに基づく「生きた改善バックログ」の維持を要求しています。"
+      }
+    ]}
+  />
+
+  ### STRIDEチートシート
+
+  <DataTable
+    headers={["脅威カテゴリ", "概要", "主な緩和策"]}
+    rows={[
+      [<Tag color="blue">S — Spoofing</Tag>, "正規ユーザーやシステムを偽装", "MFA、OAuth 2.0、mTLS（SPIFFE/SPIRE）"],
+      [<Tag color="blue">T — Tampering</Tag>, "データやコードの不正変更", "AES-256暗号化、デジタル署名、コミット署名"],
+      [<Tag color="blue">R — Repudiation</Tag>, "操作事実の否定", "イミュータブル監査ログ、WORMストレージ"],
+      [<Tag color="blue">I — Info. Disclosure</Tag>, "機密データの意図しない露出", "行レベルセキュリティ、メモリ分離、シークレットスキャン"],
+      [<Tag color="blue">D — Denial of Service</Tag>, "リソース枯渇によるサービス妨害", "APIレートリミット、意味論的レート制限、オートスケール"],
+      [<Tag color="blue">E — Elevation of Privilege</Tag>, "不正な高権限取得", "最小権限原則、RBAC、コンテナroot権限剥奪"]
+    ]}
+  />
+
+  ### AI駆動型AppSecツール比較（2026年版）
+
+  <DataTable
+    headers={["ツール", "主要機能", "AI活用ポイント"]}
+    rows={[
+      ["GHAS (GitHub)", "CodeQL SAST + Dependabot SCA + シークレットスキャン", "Copilot Autofix — コードレベルの自動修復提案"],
+      ["Veracode", "クラウドネイティブSAST/SCA/DAST + パッケージFW", "Veracode Fix — 複雑脆弱性へのAIパッチ生成"],
+      ["Semgrep", "軽量高速SAST/SCA/シークレット検出", "ノイズフィルタリングで誤検知を最大98%削減"],
+      ["GitGuardian", "350+検出器のシークレット特化 + NHIセキュリティ", "文脈理解による高精度シークレット識別"],
+      ["Apiiro", "コード前設計段階のリスクモデリング", "AIがコードグラフを解析し設計フェーズで自動リスク検出"]
+    ]}
+  />
+
+  <Terminal
+    title=".github/workflows/security-pipeline.yml"
+    code={`name: Security Pipeline (GHAS + Semgrep + Trivy)
+on: [push, pull_request]
+
+jobs:
+  sast:
+    name: 静的解析 (SAST)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep SAST — OWASP Top 10 スキャン
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/owasp-top-ten
+            p/javascript
+        env:
+          SEMGREP_APP_TOKEN: \${{ secrets.SEMGREP_APP_TOKEN }}
+
+  sca:
+    name: 依存関係スキャン (SCA)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy — HIGH/CRITICAL 脆弱性のみブロック
+        uses: aquasecurity/trivy-action@v0.30.0
+        with:
+          scan-type: fs
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+  secret-scan:
+    name: シークレットスキャン
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: GitGuardian — APIキー・パスワード検出
+        uses: GitGuardian/ggshield-action@v1
+        env:
+          GITGUARDIAN_API_KEY: \${{ secrets.GITGUARDIAN_API_KEY }}`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "NIST SSDF Version 1.2 — NIST CSRC", url: "https://csrc.nist.gov/pubs/sp/800/218/r1/ipd" },
+      { title: "Secure SDLC: A Comprehensive Guide — Snyk", url: "https://snyk.io/articles/secure-sdlc/" },
+      { title: "Apiiro — Design-Phase AI Threat Modeling", url: "https://apiiro.com/" },
+      { title: "DevSecOps 2026: Building Security Into Every Release — C4 Tech", url: "https://c4techservices.com/devsecops-2026-security-in-every-release/" },
+      { title: "Threat Modeling Process — OWASP", url: "https://owasp.org/www-community/Threat_Modeling_Process" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 03 — OWASP Top 10"
+  title="OWASP Top 10:2025 の構造的再編"
+  sub="175,000件以上のCVEデータに基づく根本的改訂。新カテゴリ追加を含む2025年版の全貌を解説。"
+>
+  <DataTable
+    headers={["順位", "カテゴリ", "変動"]}
+    rows={[
+      ["A01", "Broken Access Control", <><RiskBadge level="critical">1位維持 — SSRFを新たに統合</RiskBadge></>],
+      ["A02", "Security Misconfiguration", <><RiskBadge level="high">5位→2位 ⬆️ IaC普及で急上昇</RiskBadge></>],
+      ["A03", "Software Supply Chain Failures", <><RiskBadge level="info">🆕 新規追加 — 最高インパクト</RiskBadge></>],
+      ["A04", "Cryptographic Failures", <><RiskBadge level="medium">2位→4位 ↘️</RiskBadge></>],
+      ["A05", "Injection", <><RiskBadge level="medium">3位→5位 ↘️ ORM普及で低下</RiskBadge></>],
+      ["A06", "Insecure Design", <><RiskBadge level="medium">4位→6位 ↘️ 設計欠陥</RiskBadge></>],
+      ["A07", "Authentication Failures", <><RiskBadge level="high">変動なし — アイデンティティ攻撃激化</RiskBadge></>],
+      ["A08", "Integrity Failures", <><RiskBadge level="medium">変動なし — CI/CDパイプライン改ざん</RiskBadge></>],
+      ["A09", "Logging & Alerting Failures", <><RiskBadge level="medium">変動なし — アラート重視へ</RiskBadge></>],
+      ["A10", "Mishandling of Exceptional Conditions", <><RiskBadge level="info">🆕 新規追加 — 例外処理・フェイルオープン</RiskBadge></>],
+    ]}
+  />
+
+  ### A01: SSRF攻撃シナリオ
+  攻撃者はサーバーに内部リソースへのアクセスを強制します。
+
+  <AttackFlow label="SSRF Attack Vector — AWSメタデータ窃取">
+    **通常リクエスト**: `GET /api/v1/load-image?url=https://example.com/photo.jpg`
+    
+    **SSRF攻撃**: `GET /api/v1/load-image?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/`
+  </AttackFlow>
+
+  <Callout type="red" title="対策の核心">
+    ユーザー入力URLを直接サーバーでフェッチしてはいけません。厳格なホワイトリストとIMDSv2の強制で内部メタデータへのアクセスを物理的に遮断してください。
+  </Callout>
+
+  <Terminal
+    title="AWS IMDSv2の強制適用"
+    code={`aws ec2 modify-instance-metadata-options \\
+  --instance-id i-1234567890abcdef0 \\
+  --http-tokens required \\
+  --http-endpoint enabled`}
+  />
+
+  ### A02: IaC設定ミス
+
+  <CompareGrid
+    bad={[
+      "S3バケットをpublicに設定",
+      "root権限でコンテナを実行",
+      "デフォルト認証情報をそのまま使用",
+      "TLSを無効化した通信エンドポイント"
+    ]}
+    good={[
+      "S3: ACLをprivate + バケットポリシー明示",
+      "コンテナ: runAsNonRoot: true",
+      "強力なランダムパスワードをSecretsで管理",
+      "全エンドポイントにTLS強制"
+    ]}
+  />
+
+  <Terminal
+    title="trivy-iac-scan.yml"
+    code={`- name: Trivy IaCスキャン
+  uses: aquasecurity/trivy-action@v0.30.0
+  with:
+    scan-type: config
+    severity: CRITICAL,HIGH
+    exit-code: 1`}
+  />
+
+  ### A10: 例外処理の欠陥
+  攻撃者は意図的にエラーを引き起こしシステムの弱点を探します。
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <ThreatCard title="CWE-209: スタックトレース漏洩" severity="high">
+      ユーザーに詳細なエラーを表示せず、汎用メッセージのみを返却し、詳細はサーバーログへ記録します。
+    </ThreatCard>
+    <ThreatCard title="CWE-636: フェイルオープン" severity="critical">
+      エラー時に認証をパスさせるのではなく、必ず拒否（フェイルクローズ）する設計が必要です。
+    </ThreatCard>
+    <ThreatCard title="CWE-460: リソース解放漏れ" severity="medium">
+      finallyブロック等を用いて、例外発生時も確実にDB接続やファイルを解放します。
+    </ThreatCard>
+  </div>
+
+  <Terminal
+    title="secure-error-handler.ts"
+    code={`export async function handleRequest(req: Request): Promise<Response> {
+  try {
+    const result = await processBusinessLogic(req);
+    return Response.json(result);
+  } catch (error) {
+    logger.error('Request processing failed', {
+      requestId: req.headers.get('x-request-id'),
+      errorType: error instanceof Error ? error.constructor.name : 'Unknown',
+    });
+    return Response.json(
+      { message: '予期せぬエラーが発生しました。しばらくしてからお試しください。' },
+      { status: 500 }
+    );
+  }
+}`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "OWASP Top 10:2025 — OWASP Foundation", url: "https://owasp.org/Top10/2025/0x00_2025-Introduction/" },
+      { title: "OWASP Top 10 2025: What Changed — GitLab Blog", url: "https://about.gitlab.com/blog/2025-owasp-top-10-whats-changed-and-why-it-matters/" },
+      { title: "A10:2025 Mishandling of Exceptional Conditions", url: "https://owasp.org/Top10/2025/A10_2025-Mishandling_of_Exceptional_Conditions/" },
+      { title: "The New 2025 OWASP Top 10 — Fastly", url: "https://www.fastly.com/blog/new-2025-owasp-top-10-list-what-changed-what-you-need-to-know" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 04 — AI Security"
+  title="LLM / AI エージェントのセキュリティ"
+  sub="OWASP Top 10 for LLM Applications 2025に基づく、AI特有の脆弱性と実装ガイド。"
+>
+  <Callout type="amber" title="AIの進化がもたらす新しい攻撃面">
+    2026年、AIは「自律的に行動する存在（Agentic AI）」へ進化。Gartner予測では2026年末までにアプリの40%がAIエージェントを搭載します。
+  </Callout>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <ThreatCard title="LLM01: Prompt Injection" severity="critical">
+      間接的インジェクション — PDF等に不可視命令を潜ませAIを乗っ取る。
+    </ThreatCard>
+    <ThreatCard title="LLM04: Model DoS & Sleeper Agents" severity="high">
+      学習データ汚染で、特定トリガーで悪意ある動作を起こす潜伏型攻撃。
+    </ThreatCard>
+    <ThreatCard title="LLM06: Excessive Agency" severity="critical">
+      AIエージェントへの過剰な権限付与。最小特権原則 + Human-in-the-loopが必須。
+    </ThreatCard>
+    <ThreatCard title="LLM07: System Prompt Leakage" severity="info">
+      システムプロンプトはセキュリティ境界として機能しません。
+    </ThreatCard>
+    <ThreatCard title="LLM08: Vector Weaknesses" severity="medium">
+      RAGシステムのベクトルDBを悪用し元の機密情報を復元するリスク。
+    </ThreatCard>
+    <ThreatCard title="LLM09: Misinformation" severity="high">
+      ハルシネーションを意図的に誘発しシステムの信頼性を破壊。
+    </ThreatCard>
+  </div>
+
+  ### LLM06: Excessive Agency 対策ステップ
+
+  <StepTimeline
+    steps={[
+      {
+        title: "最小権限の原則",
+        content: "許可リスト方式で、AIに実際に必要なアクション（read等）のみ明示的に許可します。"
+      },
+      {
+        title: "ユーザーコンテキストでの実行",
+        content: "特権IDではなく、個々のユーザーのOAuthコンテキストを使用してダウンストリームへアクセスします。"
+      },
+      {
+        title: "Human-in-the-loop",
+        content: "資金移動や設定変更など、高リスクアクションには必ず人間の承認を介在させます。"
+      }
+    ]}
+  />
+
+  <Terminal
+    title="agent-guardrails.ts"
+    code={`async function executeWithGuardrails(action: AgentAction): Promise<void> {
+  if (!ALLOWED_ACTIONS.includes(action.type)) {
+    throw new SecurityError(\`Unauthorized action type: \${action.type}\`);
+  }
+
+  const userCtx = await getUserOAuthContext();
+  if (action.riskLevel === 'high' || action.riskLevel === 'critical') {
+    const approved = await requestHumanApproval({ action });
+    if (!approved) throw new SecurityError('Action rejected by human');
+  }
+
+  await executeAction(action, userCtx);
+}`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "OWASP Top 10 for LLM Applications 2025", url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/" },
+      { title: "OWASP Top 10 for Agentic Applications 2026", url: "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" },
+      { title: "AI Agent Security Guide 2026", url: "https://www.mintmcp.com/blog/ai-agent-security" },
+      { title: "Securing the AI Agent Revolution", url: "https://www.coalitionforsecureai.org/securing-the-ai-agent-revolution-a-practical-guide-to-mcp-security/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 05 — AI Coding"
+  title="AIコーディングアシスタントの安全な利用"
+  sub="GitHub Copilot・Cursor等の普及で生産性は劇的向上。しかし38%の企業が関連インシデントを経験。"
+>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <ThreatCard title="📦 Slopsquatting" severity="critical">
+      AIが実在しないパッケージを提案。攻撃者がその名前でマルウェアを登録済みの場合、即侵害されます。
+    </ThreatCard>
+    <ThreatCard title="🔐 コンテキスト漏洩" severity="high">
+      .env等の機密ファイルがAI推論コンテキストとして送信されるリスク。物理的な除外設定が必須です。
+    </ThreatCard>
+    <ThreatCard title="👁️ IDEプロンプトインジェクション" severity="info">
+      README内の不可視テキストでAIを操作し、PC内ファイルを盗む攻撃（LOTAIL）。
+    </ThreatCard>
+    <ThreatCard title="🤖 Shadow Agents" severity="medium">
+      従業員が勝手に導入したAIエージェントによる知的財産・機密データの外部漏洩。
+    </ThreatCard>
+  </div>
+
+  ### AI生成コードレビュー チェックリスト
+
+  <Checklist
+    items={[
+      { text: "Functional Check: コンパイル可能か、テストをパスするか", tag: "TODO" },
+      { text: "Context Alignment: ビジネス意図・設計標準に合致するか", tag: "TODO" },
+      { text: "Edge Case Review: エラー処理欠如・A10リスクがないか", tag: "TODO" },
+      { text: "Dependency Audit: 提案パッケージが実在するか（Slopsquatting対策）", tag: "TODO" },
+      { text: "Secret Scan: ハードコードされたキーがないか", tag: "TODO" }
+    ]}
+  />
+
+  <Terminal
+    title=".github/copilot-content-exclusion.yml"
+    code={`content_exclusion:
+  paths:
+    - "**/.env*"
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/internal-config.*"
+    - "**/secrets/**"
+    - "**/.aws/**"`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "OpenSSF AI Coding Guidelines", url: "https://openssf.org/blog/2025/09/16/new-openssf-guidance-on-ai-code-assistant-instructions/" },
+      { title: "Protect Your Enterprise from Shadow AI — Microsoft", url: "https://blogs.windows.com/msedgedev/2026/03/23/protect-your-enterprise-from-shadow-ai-and-more-announcements-at-rsac-2026/" },
+      { title: "AI Governance Card — Maryland DoIT", url: "https://doit.maryland.gov/policies/ai/Pages/AI-powered-coding-assistants.aspx" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 06 — Supply Chain"
+  title="ソフトウェアサプライチェーンセキュリティ"
+  sub="SBOM・SLSA・VEX・EU CRAによる法的義務化。OWASP A03:2025として最高インパクトカテゴリに。"
+>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <ThreatCard title="📋 SBOM" severity="info">
+      全コンポーネントを記録した成分表。CycloneDX等が国際標準。
+    </ThreatCard>
+    <ThreatCard title="🏗️ SLSA" severity="info">
+      ビルドプロセスの完全性を暗号学的に保証するフレームワーク。
+    </ThreatCard>
+    <ThreatCard title="📄 VEX" severity="info">
+      SBOMの誤検知を解消。脆弱性の「悪用可能性」を宣言。
+    </ThreatCard>
+    <ThreatCard title="⚖️ EU CRA" severity="critical">
+      EU域内のソフトウェア製品に法的要件を課す。2026年9月義務化。
+    </ThreatCard>
+  </div>
+
+  ### EU CRA コンプライアンスタイムライン
+
+  <StepTimeline
+    steps={[
+      { title: "2024年12月10日", content: "CRA発効。移行期間スタート。" },
+      { title: "2026年6月", content: "適合性評価機関の通知開始。" },
+      { title: "2026年9月11日", content: "🚨 早期報告義務スタート。悪用された脆弱性の報告が必須に。" },
+      { title: "2027年12月11日", content: "完全適用。非準拠製品は販売禁止のリスク。" }
+    ]}
+  />
+
+  ### 実践チュートリアル — Cosign検証
+
+  <Terminal
+    title="supply-chain-verify.sh"
+    code={`# ステップ1: SBOM署名検証
+cosign verify-attestation --type cyclonedx $IMAGE
+
+# ステップ2: コンテナ署名検証
+cosign verify $IMAGE --certificate-identity=$ID --certificate-oidc-issuer=$ISSUER
+
+# ステップ3: SLSA来歴検証
+slsa-verifier verify-image $IMAGE --source-uri $URI`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "EU Cyber Resilience Act: 2026 Milestones", url: "https://www.hoganlovells.com/en/publications/eu-cyber-resilience-act-getting-ready-for-cra-compliance-in-2026" },
+      { title: "SBOM + SLSA: Accelerating Success", url: "https://slsa.dev/blog/2022/05/slsa-sbom" },
+      { title: "Sigstore Cosign", url: "https://github.com/sigstore/cosign" },
+      { title: "State of VEX — OpenSSF", url: "https://openssf.org/blog/2026/01/08/signal-in-the-noise-an-industry-wide-perspective-on-the-state-of-vex/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 07 — PQC"
+  title="耐量子暗号（PQC）と Crypto-Agility"
+  sub='"Harvest now, decrypt later" 脅威は今まさに進行中。2035年までの完全移行が義務化。'
+>
+  <Callout type="red" title='"Harvest Now, Decrypt Later"'>
+    国家支援型攻撃者は現在すでにデータを収集しています。金融・医療・知的財産など長期機密性が必要なデータは今日から対策が必要です。
+  </Callout>
+
+  <DataTable
+    headers={["FIPS番号", "アルゴリズム", "用途", "困難性"]}
+    rows={[
+      ["FIPS 203", "ML-KEM (Kyber)", "鍵交換 (TLS)", "格子暗号"],
+      ["FIPS 204", "ML-DSA (Dilithium)", "署名 (証明書)", "格子暗号"],
+      ["FIPS 205", "SLH-DSA (SPHINCS+)", "ハッシュベース署名", "ハッシュ関数"]
+    ]}
+  />
+
+  ### 移行ステップ
+
+  <StepTimeline
+    steps={[
+      { title: "暗号資産インベントリの作成", content: "組織内の全公開鍵暗号使用箇所をマッピングし、長期機密性が必要なデータを特定します。" },
+      { title: "Crypto-Agility 基盤構築", content: "アルゴリズムのハードコードを排除し、設定で切り替え可能なレイヤーを設計します。" },
+      { title: "ハイブリッドモードでの試行", content: "従来暗号とPQCを同時に使用するハイブリッド鍵交換をテストします。" },
+      { title: "デュアルスタックPKI", content: "PQCとECCの両方をサポートする証明書インフラを構築します。" }
+    ]}
+  />
+
+  <Terminal
+    title="crypto-agility.ts"
+    code={`interface CryptoConfig {
+  kex: 'X25519' | 'ML-KEM-768' | 'X25519_ML-KEM-768';
+  sig: 'Ed25519' | 'ML-DSA-65' | 'Ed25519_ML-DSA-65';
+}
+
+const config: CryptoConfig = loadConfig('crypto.yml');
+
+// 設定から動的に切り替え。コード変更不要
+const session = await tls.connect({
+  keyExchange: config.kex,
+  signature: config.sig,
+});`}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "NIST FIPS 203 (ML-KEM)", url: "https://csrc.nist.gov/pubs/fips/203/final" },
+      { title: "PQC Playbook — ISACA 2026", url: "https://www.isaca.org/resources/news-and-trends/isaca-now-blog/2026/post-quantum-cryptography-a-12-month-playbook-for-digital-trust-professionals" },
+      { title: "Crypto-Agile PQC Steps", url: "https://www.cryptomathic.com/blog/how-banks-can-prepare-for-post-quantum-cryptography-in-2026" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Summary"
+  title="総括 ─ セキュリティをビジネスのイネーブラーへ"
+>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <ThreatCard title="01. アイデンティティ管理" severity="info">
+      最小権限 + Human-in-the-loop。AIエージェントにも厳格なIAMを適用。
+    </ThreatCard>
+    <ThreatCard title="02. サプライチェーン透明性" severity="info">
+      SBOM + SLSA + Cosignでコンポーネントの完全性を暗号学的に証明。
+    </ThreatCard>
+    <ThreatCard title="03. Crypto-Agility" severity="info">
+      アルゴリズムのハードコードを排除し、PQCへのシームレスな移行基盤を構築。
+    </ThreatCard>
+    <ThreatCard title="04. 継続的改善" severity="info">
+      NIST SSDF 1.2に基づき、生きた改善バックログを維持し進捗を測定。
+    </ThreatCard>
+  </div>
+
+  <Callout type="info" title="最後に">
+    完璧なセキュリティは存在しませんが、**継続的な改善と学習こそが最強の防御**です。日常のプラクティスに一つずつ組み込んでいきましょう。
+  </Callout>
+  </SectionCard>

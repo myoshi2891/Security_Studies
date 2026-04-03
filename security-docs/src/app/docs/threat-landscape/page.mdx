@@ -1,0 +1,199 @@
+---
+title: "脅威ランドスケープ 2026"
+description: "2026年3月時点の脅威ランドスケープを初学者向けに徹底解説。産業化されたサイバー犯罪・AI兵器化・アイデンティティ攻撃の実態。"
+---
+
+<HeroSection
+  section="01"
+  title={<>脅威ランドスケープ<br/><span className="text-amber-500">2026</span></>}
+  description="サイバー攻撃は「孤独なハッカー」の時代を完全に終え、高度に産業化された分業型犯罪エコシステムへと変貌しました。2026年3月時点の最新脅威をステップバイステップで解説します。"
+  chips={[
+    "📅 2026-03-25",
+    "👤 初学者〜中級者",
+    "⏱️ 読了 約20分",
+    "🔗 一次ソース付き",
+    "📊 M-Trends / WEF 準拠"
+  ]}
+/>
+
+<SectionCard
+  eyebrow="Section 01 — Overview"
+  title="「脅威ランドスケープ」とは何か？"
+  sub="なぜソフトウェア開発者がこれを知る必要があるのかを解説します。"
+>
+  <HighlightBox color="blue">
+    **脅威ランドスケープの定義**
+    **脅威ランドスケープ（Threat Landscape）**とは、特定の時点においてシステムに対して存在する*すべての脅威・攻撃者・攻撃手法・脆弱性の全体像*を指します。地形のように**常に変化し続ける生きた地図**です。
+  </HighlightBox>
+
+  <p className="mb-6">
+    あなたが書くコード、設定するインフラ、利用するライブラリの**すべてが攻撃対象**になりえます。2026年においては、すべての開発者がセキュリティエンジニアとしての視点を持つことが求められています。
+  </p>
+
+  <Callout type="amber" title="初学者への重要メッセージ">
+    攻撃者がどんな手口を使うかを知ることで、**より良いコードを書けるようになるための地図**として活用してください。
+  </Callout>
+
+  ### 脅威ランドスケープを構成する4要素
+
+  <DataTable
+    headers={["要素", "説明", "具体例"]}
+    rows={[
+      [<Tag color="amber">① 脅威アクター</Tag>, "攻撃を行う主体。動機や能力が異なる", "国家支援型、犯罪組織、内部不正者"],
+      [<Tag color="amber">② 攻撃ベクター</Tag>, "システムに侵入するための経路・手段", "フィッシング、API脆弱性、認証情報窃取"],
+      [<Tag color="amber">③ 脆弱性</Tag>, "悪用できるシステムの弱点", "未パッチのライブラリ、設定ミス"],
+      [<Tag color="amber">④ インパクト</Tag>, "攻撃成功時の被害規模", "データ漏洩、身代金、信頼失墜"]
+    ]}
+  />
+
+  <SourceReferences
+    sources={[
+      { title: "M-Trends 2026 — Google Cloud / Mandiant", url: "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026" },
+      { title: "Global Cybersecurity Outlook 2026 — WEF", url: "https://www.weforum.org/publications/global-cybersecurity-outlook-2026/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 02 — Industrialization"
+  title="サイバー犯罪の産業化"
+  sub="ハッカーは組織化され、分業によって効率的に攻撃を実行します。"
+>
+  <p className="mb-6">
+    現代のサイバー犯罪は、**RaaS (Ransomware as a Service)** や **IaaS (Initial Access as a Service)** といった「サービスとしての犯罪」モデルによって、高度に分業化されています。
+  </p>
+
+  <DataTable
+    headers={["役割", "担当業務", "ビジネスモデル"]}
+    rows={[
+      ["初期アクセスブローカー", "システムの弱点を見つけ、侵入の足がかりを確保する", "侵入経路の販売"],
+      ["ランサムウェア開発者", "暗号化ツールやリークサイトを構築・維持する", "身代金の分け前（レベニューシェア）"],
+      ["アフィリエイト（実行犯）", "盗んだ経路とツールを使い、実際の攻撃を実行する", "成功報酬"],
+      ["マネーロンダラー", "仮想通貨などを使い、奪った金を洗浄する", "手数料"]
+    ]}
+  />
+
+  <Callout type="danger" title="30秒の壁">
+    2026年の調査では、初期アクセスブローカーが侵入に成功してから、そのアクセス権が攻撃実行犯に売却・移転されるまでの時間は**平均30秒未満**に短縮されています。
+  </Callout>
+
+  <SourceReferences
+    sources={[
+      { title: "PwC Annual Threat Dynamics 2026", url: "https://industrialcyber.co/reports/pwc-annual-threat-dynamics-2026-discloses-that-identity-attacks-surge-as-ai-reshapes-cyber-threat-landscape/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 03 — Identity Attacks"
+  title="アイデンティティが新境界"
+  sub="攻撃者は「侵入」するのではなく、盗んだ情報で「ログイン」します。"
+>
+  <HighlightBox color="red">
+    **「アイデンティティは新しい境界防御（Firewall）である」**
+    かつては社内ネットワークに入ることが防御の鍵でしたが、現在はクラウドやSaaSの普及により、**正当なユーザーアカウント（アイデンティティ）を乗っ取ること**が攻撃のゴールになっています。
+  </HighlightBox>
+
+  <DataTable
+    headers={["手法", "内容", "主な対策"]}
+    rows={[
+      ["MFA疲労攻撃", "大量のMFA承認通知を送り、ユーザーが誤って承認するのを待つ", "FIDO2/パスキーへの移行"],
+      ["セッション窃取", "Cookieを盗み、MFAをバイパスしてログイン状態を維持する", "継続的セッション検証"],
+      ["OAuth乱用", "悪意あるサードパーティアプリに権限を許可させる", "SaaSガバナンスツールの導入"]
+    ]}
+  />
+
+  <DefenseList label="アイデンティティ保護の3原則">
+    <li>**パスワードの廃止**: パスキー（FIDO2）への完全移行</li>
+    <li>**最小権限の原則**: 必要な権限を必要な時だけ付与（JITアクセス）</li>
+    <li>**コンテキストベース認証**: 場所、時間、デバイスの状態を常に検証</li>
+  </DefenseList>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 04 — AI Weaponization"
+  title="AIの兵器化"
+  sub="最大の「フォースマルチプライヤー（戦力乗数）」。AIは攻撃能力を100倍に増幅させます。"
+>
+  <DataTable
+    headers={["AI活用手法", "脅威の内容", "難易度変化"]}
+    rows={[
+      ["超精密フィッシング", "ターゲットを学習した完璧に自然な文章を個別生成", <Tag color="red">超高難度化</Tag>],
+      ["音声ディープフェイク", "リアルタイムで上司の声になりすまし送金指示", <Tag color="red">防御困難</Tag>],
+      ["マルウェアの動的進化", "実行中にEDRパターンをリアルタイム学習し回避", <Tag color="red">検知不可</Tag>],
+      ["脆弱性の自動発見", "AIがコードを自動解析し数分で悪用コードを生成", <Tag color="red">速度100倍</Tag>],
+      ["プロンプトインジェクション", "AIへの悪意ある入力で意図しない動作を誘発", <Tag color="amber">新種の脅威</Tag>]
+    ]}
+  />
+
+  <HighlightBox color="blue">
+    **代表的なAIマルウェア**
+    - **PROMPTFLUX**: EDRのシグネチャをリアルタイムで変異させて回避し続けるマルウェア。
+    - **PROMPTSTEAL**: システムプロンプトから内部APIキーやロジックを抽出するツール。
+  </HighlightBox>
+
+  <Callout type="blue" title="AIは防御側にとっても最強の武器">
+    AI駆動型の解析により防御側も加速できます。重要なのは「AI活用で攻撃側に遅れを取らない」ことです。
+  </Callout>
+
+  <SourceReferences
+    sources={[
+      { title: "Trends Reshaping Cybersecurity — WEF 2026", url: "https://www.weforum.org/publications/global-cybersecurity-outlook-2026/in-full/3-the-trends-reshaping-cybersecurity/" },
+      { title: "SentinelOne Cyber Trends 2026", url: "https://www.sentinelone.com/cybersecurity-101/cybersecurity/cyber-security-trends/" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 05 — Supply Chain Risk"
+  title="産業化されたサプライチェーン攻撃"
+>
+  <p className="mb-6">
+    一つのSaaSベンダーやライブラリを侵害することで、その先の数千社の顧客へ一気にアクセスする攻撃手法です。
+  </p>
+
+  <AttackFlow label="サプライチェーン侵害フロー">
+    <strong>Step 1:</strong> ターゲットが利用している人気ライブラリのメンテナーのアカウントを奪取。<br/><br/>
+    <strong>Step 2:</strong> 悪意あるコードを微修正としてコミットし、正規のリリースとして配布させる。<br/><br/>
+    <strong>Step 3:</strong> そのライブラリをアップデートした数万の開発環境・本番環境から自動的に情報を窃取。
+  </AttackFlow>
+
+  <HighlightBox color="cyan">
+    **開発者ができる対策**
+    - **SBOM（ソフトウェア部品構成表）**の作成と管理。
+    - **依存関係のピン留め**: バージョンだけでなく、SHAハッシュ値で固定する。
+    - **SCAツール**による脆弱性の自動検知。
+  </HighlightBox>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Summary"
+  title="2026年のレジリエンス（回復力）"
+>
+  <p className="mb-6">
+    「侵害を100%防ぐ」ことは不可能な時代です。2026年に求められるのは、**「侵害されることを前提に、いかに素早く検知し、被害を最小限に抑え、復旧させるか」**というレジリエンスの考え方です。
+  </p>
+
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <HighlightBox color="blue">
+      **🛡️ 知る**
+      脅威の全体像を理解する
+    </HighlightBox>
+    <HighlightBox color="blue">
+      **🔍 測る**
+      現在のリスクを評価
+    </HighlightBox>
+    <HighlightBox color="blue">
+      **⚙️ 実装**
+      ステップバイステップで対策
+    </HighlightBox>
+    <HighlightBox color="blue">
+      **🔄 継続**
+      学習と改善を止めない
+    </HighlightBox>
+  </div>
+
+  <Callout type="success" title="次のステップ">
+    次回「02. Secure SDLC」では、この脅威を踏まえた具体的な開発プロセスの構築方法を解説します。
+  </Callout>
+</SectionCard>

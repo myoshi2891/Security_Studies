@@ -1,0 +1,167 @@
+---
+title: "ソフトウェアサプライチェーンセキュリティ 2026 完全ガイド"
+description: "SBOM・SLSA・VEX・EU CRA・Cosignを初学者向けに体系解説。2026年3月版。"
+---
+
+<HeroSection
+  section="06"
+  title={<>ソフトウェア<br/>サプライチェーン<br/><span className="text-blue-400">セキュリティ</span></>}
+  description="現代のアプリケーションコードのうち開発者が自ら書く行数はわずか10〜20%。残りはOSS・ライブラリ・CI/CDパイプライン・コンテナイメージ。"
+  chips={[
+    "📅 2026-03-25",
+    "👤 初学者〜中級者",
+    "⏱ 読了 約30分",
+    "🔗 一次ソース付き",
+    "💻 実装コード付き",
+    "☑ チェックリスト付き"
+  ]}
+/>
+
+<SectionCard
+  eyebrow="Section 01 — Overview"
+  title="ソフトウェアサプライチェーンとは何か"
+  sub="OWASP Top 10:2025でA03として新規追加。SolarWinds・Log4j・XZ Utilsが示した教訓。"
+>
+  <HighlightBox color="blue">
+    **ソフトウェアサプライチェーンの定義**
+    **ソフトウェアサプライチェーン**とは、一つのソフトウェアが完成するまでに関わる*すべての材料・プロセス・ツール・人の連鎖*を指します。
+  </HighlightBox>
+
+  <DataTable
+    headers={["背景要因", "具体的な変化", "影響"]}
+    rows={[
+      ["OSSへの依存度の増加", "現代アプリのコードの80〜90%がOSSライブラリで構成", <Tag color="red">「他者のコード」がリスクに直結</Tag>],
+      ["CI/CDの複雑化", "ビルド過程が「ブラックボックス」化", <Tag color="red">パイプライン自体が攻撃対象に</Tag>],
+      ["法規制の強化", "EU CRA・米国大統領令でSBOM提出が義務化", <Tag color="blue">法的ペナルティ・調達除外リスク</Tag>]
+    ]}
+  />
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 mt-8">
+    <ThreatCard title="SolarWinds (2020)" severity="critical">
+      CI/CD侵害。正規のビルドプロセスにバックドアを混入。
+    </ThreatCard>
+    <ThreatCard title="Log4Shell (2021)" severity="high">
+      依存関係脆弱性。Javaの人気ライブラリLog4jにRCE。
+    </ThreatCard>
+    <ThreatCard title="XZ Utils (2024)" severity="critical">
+      メンテナー乗っ取り。数年かけたソーシャルエンジニアリング。
+    </ThreatCard>
+  </div>
+
+  <SourceReferences
+    sources={[
+      { title: "OWASP Top 10:2025 A03", url: "https://owasp.org/www-project-top-10/" },
+      { title: "NIST SP 800-161 Rev. 1", url: "https://csrc.nist.gov/publications/detail/sp/800-161/rev-1/final" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 02 — Attack Vectors"
+  title="サプライチェーンの4大攻撃ポイント"
+>
+  <HighlightBox color="red">
+    攻撃者は「最も弱い環」を狙います。ソースコードだけでなく、開発環境やデプロイ経路すべてが標的です。
+  </HighlightBox>
+
+  <DataTable
+    headers={["ポイント", "攻撃例", "主な対策"]}
+    rows={[
+      ["① 依存ライブラリ", "タイポスクワッティング、依存関係の攪乱", "SCAツールの導入、ロックファイルの利用"],
+      ["② CI/CDパイプライン", "GitHub Actionsの侵害、シークレット漏洩", "最小権限(OIDC)、パイプラインのコード化"],
+      ["③ 開発ツール・環境", "悪意あるIDE拡張機能、Shadow AI", "ツール許可リスト、EDR導入"],
+      ["④ パッケージレジストリ", "レジストリ自体の侵害、署名の不在", "署名検証(Cosign)、SLSA準拠"]
+    ]}
+  />
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    <HighlightBox color="blue">
+      **③ メンテナー乗っ取り**
+      XZ Utils型。ソーシャルエンジニアリングで信頼を得て権限を奪取。コードレビューの徹底が不可欠。
+    </HighlightBox>
+    <HighlightBox color="blue">
+      **④ レジストリ/⑤ ビルドツール攻撃**
+      レジストリ自体の侵害やコンパイラへの毒入れ。SLSAとCosignによる署名検証が有効。
+    </HighlightBox>
+  </div>
+
+  <SourceReferences
+    sources={[
+      { title: "Supply Chain Security Roadmap 2026", url: "https://kawaldeepsingh.medium.com/software-supply-chain-security-in-2026-sboms-sigstore-in-toto-and-a-practical-roadmap-for-dev-4421990653f2" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 03 — SBOM & VEX"
+  title="透明性の確保：SBOMとVEX"
+>
+  <HighlightBox color="blue">
+    **SBOM (Software Bill of Materials)** とは、ソフトウェアに含まれるすべての部品を網羅した「原材料リスト」です。
+  </HighlightBox>
+
+  <DataTable
+    headers={["技術", "フルネーム", "役割"]}
+    rows={[
+      ["SPDX", "Software Package Data Exchange", "ISO標準のSBOM形式"],
+      ["CycloneDX", "Cyclone Data Exchange", "軽量でセキュリティに特化したSBOM形式"],
+      ["VEX", "Vulnerability Exploitability eXchange", "脆弱性が実際に「悪用可能か」を示す対の文書"]
+    ]}
+  />
+
+  <Callout type="info" title="VEXの重要性">
+    SBOMだけでは「大量の脆弱性リスト」に圧倒されます。VEXを使うことで「この脆弱性は含まれるが、設定により悪用不可である」ことを伝え、不必要な調査を減らせます。
+  </Callout>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Section 04 — SLSA & Cosign"
+  title="プロセスの完全性：SLSAとCosign"
+>
+  <p className="mb-6">
+    「正しい部品を、正しい手順で組み立てたか」を証明するためのフレームワークとツールです。
+  </p>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <HighlightBox color="cyan">
+      **SLSA (サルサ)**
+      Supply-chain Levels for Software Artifacts。ビルドプロセスの完全性を4段階で評価するガイドライン。
+    </HighlightBox>
+    <HighlightBox color="cyan">
+      **Cosign**
+      Sigstoreプロジェクトのツール。コンテナイメージやSBOMに暗号署名を付与し、改ざんを検知。
+    </HighlightBox>
+  </div>
+
+  <Terminal title="cosign-verify.sh">
+{`# イメージの署名を検証
+cosign verify --key cosign.pub my-registry.com/my-image:latest
+
+# SBOMの署名を検証
+cosign verify-attestation --key cosign.pub --type cyclonedx my-registry.com/my-image:latest`}
+  </Terminal>
+</SectionCard>
+
+<SectionCard
+  eyebrow="Checklist"
+  title="サプライチェーンセキュリティ実務チェックリスト"
+>
+  <Checklist
+    items={[
+      { text: "依存関係をハッシュ値で固定(pin)している", tag: "REQUIRED" },
+      { text: "SBOM(CycloneDX/SPDX)を自動生成している", tag: "REQUIRED" },
+      { text: "CI/CDでSCAツール(Trivy等)を実行している", tag: "CRITICAL" },
+      { text: "イメージや成果物にCosignで署名している", tag: "HIGH" },
+      { text: "CI/CDの権限にOIDCを利用し、長期間有効なキーを排除している", tag: "CRITICAL" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Summary"
+  title="2026年の標準：EUサイバーレジリエンス法 (CRA)"
+>
+  <Callout type="warning" title="法的リスク">
+    2026年、EU CRAが完全に施行。SBOMの不在や脆弱性の放置は、EU市場での販売禁止や多額の制裁金の対象となります。サプライチェーンセキュリティはもはや「ベストプラクティス」ではなく「法的義務」です。
+  </Callout>
+</SectionCard>

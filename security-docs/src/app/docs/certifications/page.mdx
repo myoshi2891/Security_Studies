@@ -1,0 +1,110 @@
+---
+title: "AppSec 国際資格完全ガイド 2026"
+description: "CSSLP・CASE・GWEBの国際資格を初学者向けにカテゴリーごとにステップバイステップで解説する完全ガイド"
+---
+
+<HeroSection 
+  section="CERT" 
+  title={<>AppSec 国際資格<br /><span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">完全ガイド 2026</span></>}
+  description={
+    <>
+      CSSLP・CASE・GWEBの3大国際資格を<strong>カテゴリーごとに完全分解</strong>。
+      初学者がどこから学び始め、何を習得すれば合格に近づけるかを、公式試験アウトラインに基づいてステップバイステップで解説します。
+    </>
+  }
+  chips={[
+    "ISC2 · CSSLP",
+    "EC-Council · CASE",
+    "GIAC · GWEB",
+    "📅 2026-03-26"
+  ]}
+/>
+
+<SectionCard eyebrow="// Introduction" title="なぜ AppSec 資格が必要なのか">
+  <HighlightBox color="blue">
+    ソフトウェア開発のライフサイクル全体（SDLC）においてセキュリティを組み込む能力は、2026年現在のエンジニアにとって最も価値のあるスキルの一つです。
+    国際的な資格を取得することは、単なる「知識の証明」だけでなく、<strong>世界標準のセキュリティフレームワークと言語を習得すること</strong>を意味します。
+  </HighlightBox>
+
+  <DataTable 
+    headers={["資格名", "主催団体", "主な対象者", "特徴"]}
+    rows={[
+      [<Tag color="blue">CSSLP</Tag>, "ISC2", "シニアエンジニア, PM, セキュリティ担当", "SDLC全体（設計〜運用）をカバーする広範な知識体系"],
+      [<Tag color="green">CASE</Tag>, "EC-Council", "開発者, テスター, アプリケーション担当", "特定言語（Java/.NET）に特化した、実装レベルのセキュアコーディング"],
+      [<Tag color="cyan">GWEB</Tag>, "GIAC (SANS)", "Web開発者, ペネトレーションテスター", "Webアプリケーションの脆弱性（OWASP Top 10等）への実践的な防御"]
+    ]}
+  />
+</SectionCard>
+
+<SectionCard id="csslp" eyebrow="// Certification 01" title={<><span className="text-blue-400">CSSLP</span> ─ Certified Secure Software Lifecycle Professional</>} sub="SDLC全般を網羅する、世界で最も信頼される AppSec プロフェッショナル資格。">
+  <Callout type="info" title="CSSLP の核心">
+    CSSLPは、単に「コードを書く」ことではなく、<strong>「いかにしてセキュアなソフトウェアを管理・設計・実装・テスト・運用するか」</strong>というライフサイクル全体のマネジメントと技術の橋渡しを重視します。
+  </Callout>
+
+  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">8つのドメイン (CBK)</h3>
+  
+  <StepTimeline 
+    steps={[
+      { title: "Domain 1: Secure Software Concepts", content: "セキュリティの基本原則（CIA, 最小権限, 多層防御等）、プライバシー、コンプライアンス、リスク管理の基礎。" },
+      { title: "Domain 2: Secure Software Requirements", content: "セキュリティ要件の抽出、データ分類、プライバシー要件の定義。" },
+      { title: "Domain 3: Secure Software Design", content: "脅威モデリング（STRIDE等）、セキュアデザイン原則、アーキテクチャの脆弱性回避。" },
+      { title: "Domain 4: Secure Software Implementation", content: "セキュアコーディング、脆弱な関数の回避、コードレビュー、シークレット管理。" },
+      { title: "Domain 5: Secure Software Testing", content: "静的解析(SAST)、動的解析(DAST)、ペネトレーションテスト、脆弱性スキャンの計画と実行。" },
+      { title: "Domain 6: Secure Software Lifecycle Management", content: "構成管理、パッチ管理、セキュアなリリースプロセス、脆弱性開示ポリシー。" },
+      { title: "Domain 7: Software Deployment, Operations, and Maintenance", content: "セキュアなデプロイメント、ログ監視、インシデント対応、継続的なセキュリティ改善。" },
+      { title: "Domain 8: Supply Chain and Software Acquisition", content: "OSS管理、SBOM、ベンダー管理、サードパーティ製コンポーネントのリスク評価。" }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard id="case" eyebrow="// Certification 02" title={<><span className="text-emerald-400">CASE</span> ─ Certified Application Security Engineer</>} sub="実装・コーディングに特化した、開発者のための「攻守」の知識。">
+  <HighlightBox color="green">
+    CASEは、Java または .NET の特定言語を選択して受験します。理論よりも<strong>「実際の脆弱なコードをどう修正するか」</strong>という、より実務に近いコーディングスキルを重視します。
+  </HighlightBox>
+
+  <DataTable 
+    headers={["フェーズ", "主な学習項目"]}
+    rows={[
+      ["Requirements", "入力バリデーションの定義, 認証・認可の要件"],
+      ["Design", "セキュアアーキテクチャ, 脅威モデリングの実践"],
+      ["Implementation", "OWASP Top 10 への具体的なコーディングレベルの対策"],
+      ["Testing", "SAST/DASTツールの活用, 脆弱性スキャンの解釈"],
+      ["Operations", "ロギングとモニタリング, インシデントの分析"]
+    ]}
+  />
+</SectionCard>
+
+<SectionCard id="gweb" eyebrow="// Certification 03" title={<><span className="text-purple-400">GWEB</span> ─ GIAC Certified Web Application Defender</>} sub="OWASP Top 10 への防御と、モダン Web 開発のセキュリティ。">
+  <Callout type="success" title="GWEB の特徴">
+    GIAC (SANS) の資格であるGWEBは、非常に高価ですが、その分<strong>「現代の Web アプリケーションに対する具体的な攻撃手法と、それに対する実践的な防御コード」</strong>を深く学びます。オープンブック形式の試験も特徴です。
+  </Callout>
+
+  <DefenseList label="GWEB で習得する主な防御技術">
+    <li>XSS (Cross-Site Scripting) への包括的なエンコーディングと CSP 適用</li>
+    <li>SQL インジェクションを根絶するプリペアドステートメントの実装</li>
+    <li>CSRF 対策としてのトークン検証と SameSite Cookie 設定</li>
+    <li>認証（OAuth 2.0 / OIDC）のセキュアな実装</li>
+    <li>API セキュリティ（REST / GraphQL）の防御</li>
+  </DefenseList>
+</SectionCard>
+
+<SectionCard eyebrow="// Comparison" title="どの資格から取得すべきか？">
+  <CompareGrid 
+    bad={[
+      "名前が有名だからという理由だけで、実務に関係ない言語の資格（CASE等）を選ぶ",
+      "基礎を飛ばして、いきなり高額な GWEB に挑戦する",
+      "コードが書けない状態で、実装特化の CASE を目指す"
+    ]}
+    good={[
+      "PMや設計者を目指すなら、まず CSSLP で全体俯瞰力を養う",
+      "バリバリの開発者なら、自身の使用言語に合わせて CASE を検討する",
+      "Webセキュリティを極めたい、あるいはペンテスター志望なら GWEB を目指す"
+    ]}
+  />
+</SectionCard>
+
+<SectionCard eyebrow="// Summary" title="2026年以降のキャリア形成">
+  <p className="text-[0.9375rem] text-[#94a3b8] leading-[1.9] mb-5">
+    AIによる自動コーディングが普及する2026年において、エンジニアに求められるのは「ただ動くコードを書くこと」ではなく、<strong>「そのコードが安全であることを保証し、アーキテクチャ全体をセキュアに保つこと」</strong>です。資格取得を通じて得た知識は、AI生成コードの品質を評価し、リスクを管理するための強力な武器になります。
+  </p>
+</SectionCard>

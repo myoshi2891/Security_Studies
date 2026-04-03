@@ -1,0 +1,470 @@
+---
+title: "OWASP Top 10:2025 完全解説"
+description: "175,000件以上のCVEデータに基づき大幅改訂。クラウド・AI・サプライチェーンの現実を反映した全10カテゴリを徹底解説。2026年3月版。"
+---
+
+<HeroSection
+  section="03"
+  title={<>OWASP<br/>Top 10<br/><span className="text-red-500">:2025</span></>}
+  description="175,000件以上のCVEデータに基づき大幅改訂。2つの新カテゴリが追加され、クラウド・AI・サプライチェーンの現実を反映した全10カテゴリを、攻撃シナリオ・実装コード・防御ステップ付きで徹底解説します。"
+  chips={[
+    "📅 2026-03-25",
+    "👤 初学者〜中級者",
+    "⏱ 読了 約35分",
+    "🔗 一次ソース付き",
+    "💻 実装コード付き"
+  ]}
+/>
+
+<SectionCard
+  eyebrow="Overview — 2025年版の全体像"
+  title={<>OWASP Top 10:2025<br/>─ なぜ今重要なのか</>}
+>
+  **OWASP（Open Web Application Security Project）Top 10**は、世界中のセキュリティ専門家が収集した175,000件以上のCVEデータと実際のインシデントデータに基づき、*Webアプリケーションにおける最も重大なセキュリティリスク*をランキング化したものです。企業のセキュリティポリシー・ペネトレーションテスト・開発ガイドラインの事実上のグローバル標準として機能しています。
+
+  <Callout type="red" title="2025年版の最大のパラダイムシフト">
+    単なる順位の入れ替えではなく、**構造的な再編**です。旧来の「コードバグ」中心の視点から、*クラウドネイティブ・AI・サプライチェーン*の現実を反映した設計思想の変革が行われました。特に「サプライチェーン（A03）」「例外処理不備（A10）」の2カテゴリが新規追加されています。
+  </Callout>
+
+  ### 全10カテゴリ一覧と変動
+
+  <DataTable
+    headers={["順位", "カテゴリ", "状態", "変化のポイント"]}
+    rows={[
+      ["A01", "Broken Access Control（アクセス制御の不備）", <Tag color="red">1位維持</Tag>, "SSRF（サーバー側リクエスト偽造）を新たに統合。"],
+      ["A02", "Security Misconfiguration（セキュリティ設定ミス）", <Tag color="yellow">5位→2位 ⬆️</Tag>, "IaC普及による設定ミスリスクの増大。"],
+      ["A03", "Software Supply Chain Failures（サプライチェーン）", <Tag color="red">🆕 NEW</Tag>, "最高インパクト。OSSやCI/CDの侵害をカバー。"],
+      ["A04", "Cryptographic Failures（暗号化の失敗）", <Tag color="blue">2位→4位 ↘️</Tag>, "TLS普及により順位は下がったが依然重要。"],
+      ["A05", "Injection（インジェクション）", <Tag color="blue">3位→5位 ↘️</Tag>, "ORMの普及により減少傾向。XSSを包含。"],
+      ["A06", "Insecure Design（安全でない設計）", <Tag color="yellow">4位→6位 ↘️</Tag>, "「設計の欠陥」への注力。"],
+      ["A07", "Authentication Failures（認証の不備）", <Tag color="yellow">変動なし</Tag>, "アイデンティティ攻撃の激化。AIによる突破リスク。"],
+      ["A08", "Software and Data Integrity Failures（完全性の欠如）", <Tag color="blue">変動なし</Tag>, "更新プロセスやデシリアライズの不備。"],
+      ["A09", "Security Logging and Alerting Failures（ログ・アラート不備）", <Tag color="blue">変動なし</Tag>, "プロアクティブなアラートを重視。"],
+      ["A10", "Mishandling of Exceptional Conditions（例外処理の不備）", <Tag color="yellow">🆕 NEW</Tag>, "エラー処理の不備による情報漏洩やバイパス。"]
+    ]}
+  />
+
+  <SourceReferences
+    sources={[
+      {
+        title: "OWASP Top 10:2025 — Introduction — OWASP Foundation",
+        url: "https://owasp.org/Top10/2025/0x00_2025-Introduction/",
+        description: "OWASP Top 10 2025年版の公式イントロダクション（一次ソース）"
+      },
+      {
+        title: "OWASP Top 10 2025: What's changed and why it matters — GitLab",
+        url: "https://about.gitlab.com/blog/2025-owasp-top-10-whats-changed-and-why-it-matters/",
+        description: "2021年版との差分を開発者向けに解説した詳細記事"
+      }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A01:2025 — 1位維持 / SSRFを新統合"
+  title="Broken Access Control（アクセス制御の不備）"
+  sub="最多発生カテゴリ。ユーザーAがユーザーBのデータにアクセスできてしまう問題全般。SSRFを統合した拡張版。"
+>
+  <div className="flex gap-2 mb-6">
+    <RiskBadge level="critical">CRITICAL</RiskBadge>
+    <RiskBadge level="high">発生頻度：最高</RiskBadge>
+    <RiskBadge level="info">SSRFを統合</RiskBadge>
+  </div>
+
+  <Callout type="red" title="初学者向け一言定義">
+    「自分以外のデータに触れてしまえる、または触れるべきでない操作ができてしまう」すべての欠陥です。URLのIDを変えたら他人の注文履歴が見えた、管理者ページにログインせずアクセスできた、なども全てこのカテゴリです。
+  </Callout>
+
+  <AttackFlow label="典型的な攻撃シナリオ">
+    **IDOR (Insecure Direct Object Reference)**: URLの注文ID（/orders/12345）を12344に変えると、別ユーザーの注文情報が閲覧できてしまう。
+    
+    **SSRF (Server-Side Request Forgery)**: 画像取得機能に内部メタデータURL（169.254.169.254）を指定し、クラウドの認証情報を盗み出す。
+  </AttackFlow>
+
+  <DefenseList label="防御の鉄則">
+    <li>オブジェクトへのアクセス時は必ずサーバー側でオーナーシップを検証（「リクエストユーザーはこのリソースの所有者か？」）</li>
+    <li>デフォルトはアクセス拒否（Deny by Default）。明示的に許可したもの以外はすべて拒否</li>
+    <li>推測可能な連番IDの代わりにUUIDやランダムトークンを使用</li>
+    <li>SSRF対策: URLホワイトリスト + IMDSv2強制（AWS）+ メタデータエンドポイントをファイアウォールでブロック</li>
+    <li>ディレクトリトラバーサル対策：パスの正規化とサンドボックス化</li>
+  </DefenseList>
+
+  <CompareGrid
+    bad={[
+      "URLのIDをそのままDBクエリに使用",
+      "リクエストユーザーの所有権チェックなし",
+      "エラーハンドリングで内部情報漏洩"
+    ]}
+    good={[
+      "JWTなどからユーザーIDを取得（信頼できるソース）",
+      "DBクエリにユーザーIDを条件追加",
+      "見つからない場合は汎用エラーを返す"
+    ]}
+  />
+
+  <Terminal
+    title="access-control.ts — IDOR対策実装例"
+    code={`// ━━ ✅ セキュアな実装（オーナーシップ検証） ━━
+app.get('/orders/:orderId', authenticate, async (req, res) => {
+  const userId = req.user.id; // JWTから取得（信頼できるソース）
+
+  // ✅ ユーザーIDを検索条件に含める = 自分のデータしか取得できない
+  const order = await db.orders.findOne({
+    where: {
+      id: req.params.orderId,
+      userId: userId, // ← これが重要: オーナーシップ検証
+    },
+  });
+
+  if (!order) {
+    return res.status(404).json({ message: 'Not found' });
+  }
+  res.json(order);
+});
+
+// ━━ SSRF対策: URLホワイトリスト ━━
+const ALLOWED_DOMAINS = ['images.example.com', 'cdn.trusted.com'];
+function validateUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    if (!['http:', 'https:'].includes(parsed.protocol)) return false;
+    if (!ALLOWED_DOMAINS.includes(parsed.hostname)) return false;
+    // プライベートIPレンジを拒否
+    if (/^(10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|127\.|169\.254\.)/.test(parsed.hostname)) return false;
+    return true;
+  } catch { return false; }
+}`}
+  />
+
+  <SourceReferences
+    sources={[
+      {
+        title: "A01:2025 Broken Access Control — OWASP",
+        url: "https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/"
+      },
+      {
+        title: "Server-Side Request Forgery — OWASP Community",
+        url: "https://owasp.org/www-community/attacks/Server_Side_Request_Forgery"
+      }
+    ]}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A02:2025 — 5位→2位 大幅上昇"
+  title="Security Misconfiguration（セキュリティ設定ミス）"
+  sub="IaC・クラウドの普及で設定ファイル1つのミスが組織全体を危険に晒す時代に。テスト対象アプリの約3%で深刻な設定ミスが発見される。"
+>
+  <AttackFlow label="典型的な攻撃シナリオ">
+    **デフォルト設定の放置**: S3バケットを public-read でデプロイし、機密データが全世界に公開される。
+
+    **不必要な機能の有効化**: K8s Dashboardをデフォルト認証のまま外部公開し、クラスター全体が乗っ取られる。
+  </AttackFlow>
+
+  <DefenseList label="Prevention">
+    <li>CI/CDにIaCスキャン（Trivy config / Checkov）を統合し、設定ミスを自動検出</li>
+    <li>デフォルト認証情報を必ず変更。不要な機能・ポートを無効化</li>
+    <li>本番・開発・環境の設定を分離管理（SecretsをVault等で管理）</li>
+    <li>スタックトレースが本番環境で表示されないよう NODE_ENV=production を設定</li>
+    <li>セキュリティHTTPヘッダー（HSTS・CSP・X-Frame-Options）を全エンドポイントに設定</li>
+  </DefenseList>
+
+  <Terminal
+    title="security-headers.ts — ExpressでのHelmet設定"
+    code={`import helmet from 'helmet';
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://trusted-cdn.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  },
+  hsts: { maxAge: 31536000, includeSubDomains: true },
+  frameguard: { action: 'deny' },
+  noSniff: true,
+}));`}
+  />
+
+  <Terminal
+    title="main.tf — セキュアなS3バケット設定"
+    code={`resource "aws_s3_bucket" "secure" {
+  bucket = "my-secure-bucket"
+}
+
+resource "aws_s3_bucket_public_access_block" "secure" {
+  bucket = aws_s3_bucket.secure.id
+  block_public_acls       = true
+  block_public_policy     = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "secure" {
+  bucket = aws_s3_bucket.secure.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
+    }
+  }
+}`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A03:2025 — 🆕 新規追加カテゴリ"
+  title="Software Supply Chain Failures（サプライチェーンの不備）"
+  sub="SolarWinds・Log4j・XZ Utils事件が示した教訓。インパクトスコアは全カテゴリ中最高。旧「脆弱なコンポーネント」を大幅拡張。"
+>
+  <Callout type="red" title="なぜ「サプライチェーン」が独立カテゴリに？">
+    現代のアプリコードのうち、開発者が書いた行数はわずか10〜20%です。残りはOSSやコンテナ。これら「他者のコード」に脆弱性や悪意が含まれていれば、自分のコードがどれだけ安全でも意味がありません。
+  </Callout>
+
+  <AttackFlow label="サプライチェーン攻撃の形態">
+    **Dependency Confusion**: 社内限定パッケージと同名の悪意あるパッケージを公開レジストリに登録し、誤ってインストールさせる。
+
+    **タイポスクワッティング**: requests -> reqeusts のように打ち間違いを狙ったマルウェア配布。
+
+    **Slopsquatting (2026年新脅威)**: AIが「幻覚」で提案した実在しないパッケージ名を攻撃者が先回りして登録する攻撃。
+  </AttackFlow>
+
+  <DefenseList label="Prevention">
+    <li>SBOM（Software Bill of Materials）を生成し、全コンポーネントを可視化（CycloneDX等）</li>
+    <li>SCA（ソフトウェアコンポジション解析）ツールをCI/CDに統合</li>
+    <li>パッケージのハッシュ値をlockファイルで固定（npm ci 等を使用）</li>
+    <li>コンテナイメージ・バイナリはCosignで署名・検証（SLSA来歴確認）</li>
+    <li>AIが提案したパッケージ名は必ず公式ドキュメントと照合してからインストール</li>
+  </DefenseList>
+
+  <Terminal
+    title="supply-chain-verify.sh — SBOM + Cosign 検証"
+    code={`# SBOM生成
+npx @cyclonedx/cyclonedx-npm --output-format JSON --output-file sbom.json
+
+# SBOMスキャン
+grype sbom:./sbom.json --fail-on high
+
+# コンテナイメージの署名検証
+cosign verify $IMAGE --certificate-identity=https://github.com/my-org/...
+
+# lockファイルでバージョン固定
+npm ci`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A04:2025 — 2位→4位"
+  title="Cryptographic Failures（暗号化の失敗）"
+  sub="機密データを適切に保護しない問題。平文保存・弱いアルゴリズム・不適切な鍵管理が主因。TLS普及で順位は下がったが依然重要。"
+>
+  <AttackFlow label="典型的な失敗例">
+    **弱いハッシュ関数**: パスワードを MD5 や SHA-1 でハッシュ化（レインボーテーブルで即解読可能）。
+
+    **自作暗号**: 独自の暗号ロジックを実装し、数分で解読される。
+  </AttackFlow>
+
+  ### 暗号技術の選択基準（2026年推奨）
+
+  <DataTable
+    headers={["用途", "❌ 使ってはいけない", "✅ 推奨"]}
+    rows={[
+      ["パスワードハッシュ", "MD5, SHA-1, SHA-256単体", "bcrypt (cost≥12), Argon2id"],
+      ["データ暗号化", "DES, 3DES, AES-ECB", "AES-256-GCM, ChaCha20-Poly1305"],
+      ["鍵交換", "RSA-1024, DH (弱い鍵)", "X25519 + ML-KEM-768 (PQC)"],
+      ["TLS", "TLS 1.0, 1.1", "TLS 1.3"]
+    ]}
+  />
+
+  <Terminal
+    title="cryptography-examples.ts — 正しい暗号化実装"
+    code={`import bcrypt from 'bcrypt';
+import { createCipheriv, randomBytes } from 'crypto';
+
+// パスワードハッシュ
+const hash = await bcrypt.hash(password, 12);
+
+// AES-256-GCM 暗号化
+const iv = randomBytes(12);
+const cipher = createCipheriv('aes-256-gcm', key, iv);
+let encrypted = cipher.update(plaintext, 'utf8', 'hex');
+encrypted += cipher.final('hex');
+const authTag = cipher.getAuthTag(); // 改ざん検知に必須`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A05:2025 — 3位→5位"
+  title="Injection（インジェクション）"
+  sub="SQLi・XSS・OS コマンドインジェクション等。ORMの普及で相対順位は低下したが、「AIへのプロンプトインジェクション」という新形態が出現。"
+>
+  <AttackFlow label="攻撃シナリオ">
+    **SQLインジェクション**: 入力欄に ' OR '1'='1 を入力し、全ユーザーとしてログイン。
+
+    **Stored XSS**: コメント欄に悪意あるスクリプトを投稿し、他ユーザーのセッションを盗む。
+  </AttackFlow>
+
+  <CompareGrid
+    bad={[
+      "ユーザー入力を文字列結合でSQL生成",
+      "エスケープ処理なし",
+      "innerHTML にユーザー入力を直接渡す"
+    ]}
+    good={[
+      "プレースホルダー（?）によるパラメータ化",
+      "ORM（Prisma等）を適切に使用",
+      "DOMPurifyによるサニタイズ"
+    ]}
+  />
+
+  <Terminal
+    title="injection-prevention.ts — 対策実装例"
+    code={`// SQLi対策: Prisma等を使用
+const user = await prisma.user.findUnique({
+  where: { username: userInput }, // 内部でパラメータ化される
+});
+
+// XSS対策: DOMPurify
+import DOMPurify from 'dompurify';
+const safeHtml = DOMPurify.sanitize(userHtmlInput);
+
+// Prompt Injection対策: 境界の明示
+const userMessage = \`\${userInput}\\n###ユーザー入力終了###\`;`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A06-A08:2025"
+  title={<>設計・認証・完全性の欠如</>}
+  sub="設計段階の欠陥・認証の実装不備・ソフトウェア/データ完全性の欠如。"
+>
+  ### A06: Insecure Design（安全でない設計）
+  コードのバグではなく、設計段階でのセキュリティ考慮の欠如。
+  - **対策**: 脅威モデリング（STRIDE等）の実施、ビジネスフローへのレート制限設計。
+
+  ### A07: Authentication Failures（認証の不備）
+  弱いパスワードポリシーやMFAの未実装。
+  <DataTable
+    headers={["脆弱なパターン", "セキュアな実装"]}
+    rows={[
+      ["無制限のログイン試行", "アカウントロック + レート制限"],
+      ["セッションIDをURLに含める", "HttpOnly + Secure + SameSite=Strict のCookie"],
+      ["SMS OTPのみのMFA", "FIDO2パスキー / TOTP"]
+    ]}
+  />
+
+  ### A08: Integrity Failures（完全性の欠如）
+  署名されていないソフトウェアの更新やCI/CDの改ざん。
+  - **対策**: コミットへのGPG署名、GitHub Actionsでのハッシュ指定（SHA）による固定。
+</SectionCard>
+
+<SectionCard
+  eyebrow="A09:2025 — 変動なし"
+  title="Logging & Alerting Failures（ログ・アラート不備）"
+  sub="攻撃が発生しても検知・対応できない状態。2025年版ではプロアクティブなアラートが強調されている。"
+>
+  <AttackFlow label="侵害シナリオ">
+    **ログの欠如**: 大量のデータ転送や深夜の管理者アクセスが記録されておらず、侵害に数ヶ月気づかない。
+  </AttackFlow>
+
+  ### 監視すべきイベント例
+  <DataTable
+    headers={["ログすべきイベント", "アラート条件"]}
+    rows={[
+      ["ログイン成功・失敗", "同一IPから5回/分以上の失敗"],
+      ["権限昇格・管理者操作", "深夜帯の管理者アクセス"],
+      ["データ大量エクスポート", "1セッションでの閾値超アクセス"],
+      ["APIエラー（500等）", "エラーレートの急増"]
+    ]}
+  />
+
+  <Terminal
+    title="security-logger.ts — セキュリティログ実装"
+    code={`function logSecurityEvent(event: SecurityEvent) {
+  const sanitized = {
+    ...event,
+    details: sanitizeForLog(event.details), // PIIを除去
+  };
+  // 構造化ログ（JSON）で出力
+  console.log(JSON.stringify(sanitized));
+
+  // アラートロジック
+  if (event.eventType === 'login_failure' && count > 5) {
+    sendSecurityAlert('Potential brute force', event);
+  }
+}`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="A10:2025 — 🆕 新規追加カテゴリ"
+  title="Mishandling of Exceptional Conditions（例外状況の不適切な処理）"
+  sub="エラー処理の不備による情報漏洩やフェイルオープン。24のCWEを包含。"
+>
+  <Callout type="amber" title="なぜ「例外処理」が重要か">
+    攻撃者は意図的にエラーを引き起こしシステムの弱点を探ります。エラー発生時に機密情報を漏らしたり、認証をバイパスして「フェイルオープン」状態になることは致命的です。
+  </Callout>
+
+  <DataTable
+    headers={["CWE", "問題パターン", "対策"]}
+    rows={[
+      ["CWE-209", "エラーに内部情報（スタックトレース等）を含める", "ユーザーには汎用メッセージ、詳細はログへ"],
+      ["CWE-636", "フェイルオープン（エラー時に認証OKとする等）", "フェイルクローズ：エラー時は必ず拒否"],
+      ["CWE-460", "リソース解放漏れによるDoS", "finally/usingで確実に解放"],
+      ["CWE-754", "例外条件の不適切な確認（nullチェックなし等）", "防御的プログラミングの徹底"]
+    ]}
+  />
+
+  <Terminal
+    title="exception-handling.ts — セキュアな処理"
+    code={`// フェイルクローズ
+async function authenticate(token: string) {
+  try {
+    return await verifyJwt(token);
+  } catch (error) {
+    logger.warn('Auth failed', { error });
+    throw new UnauthorizedError('Authentication failed'); // 常に拒否
+  }
+}
+
+// リソース解放
+await using file = await openFile(path); // TypeScript 5.2+ 自動解放`}
+  />
+</SectionCard>
+
+<SectionCard
+  eyebrow="Action Plan — 初学者が今週始めること"
+  title="OWASP Top 10:2025 実践アクションプラン"
+>
+  <StepTimeline
+    steps={[
+      {
+        title: "シークレットスキャンを導入",
+        content: "gitleaks 等でコード内のAPIキー露出をチェック。pre-commit フックを設定。"
+      },
+      {
+        title: "依存関係のCVEスキャン",
+        content: "npm audit 等を実行。CRITICALな脆弱性を即日解消する。"
+      },
+      {
+        title: "暗号化アルゴリズムの確認",
+        content: "MD5/SHA-1を廃止し、パスワードハッシュを bcrypt/Argon2id へ移行。"
+      },
+      {
+        title: "入力値検証のコードレビュー",
+        content: "生SQLを排除し、innerHTML を textContent またはサニタイズ処理に置換。"
+      },
+      {
+        title: "セキュリティHTTPヘッダー設定",
+        content: "Helmet 等を導入し、HSTS・CSP・X-Frame-Optionsを設定。"
+      },
+      {
+        title: "エラーメッセージの精査",
+        content: "本番環境でスタックトレースが表示されないことを確認し、汎用エラーハンドラーを実装。"
+      },
+      {
+        title: "MFAのアップグレード",
+        content: "SMS OTPからFIDO2パスキー等のより安全な認証方式へ移行。"
+      }
+    ]}
+  />
+</SectionCard>

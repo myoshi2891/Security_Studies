@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECURITY STUDIES 2026 — CORE DESIGN SYSTEM
+   Professional, high-fidelity documentation theme.
+   PURE CSS — No external dependencies for maximum reliability.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+:root {
+  --bg: #ffffff;
+  --fg: #09090b;
+  --zinc-50: #fafafa;
+  --zinc-100: #f4f4f5;
+  --zinc-200: #e4e4e7;
+  --zinc-300: #d4d4d8;
+  --zinc-400: #a1a1aa;
+  --zinc-500: #71717a;
+  --zinc-600: #52525b;
+  --zinc-700: #3f3f46;
+  --zinc-800: #27272a;
+  --zinc-900: #18181b;
+  --zinc-950: #09090b;
+  --primary: #09090b;
+  --border: #e4e4e7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #09090b;
+    --fg: #fafafa;
+    --border: #27272a;
+  }
+}
+
+* { box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ━━ Layout ━━ */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ━━ Typography & MDX ━━ */
+.prose {
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--zinc-700);
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose { color: var(--zinc-300); }
+}
+
+.prose h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--fg);
+  line-height: 1.1;
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--fg);
+}
+
+.prose p { margin: 1.25rem 0; }
+
+.prose ul, .prose ol { margin: 1.25rem 0; padding-left: 1.5rem; }
+.prose li { margin: 0.5rem 0; }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 0.9rem;
+}
+
+.prose th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
+  font-weight: 700;
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.prose tr:hover td {
+  background-color: var(--zinc-50);
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose tr:hover td { background-color: var(--zinc-900); }
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  background-color: var(--zinc-100);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--zinc-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose code { background-color: var(--zinc-800); color: var(--zinc-100); }
+}
+
+.prose pre {
+  background-color: var(--zinc-950);
+  color: var(--zinc-200);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid var(--zinc-800);
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.prose blockquote {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--zinc-300);
+  font-style: italic;
+  color: var(--zinc-500);
+}
+
+/* ━━ Utility Components ━━ */
+.docs-layout header {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.docs-layout aside {
+  border-right: 1px solid var(--border);
+  padding-right: 2rem;
+}
+
+.docs-layout nav a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--zinc-500);
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+}
+
+.docs-layout nav a:hover {
+  background-color: var(--zinc-100);
+  color: var(--fg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .docs-layout nav a:hover { background-color: var(--zinc-800); }
+}
+
+
+
+
+
