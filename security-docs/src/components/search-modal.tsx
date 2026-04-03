@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Search, X, FileText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
-import { SearchResult } from "@/lib/search";
+import type { SearchResult } from "@/lib/search";
 
 export function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,6 +80,7 @@ export function SearchModal() {
   if (!isOpen) {
     return (
       <button
+        type="button"
         onClick={() => setIsOpen(true)}
         className="flex items-center gap-3 px-4 py-2 text-sm text-zinc-500 bg-transparent border border-zinc-200 dark:border-zinc-800 rounded-md cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors w-full md:w-64"
       >
@@ -103,6 +104,7 @@ export function SearchModal() {
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
+        aria-label="Search"
       >
         <div className="flex items-center p-4 border-b border-zinc-200 dark:border-zinc-800 gap-4">
           <Search size={20} className="text-zinc-400" />

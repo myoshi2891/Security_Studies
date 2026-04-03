@@ -36,6 +36,6 @@ describe('SectionCard', () => {
       </SectionCard>
     );
 
-    expect(screen.queryByText('Unique Subtitle Beta')).toBeNull();
+    expect(screen.queryByTestId('section-card-subtitle')).toBeNull();
   });
 });
