@@ -194,12 +194,5 @@ body {
 
 
 
-/* ━━ SectionCard Gradients ━━ */
-.section-card-top-gradient {
-  background: linear-gradient(90deg, #3b82f6, #38bdf8 60%, transparent);
-}
 
-.section-card-left-accent {
-  background: linear-gradient(to bottom, #3b82f6, transparent);
-}
 

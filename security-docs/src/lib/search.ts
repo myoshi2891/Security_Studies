@@ -31,12 +31,6 @@ export async function getSearchIndex(): Promise<SearchResult[]> {
       const filePath = path.join(docsDirectory, category, "page.mdx");
 
       try {
-        try {
-          await fs.promises.access(filePath);
-        } catch {
-          continue;
-        }
-
         const fileContents = await fs.promises.readFile(filePath, "utf8");
         const { data, content } = matter(fileContents);
 

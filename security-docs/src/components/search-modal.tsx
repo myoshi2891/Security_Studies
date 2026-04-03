@@ -12,7 +12,7 @@ export function SearchModal() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [fuse, setFuse] = useState<Fuse<SearchResult> | null>(null);
   const [isError, setIsError] = useState(false);
-  const [shortcutLabel, setShortcutLabel] = useState("Ctrl+K");
+  const [shortcutLabel, setShortcutLabel] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -57,9 +57,7 @@ export function SearchModal() {
   useEffect(() => {
     // Detect Mac platform for accurate shortcut rendering client-side
     const isMac = typeof window !== "undefined" && /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
-    if (isMac) {
-      setShortcutLabel("⌘K");
-    }
+    setShortcutLabel(isMac ? "⌘K" : "Ctrl+K");
   }, []);
 
   useEffect(() => {

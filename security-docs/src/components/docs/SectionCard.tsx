@@ -13,11 +13,11 @@ export const SectionCard: React.FC<SectionCardProps> = ({ eyebrow, title, sub, c
     <div id={id} className="relative bg-[#161b27] border border-[#2a3548] rounded-[0.625rem] mb-7 overflow-hidden">
       {/* Top Gradient Bar */}
       <div 
-        className="absolute top-0 left-0 right-0 h-[2px] section-card-top-gradient" 
+        className="absolute top-0 left-0 right-0 h-[2px] bg-[linear-gradient(90deg,#3b82f6,#38bdf8_60%,transparent)]" 
       />
       {/* Left Accent Bar */}
       <div 
-        className="absolute top-0 bottom-0 left-0 w-[3px] section-card-left-accent" 
+        className="absolute top-0 bottom-0 left-0 w-[3px] bg-[linear-gradient(to_bottom,#3b82f6,transparent)]" 
       />
       
       <div className="p-5 md:pt-6 md:px-8 md:pb-5 border-b border-[#2a3548] relative text-left">
