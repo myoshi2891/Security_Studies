@@ -63,15 +63,13 @@ body {
 
 /* ━━ Typography & MDX ━━ */
 .prose {
-    max-width: 800px;
-    margin: 0 auto;
-    color: var(--zinc-700);
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--zinc-700);
 }
 
-@media (prefers-color-scheme: dark) {
-    .prose {
-        color: var(--zinc-300);
-    }
+.prose-invert {
+  color: var(--zinc-300);
 }
 
 .prose h1 {
