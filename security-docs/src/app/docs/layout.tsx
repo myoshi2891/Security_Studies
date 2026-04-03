@@ -6,6 +6,12 @@ interface DocsLayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Layout component that wraps documentation pages with a sticky header, a left sidebar navigation (desktop only), and a main article area.
+ *
+ * @param children - Content to render inside the main article area
+ * @returns The root JSX element containing the header, responsive sidebar navigation, and main content region
+ */
 export default function DocsLayout({ children }: DocsLayoutProps) {
   return (
     <div className="min-h-screen flex-col flex">

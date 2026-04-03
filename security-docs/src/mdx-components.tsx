@@ -3,6 +3,12 @@ import * as Docs from './components/docs';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+/**
+ * Provide a default MDX component mapping with styled HTML element renderers and project-specific components, merged with any caller-provided overrides.
+ *
+ * @param components - MDX component overrides that will replace or extend the default mappings
+ * @returns An `MDXComponents` object mapping MDX element names (e.g., `h1`, `p`, `code`) and custom component keys (e.g., `HeroSection`, `RiskBadge`) to React components; entries from `components` take precedence over the defaults
+ */
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: ({ className, ...props }) => <h1 className={twMerge(clsx("text-4xl font-extrabold tracking-tight lg:text-5xl mb-6", className))} {...props} />,

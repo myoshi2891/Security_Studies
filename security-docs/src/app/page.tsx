@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { docsConfig } from "@/config/docs";
 
+/**
+ * Render the site's home page: header with navigation, a centered hero section, a grid of documentation category links, and a footer.
+ *
+ * @returns The React element representing the complete home page layout.
+ */
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950">
