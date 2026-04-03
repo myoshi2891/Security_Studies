@@ -98,9 +98,9 @@ export function SearchModal() {
   }
 
   return (
-    <div className="search-modal-backdrop" onClick={() => setIsOpen(false)}>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-[4px] z-[100] flex justify-center pt-[10vh]" onClick={() => setIsOpen(false)}>
       <div 
-        className="search-modal" 
+        className="w-full max-w-[600px] h-fit max-h-[60vh] rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl overflow-hidden" 
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

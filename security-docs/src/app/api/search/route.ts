@@ -1,13 +1,18 @@
 import { NextResponse } from "next/server";
 import { getSearchIndex, SearchResult } from "@/lib/search";
 
-let cachedIndex: SearchResult[] | null = null;
+let cachedIndexPromise: Promise<SearchResult[]> | null = null;
 
 export async function GET() {
   try {
-    if (!cachedIndex) {
-      cachedIndex = await getSearchIndex();
+    if (!cachedIndexPromise) {
+      cachedIndexPromise = getSearchIndex().catch(err => {
+        cachedIndexPromise = null;
+        throw err;
+      });
     }
+
+    const cachedIndex = await cachedIndexPromise;
 
     return NextResponse.json(cachedIndex, {
       headers: {
