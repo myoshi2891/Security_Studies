@@ -45,6 +45,16 @@ export function SearchModal() {
   }, []);
 
   useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (isOpen && e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isOpen]);
+
+  useEffect(() => {
     // Detect Mac platform for accurate shortcut rendering client-side
     const isMac = typeof window !== "undefined" && /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
     if (isMac) {
@@ -88,7 +98,12 @@ export function SearchModal() {
 
   return (
     <div className="search-modal-backdrop" onClick={() => setIsOpen(false)}>
-      <div className="search-modal" onClick={(e) => e.stopPropagation()}>
+      <div 
+        className="search-modal" 
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="flex items-center p-4 border-b border-zinc-200 dark:border-zinc-800 gap-4">
           <Search size={20} className="text-zinc-400" />
           <input
@@ -100,6 +115,8 @@ export function SearchModal() {
             onChange={(e) => setQuery(e.target.value)}
           />
           <button 
+            type="button"
+            aria-label="Close"
             onClick={() => setIsOpen(false)} 
             className="bg-transparent border-none cursor-pointer text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
           >
@@ -113,17 +130,19 @@ export function SearchModal() {
             </div>
           ) : results.length > 0 ? (
             results.map((result) => (
-              <div
+              <button
+                type="button"
+                aria-label={`Open ${result.title}`}
                 key={result.href}
                 onClick={() => onSelect(result.href)}
-                className="p-4 rounded-lg cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors border-b border-zinc-50 dark:border-zinc-900 last:border-0"
+                className="w-full text-left bg-transparent p-4 rounded-lg cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors border-b border-zinc-50 dark:border-zinc-900 last:border-0 block"
               >
                 <div className="font-bold text-sm mb-1 flex items-center gap-2 text-zinc-900 dark:text-zinc-50">
                   <FileText size={14} className="text-zinc-400" />
                   {result.title}
                 </div>
                 <div className="text-xs text-zinc-500 line-clamp-1">{result.description}</div>
-              </div>
+              </button>
             ))
           ) : (
             <div className="p-8 text-center text-zinc-500 text-sm">

@@ -6,7 +6,7 @@ let cachedIndex: SearchResult[] | null = null;
 export async function GET() {
   try {
     if (!cachedIndex) {
-      cachedIndex = getSearchIndex();
+      cachedIndex = await getSearchIndex();
     }
 
     return NextResponse.json(cachedIndex, {

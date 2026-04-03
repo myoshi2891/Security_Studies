@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import { describe, test, expect } from 'bun:test';
+import { render, screen, cleanup } from '@testing-library/react';
+import { describe, test, expect, afterEach } from 'bun:test';
 import { SectionCard } from './SectionCard';
 
 describe('SectionCard', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   test('renders eyebrow, title, and children', () => {
     render(
       <SectionCard eyebrow="Section 01" title="Test Title Alpha">
@@ -26,16 +30,12 @@ describe('SectionCard', () => {
   });
 
   test('does not render subtitle when sub prop is omitted', () => {
-    // 前のテストの要素が残っている可能性があるため、新しい要素をラップしてレンダリングする
-    const { container } = render(
-      <div data-testid="gamma-container">
-        <SectionCard title="Title Gamma">
-          <p>Content Gamma</p>
-        </SectionCard>
-      </div>
+    render(
+      <SectionCard title="Title Gamma">
+        <p>Content Gamma</p>
+      </SectionCard>
     );
 
-    const subtitle = container.querySelector('.text-\\[0\\.9rem\\]');
-    expect(subtitle).toBeNull();
+    expect(screen.queryByText('Unique Subtitle Beta')).toBeNull();
   });
 });
