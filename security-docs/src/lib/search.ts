@@ -11,6 +11,17 @@ export interface SearchResult {
   content: string;
 }
 
+/**
+ * Builds a search index from documentation pages located under the project's docs directory.
+ *
+ * Scans immediate subdirectories of the docs directory for a `page.mdx` file, parses its frontmatter
+ * and body, and produces one `SearchResult` per category with `title` (frontmatter `title` or the
+ * directory name), `description` (frontmatter `description` or empty string), `href` (`/docs/<category>`),
+ * and `content` (the first 500 characters of the page body). If the docs directory is missing the
+ * function returns an empty array. Individual category read/parse errors are logged and skipped.
+ *
+ * @returns An array of `SearchResult` entries representing each successfully read documentation page.
+ */
 export async function getSearchIndex(): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
 

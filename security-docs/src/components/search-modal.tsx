@@ -6,6 +6,17 @@ import { useRouter } from 'next/navigation';
 import Fuse from 'fuse.js';
 import type { SearchResult } from '@/lib/search';
 
+/**
+ * Render a searchable modal for documentation with platform-specific shortcut support.
+ *
+ * The component shows a closed "Search..." button (with a macOS or Windows shortcut label)
+ * that opens a fullscreen modal. While mounted it fetches a search index from `/api/search`,
+ * builds a fuzzy search index, and updates visible results as the user types. The modal can
+ * be toggled with Cmd/Ctrl+K, closed with Escape or by clicking outside, and selecting a
+ * result closes the modal and navigates to the result's href.
+ *
+ * @returns The rendered search modal React element
+ */
 export function SearchModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
