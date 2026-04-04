@@ -44,7 +44,7 @@ description: "GitHub Copilot・Claude Code・Cursor等AIコーディングツー
     ]}
   />
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">なぜ今セキュリティが問題なのか</h3>
+  <DocsSubheading>なぜ今セキュリティが問題なのか</DocsSubheading>
 
   <DataTable 
     headers={["統計・データ", "出典", "意味"]}
@@ -175,7 +175,7 @@ $ npm audit signatures # 署名を検証
     <RiskBadge level="high">認証情報・シークレット流出</RiskBadge>
   </div>
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[0.68rem] text-red-400 my-6 uppercase tracking-[0.1em] border-l-2 border-red-400 pl-3">① コンテキストウィンドウからのシークレット漏洩</h3>
+  <DocsSubheading color="red">① コンテキストウィンドウからのシークレット漏洩</DocsSubheading>
 
   <Callout type="danger" title="仕組みと危険性">
     AIコーディングツールは適切な提案をするために、
@@ -233,7 +233,7 @@ $ npm audit signatures # 署名を検証
 
   <hr className="my-8 border-[#2a3548]" />
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[0.68rem] text-yellow-500 my-6 uppercase tracking-[0.1em] border-l-2 border-yellow-500 pl-3">② IDEプロンプトインジェクション（LOTAIL攻撃）</h3>
+  <DocsSubheading color="yellow">② IDEプロンプトインジェクション（LOTAIL攻撃）</DocsSubheading>
 
   <p className="text-[0.875rem] text-[#94a3b8] leading-[1.82] mb-4">
     「LOTAIL（Living Off The AI Land）」攻撃。
@@ -271,7 +271,7 @@ $ npm audit signatures # 署名を検証
     組織の知的財産が事実上外部に漏洩します。
   </Callout>
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">Shadow AIの組織リスクマトリクス</h3>
+  <DocsSubheading>Shadow AIの組織リスクマトリクス</DocsSubheading>
   <DataTable 
     headers={["リスクカテゴリ", "具体的なシナリオ", "影響"]}
     rows={[
@@ -283,7 +283,7 @@ $ npm audit signatures # 署名を検証
     ]}
   />
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">組織向け Shadow AI 対策 5ステップ</h3>
+  <DocsSubheading>組織向け Shadow AI 対策 5ステップ</DocsSubheading>
   <StepTimeline 
     steps={[
       {
@@ -336,7 +336,7 @@ $ npm audit signatures # 署名を検証
     ]}
   />
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">承認済みツール分類（Green/Yellow/Red モデル）</h3>
+  <DocsSubheading>承認済みツール分類（Green/Yellow/Red モデル）</DocsSubheading>
   <DataTable 
     headers={["分類", "条件", "具体例", "使用可否"]}
     rows={[
@@ -346,7 +346,7 @@ $ npm audit signatures # 署名を検証
     ]}
   />
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">セキュリティフォーカスプロンプト例</h3>
+  <DocsSubheading>セキュリティフォーカスプロンプト例</DocsSubheading>
   <Terminal title="ai-prompt-templates.md">
 {`# ❌ NG: 曖昧なプロンプト
 # "ユーザー認証APIを作って"

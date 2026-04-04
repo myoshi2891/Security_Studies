@@ -18,6 +18,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ul: ({ className, ...props }) => <ul className={twMerge(clsx("my-6 ml-6 list-disc [&>li]:mt-2", className))} {...props} />,
     li: ({ className, ...props }) => <li className={twMerge(clsx("", className))} {...props} />,
     code: ({ className, ...props }) => <code className={twMerge(clsx("relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold", className))} {...props} />,
+    table: ({ className, ...props }) => <div className="my-6 w-full overflow-x-auto"><table className={twMerge(clsx("w-full text-zinc-700 dark:text-zinc-300", className))} {...props} /></div>,
+    tr: ({ className, ...props }) => <tr className={twMerge(clsx("m-0 border-t p-0 even:bg-zinc-50 dark:even:bg-zinc-900/50", className))} {...props} />,
+    th: ({ className, ...props }) => <th className={twMerge(clsx("border border-zinc-200 dark:border-zinc-800 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right text-zinc-900 dark:text-zinc-100", className))} {...props} />,
+    td: ({ className, ...props }) => <td className={twMerge(clsx("border border-zinc-200 dark:border-zinc-800 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right", className))} {...props} />,
     // Custom Components
     HeroSection: Docs.HeroSection,
     SectionCard: Docs.SectionCard,
@@ -34,6 +38,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Checklist: Docs.Checklist,
     DataTable: Docs.DataTable,
     Tag: Docs.Tag,
+    DocsSubheading: Docs.DocsSubheading,
     ...components,
   };
 }
