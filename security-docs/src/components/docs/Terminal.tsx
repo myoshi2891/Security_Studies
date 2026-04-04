@@ -28,7 +28,13 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
       theme: 'github-dark',
     });
   } catch (e) {
-    htmlContent = `<pre><code>${content}</code></pre>`;
+    const escapedContent = content
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+    htmlContent = `<pre><code>${escapedContent}</code></pre>`;
   }
 
   return (
