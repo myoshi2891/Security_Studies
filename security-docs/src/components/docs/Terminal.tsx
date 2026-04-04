@@ -12,6 +12,7 @@ export interface TerminalProps {
 
 export const Terminal = async ({ title, children, className, code }: TerminalProps) => {
   const content = code ?? children ?? '';
+  const contentString = typeof content === 'string' ? content : String(content);
   let lang = 'typescript';
   
   if (title) {
@@ -24,12 +25,12 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
 
   let htmlContent = '';
   try {
-    htmlContent = await codeToHtml(content, {
+    htmlContent = await codeToHtml(contentString, {
       lang,
       theme: 'github-dark',
     });
   } catch (e) {
-    const escapedContent = content
+    const escapedContent = contentString
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')

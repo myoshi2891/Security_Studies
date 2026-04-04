@@ -1,4 +1,5 @@
 .markdownlint.json
 gen_security_html.sh
 install-fumadocs.expect
-md
+md/
+html/
