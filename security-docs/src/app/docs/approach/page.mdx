@@ -38,7 +38,7 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
 <SectionCard eyebrow="Section 02" title="セキュアなソフトウェア開発ライフサイクル（Secure SDLC）の進化と「シフトエブリウェア」への移行">
   従来のソフトウェア開発ライフサイクル（SDLC）では、セキュリティテストは開発の最終段階（右側）に配置されることが一般的であった。2026年現在、この概念はさらに進化を遂げ、設計から運用、さらにはユーザーからのフィードバックループに至るまで、ライフサイクル全体で継続的に品質とセキュリティを検証する「シフトエブリウェア（Shift Everywhere）」へと発展している。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">2.1. NIST SSDF 1.2と継続的改善の要件</h3>
+  <DocsSubheading>2.1. NIST SSDF 1.2と継続的改善の要件</DocsSubheading>
   米国国立標準技術研究所（NIST）は、2025年末から2026年初頭にかけて「セキュアソフトウェア開発フレームワーク（SSDF）バージョン1.2」の初期公開ドラフトを発表した。2026年のアップデートにおいて初学者が特に注目すべきは、セキュリティ態勢の「測定可能な改善（PO.6）」が強く要求されるようになった点である。これは、単にセキュリティコントロールを導入するだけでなく、その有効性をKPI（重要業績評価指標）で測定し、継続的にプロセスを洗練させなければならないことを意味している。
 
   SSDF 1.2は、以下の4つの柱で構成されている。
@@ -48,7 +48,7 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
   3.  **セキュアなソフトウェアの作成（PW）**: セキュアコーディングの実践と、脆弱性が最小限の状態でリリースする。
   4.  **脆弱性への対応（RV）**: 未知の脆弱性が発見された際の迅速なパッチ適用と情報公開。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">2.2. 初学者のためのSecure SDLC実践ステップ</h3>
+  <DocsSubheading>2.2. 初学者のためのSecure SDLC実践ステップ</DocsSubheading>
   ソフトウェア開発の各フェーズにおいて、具体的にどのようなセキュリティ活動を行うべきかをステップバイステップで示す。
 
   #### **ステップ1：要件定義と設計（設計段階でのセキュリティ統合）**
@@ -68,7 +68,7 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
   - **IaCスキャン**: TerraformやCloudFormationの設定ミス（S3バケットの公開等）をプロビジョニング前に検知する。
   - **ランタイム防御**: WAFやクラウドネイティブな監視ツールを配置し、異常なアクセスパターンをAIで検知する。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">2.3. AI駆動型AppSecツールの比較</h3>
+  <DocsSubheading>2.3. AI駆動型AppSecツールの比較</DocsSubheading>
   2026年、セキュリティツールの選定基準は「AIがいかに精度高くノイズを減らし、自動修復を提案できるか」に移行している。
 
   <DataTable 
@@ -85,7 +85,7 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
 <SectionCard eyebrow="Section 03" title="OWASP Top 10（2025/2026年版）の構造的再編">
   Webアプリケーションセキュリティのバイブルである「OWASP Top 10」は、2025年に大規模な改訂版（OWASP Top 10:2025）がリリースされた。この改訂は、175,000件以上のCVE（共通脆弱性識別子）データを分析した結果に基づき、現代のクラウドネイティブ環境とAIシステムの現実を反映している。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">3.1. OWASP Top 10:2025 カテゴリ別の詳細</h3>
+  <DocsSubheading>3.1. OWASP Top 10:2025 カテゴリ別の詳細</DocsSubheading>
   初学者が優先的に理解すべき順位と各カテゴリの内容は以下の通りである。
 
   1.  **A01: Broken Access Control（アクセス制御の不備）**
@@ -113,13 +113,13 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
 <SectionCard eyebrow="Section 04" title="大規模言語モデル（LLM）および自律型AIエージェントのセキュリティ">
   2026年、AI技術は単なるテキスト生成から、システム全体にわたる意思決定を行う「エージェント型（Agentic）アーキテクチャ」へと急速に進化している。この自律性の獲得は、エンタープライズ環境において「データ」と「命令」の境界を曖昧にし、かつてない深刻なセキュリティリスクを生み出している。「OWASP Top 10 for LLM Applications 2025」は、これらのAI特有の脆弱性を網羅したサバイバルガイドとして機能している。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">4.1. LLMアプリケーションにおける主要な脅威</h3>
+  <DocsSubheading>4.1. LLMアプリケーションにおける主要な脅威</DocsSubheading>
   - **Prompt Injection（プロンプトインジェクション）**: 悪意のあるプロンプトでLLMの指示を上書きし、システムを不正操作させる攻撃。
   - **Sensitive Information Disclosure（機密情報の開示）**: 学習データやシステムプロンプトに含まれる機密情報が、巧妙な問いかけによって漏洩する。
   - **Excessive Agency（過剰な自律性）**: AIエージェントに与えられた権限が広すぎるため、エージェントが暴走してデータを削除したり不正な通信を行ったりする。
   - **System Prompt Leakage（システムプロンプトの漏洩）**: 開発者が設定したAIの動作ルール（秘密の指示）が盗まれる。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">4.2. MCP（Model Context Protocol）と2026年の新アプローチ</h3>
+  <DocsSubheading>4.2. MCP（Model Context Protocol）と2026年の新アプローチ</DocsSubheading>
   Anthropicが提唱した「MCP」などのプロトコルにより、AIは外部ツールと標準化された方法で通信できるようになった。しかし、これは「AIエージェントが企業の内部データに触れる口」が増えたことを意味する。2026年のAIセキュリティでは、以下の対策が標準となっている。
 
   - **MCPゲートウェイの配置**: AIと外部ツールの通信を検査し、データ漏洩や不正なAPI呼び出しをブロックする。
@@ -130,12 +130,12 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
 <SectionCard eyebrow="Section 05" title="ソフトウェアサプライチェーンセキュリティの義務化と法規制">
   2026年、ソフトウェアサプライチェーンセキュリティは「努力目標」から「法的義務」へと完全にシフトした。米国の大統領令（EO 14028）や欧州のサイバーレジリエンス法（EU CRA）により、SBOM（ソフトウェア部品表）の提供は事実上のデファクトスタンダードとなっている。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">5.1. SBOM、VEX、およびSLSAの運用</h3>
+  <DocsSubheading>5.1. SBOM、VEX、およびSLSAの運用</DocsSubheading>
   - **SBOM（Software Bill of Materials）**: アプリケーションを構成するすべてのOSSライブラリのリスト。
   - **VEX（Vulnerability Exploitability eXchange）**: SBOMで検出された脆弱性が、その製品のコンテキストで「実際に悪用可能か」を宣言する文書。これにより、無害な脆弱性によるノイズを排除する。
   - **SLSA（Supply-chain Levels for Software Artifacts）**: ソースコードの変更からビルド、パッケージ配布までのプロセスの完全性を保証するフレームワーク。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">5.2. ゼロトラストとマシンアイデンティティ</h3>
+  <DocsSubheading>5.2. ゼロトラストとマシンアイデンティティ</DocsSubheading>
   クラウドネイティブ環境では、マイクロサービス間の通信を常に疑い、検証する必要がある。
   - **SPIFFE/SPIRE**: コンテナやプロセスに対して「マシンアイデンティティ」を動的に発行し、mTLS（相互TLS）によるセキュアな通信を確立する。
 </SectionCard>
@@ -143,7 +143,7 @@ description: "現代のサイバー脅威、Secure SDLC、OWASP Top 10:2025、AI
 <SectionCard eyebrow="Section 06" title="未来への備え：耐量子計算機暗号（PQC）の本格導入">
   量子コンピューティングの進歩は、現在のインターネットの基盤であるRSAや楕円曲線暗号（ECC）を無効化する「Q-Day」へのカウントダウンを開始させた。2024年8月にNISTが発表したFIPS 203/204/205（ML-KEM, ML-DSA, SLH-DSA）に基づき、2026年は既存システムの大規模な暗号移行が本格化している。
 
-  <h3 className="flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6 before:content-[''] before:w-5 before:h-[2px] before:bg-blue-500 before:shrink-0">6.1. 「Harvest Now, Decrypt Later」への対策</h3>
+  <DocsSubheading>6.1. 「Harvest Now, Decrypt Later」への対策</DocsSubheading>
   攻撃者は将来の量子解読に備えて、現在暗号化されている通信データを今から大量に収集・蓄積している。この脅威に対抗するため、組織は以下の「クリプトアジリティ（暗号の俊敏性）」を確保しなければならない。
 
   - **ハイブリッド暗号の実装**: 既存の暗号（X25519等）とPQC（ML-KEM等）を組み合わせ、どちらか一方が破られても安全性を保つ構成。

@@ -53,7 +53,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
         </aside>
         
         <main className="flex-1 min-w-0 pb-32">
-          <article className="prose text-zinc-700 dark:text-zinc-300 max-w-none">
+          <article className="prose text-zinc-700 dark:text-zinc-300 dark:prose-invert max-w-none">
             {children}
           </article>
         </main>

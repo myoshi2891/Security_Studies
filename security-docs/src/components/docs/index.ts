@@ -13,3 +13,4 @@ export * from './SourceReferences';
 export * from './Checklist';
 export * from './DataTable';
 export * from './Tag';
+export * from './DocsSubheading';

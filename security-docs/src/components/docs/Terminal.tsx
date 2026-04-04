@@ -15,7 +15,7 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
   let lang = 'typescript';
   
   if (title) {
-    if (title.endsWith('.sh') || title.includes('sh')) lang = 'bash';
+    if (title.toLowerCase().endsWith('.sh')) lang = 'bash';
     else if (title.endsWith('.yml') || title.endsWith('.yaml')) lang = 'yaml';
     else if (title.endsWith('.json')) lang = 'json';
     else if (title.endsWith('.md')) lang = 'markdown';
