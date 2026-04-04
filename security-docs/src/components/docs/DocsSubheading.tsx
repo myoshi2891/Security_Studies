@@ -2,40 +2,29 @@ import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export interface DocsSubheadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+export interface DocsSubheadingProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: 'blue' | 'emerald' | 'red' | 'yellow';
 }
 
 export const DocsSubheading = ({ className, color = 'blue', children, ...props }: DocsSubheadingProps) => {
-  let colorClasses = '';
-  
-  switch (color) {
-    case 'emerald':
-      colorClasses = "text-[#f0f6ff] before:bg-emerald-500 text-[1.1rem]";
-      break;
-    case 'red':
-      colorClasses = "text-red-400 border-l-2 border-red-400 pl-3 uppercase tracking-[0.1em] text-[0.68rem] before:hidden";
-      break;
-    case 'yellow':
-      colorClasses = "text-yellow-500 border-l-2 border-yellow-500 pl-3 uppercase tracking-[0.1em] text-[0.68rem] before:hidden";
-      break;
-    case 'blue':
-    default:
-      colorClasses = "text-[#f0f6ff] before:bg-blue-500 text-[1.1rem]";
-      break;
-  }
+  const bgColorClass = {
+    emerald: 'before:bg-emerald-500',
+    blue: 'before:bg-blue-500',
+    red: 'before:bg-red-500',
+    yellow: 'before:bg-yellow-500',
+  }[color];
   
   return (
     <div 
       className={twMerge(
         clsx(
-          "flex items-center gap-2.5 font-sans font-bold my-6",
-          color !== 'red' && color !== 'yellow' ? "before:content-[''] before:w-5 before:h-[2px] before:shrink-0" : "",
-          colorClasses,
+          "flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6",
+          "before:content-[''] before:w-5 before:h-[2px] before:shrink-0",
+          bgColorClass,
           className
         )
       )}
-      {...(props as any)}
+      {...props}
     >
       {children}
     </div>

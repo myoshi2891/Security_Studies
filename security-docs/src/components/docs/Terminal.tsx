@@ -15,10 +15,11 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
   let lang = 'typescript';
   
   if (title) {
-    if (title.toLowerCase().endsWith('.sh')) lang = 'bash';
-    else if (title.endsWith('.yml') || title.endsWith('.yaml')) lang = 'yaml';
-    else if (title.endsWith('.json')) lang = 'json';
-    else if (title.endsWith('.md')) lang = 'markdown';
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.endsWith('.sh')) lang = 'bash';
+    else if (lowerTitle.endsWith('.yml') || lowerTitle.endsWith('.yaml')) lang = 'yaml';
+    else if (lowerTitle.endsWith('.json')) lang = 'json';
+    else if (lowerTitle.endsWith('.md')) lang = 'markdown';
   }
 
   let htmlContent = '';
