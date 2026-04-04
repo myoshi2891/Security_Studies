@@ -5,13 +5,13 @@ import { codeToHtml } from 'shiki';
 
 export interface TerminalProps {
   title?: string;
-  children?: React.ReactNode;
+  children?: string;
   className?: string;
   code?: string;
 }
 
 export const Terminal = async ({ title, children, className, code }: TerminalProps) => {
-  const content = String(code || children || '');
+  const content = code ?? children ?? '';
   let lang = 'typescript';
   
   if (title) {

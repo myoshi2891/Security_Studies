@@ -38,14 +38,6 @@
 html {
     font-size: 16px;
 }
-html[data-scroll-behavior="smooth"] {
-    scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-}
 body {
     background-color: var(--bg);
     color: var(--fg);

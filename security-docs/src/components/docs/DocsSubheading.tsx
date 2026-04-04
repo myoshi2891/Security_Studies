@@ -4,9 +4,10 @@ import { twMerge } from 'tailwind-merge';
 
 export interface DocsSubheadingProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: 'blue' | 'emerald' | 'red' | 'yellow';
+  level?: number;
 }
 
-export const DocsSubheading = ({ className, color = 'blue', children, ...props }: DocsSubheadingProps) => {
+export const DocsSubheading = ({ className, color = 'blue', level, children, ...props }: DocsSubheadingProps) => {
   const bgColorClass = {
     emerald: 'before:bg-emerald-500',
     blue: 'before:bg-blue-500',
@@ -16,6 +17,8 @@ export const DocsSubheading = ({ className, color = 'blue', children, ...props }
   
   return (
     <div 
+      role="heading"
+      aria-level={level || 3}
       className={twMerge(
         clsx(
           "flex items-center gap-2.5 font-sans font-bold text-[1.1rem] text-[#f0f6ff] my-6",
