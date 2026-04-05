@@ -19,7 +19,7 @@ export const DataTable: React.FC<DataTableProps> = ({ headers, rows, className }
                 <th 
                   key={index} 
                   scope="col"
-                  className="px-4 py-2.5 text-left font-mono font-bold text-[#94a3b8] uppercase tracking-wider text-[0.65rem]"
+                  className="px-4 py-2.5 text-left font-mono font-bold text-slate-200 uppercase tracking-wider text-[0.65rem]"
                 >
                   {header}
                 </th>
@@ -30,7 +30,7 @@ export const DataTable: React.FC<DataTableProps> = ({ headers, rows, className }
             {rows.map((row, rowIndex) => (
               <tr key={rowIndex} className="hover:bg-[#161b27] transition-colors">
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="px-4 py-2.5 text-[#94a3b8] leading-relaxed align-top">
+                  <td key={cellIndex} className="px-4 py-2.5 text-slate-200 leading-relaxed align-top">
                     {cell}
                   </td>
                 ))}

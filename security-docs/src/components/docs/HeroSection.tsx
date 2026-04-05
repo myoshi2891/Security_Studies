@@ -27,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ section, title, descri
         </h1>
 
         {description && (
-          <p className="text-[1.05rem] text-[#94a3b8] max-w-3xl leading-[1.85] mb-8">
+          <p className="text-[1.05rem] text-slate-200 max-w-3xl leading-[1.85] mb-8">
             {description}
           </p>
         )}

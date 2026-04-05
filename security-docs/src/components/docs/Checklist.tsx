@@ -63,7 +63,7 @@ export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
               "w-full text-left flex items-start gap-3 px-3.5 py-2.5 rounded-md border cursor-pointer transition-all duration-150 select-none",
               checkedItems[index] 
                 ? "bg-emerald-500/5 border-emerald-500/30 text-[#e2e8f4]" 
-                : "bg-[#0d1117] border-[#2a3548] text-[#94a3b8] hover:border-[#374860]"
+                : "bg-[#0d1117] border-[#2a3548] text-slate-200 hover:border-[#374860]"
             )}
           >
             <div className={clsx(

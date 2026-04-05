@@ -14,7 +14,7 @@ export const DefenseList: React.FC<DefenseListProps> = ({ label = 'DEFENSE MEASU
       <span className="font-mono text-[0.65rem] font-bold tracking-[0.1em] uppercase text-emerald-400 mb-2.5 block">
         {label}
       </span>
-      <ul className="list-none flex flex-col gap-2 [&>li]:flex [&>li]:gap-3 [&>li]:text-[0.875rem] [&>li]:text-[#94a3b8] [&>li]:leading-[1.7] [&>li::before]:content-['✓'] [&>li::before]:text-emerald-500 [&>li::before]:font-bold [&>li::before]:shrink-0 [&>li::before]:mt-0.5">
+      <ul className="list-none flex flex-col gap-2 [&>li]:flex [&>li]:gap-3 [&>li]:text-[0.875rem] [&>li]:text-slate-200 [&>li]:leading-[1.7] [&>li::before]:content-['✓'] [&>li::before]:text-emerald-500 [&>li::before]:font-bold [&>li::before]:shrink-0 [&>li::before]:mt-0.5">
         {children}
       </ul>
     </div>

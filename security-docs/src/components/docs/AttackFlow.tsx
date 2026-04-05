@@ -14,7 +14,7 @@ export const AttackFlow: React.FC<AttackFlowProps> = ({ label = 'ATTACK FLOW', c
       <span className="font-mono text-[0.65rem] font-bold tracking-[0.1em] uppercase text-red-400 mb-2.5 block">
         {label}
       </span>
-      <div className="text-[0.875rem] text-[#94a3b8] leading-[1.82]">
+      <div className="text-[0.875rem] text-slate-200 leading-[1.82]">
         {children}
       </div>
     </div>

@@ -9,7 +9,7 @@ export interface CompareGridProps {
 }
 
 export const CompareGrid: React.FC<CompareGridProps> = ({ bad, good, className }) => {
-  const commonUlClass = "list-none flex flex-col gap-2 [&>li]:flex [&>li]:gap-2.5 [&>li]:text-[0.83rem] [&>li]:text-[#94a3b8] [&>li]:leading-[1.65] [&>li::before]:shrink-0";
+  const commonUlClass = "list-none flex flex-col gap-2 [&>li]:flex [&>li]:gap-2.5 [&>li]:text-[0.83rem] [&>li]:text-slate-200 [&>li]:leading-[1.65] [&>li::before]:shrink-0";
 
   return (
     <div className={twMerge(clsx("grid grid-cols-1 sm:grid-cols-2 gap-4 my-5", className))}>
