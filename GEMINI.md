@@ -2,21 +2,23 @@
 
 ## Project Overview
 
-This is a Next.js-based documentation application focused on security studies, leveraging the Fumadocs framework and MDX for content authoring. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, and PQC (Post-Quantum Cryptography).
+This is a Next.js-based documentation application focused on security studies. It uses a custom MDX implementation (via `@next/mdx`) with hand-crafted React components — Fumadocs has been fully removed. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, and PQC (Post-Quantum Cryptography).
 
 ### Key Technologies
 
-- **Framework:** Next.js (App Router)
-- **UI Library:** React
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS (v4) with PostCSS
-- **Documentation Engine:** Fumadocs (Core, MDX, and UI)
+- **Framework:** Next.js 16.2.2 (App Router)
+- **UI Library:** React 19
+- **Language:** TypeScript (strict)
+- **Styling:** Tailwind CSS v4 with PostCSS
+- **Content Engine:** `@next/mdx` + custom components in `src/components/docs/`
 - **Package Manager:** Bun
 
 ### Architecture
 
-- `security-docs/src/app/docs/`: Contains the documentation content in Next.js App Router MDX format.
-- `security-docs/src/app/api/search/`: Contains the search handler.
+- `security-docs/src/app/docs/`: Contains all MDX documentation pages (`page.mdx` per topic). This is the **authoritative** content directory.
+- `security-docs/src/components/docs/`: Custom React components used in MDX (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
+- `security-docs/src/config/docs.ts`: Sidebar navigation configuration.
+- `security-docs/src/app/api/search/`: Search API handler.
 - `security-docs/src/lib/search.ts`: Logic for generating the search index.
 
 ## Building and Running
@@ -32,6 +34,6 @@ Commands should be executed within the `security-docs` directory.
 
 ## Development Conventions
 
-- **Content Authoring:** All new documentation content should be authored in MDX and placed within the `security-docs/src/app/docs/` directory. Each page is a `page.mdx` file within its own subdirectory. Use custom UI components from `src/components/docs/`.
-- **Styling:** The project uses Tailwind CSS v4. Utilize utility classes for styling.
-- **Type Safety:** Ensure type safety across the project.
+- **Content Authoring:** All new documentation content should be authored in MDX and placed within `security-docs/src/app/docs/<slug>/page.mdx`. Use custom UI components from `src/components/docs/` (e.g. `<HeroSection>`, `<ThreatCard>`, `<DataTable>`). Register any new slug in `src/config/docs.ts`.
+- **Styling:** The project uses Tailwind CSS v4. Utility classes only — no custom CSS unless adding to `globals.css`.
+- **Type Safety:** Run `bun run types:check` before committing. `any` is prohibited; use `unknown` + type guards.

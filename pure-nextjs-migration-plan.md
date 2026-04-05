@@ -6,7 +6,7 @@ This project aims to build a high-performance, secure, and modern documentation 
 
 ### Tech Stack
 
-- **Framework:** Next.js 15+ (App Router)
+- **Framework:** Next.js 16.2.2 (App Router)
 - **Styling:** Tailwind CSS v4 (Alpha/Stable) with CSS Variables
 - **Content:** MDX via `@next/mdx` and `next-mdx-remote` (or standard MDX components)
 - **Language:** TypeScript (Strict Mode)
@@ -49,9 +49,9 @@ This project aims to build a high-performance, secure, and modern documentation 
     - [x] Extract clean Markdown from `html/ai-coding-safety-2026-guide.html`.
     - [x] Extract clean Markdown from `html/llm-ai-security-2026-guide.html`.
     - [x] Extract clean Markdown from `html/secdev-guide.html`. (Completed with 100% fidelity)
-    - [ ] Extract clean Markdown from `html/software-supply-chain-security-2026-guide.html`.
-    - [ ] Extract clean Markdown from `html/post-quantum-cryptography-2026-guide.html`.
-    - [ ] Extract clean Markdown from `html/owasp-top-10-2025-guide.html`.
+    - [x] Extract clean Markdown from `html/software-supply-chain-security-2026-guide.html`.
+    - [x] Extract clean Markdown from `html/post-quantum-cryptography-2026-guide.html`.
+    - [x] Extract clean Markdown from `html/owasp-top-10-2025-guide.html`.
     - [x] Extract clean Markdown from `html/threat-landscape-2026.html`. (Completed with 100% fidelity)
 3. **TDD:** Run `bun run build` to ensure no broken links or missing frontmatter.
 4. **Commit:** `docs: migrate core security documents and initial ai guides to mdx`
@@ -105,8 +105,8 @@ This project aims to build a high-performance, secure, and modern documentation 
 
 ## 4. Verification Checklist
 
-- [ ] No `fumadocs-*` packages in `package.json`.
-- [ ] Tailwind CSS v4 is initialized in `globals.css` using `@import "tailwindcss";`.
-- [ ] All `.mdx` files have valid TypeScript types.
-- [ ] Sidebar reflects the actual file structure.
-- [ ] Code blocks have "Copy" buttons and syntax highlighting.
+- [x] No `fumadocs-*` packages in `package.json`.
+- [x] Tailwind CSS v4 is initialized in `globals.css` using `@import "tailwindcss";`.
+- [x] All `.mdx` files have valid TypeScript types.
+- [x] Sidebar reflects the actual file structure (`src/config/docs.ts` — 10 pages).
+- [ ] Code blocks have "Copy" buttons and syntax highlighting. (未実装 — Phase 4 タスク)
