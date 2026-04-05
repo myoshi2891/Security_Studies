@@ -354,7 +354,7 @@ Trivyから盗んだPATを転用し、Checkmarxのオープンソースセキュ
 
 **なぜTrivy侵害が連鎖的被害を生んだか**:
 
-```
+```text
 Trivy侵害
   → CI/CDランナーのメモリからトークン窃取
      → PYPI_PUBLISHトークン（LiteLLM）
