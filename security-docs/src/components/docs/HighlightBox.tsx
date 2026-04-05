@@ -19,7 +19,7 @@ export const HighlightBox: React.FC<HighlightBoxProps> = ({ color = 'blue', chil
 
   return (
     <div className={twMerge(clsx(
-      "bg-[#1c2333] border border-[#374860] rounded-md p-5 md:px-6 my-5 text-[0.875rem] leading-[1.8] text-slate-100",
+      "bg-slate-900 border border-slate-700 rounded-md p-5 md:px-6 my-5 text-[0.875rem] leading-[1.8] text-slate-100",
       colorClasses[color],
       className
     ))}>
