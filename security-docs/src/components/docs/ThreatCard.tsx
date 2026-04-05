@@ -33,7 +33,7 @@ export const ThreatCard: React.FC<ThreatCardProps> = ({ title, severity, childre
         <RiskBadge level={severity}>{severity}</RiskBadge>
       </div>
       
-      <div className="text-[0.82rem] text-[#94a3b8] leading-[1.7]">
+      <div className="text-[0.82rem] text-slate-200 leading-[1.7]">
         {children}
       </div>
     </div>

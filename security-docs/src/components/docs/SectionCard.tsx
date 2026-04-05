@@ -30,13 +30,13 @@ export const SectionCard: React.FC<SectionCardProps> = ({ eyebrow, title, sub, c
           {title}
         </h2>
         {sub && (
-          <div data-testid="section-card-subtitle" className="text-[0.9rem] text-[#94a3b8] leading-[1.82] mt-2">
+          <div data-testid="section-card-subtitle" className="text-[0.9rem] text-slate-200 leading-[1.82] mt-2">
             {sub}
           </div>
         )}
       </div>
 
-      <div className="p-5 md:pt-7 md:px-8 md:pb-7 text-left">
+      <div className="p-5 md:pt-7 md:px-8 md:pb-7 text-left text-slate-200">
         {children}
       </div>
     </div>
