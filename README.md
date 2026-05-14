@@ -20,6 +20,53 @@ Next.js 16.2.2 (App Router) と カスタム MDX コンポーネントを活用�
   - `src/components/docs/`: MDX 内で使用するカスタム React コンポーネント群です。
   - `src/config/docs.ts`: サイドバーナビゲーション設定です。
 
+## Docker を使った開発・本番環境
+
+プロジェクトルートに `Makefile` と `docker-compose.yml` が配置されています。
+
+### 前提条件
+
+- Docker Engine 26+
+- Docker Compose v2+
+
+### 開発サーバー（ホットリロード付き）
+
+```bash
+make dev
+```
+
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
+`security-docs/` 以下のファイルを編集すると即座に反映されます。
+
+### 本番ビルドと起動
+
+```bash
+make build   # Docker イメージのビルド
+make up      # 本番コンテナの起動（バックグラウンド）
+make logs    # ログの確認
+make down    # コンテナの停止
+```
+
+### その他のコマンド
+
+```bash
+make shell   # 実行中の dev コンテナにシェルで接続
+make test    # Bun テストスイートの実行（コンテナ内）
+make clean   # コンテナ・イメージ・ボリュームの完全削除
+make help    # コマンド一覧の表示
+```
+
+### Docker 関連ファイル構成
+
+```
+Security_Studies/
+├── Makefile                    # Docker 操作ショートカット
+├── docker-compose.yml          # dev/prod サービス定義
+└── security-docs/
+    ├── Dockerfile              # マルチステージビルド（deps/builder/runner）
+    └── .dockerignore           # ビルドコンテキスト除外リスト
+```
+
 ## はじめに
 
 メインのアプリケーションは `security-docs` ディレクトリ内にあります。パッケージマネージャーとして `bun` を使用しています。

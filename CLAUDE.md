@@ -19,11 +19,42 @@ bun test src/components/docs/Callout.test.tsx  # 単一テストファイル実�
 
 コミット前に必ず `bun run types:check` を通過させること。
 
+## Docker コマンド
+
+すべての Docker 操作はプロジェクトルート (`Security_Studies/`) から実行する。
+
+```bash
+make dev              # 開発サーバー起動（ホットリロード, http://localhost:3000）
+make build            # 本番イメージビルド（security-studies:prod）
+make up               # 本番コンテナ起動（バックグラウンド）
+make down             # 全コンテナ停止
+make logs             # dev ログ追跡（make logs SERVICE=prod で prod ログ）
+make shell            # dev コンテナへのシェル接続
+make test             # Bun テスト実行（コンテナ内）
+make clean            # コンテナ・イメージ・ボリューム完全削除
+```
+
+### Docker アーキテクチャ
+
+| 項目 | 詳細 |
+|---|---|
+| **Dockerfile** | `security-docs/Dockerfile`（3ステージ: deps / builder / runner） |
+| deps stage | `oven/bun:1-alpine` — 本番依存関係のみ |
+| builder stage | `oven/bun:1-alpine` — 全依存関係 + `next build` |
+| runner stage | `node:22-alpine` — `.next/standalone/server.js` を `node` で実行 |
+| **output mode** | `next.config.ts` に `output: 'standalone'` 設定済み |
+| **本番起動** | `node server.js`（`next start` は standalone モードで無効） |
+| **開発** | ボリュームマウント + `CHOKIDAR_USEPOLLING=true` でホットリロード |
+
 ## アーキテクチャ
 
 ```
 Security_Studies/
-├── security-docs/          # Next.js 16.2.2 アプリ (本体)
+├── Makefile                    # Docker 操作ショートカット
+├── docker-compose.yml          # dev/prod サービス定義
+├── security-docs/          # Next.js 16.2.x アプリ (本体)
+│   ├── Dockerfile              # マルチステージビルド
+│   ├── .dockerignore           # ビルドコンテキスト除外
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── docs/       # ドキュメントページ (各 page.mdx)
