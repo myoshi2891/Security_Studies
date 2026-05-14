@@ -3,3 +3,5 @@ gen_security_html.sh
 install-fumadocs.expect
 md/
 html/
+.DS_Store
+node_modules/
