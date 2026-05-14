@@ -1,0 +1,39 @@
+# Version control
+.git
+.gitignore
+
+# Next.js build output (rebuilt inside Docker)
+.next/
+out/
+
+# Dependencies (reinstalled inside Docker from lockfile)
+node_modules/
+
+# Dev/test artifacts
+coverage/
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+*.pem
+
+# Logs
+npm-debug.log*
+bun-debug.log*
+
+# Editor configs
+.vscode/
+.idea/
+
+# Local env files (secrets must not enter image)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docs / planning files (not needed at runtime)
+README.md
+CLAUDE.md
+AGENTS.md
