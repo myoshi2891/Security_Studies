@@ -1,0 +1,47 @@
+# Docker Compose v2 形式（name: フィールド使用、version: フィールドは非推奨のため省略）
+name: security-studies
+
+services:
+  # ----------------------------------------------------------
+  # dev: Bun + Next.js 開発サーバー（ホットリロード付き）
+  # ----------------------------------------------------------
+  dev:
+    image: oven/bun:1-alpine
+    working_dir: /app
+    command: ["sh", "-c", "bun install --frozen-lockfile && bun run dev"]
+    ports:
+      - "3000:3000"
+    volumes:
+      # ソースをマウントして編集を即時反映
+      - ./security-docs:/app
+      # 匿名ボリューム: macOS の node_modules が Linux コンテナに混入しないよう保護
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+      # macOS + Docker ボリュームマウント環境ではinotifyが機能しないためポーリングが必要
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
+
+  # ----------------------------------------------------------
+  # prod: standalone server.js による本番サーバー
+  # ----------------------------------------------------------
+  prod:
+    build:
+      context: ./security-docs
+      dockerfile: Dockerfile
+      target: runner
+    image: security-studies:prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    restart: unless-stopped
+    # prod プロファイル: docker compose up だけでは起動しない
+    # make up (--profile prod) でのみ起動し、dev とのポート競合を防ぐ
+    profiles:
+      - prod
