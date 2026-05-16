@@ -28,9 +28,15 @@ Commands should be executed within the `security-docs` directory.
 - **Install dependencies:** `bun install`
 - **Start development server:** `bun run dev`
 - **Create production build:** `bun run build`
-- **Start production server:** `bun run start`
 - **Testing:** `bun test`
 - **Type checking:** `bun run types:check`
+
+> **Note on `output` mode:** `next.config.ts` sets `output: 'standalone'` only when the `NETLIFY` environment variable is absent. Under Docker, the production server is started via `node .next/standalone/server.js` (not `next start`). Under Netlify, the runtime manages serving automatically.
+
+## Deployment
+
+- **Netlify (primary hosting):** GitHub `main` branch push triggers automatic build and deploy via `@netlify/plugin-nextjs`. Configuration: `security-docs/netlify.toml`.
+- **Docker (local / self-hosted):** Use `make build && make up` from the project root. See `Makefile` for all targets.
 
 ## Development Conventions
 

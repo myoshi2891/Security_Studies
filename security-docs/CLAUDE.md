@@ -6,6 +6,14 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ---
 
+## Deployment Note
+
+`next.config.ts` の `output` は `process.env.NETLIFY` で分岐する。
+- **Netlify ビルド時** (`NETLIFY=true`): standalone 無効 → Netlify Next.js Runtime が処理
+- **Docker / ローカル** (未設定): `output: 'standalone'` 有効 → `node .next/standalone/server.js` で起動
+
+詳細は親ディレクトリの `CLAUDE.md` の「Netlify デプロイ」セクションを参照。
+
 ## Technical Standards
 
 - **Next.js**: 16.2.2, App Router, TypeScript (strict).

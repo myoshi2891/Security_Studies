@@ -64,8 +64,21 @@ Security_Studies/
 ├── docker-compose.yml          # dev/prod サービス定義
 └── security-docs/
     ├── Dockerfile              # マルチステージビルド（deps/builder/runner）
-    └── .dockerignore           # ビルドコンテキスト除外リスト
+    ├── .dockerignore           # ビルドコンテキスト除外リスト
+    ├── netlify.toml            # Netlify ビルド設定
+    └── .nvmrc                  # Node.js バージョン固定 (22)
 ```
+
+## Netlify デプロイ（Free Plan）
+
+`main` ブランチへの push でビルド・デプロイが自動実行される（GitHub 連携）。
+
+- 設定: `security-docs/netlify.toml`
+- ビルド: `bun install --frozen-lockfile && bun run build`
+- プラグイン: `@netlify/plugin-nextjs`（Next.js Runtime v5）
+- Deploy Preview: PR ごとに自動生成
+
+> **Docker との共存**: `next.config.ts` が `NETLIFY` 環境変数で `output: 'standalone'` を分岐するため、Docker 運用は変更なしで継続可能。
 
 ## はじめに
 
@@ -88,11 +101,30 @@ bun run dev
 
 ### ビルドと本番環境
 
-本番用のビルドを作成し、サーバーを起動するには、以下のコマンドを実行します。
+`next.config.ts` は `NETLIFY` 環境変数が未設定のとき `output: 'standalone'` を有効にするため、
+`bun run start`（= `next start`）はそのままでは動作しません。以下の 3 つの方法から選択してください。
+
+**オプション 1: standalone を無効化して起動**（`NETLIFY=true` で standalone を無効化）
 
 ```bash
-bun run build
+cd security-docs
+NETLIFY=true bun run build
 bun run start
+```
+
+**オプション 2: standalone ビルドを直接起動**（`output: 'standalone'` のまま使う場合）
+
+```bash
+cd security-docs
+bun run build
+node .next/standalone/server.js
+```
+
+**オプション 3: Docker で本番環境を再現（推奨）**
+
+```bash
+# プロジェクトルートで実行
+make build && make up
 ```
 
 ### 型チェック

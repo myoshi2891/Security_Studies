@@ -42,7 +42,7 @@ make clean            # コンテナ・イメージ・ボリューム完全削�
 | deps stage | `oven/bun:1-alpine` — 本番依存関係のみ |
 | builder stage | `oven/bun:1-alpine` — 全依存関係 + `next build` |
 | runner stage | `node:22-alpine` — `.next/standalone/server.js` を `node` で実行 |
-| **output mode** | `next.config.ts` に `output: 'standalone'` 設定済み |
+| **output mode** | `process.env.NETLIFY` が真のとき無効、それ以外は `'standalone'` |
 | **本番起動** | `node server.js`（`next start` は standalone モードで無効） |
 | **開発** | ボリュームマウント + `CHOKIDAR_USEPOLLING=true` でホットリロード |
 
@@ -53,6 +53,8 @@ Security_Studies/
 ├── Makefile                    # Docker 操作ショートカット
 ├── docker-compose.yml          # dev/prod サービス定義
 ├── security-docs/          # Next.js 16.2.x アプリ (本体)
+│   ├── netlify.toml            # Netlify ビルド設定（@netlify/plugin-nextjs）
+│   ├── .nvmrc                  # Node.js バージョン固定 (22)
 │   ├── Dockerfile              # マルチステージビルド
 │   ├── .dockerignore           # ビルドコンテキスト除外
 │   ├── src/
@@ -104,6 +106,26 @@ Security_Studies/
 ### 検索 API
 
 `GET /api/search` が `src/app/docs/` の `page.mdx` を読み取り、frontmatter + 本文冒頭500文字を返す。モジュールレベルでキャッシュされ、`Cache-Control: s-maxage=3600` が設定されている。
+
+## Netlify デプロイ
+
+`main` ブランチへの push で自動ビルド・デプロイ（GitHub 連携）。
+
+```bash
+# Netlify ビルドを手元で再現（.next/standalone が生成されないことを確認）
+NETLIFY=true bun run build
+ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
+```
+
+| 項目 | 詳細 |
+|---|---|
+| **設定ファイル** | `security-docs/netlify.toml` |
+| **ビルドコマンド** | `bun install --frozen-lockfile && bun run build` |
+| **publish ディレクトリ** | `.next` |
+| **プラグイン** | `@netlify/plugin-nextjs`（Next.js Runtime v5） |
+| **output 分岐** | `NETLIFY=true` → standalone 無効 / 未設定 → standalone 有効（Docker 用） |
+| **Node.js** | 22（`.nvmrc` + `netlify.toml` の `NODE_VERSION` で固定） |
+| **Deploy Preview** | PR ごとに自動生成（Free Plan 対象） |
 
 ### テスト構成
 
