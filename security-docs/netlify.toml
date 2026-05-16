@@ -1,0 +1,17 @@
+[build]
+  base    = "security-docs"
+  command = "bun install --frozen-lockfile && bun run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION           = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_ENV = "preview"
+
+[context.production.environment]
+  NEXT_PUBLIC_ENV = "production"
