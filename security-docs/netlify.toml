@@ -8,7 +8,7 @@
   NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+  package = "@netlify/plugin-nextjs@5.15.11"
 
 [context.deploy-preview.environment]
   NEXT_PUBLIC_ENV = "preview"

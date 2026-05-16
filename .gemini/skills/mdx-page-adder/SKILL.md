@@ -60,7 +60,7 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    - Fail-closed when required assets cannot be represented within the allowed write scope (`.mdx` files only).
 
 4. **Sidebar Registration**:
-   - Read `security-docs/src/config/docs.ts` and add the following entry to the appropriate `sidebarNav` group using Edit:
+   - Use the Edit tool to insert the following entry into the appropriate `sidebarNav` group in `security-docs/src/config/docs.ts` (target symbol: `sidebarNav`):
 
      ```typescript
      { title: "[Extracted Title]", href: "/docs/slug" }
