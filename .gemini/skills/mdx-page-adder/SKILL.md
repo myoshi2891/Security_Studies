@@ -59,15 +59,23 @@ When the user provides an HTML or MD file (or its content) and asks to add it as
    - Write the finalized MDX string to a new file named `page.mdx` inside the newly created directory (`security-docs/src/app/docs/slug/page.mdx`).
    - Fail-closed when required assets cannot be represented within the allowed write scope (`.mdx` files only).
 
-4. **Completion**:
+4. **Sidebar Registration**:
+   - Read `security-docs/src/config/docs.ts` and add the following entry to the appropriate `sidebarNav` group using Edit:
+
+     ```typescript
+     { title: "[Extracted Title]", href: "/docs/slug" }
+     ```
+
+   - Group selection: `Getting Started` for overview/architecture, `Security Guides` for technique-specific guides, `Advanced Topics` for OWASP/PQC/supply-chain, `Resources` for reference material.
+
+5. **Completion**:
    - Run validation in `security-docs`: `bun run types:check`.
    - If validation fails, report the errors and do not claim completion.
-   - If validation succeeds, inform the user that the file was successfully generated and registered as an MDX page.
-   - **Sidebar Navigation Update:** Explicitly inform the user that the generated `page.mdx` is not automatically added to the sidebar. Advise the user to manually add an entry (e.g., `{ title: "[Extracted Title]", href: "/docs/slug" }`) to the `docsConfig.sidebarNav` array in `security-docs/src/config/docs.ts`, or instruct them to execute an automated registration script.
+   - If validation succeeds, report the added path (`/docs/<slug>`) to the user.
 
 ## Constraints & Safety Rules
 
 - **No File Deletion**: Under no circumstances should you delete or remove existing files from the workspace.
 - **Command Execution**: You are permitted to execute necessary read-only commands (e.g., listing directories or checking file contents) to gather context. However, you must NOT execute any destructive commands (like `rm` or `rmdir`) or modify files outside the explicit scope of adding a new MDX page.
-  - **Exception for Validation**: To support the validation step (`bun run types:check`), you are explicitly permitted to run its underlying subcommands. The subcommand `next typegen` is allowed to perform safe write operations (creating temporary/generated type files) as required. The subcommand `tsc --noEmit` must be executed as read-only validation. (Note: `fumadocs-mdx` is not present in this project's dependencies).
+  - **Exception for Validation**: To support the validation step (`bun run types:check`), you are explicitly permitted to run its underlying subcommands. The subcommand `tsc --noEmit` must be executed as read-only validation.
 - **Create/Update Only**: Except for the `next typegen` validation step mentioned above, you may only create new topic directories under `security-docs/src/app/docs/` and add a new `page.mdx` inside them. Existing documentation pages must never be overwritten or deleted.
