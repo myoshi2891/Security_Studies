@@ -64,8 +64,21 @@ Security_Studies/
 ├── docker-compose.yml          # dev/prod サービス定義
 └── security-docs/
     ├── Dockerfile              # マルチステージビルド（deps/builder/runner）
-    └── .dockerignore           # ビルドコンテキスト除外リスト
+    ├── .dockerignore           # ビルドコンテキスト除外リスト
+    ├── netlify.toml            # Netlify ビルド設定
+    └── .nvmrc                  # Node.js バージョン固定 (22)
 ```
+
+## Netlify デプロイ（Free Plan）
+
+`main` ブランチへの push でビルド・デプロイが自動実行される（GitHub 連携）。
+
+- 設定: `security-docs/netlify.toml`
+- ビルド: `bun install --frozen-lockfile && bun run build`
+- プラグイン: `@netlify/plugin-nextjs`（Next.js Runtime v5）
+- Deploy Preview: PR ごとに自動生成
+
+> **Docker との共存**: `next.config.ts` が `NETLIFY` 環境変数で `output: 'standalone'` を分岐するため、Docker 運用は変更なしで継続可能。
 
 ## はじめに
 
