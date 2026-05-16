@@ -20,15 +20,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Documentation Layout
 
-- **Pages**: `security-docs/content/docs/**/*.mdx`
+- **Pages**: `src/app/docs/<slug>/page.mdx`
 - **Components**: `src/components/docs/`
 - **Search API**: `src/app/api/search/route.ts`
+- **Sidebar config**: `src/config/docs.ts`
 
 ## Authoring Guidelines
 
-All documentation content is authored in MDX. You can use custom UI components like `<HeroSection>`, `<SectionCard>`, and `<DataTable>` directly in your MDX files.
+All documentation content is authored in MDX. You can use custom UI components like `<HeroSection>`, `<SectionCard>`, and `<DataTable>` directly in your MDX files without imports (`mdx-components.tsx` registers them globally).
 
-To add a new page, create a new directory under `security-docs/content/docs/` and add a `page.mdx` file.
+To add a new page:
+1. Create `src/app/docs/<slug>/page.mdx` with `title` / `description` frontmatter
+2. Add `{ title, href: "/docs/<slug>" }` to `sidebarNav` in `src/config/docs.ts`
 
 ## Testing
 
