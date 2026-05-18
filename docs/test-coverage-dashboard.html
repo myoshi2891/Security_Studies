@@ -84,8 +84,7 @@
                 background: var(--bg);
                 color: var(--text-primary);
                 line-height: 1.6;
-                min-width: 1024px;
-            }
+                }
 
             .container {
                 max-width: 1360px;
@@ -856,7 +855,7 @@
                     <div class="filter-group">
                         <span class="filter-label">Category</span>
                         <button
-                            class="filter-btn active"
+                            type="button" aria-pressed="true" class="filter-btn active"
                             data-ftype="cat"
                             data-fval="all"
                             onclick="applyFilter('cat', 'all', this)"
@@ -864,7 +863,7 @@
                             All
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="unit"
                             onclick="applyFilter('cat', 'unit', this)"
@@ -872,7 +871,7 @@
                             Unit
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="integration"
                             onclick="applyFilter('cat', 'integration', this)"
@@ -880,7 +879,7 @@
                             Integration
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="e2e"
                             onclick="applyFilter('cat', 'e2e', this)"
@@ -888,7 +887,7 @@
                             E2E
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="visual"
                             onclick="applyFilter('cat', 'visual', this)"
@@ -896,7 +895,7 @@
                             Visual
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="a11y"
                             onclick="applyFilter('cat', 'a11y', this)"
@@ -904,7 +903,7 @@
                             A11y
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="perf"
                             onclick="applyFilter('cat', 'perf', this)"
@@ -912,7 +911,7 @@
                             Perf
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="api"
                             onclick="applyFilter('cat', 'api', this)"
@@ -920,7 +919,7 @@
                             API
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="cat"
                             data-fval="security"
                             onclick="applyFilter('cat', 'security', this)"
@@ -931,7 +930,7 @@
                     <div class="filter-group">
                         <span class="filter-label">Domain</span>
                         <button
-                            class="filter-btn active"
+                            type="button" aria-pressed="true" class="filter-btn active"
                             data-ftype="dom"
                             data-fval="all"
                             onclick="applyFilter('dom', 'all', this)"
@@ -939,7 +938,7 @@
                             All
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="dom"
                             data-fval="d1"
                             onclick="applyFilter('dom', 'd1', this)"
@@ -947,7 +946,7 @@
                             docs/Comp
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="dom"
                             data-fval="d2"
                             onclick="applyFilter('dom', 'd2', this)"
@@ -955,7 +954,7 @@
                             UI Comp
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="dom"
                             data-fval="d3"
                             onclick="applyFilter('dom', 'd3', this)"
@@ -963,7 +962,7 @@
                             App/Pages
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="dom"
                             data-fval="d4"
                             onclick="applyFilter('dom', 'd4', this)"
@@ -971,7 +970,7 @@
                             Search/API
                         </button>
                         <button
-                            class="filter-btn"
+                            type="button" aria-pressed="false" class="filter-btn"
                             data-ftype="dom"
                             data-fval="d5"
                             onclick="applyFilter('dom', 'd5', this)"
@@ -2006,8 +2005,12 @@
                 // update buttons
                 document
                     .querySelectorAll(`[data-ftype="${type}"]`)
-                    .forEach((b) => b.classList.remove('active'));
+                    .forEach((b) => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-pressed', 'false');
+                    });
                 btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
 
                 // filter rows
                 document.querySelectorAll('tbody tr[data-cat]').forEach((tr) => {
