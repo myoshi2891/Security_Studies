@@ -21,10 +21,15 @@ export function DisclaimerModal() {
         setConsented(readConsent());
         const onStorage = (event: StorageEvent) => {
             if (event.key === null) {
-                // localStorage.clear() はすべてのキーを消去するため同意を無効化する
+                // localStorage.clear() はすべてのキーを消去するため同意と dismissed を両方リセット
                 setConsented(false);
+                setDismissed(false);
             } else if (event.key === STORAGE_KEY) {
-                setConsented(event.newValue === '1');
+                const newConsent = event.newValue === '1';
+                setConsented(newConsent);
+                if (!newConsent) {
+                    setDismissed(false);
+                }
             }
         };
         window.addEventListener('storage', onStorage);
