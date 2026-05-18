@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function proxy(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
+  const nonce = btoa(crypto.randomUUID())
 
   const cspHeader = `
     default-src 'self';
