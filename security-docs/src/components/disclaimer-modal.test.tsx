@@ -1,4 +1,4 @@
-import { render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent, act } from '@testing-library/react';
 import { describe, test, expect, afterEach } from 'bun:test';
 import { DisclaimerModal } from './disclaimer-modal';
 
@@ -43,6 +43,25 @@ describe('DisclaimerModal', () => {
         localStorage.setItem(STORAGE_KEY, '1');
 
         render(<DisclaimerModal />);
+
+        expect(screen.queryByRole('dialog')).toBeNull();
+    });
+
+    test('他タブ相当の storage イベントで同意状態が同期される', () => {
+        render(<DisclaimerModal />);
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+        localStorage.setItem(STORAGE_KEY, '1');
+        act(() => {
+            window.dispatchEvent(
+                new StorageEvent('storage', {
+                    key: STORAGE_KEY,
+                    newValue: '1',
+                    oldValue: null,
+                    storageArea: localStorage,
+                }),
+            );
+        });
 
         expect(screen.queryByRole('dialog')).toBeNull();
     });
