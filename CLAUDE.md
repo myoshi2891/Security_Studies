@@ -25,6 +25,7 @@ bun test src/components/docs/Callout.test.tsx  # 単一テストファイル実�
 
 ```bash
 make dev              # 開発サーバー起動（ホットリロード, http://localhost:3000）
+make dev-recreate     # docker-compose.yml 変更後の強制再作成
 make build            # 本番イメージビルド（security-studies:prod）
 make up               # 本番コンテナ起動（バックグラウンド）
 make down             # 全コンテナ停止
@@ -33,6 +34,8 @@ make shell            # dev コンテナへのシェル接続
 make test             # Bun テスト実行（コンテナ内）
 make clean            # コンテナ・イメージ・ボリューム完全削除
 ```
+
+> **注意**: `docker-compose.yml` を変更した後は `make dev` だけでは旧設定で再起動される。`make dev-recreate` でコンテナを作り直す。
 
 ### Docker アーキテクチャ
 
@@ -45,6 +48,7 @@ make clean            # コンテナ・イメージ・ボリューム完全削�
 | **output mode** | `process.env.NETLIFY` が真のとき無効、それ以外は `'standalone'` |
 | **本番起動** | `node server.js`（`next start` は standalone モードで無効） |
 | **開発** | ボリュームマウント + `CHOKIDAR_USEPOLLING=true` でホットリロード |
+| **`.next` 隔離** | 匿名ボリューム `- /app/.next` で macOS virtiofs の `EROFS` を回避。初回起動時は Turbopack が再コンパイルするため遅い |
 
 ## アーキテクチャ
 
@@ -68,7 +72,7 @@ Security_Studies/
 │   │   │   └── search-modal.tsx
 │   │   ├── config/docs.ts  # サイドバーナビゲーション定義
 │   │   ├── lib/search.ts   # 検索インデックス生成ロジック
-│   │   ├── middleware.ts   # Next.js Middleware — nonce生成 & CSP ヘッダー付与
+│   │   ├── proxy.ts        # Next.js Proxy (旧 middleware) — nonce生成 & CSP ヘッダー付与
 │   │   └── mdx-components.tsx  # MDX コンポーネントのグローバル登録
 ├── docs/                   # 静的ダッシュボード（test-coverage-dashboard.html + .css）
 ├── md/                     # Markdown ソース原稿
@@ -129,14 +133,14 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 | **Node.js** | 22（`.nvmrc` + `netlify.toml` の `NODE_VERSION` で固定） |
 | **Deploy Preview** | PR ごとに自動生成（Free Plan 対象） |
 
-### セキュリティ (CSP / Middleware)
+### セキュリティ (CSP / Proxy)
 
-`src/middleware.ts` が Next.js Middleware として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する。
+`src/proxy.ts` が Next.js Proxy として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する（Next.js 16 では `middleware.ts` が deprecated となり `proxy.ts` が正式規約）。
 
 | ディレクティブ | 設定値 |
 |---|---|
 | `default-src` | `'self'` |
-| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'` |
+| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'`（dev では `'unsafe-eval'` を追加） |
 | `style-src` | `'self' 'nonce-<生成値>'` |
 | `img-src` | `'self' data:` |
 | `font-src` | `'self'` |

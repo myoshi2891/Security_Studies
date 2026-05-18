@@ -1,38 +1,32 @@
 'use client';
 
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
-const SERVER_SNAPSHOT = 'server';
-const UNSET = 'unset';
 
-type ConsentSnapshot = typeof SERVER_SNAPSHOT | typeof UNSET | '1';
-
-function subscribe(callback: () => void): () => void {
-    window.addEventListener('storage', callback);
-    return () => window.removeEventListener('storage', callback);
-}
-
-function getStoredConsent(): ConsentSnapshot {
+function readConsent(): boolean {
     try {
-        const value = localStorage.getItem(STORAGE_KEY);
-        return value === '1' ? '1' : UNSET;
+        return localStorage.getItem(STORAGE_KEY) === '1';
     } catch {
-        return UNSET;
+        return false;
     }
 }
 
-function getServerStoredConsent(): ConsentSnapshot {
-    return SERVER_SNAPSHOT;
-}
-
 export function DisclaimerModal() {
-    const stored = useSyncExternalStore(
-        subscribe,
-        getStoredConsent,
-        getServerStoredConsent,
-    );
+    // SSR / hydration では常に非表示（HTML 不一致を防ぐ）。client 側で useEffect により実値を反映する。
+    const [consented, setConsented] = useState(true);
     const [dismissed, setDismissed] = useState(false);
+
+    useEffect(() => {
+        setConsented(readConsent());
+        const onStorage = (event: StorageEvent) => {
+            if (event.key === STORAGE_KEY) {
+                setConsented(event.newValue === '1');
+            }
+        };
+        window.addEventListener('storage', onStorage);
+        return () => window.removeEventListener('storage', onStorage);
+    }, []);
 
     const handleAgree = () => {
         try {
@@ -43,7 +37,7 @@ export function DisclaimerModal() {
         setDismissed(true);
     };
 
-    if (stored !== UNSET || dismissed) return null;
+    if (consented || dismissed) return null;
 
     return (
         <div

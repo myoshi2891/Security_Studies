@@ -1,16 +1,31 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const nonce = btoa(crypto.randomUUID())
+  const isDev = process.env.NODE_ENV === 'development'
+
+  // dev: 'strict-dynamic' は Turbopack の modulepreload/HMR チャンクを block するため外す。
+  //      'self' で同一オリジンを許可し、'unsafe-eval' / 'unsafe-inline' で React dev runtime と
+  //      Turbopack の inline ブートストラップを許可。connect-src には HMR の ws を追加。
+  // prod: nonce + strict-dynamic で厳格に。
+  const scriptSrc = isDev
+    ? `'self' 'nonce-${nonce}' 'unsafe-eval' 'unsafe-inline'`
+    : `'self' 'nonce-${nonce}' 'strict-dynamic'`
+  const styleSrc = isDev
+    ? `'self' 'nonce-${nonce}' 'unsafe-inline'`
+    : `'self' 'nonce-${nonce}'`
+  const connectSrc = isDev
+    ? `'self' ws://localhost:* ws://127.0.0.1:*`
+    : `'self'`
 
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
-    style-src 'self' 'nonce-${nonce}';
+    script-src ${scriptSrc};
+    style-src ${styleSrc};
     img-src 'self' data:;
     font-src 'self';
-    connect-src 'self';
+    connect-src ${connectSrc};
     frame-ancestors 'none';
     base-uri 'self';
     form-action 'self';
