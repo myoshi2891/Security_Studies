@@ -38,4 +38,12 @@ describe('DisclaimerModal', () => {
         expect(screen.queryByRole('dialog')).toBeNull();
         expect(localStorage.getItem(STORAGE_KEY)).toBe('1');
     });
+
+    test('localStorage に同意フラグが既にある場合はモーダルを表示しない', () => {
+        localStorage.setItem(STORAGE_KEY, '1');
+
+        render(<DisclaimerModal />);
+
+        expect(screen.queryByRole('dialog')).toBeNull();
+    });
 });
