@@ -68,7 +68,7 @@ Security_Studies/
 │   │   │   └── search-modal.tsx
 │   │   ├── config/docs.ts  # サイドバーナビゲーション定義
 │   │   ├── lib/search.ts   # 検索インデックス生成ロジック
-│   │   ├── proxy.ts        # Next.js Middleware — nonce生成 & CSP ヘッダー付与
+│   │   ├── middleware.ts   # Next.js Middleware — nonce生成 & CSP ヘッダー付与
 │   │   └── mdx-components.tsx  # MDX コンポーネントのグローバル登録
 ├── docs/                   # 静的ダッシュボード（test-coverage-dashboard.html + .css）
 ├── md/                     # Markdown ソース原稿
@@ -131,7 +131,7 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 
 ### セキュリティ (CSP / Middleware)
 
-`src/proxy.ts` が Next.js Middleware として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する。
+`src/middleware.ts` が Next.js Middleware として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する。
 
 | ディレクティブ | 設定値 |
 |---|---|
