@@ -1,22 +1,38 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 
 const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
+const SERVER_SNAPSHOT = 'server';
+const UNSET = 'unset';
+
+type ConsentSnapshot = typeof SERVER_SNAPSHOT | typeof UNSET | '1';
+
+function subscribe(callback: () => void): () => void {
+    window.addEventListener('storage', callback);
+    return () => window.removeEventListener('storage', callback);
+}
+
+function getStoredConsent(): ConsentSnapshot {
+    try {
+        const value = localStorage.getItem(STORAGE_KEY);
+        return value === '1' ? '1' : UNSET;
+    } catch {
+        return UNSET;
+    }
+}
+
+function getServerStoredConsent(): ConsentSnapshot {
+    return SERVER_SNAPSHOT;
+}
 
 export function DisclaimerModal() {
-    // null = 未判定 (SSR / マウント直後)。判定確定後に boolean をセットする
-    const [isOpen, setIsOpen] = useState<boolean | null>(null);
-
-    useEffect(() => {
-        try {
-            const acknowledged = localStorage.getItem(STORAGE_KEY) === '1';
-            setIsOpen(!acknowledged);
-        } catch {
-            // localStorage が読めない場合は安全側に倒してモーダルを表示する
-            setIsOpen(true);
-        }
-    }, []);
+    const stored = useSyncExternalStore(
+        subscribe,
+        getStoredConsent,
+        getServerStoredConsent,
+    );
+    const [dismissed, setDismissed] = useState(false);
 
     const handleAgree = () => {
         try {
@@ -24,10 +40,10 @@ export function DisclaimerModal() {
         } catch {
             // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
         }
-        setIsOpen(false);
+        setDismissed(true);
     };
 
-    if (isOpen !== true) return null;
+    if (stored !== UNSET || dismissed) return null;
 
     return (
         <div
@@ -53,6 +69,7 @@ export function DisclaimerModal() {
                 <div className="mt-6 flex justify-end">
                     <button
                         type="button"
+                        autoFocus
                         onClick={handleAgree}
                         className="inline-flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 transition-colors"
                     >
