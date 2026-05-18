@@ -1,6 +1,8 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { describe, test, expect, afterEach } from 'bun:test';
 import { DisclaimerModal } from './disclaimer-modal';
+
+const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 
 describe('DisclaimerModal', () => {
     afterEach(() => {
@@ -25,5 +27,15 @@ describe('DisclaimerModal', () => {
         expect(
             screen.getByText(/最新の公式情報は各試験プロバイダーの公式サイトをご確認ください/),
         ).toBeInTheDocument();
+    });
+
+    test('「同意して閲覧する」ボタン押下でモーダルが消え、localStorage に同意を記録する', () => {
+        render(<DisclaimerModal />);
+
+        const button = screen.getByRole('button', { name: '同意して閲覧する' });
+        fireEvent.click(button);
+
+        expect(screen.queryByRole('dialog')).toBeNull();
+        expect(localStorage.getItem(STORAGE_KEY)).toBe('1');
     });
 });
