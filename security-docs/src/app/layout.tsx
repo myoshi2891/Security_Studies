@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DisclaimerModal } from "@/components/disclaimer-modal";
 
 export const metadata: Metadata = {
   title: "Security Studies 2026",
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="ja" className="scroll-smooth motion-reduce:scroll-auto">
       <body className="antialiased font-sans bg-white dark:bg-zinc-950">
         {children}
+        <DisclaimerModal />
       </body>
     </html>
   );

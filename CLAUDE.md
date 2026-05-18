@@ -68,7 +68,9 @@ Security_Studies/
 │   │   │   └── search-modal.tsx
 │   │   ├── config/docs.ts  # サイドバーナビゲーション定義
 │   │   ├── lib/search.ts   # 検索インデックス生成ロジック
+│   │   ├── proxy.ts        # Next.js Middleware — nonce生成 & CSP ヘッダー付与
 │   │   └── mdx-components.tsx  # MDX コンポーネントのグローバル登録
+├── docs/                   # 静的ダッシュボード（test-coverage-dashboard.html + .css）
 ├── md/                     # Markdown ソース原稿
 ├── html/                   # 静的 HTML ドキュメント
 └── gen_security_html.sh    # HTML 生成スクリプト
@@ -126,6 +128,22 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 | **output 分岐** | `NETLIFY=true` → standalone 無効 / 未設定 → standalone 有効（Docker 用） |
 | **Node.js** | 22（`.nvmrc` + `netlify.toml` の `NODE_VERSION` で固定） |
 | **Deploy Preview** | PR ごとに自動生成（Free Plan 対象） |
+
+### セキュリティ (CSP / Middleware)
+
+`src/proxy.ts` が Next.js Middleware として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する。
+
+| ディレクティブ | 設定値 |
+|---|---|
+| `default-src` | `'self'` |
+| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'` |
+| `style-src` | `'self' 'nonce-<生成値>'` |
+| `img-src` | `'self' data:` |
+| `font-src` | `'self'` |
+| `connect-src` | `'self'` |
+| `frame-ancestors` | `'none'` |
+
+`'strict-dynamic'` により、nonce 付きスクリプトが生成するスクリプト（Next.js ダイナミックインポート等）も自動的に信頼される。nonce は `x-nonce` リクエストヘッダーでページコンポーネントへ渡す。
 
 ### テスト構成
 

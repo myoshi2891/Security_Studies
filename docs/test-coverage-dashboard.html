@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test Coverage Dashboard — Security Studies</title>
+        <link rel="stylesheet" href="test-coverage-dashboard.css" />
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header class="site-header">
+            <div class="container">
+                <div class="header-inner">
+                    <div>
+                        <div class="doc-classification">Security Studies · Test Audit Report</div>
+                        <h1>Test Coverage Dashboard</h1>
+                        <div class="header-meta">
+                            <span><span class="live-dot"></span>Scanned 2026-05-18</span>
+                            <span>Runner: bun test</span>
+                            <span>DOM: happy-dom</span>
+                            <span>Assert: @testing-library/jest-dom</span>
+                            <span>CI: ❌ 未設定</span>
+                        </div>
+                    </div>
+                    <div class="stamp">Audit<br />Required</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- SUMMARY -->
+        <section class="summary-section">
+            <div class="container">
+                <div class="summary-grid">
+                    <div class="summary-card c-red">
+                        <div class="summary-label">Strategy Coverage</div>
+                        <div class="summary-value">2.5%</div>
+                        <div class="summary-sub">
+                            カテゴリ戦略カバレッジ<br />（40 セル中 1 セル相当）
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 2.5%; --bar-color: var(--status-none-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-green">
+                        <div class="summary-label">File Unit Coverage</div>
+                        <div class="summary-value">73%</div>
+                        <div class="summary-sub">
+                            22 ファイル中 16 ファイルに<br />Unit テストあり（smoke 含む）
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 73%; --bar-color: var(--status-ok-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-amber">
+                        <div class="summary-label">Test Cases</div>
+                        <div class="summary-value">29</div>
+                        <div class="summary-sub">16 ファイル · 大半が<br />smoke test 1件のみ</div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 30%; --bar-color: var(--status-partial-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-red">
+                        <div class="summary-label">CI Pipeline</div>
+                        <div class="summary-value">None</div>
+                        <div class="summary-sub">.github/workflows/ 未設定<br />手動実行のみ</div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 0%; --bar-color: var(--status-none-border)"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTERS -->
+        <section class="filters-section">
+            <div class="container">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <span class="filter-label">Category</span>
+                        <button
+                            type="button" aria-pressed="true" class="filter-btn active"
+                            data-ftype="cat"
+                            data-fval="all"
+                            onclick="applyFilter('cat', 'all', this)"
+                        >
+                            All
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="unit"
+                            onclick="applyFilter('cat', 'unit', this)"
+                        >
+                            Unit
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="integration"
+                            onclick="applyFilter('cat', 'integration', this)"
+                        >
+                            Integration
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="e2e"
+                            onclick="applyFilter('cat', 'e2e', this)"
+                        >
+                            E2E
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="visual"
+                            onclick="applyFilter('cat', 'visual', this)"
+                        >
+                            Visual
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="a11y"
+                            onclick="applyFilter('cat', 'a11y', this)"
+                        >
+                            A11y
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="perf"
+                            onclick="applyFilter('cat', 'perf', this)"
+                        >
+                            Perf
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="api"
+                            onclick="applyFilter('cat', 'api', this)"
+                        >
+                            API
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="security"
+                            onclick="applyFilter('cat', 'security', this)"
+                        >
+                            Security
+                        </button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">Domain</span>
+                        <button
+                            type="button" aria-pressed="true" class="filter-btn active"
+                            data-ftype="dom"
+                            data-fval="all"
+                            onclick="applyFilter('dom', 'all', this)"
+                        >
+                            All
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d1"
+                            onclick="applyFilter('dom', 'd1', this)"
+                        >
+                            docs/Comp
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d2"
+                            onclick="applyFilter('dom', 'd2', this)"
+                        >
+                            UI Comp
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d3"
+                            onclick="applyFilter('dom', 'd3', this)"
+                        >
+                            App/Pages
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d4"
+                            onclick="applyFilter('dom', 'd4', this)"
+                        >
+                            Search/API
+                        </button>
+                        <button
+                            type="button" aria-pressed="false" class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d5"
+                            onclick="applyFilter('dom', 'd5', this)"
+                        >
+                            Config
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATRIX -->
+        <section class="matrix-section">
+            <div class="container">
+                <div class="section-title">Coverage Matrix · 8 categories × 5 domains</div>
+                <div class="matrix-wrapper">
+                    <table
+                        class="matrix-table"
+                        role="table"
+                    >
+                        <caption>テストカバレッジマトリクス — 8カテゴリ × 5ドメイン</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col" data-dom="d1">
+                                    docs/Components<small>src/components/docs/ · 16 files</small>
+                                </th>
+                                <th scope="col" data-dom="d2">
+                                    UI Components<small>disclaimer-modal, search-modal</small>
+                                </th>
+                                <th scope="col" data-dom="d3">
+                                    App / Pages<small>app/page.tsx, layouts, 10×mdx</small>
+                                </th>
+                                <th scope="col" data-dom="d4">
+                                    Search &amp; API<small>src/lib/search.ts, api/search/</small>
+                                </th>
+                                <th scope="col" data-dom="d5">
+                                    Config &amp; Nav<small>src/config/docs.ts</small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Unit -->
+                            <tr data-cat="unit">
+                                <td>
+                                    <span class="cat-name">Unit</span
+                                    ><span class="cat-desc"
+                                        >個別関数・コンポーネントの単体テスト</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div
+                                        class="cell partial"
+                                        tabindex="0"
+                                        aria-label="docs/Components Unit: 部分的"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">28 tests · 15/16 files</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">⚠️ Partial — 15/16 ファイル</div>
+                                            大半が smoke test 1件。DocsSubheading のみ未テスト。
+                                            <ul class="tt-files">
+                                                <li>✓ Callout.test.tsx (4 tests)</li>
+                                                <li>✓ SectionCard.test.tsx (3 tests)</li>
+                                                <li>
+                                                    ✓ AttackFlow, DefenseList, RiskBadge, Terminal
+                                                    (各2)
+                                                </li>
+                                                <li>✓ 9 コンポーネント (各1 smoke)</li>
+                                                <li>✗ DocsSubheading.tsx — 未テスト</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div
+                                        class="cell partial"
+                                        tabindex="0"
+                                        aria-label="UI Components Unit: 部分的"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">5 tests · 1/2 files</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill" style="width: 50%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">⚠️ Partial — 1/2 ファイル</div>
+                                            DisclaimerModal のみカバー済み。SearchModal
+                                            は完全に未テスト。
+                                            <ul class="tt-files">
+                                                <li>✓ disclaimer-modal.test.tsx (5 tests)</li>
+                                                <li>
+                                                    → 表示/非表示, consent storage, storage sync
+                                                </li>
+                                                <li>✗ search-modal.tsx — テストなし</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="App/Pages Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            Next.js ページ・レイアウトはテスト対象外。
+                                            <ul class="tt-files">
+                                                <li>✗ src/app/page.tsx</li>
+                                                <li>✗ src/app/layout.tsx</li>
+                                                <li>✗ src/app/docs/layout.tsx</li>
+                                                <li>✗ 10 × docs/*/page.mdx</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="Search/API Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 高リスク</div>
+                                            全ドキュメントインデックスの核心ロジックが未カバー。
+                                            <ul class="tt-files">
+                                                <li>✗ src/lib/search.ts</li>
+                                                <li>✗ src/app/api/search/ (route)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="Config/Nav Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            <ul class="tt-files">
+                                                <li>✗ src/config/docs.ts (sidebarNav)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Integration -->
+                            <tr data-cat="integration">
+                                <td>
+                                    <span class="cat-name">Integration</span
+                                    ><span class="cat-desc">モジュール間の連携テスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            コンポーネント間組み合わせ動作テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            SearchModal + サイドバー連携などの統合テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            docs layout + MDX + sidebar の組み合わせテストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索 API ↔ インデックス生成の連携テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- E2E -->
+                            <tr data-cat="e2e">
+                                <td>
+                                    <span class="cat-name">E2E</span
+                                    ><span class="cat-desc"
+                                        >ユーザーシナリオを再現したエンドツーエンド</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            Playwright / Cypress 未導入。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            DisclaimerModal 同意フロー・SearchModal E2E なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            ページ間ナビゲーション・サイドバー展開のE2Eなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索フロー（入力→結果→ページ遷移）のE2Eなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Visual -->
+                            <tr data-cat="visual">
+                                <td>
+                                    <span class="cat-name">Visual / Snapshot</span
+                                    ><span class="cat-desc">UIの見た目の回帰テスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            スナップショット未導入。Playwright
+                                            スクリーンショット等が候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                            バックエンドロジックに Visual テストは不要。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- A11y -->
+                            <tr data-cat="a11y">
+                                <td>
+                                    <span class="cat-name">Accessibility</span
+                                    ><span class="cat-desc">WCAG 2.1 AA アクセシビリティ基準</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            aria-label・コントラスト比のテストなし。jest-axe
+                                            が候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 要対応</div>
+                                            DisclaimerModal のフォーカストラップ・Escape・background
+                                            scroll lock が未検証。
+                                            <ul class="tt-files">
+                                                <li>✗ focus trap (role=dialog)</li>
+                                                <li>✗ Escape キー閉じる</li>
+                                                <li>✗ background scroll lock</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Performance -->
+                            <tr data-cat="perf">
+                                <td>
+                                    <span class="cat-name">Performance</span
+                                    ><span class="cat-desc"
+                                        >レンダリング・バンドルサイズの計測</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            レンダリング時間・リペイント計測なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            バンドルサイズ監視なし。size-limit / bundle analyzer
+                                            候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索インデックス生成の速度計測なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- API/Contract -->
+                            <tr data-cat="api">
+                                <td>
+                                    <span class="cat-name">API / Contract</span
+                                    ><span class="cat-desc">APIレスポンス・型契約のテスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                            UI コンポーネントに API 契約テストは不要。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 最重要</div>
+                                            GET /api/search のレスポンス構造・型契約テストなし。
+                                            <ul class="tt-files">
+                                                <li>✗ GET /api/search → SearchResult[]</li>
+                                                <li>✗ frontmatter フィールド型検証</li>
+                                                <li>✗ Cache-Control ヘッダー検証</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Security -->
+                            <tr data-cat="security">
+                                <td>
+                                    <span class="cat-name">Security</span
+                                    ><span class="cat-desc">XSS・依存関係の脆弱性チェック</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            XSS インジェクション耐性テストなし。MDX
+                                            はユーザー入力を受け取らないが未検証。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            SearchModal への入力サニタイズ検証なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            パストラバーサルアタック検証なし。APIセキュリティヘッダー未検証。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">bun audit</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 依存関係監査のみ</div>
+                                            bun audit / Snyk での脆弱性チェックが候補。
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot ok"></div>
+                        ✅ 実装済み — テストが存在し CI で実行
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot partial"></div>
+                        ⚠️ 部分的 — テストはあるが網羅不十分
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot none"></div>
+                        ❌ 未実装 — テストなし
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXT ACTIONS -->
+        <section class="actions-section">
+            <div class="container">
+                <div class="section-title">Next Actions · 優先度別テスト導入計画</div>
+
+                <!-- HIGH -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge high">🔴 高優先度</span>
+                        <span class="priority-title">即対応 — ビジネスロジック・重要フロー</span>
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card high">
+                            <div class="action-title">SearchModal Unit テスト追加</div>
+                            <div class="action-desc">
+                                <code>src/components/search-modal.tsx</code> は検索という重要 UX
+                                パスにも関わらず完全に未カバー。キーボードナビゲーション・入力サニタイズ・結果表示ロジックを検証する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 検索フロー回帰防止</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">Search API / search.ts Unit テスト</div>
+                            <div class="action-desc">
+                                <code>src/lib/search.ts</code>
+                                は全ドキュメントインデックスを生成する核心ロジック。frontmatter
+                                パース・本文切り出し・キャッシュ動作を Unit + Contract
+                                テストで保護する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test</span>
+                                <span class="action-tag c-sm">コスト: 小〜中</span>
+                                <span class="action-tag">効果: 検索 API の型契約保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">CI Pipeline 構築（GitHub Actions）</div>
+                            <div class="action-desc">
+                                <code>.github/workflows/</code> が未設定のため、PR
+                                時の自動テストが存在しない。<code>bun test</code> +
+                                <code>bun run types:check</code> +
+                                <code>bun run lint</code> を実行するワークフローを追加する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">GitHub Actions</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: PR ごとの自動品質ゲート</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">DocsSubheading Unit テスト追加</div>
+                            <div class="action-desc">
+                                <code>src/components/docs/DocsSubheading.tsx</code> は docs
+                                コンポーネント群で唯一テストなし。他コンポーネントと統一するため
+                                smoke テストを追加する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: コンポーネントセット完結</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDIUM -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge medium">🟡 中優先度</span>
+                        <span class="priority-title"
+                            >次スプリント — リグレッション防止・DX 改善</span
+                        >
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card medium">
+                            <div class="action-title">カバレッジレポート追加</div>
+                            <div class="action-desc">
+                                <code>bun test --coverage</code> で lcov レポートを生成する設定を
+                                <code>bunfig.toml</code> に追加。CI で Codecov / Coveralls
+                                へアップロードし、PR ごとにカバレッジ差分を可視化する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun --coverage</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 行カバレッジの数値化</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">既存 Unit テストの深化</div>
+                            <div class="action-desc">
+                                smoke 1件のコンポーネント（Checklist・DataTable 等 9 件）に prop
+                                variation・エラー状態・エッジケースを追加。<code>Callout</code> の 4
+                                テストスタイルを参考にする。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: リグレッション検出精度向上</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">DisclaimerModal Accessibility テスト</div>
+                            <div class="action-desc">
+                                既存の 5 テストに WCAG 2.1 AA 準拠検証を追加。focus
+                                trap・<code>role=dialog</code>・Escape
+                                閉じる・背景スクロールロックを
+                                <code>@testing-library/user-event</code> でテストする。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">@testing-library/user-event</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: WCAG 2.1 AA 達成</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">Integration: docs layout + MDX</div>
+                            <div class="action-desc">
+                                docs layout と MDX
+                                ページ（複数コンポーネント埋め込み）の組み合わせ動作を Integration
+                                テストで検証。サイドバーナビゲーション・アクティブリンク状態を含む。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: ページ単位の回帰防止</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LOW -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge low">🟢 低優先度</span>
+                        <span class="priority-title"
+                            >中長期 — Nice-to-have・パフォーマンス最適化</span
+                        >
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card low">
+                            <div class="action-title">E2E テスト（Playwright）</div>
+                            <div class="action-desc">
+                                ナビゲーション・検索・DisclaimerModal のフルユーザーシナリオを E2E
+                                で保証。Next.js + Playwright の公式インテグレーションを活用。Netlify
+                                Deploy Preview との連携も可能。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">Playwright</span>
+                                <span class="action-tag c-lg">コスト: 大</span>
+                                <span class="action-tag">効果: フルシナリオ保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Visual / Snapshot 回帰テスト</div>
+                            <div class="action-desc">
+                                Playwright
+                                スクリーンショット比較でコンポーネントのビジュアル回帰を検出。特に
+                                <code>Callout</code>・<code>AttackFlow</code>・<code
+                                    >RiskBadge</code
+                                >
+                                のカラー variant 変更に有効。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">Playwright screenshot</span>
+                                <span class="action-tag c-md">コスト: 中〜大</span>
+                                <span class="action-tag">効果: CSS 変更による破壊検出</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Bundle Size モニタリング</div>
+                            <div class="action-desc">
+                                Next.js の <code>@next/bundle-analyzer</code> +
+                                <code>size-limit</code> を導入し、PR ごとにバンドルサイズ差分を CI
+                                でチェック。ドキュメントサイトのロード時間を守る。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">size-limit</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: パフォーマンス回帰防止</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Dependency Security Audit</div>
+                            <div class="action-desc">
+                                <code>bun audit</code> を CI
+                                に追加し、脆弱な依存関係を自動検出。必要に応じて Snyk / GitHub
+                                Dependabot と組み合わせて継続監視する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun audit / Snyk</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 依存関係脆弱性の継続監視</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-inner">
+                    <span>Security Studies · Test Coverage Dashboard · Generated 2026-05-18</span>
+                    <span
+                        >Runner: bun test · DOM: happy-dom · 16 files · 29 test cases · CI:
+                        未設定</span
+                    >
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            const state = { cat: 'all', dom: 'all' };
+
+            function applyFilter(type, val, btn) {
+                if (!btn) return;
+                try {
+                    state[type] = val;
+
+                    document
+                        .querySelectorAll(`[data-ftype="${type}"]`)
+                        .forEach((b) => {
+                            b.classList.remove('active');
+                            b.setAttribute('aria-pressed', 'false');
+                        });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
+
+                    document.querySelectorAll('tbody tr[data-cat]').forEach((tr) => {
+                        const show = state.cat === 'all' || tr.dataset.cat === state.cat;
+                        tr.classList.toggle('row-hidden', !show);
+                    });
+
+                    ['d1', 'd2', 'd3', 'd4', 'd5'].forEach((d) => {
+                        const show = state.dom === 'all' || state.dom === d;
+                        document.querySelectorAll(`[data-dom="${d}"]`).forEach((el) => {
+                            el.classList.toggle('col-hidden', !show);
+                        });
+                    });
+                } catch (err) {
+                    console.error('[applyFilter]', err);
+                }
+            }
+
+            // keyboard: Enter/Space on filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            if (filterBtns.length > 0) {
+                filterBtns.forEach((btn) => {
+                    btn.addEventListener('keydown', (e) => {
+                        try {
+                            if (!e.key) return;
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                btn.click();
+                            }
+                        } catch (err) {
+                            console.error('[keydown]', err);
+                        }
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>
