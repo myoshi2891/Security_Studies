@@ -15,7 +15,7 @@ dev: ## 開発サーバー起動（ホットリロード, http://localhost:3000�
 dev-recreate: ## docker-compose.yml 変更後の強制再作成（ボリューム含めて作り直す）
 	@echo "Recreating dev container from scratch ..."
 	$(COMPOSE) down --remove-orphans
-	$(COMPOSE) up dev --force-recreate
+	$(COMPOSE) up dev --force-recreate --renew-anon-volumes
 
 ## ── 本番ビルド ───────────────────────────────────────────────────────────────
 

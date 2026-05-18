@@ -5,12 +5,11 @@ export function proxy(request: NextRequest) {
   const nonce = btoa(crypto.randomUUID())
   const isDev = process.env.NODE_ENV === 'development'
 
-  // dev: 'strict-dynamic' は Turbopack の modulepreload/HMR チャンクを block するため外す。
-  //      'self' で同一オリジンを許可し、'unsafe-eval' / 'unsafe-inline' で React dev runtime と
-  //      Turbopack の inline ブートストラップを許可。connect-src には HMR の ws を追加。
+  // dev: 'unsafe-eval' / 'unsafe-inline' で React dev runtime と Turbopack の inline ブートストラップを許可。
+  //      connect-src には HMR の ws を追加。'strict-dynamic' は Next.js dynamic import に必要。
   // prod: nonce + strict-dynamic で厳格に。
   const scriptSrc = isDev
-    ? `'self' 'nonce-${nonce}' 'unsafe-eval' 'unsafe-inline'`
+    ? `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval' 'unsafe-inline'`
     : `'self' 'nonce-${nonce}' 'strict-dynamic'`
   const styleSrc = isDev
     ? `'self' 'nonce-${nonce}' 'unsafe-inline'`

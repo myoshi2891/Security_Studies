@@ -20,7 +20,10 @@ export function DisclaimerModal() {
     useEffect(() => {
         setConsented(readConsent());
         const onStorage = (event: StorageEvent) => {
-            if (event.key === STORAGE_KEY) {
+            if (event.key === null) {
+                // localStorage.clear() はすべてのキーを消去するため同意を無効化する
+                setConsented(false);
+            } else if (event.key === STORAGE_KEY) {
                 setConsented(event.newValue === '1');
             }
         };
