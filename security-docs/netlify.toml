@@ -2,6 +2,8 @@
   base    = "security-docs"
   command = "bun install --frozen-lockfile && bun run build"
   publish = ".next"
+  # security-docs/ 配下に変更がない場合はビルドをスキップしてビルド時間 (Free 300分/月) を節約
+  ignore  = "git diff --quiet HEAD^ HEAD ."
 
 [build.environment]
   NODE_VERSION           = "22"
@@ -11,7 +13,31 @@
   package = "@netlify/plugin-nextjs@5.15.11"
 
 [context.deploy-preview.environment]
-  NEXT_PUBLIC_ENV = "preview"
+  NEXT_PUBLIC_ENV         = "preview"
+  NEXT_TELEMETRY_DISABLED = "1"
 
 [context.production.environment]
   NEXT_PUBLIC_ENV = "production"
+
+# --------- Cache headers ---------
+# 検索インデックスはコンテンツ追加時の反映を遅らせないため max-age=300 / CDN は 1日キャッシュ
+[[headers]]
+  for = "/search-index.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=86400, stale-while-revalidate=86400"
+
+# Next.js のハッシュ付き静的アセットは immutable で安全
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# --------- Security headers ---------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options         = "DENY"
+    X-Content-Type-Options  = "nosniff"
+    Referrer-Policy         = "strict-origin-when-cross-origin"
+    Permissions-Policy      = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"

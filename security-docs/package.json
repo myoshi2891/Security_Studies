@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "bun run build:search-index",
     "dev": "next dev",
+    "prebuild": "bun run build:search-index",
     "build": "next build",
+    "build:search-index": "bun run scripts/build-search-index.ts",
     "start": "next start",
     "lint": "next lint",
     "types:check": "tsc --noEmit",

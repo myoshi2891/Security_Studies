@@ -27,7 +27,7 @@ export function SearchModal() {
     const router = useRouter();
 
     useEffect(() => {
-        fetch('/api/search')
+        fetch('/search-index.json')
             .then((res) => {
                 if (!res.ok) throw new Error('Failed to fetch search index');
                 return res.json();
