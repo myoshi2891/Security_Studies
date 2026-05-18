@@ -1,8 +1,6 @@
 import { render, screen, cleanup, fireEvent, act } from '@testing-library/react';
 import { describe, test, expect, afterEach } from 'bun:test';
-import { DisclaimerModal } from './disclaimer-modal';
-
-const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
+import { DisclaimerModal, STORAGE_KEY } from './disclaimer-modal';
 
 describe('DisclaimerModal', () => {
     afterEach(() => {

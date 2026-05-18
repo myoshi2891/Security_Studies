@@ -3,7 +3,8 @@
   command = "bun install --frozen-lockfile && bun run build"
   publish = ".next"
   # security-docs/ 配下に変更がない場合はビルドをスキップしてビルド時間 (Free 300分/月) を節約
-  ignore  = "git diff --quiet HEAD^ HEAD ."
+  # CACHED_COMMIT_REF を優先し、HEAD^ が存在しないシャロークローン環境でも安全に動作させる
+  ignore = "if [ -n \"$CACHED_COMMIT_REF\" ]; then git diff --quiet \"$CACHED_COMMIT_REF\" HEAD .; elif git rev-parse HEAD^ >/dev/null 2>&1; then git diff --quiet HEAD^ HEAD .; else false; fi"
 
 [build.environment]
   NODE_VERSION           = "22"
@@ -29,7 +30,7 @@
 
 # Next.js のハッシュ付き静的アセットは immutable で安全
 [[headers]]
-  for = "/_next/static/*"
+  for = "/_next/static/**"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 

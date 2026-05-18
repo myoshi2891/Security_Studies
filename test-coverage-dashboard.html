@@ -1,0 +1,2038 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test Coverage Dashboard — Security Studies</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #f8f5ef;
+                --bg-secondary: #ede9e0;
+                --bg-card: #fdfaf5;
+                --border: #c8c0b0;
+                --border-strong: #8a7f6e;
+                --text-primary: #0d1b2a;
+                --text-secondary: #4a4035;
+                --text-muted: #7a7060;
+                --accent: #0d1b2a;
+                --accent-red: #a02020;
+                --accent-teal: #1a6b6b;
+                --status-ok: #1e6b3a;
+                --status-ok-bg: #e8f5ec;
+                --status-ok-border: #4caf50;
+                --status-partial: #7a5800;
+                --status-partial-bg: #fff8e6;
+                --status-partial-border: #e09000;
+                --status-none: #8b1c1c;
+                --status-none-bg: #fef0f0;
+                --status-none-border: #e53e3e;
+                --priority-high: #c0392b;
+                --priority-medium: #c48a00;
+                --priority-low: #1e8449;
+                --font-mono: 'Courier Prime', 'Courier New', monospace;
+                --font-serif: 'Source Serif 4', Georgia, serif;
+                --shadow: 0 2px 8px rgba(13, 27, 42, 0.08);
+                --shadow-lg: 0 8px 32px rgba(13, 27, 42, 0.14);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #080c18;
+                    --bg-secondary: #0d1525;
+                    --bg-card: #101828;
+                    --border: #1a2840;
+                    --border-strong: #263c5c;
+                    --text-primary: #c8d8e8;
+                    --text-secondary: #a6c3e6;
+                    --text-muted: #7a9abd;
+                    --accent: #00c8be;
+                    --accent-red: #ff6060;
+                    --accent-teal: #00c8be;
+                    --status-ok: #00c8be;
+                    --status-ok-bg: #001a19;
+                    --status-ok-border: #009990;
+                    --status-partial: #ffb020;
+                    --status-partial-bg: #1a1000;
+                    --status-partial-border: #cc8800;
+                    --status-none: #ff6060;
+                    --status-none-bg: #1a0808;
+                    --status-none-border: #cc2222;
+                    --priority-high: #ff6060;
+                    --priority-medium: #ffb020;
+                    --priority-low: #00c8be;
+                    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+                    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+                }
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: var(--font-serif);
+                background: var(--bg);
+                color: var(--text-primary);
+                line-height: 1.6;
+                min-width: 1024px;
+            }
+
+            .container {
+                max-width: 1360px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            /* ── HEADER ── */
+            .site-header {
+                border-bottom: 2px solid var(--border-strong);
+                padding: 2rem 0 1.5rem;
+            }
+
+            .header-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+
+            .doc-classification {
+                font-family: var(--font-mono);
+                font-size: 0.65rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--accent-red);
+                border: 1.5px solid var(--accent-red);
+                display: inline-block;
+                padding: 0.15rem 0.65rem;
+                margin-bottom: 0.75rem;
+                opacity: 0.85;
+            }
+
+            h1 {
+                font-family: var(--font-mono);
+                font-size: 1.85rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                letter-spacing: -0.02em;
+                line-height: 1.2;
+            }
+
+            .header-meta {
+                display: flex;
+                gap: 2rem;
+                margin-top: 0.75rem;
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                color: var(--text-muted);
+                flex-wrap: wrap;
+            }
+
+            .header-meta .live-dot {
+                display: inline-block;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent-teal);
+                margin-right: 0.35rem;
+                vertical-align: middle;
+                animation: pulse 2s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.25;
+                }
+            }
+
+            .stamp {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--accent-red);
+                border: 3px solid var(--accent-red);
+                padding: 0.5rem 1.1rem;
+                transform: rotate(-7deg);
+                opacity: 0.65;
+                white-space: nowrap;
+                align-self: center;
+                flex-shrink: 0;
+            }
+
+            /* ── SUMMARY ── */
+            .summary-section {
+                padding: 2rem 0 1.75rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .summary-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.25rem;
+            }
+
+            .summary-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                padding: 1.25rem 1.5rem 1rem;
+                box-shadow: var(--shadow);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .summary-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: var(--card-top, var(--border-strong));
+            }
+
+            .summary-card.c-teal {
+                --card-top: var(--accent-teal);
+            }
+            .summary-card.c-green {
+                --card-top: var(--status-ok-border);
+            }
+            .summary-card.c-amber {
+                --card-top: var(--status-partial-border);
+            }
+            .summary-card.c-red {
+                --card-top: var(--status-none-border);
+            }
+
+            .summary-label {
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 0.45rem;
+            }
+
+            .summary-value {
+                font-family: var(--font-mono);
+                font-size: 2rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                line-height: 1;
+            }
+
+            .summary-sub {
+                font-size: 0.78rem;
+                color: var(--text-secondary);
+                margin-top: 0.4rem;
+                line-height: 1.4;
+            }
+
+            .progress-bar-wrap {
+                margin-top: 0.85rem;
+                background: var(--border);
+                height: 3px;
+                border-radius: 2px;
+                overflow: hidden;
+            }
+
+            .progress-bar {
+                height: 100%;
+                border-radius: 2px;
+                background: var(--bar-color, var(--accent-teal));
+                animation: fillBar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+
+            @keyframes fillBar {
+                from {
+                    width: 0 !important;
+                }
+            }
+
+            /* ── FILTERS ── */
+            .filters-section {
+                padding: 1.25rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .filters-row {
+                display: flex;
+                gap: 2.5rem;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .filter-group {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+
+            .filter-label {
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                min-width: 80px;
+            }
+
+            .filter-btn {
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                padding: 0.28rem 0.7rem;
+                border: 1px solid var(--border-strong);
+                background: transparent;
+                color: var(--text-secondary);
+                cursor: pointer;
+                transition: all 0.13s ease;
+                letter-spacing: 0.04em;
+            }
+
+            .filter-btn:hover,
+            .filter-btn:focus {
+                border-color: var(--accent);
+                color: var(--accent);
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+            }
+
+            .filter-btn:focus-visible {
+                outline: 2px solid var(--accent);
+            }
+
+            .filter-btn.active {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: var(--bg);
+            }
+
+            /* ── MATRIX ── */
+            .matrix-section {
+                padding: 2rem 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .section-title {
+                font-family: var(--font-mono);
+                font-size: 0.72rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-bottom: 1.25rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .section-title::after {
+                content: '';
+                flex: 1;
+                height: 1px;
+                background: var(--border);
+            }
+
+            .matrix-wrapper {
+                overflow-x: auto;
+            }
+
+            .matrix-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                min-width: 860px;
+            }
+
+            .matrix-table th {
+                padding: 0.7rem 1rem;
+                text-align: left;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                font-size: 0.68rem;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--text-secondary);
+                font-weight: 700;
+            }
+
+            .matrix-table th small {
+                display: block;
+                font-weight: 400;
+                opacity: 0.6;
+                font-size: 0.62rem;
+                margin-top: 0.2rem;
+                letter-spacing: 0.03em;
+                text-transform: none;
+            }
+
+            .matrix-table td {
+                padding: 0;
+                border: 1px solid var(--border);
+                vertical-align: middle;
+            }
+
+            .matrix-table td:first-child {
+                padding: 0.7rem 1rem;
+                background: var(--bg-secondary);
+                border-right: 2px solid var(--border-strong);
+                min-width: 165px;
+            }
+
+            .cat-name {
+                display: block;
+                font-weight: 700;
+                color: var(--text-primary);
+                font-size: 0.8rem;
+            }
+
+            .cat-desc {
+                display: block;
+                font-size: 0.62rem;
+                color: var(--text-muted);
+                margin-top: 0.15rem;
+                font-weight: 400;
+            }
+
+            /* Cells */
+            .cell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 68px;
+                position: relative;
+                cursor: default;
+                transition: filter 0.12s;
+            }
+
+            .cell:hover {
+                filter: brightness(1.06);
+            }
+
+            .cell.ok {
+                background: var(--status-ok-bg);
+            }
+            .cell.partial {
+                background: var(--status-partial-bg);
+            }
+            .cell.none {
+                background: var(--status-none-bg);
+            }
+            .cell.na {
+                background: var(--bg-secondary);
+            }
+
+            .cell-inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.22rem;
+                padding: 0.55rem 0.5rem;
+                width: 100%;
+            }
+
+            .cell-icon {
+                font-size: 1.1rem;
+                line-height: 1;
+            }
+            .cell-count {
+                font-size: 0.58rem;
+                color: var(--text-muted);
+                letter-spacing: 0.04em;
+                text-align: center;
+            }
+
+            .cell-bar {
+                width: calc(100% - 1rem);
+                height: 3px;
+                border-radius: 2px;
+                background: var(--border);
+                overflow: hidden;
+            }
+
+            .cell-bar-fill {
+                height: 100%;
+                border-radius: 2px;
+            }
+            .ok .cell-bar-fill {
+                background: var(--status-ok-border);
+            }
+            .partial .cell-bar-fill {
+                background: var(--status-partial-border);
+            }
+            .none .cell-bar-fill {
+                background: var(--status-none-border);
+                width: 0;
+            }
+            .na .cell-bar-fill {
+                background: var(--border-strong);
+                width: 0;
+            }
+
+            /* hidden rows/cols */
+            .matrix-table tr.row-hidden {
+                display: none;
+            }
+            .matrix-table th.col-hidden,
+            .matrix-table td.col-hidden {
+                display: none;
+            }
+
+            /* Tooltips */
+            .tooltip {
+                position: absolute;
+                bottom: calc(100% + 10px);
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--text-primary);
+                color: var(--bg);
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                padding: 0.75rem 1rem;
+                min-width: 210px;
+                max-width: 290px;
+                z-index: 200;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.15s ease;
+                border: 1px solid var(--border-strong);
+                box-shadow: var(--shadow-lg);
+                text-align: left;
+                line-height: 1.5;
+            }
+
+            .tooltip::after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border: 6px solid transparent;
+                border-top-color: var(--text-primary);
+            }
+
+            .cell:hover .tooltip,
+            .cell:focus-within .tooltip {
+                opacity: 1;
+            }
+
+            .tt-title {
+                font-weight: 700;
+                margin-bottom: 0.35rem;
+                color: var(--accent-teal);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                .tt-title {
+                    color: var(--accent);
+                }
+            }
+
+            .tt-files {
+                list-style: none;
+                margin-top: 0.35rem;
+            }
+
+            .tt-files li {
+                font-size: 0.63rem;
+                padding: 0.08rem 0;
+                opacity: 0.75;
+            }
+
+            /* Legend */
+            .legend {
+                display: flex;
+                gap: 1.75rem;
+                margin-top: 1rem;
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                flex-wrap: wrap;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                color: var(--text-muted);
+            }
+
+            .legend-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 2px;
+                flex-shrink: 0;
+            }
+
+            .legend-dot.ok {
+                background: var(--status-ok-bg);
+                border: 2px solid var(--status-ok-border);
+            }
+            .legend-dot.partial {
+                background: var(--status-partial-bg);
+                border: 2px solid var(--status-partial-border);
+            }
+            .legend-dot.none {
+                background: var(--status-none-bg);
+                border: 2px solid var(--status-none-border);
+            }
+
+            /* ── ACTIONS ── */
+            .actions-section {
+                padding: 2rem 0;
+            }
+
+            .priority-group {
+                margin-bottom: 2.25rem;
+            }
+
+            .priority-header {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .priority-badge {
+                font-family: var(--font-mono);
+                font-size: 0.65rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                padding: 0.22rem 0.75rem;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .priority-badge.high {
+                background: var(--priority-high);
+            }
+            .priority-badge.medium {
+                background: var(--priority-medium);
+            }
+            .priority-badge.low {
+                background: var(--priority-low);
+            }
+
+            .priority-title {
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+                color: var(--text-secondary);
+            }
+
+            .actions-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .action-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-left: 3px solid var(--card-priority, var(--border-strong));
+                padding: 1.2rem 1.3rem;
+                box-shadow: var(--shadow);
+            }
+
+            .action-card.high {
+                --card-priority: var(--priority-high);
+            }
+            .action-card.medium {
+                --card-priority: var(--priority-medium);
+            }
+            .action-card.low {
+                --card-priority: var(--priority-low);
+            }
+
+            .action-title {
+                font-family: var(--font-mono);
+                font-weight: 700;
+                font-size: 0.83rem;
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+            }
+
+            .action-desc {
+                font-size: 0.83rem;
+                color: var(--text-secondary);
+                margin-bottom: 0.8rem;
+                line-height: 1.5;
+            }
+
+            .action-desc code {
+                font-family: var(--font-mono);
+                font-size: 0.78rem;
+                background: var(--bg-secondary);
+                padding: 0.05rem 0.3rem;
+                border: 1px solid var(--border);
+            }
+
+            .action-meta {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .action-tag {
+                font-family: var(--font-mono);
+                font-size: 0.62rem;
+                padding: 0.14rem 0.5rem;
+                border: 1px solid var(--border-strong);
+                color: var(--text-muted);
+                letter-spacing: 0.05em;
+            }
+
+            .action-tag.tool {
+                border-color: var(--accent-teal);
+                color: var(--accent-teal);
+            }
+            .action-tag.c-sm {
+                border-color: var(--status-ok-border);
+                color: var(--status-ok);
+            }
+            .action-tag.c-md {
+                border-color: var(--status-partial-border);
+                color: var(--status-partial);
+            }
+            .action-tag.c-lg {
+                border-color: var(--status-none-border);
+                color: var(--status-none);
+            }
+
+            /* ── FOOTER ── */
+            .site-footer {
+                border-top: 2px solid var(--border-strong);
+                padding: 1.4rem 0;
+                font-family: var(--font-mono);
+                font-size: 0.68rem;
+                color: var(--text-muted);
+            }
+
+            .footer-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            /* ── PRINT ── */
+            @media print {
+                body {
+                    background: #fff;
+                    color: #000;
+                    min-width: auto;
+                }
+                .filter-btn {
+                    display: none;
+                }
+                .tooltip {
+                    display: none;
+                }
+                .cell.ok {
+                    background: #e8f5ec !important;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                .cell.partial {
+                    background: #fff8e6 !important;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                .cell.none {
+                    background: #fef0f0 !important;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                .summary-card,
+                .action-card {
+                    box-shadow: none;
+                    border: 1px solid #ccc;
+                }
+                .action-card {
+                    break-inside: avoid;
+                }
+                .matrix-wrapper {
+                    overflow: visible;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header class="site-header">
+            <div class="container">
+                <div class="header-inner">
+                    <div>
+                        <div class="doc-classification">Security Studies · Test Audit Report</div>
+                        <h1>Test Coverage Dashboard</h1>
+                        <div class="header-meta">
+                            <span><span class="live-dot"></span>Scanned 2026-05-18</span>
+                            <span>Runner: bun test</span>
+                            <span>DOM: happy-dom</span>
+                            <span>Assert: @testing-library/jest-dom</span>
+                            <span>CI: ❌ 未設定</span>
+                        </div>
+                    </div>
+                    <div class="stamp">Audit<br />Required</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- SUMMARY -->
+        <section class="summary-section">
+            <div class="container">
+                <div class="summary-grid">
+                    <div class="summary-card c-red">
+                        <div class="summary-label">Strategy Coverage</div>
+                        <div class="summary-value">2.5%</div>
+                        <div class="summary-sub">
+                            カテゴリ戦略カバレッジ<br />（40 セル中 1 セル相当）
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 2.5%; --bar-color: var(--status-none-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-green">
+                        <div class="summary-label">File Unit Coverage</div>
+                        <div class="summary-value">73%</div>
+                        <div class="summary-sub">
+                            22 ファイル中 16 ファイルに<br />Unit テストあり（smoke 含む）
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 73%; --bar-color: var(--status-ok-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-amber">
+                        <div class="summary-label">Test Cases</div>
+                        <div class="summary-value">29</div>
+                        <div class="summary-sub">16 ファイル · 大半が<br />smoke test 1件のみ</div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 30%; --bar-color: var(--status-partial-border)"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="summary-card c-red">
+                        <div class="summary-label">CI Pipeline</div>
+                        <div class="summary-value">None</div>
+                        <div class="summary-sub">.github/workflows/ 未設定<br />手動実行のみ</div>
+                        <div class="progress-bar-wrap">
+                            <div
+                                class="progress-bar"
+                                style="width: 0%; --bar-color: var(--status-none-border)"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTERS -->
+        <section class="filters-section">
+            <div class="container">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <span class="filter-label">Category</span>
+                        <button
+                            class="filter-btn active"
+                            data-ftype="cat"
+                            data-fval="all"
+                            onclick="applyFilter('cat', 'all', this)"
+                        >
+                            All
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="unit"
+                            onclick="applyFilter('cat', 'unit', this)"
+                        >
+                            Unit
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="integration"
+                            onclick="applyFilter('cat', 'integration', this)"
+                        >
+                            Integration
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="e2e"
+                            onclick="applyFilter('cat', 'e2e', this)"
+                        >
+                            E2E
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="visual"
+                            onclick="applyFilter('cat', 'visual', this)"
+                        >
+                            Visual
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="a11y"
+                            onclick="applyFilter('cat', 'a11y', this)"
+                        >
+                            A11y
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="perf"
+                            onclick="applyFilter('cat', 'perf', this)"
+                        >
+                            Perf
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="api"
+                            onclick="applyFilter('cat', 'api', this)"
+                        >
+                            API
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="cat"
+                            data-fval="security"
+                            onclick="applyFilter('cat', 'security', this)"
+                        >
+                            Security
+                        </button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">Domain</span>
+                        <button
+                            class="filter-btn active"
+                            data-ftype="dom"
+                            data-fval="all"
+                            onclick="applyFilter('dom', 'all', this)"
+                        >
+                            All
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d1"
+                            onclick="applyFilter('dom', 'd1', this)"
+                        >
+                            docs/Comp
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d2"
+                            onclick="applyFilter('dom', 'd2', this)"
+                        >
+                            UI Comp
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d3"
+                            onclick="applyFilter('dom', 'd3', this)"
+                        >
+                            App/Pages
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d4"
+                            onclick="applyFilter('dom', 'd4', this)"
+                        >
+                            Search/API
+                        </button>
+                        <button
+                            class="filter-btn"
+                            data-ftype="dom"
+                            data-fval="d5"
+                            onclick="applyFilter('dom', 'd5', this)"
+                        >
+                            Config
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATRIX -->
+        <section class="matrix-section">
+            <div class="container">
+                <div class="section-title">Coverage Matrix · 8 categories × 5 domains</div>
+                <div class="matrix-wrapper">
+                    <table
+                        class="matrix-table"
+                        role="table"
+                        aria-label="テストカバレッジマトリクス"
+                    >
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col" data-dom="d1">
+                                    docs/Components<small>src/components/docs/ · 16 files</small>
+                                </th>
+                                <th scope="col" data-dom="d2">
+                                    UI Components<small>disclaimer-modal, search-modal</small>
+                                </th>
+                                <th scope="col" data-dom="d3">
+                                    App / Pages<small>app/page.tsx, layouts, 10×mdx</small>
+                                </th>
+                                <th scope="col" data-dom="d4">
+                                    Search &amp; API<small>src/lib/search.ts, api/search/</small>
+                                </th>
+                                <th scope="col" data-dom="d5">
+                                    Config &amp; Nav<small>src/config/docs.ts</small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Unit -->
+                            <tr data-cat="unit">
+                                <td>
+                                    <span class="cat-name">Unit</span
+                                    ><span class="cat-desc"
+                                        >個別関数・コンポーネントの単体テスト</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div
+                                        class="cell partial"
+                                        tabindex="0"
+                                        aria-label="docs/Components Unit: 部分的"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">28 tests · 15/16 files</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">⚠️ Partial — 15/16 ファイル</div>
+                                            大半が smoke test 1件。DocsSubheading のみ未テスト。
+                                            <ul class="tt-files">
+                                                <li>✓ Callout.test.tsx (4 tests)</li>
+                                                <li>✓ SectionCard.test.tsx (3 tests)</li>
+                                                <li>
+                                                    ✓ AttackFlow, DefenseList, RiskBadge, Terminal
+                                                    (各2)
+                                                </li>
+                                                <li>✓ 9 コンポーネント (各1 smoke)</li>
+                                                <li>✗ DocsSubheading.tsx — 未テスト</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div
+                                        class="cell partial"
+                                        tabindex="0"
+                                        aria-label="UI Components Unit: 部分的"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">5 tests · 1/2 files</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill" style="width: 50%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">⚠️ Partial — 1/2 ファイル</div>
+                                            DisclaimerModal のみカバー済み。SearchModal
+                                            は完全に未テスト。
+                                            <ul class="tt-files">
+                                                <li>✓ disclaimer-modal.test.tsx (5 tests)</li>
+                                                <li>
+                                                    → 表示/非表示, consent storage, storage sync
+                                                </li>
+                                                <li>✗ search-modal.tsx — テストなし</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="App/Pages Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            Next.js ページ・レイアウトはテスト対象外。
+                                            <ul class="tt-files">
+                                                <li>✗ src/app/page.tsx</li>
+                                                <li>✗ src/app/layout.tsx</li>
+                                                <li>✗ src/app/docs/layout.tsx</li>
+                                                <li>✗ 10 × docs/*/page.mdx</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="Search/API Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 高リスク</div>
+                                            全ドキュメントインデックスの核心ロジックが未カバー。
+                                            <ul class="tt-files">
+                                                <li>✗ src/lib/search.ts</li>
+                                                <li>✗ src/app/api/search/ (route)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div
+                                        class="cell none"
+                                        tabindex="0"
+                                        aria-label="Config/Nav Unit: 未実装"
+                                    >
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span>
+                                            <span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            <ul class="tt-files">
+                                                <li>✗ src/config/docs.ts (sidebarNav)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Integration -->
+                            <tr data-cat="integration">
+                                <td>
+                                    <span class="cat-name">Integration</span
+                                    ><span class="cat-desc">モジュール間の連携テスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            コンポーネント間組み合わせ動作テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            SearchModal + サイドバー連携などの統合テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            docs layout + MDX + sidebar の組み合わせテストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索 API ↔ インデックス生成の連携テストなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- E2E -->
+                            <tr data-cat="e2e">
+                                <td>
+                                    <span class="cat-name">E2E</span
+                                    ><span class="cat-desc"
+                                        >ユーザーシナリオを再現したエンドツーエンド</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            Playwright / Cypress 未導入。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            DisclaimerModal 同意フロー・SearchModal E2E なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            ページ間ナビゲーション・サイドバー展開のE2Eなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索フロー（入力→結果→ページ遷移）のE2Eなし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Visual -->
+                            <tr data-cat="visual">
+                                <td>
+                                    <span class="cat-name">Visual / Snapshot</span
+                                    ><span class="cat-desc">UIの見た目の回帰テスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            スナップショット未導入。Playwright
+                                            スクリーンショット等が候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                            バックエンドロジックに Visual テストは不要。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- A11y -->
+                            <tr data-cat="a11y">
+                                <td>
+                                    <span class="cat-name">Accessibility</span
+                                    ><span class="cat-desc">WCAG 2.1 AA アクセシビリティ基準</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            aria-label・コントラスト比のテストなし。jest-axe
+                                            が候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 要対応</div>
+                                            DisclaimerModal のフォーカストラップ・Escape・background
+                                            scroll lock が未検証。
+                                            <ul class="tt-files">
+                                                <li>✗ focus trap (role=dialog)</li>
+                                                <li>✗ Escape キー閉じる</li>
+                                                <li>✗ background scroll lock</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Performance -->
+                            <tr data-cat="perf">
+                                <td>
+                                    <span class="cat-name">Performance</span
+                                    ><span class="cat-desc"
+                                        >レンダリング・バンドルサイズの計測</span
+                                    >
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            レンダリング時間・リペイント計測なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            バンドルサイズ監視なし。size-limit / bundle analyzer
+                                            候補。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            検索インデックス生成の速度計測なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- API/Contract -->
+                            <tr data-cat="api">
+                                <td>
+                                    <span class="cat-name">API / Contract</span
+                                    ><span class="cat-desc">APIレスポンス・型契約のテスト</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                            UI コンポーネントに API 契約テストは不要。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装 — 最重要</div>
+                                            GET /api/search のレスポンス構造・型契約テストなし。
+                                            <ul class="tt-files">
+                                                <li>✗ GET /api/search → SearchResult[]</li>
+                                                <li>✗ frontmatter フィールド型検証</li>
+                                                <li>✗ Cache-Control ヘッダー検証</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">N/A</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 対象外</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Security -->
+                            <tr data-cat="security">
+                                <td>
+                                    <span class="cat-name">Security</span
+                                    ><span class="cat-desc">XSS・依存関係の脆弱性チェック</span>
+                                </td>
+                                <td data-dom="d1">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            XSS インジェクション耐性テストなし。MDX
+                                            はユーザー入力を受け取らないが未検証。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d2">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            SearchModal への入力サニタイズ検証なし。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d3">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d4">
+                                    <div class="cell none" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span class="cell-icon">❌</span
+                                            ><span class="cell-count">0 tests</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">❌ 未実装</div>
+                                            パストラバーサルアタック検証なし。APIセキュリティヘッダー未検証。
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-dom="d5">
+                                    <div class="cell na" tabindex="0">
+                                        <div class="cell-inner">
+                                            <span
+                                                class="cell-icon"
+                                                style="font-size: 0.9rem; opacity: 0.4"
+                                                >—</span
+                                            ><span class="cell-count">bun audit</span>
+                                            <div class="cell-bar">
+                                                <div class="cell-bar-fill"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tooltip" role="tooltip">
+                                            <div class="tt-title">— 依存関係監査のみ</div>
+                                            bun audit / Snyk での脆弱性チェックが候補。
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot ok"></div>
+                        ✅ 実装済み — テストが存在し CI で実行
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot partial"></div>
+                        ⚠️ 部分的 — テストはあるが網羅不十分
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot none"></div>
+                        ❌ 未実装 — テストなし
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEXT ACTIONS -->
+        <section class="actions-section">
+            <div class="container">
+                <div class="section-title">Next Actions · 優先度別テスト導入計画</div>
+
+                <!-- HIGH -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge high">🔴 高優先度</span>
+                        <span class="priority-title">即対応 — ビジネスロジック・重要フロー</span>
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card high">
+                            <div class="action-title">SearchModal Unit テスト追加</div>
+                            <div class="action-desc">
+                                <code>src/components/search-modal.tsx</code> は検索という重要 UX
+                                パスにも関わらず完全に未カバー。キーボードナビゲーション・入力サニタイズ・結果表示ロジックを検証する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 検索フロー回帰防止</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">Search API / search.ts Unit テスト</div>
+                            <div class="action-desc">
+                                <code>src/lib/search.ts</code>
+                                は全ドキュメントインデックスを生成する核心ロジック。frontmatter
+                                パース・本文切り出し・キャッシュ動作を Unit + Contract
+                                テストで保護する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test</span>
+                                <span class="action-tag c-sm">コスト: 小〜中</span>
+                                <span class="action-tag">効果: 検索 API の型契約保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">CI Pipeline 構築（GitHub Actions）</div>
+                            <div class="action-desc">
+                                <code>.github/workflows/</code> が未設定のため、PR
+                                時の自動テストが存在しない。<code>bun test</code> +
+                                <code>bun run types:check</code> +
+                                <code>bun run lint</code> を実行するワークフローを追加する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">GitHub Actions</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: PR ごとの自動品質ゲート</span>
+                            </div>
+                        </div>
+                        <div class="action-card high">
+                            <div class="action-title">DocsSubheading Unit テスト追加</div>
+                            <div class="action-desc">
+                                <code>src/components/docs/DocsSubheading.tsx</code> は docs
+                                コンポーネント群で唯一テストなし。他コンポーネントと統一するため
+                                smoke テストを追加する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: コンポーネントセット完結</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDIUM -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge medium">🟡 中優先度</span>
+                        <span class="priority-title"
+                            >次スプリント — リグレッション防止・DX 改善</span
+                        >
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card medium">
+                            <div class="action-title">カバレッジレポート追加</div>
+                            <div class="action-desc">
+                                <code>bun test --coverage</code> で lcov レポートを生成する設定を
+                                <code>bunfig.toml</code> に追加。CI で Codecov / Coveralls
+                                へアップロードし、PR ごとにカバレッジ差分を可視化する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun --coverage</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 行カバレッジの数値化</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">既存 Unit テストの深化</div>
+                            <div class="action-desc">
+                                smoke 1件のコンポーネント（Checklist・DataTable 等 9 件）に prop
+                                variation・エラー状態・エッジケースを追加。<code>Callout</code> の 4
+                                テストスタイルを参考にする。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: リグレッション検出精度向上</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">DisclaimerModal Accessibility テスト</div>
+                            <div class="action-desc">
+                                既存の 5 テストに WCAG 2.1 AA 準拠検証を追加。focus
+                                trap・<code>role=dialog</code>・Escape
+                                閉じる・背景スクロールロックを
+                                <code>@testing-library/user-event</code> でテストする。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">@testing-library/user-event</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: WCAG 2.1 AA 達成</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">Integration: docs layout + MDX</div>
+                            <div class="action-desc">
+                                docs layout と MDX
+                                ページ（複数コンポーネント埋め込み）の組み合わせ動作を Integration
+                                テストで検証。サイドバーナビゲーション・アクティブリンク状態を含む。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: ページ単位の回帰防止</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LOW -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge low">🟢 低優先度</span>
+                        <span class="priority-title"
+                            >中長期 — Nice-to-have・パフォーマンス最適化</span
+                        >
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-card low">
+                            <div class="action-title">E2E テスト（Playwright）</div>
+                            <div class="action-desc">
+                                ナビゲーション・検索・DisclaimerModal のフルユーザーシナリオを E2E
+                                で保証。Next.js + Playwright の公式インテグレーションを活用。Netlify
+                                Deploy Preview との連携も可能。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">Playwright</span>
+                                <span class="action-tag c-lg">コスト: 大</span>
+                                <span class="action-tag">効果: フルシナリオ保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Visual / Snapshot 回帰テスト</div>
+                            <div class="action-desc">
+                                Playwright
+                                スクリーンショット比較でコンポーネントのビジュアル回帰を検出。特に
+                                <code>Callout</code>・<code>AttackFlow</code>・<code
+                                    >RiskBadge</code
+                                >
+                                のカラー variant 変更に有効。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">Playwright screenshot</span>
+                                <span class="action-tag c-md">コスト: 中〜大</span>
+                                <span class="action-tag">効果: CSS 変更による破壊検出</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Bundle Size モニタリング</div>
+                            <div class="action-desc">
+                                Next.js の <code>@next/bundle-analyzer</code> +
+                                <code>size-limit</code> を導入し、PR ごとにバンドルサイズ差分を CI
+                                でチェック。ドキュメントサイトのロード時間を守る。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">size-limit</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: パフォーマンス回帰防止</span>
+                            </div>
+                        </div>
+                        <div class="action-card low">
+                            <div class="action-title">Dependency Security Audit</div>
+                            <div class="action-desc">
+                                <code>bun audit</code> を CI
+                                に追加し、脆弱な依存関係を自動検出。必要に応じて Snyk / GitHub
+                                Dependabot と組み合わせて継続監視する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun audit / Snyk</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 依存関係脆弱性の継続監視</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-inner">
+                    <span>Security Studies · Test Coverage Dashboard · Generated 2026-05-18</span>
+                    <span
+                        >Runner: bun test · DOM: happy-dom · 16 files · 29 test cases · CI:
+                        未設定</span
+                    >
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            const state = { cat: 'all', dom: 'all' };
+
+            function applyFilter(type, val, btn) {
+                state[type] = val;
+
+                // update buttons
+                document
+                    .querySelectorAll(`[data-ftype="${type}"]`)
+                    .forEach((b) => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // filter rows
+                document.querySelectorAll('tbody tr[data-cat]').forEach((tr) => {
+                    const show = state.cat === 'all' || tr.dataset.cat === state.cat;
+                    tr.classList.toggle('row-hidden', !show);
+                });
+
+                // filter cols
+                ['d1', 'd2', 'd3', 'd4', 'd5'].forEach((d) => {
+                    const show = state.dom === 'all' || state.dom === d;
+                    document.querySelectorAll(`[data-dom="${d}"]`).forEach((el) => {
+                        el.classList.toggle('col-hidden', !show);
+                    });
+                });
+            }
+
+            // keyboard: Enter/Space on filter buttons
+            document.querySelectorAll('.filter-btn').forEach((btn) => {
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        btn.click();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

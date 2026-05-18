@@ -2,7 +2,7 @@
 
 import { useState, useSyncExternalStore } from 'react';
 
-const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
+export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 const SERVER_SNAPSHOT = 'server';
 const UNSET = 'unset';
 
