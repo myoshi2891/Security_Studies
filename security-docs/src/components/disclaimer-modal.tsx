@@ -2,8 +2,19 @@
 
 import { useState } from 'react';
 
+const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
+
 export function DisclaimerModal() {
     const [isOpen, setIsOpen] = useState(true);
+
+    const handleAgree = () => {
+        try {
+            localStorage.setItem(STORAGE_KEY, '1');
+        } catch {
+            // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
+        }
+        setIsOpen(false);
+    };
 
     if (!isOpen) return null;
 
@@ -31,7 +42,7 @@ export function DisclaimerModal() {
                 <div className="mt-6 flex justify-end">
                     <button
                         type="button"
-                        onClick={() => setIsOpen(false)}
+                        onClick={handleAgree}
                         className="inline-flex items-center justify-center rounded-md bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 transition-colors"
                     >
                         同意して閲覧する
