@@ -21,3 +21,4 @@ The following directive is used to include agent-specific rules and context. Thi
 - **Components**: Custom docs components in `src/components/docs/` (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
 - **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes only.
 - **Testing**: Bun test with React Testing Library.
+- **Security / CSP**: `src/proxy.ts` implements Next.js Middleware. It generates a per-request UUID nonce (`crypto.randomUUID()` → base64) and sets the `Content-Security-Policy` response header. Key directives: `script-src 'self' 'nonce-<value>' 'strict-dynamic'` and `style-src 'self' 'nonce-<value>'`. The nonce is forwarded to page components via the `x-nonce` request header. Do not remove `'strict-dynamic'` — it is required for Next.js dynamic imports to load without CSP violations.
