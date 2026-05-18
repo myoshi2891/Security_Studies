@@ -1,11 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 
 export function DisclaimerModal() {
-    const [isOpen, setIsOpen] = useState(true);
+    // null = 未判定 (SSR / マウント直後)。判定確定後に boolean をセットする
+    const [isOpen, setIsOpen] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        try {
+            const acknowledged = localStorage.getItem(STORAGE_KEY) === '1';
+            setIsOpen(!acknowledged);
+        } catch {
+            // localStorage が読めない場合は安全側に倒してモーダルを表示する
+            setIsOpen(true);
+        }
+    }, []);
 
     const handleAgree = () => {
         try {
@@ -16,7 +27,7 @@ export function DisclaimerModal() {
         setIsOpen(false);
     };
 
-    if (!isOpen) return null;
+    if (isOpen !== true) return null;
 
     return (
         <div
