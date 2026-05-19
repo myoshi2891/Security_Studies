@@ -18,11 +18,13 @@ export function proxy(request: NextRequest) {
   //      'unsafe-inline' は script/style ともに付与しない（nonce で代替）。
   //      connect-src には HMR の ws を追加。'strict-dynamic' は Next.js dynamic import に必要。
   // prod: nonce + strict-dynamic で厳格に。
-  // Netlify: Deploy Preview / Branch Deploy では /.netlify/scripts/cdp を読み込む
-  //          インラインスクリプトのハッシュを許可し、strict-dynamic の伝播で cdp も信頼させる。
-  //          CONTEXT は Netlify がビルド時に設定する環境変数
-  //          （'production' | 'deploy-preview' | 'branch-deploy'）。
-  const netlifyInlineHash = process.env.CONTEXT
+  // Netlify: 全デプロイ環境（production / deploy-preview / branch-deploy）で
+  //          /.netlify/scripts/cdp インラインスクリプトを注入する。
+  //          next.config.ts の env セクション経由で IS_NETLIFY を Edge Runtime に渡す
+  //          （process.env.NETLIFY を proxy.ts で直接参照すると Edge Runtime で undefined になる）。
+  //          sha256 ハッシュはインラインスクリプトを信頼し、strict-dynamic の伝播で
+  //          動的ロードされる cdp スクリプトも許可する。
+  const netlifyInlineHash = process.env.IS_NETLIFY
     ? ` 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo='`
     : '';
   const scriptSrc = isDev
