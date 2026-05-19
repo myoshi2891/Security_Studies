@@ -1,7 +1,7 @@
 # Makefile — Security Studies Docker ワークフロー
 # プロジェクトルート (Security_Studies/) から実行すること
 
-.PHONY: dev build up down logs shell test clean help
+.PHONY: dev dev-recreate build up down logs shell test clean help
 
 COMPOSE    := docker compose
 IMAGE_NAME := security-studies:prod
@@ -11,6 +11,11 @@ IMAGE_NAME := security-studies:prod
 dev: ## 開発サーバー起動（ホットリロード, http://localhost:3000）
 	@echo "Starting dev server on http://localhost:3000 ..."
 	$(COMPOSE) up dev
+
+dev-recreate: ## docker-compose.yml 変更後の強制再作成（ボリューム含めて作り直す）
+	@echo "Recreating dev container from scratch ..."
+	$(COMPOSE) down --remove-orphans
+	$(COMPOSE) up dev --force-recreate --renew-anon-volumes
 
 ## ── 本番ビルド ───────────────────────────────────────────────────────────────
 

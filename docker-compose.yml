@@ -16,6 +16,8 @@ services:
       - ./security-docs:/app
       # 匿名ボリューム: macOS の node_modules が Linux コンテナに混入しないよう保護
       - /app/node_modules
+      # 匿名ボリューム: Turbopack が macOS-Linux 間の virtiofs で EROFS になるのを防ぐ
+      - /app/.next
     environment:
       - NODE_ENV=development
       - NEXT_TELEMETRY_DISABLED=1

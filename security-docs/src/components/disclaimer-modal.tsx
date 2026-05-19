@@ -1,49 +1,64 @@
 'use client';
 
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
-const SERVER_SNAPSHOT = 'server';
-const UNSET = 'unset';
 
-type ConsentSnapshot = typeof SERVER_SNAPSHOT | typeof UNSET | '1';
-
-function subscribe(callback: () => void): () => void {
-    window.addEventListener('storage', callback);
-    return () => window.removeEventListener('storage', callback);
-}
-
-function getStoredConsent(): ConsentSnapshot {
+/**
+ * Determines whether the user has previously acknowledged the disclaimer in browser storage.
+ *
+ * @returns `true` if the stored consent value for the module key is exactly `'1'`, `false` otherwise or if storage access fails.
+ */
+function readConsent(): boolean {
     try {
-        const value = localStorage.getItem(STORAGE_KEY);
-        return value === '1' ? '1' : UNSET;
+        return localStorage.getItem(STORAGE_KEY) === '1';
     } catch {
-        return UNSET;
+        return false;
     }
 }
 
-function getServerStoredConsent(): ConsentSnapshot {
-    return SERVER_SNAPSHOT;
-}
-
+/**
+ * Render a client-side disclaimer modal that requires the user to acknowledge terms before viewing the site.
+ *
+ * The component reads and persists acknowledgement via localStorage under `STORAGE_KEY`, and synchronizes acknowledgement state across tabs/windows via the `storage` event. It is intentionally hidden during server-side rendering/hydration to avoid HTML mismatches and will only reflect the actual persisted state on the client.
+ *
+ * @returns A React element for the modal, or `null` when the user has acknowledged (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
+ */
 export function DisclaimerModal() {
-    const stored = useSyncExternalStore(
-        subscribe,
-        getStoredConsent,
-        getServerStoredConsent,
-    );
+    // SSR / hydration では常に非表示（HTML 不一致を防ぐ）。client 側で useEffect により実値を反映する。
+    const [consented, setConsented] = useState(true);
     const [dismissed, setDismissed] = useState(false);
+
+    useEffect(() => {
+        setConsented(readConsent());
+        const onStorage = (event: StorageEvent) => {
+            if (event.key === null) {
+                // localStorage.clear() はすべてのキーを消去するため同意と dismissed を両方リセット
+                setConsented(false);
+                setDismissed(false);
+            } else if (event.key === STORAGE_KEY) {
+                const newConsent = event.newValue === '1';
+                setConsented(newConsent);
+                if (!newConsent) {
+                    setDismissed(false);
+                }
+            }
+        };
+        window.addEventListener('storage', onStorage);
+        return () => window.removeEventListener('storage', onStorage);
+    }, []);
 
     const handleAgree = () => {
         try {
             localStorage.setItem(STORAGE_KEY, '1');
+            setConsented(true);
         } catch {
             // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
         }
         setDismissed(true);
     };
 
-    if (stored !== UNSET || dismissed) return null;
+    if (consented || dismissed) return null;
 
     return (
         <div
