@@ -103,7 +103,7 @@ Security_Studies/
 | `<CompareGrid>` | 比較グリッド |
 | `<AttackFlow>` | 攻撃フロー図 |
 | `<DefenseList>` | 防御策リスト |
-| `<Terminal title="file.sh" code="...">` | ターミナル表示（`title` の拡張子で言語自動判定: `.sh`→bash / `.ts`→typescript / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown） |
+| `<Terminal title="file.sh" code="...">` | ターミナル表示（`title` の拡張子で言語自動判定: `.sh`→bash / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown。未対応拡張子は `typescript` を使用する（フォールバック）。`.ts` も同フォールバック経由で typescript が適用される） |
 | `<Checklist>` | チェックリスト |
 | `<DataTable>` | テーブル |
 | `<SourceReferences>` | 出典一覧 |
@@ -140,8 +140,8 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 | ディレクティブ | 設定値 |
 |---|---|
 | `default-src` | `'self'` |
-| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'`（dev では `'unsafe-eval'` を追加） |
-| `style-src` | `'self' 'nonce-<生成値>'`（dev では `'unsafe-inline'` を追加 — Next.js dev overlay・フォント・React 19 style ホイスティングが nonce なしで `<style>` を注入するため） |
+| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'`（dev では `'unsafe-eval'` を追加、Netlify 環境では `'sha256-OBTN3...'` を追加） |
+| `style-src` | prod: `'self' 'nonce-<生成値>'` / dev: `'self' 'unsafe-inline'`（nonce なし — CSP Level 3 で nonce と `'unsafe-inline'` の併記は無効になるため分離） |
 | `img-src` | `'self' data:` |
 | `font-src` | `'self'` |
 | `connect-src` | `'self'` |
