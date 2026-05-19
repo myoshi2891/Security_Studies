@@ -1,26 +1,21 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, X, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Fuse from 'fuse.js';
 import type { SearchResult } from '@/lib/search';
 
 /**
- * Render a searchable modal for documentation with platform-specific shortcut support.
+ * Search modal component that opens from a "Search..." button and lets users fuzzy-search documentation.
  *
- * The component shows a closed "Search..." button (with a macOS or Windows shortcut label)
- * that opens a fullscreen modal. While mounted it fetches a search index from `/api/search`,
- * builds a fuzzy search index, and updates visible results as the user types. The modal can
- * be toggled with Cmd/Ctrl+K, closed with Escape or by clicking outside, and selecting a
- * result closes the modal and navigates to the result's href.
+ * Renders a closed "Search..." button with a platform-specific shortcut label (⌘K / Ctrl+K) that opens a fullscreen modal. While mounted it loads a remote search index, updates results as the user types, supports Cmd/Ctrl+K to toggle the modal, Escape or clicking outside to close it, and navigates to the selected result.
  *
- * @returns The rendered search modal React element
+ * @returns The rendered SearchModal React element
  */
 export function SearchModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<SearchResult[]>([]);
     const [fuse, setFuse] = useState<Fuse<SearchResult> | null>(null);
     const [isError, setIsError] = useState(false);
     const [shortcutLabel, setShortcutLabel] = useState('');
@@ -68,20 +63,20 @@ export function SearchModal() {
     }, [isOpen]);
 
     useEffect(() => {
-        // Detect Mac platform for accurate shortcut rendering client-side
+        // SSR との hydration 整合性を保つためマウント後に navigator を参照する。
+        // useMemo / useState 初期化関数は SSR で実行されるためここでは使用できない。
         const isMac =
             typeof window !== 'undefined' &&
             /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setShortcutLabel(isMac ? '⌘K' : 'Ctrl+K');
     }, []);
 
-    useEffect(() => {
+    const results = useMemo<SearchResult[]>(() => {
         if (fuse && query) {
-            const searchResults = fuse.search(query).map((r) => r.item);
-            setResults(searchResults);
-        } else {
-            setResults([]);
+            return fuse.search(query).map((r) => r.item);
         }
+        return [];
     }, [query, fuse]);
 
     const onSelect = useCallback(

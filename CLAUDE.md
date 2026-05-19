@@ -11,13 +11,13 @@ cd security-docs
 bun install          # 依存関係のインストール
 bun run dev          # 開発サーバー起動 (http://localhost:3000)
 bun run build        # 本番ビルド
-bun run lint         # ESLint 実行
+bun run lint         # ESLint v9 実行（eslint . を直接呼ぶ）
 bun run types:check  # TypeScript 型チェック (tsc --noEmit)
 bun test             # 全テスト実行
 bun test src/components/docs/Callout.test.tsx  # 単一テストファイル実行
 ```
 
-コミット前に必ず `bun run types:check` を通過させること。
+コミット前に必ず `bun run lint` および `bun run types:check` を通過させること。
 
 ## Docker コマンド
 
@@ -72,7 +72,7 @@ Security_Studies/
 │   │   │   └── search-modal.tsx
 │   │   ├── config/docs.ts  # サイドバーナビゲーション定義
 │   │   ├── lib/search.ts   # 検索インデックス生成ロジック
-│   │   ├── proxy.ts        # Next.js Proxy (旧 middleware) — nonce生成 & CSP ヘッダー付与
+│   │   ├── proxy.ts        # Next.js Proxy (旧 middleware) — 静的 CSP ヘッダー付与（nonce 廃止済み、Issue #32）
 │   │   └── mdx-components.tsx  # MDX コンポーネントのグローバル登録
 ├── docs/                   # 静的ダッシュボード（test-coverage-dashboard.html + .css）
 ├── md/                     # Markdown ソース原稿
@@ -157,5 +157,27 @@ Issue [#32](https://github.com/myoshi2891/Security_Studies/issues/32) で判明�
 
 - ランナー: `bun test`
 - DOM 環境: `happy-dom` (`bunfig.toml` の `preload` で自動セットアップ)
-- アサーション: `@testing-library/jest-dom`
-- テストファイルはコンポーネントと同階層に `*.test.tsx` として配置
+- アサーション: `@testing-library/jest-dom`（型は `src/jest-dom.d.ts` で `bun:test` に拡張済み）
+- テストファイルはコンポーネントと同階層に `*.test.tsx` / `*.test.ts` として配置
+- 主要テストファイル:
+  - `src/lib/search.test.ts` — 検索インデックス生成・SearchResult 形式・href フォーマット
+  - `src/components/search-modal.test.tsx` — SearchModal の fetch / クエリ / ナビゲーション
+  - `src/components/docs/DocsSubheading.test.tsx` — DocsSubheading レンダリング
+
+### ESLint 構成
+
+ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `eslint .` を直接呼ぶ（`next lint` ラッパーではない）。
+
+カスタムルール:
+- `@typescript-eslint/no-unused-vars`: `_` プレフィックスの引数・変数・catch エラーは警告対象外（シグネチャ維持目的の慣行に合わせた設定）
+
+### CI（GitHub Actions）
+
+`.github/workflows/ci.yml` が `main` / `dev` ブランチへの push および PR トリガーで以下を実行する:
+
+1. `bun install --frozen-lockfile`
+2. `bun run lint`
+3. `bun run types:check`
+4. `bun test`
+
+作業ディレクトリは `security-docs/` 固定。

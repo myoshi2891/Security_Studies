@@ -19,7 +19,7 @@ Next.js 16.2.2 (App Router) と カスタム MDX コンポーネントを活用�
   - `src/app/docs/`: 実際のドキュメントコンテンツ (MDX 形式) が格納されています。各トピックは `<slug>/page.mdx` 形式です。
   - `src/components/docs/`: MDX 内で使用するカスタム React コンポーネント群です。
   - `src/config/docs.ts`: サイドバーナビゲーション設定です。
-  - `src/proxy.ts`: Next.js Middleware。リクエストごとに UUID ベースの nonce を生成し、`Content-Security-Policy` ヘッダー（`script-src 'nonce-…' 'strict-dynamic'`）を付与します。
+  - `src/proxy.ts`: Next.js Proxy（旧 Middleware）。静的な `Content-Security-Policy` ヘッダー（`script-src 'self' 'unsafe-inline'`）を付与します。nonce / `'strict-dynamic'` は Netlify Next.js Runtime との nonce 競合（Issue [#32](https://github.com/myoshi2891/Security_Studies/issues/32)）により廃止済みです。
 - `docs/`: ビルド不要の静的ダッシュボード群です。`test-coverage-dashboard.html` / `test-coverage-dashboard.css` を含みます。
 - `md/`: MDX ページの原稿となる Markdown ソースファイルです。
 - `html/`: `gen_security_html.sh` で生成されたレガシーな静的 HTML ドキュメントです。
@@ -131,16 +131,25 @@ node .next/standalone/server.js
 make build && make up
 ```
 
-### 型チェック
-
-型チェックと MDX の型生成を行うには、以下のコマンドを実行します。
+### 型チェック・リント
 
 ```bash
-bun run types:check
+bun run types:check  # TypeScript 型チェック
+bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 ```
+
+## CI（GitHub Actions）
+
+`.github/workflows/ci.yml` が `main` / `dev` への push および PR で自動実行されます。
+
+1. `bun install --frozen-lockfile`
+2. `bun run lint`
+3. `bun run types:check`
+4. `bun test`
 
 ## 開発の規約
 
 - **コンテンツの作成:** 新しいドキュメントコンテンツはすべて MDX で作成し、`security-docs/src/app/docs/<slug>/page.mdx` に配置してください。追加後は `src/config/docs.ts` にもエントリを追加してください。
 - **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、Tailwind のユーティリティクラスを利用してください。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
+- **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。

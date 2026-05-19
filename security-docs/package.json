@@ -9,7 +9,7 @@
     "build": "next build",
     "build:search-index": "bun run scripts/build-search-index.ts",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "types:check": "tsc --noEmit",
     "test": "bun test"
   },
