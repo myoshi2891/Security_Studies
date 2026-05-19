@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   description: "Advanced Security Documentation for 2026",
 };
 
+/**
+ * Root layout component that renders the application's top-level HTML and body structure and includes the disclaimer modal.
+ *
+ * This component invokes `headers()` to enable dynamic rendering so Next.js can attach CSP nonces to internal script tags when required.
+ *
+ * @param children - The page content to render inside the document body.
+ * @returns The root HTML element containing the document body with `children` and the `DisclaimerModal`.
+ */
 export default async function RootLayout({
   children,
 }: Readonly<{

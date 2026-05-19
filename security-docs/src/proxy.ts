@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+/**
+ * Proxies the incoming request while injecting a per-request nonce and a Content-Security-Policy header.
+ *
+ * Builds a CSP value (varying between development and production) that includes a generated `nonce` and sets
+ * the `Content-Security-Policy` and `x-nonce` headers on both the forwarded request and the returned response.
+ *
+ * @param request - The incoming Next.js request to forward
+ * @returns A NextResponse that forwards the request with the CSP and `x-nonce` headers applied
+ */
 export function proxy(request: NextRequest) {
   const nonce = btoa(crypto.randomUUID())
   const isDev = process.env.NODE_ENV === 'development'
