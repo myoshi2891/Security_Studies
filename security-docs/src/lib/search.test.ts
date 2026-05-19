@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'bun:test';
+import fs from 'node:fs';
+import path from 'node:path';
 import { getSearchIndex, type SearchResult } from './search';
 
 const REQUIRED_KEYS = ['content', 'description', 'href', 'title'] as const;
+const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
+const HREF_PATTERN = /^\/docs\/([^/]+)$/;
 
 describe('getSearchIndex', () => {
     test('returns a non-empty SearchResult array', async () => {
@@ -34,6 +38,27 @@ describe('getSearchIndex', () => {
 
         for (const item of results) {
             expect(typeof item.description).toBe('string');
+        }
+    });
+
+    test('each href matches /docs/<slug> and slug exists on disk', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            const match = item.href.match(HREF_PATTERN);
+            expect(match).not.toBeNull();
+            const slug = match?.[1] ?? '';
+            const mdxPath = path.join(DOCS_DIR, slug, 'page.mdx');
+            expect(fs.existsSync(mdxPath)).toBe(true);
+        }
+    });
+
+    test('each content is at most 500 characters', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            expect(typeof item.content).toBe('string');
+            expect(item.content.length).toBeLessThanOrEqual(500);
         }
     });
 });
