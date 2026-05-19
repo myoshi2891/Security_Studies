@@ -242,4 +242,121 @@ describe('SearchModal', () => {
             expect(input.value).toBe('hello');
         });
     });
+
+    describe('error paths and input edges', () => {
+        const originalConsoleError = console.error;
+
+        beforeEach(() => {
+            // SearchModal は fetch 失敗時に console.error を呼ぶため、テスト出力を抑制
+            console.error = (): void => {};
+        });
+
+        afterEach(() => {
+            console.error = originalConsoleError;
+        });
+
+        const openModal = async (): Promise<void> => {
+            await act(async () => {
+                fireEvent.keyDown(document, { key: 'k', ctrlKey: true });
+            });
+        };
+
+        test('fetch が ok:false を返すとエラーメッセージを表示する', async () => {
+            mockFetchOnce(null, false);
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            expect(
+                await screen.findByText('Failed to load search index. Please try again later.'),
+            ).toBeInTheDocument();
+        });
+
+        test('fetch が reject された場合もエラーメッセージを表示する', async () => {
+            globalThis.fetch = mock(async () => {
+                throw new Error('network unreachable');
+            }) as unknown as typeof fetch;
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            expect(
+                await screen.findByText('Failed to load search index. Please try again later.'),
+            ).toBeInTheDocument();
+        });
+
+        test('HTML/特殊文字を含むクエリでも例外を投げずテキストとして描画する', async () => {
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+            ]);
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            const tricky = '<script>alert("x")</script>\\\\';
+            const input = screen.getByRole('textbox', { name: 'Search documentation' });
+            await act(async () => {
+                fireEvent.change(input, { target: { value: tricky } });
+            });
+
+            // React は children を textContent としてエスケープして描画するため、
+            // クエリそのものが画面に現れることが「XSS 経路にならない」境界の確認となる。
+            expect(screen.getByText(`No results for "${tricky}"`)).toBeInTheDocument();
+            // 副作用として実際の script ノードが注入されていないこと
+            expect(document.querySelector('script')).toBeNull();
+        });
+
+        test('空白のみのクエリでも例外なくダイアログを保持する', async () => {
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+            ]);
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            const input = screen.getByRole('textbox', { name: 'Search documentation' });
+            await act(async () => {
+                fireEvent.change(input, { target: { value: '   ' } });
+            });
+
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+        });
+
+        test('1000 文字の長大クエリでも例外なくダイアログを保持する', async () => {
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+            ]);
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            const long = 'a'.repeat(1000);
+            const input = screen.getByRole('textbox', { name: 'Search documentation' });
+            await act(async () => {
+                fireEvent.change(input, { target: { value: long } });
+            });
+
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+        });
+    });
 });
