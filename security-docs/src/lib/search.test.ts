@@ -61,7 +61,32 @@ describe('getSearchIndex', () => {
             expect(item.content.length).toBeLessThanOrEqual(500);
         }
     });
+
+    test('includes every directory that has a page.mdx and only those', async () => {
+        const results = await getSearchIndex();
+
+        const fsSlugs = new Set(listDocDirsWithMdx());
+        const indexSlugs = new Set(
+            results.map((item) => item.href.replace(/^\/docs\//, '')),
+        );
+
+        expect(indexSlugs).toEqual(fsSlugs);
+    });
 });
+
+// DOCS_DIR 直下の subdirectory のうち page.mdx を含むものだけ列挙する。
+// getSearchIndex の走査条件と等価なので、両者の集合一致は検索インデックス
+// の漏れ (page.mdx あるが結果に無い) と誤包含 (page.mdx 無いが結果に有る)
+// を同時に検出する。
+function listDocDirsWithMdx(): string[] {
+    return fs
+        .readdirSync(DOCS_DIR, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .filter((entry) =>
+            fs.existsSync(path.join(DOCS_DIR, entry.name, 'page.mdx')),
+        )
+        .map((entry) => entry.name);
+}
 
 // 型エクスポートが破壊されないことを保証する型レベルチェック。
 // SearchResult の型シェイプを意図せず変更すると、ここで TS エラーになる。
