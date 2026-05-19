@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 
 export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 
+/**
+ * Determines whether the user has previously acknowledged the disclaimer in browser storage.
+ *
+ * @returns `true` if the stored consent value for the module key is exactly `'1'`, `false` otherwise or if storage access fails.
+ */
 function readConsent(): boolean {
     try {
         return localStorage.getItem(STORAGE_KEY) === '1';
@@ -12,6 +17,13 @@ function readConsent(): boolean {
     }
 }
 
+/**
+ * Render a client-side disclaimer modal that requires the user to acknowledge terms before viewing the site.
+ *
+ * The component reads and persists acknowledgement via localStorage under `STORAGE_KEY`, and synchronizes acknowledgement state across tabs/windows via the `storage` event. It is intentionally hidden during server-side rendering/hydration to avoid HTML mismatches and will only reflect the actual persisted state on the client.
+ *
+ * @returns A React element for the modal, or `null` when the user has acknowledged (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
+ */
 export function DisclaimerModal() {
     // SSR / hydration では常に非表示（HTML 不一致を防ぐ）。client 側で useEffect により実値を反映する。
     const [consented, setConsented] = useState(true);
