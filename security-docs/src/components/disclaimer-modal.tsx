@@ -39,6 +39,7 @@ export function DisclaimerModal() {
     const handleAgree = () => {
         try {
             localStorage.setItem(STORAGE_KEY, '1');
+            setConsented(true);
         } catch {
             // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
         }
