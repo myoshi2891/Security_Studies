@@ -9,22 +9,26 @@ export const metadata: Metadata = {
 };
 
 /**
- * Root layout component that renders the application's top-level HTML and body structure and includes the disclaimer modal.
+ * Root layout component that wraps page content with the application HTML/body structure and disclaimer modal.
  *
- * This component invokes `headers()` to enable dynamic rendering so Next.js can attach CSP nonces to internal script tags when required.
+ * This component reads the `x-nonce` header so Next.js registers a nonce for framework-generated `<script>` tags,
+ * ensuring those scripts receive a `nonce` attribute. It renders the document `<html>` and `<body>` with the
+ * provided `children` and a `DisclaimerModal`.
  *
- * @param children - The page content to render inside the document body.
- * @returns The root HTML element containing the document body with `children` and the `DisclaimerModal`.
+ * @param children - Page content to render inside the layout
+ * @returns The root HTML structure containing `children` and the `DisclaimerModal`
  */
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // headers() を呼ぶことで dynamic rendering を有効化し、
-  // Next.js が proxy.ts の x-nonce を内部 script tag に自動付与できるようにする。
-  // これを呼ばないと Static Generation 時に nonce が埋め込まれず CSP strict-dynamic で全 script が block される。
-  await headers();
+  // proxy.ts が設定した x-nonce を明示的に読み取る。
+  // Next.js App Router は .get('x-nonce') の呼び出し自体をトリガーとして
+  // レンダリングコンテキストに nonce を登録し、フレームワークが生成する全
+  // <script>（RSC インライン・静的チャンク等）に nonce 属性を自動付与する。
+  // await headers() だけでは値が登録されない点に注意。
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
 
   return (
     <html lang="ja" className="scroll-smooth motion-reduce:scroll-auto">
