@@ -177,6 +177,53 @@ Netlify CDP インラインスクリプト → hash 一致で信頼 ✓
   strict-dynamic 伝播で /.netlify/scripts/cdp も信頼 ✓
 ```
 
+→ **後述の対応 5 で追加修正**（Netlify が2本目のインラインスクリプトも注入していることが判明）
+
+---
+
+## 対応 5 — 本番 Netlify での `script-src` 違反（2本目のインラインスクリプト）
+
+### エラー内容
+
+```
+Loading the script '<URL>' violates:
+"script-src 'self' 'nonce-...' 'strict-dynamic' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo='"
+
+Executing inline script violates script-src.
+Hash: 'sha256-F+nsqe/0sV8PrfMTfANWaYSWTSfnhRmJ9+Gt3npr1RY='
+```
+
+CSP ヘッダーに `sha256-OBTN3...` が含まれていることを確認 → 対応 4 の `IS_NETLIFY` 修正は機能していた。
+
+### 根本原因
+
+Netlify は HTML に独立したインラインスクリプトを **2本**直接埋め込む。2本は親子関係になく、`'strict-dynamic'` の伝播では信頼されない。
+
+```
+HTML に直接注入（独立）:
+  <script>...OBTN3のコード...</script>   ← 対応 4 で許可済み ✓
+  <script>...F+nsqeのコード...</script>  ← 今回判明 ✗
+    └── /.netlify/scripts/cdp を動的ロード（strict-dynamic で伝播）
+```
+
+### 影響度
+
+| 項目 | 状態 |
+|---|---|
+| ドキュメント閲覧・検索・ナビゲーション | 正常 ✓ |
+| Netlify Analytics (CDP) | 停止 ✗ |
+| セキュリティリスク | なし（意図通りブロック） |
+
+### 修正内容
+
+`proxy.ts` の `netlifyInlineHash` に2本目のハッシュを追加:
+
+```typescript
+const netlifyInlineHash = process.env.IS_NETLIFY
+  ? ` 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-F+nsqe/0sV8PrfMTfANWaYSWTSfnhRmJ9+Gt3npr1RY='`
+  : '';
+```
+
 ---
 
 ## 最終的な CSP 構成
@@ -186,14 +233,16 @@ Netlify CDP インラインスクリプト → hash 一致で信頼 ✓
 | 環境 | script-src | style-src |
 |---|---|---|
 | ローカル dev | `'self' 'nonce-...' 'strict-dynamic' 'unsafe-eval'` | `'self' 'unsafe-inline'` |
-| Netlify 本番 / Deploy Preview | `'self' 'nonce-...' 'strict-dynamic' 'sha256-OBTN3...'` | `'self' 'nonce-...'` |
+| Netlify 本番 / Deploy Preview | `'self' 'nonce-...' 'strict-dynamic' 'sha256-OBTN3...' 'sha256-F+nsqe...'` | `'self' 'nonce-...'` |
 | Docker 本番（非 Netlify） | `'self' 'nonce-...' 'strict-dynamic'` | `'self' 'nonce-...'` |
 
 ### 全ディレクティブ（Netlify 本番）
 
 ```
 default-src 'self';
-script-src 'self' 'nonce-<uuid>' 'strict-dynamic' 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=';
+script-src 'self' 'nonce-<uuid>' 'strict-dynamic'
+           'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo='
+           'sha256-F+nsqe/0sV8PrfMTfANWaYSWTSfnhRmJ9+Gt3npr1RY=';
 style-src 'self' 'nonce-<uuid>';
 img-src 'self' data:;
 font-src 'self';
@@ -213,7 +262,7 @@ form-action 'self';
 | `security-docs/CLAUDE.md` | highlight.js 実装詳細と Terminal 同期化を Technical Standards に追記 |
 | `.claude/skills/mdx-page-adder/SKILL.md` | Terminal の言語判定ルールとデフォルトを明記 |
 | `security-docs/next.config.ts` | `env.IS_NETLIFY` を追加し Edge Runtime へ変数を確実に伝播 |
-| `security-docs/src/proxy.ts` | `styleSrc` dev/prod 分岐・`netlifyInlineHash` 検出ロジックを修正 |
+| `security-docs/src/proxy.ts` | `styleSrc` dev/prod 分岐・`netlifyInlineHash` 検出ロジック修正・2本目の Netlify hash 追加 |
 
 ---
 
@@ -221,7 +270,12 @@ form-action 'self';
 
 ### Netlify CDP ハッシュの更新が必要なケース
 
-`sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=` は Netlify のインラインスクリプト内容に基づく固定値。Netlify がスクリプトを更新した場合はハッシュが無効になる。
+現在許可している2つのハッシュは Netlify のインラインスクリプト内容に基づく固定値。Netlify がスクリプトを更新した場合はハッシュが無効になる。
+
+| ハッシュ | 対象 |
+|---|---|
+| `sha256-OBTN3...` | Netlify CDP インラインスクリプト 1本目 |
+| `sha256-F+nsqe...` | Netlify CDP インラインスクリプト 2本目 |
 
 **確認方法**: ブラウザコンソールで同エラーが再発した際、メッセージ内に新しい `sha256-...` が提示される。その値で `proxy.ts` の `netlifyInlineHash` を更新する。
 
