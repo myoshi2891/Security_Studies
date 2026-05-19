@@ -119,4 +119,127 @@ describe('SearchModal', () => {
             expect(screen.queryByRole('dialog')).toBeNull();
         });
     });
+
+    describe('search query and results', () => {
+        const openModal = async (): Promise<void> => {
+            await act(async () => {
+                fireEvent.keyDown(document, { key: 'k', ctrlKey: true });
+            });
+        };
+
+        const typeQuery = async (value: string): Promise<HTMLInputElement> => {
+            const input = screen.getByRole('textbox', {
+                name: 'Search documentation',
+            }) as HTMLInputElement;
+            await act(async () => {
+                fireEvent.change(input, { target: { value } });
+            });
+            return input;
+        };
+
+        test('モーダル開いた直後はガイダンス文を表示する', async () => {
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            expect(screen.getByText('Type to start searching...')).toBeInTheDocument();
+        });
+
+        test('マッチしないクエリでは "No results for ..." を表示する', async () => {
+            setUserAgent(WIN_UA);
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+            ]);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+            await typeQuery('zzz_no_match_zzz');
+
+            expect(screen.getByText('No results for "zzz_no_match_zzz"')).toBeInTheDocument();
+        });
+
+        test('マッチするクエリで結果ボタンを描画する', async () => {
+            setUserAgent(WIN_UA);
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+                {
+                    title: 'CSRF',
+                    description: 'CSRF intro',
+                    href: '/docs/csrf',
+                    content: 'cross-site request forgery',
+                },
+            ]);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+            await typeQuery('XSS');
+
+            // findByRole は fuse 初期化の追加 tick 待ちを兼ねる
+            expect(await screen.findByRole('button', { name: 'Open XSS' })).toBeInTheDocument();
+        });
+
+        test('結果クリックで router.push を呼びモーダルを閉じる', async () => {
+            setUserAgent(WIN_UA);
+            mockFetchOnce([
+                {
+                    title: 'XSS',
+                    description: 'XSS attacks',
+                    href: '/docs/xss',
+                    content: 'cross-site scripting',
+                },
+            ]);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+            await typeQuery('XSS');
+
+            const resultButton = await screen.findByRole('button', { name: 'Open XSS' });
+            await act(async () => {
+                fireEvent.click(resultButton);
+            });
+
+            expect(pushMock).toHaveBeenCalledWith('/docs/xss');
+            expect(screen.queryByRole('dialog')).toBeNull();
+        });
+
+        test('オーバーレイ (バックドロップ) クリックでモーダルを閉じる', async () => {
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            const dialog = screen.getByRole('dialog');
+            const overlay = dialog.parentElement;
+            if (!overlay) {
+                throw new Error('backdrop element should exist as the dialog parent');
+            }
+
+            await act(async () => {
+                fireEvent.click(overlay);
+            });
+
+            expect(screen.queryByRole('dialog')).toBeNull();
+        });
+
+        test('input への入力が DOM 値として反映される (aria-label 経由でアクセス可能)', async () => {
+            setUserAgent(WIN_UA);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+
+            const input = await typeQuery('hello');
+            expect(input.value).toBe('hello');
+        });
+    });
 });
