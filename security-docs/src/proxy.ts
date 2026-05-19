@@ -25,7 +25,7 @@ export function proxy(request: NextRequest) {
   //          sha256 ハッシュはインラインスクリプトを信頼し、strict-dynamic の伝播で
   //          動的ロードされる cdp スクリプトも許可する。
   const netlifyInlineHash = process.env.IS_NETLIFY
-    ? ` 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo='`
+    ? ` 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo=' 'sha256-F+nsqe/0sV8PrfMTfANWaYSWTSfnhRmJ9+Gt3npr1RY='`
     : '';
   const scriptSrc = isDev
     ? `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval'`
