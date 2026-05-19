@@ -8,6 +8,16 @@ export const metadata: Metadata = {
   description: "Advanced Security Documentation for 2026",
 };
 
+/**
+ * Root layout component that wraps page content with the application HTML/body structure and disclaimer modal.
+ *
+ * This component reads the `x-nonce` header so Next.js registers a nonce for framework-generated `<script>` tags,
+ * ensuring those scripts receive a `nonce` attribute. It renders the document `<html>` and `<body>` with the
+ * provided `children` and a `DisclaimerModal`.
+ *
+ * @param children - Page content to render inside the layout
+ * @returns The root HTML structure containing `children` and the `DisclaimerModal`
+ */
 export default async function RootLayout({
   children,
 }: Readonly<{
