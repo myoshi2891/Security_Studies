@@ -30,6 +30,8 @@ export function DisclaimerModal() {
     const [dismissed, setDismissed] = useState(false);
 
     useEffect(() => {
+        // Hydration 後にクライアント側 localStorage の実値で同期する正当パターン。
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setConsented(readConsent());
         const onStorage = (event: StorageEvent) => {
             if (event.key === null) {

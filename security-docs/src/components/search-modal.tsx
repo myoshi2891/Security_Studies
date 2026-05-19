@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, X, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Fuse from 'fuse.js';
@@ -20,7 +20,6 @@ import type { SearchResult } from '@/lib/search';
 export function SearchModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<SearchResult[]>([]);
     const [fuse, setFuse] = useState<Fuse<SearchResult> | null>(null);
     const [isError, setIsError] = useState(false);
     const [shortcutLabel, setShortcutLabel] = useState('');
@@ -68,20 +67,20 @@ export function SearchModal() {
     }, [isOpen]);
 
     useEffect(() => {
-        // Detect Mac platform for accurate shortcut rendering client-side
+        // SSR との hydration 整合性を保つためマウント後に navigator を参照する。
+        // useMemo / useState 初期化関数は SSR で実行されるためここでは使用できない。
         const isMac =
             typeof window !== 'undefined' &&
             /Macintosh|MacIntel|MacPPC|Mac68K/.test(navigator.userAgent);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setShortcutLabel(isMac ? '⌘K' : 'Ctrl+K');
     }, []);
 
-    useEffect(() => {
+    const results = useMemo<SearchResult[]>(() => {
         if (fuse && query) {
-            const searchResults = fuse.search(query).map((r) => r.item);
-            setResults(searchResults);
-        } else {
-            setResults([]);
+            return fuse.search(query).map((r) => r.item);
         }
+        return [];
     }, [query, fuse]);
 
     const onSelect = useCallback(
