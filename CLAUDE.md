@@ -103,7 +103,7 @@ Security_Studies/
 | `<CompareGrid>` | 比較グリッド |
 | `<AttackFlow>` | 攻撃フロー図 |
 | `<DefenseList>` | 防御策リスト |
-| `<Terminal>` | ターミナル表示 |
+| `<Terminal title="file.sh" code="...">` | ターミナル表示（`title` の拡張子で言語自動判定: `.sh`→bash / `.ts`→typescript / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown） |
 | `<Checklist>` | チェックリスト |
 | `<DataTable>` | テーブル |
 | `<SourceReferences>` | 出典一覧 |
