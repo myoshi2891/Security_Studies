@@ -32,6 +32,7 @@ Commands should be executed within the `security-docs` directory.
 - **Install dependencies:** `bun install`
 - **Start development server:** `bun run dev`
 - **Create production build:** `bun run build`
+- **Linting:** `bun run lint` (ESLint v9, calls `eslint .` directly — not `next lint`)
 - **Testing:** `bun test`
 - **Type checking:** `bun run types:check`
 
@@ -47,3 +48,23 @@ Commands should be executed within the `security-docs` directory.
 - **Content Authoring:** All new documentation content should be authored in MDX and placed within `security-docs/src/app/docs/<slug>/page.mdx`. Use custom UI components from `src/components/docs/` (e.g. `<HeroSection>`, `<ThreatCard>`, `<DataTable>`). Register any new slug in `src/config/docs.ts`.
 - **Styling:** The project uses Tailwind CSS v4. Utility classes only — no custom CSS unless adding to `globals.css`.
 - **Type Safety:** Run `bun run types:check` before committing. `any` is prohibited; use `unknown` + type guards.
+- **Linting:** Run `bun run lint` before committing. Unused variables/args prefixed with `_` are ignored (signature-preservation convention).
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on push and PRs to `main` / `dev`:
+
+1. `bun install --frozen-lockfile`
+2. `bun run lint`
+3. `bun run types:check`
+4. `bun test`
+
+All steps execute in the `security-docs/` working directory.
+
+## Testing
+
+- Runner: `bun test`
+- DOM environment: `happy-dom` (auto-setup via `bunfig.toml` preload)
+- Assertions: `@testing-library/jest-dom` (types extended to `bun:test` in `src/jest-dom.d.ts`)
+- Test files co-located with source as `*.test.tsx` / `*.test.ts`
+- Key test files: `src/lib/search.test.ts`, `src/components/search-modal.test.tsx`, `src/components/docs/DocsSubheading.test.tsx`
