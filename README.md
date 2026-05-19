@@ -19,7 +19,7 @@ Next.js 16.2.2 (App Router) と カスタム MDX コンポーネントを活用�
   - `src/app/docs/`: 実際のドキュメントコンテンツ (MDX 形式) が格納されています。各トピックは `<slug>/page.mdx` 形式です。
   - `src/components/docs/`: MDX 内で使用するカスタム React コンポーネント群です。
   - `src/config/docs.ts`: サイドバーナビゲーション設定です。
-  - `src/proxy.ts`: Next.js Middleware。リクエストごとに UUID ベースの nonce を生成し、`Content-Security-Policy` ヘッダー（`script-src 'nonce-…' 'strict-dynamic'`）を付与します。
+  - `src/proxy.ts`: Next.js Proxy（旧 Middleware）。静的な `Content-Security-Policy` ヘッダー（`script-src 'self' 'unsafe-inline'`）を付与します。nonce / `'strict-dynamic'` は Netlify Next.js Runtime との nonce 競合（Issue [#32](https://github.com/myoshi2891/Security_Studies/issues/32)）により廃止済みです。
 - `docs/`: ビルド不要の静的ダッシュボード群です。`test-coverage-dashboard.html` / `test-coverage-dashboard.css` を含みます。
 - `md/`: MDX ページの原稿となる Markdown ソースファイルです。
 - `html/`: `gen_security_html.sh` で生成されたレガシーな静的 HTML ドキュメントです。

@@ -72,7 +72,7 @@ Security_Studies/
 │   │   │   └── search-modal.tsx
 │   │   ├── config/docs.ts  # サイドバーナビゲーション定義
 │   │   ├── lib/search.ts   # 検索インデックス生成ロジック
-│   │   ├── proxy.ts        # Next.js Proxy (旧 middleware) — nonce生成 & CSP ヘッダー付与
+│   │   ├── proxy.ts        # Next.js Proxy (旧 middleware) — 静的 CSP ヘッダー付与（nonce 廃止済み、Issue #32）
 │   │   └── mdx-components.tsx  # MDX コンポーネントのグローバル登録
 ├── docs/                   # 静的ダッシュボード（test-coverage-dashboard.html + .css）
 ├── md/                     # Markdown ソース原稿
