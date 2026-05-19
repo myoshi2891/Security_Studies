@@ -141,7 +141,7 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 |---|---|
 | `default-src` | `'self'` |
 | `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'`（dev では `'unsafe-eval'` を追加） |
-| `style-src` | `'self' 'nonce-<生成値>'` |
+| `style-src` | `'self' 'nonce-<生成値>'`（dev では `'unsafe-inline'` を追加 — Next.js dev overlay・フォント・React 19 style ホイスティングが nonce なしで `<style>` を注入するため） |
 | `img-src` | `'self' data:` |
 | `font-src` | `'self'` |
 | `connect-src` | `'self'` |

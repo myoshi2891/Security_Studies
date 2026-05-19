@@ -18,10 +18,24 @@ export function proxy(request: NextRequest) {
   //      'unsafe-inline' は script/style ともに付与しない（nonce で代替）。
   //      connect-src には HMR の ws を追加。'strict-dynamic' は Next.js dynamic import に必要。
   // prod: nonce + strict-dynamic で厳格に。
+  // Netlify: Deploy Preview / Branch Deploy では /.netlify/scripts/cdp を読み込む
+  //          インラインスクリプトのハッシュを許可し、strict-dynamic の伝播で cdp も信頼させる。
+  //          CONTEXT は Netlify がビルド時に設定する環境変数
+  //          （'production' | 'deploy-preview' | 'branch-deploy'）。
+  const netlifyInlineHash = process.env.CONTEXT
+    ? ` 'sha256-OBTN3RiyCV4Bq7dFqZ5a2pAXjnCcCYeTJMO2I/LYKeo='`
+    : '';
   const scriptSrc = isDev
     ? `'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval'`
-    : `'self' 'nonce-${nonce}' 'strict-dynamic'`
-  const styleSrc = `'self' 'nonce-${nonce}'`
+    : `'self' 'nonce-${nonce}' 'strict-dynamic'${netlifyInlineHash}`
+  // dev: 'unsafe-inline' のみ（nonce なし）。
+  //      CSP Level 3 では nonce/hash があると 'unsafe-inline' は無視されるため、
+  //      Next.js dev overlay・フォントスタイル・React 19 style ホイスティングを通すには
+  //      nonce を外して 'unsafe-inline' だけにする必要がある。
+  // prod: nonce のみで厳格に維持。
+  const styleSrc = isDev
+    ? `'self' 'unsafe-inline'`
+    : `'self' 'nonce-${nonce}'`
   const connectSrc = isDev
     ? `'self' ws://localhost:* ws://127.0.0.1:*`
     : `'self'`
