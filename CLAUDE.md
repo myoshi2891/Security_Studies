@@ -135,19 +135,23 @@ ls .next/standalone 2>/dev/null && echo "NG" || echo "OK: standalone なし"
 
 ### セキュリティ (CSP / Proxy)
 
-`src/proxy.ts` が Next.js Proxy として動作し、リクエストごとに UUID ベースの nonce を生成して CSP ヘッダーを付与する（Next.js 16 では `middleware.ts` が deprecated となり `proxy.ts` が正式規約）。
+`src/proxy.ts` が Next.js Proxy として動作し、CSP ヘッダーを静的構成で付与する（Next.js 16 では `middleware.ts` が deprecated となり `proxy.ts` が正式規約）。
+
+Issue [#32](https://github.com/myoshi2891/Security_Studies/issues/32) で判明した通り、Netlify Next.js Runtime (`@netlify/plugin-nextjs`) が独自 nonce を生成して全 `<script>` タグに上書き付与し、`proxy.ts` 側の nonce と不一致になる事象が継続発生したため、nonce および `'strict-dynamic'` を廃止した。ページ毎に内容が変動する Next.js Flight data の inline script は事前ハッシュ化できないため `'unsafe-inline'` で許可している。
 
 | ディレクティブ | 設定値 |
 |---|---|
 | `default-src` | `'self'` |
-| `script-src` | `'self' 'nonce-<生成値>' 'strict-dynamic'`（dev では `'unsafe-eval'` を追加、Netlify 環境では `'sha256-OBTN3...'` を追加） |
-| `style-src` | prod: `'self' 'nonce-<生成値>'` / dev: `'self' 'unsafe-inline'`（nonce なし — CSP Level 3 で nonce と `'unsafe-inline'` の併記は無効になるため分離） |
+| `script-src` | prod: `'self' 'unsafe-inline'` / dev: `'self' 'unsafe-inline' 'unsafe-eval'` |
+| `style-src` | `'self' 'unsafe-inline'` |
 | `img-src` | `'self' data:` |
 | `font-src` | `'self'` |
-| `connect-src` | `'self'` |
+| `connect-src` | prod: `'self'` / dev: `'self' ws://localhost:* ws://127.0.0.1:*`（HMR 用） |
 | `frame-ancestors` | `'none'` |
+| `base-uri` | `'self'` |
+| `form-action` | `'self'` |
 
-`'strict-dynamic'` により、nonce 付きスクリプトが生成するスクリプト（Next.js ダイナミックインポート等）も自動的に信頼される。nonce は `x-nonce` リクエストヘッダーでページコンポーネントへ渡す。
+`'unsafe-inline'` を許可するため inline script ベースの XSS 防御は後退するが、`default-src 'self'` で第三者ドメインからの script ロードを遮断し、`frame-ancestors 'none'` で clickjacking、`base-uri 'self'` / `form-action 'self'` で base タグ・フォーム経由の改竄を防御する構成は維持される。
 
 ### テスト構成
 

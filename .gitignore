@@ -7,3 +7,6 @@ html/
 node_modules/
 .netlify/
 .playwright-mcp
+
+docs/csp-fix-report-2026-05-19.html
+docs/csp-fix-report-2026-05-19.md
