@@ -1,7 +1,20 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { codeToHtml } from 'shiki';
+import hljs from 'highlight.js/lib/core';
+import bash from 'highlight.js/lib/languages/bash';
+import typescript from 'highlight.js/lib/languages/typescript';
+import yaml from 'highlight.js/lib/languages/yaml';
+import json from 'highlight.js/lib/languages/json';
+import markdown from 'highlight.js/lib/languages/markdown';
+import 'highlight.js/styles/github-dark.css';
+
+// 静的 import で必要な言語のみ登録（Turbopack の動的チャンク生成を完全に回避）
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('typescript', typescript);
+hljs.registerLanguage('yaml', yaml);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('markdown', markdown);
 
 export interface TerminalProps {
   title?: string;
@@ -10,11 +23,11 @@ export interface TerminalProps {
   code?: string;
 }
 
-export const Terminal = async ({ title, children, className, code }: TerminalProps) => {
+export const Terminal = ({ title, children, className, code }: TerminalProps) => {
   const content = code ?? children ?? '';
   const contentString = typeof content === 'string' ? content : String(content);
   let lang = 'typescript';
-  
+
   if (title) {
     const lowerTitle = title.toLowerCase();
     if (lowerTitle.endsWith('.sh')) lang = 'bash';
@@ -23,20 +36,16 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
     else if (lowerTitle.endsWith('.md')) lang = 'markdown';
   }
 
-  let htmlContent = '';
+  let htmlContent: string;
   try {
-    htmlContent = await codeToHtml(contentString, {
-      lang,
-      theme: 'github-dark',
-    });
-  } catch (e) {
-    const escapedContent = contentString
+    htmlContent = hljs.highlight(contentString, { language: lang, ignoreIllegals: true }).value;
+  } catch {
+    htmlContent = contentString
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
-    htmlContent = `<pre><code>${escapedContent}</code></pre>`;
   }
 
   return (
@@ -54,10 +63,12 @@ export const Terminal = async ({ title, children, className, code }: TerminalPro
           <div className="w-10" /> {/* Spacer to center title somewhat */}
         </div>
       )}
-      <div 
-        className="p-5 font-mono text-[0.82rem] leading-[1.78] overflow-x-auto [&>pre]:!bg-transparent [&>pre]:!m-0 [&>pre]:!p-0"
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
-      />
+      <pre className="p-5 m-0 font-mono text-[0.82rem] leading-[1.78] overflow-x-auto bg-transparent">
+        <code
+          className={`hljs language-${lang}`}
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
+      </pre>
     </div>
   );
 };

@@ -81,7 +81,7 @@ description: "説明文"
 | `<CompareGrid>` | 比較グリッド | 複数手法の比較 |
 | `<AttackFlow>` | 攻撃フロー図 | 攻撃シナリオの可視化 |
 | `<DefenseList>` | 防御策リスト | 対策・推奨事項の列挙 |
-| `<Terminal>` | ターミナル表示 | コマンド出力の再現 |
+| `<Terminal title="example.sh" code="...">` | ターミナル表示 | コマンド出力・コードスニペットの再現。`title` の拡張子で言語自動判定（`.sh`→bash / `.ts`→typescript / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown）。対応外の拡張子はデフォルト `typescript`。 |
 | `<Checklist>` | チェックリスト | 確認事項の列挙 |
 | `<DataTable headers={[...]} rows={[...]}>` | テーブル | 表形式データ |
 | `<ThreatCard title="..." severity="critical\|high\|medium\|low">` | 脅威カード | インシデント・CVE 情報 |
