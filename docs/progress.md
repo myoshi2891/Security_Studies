@@ -124,7 +124,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
-| P-01 | カバレッジレポート追加（bunfig.toml + Codecov CI） | 2026-05-20 |
+| P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
 
 ---
 

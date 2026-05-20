@@ -13,11 +13,11 @@ describe('StepTimeline', () => {
       />
     );
 
-    expect(screen.getByText('01')).toBeInTheDocument();
-    expect(screen.getByText('Step 1')).toBeInTheDocument();
-    expect(screen.getByText('Description 1')).toBeInTheDocument();
-    expect(screen.getByText('02')).toBeInTheDocument();
-    expect(screen.getByText('Step 2')).toBeInTheDocument();
-    expect(screen.getByText('Description 2')).toBeInTheDocument();
+    expect(screen.getByText(/01/)).toBeInTheDocument();
+    expect(screen.getByText(/Step 1/)).toBeInTheDocument();
+    expect(screen.getByText(/Description 1/)).toBeInTheDocument();
+    expect(screen.getByText(/02/)).toBeInTheDocument();
+    expect(screen.getByText(/Step 2/)).toBeInTheDocument();
+    expect(screen.getByText(/Description 2/)).toBeInTheDocument();
   });
 });

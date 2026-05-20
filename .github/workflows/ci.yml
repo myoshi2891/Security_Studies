@@ -35,7 +35,7 @@ jobs:
         run: bun test --coverage
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@bf67ee1d8825c34537330756778f6734d8ef091a # v4.5.0
         with:
           files: security-docs/coverage/lcov.info
           fail_ci_if_error: false
