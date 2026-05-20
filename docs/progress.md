@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-20  
+> **最終更新**: 2026-05-20（Codecov 連携追加）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -15,8 +15,8 @@
 | テストケース総数 | **57件** | `bun test` 全 pass |
 | テストファイル数 | **19 / 22 ファイル** | 86% カバー |
 | Strategy Coverage | **7.5%** | 40カテゴリ×ドメインセル中 3セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test） |
-| カバレッジレポート | ❌ **未設定** | `bun --coverage` 未導入 |
+| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
+| カバレッジレポート | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov) |
 
 #### ファイル別テスト数（2026-05-20 時点）
 
@@ -98,9 +98,10 @@ form-action 'self'
 |---|---|---|
 | `CLAUDE.md` (ルート) | 2026-05-20 | CSP 静的構成・Terminal 仕様・ESLint v9 反映 |
 | `security-docs/CLAUDE.md` | 2026-05-20 | CI 設定・テスト構成・ESLint v9 詳細追記 |
-| `docs/test-coverage-dashboard.html` | 2026-05-20 | テスト数・CI・カバレッジ率を最新値に更新 |
+| `docs/test-coverage-dashboard.html` | 2026-05-20 | Codecov 追加・テスト数・CI 更新 |
 | `docs/csp-fix-report-2026-05-19.md` | 2026-05-19 | Issue #32 対応記録（7フェーズ） |
-| `docs/progress.md` (本ファイル) | 2026-05-20 | 新規作成 |
+| `docs/progress.md` (本ファイル) | 2026-05-20 | Codecov 完了・P-01 クローズ |
+| `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 
 ---
 
@@ -111,7 +112,7 @@ form-action 'self'
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
-| カバレッジ CI 連携 | ❌ **未設定** | Codecov / Coveralls 未導入 |
+| カバレッジ CI 連携 | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov.info) ※CODECOV_TOKEN 要手動追加 |
 | `bun audit` CI 組み込み | ❌ **未設定** | 脆弱性チェック自動化なし |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
 
@@ -119,21 +120,17 @@ form-action 'self'
 
 ## 次のアクション
 
-### 🔴 HIGH — 即対応
+### ✅ 完了済み
 
-#### 1. カバレッジレポート追加
-
-CI が整備された今、行カバレッジを数値化して退行を可視化する。
-
-- `bunfig.toml` に `[test] coverage = true` を追加
-- CI で Codecov へアップロード
-- PR ごとにカバレッジ差分バッジを確認できる状態にする
-
-**コスト**: 小 | **効果**: テストの穴を定量的に把握
+| # | タスク | 完了日 |
+|---|---|---|
+| P-01 | カバレッジレポート追加（bunfig.toml + Codecov CI） | 2026-05-20 |
 
 ---
 
-#### 2. Search API Contract テスト
+### 🔴 HIGH — 即対応
+
+#### 1. Search API Contract テスト
 
 `GET /api/search` のレスポンス構造・`Cache-Control` ヘッダーを検証するテストが未実装。`search.ts` の Unit テストは済んでいるが、HTTP 層が無防備。
 
@@ -144,7 +141,7 @@ CI が整備された今、行カバレッジを数値化して退行を可視�
 
 ---
 
-#### 3. DisclaimerModal A11y テスト
+#### 2. DisclaimerModal A11y テスト
 
 既存 5 テストに WCAG 2.1 AA 準拠検証を追加。
 
@@ -155,7 +152,7 @@ CI が整備された今、行カバレッジを数値化して退行を可視�
 
 ---
 
-#### 4. smoke テストコンポーネントの深化
+#### 3. smoke テストコンポーネントの深化
 
 9 件のコンポーネント（Checklist, DataTable, CompareGrid 等）が smoke test 1件のみ。`Callout.test.tsx`（4件）を参考に prop variation・エラー状態を追加。
 
@@ -165,19 +162,19 @@ CI が整備された今、行カバレッジを数値化して退行を可視�
 
 ### 🟡 MEDIUM — 次スプリント
 
-#### 5. Integration: docs layout + MDX
+#### 4. Integration: docs layout + MDX
 
 docs layout と MDX ページの組み合わせ動作テスト（サイドバーナビゲーション・アクティブリンク状態）。
 
-#### 6. SearchModal A11y テスト追加
+#### 5. SearchModal A11y テスト追加
 
 17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
 
-#### 7. CSP ヘッダー検証テスト
+#### 6. CSP ヘッダー検証テスト
 
 `src/proxy.ts` の CSP ヘッダー構成を Unit テストで保護し、意図しない緩和変更を検出する。
 
-#### 8. `bun audit` CI 組み込み
+#### 7. `bun audit` CI 組み込み
 
 依存関係の脆弱性チェックを CI に追加。
 
@@ -185,15 +182,15 @@ docs layout と MDX ページの組み合わせ動作テスト（サイドバー
 
 ### 🟢 LOW — 中長期
 
-#### 9. E2E テスト（Playwright）
+#### 8. E2E テスト（Playwright）
 
 ナビゲーション・検索・DisclaimerModal のフルユーザーシナリオ。Netlify Deploy Preview との連携も可能。
 
-#### 10. Visual / Snapshot 回帰テスト
+#### 9. Visual / Snapshot 回帰テスト
 
 `Callout`・`AttackFlow`・`RiskBadge` の variant 変更を Playwright スクリーンショット比較で検出。
 
-#### 11. Bundle Size モニタリング
+#### 10. Bundle Size モニタリング
 
 `@next/bundle-analyzer` + `size-limit` を CI に追加。
 
