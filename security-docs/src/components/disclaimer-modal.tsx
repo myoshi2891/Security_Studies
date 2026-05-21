@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 
@@ -50,7 +50,7 @@ export function DisclaimerModal() {
         return () => window.removeEventListener('storage', onStorage);
     }, []);
 
-    const handleAgree = () => {
+    const handleAgree = useCallback(() => {
         try {
             localStorage.setItem(STORAGE_KEY, '1');
             setConsented(true);
@@ -58,7 +58,42 @@ export function DisclaimerModal() {
             // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
         }
         setDismissed(true);
-    };
+    }, []);
+
+    // Escape キーでモーダルを閉じる、および Tab キーによるフォーカストラップの制御
+    useEffect(() => {
+        if (consented || dismissed) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                handleAgree();
+            }
+
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                // 唯一のフォーカス可能要素である「同意して閲覧する」ボタンにフォーカスを強制
+                const button = document.querySelector('button[autoFocus]');
+                if (button instanceof HTMLElement) {
+                    button.focus();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [consented, dismissed, handleAgree]);
+
+    // モーダル表示中のボディスクロール制御
+    useEffect(() => {
+        if (!consented && !dismissed) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [consented, dismissed]);
 
     if (consented || dismissed) return null;
 

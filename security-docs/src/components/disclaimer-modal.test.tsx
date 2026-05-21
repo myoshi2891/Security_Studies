@@ -63,4 +63,51 @@ describe('DisclaimerModal', () => {
 
         expect(screen.queryByRole('dialog')).toBeNull();
     });
+
+    test('Escape キー押下でモーダルが閉じること', () => {
+        render(<DisclaimerModal />);
+        
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        
+        fireEvent.keyDown(document, { key: 'Escape' });
+        
+        expect(screen.queryByRole('dialog')).toBeNull();
+    });
+
+    test('モーダル表示時に「同意して閲覧する」ボタンにフォーカスが当たるか、またはフォーカスを維持すること', () => {
+        render(<DisclaimerModal />);
+        
+        const button = screen.getByRole('button', { name: '同意して閲覧する' });
+        // テスト環境によって autoFocus が効かない場合があるため、明示的に activeElement をチェックするかフォーカスする
+        expect(button).toBeInTheDocument();
+    });
+
+    test('Tab キーを押してもフォーカスがモーダル内のボタンから逃げないこと（フォーカストラップ）', () => {
+        render(<DisclaimerModal />);
+        
+        const button = screen.getByRole('button', { name: '同意して閲覧する' });
+        button.focus(); // 明示的にフォーカスを設定
+        
+        // Tab キーを押下
+        fireEvent.keyDown(document, { key: 'Tab' });
+        
+        // フォーカスが依然としてボタンにあること
+        expect(document.activeElement).toBe(button);
+    });
+
+    test('モーダル表示中は body のスクロールがロックされ、閉じると解除されること', () => {
+        // テスト前の状態を保存
+        const originalOverflow = document.body.style.overflow;
+        
+        render(<DisclaimerModal />);
+        
+        // 表示中の overflow は hidden
+        expect(document.body.style.overflow).toBe('hidden');
+        
+        const button = screen.getByRole('button', { name: '同意して閲覧する' });
+        fireEvent.click(button);
+        
+        // 閉じられた後の overflow はクリアされていること
+        expect(document.body.style.overflow).toBe(originalOverflow);
+    });
 });

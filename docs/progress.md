@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **60件** | `bun test` 全 pass |
+| テストケース総数 | **64件** | `bun test` 全 pass |
 | テストファイル数 | **20 / 22 ファイル** | 90.9% カバー |
 | Strategy Coverage | **7.5%** | 40カテゴリ×ドメインセル中 3セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -38,7 +38,7 @@
 | `src/components/docs/StepTimeline.test.tsx` | 1 | smoke のみ |
 | `src/components/docs/Tag.test.tsx` | 1 | smoke のみ |
 | `src/components/docs/ThreatCard.test.tsx` | 1 | smoke のみ |
-| `src/components/disclaimer-modal.test.tsx` | 5 | 表示/同意/storage 検証 |
+| `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証 |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
 | `src/app/api/search/route.ts` | 3 | ✅ 2026-05-21 追加 |
@@ -126,21 +126,11 @@ form-action 'self'
 |---|---|---|
 | P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
 | P-02 | **Search API Contract テスト**<br>`GET /api/search` を提供する `route.ts` ハンドラを実装し、戻り値の型（`SearchResult[]`）やキャッシュヘッダー（`Cache-Control: s-maxage=3600`）を HTTP レベルで検証するテスト `route.test.ts` を追加しました。<br>**タグ**: `API Contract` \| **コスト**: 小 \| **効果**: API 契約の回帰防止 | 2026-05-21 |
+| P-03 | **DisclaimerModal A11y テスト**<br>`DisclaimerModal` に Escape キーによるクローズ、フォーカストラップ、ボディスクロールロック制御の機能を実装し、`disclaimer-modal.test.tsx` に WCAG 2.1 AA 準拠のテストを追加しました。<br>**タグ**: `A11y` \| **コスト**: 小 \| **効果**: WCAG 2.1 AA 達成 | 2026-05-21 |
 
 ---
 
 ### 🔴 HIGH — 即対応
-
----
-
-#### 2. DisclaimerModal A11y テスト
-
-既存 5 テストに WCAG 2.1 AA 準拠検証を追加。
-
-- `@testing-library/user-event` で Escape キー・フォーカストラップを検証
-- `role=dialog`・`aria-modal` 属性の存在確認
-
-**コスト**: 小 | **効果**: WCAG 2.1 AA 達成
 
 ---
 
