@@ -15,11 +15,12 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-05-18</span>
-                            <span>Runner: bun test</span>
+                            <span><span class="live-dot"></span>Scanned 2026-05-20</span>
+                            <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
-                            <span>CI: ❌ 未設定</span>
+                            <span>CI: ✅ GitHub Actions</span>
+                            <span>Coverage: ✅ Codecov (lcov)</span>
                         </div>
                     </div>
                     <div class="stamp">Audit<br />Required</div>
@@ -31,51 +32,51 @@
         <section class="summary-section">
             <div class="container">
                 <div class="summary-grid">
-                    <div class="summary-card c-red">
+                    <div class="summary-card c-amber">
                         <div class="summary-label">Strategy Coverage</div>
-                        <div class="summary-value">2.5%</div>
+                        <div class="summary-value">7.5%</div>
                         <div class="summary-sub">
-                            カテゴリ戦略カバレッジ<br />（40 セル中 1 セル相当）
+                            カテゴリ戦略カバレッジ<br />（40 セル中 3 セル相当）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 2.5%; --bar-color: var(--status-none-border)"
+                                style="width: 7.5%; --bar-color: var(--status-partial-border)"
                             ></div>
                         </div>
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">File Unit Coverage</div>
-                        <div class="summary-value">73%</div>
+                        <div class="summary-value">86%</div>
                         <div class="summary-sub">
-                            22 ファイル中 16 ファイルに<br />Unit テストあり（smoke 含む）
+                            22 ファイル中 19 ファイルに<br />Unit テストあり（smoke 含む）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 73%; --bar-color: var(--status-ok-border)"
+                                style="width: 86%; --bar-color: var(--status-ok-border)"
                             ></div>
                         </div>
                     </div>
                     <div class="summary-card c-amber">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">29</div>
-                        <div class="summary-sub">16 ファイル · 大半が<br />smoke test 1件のみ</div>
+                        <div class="summary-value">57</div>
+                        <div class="summary-sub">19 ファイル · SearchModal/search.ts<br />テスト追加済み</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 30%; --bar-color: var(--status-partial-border)"
+                                style="width: 58%; --bar-color: var(--status-partial-border)"
                             ></div>
                         </div>
                     </div>
-                    <div class="summary-card c-red">
+                    <div class="summary-card c-green">
                         <div class="summary-label">CI Pipeline</div>
-                        <div class="summary-value">None</div>
-                        <div class="summary-sub">.github/workflows/ 未設定<br />手動実行のみ</div>
+                        <div class="summary-value">Active</div>
+                        <div class="summary-sub">GitHub Actions + Codecov<br />PR 自動テスト・カバレッジ計測</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 0%; --bar-color: var(--status-none-border)"
+                                style="width: 100%; --bar-color: var(--status-ok-border)"
                             ></div>
                         </div>
                     </div>
@@ -264,50 +265,52 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">28 tests · 15/16 files</span>
+                                            <span class="cell-count">28 tests · 16/16 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 75%"></div>
+                                                <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 15/16 ファイル</div>
-                                            大半が smoke test 1件。DocsSubheading のみ未テスト。
+                                            <div class="tt-title">⚠️ Partial — 16/16 ファイル</div>
+                                            全ファイルにテストあり。大半は smoke test 1件。
                                             <ul class="tt-files">
                                                 <li>✓ Callout.test.tsx (4 tests)</li>
+                                                <li>✓ DocsSubheading.test.tsx (4 tests)</li>
                                                 <li>✓ SectionCard.test.tsx (3 tests)</li>
                                                 <li>
                                                     ✓ AttackFlow, DefenseList, RiskBadge, Terminal
                                                     (各2)
                                                 </li>
                                                 <li>✓ 9 コンポーネント (各1 smoke)</li>
-                                                <li>✗ DocsSubheading.tsx — 未テスト</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </td>
                                 <td data-dom="d2">
                                     <div
-                                        class="cell partial"
+                                        class="cell ok"
                                         tabindex="0"
-                                        aria-label="UI Components Unit: 部分的"
+                                        aria-label="UI Components Unit: 良好"
                                     >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">5 tests · 1/2 files</span>
+                                            <span class="cell-icon">✅</span>
+                                            <span class="cell-count">22 tests · 2/2 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 50%"></div>
+                                                <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 1/2 ファイル</div>
-                                            DisclaimerModal のみカバー済み。SearchModal
-                                            は完全に未テスト。
+                                            <div class="tt-title">✅ Good — 2/2 ファイル</div>
+                                            全 UI コンポーネントにテストあり。
                                             <ul class="tt-files">
                                                 <li>✓ disclaimer-modal.test.tsx (5 tests)</li>
                                                 <li>
                                                     → 表示/非表示, consent storage, storage sync
                                                 </li>
-                                                <li>✗ search-modal.tsx — テストなし</li>
+                                                <li>✓ search-modal.test.tsx (17 tests)</li>
+                                                <li>
+                                                    → fetch/クエリ/ナビゲーション/キーボード
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -339,23 +342,26 @@
                                 </td>
                                 <td data-dom="d4">
                                     <div
-                                        class="cell none"
+                                        class="cell partial"
                                         tabindex="0"
-                                        aria-label="Search/API Unit: 未実装"
+                                        aria-label="Search/API Unit: 部分的"
                                     >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">❌</span>
-                                            <span class="cell-count">0 tests</span>
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">7 tests · 1/2 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill"></div>
+                                                <div class="cell-bar-fill" style="width: 50%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装 — 高リスク</div>
-                                            全ドキュメントインデックスの核心ロジックが未カバー。
+                                            <div class="tt-title">⚠️ Partial — 1/2 ファイル</div>
+                                            search.ts はカバー済み。API ルートは未テスト。
                                             <ul class="tt-files">
-                                                <li>✗ src/lib/search.ts</li>
-                                                <li>✗ src/app/api/search/ (route)</li>
+                                                <li>✓ src/lib/search.test.ts (7 tests)</li>
+                                                <li>
+                                                    → インデックス生成・SearchResult 形式・href
+                                                </li>
+                                                <li>✗ src/app/api/search/ (route) — 未テスト</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -881,11 +887,11 @@
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装 — 最重要</div>
-                                            GET /api/search のレスポンス構造・型契約テストなし。
+                                            <div class="tt-title">❌ 未実装 — 要対応</div>
+                                            search.ts の Unit テストは追加済みだが、
+                                            API ルートの Contract テストは未実装。
                                             <ul class="tt-files">
                                                 <li>✗ GET /api/search → SearchResult[]</li>
-                                                <li>✗ frontmatter フィールド型検証</li>
                                                 <li>✗ Cache-Control ヘッダー検証</li>
                                             </ul>
                                         </div>
@@ -1025,101 +1031,23 @@
                 <div class="priority-group">
                     <div class="priority-header">
                         <span class="priority-badge high">🔴 高優先度</span>
-                        <span class="priority-title">即対応 — ビジネスロジック・重要フロー</span>
+                        <span class="priority-title">次スプリント — カバレッジ品質・アクセシビリティ</span>
                     </div>
                     <div class="actions-grid">
                         <div class="action-card high">
-                            <div class="action-title">SearchModal Unit テスト追加</div>
+                            <div class="action-title">Search API Contract テスト</div>
                             <div class="action-desc">
-                                <code>src/components/search-modal.tsx</code> は検索という重要 UX
-                                パスにも関わらず完全に未カバー。キーボードナビゲーション・入力サニタイズ・結果表示ロジックを検証する。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">bun test + RTL</span>
-                                <span class="action-tag c-sm">コスト: 小</span>
-                                <span class="action-tag">効果: 検索フロー回帰防止</span>
-                            </div>
-                        </div>
-                        <div class="action-card high">
-                            <div class="action-title">Search API / search.ts Unit テスト</div>
-                            <div class="action-desc">
-                                <code>src/lib/search.ts</code>
-                                は全ドキュメントインデックスを生成する核心ロジック。frontmatter
-                                パース・本文切り出し・キャッシュ動作を Unit + Contract
-                                テストで保護する。
+                                <code>src/lib/search.ts</code> の Unit テストは追加済みだが、
+                                <code>GET /api/search</code> のレスポンス構造・<code>Cache-Control</code>
+                                ヘッダーを検証する Contract テストが未実装。
                             </div>
                             <div class="action-meta">
                                 <span class="action-tag tool">bun test</span>
-                                <span class="action-tag c-sm">コスト: 小〜中</span>
-                                <span class="action-tag">効果: 検索 API の型契約保証</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: API 型契約の保証</span>
                             </div>
                         </div>
                         <div class="action-card high">
-                            <div class="action-title">CI Pipeline 構築（GitHub Actions）</div>
-                            <div class="action-desc">
-                                <code>.github/workflows/</code> が未設定のため、PR
-                                時の自動テストが存在しない。<code>bun test</code> +
-                                <code>bun run types:check</code> +
-                                <code>bun run lint</code> を実行するワークフローを追加する。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">GitHub Actions</span>
-                                <span class="action-tag c-sm">コスト: 小</span>
-                                <span class="action-tag">効果: PR ごとの自動品質ゲート</span>
-                            </div>
-                        </div>
-                        <div class="action-card high">
-                            <div class="action-title">DocsSubheading Unit テスト追加</div>
-                            <div class="action-desc">
-                                <code>src/components/docs/DocsSubheading.tsx</code> は docs
-                                コンポーネント群で唯一テストなし。他コンポーネントと統一するため
-                                smoke テストを追加する。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">bun test + RTL</span>
-                                <span class="action-tag c-sm">コスト: 小</span>
-                                <span class="action-tag">効果: コンポーネントセット完結</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MEDIUM -->
-                <div class="priority-group">
-                    <div class="priority-header">
-                        <span class="priority-badge medium">🟡 中優先度</span>
-                        <span class="priority-title"
-                            >次スプリント — リグレッション防止・DX 改善</span
-                        >
-                    </div>
-                    <div class="actions-grid">
-                        <div class="action-card medium">
-                            <div class="action-title">カバレッジレポート追加</div>
-                            <div class="action-desc">
-                                <code>bun test --coverage</code> で lcov レポートを生成する設定を
-                                <code>bunfig.toml</code> に追加。CI で Codecov / Coveralls
-                                へアップロードし、PR ごとにカバレッジ差分を可視化する。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">bun --coverage</span>
-                                <span class="action-tag c-sm">コスト: 小</span>
-                                <span class="action-tag">効果: 行カバレッジの数値化</span>
-                            </div>
-                        </div>
-                        <div class="action-card medium">
-                            <div class="action-title">既存 Unit テストの深化</div>
-                            <div class="action-desc">
-                                smoke 1件のコンポーネント（Checklist・DataTable 等 9 件）に prop
-                                variation・エラー状態・エッジケースを追加。<code>Callout</code> の 4
-                                テストスタイルを参考にする。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">bun test + RTL</span>
-                                <span class="action-tag c-md">コスト: 中</span>
-                                <span class="action-tag">効果: リグレッション検出精度向上</span>
-                            </div>
-                        </div>
-                        <div class="action-card medium">
                             <div class="action-title">DisclaimerModal Accessibility テスト</div>
                             <div class="action-desc">
                                 既存の 5 テストに WCAG 2.1 AA 準拠検証を追加。focus
@@ -1133,6 +1061,31 @@
                                 <span class="action-tag">効果: WCAG 2.1 AA 達成</span>
                             </div>
                         </div>
+                        <div class="action-card high">
+                            <div class="action-title">既存 Unit テストの深化</div>
+                            <div class="action-desc">
+                                smoke 1件のコンポーネント（Checklist・DataTable 等 9 件）に prop
+                                variation・エラー状態・エッジケースを追加。<code>Callout</code> の
+                                4 テストスタイルを参考にする。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: リグレッション検出精度向上</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDIUM -->
+                <div class="priority-group">
+                    <div class="priority-header">
+                        <span class="priority-badge medium">🟡 中優先度</span>
+                        <span class="priority-title"
+                            >中期 — 統合テスト・ページ品質保証</span
+                        >
+                    </div>
+                    <div class="actions-grid">
                         <div class="action-card medium">
                             <div class="action-title">Integration: docs layout + MDX</div>
                             <div class="action-desc">
@@ -1144,6 +1097,45 @@
                                 <span class="action-tag tool">bun test + RTL</span>
                                 <span class="action-tag c-md">コスト: 中</span>
                                 <span class="action-tag">効果: ページ単位の回帰防止</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">SearchModal A11y テスト追加</div>
+                            <div class="action-desc">
+                                17 件の Unit テストに加え、Escape 閉じる・フォーカス管理・
+                                <code>role=combobox</code> 相当のキーボードナビゲーションを
+                                WCAG 2.1 AA の観点で検証する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">@testing-library/user-event</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: 検索 UX のアクセシビリティ保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">Integration: Search API ↔ Modal</div>
+                            <div class="action-desc">
+                                <code>src/lib/search.ts</code> ↔ <code>SearchModal</code>
+                                間の連携テスト。入力→インデックス参照→結果表示の一貫性と、
+                                fetch エラー時のフォールバック動作を検証する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test + RTL</span>
+                                <span class="action-tag c-md">コスト: 中</span>
+                                <span class="action-tag">効果: 検索フロー全体の一貫性保証</span>
+                            </div>
+                        </div>
+                        <div class="action-card medium">
+                            <div class="action-title">CSP ヘッダー検証テスト</div>
+                            <div class="action-desc">
+                                <code>src/proxy.ts</code> の CSP ヘッダー構成（<code>frame-ancestors</code>・
+                                <code>default-src</code>・<code>form-action</code> 等）を
+                                Unit テストで保護し、意図しない緩和変更を検出する。
+                            </div>
+                            <div class="action-meta">
+                                <span class="action-tag tool">bun test</span>
+                                <span class="action-tag c-sm">コスト: 小</span>
+                                <span class="action-tag">効果: セキュリティ設定の回帰防止</span>
                             </div>
                         </div>
                     </div>
@@ -1222,10 +1214,10 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Generated 2026-05-18</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-05-20</span>
                     <span
-                        >Runner: bun test · DOM: happy-dom · 16 files · 29 test cases · CI:
-                        未設定</span
+                        >Runner: bun test --coverage · DOM: happy-dom · 19 files · 57 test cases · CI:
+                        GitHub Actions ✅ · Coverage: Codecov ✅</span
                     >
                 </div>
             </div>

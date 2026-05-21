@@ -13,11 +13,13 @@ describe('StepTimeline', () => {
       />
     );
 
-    expect(screen.getByText('01')).toBeInTheDocument();
-    expect(screen.getByText('Step 1')).toBeInTheDocument();
-    expect(screen.getByText('Description 1')).toBeInTheDocument();
-    expect(screen.getByText('02')).toBeInTheDocument();
-    expect(screen.getByText('Step 2')).toBeInTheDocument();
-    expect(screen.getByText('Description 2')).toBeInTheDocument();
+    // getAllByText で複数マッチ時も安全にインデックス指定
+    expect(screen.getAllByText('01')[0]).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: "Step 1" })).toBeInTheDocument();
+    expect(screen.getByText("Description 1")).toBeInTheDocument();
+
+    expect(screen.getAllByText('02')[0]).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: "Step 2" })).toBeInTheDocument();
+    expect(screen.getByText("Description 2")).toBeInTheDocument();
   });
 });
