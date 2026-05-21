@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add security-docs/src/lib/search.test.ts)",
+      "Bash(git commit -m ' *)",
+      "Bash(bun test *)",
+      "Bash(bun run *)"
+    ]
+  }
+}
