@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **57件** | `bun test` 全 pass |
-| テストファイル数 | **19 / 22 ファイル** | 86% カバー |
+| テストケース総数 | **60件** | `bun test` 全 pass |
+| テストファイル数 | **20 / 22 ファイル** | 90.9% カバー |
 | Strategy Coverage | **7.5%** | 40カテゴリ×ドメインセル中 3セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov) |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 5 | 表示/同意/storage 検証 |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
-| `src/app/api/search/route.ts` | 0 | ❌ 未テスト |
+| `src/app/api/search/route.ts` | 3 | ✅ 2026-05-21 追加 |
 
 ---
 
@@ -125,19 +125,11 @@ form-action 'self'
 | # | タスク | 完了日 |
 |---|---|---|
 | P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
+| P-02 | **Search API Contract テスト**<br>`GET /api/search` を提供する `route.ts` ハンドラを実装し、戻り値の型（`SearchResult[]`）やキャッシュヘッダー（`Cache-Control: s-maxage=3600`）を HTTP レベルで検証するテスト `route.test.ts` を追加しました。<br>**タグ**: `API Contract` \| **コスト**: 小 \| **効果**: API 契約の回帰防止 | 2026-05-21 |
 
 ---
 
 ### 🔴 HIGH — 即対応
-
-#### 1. Search API Contract テスト
-
-`GET /api/search` のレスポンス構造・`Cache-Control` ヘッダーを検証するテストが未実装。`search.ts` の Unit テストは済んでいるが、HTTP 層が無防備。
-
-- `src/app/api/search/route.test.ts` を新規作成
-- `SearchResult[]` 形式・`Cache-Control: s-maxage=3600` を検証
-
-**コスト**: 小 | **効果**: API 型契約の回帰防止
 
 ---
 
