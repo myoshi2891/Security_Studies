@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-20（Codecov 連携追加）  
+> **最終更新**: 2026-05-21（コンポーネントテスト拡張）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **64件** | `bun test` 全 pass |
+| テストケース総数 | **100件** | `bun test` 全 pass |
 | テストファイル数 | **20 / 22 ファイル** | 90.9% カバー |
 | Strategy Coverage | **7.5%** | 40カテゴリ×ドメインセル中 3セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -29,15 +29,15 @@
 | `src/components/docs/DefenseList.test.tsx` | 2 | |
 | `src/components/docs/RiskBadge.test.tsx` | 2 | |
 | `src/components/docs/Terminal.test.tsx` | 2 | |
-| `src/components/docs/Checklist.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/CompareGrid.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/DataTable.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/HeroSection.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/HighlightBox.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/SourceReferences.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/StepTimeline.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/Tag.test.tsx` | 1 | smoke のみ |
-| `src/components/docs/ThreatCard.test.tsx` | 1 | smoke のみ |
+| `src/components/docs/Checklist.test.tsx` | 5 | ✅ 2026-05-21 拡張 (prop variation, 空データなど) |
+| `src/components/docs/CompareGrid.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
+| `src/components/docs/DataTable.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
+| `src/components/docs/HeroSection.test.tsx` | 3 | ✅ 2026-05-21 拡張 (ReactNode, オプショナル非表示) |
+| `src/components/docs/HighlightBox.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
+| `src/components/docs/SourceReferences.test.tsx` | 4 | ✅ 2026-05-21 拡張 (description有無, classNameなど) |
+| `src/components/docs/StepTimeline.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
+| `src/components/docs/Tag.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
+| `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証 |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
@@ -127,18 +127,11 @@ form-action 'self'
 | P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
 | P-02 | **Search API Contract テスト**<br>`GET /api/search` を提供する `route.ts` ハンドラを実装し、戻り値の型（`SearchResult[]`）やキャッシュヘッダー（`Cache-Control: s-maxage=3600`）を HTTP レベルで検証するテスト `route.test.ts` を追加しました。<br>**タグ**: `API Contract` \| **コスト**: 小 \| **効果**: API 契約の回帰防止 | 2026-05-21 |
 | P-03 | **DisclaimerModal A11y テスト**<br>`DisclaimerModal` に Escape キーによるクローズ、フォーカストラップ、ボディスクロールロック制御の機能を実装し、`disclaimer-modal.test.tsx` に WCAG 2.1 AA 準拠のテストを追加しました。<br>**タグ**: `A11y` \| **コスト**: 小 \| **効果**: WCAG 2.1 AA 達成 | 2026-05-21 |
+| P-04 | **smoke テストコンポーネントの深化**<br>Checklist, CompareGrid, DataTable など 9 つのコンポーネントに対し、prop variation, ReactNode レンダリング, カラーバリアント, エッジケース等の検証テストを追加・深化させました。<br>**タグ**: `Unit Test` \| **コスト**: 中 \| **効果**: リグレッション検出精度向上 | 2026-05-21 |
 
 ---
 
 ### 🔴 HIGH — 即対応
-
----
-
-#### 3. smoke テストコンポーネントの深化
-
-9 件のコンポーネント（Checklist, DataTable, CompareGrid 等）が smoke test 1件のみ。`Callout.test.tsx`（4件）を参考に prop variation・エラー状態を追加。
-
-**コスト**: 中 | **効果**: リグレッション検出精度向上
 
 ---
 
