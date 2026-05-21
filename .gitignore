@@ -10,3 +10,26 @@ node_modules/
 
 docs/csp-fix-report-2026-05-19.html
 docs/csp-fix-report-2026-05-19.md
+
+# Next.js / React / Bun / Node.js
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment variables
+.env*
+!.env.example
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Vercel / Netlify
+.vercel
+.netlify
