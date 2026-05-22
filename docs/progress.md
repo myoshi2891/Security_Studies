@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証 |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
-| `src/app/api/search/route.ts` | 3 | ✅ 2026-05-21 追加 |
+| `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
 
 ---
 

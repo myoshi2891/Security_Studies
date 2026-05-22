@@ -877,21 +877,27 @@
                                     </div>
                                 </td>
                                 <td data-dom="d4">
-                                    <div class="cell none" tabindex="0">
+                                    <div
+                                        class="cell ok"
+                                        tabindex="0"
+                                        aria-label="Search/API Contract: 良好"
+                                    >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">❌</span
-                                            ><span class="cell-count">0 tests</span>
+                                            <span class="cell-icon">✅</span>
+                                            <span class="cell-count">10 tests · 2/2 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill"></div>
+                                                <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装 — 要対応</div>
-                                            search.ts の Unit テストは追加済みだが、
-                                            API ルートの Contract テストは未実装。
+                                            <div class="tt-title">✅ Good — 2/2 ファイル</div>
+                                            search.ts および API ルート (Contractテスト) をカバー。
                                             <ul class="tt-files">
-                                                <li>✗ GET /api/search → SearchResult[]</li>
-                                                <li>✗ Cache-Control ヘッダー検証</li>
+                                                <li>✓ src/lib/search.test.ts (7 tests)</li>
+                                                <li>
+                                                    → インデックス生成・SearchResult 形式・href
+                                                </li>
+                                                <li>✓ src/app/api/search/route.test.ts (3 tests)</li>
                                             </ul>
                                         </div>
                                     </div>

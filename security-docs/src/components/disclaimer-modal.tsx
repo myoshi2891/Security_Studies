@@ -85,13 +85,14 @@ export function DisclaimerModal() {
 
     // モーダル表示中のボディスクロール制御
     useEffect(() => {
+        const prevOverflow = document.body.style.overflow;
         if (!consented && !dismissed) {
             document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = '';
+            document.body.style.overflow = prevOverflow;
         }
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = prevOverflow;
         };
     }, [consented, dismissed]);
 

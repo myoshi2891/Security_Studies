@@ -92,15 +92,17 @@ describe("GET /api/search API Contract", () => {
       throw new Error("Simulated index read error");
     });
 
-    // Act
-    const response = await GET();
+    try {
+      // Act
+      const response = await GET();
 
-    // Assert
-    expect(response.status).toBe(500);
-    const body = await response.json();
-    expect(body).toEqual({ error: "Internal Server Error" });
-
-    // Restore
-    console.error = originalConsoleError;
+      // Assert
+      expect(response.status).toBe(500);
+      const body = await response.json();
+      expect(body).toEqual({ error: "Internal Server Error" });
+    } finally {
+      // Restore
+      console.error = originalConsoleError;
+    }
   });
 });

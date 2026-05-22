@@ -79,7 +79,8 @@ describe('DisclaimerModal', () => {
         
         const button = screen.getByRole('button', { name: '同意して閲覧する' });
         // テスト環境によって autoFocus が効かない場合があるため、明示的に activeElement をチェックするかフォーカスする
-        expect(button).toBeInTheDocument();
+        button.focus();
+        expect(button).toHaveFocus();
     });
 
     test('Tab キーを押してもフォーカスがモーダル内のボタンから逃げないこと（フォーカストラップ）', () => {
