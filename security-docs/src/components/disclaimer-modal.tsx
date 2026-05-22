@@ -18,11 +18,11 @@ function readConsent(): boolean {
 }
 
 /**
- * Render a client-side disclaimer modal that requires the user to acknowledge terms before viewing the site.
+ * Display a client-side disclaimer modal that blocks site access until the user acknowledges the terms.
  *
- * The component reads and persists acknowledgement via localStorage under `STORAGE_KEY`, and synchronizes acknowledgement state across tabs/windows via the `storage` event. It is intentionally hidden during server-side rendering/hydration to avoid HTML mismatches and will only reflect the actual persisted state on the client.
+ * The component reads and persists acknowledgement under `STORAGE_KEY` in localStorage, synchronizes acknowledgement across tabs via the `storage` event, and remains hidden during server-side rendering to avoid hydration mismatches.
  *
- * @returns A React element for the modal, or `null` when the user has acknowledged (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
+ * @returns A React element for the modal, or `null` when the user has acknowledged the disclaimer (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
  */
 export function DisclaimerModal() {
     // SSR / hydration では常に非表示（HTML 不一致を防ぐ）。client 側で useEffect により実値を反映する。

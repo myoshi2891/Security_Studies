@@ -4,23 +4,20 @@ import { getSearchIndex, SearchResult } from "@/lib/search";
 let cachedIndexPromise: Promise<SearchResult[]> | null = null;
 
 /**
- * Reset the cached search index promise (primarily for testing purposes).
+ * Resets the module-level cached search index promise so the index will be reinitialized on the next request.
+ *
+ * Primarily intended for use in tests to force fresh initialization.
  */
 export function clearCache() {
   cachedIndexPromise = null;
 }
 
 /**
- * Serve the prebuilt search index as a JSON response with HTTP caching headers.
+ * Serve the prebuilt search index as a JSON HTTP response with caching headers.
  *
- * Initializes and reuses a module-level cached promise for the search index so
- * subsequent requests return the same index without reinitializing. If cache
- * initialization fails, the cache is cleared and the request returns an error.
- *
- * @returns A JSON HTTP response containing the search index (array of search results)
- *          with `Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400`.
- *          On failure, returns a JSON error body `{ error: "Internal Server Error" }`
- *          with HTTP status 500.
+ * @returns A JSON response containing the search index (array of search results)
+ *          with header `Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400`.
+ *          On failure, a JSON body `{ error: "Internal Server Error" }` with status `500`.
  */
 export async function GET() {
   try {
