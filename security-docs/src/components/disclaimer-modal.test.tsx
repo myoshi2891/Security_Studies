@@ -78,8 +78,6 @@ describe('DisclaimerModal', () => {
         render(<DisclaimerModal />);
         
         const button = screen.getByRole('button', { name: '同意して閲覧する' });
-        // テスト環境によって autoFocus が効かない場合があるため、明示的に activeElement をチェックするかフォーカスする
-        button.focus();
         expect(button).toHaveFocus();
     });
 
