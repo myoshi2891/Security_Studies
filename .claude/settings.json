@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add security-docs/src/lib/search.test.ts)"
+    ]
+  }
+}

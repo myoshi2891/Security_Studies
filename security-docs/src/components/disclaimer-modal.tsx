@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export const STORAGE_KEY = 'security-docs:disclaimer-acknowledged';
 
@@ -18,11 +18,11 @@ function readConsent(): boolean {
 }
 
 /**
- * Render a client-side disclaimer modal that requires the user to acknowledge terms before viewing the site.
+ * Display a client-side disclaimer modal that blocks site access until the user acknowledges the terms.
  *
- * The component reads and persists acknowledgement via localStorage under `STORAGE_KEY`, and synchronizes acknowledgement state across tabs/windows via the `storage` event. It is intentionally hidden during server-side rendering/hydration to avoid HTML mismatches and will only reflect the actual persisted state on the client.
+ * The component reads and persists acknowledgement under `STORAGE_KEY` in localStorage, synchronizes acknowledgement across tabs via the `storage` event, and remains hidden during server-side rendering to avoid hydration mismatches.
  *
- * @returns A React element for the modal, or `null` when the user has acknowledged (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
+ * @returns A React element for the modal, or `null` when the user has acknowledged the disclaimer (`localStorage[STORAGE_KEY] === '1'`) or has dismissed the modal in the current session.
  */
 export function DisclaimerModal() {
     // SSR / hydration では常に非表示（HTML 不一致を防ぐ）。client 側で useEffect により実値を反映する。
@@ -50,7 +50,7 @@ export function DisclaimerModal() {
         return () => window.removeEventListener('storage', onStorage);
     }, []);
 
-    const handleAgree = () => {
+    const handleAgree = useCallback(() => {
         try {
             localStorage.setItem(STORAGE_KEY, '1');
             setConsented(true);
@@ -58,7 +58,43 @@ export function DisclaimerModal() {
             // localStorage が無効化されている環境ではモーダルを閉じる動作のみ行う
         }
         setDismissed(true);
-    };
+    }, []);
+
+    // Escape キーでモーダルを閉じる、および Tab キーによるフォーカストラップの制御
+    useEffect(() => {
+        if (consented || dismissed) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                handleAgree();
+            }
+
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                // 唯一のフォーカス可能要素である「同意して閲覧する」ボタンにフォーカスを強制
+                const button = document.querySelector('button[autoFocus]');
+                if (button instanceof HTMLElement) {
+                    button.focus();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [consented, dismissed, handleAgree]);
+
+    // モーダル表示中のボディスクロール制御
+    useEffect(() => {
+        const prevOverflow = document.body.style.overflow;
+        if (!consented && !dismissed) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = prevOverflow;
+        }
+        return () => {
+            document.body.style.overflow = prevOverflow;
+        };
+    }, [consented, dismissed]);
 
     if (consented || dismissed) return null;
 

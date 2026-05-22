@@ -25,7 +25,7 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({ steps, className }) 
       
       <div className="flex flex-col">
         {steps.map((step, index) => (
-          <div key={step.id || index} className="flex gap-5 py-5 border-b border-[#2a3548] last:border-b-0">
+          <article key={step.id || index} className="flex gap-5 py-5 border-b border-[#2a3548] last:border-b-0">
             <div className="w-11 h-11 min-w-[2.75rem] rounded-full border-[1.5px] border-blue-500 bg-[#0d1117] flex items-center justify-center font-mono font-bold text-[0.8rem] text-blue-400 z-10">
               {(index + 1).toString().padStart(2, '0')}
             </div>
@@ -37,7 +37,7 @@ export const StepTimeline: React.FC<StepTimelineProps> = ({ steps, className }) 
                 {step.content}
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>
