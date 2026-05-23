@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-21（コンポーネントテスト拡張）  
+> **最終更新**: 2026-05-23（P-05 CSP ヘッダー検証テスト追加・全 22 ファイルがテスト対象に）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,13 +12,13 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **100件** | `bun test` 全 pass |
-| テストファイル数 | **20 / 22 ファイル** | 90.9% カバー |
-| Strategy Coverage | **7.5%** | 40カテゴリ×ドメインセル中 3セル相当 |
+| テストケース総数 | **114件** | `bun test` 全 pass |
+| テストファイル数 | **22 / 22 ファイル** | 100% カバー |
+| Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov) |
 
-#### ファイル別テスト数（2026-05-20 時点）
+#### ファイル別テスト数（2026-05-23 時点）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
@@ -38,10 +38,12 @@
 | `src/components/docs/StepTimeline.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
 | `src/components/docs/Tag.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
 | `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
-| `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証 |
+| `src/components/disclaimer-modal.test.tsx` | 8 | 表示/同意/storage/A11y 検証 |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
 | `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
+| `src/app/docs/layout.test.tsx` | 8 | ✅ 2026-05-23 追加 |
+| `src/proxy.test.ts` | 6 | ✅ 2026-05-23 追加（CSP ディレクティブ固定化） |
 
 ---
 
@@ -89,6 +91,7 @@ form-action 'self'
 | DisclaimerModal | ✅ 稼働中 | — |
 | Docs ページ (10ページ) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
+| DocsSidebar のクライアントコンポーネント化とアクティブ状態の aria-current 制御 | ✅ 完了 | 2026-05-23 |
 
 ---
 
@@ -98,9 +101,9 @@ form-action 'self'
 |---|---|---|
 | `CLAUDE.md` (ルート) | 2026-05-20 | CSP 静的構成・Terminal 仕様・ESLint v9 反映 |
 | `security-docs/CLAUDE.md` | 2026-05-20 | CI 設定・テスト構成・ESLint v9 詳細追記 |
-| `docs/test-coverage-dashboard.html` | 2026-05-20 | Codecov 追加・テスト数・CI 更新 |
+| `docs/test-coverage-dashboard.html` | 2026-05-23 | P-05 CSP テスト反映（114 cases / 22 files / 100% File Unit Coverage） |
 | `docs/csp-fix-report-2026-05-19.md` | 2026-05-19 | Issue #32 対応記録（7フェーズ） |
-| `docs/progress.md` (本ファイル) | 2026-05-20 | Codecov 完了・P-01 クローズ |
+| `docs/progress.md` (本ファイル) | 2026-05-23 | P-05 CSP ヘッダー検証テスト完了を反映（プロンプトブロック整理） |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 
 ---
@@ -128,6 +131,8 @@ form-action 'self'
 | P-02 | **Search API Contract テスト**<br>`GET /api/search` を提供する `route.ts` ハンドラを実装し、戻り値の型（`SearchResult[]`）やキャッシュヘッダー（`Cache-Control: s-maxage=3600`）を HTTP レベルで検証するテスト `route.test.ts` を追加しました。<br>**タグ**: `API Contract` \| **コスト**: 小 \| **効果**: API 契約の回帰防止 | 2026-05-21 |
 | P-03 | **DisclaimerModal A11y テスト**<br>`DisclaimerModal` に Escape キーによるクローズ、フォーカストラップ、ボディスクロールロック制御の機能を実装し、`disclaimer-modal.test.tsx` に WCAG 2.1 AA 準拠のテストを追加しました。<br>**タグ**: `A11y` \| **コスト**: 小 \| **効果**: WCAG 2.1 AA 達成 | 2026-05-21 |
 | P-04 | **smoke テストコンポーネントの深化**<br>Checklist, CompareGrid, DataTable など 9 つのコンポーネントに対し、prop variation, ReactNode レンダリング, カラーバリアント, エッジケース等の検証テストを追加・深化させました。<br>**タグ**: `Unit Test` \| **コスト**: 中 \| **効果**: リグレッション検出精度向上 | 2026-05-21 |
+| P-05 | **CSP ヘッダー検証テスト**<br>`src/proxy.ts` の CSP ディレクティブ（`script-src` の env 分岐、`frame-ancestors`/`base-uri`/`form-action`/`default-src`）を `src/proxy.test.ts` で固定化。`NODE_ENV` を切り替えながらディレクティブ単位でアサートし、意図しない緩和をリグレッション検出可能に。<br>**タグ**: `CSP` / `Unit Test` \| **コスト**: 小 \| **効果**: XSS 防御後退の即時検知 | 2026-05-23 |
+| P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 
 ---
 
@@ -137,17 +142,9 @@ form-action 'self'
 
 ### 🟡 MEDIUM — 次スプリント
 
-#### 4. Integration: docs layout + MDX
-
-docs layout と MDX ページの組み合わせ動作テスト（サイドバーナビゲーション・アクティブリンク状態）。
-
 #### 5. SearchModal A11y テスト追加
 
 17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
-
-#### 6. CSP ヘッダー検証テスト
-
-`src/proxy.ts` の CSP ヘッダー構成を Unit テストで保護し、意図しない緩和変更を検出する。
 
 #### 7. `bun audit` CI 組み込み
 
@@ -258,31 +255,6 @@ Callout.test.tsx（4件）のスタイルを参考に、各コンポーネント
 
 コンポーネントの実装を最初に確認してから、実際の props インターフェースに合わせて
 テストを書いてください。最後に bun test を実行して全件 pass を確認。
-```
-
----
-
-### P-05: CSP ヘッダー検証テスト
-
-```
-security-docs/src/proxy.ts の CSP ヘッダー構成を Unit テストで保護してください。
-
-テストファイル: src/proxy.test.ts（新規作成）
-
-proxy.ts は Next.js Proxy として動作し、全レスポンスに CSP ヘッダーを付与します。
-以下の内容を検証するテストを書いてください:
-
-1. 本番環境（NODE_ENV=production）での script-src が
-   "'self' 'unsafe-inline'" を含み 'unsafe-eval' を含まないこと
-2. 開発環境（NODE_ENV=development）での script-src が
-   "'self' 'unsafe-inline' 'unsafe-eval'" を含むこと
-3. frame-ancestors が 'none' であること
-4. base-uri が 'self' であること
-5. form-action が 'self' であること
-6. default-src が 'self' であること
-
-proxy.ts の実装を最初に確認してから、テスト方法（middleware テストの慣習）を
-判断して実装してください。bun test src/proxy.test.ts で全件 pass を確認。
 ```
 
 ---
