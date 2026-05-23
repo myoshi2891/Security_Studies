@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-23（P-05 CSP ヘッダー検証テスト追加・全 22 ファイルがテスト対象に）  
+> **最終更新**: 2026-05-23（P-07 `bun audit` CI 組み込み完了・脆弱性チェック自動化）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -38,7 +38,7 @@
 | `src/components/docs/StepTimeline.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
 | `src/components/docs/Tag.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
 | `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
-| `src/components/disclaimer-modal.test.tsx` | 8 | 表示/同意/storage/A11y 検証 |
+| `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証（初期フォーカステスト修正） |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
 | `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
 | `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
@@ -56,7 +56,7 @@
 | Netlify CDP スクリプト | ✅ **解消** | nonce 廃止により衝突なし |
 | API セキュリティヘッダー | ❌ **未検証** | `GET /api/search` の CSP 応用未テスト |
 | 入力サニタイズ | ❌ **未テスト** | SearchModal XSS 耐性テストなし |
-| 依存関係監査 | ❌ **未設定** | `bun audit` CI 組み込みなし |
+| 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行 |
 
 #### CSP 現行構成（2026-05-20）
 
@@ -116,7 +116,7 @@ form-action 'self'
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
 | カバレッジ CI 連携 | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov.info) ※CODECOV_TOKEN 要手動追加 |
-| `bun audit` CI 組み込み | ❌ **未設定** | 脆弱性チェック自動化なし |
+| `bun audit` CI 組み込み | ✅ **稼働中** | `audit` job として並列実行（`--audit-level=high`、高・重大のみ failure 扱い） |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
 
 ---
@@ -133,6 +133,7 @@ form-action 'self'
 | P-04 | **smoke テストコンポーネントの深化**<br>Checklist, CompareGrid, DataTable など 9 つのコンポーネントに対し、prop variation, ReactNode レンダリング, カラーバリアント, エッジケース等の検証テストを追加・深化させました。<br>**タグ**: `Unit Test` \| **コスト**: 中 \| **効果**: リグレッション検出精度向上 | 2026-05-21 |
 | P-05 | **CSP ヘッダー検証テスト**<br>`src/proxy.ts` の CSP ディレクティブ（`script-src` の env 分岐、`frame-ancestors`/`base-uri`/`form-action`/`default-src`）を `src/proxy.test.ts` で固定化。`NODE_ENV` を切り替えながらディレクティブ単位でアサートし、意図しない緩和をリグレッション検出可能に。<br>**タグ**: `CSP` / `Unit Test` \| **コスト**: 小 \| **効果**: XSS 防御後退の即時検知 | 2026-05-23 |
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
+| P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 
 ---
 
@@ -145,10 +146,6 @@ form-action 'self'
 #### 5. SearchModal A11y テスト追加
 
 17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
-
-#### 7. `bun audit` CI 組み込み
-
-依存関係の脆弱性チェックを CI に追加。
 
 ---
 
@@ -171,131 +168,6 @@ form-action 'self'
 ## プロンプト集
 
 各アクションをそのまま Claude に貼り付けて使うプロンプト。
-
----
-
-### P-01: カバレッジレポート追加
-
-```
-security-docs/ ディレクトリで bun test のカバレッジレポートを CI に組み込んでください。
-
-やること:
-1. bunfig.toml に [test] coverage = true、coverageReporter = ["lcov", "text"] を追加する
-2. .github/workflows/ci.yml の Test ステップを bun test --coverage に変更する
-3. Codecov の公式 GitHub Action (codecov/codecov-action@v4) を CI に追加し、
-   coverage/lcov.info をアップロードする設定を追加する
-4. README.md にカバレッジバッジを追加する（Codecov から取得した URL を使う）
-
-注意:
-- bun test --coverage の出力先は coverage/lcov.info
-- secrets.CODECOV_TOKEN は GitHub リポジトリ Settings → Secrets に手動追加が必要（私が後で追加する）
-- 型・lint エラーがないことを確認してから完了報告してください
-```
-
----
-
-### P-02: Search API Contract テスト
-
-```
-security-docs/src/app/api/search/ の API ルートに対する Contract テストを追加してください。
-
-対象ファイル: src/app/api/search/route.ts
-テストファイル: src/app/api/search/route.test.ts（新規作成）
-
-検証すべき内容:
-1. レスポンスが SearchResult[] 型に準拠していること
-   - SearchResult 型: { title: string; href: string; description: string; content: string }
-2. 各エントリの href が /docs/<slug> 形式であること
-3. content フィールドが最大 500 文字であること
-4. Cache-Control: s-maxage=3600 ヘッダーが設定されていること
-5. クエリパラメータなし（デフォルト）でも正常にレスポンスを返すこと
-
-テストランナー: bun test（happy-dom 環境、@testing-library/jest-dom 使用済み）
-AAAパターン（Arrange-Act-Assert）で書いてください。
-最後に bun test src/app/api/search/route.test.ts を実行して全件 pass を確認してください。
-```
-
----
-
-### P-03: DisclaimerModal A11y テスト
-
-```
-security-docs/src/components/disclaimer-modal.test.tsx に
-WCAG 2.1 AA のアクセシビリティテストを追加してください。
-
-既存テスト: 5件（表示/非表示、consent storage、storage sync）
-追加するテスト:
-1. role="dialog" および aria-modal="true" 属性が存在すること
-2. Escape キーでモーダルが閉じること（@testing-library/user-event の userEvent.keyboard を使用）
-3. モーダル表示時に「同意する」ボタンにフォーカスが移ること（autoFocus または focus 呼び出し）
-4. モーダルが閉じているとき body のスクロールが復元されること
-
-前提: @testing-library/user-event はすでにインストール済みか確認してから使用すること。
-未インストールなら bun add -D @testing-library/user-event を実行してください。
-最後に bun test src/components/disclaimer-modal.test.tsx を実行して全件 pass を確認。
-```
-
----
-
-### P-04: smoke テストの深化（Checklist / DataTable / CompareGrid）
-
-```
-以下の docs コンポーネントの Unit テストを smoke test 1件から深化させてください。
-
-対象コンポーネント（優先順）:
-1. src/components/docs/Checklist.tsx
-2. src/components/docs/DataTable.tsx
-3. src/components/docs/CompareGrid.tsx
-
-各コンポーネントのテストファイルはすでに存在します（*.test.tsx）。
-Callout.test.tsx（4件）のスタイルを参考に、各コンポーネントに以下を追加してください:
-- 必須 props の正常系レンダリング
-- 主要な prop variation（children, 配列要素数、ヘッダー有無など）
-- 空データ・最小データでのエッジケース（可能な場合）
-
-コンポーネントの実装を最初に確認してから、実際の props インターフェースに合わせて
-テストを書いてください。最後に bun test を実行して全件 pass を確認。
-```
-
----
-
-### P-06: Integration テスト（docs layout + MDX）
-
-```
-security-docs の docs レイアウトと MDX ページの統合テストを追加してください。
-
-テストファイル: src/app/docs/layout.test.tsx（新規作成）
-
-検証すべき内容:
-1. src/config/docs.ts の sidebarNav に定義された全エントリが
-   サイドバーに描画されること（リンクテキスト・href の一致）
-2. 現在のページ（pathname）に対応するサイドバーリンクが
-   アクティブスタイル（aria-current または active クラス）になること
-3. モバイルビューポート（375px）でサイドバーが折りたたまれること（もし実装済みなら）
-
-レイアウトとサイドバーの実装（src/app/docs/layout.tsx と関連コンポーネント）を
-先に確認してから、テスト可能な範囲で実装してください。
-bun test src/app/docs/layout.test.tsx で全件 pass を確認。
-```
-
----
-
-### P-07: `bun audit` CI 組み込み
-
-```
-security-docs/ の CI に依存関係の脆弱性チェックを追加してください。
-
-やること:
-1. .github/workflows/ci.yml に "Security Audit" ステップを追加する
-   - コマンド: bun audit
-   - 高・重大レベルの脆弱性がある場合のみ CI を失敗させること
-   - bun audit が存在しない場合は npm audit --audit-level=high で代替
-2. 脆弱性が見つかった場合の対処方針をコメントに記載する
-
-注意: audit ステップは lint/types/test と独立した job にして、
-テストの失敗と脆弱性の失敗が別々に確認できるようにする。
-.github/workflows/ci.yml の現状を確認してから実装してください。
-```
 
 ---
 
