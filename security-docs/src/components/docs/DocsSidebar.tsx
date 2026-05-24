@@ -12,6 +12,13 @@ const inactiveLinkClass =
 const activeLinkClass =
   "bg-zinc-100 text-zinc-950 font-medium dark:bg-zinc-800 dark:text-zinc-50";
 
+/**
+ * Render the documentation sidebar navigation for the current pathname.
+ *
+ * Renders an aside containing sections and links from `docsConfig.sidebarNav`. Links that match the current pathname are marked as active by setting `aria-current="page"` and applying the active link classes; a link is considered active when the pathname equals the link's `href`, or when the link's `href` is not `/` and the pathname starts with `href + "/"`.
+ *
+ * @returns The sidebar `aside` element containing the navigation links as JSX.
+ */
 export function DocsSidebar() {
   const pathname = usePathname();
 
