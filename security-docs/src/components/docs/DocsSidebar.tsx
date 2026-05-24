@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { docsConfig } from "@/config/docs";
+import { clsx } from "clsx";
 
 const baseLinkClass =
   "block px-4 py-2 text-sm rounded-md transition-colors";
@@ -24,13 +25,18 @@ export function DocsSidebar() {
             </h4>
             <div className="grid gap-1">
               {section.items.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive =
+                  pathname === item.href ||
+                  (item.href !== "/" && pathname.startsWith(item.href + "/"));
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`${baseLinkClass} ${isActive ? activeLinkClass : inactiveLinkClass}`}
+                    className={clsx(
+                      baseLinkClass,
+                      isActive ? activeLinkClass : inactiveLinkClass
+                    )}
                   >
                     {item.title}
                   </Link>

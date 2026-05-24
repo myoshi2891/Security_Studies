@@ -18,13 +18,13 @@ const allItems = docsConfig.sidebarNav.flatMap((section) => section.items);
 
 // SearchModal の mount-time fetch を解決させてから assertion する。
 const renderLayout = async (): Promise<ReturnType<typeof render>> => {
-    let result!: ReturnType<typeof render>;
+    let result: ReturnType<typeof render> | undefined = undefined;
     await act(async () => {
         result = render(<DocsLayout>content</DocsLayout>);
         await Promise.resolve();
         await Promise.resolve();
     });
-    return result;
+    return result!;
 };
 
 describe('DocsLayout', () => {
