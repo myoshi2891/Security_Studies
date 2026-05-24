@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { docsConfig } from "@/config/docs";
 import { SearchModal } from "@/components/search-modal";
+import { DocsSidebar } from "@/components/docs/DocsSidebar";
 
 interface DocsLayoutProps {
   children: React.ReactNode;
@@ -29,28 +29,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
       </header>
       
       <div className="container flex items-start mt-8 gap-12">
-        <aside className="w-72 shrink-0 sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto hidden lg:block">
-          <nav>
-            {docsConfig.sidebarNav.map((section) => (
-              <div key={section.title} className="mb-8">
-                <h4 className="text-[0.7rem] font-bold uppercase text-zinc-500 tracking-[0.1em] mb-3 px-4">
-                  {section.title}
-                </h4>
-                <div className="grid gap-1">
-                  {section.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800 rounded-md transition-colors"
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </nav>
-        </aside>
+        <DocsSidebar />
         
         <main className="flex-1 min-w-0 pb-32">
           <article className="prose text-zinc-700 dark:text-zinc-300 dark:prose-invert max-w-none">

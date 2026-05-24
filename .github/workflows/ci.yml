@@ -18,7 +18,9 @@ jobs:
         working-directory: security-docs
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          persist-credentials: false
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -44,3 +46,34 @@ jobs:
           fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: security-docs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          persist-credentials: false
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # 高・重大レベルの脆弱性のみで CI を失敗させる（moderate/low はレポートのみで通過）。
+      # 対処方針:
+      #   1. ローカルで `bun audit` を実行し、CVE / 影響パッケージ / 推奨バージョンを確認
+      #   2. 直接依存: `bun update <package>` または `bun add <package>@<safe-version>` で修正
+      #      推移依存: `bun update` でロックファイル再解決、不可なら package.json の overrides で固定
+      #   3. パッチ未提供時は CVE ID を `bun audit --ignore=<CVE-ID>` で一時除外し、
+      #      docs/progress.md の「セキュリティ / CSP」セクションに対応期限とともに記録する
+      #   4. `bun audit` が利用不能な環境では `npm audit --audit-level=high` に切り替える
+      - name: Run security audit
+        run: bun audit --audit-level=high

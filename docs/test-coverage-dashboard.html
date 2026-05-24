@@ -15,7 +15,7 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-05-21</span>
+                            <span><span class="live-dot"></span>Scanned 2026-05-23</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
@@ -34,34 +34,34 @@
                 <div class="summary-grid">
                     <div class="summary-card c-amber">
                         <div class="summary-label">Strategy Coverage</div>
-                        <div class="summary-value">7.5%</div>
+                        <div class="summary-value">12.5%</div>
                         <div class="summary-sub">
-                            カテゴリ戦略カバレッジ<br />（40 セル中 3 セル相当）
+                            カテゴリ戦略カバレッジ<br />（40 セル中 5 セル相当）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 7.5%; --bar-color: var(--status-partial-border)"
+                                style="width: 12.5%; --bar-color: var(--status-partial-border)"
                             ></div>
                         </div>
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">File Unit Coverage</div>
-                        <div class="summary-value">91%</div>
+                        <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            22 ファイル中 20 ファイルに<br />Unit テストあり（smoke 含む）
+                            22 ファイル中 22 ファイルに<br />Unit テストあり（proxy / layout 追加で完走）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 91%; --bar-color: var(--status-ok-border)"
+                                style="width: 100%; --bar-color: var(--status-ok-border)"
                             ></div>
                         </div>
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">100</div>
-                        <div class="summary-sub">20 ファイル · ドキュメントコンポーネントテスト大幅拡充</div>
+                        <div class="summary-value">114</div>
+                        <div class="summary-sub">22 ファイル · CSP ヘッダー保護＋docs layout 統合テスト追加</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -316,25 +316,25 @@
                                 </td>
                                 <td data-dom="d3">
                                     <div
-                                        class="cell none"
+                                        class="cell partial"
                                         tabindex="0"
-                                        aria-label="App/Pages Unit: 未実装"
+                                        aria-label="App/Pages Unit: 部分的"
                                     >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">❌</span>
-                                            <span class="cell-count">0 tests</span>
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">8 tests · 1/3 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill"></div>
+                                                <div class="cell-bar-fill" style="width: 33%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装</div>
-                                            Next.js ページ・レイアウトはテスト対象外。
+                                            <div class="tt-title">⚠️ Partial — 1/3 ファイル</div>
+                                            docs レイアウトのみ統合テスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
+                                                <li>✓ src/app/docs/layout.test.tsx (8 tests)</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✗ src/app/docs/layout.tsx</li>
-                                                <li>✗ 10 × docs/*/page.mdx</li>
+                                                <li>— 10 × docs/*/page.mdx（テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -959,16 +959,24 @@
                                     </div>
                                 </td>
                                 <td data-dom="d3">
-                                    <div class="cell none" tabindex="0">
+                                    <div
+                                        class="cell partial"
+                                        tabindex="0"
+                                        aria-label="App/Pages Security: 部分的"
+                                    >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">❌</span
-                                            ><span class="cell-count">0 tests</span>
+                                            <span class="cell-icon">⚠️</span
+                                            ><span class="cell-count">6 tests · 1/1 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill"></div>
+                                                <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装</div>
+                                            <div class="tt-title">⚠️ Partial — CSP ヘッダー固定化</div>
+                                            <code>src/proxy.ts</code> の CSP ディレクティブ（script-src の env 分岐、frame-ancestors / base-uri / form-action / default-src）を Unit テストで固定化。XSS / clickjacking 等の動的攻撃検証は未実装。
+                                            <ul class="tt-files">
+                                                <li>✓ src/proxy.test.ts (6 tests)</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </td>
@@ -1083,19 +1091,6 @@
                                 <span class="action-tag">効果: 検索フロー全体の一貫性保証</span>
                             </div>
                         </div>
-                        <div class="action-card medium">
-                            <div class="action-title">CSP ヘッダー検証テスト</div>
-                            <div class="action-desc">
-                                <code>src/proxy.ts</code> の CSP ヘッダー構成（<code>frame-ancestors</code>・
-                                <code>default-src</code>・<code>form-action</code> 等）を
-                                Unit テストで保護し、意図しない緩和変更を検出する。
-                            </div>
-                            <div class="action-meta">
-                                <span class="action-tag tool">bun test</span>
-                                <span class="action-tag c-sm">コスト: 小</span>
-                                <span class="action-tag">効果: セキュリティ設定の回帰防止</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1172,9 +1167,9 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-05-21</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-05-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 20 files · 100 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 22 files · 114 test cases · CI:
                         GitHub Actions ✅ · Coverage: Codecov ✅</span
                     >
                 </div>
