@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-27（docs-sync スキル作成・調整および仕様書の一斉同期）  
+> **最終更新**: 2026-05-27（search.ts エラーパスカバレッジ補完・118ケース）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **115件** | `bun test` 全 pass |
+| テストケース総数 | **118件** | `bun test` 全 pass |
 | テストファイル数 | **22 / 22 ファイル** | 100% カバー |
 | Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -40,7 +40,7 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証（初期フォーカステスト修正） |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
-| `src/lib/search.test.ts` | 8 | ✅ 2026-05-20 追加 (2026-05-27 approachページ更新テスト追加) |
+| `src/lib/search.test.ts` | 11 | ✅ 2026-05-20 追加 (2026-05-27 エラーパステスト追加・カバレッジ100%化) |
 | `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
 | `src/app/docs/layout.test.tsx` | 8 | ✅ 2026-05-23 追加 |
 | `src/proxy.test.ts` | 6 | ✅ 2026-05-23 追加（CSP ディレクティブ固定化） |
@@ -102,8 +102,8 @@ form-action 'self'
 | `README.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
 | `security-docs/CLAUDE.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
 | `security-docs/README.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 (115 cases) |
-| `docs/progress.md` (本ファイル) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期および search カバレッジ 100% 反映 (118 cases) |
+| `docs/progress.md` (本ファイル) | 2026-05-27 | カバレッジ 100% 補完に伴うテスト数 (118件) 更新 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
