@@ -82,11 +82,10 @@ describe('getSearchIndex', () => {
     });
 });
 
-// DOCS_DIR 直下の subdirectory のうち page.mdx を含むものだけ列挙する。
+// DOCS_DIR 配下のすべてのディレクトリを再帰的に走査し、page.mdx を含むものを列挙する。
 // getSearchIndex の走査条件と等価なので、両者の集合一致は検索インデックス
 // の漏れ (page.mdx あるが結果に無い) と誤包含 (page.mdx 無いが結果に有る)
 // を同時に検出する。
-// DOCS_DIR 配下のすべてのディレクトリのうち page.mdx を含むものを再帰的に列挙する。
 function listDocDirsWithMdx(dir: string = DOCS_DIR): string[] {
     const results: string[] = [];
     const entries = fs.readdirSync(dir, { withFileTypes: true });

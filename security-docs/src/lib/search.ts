@@ -17,6 +17,7 @@ export interface SearchResult {
 async function scanDirectory(dir: string, baseDir: string): Promise<SearchResult[]> {
   const results: SearchResult[] = [];
   const items = await fs.promises.readdir(dir, { withFileTypes: true });
+  items.sort((a, b) => a.name.localeCompare(b.name));
 
   for (const item of items) {
     const fullPath = path.join(dir, item.name);
