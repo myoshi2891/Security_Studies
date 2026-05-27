@@ -21,25 +21,25 @@ This skill provides rules and best practices to ensure all Markdown documents (`
 **問題**: ``` で囲まれたコードブロックの直前または直後に空行（改行）がない。特にリストの直下にネストされているコードブロックで多発します。
 
 #### ❌ 違反例
-```markdown
+````markdown
 - **tests/lib/navigation.test.ts**:
   - `NAV_ITEMS` の総数を検証します。
   ```typescript
   expect(NAV_ITEMS).toHaveLength(25);
   ```
-```
+````
 
 #### ✅ 修正例
 リストのネスト内であっても、コードブロックの前後に**インデントされた空行**を挿入します。
 
-```markdown
+````markdown
 - **tests/lib/navigation.test.ts**:
   - `NAV_ITEMS` の総数を検証します。
 
   ```typescript
   expect(NAV_ITEMS).toHaveLength(25);
   ```
-```
+````
 
 ---
 
@@ -136,7 +136,7 @@ This skill provides rules and best practices to ensure all Markdown documents (`
 
 **問題**: Markdown 内に `<br>`, `<img>`, `<a>` などの HTML タグが直接書かれている。
 
-* **例外**: プロジェクトで意図的に HTML レンダリングする特定のダッシュボードやスライドコンポーネント用ファイル（例: `docs/test-coverage-dashboard.html`、またはマークダウン内で特別に許可されたアコーディオン等）を除き、原則として標準のMarkdown記法を使用してください。
+* **例外**: プロジェクトで意図的に HTML レンダリングする特定のダッシュボードやスライドコンポーネント用ファイル（例: `docs/test-coverage-dashboard.html`、またはマークダウン内で特別に許可されたアコーディオン等）を除き、原則として標準の Markdown 記法を使用してください。
 * **改行の代替案**: 行末に 2 つのスペースを入れる（ダブルスペース改行）、または新しいパラグラフ（空行を挟む）として分割してください。
 
 ---<!-- markdownlint-enable MD031 MD022 MD032 -->
@@ -176,3 +176,4 @@ git diff --cached | grep -E '^\+[^+]' | grep -E '(/Users/|/home/|C:\\Users\\)' |
 ```
 
 検証が成功（何も検出されない）したことを確認してから、コミットを適用してください。
+�
