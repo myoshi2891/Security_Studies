@@ -45,8 +45,8 @@ describe('DocsLayout', () => {
     });
 
     describe('sidebar rendering', () => {
-        test('sidebarNav に定義された全エントリ (10 件) がリンクとして描画される', async () => {
-            currentPath = '/docs/approach';
+        test('sidebarNav に定義された全エントリ (11 件) がリンクとして描画される', async () => {
+            currentPath = '/docs/archive/approach';
             await renderLayout();
 
             for (const item of allItems) {
@@ -55,21 +55,21 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(10);
+            expect(allItems.length).toBe(11);
         });
 
-        test('セクション見出し (4 件) が描画される', async () => {
-            currentPath = '/docs/approach';
+        test('セクション見出し (5 件) が描画される', async () => {
+            currentPath = '/docs/archive/approach';
             await renderLayout();
 
             for (const section of docsConfig.sidebarNav) {
                 expect(screen.getByText(section.title)).toBeInTheDocument();
             }
-            expect(docsConfig.sidebarNav.length).toBe(4);
+            expect(docsConfig.sidebarNav.length).toBe(5);
         });
 
         test('サイドバー全体が nav 要素として描画される', async () => {
-            currentPath = '/docs/approach';
+            currentPath = '/docs/archive/approach';
             await renderLayout();
 
             // layout には他に nav 要素を持たないので getByRole で一意に取得できる
@@ -124,7 +124,7 @@ describe('DocsLayout', () => {
 
     describe('mobile responsive', () => {
         test('aside 要素は hidden lg:block クラスを持つ (lg 未満で折りたたみ)', async () => {
-            currentPath = '/docs/approach';
+            currentPath = '/docs/archive/approach';
             const { container } = await renderLayout();
 
             const aside = container.querySelector('aside');

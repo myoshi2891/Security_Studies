@@ -12,19 +12,49 @@ export interface SearchResult {
 }
 
 /**
+ * Recursively scans the directory to find page.mdx files and extract search results.
+ */
+async function scanDirectory(dir: string, baseDir: string): Promise<SearchResult[]> {
+  const results: SearchResult[] = [];
+  const items = await fs.promises.readdir(dir, { withFileTypes: true });
+
+  for (const item of items) {
+    const fullPath = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      const subResults = await scanDirectory(fullPath, baseDir);
+      results.push(...subResults);
+    } else if (item.isFile() && item.name === "page.mdx") {
+      try {
+        const fileContents = await fs.promises.readFile(fullPath, "utf8");
+        const { data, content } = matter(fileContents);
+
+        // Normalize backslashes to forward slashes for URL path on Windows.
+        const relativePath = path.relative(baseDir, dir).replace(/\\/g, "/");
+
+        results.push({
+          title: data.title || relativePath,
+          description: data.description || "",
+          href: `/docs/${relativePath}`,
+          content: content.slice(0, 500), // Keep first 500 characters for search
+        });
+      } catch (error) {
+        console.error(`Error reading search index for ${fullPath}:`, error);
+      }
+    }
+  }
+
+  return results;
+}
+
+/**
  * Builds a search index from documentation pages located under the project's docs directory.
  *
- * Scans immediate subdirectories of the docs directory for a `page.mdx` file, parses its frontmatter
- * and body, and produces one `SearchResult` per category with `title` (frontmatter `title` or the
- * directory name), `description` (frontmatter `description` or empty string), `href` (`/docs/<category>`),
- * and `content` (the first 500 characters of the page body). If the docs directory is missing the
- * function returns an empty array. Individual category read/parse errors are logged and skipped.
+ * Scans directories recursively for a `page.mdx` file, parses its frontmatter and body,
+ * and produces search results.
  *
  * @returns An array of `SearchResult` entries representing each successfully read documentation page.
  */
 export async function getSearchIndex(): Promise<SearchResult[]> {
-  const results: SearchResult[] = [];
-
   try {
     try {
       await fs.promises.access(docsDirectory);
@@ -33,31 +63,9 @@ export async function getSearchIndex(): Promise<SearchResult[]> {
       return [];
     }
 
-    const items = await fs.promises.readdir(docsDirectory, { withFileTypes: true });
-
-    for (const item of items) {
-      if (!item.isDirectory()) continue;
-
-      const category = item.name;
-      const filePath = path.join(docsDirectory, category, "page.mdx");
-
-      try {
-        const fileContents = await fs.promises.readFile(filePath, "utf8");
-        const { data, content } = matter(fileContents);
-
-        results.push({
-          title: data.title || category,
-          description: data.description || "",
-          href: `/docs/${category}`,
-          content: content.slice(0, 500), // 検索用に冒頭500文字を保持
-        });
-      } catch (error) {
-        console.error(`Error reading search index for ${category}:`, error);
-      }
-    }
+    return await scanDirectory(docsDirectory, docsDirectory);
   } catch (error) {
     console.error("Error generating search index:", error);
+    return [];
   }
-
-  return results;
 }

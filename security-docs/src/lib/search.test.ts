@@ -5,7 +5,7 @@ import { getSearchIndex, type SearchResult } from './search';
 
 const REQUIRED_KEYS = ['content', 'description', 'href', 'title'] as const;
 const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
-const HREF_PATTERN = /^\/docs\/([^/]+)$/;
+const HREF_PATTERN = /^\/docs\/(.+)$/;
 
 describe('getSearchIndex', () => {
     test('returns a non-empty SearchResult array', async () => {
@@ -78,14 +78,22 @@ describe('getSearchIndex', () => {
 // getSearchIndex の走査条件と等価なので、両者の集合一致は検索インデックス
 // の漏れ (page.mdx あるが結果に無い) と誤包含 (page.mdx 無いが結果に有る)
 // を同時に検出する。
-function listDocDirsWithMdx(): string[] {
-    return fs
-        .readdirSync(DOCS_DIR, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory())
-        .filter((entry) =>
-            fs.existsSync(path.join(DOCS_DIR, entry.name, 'page.mdx')),
-        )
-        .map((entry) => entry.name);
+// DOCS_DIR 配下のすべてのディレクトリのうち page.mdx を含むものを再帰的に列挙する。
+function listDocDirsWithMdx(dir: string = DOCS_DIR): string[] {
+    const results: string[] = [];
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+            const subResults = listDocDirsWithMdx(fullPath);
+            results.push(...subResults);
+        } else if (entry.isFile() && entry.name === 'page.mdx') {
+            const relativePath = path.relative(DOCS_DIR, dir).replace(/\\/g, '/');
+            results.push(relativePath);
+        }
+    }
+    return results;
 }
 
 // 型エクスポートが破壊されないことを保証する型レベルチェック。
