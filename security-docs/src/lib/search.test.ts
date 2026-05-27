@@ -72,6 +72,14 @@ describe('getSearchIndex', () => {
 
         expect(indexSlugs).toEqual(fsSlugs);
     });
+
+    test('contains approach page with updated title and keywords', async () => {
+        const results = await getSearchIndex();
+        const approach = results.find(item => item.href === '/docs/approach');
+        expect(approach).toBeDefined();
+        expect(approach?.title).toBe('2026年 サプライチェーンセキュリティ＆SCS評価制度 対策アプローチ');
+        expect(approach?.content).toContain('SCS評価制度');
+    });
 });
 
 // DOCS_DIR 直下の subdirectory のうち page.mdx を含むものだけ列挙する。
