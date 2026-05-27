@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-27（P-08 `approach` ページ最新セキュリティアプローチ・SCS評価制度内容統合、および検索インデックステスト追加）  
+> **最終更新**: 2026-05-27（docs-sync スキル作成・調整および仕様書の一斉同期）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -97,14 +97,19 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| ファイル | 最終更新 | 内容 |
-|---|---|---|
-| `CLAUDE.md` (ルート) | 2026-05-20 | CSP 静的構成・Terminal 仕様・ESLint v9 反映 |
-| `security-docs/CLAUDE.md` | 2026-05-20 | CI 設定・テスト構成・ESLint v9 詳細追記 |
-| `docs/test-coverage-dashboard.html` | 2026-05-27 | P-08 approach ページテスト件数・日付反映（115 cases） |
-| `docs/progress.md` (本ファイル) | 2026-05-27 | P-08 approach ページ進捗反映 |
+| `CLAUDE.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `GEMINI.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `README.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `security-docs/CLAUDE.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `security-docs/README.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 (115 cases) |
+| `docs/progress.md` (本ファイル) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
+| `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
+| `.gemini/skills/docs-sync/SKILL.md` | 2026-05-27 | プロジェクトローカルの .gemini/skills に移行し適用 |
+| `.claude/skills/markdown-formatter/SKILL.md` | 2026-05-27 | マークダウンフォーマッタ規約スキルファイル |
+| `.gemini/skills/markdown-formatter/SKILL.md` | 2026-05-27 | 新規作成、プロジェクトローカル .gemini/skills に移行し適用 |
 
 ---
 

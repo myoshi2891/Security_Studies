@@ -116,8 +116,8 @@ This skill provides rules and best practices to ensure all Markdown documents (`
 #### ❌ 違反例
 ```markdown
 パラグラフ1
-
-
+ 
+ 
 パラグラフ2（空行が2行以上挟まれている）
 ```
 
