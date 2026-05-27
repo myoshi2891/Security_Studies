@@ -298,7 +298,7 @@ grype sbom:./sbom.json --fail-on high`}
   - **SLSA (Supply-chain Levels for Software Artifacts):** ビルドプロセスの完全性を暗号学的に証明する4段階のフレームワーク。ビルドの「来歴（Provenance）」を生成。
   - **Cosign:** コンテナイメージやSBOMに暗号署名を付与し、改ざんを検知するツール。キーレス署名（OIDC）が主力。
 
-  <Terminal title="来歴検証とCosign署名の検証">
+  <Terminal title="来歴検証とCosign署名の検証.sh">
     {`# SLSA来歴の検証
 slsa-verifier verify-image "myapp:v1.2.0" \\
   --provenance-path provenance.json \\

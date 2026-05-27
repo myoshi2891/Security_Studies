@@ -108,7 +108,7 @@ bun test
   - [ ] 最終更新（タイムスタンプ）が更新されているか。
 - [ ] **`docs/test-coverage-dashboard.html` 監査**
   - [ ] ヘッダーメタ情報エリア（`Scanned YYYY-MM-DD`）およびフッターの日付（`Updated YYYY-MM-DD`）が更新されているか。
-  - [ ] テストケース総数が `bun test` の実測値（現在は 115件）と一致しているか。
+  - [ ] テストケース総数が `bun test` の実測値（現在は 118件）と一致しているか。
 - [ ] **`security-docs/CLAUDE.md` 監査**
   - [ ] ローカル起動やデプロイに関する定義、技術スタックに変更はないか。
   - [ ] 最終更新日のタイムスタンプが最新化されているか。
@@ -162,3 +162,4 @@ git commit -m "chore(docs): sync spec files — <具体的な更新理由や同�
 
 > [!NOTE]
 > プロジェクトの規約により、`.claude/skills/` および `.gemini/skills/` の配下にある `SKILL.md` ファイルでは、ローカライズされたキーではなく、英語のフロントマターキー `description` を必ず使用する必要があります。
+。

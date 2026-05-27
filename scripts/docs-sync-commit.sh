@@ -11,7 +11,7 @@ git add \
   CLAUDE.md GEMINI.md README.md \
   docs/progress.md docs/test-coverage-dashboard.html \
   security-docs/CLAUDE.md security-docs/README.md \
-  .gemini/skills/ .claude/skills/ scripts/ 2>/dev/null || true
+  .gemini/skills/ .claude/skills/ .gemini/rules/ .claude/rules/ scripts/ 2>/dev/null || true
 
 # 2. ステージングされた差分があるか確認
 if git diff --cached --quiet; then
