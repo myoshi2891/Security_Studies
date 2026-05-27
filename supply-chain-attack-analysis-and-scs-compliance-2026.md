@@ -279,44 +279,29 @@ flowchart LR
 
 | 根拠 ID | インシデント・制度名 | 提供ソース（URL） |
 | --- | --- | --- |
+| | **サプライチェーン攻撃一般** | [KDDI Business](https://biz.kddi.com/content/column/smartwork/what-is-supply-chain-attack/) |
+| | **サプライチェーン攻撃一般** | [IPA (10大脅威 2026 PDF)](https://www.ipa.go.jp/security/10threats/omgdg50000008fi8-att/kaisetsu_2026_soshiki.pdf) |
+| | **サプライチェーン攻撃一般** | [Zscaler ThreatLabz](https://www.zscaler.com/blogs/security-research/supply-chain-attacks-surge-march-2026) |
+| | **サプライチェーン攻撃一般** | [GitLab Blog](https://about.gitlab.com/ja-jp/blog/pipeline-security-lessons-from-march-supply-chain-incidents/) |
 | / | **TrapDoor キャンペーン** | [The Hacker News](https://thehackernews.com/2026/05/trapdoor-supply-chain-attack-spreads.html) |
-|  | **Laravel-Lang タグハイジャック** | [Aikido Blog](https://www.aikido.dev/blog/supply-chain-attack-targets-laravel-lang-packages-with-credential-stealer) |
+| | **TrapDoor キャンペーン** | [Bitcoin.com News](https://news.bitcoin.com/trapdoor-malware-the-massive-supply-chain-attack-targeting-crypto-developers/) |
+| | **Laravel-Lang タグハイジャック** | [Aikido Blog](https://www.aikido.dev/blog/supply-chain-attack-targets-laravel-lang-packages-with-credential-stealer) |
 | / | **Mini Shai-Hulud (AntV)** | [Snyk Blog](https://snyk.io/blog/mini-shai-hulud-antv-npm-supply-chain-attack/) |
 | / | **Mini Shai-Hulud (TanStack)** | [Orca Security](https://orca.security/resources/blog/tanstack-npm-supply-chain-worm/) |
-|  | **Axios NPM 侵害 (CISA警告)** | [CISA Alert](https://www.cisa.gov/news-events/alerts/2026/04/20/supply-chain-compromise-impacts-axios-node-package-manager) |
-|  | **Axios NPM 侵害 (MS解説)** | [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/) |
-|  | **Axios NPM 侵害 (Palo Alto)** | [Unit 42](https://unit42.paloaltonetworks.com/axios-supply-chain-attack/) |
-|  | **Axios NPM 侵害 (Trend Micro)** | [Trend Micro](https://www.trendmicro.com/en_us/research/26/c/axios-npm-package-compromised.html) |
-|  | **Trivy / LiteLLM / Telnyx** | [RapidFort Blog](https://www.rapidfort.com/blog/pypi-npm-and-the-new-frontline-of-software-supply-chain-attacks) |
-|  | **Trivy からの連鎖侵害** | [Elastic Security Labs](https://www.elastic.co/security-labs/how-we-caught-the-axios-supply-chain-attack) |
-|  | **SCS評価制度 構築方針** | [経済産業省](https://www.meti.go.jp/press/2025/03/20260327001/20260327001.html) |
-|  | **Canvas LMS 侵害影響 (Trend Micro)** | [Trend Micro](https://www.trendmicro.com/en_us/research/26/e/What-Is-the-Instructure-Canvas-Breach.html) |
-|  | **Canvas LMS テクニカルアドバイザリ** | [Bitdefender](https://businessinsights.bitdefender.com/technical-advisory-shinyhunters-breach-instructure-canvas-lms) |
-|  | **Canvas LMS 侵害の経緯（Wikipedia）** | [Wikipedia](https://en.wikipedia.org/wiki/2026_Canvas_data_breach) |
-
-[**biz.kddi.com**サプライチェーン攻撃とは？主な手法や対策、事例を解説 - KDDI Business](https://biz.kddi.com/content/column/smartwork/what-is-supply-chain-attack/)
-[**ipa.go.jp**10 大脅威 2026 - 解説書［組織編］ - IPA](https://www.ipa.go.jp/security/10threats/omgdg50000008fi8-att/kaisetsu_2026_soshiki.pdf)
-[**cloud.google.com**North Korea-Nexus Threat Actor Compromises Widely Used Axios NPM Package in Supply Chain Attack | Google Cloud Blog](https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package)
-[**snyk.io**Mini Shai-Hulud Hits AntV: 300+ Malicious npm Packages ... - Snyk](https://snyk.io/blog/mini-shai-hulud-antv-npm-supply-chain-attack/)
-[**microsoft.com**Mitigating the Axios npm supply chain compromise | Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/)
-[**trendmicro.com**Axios NPM Package Compromised: Supply Chain Attack Hits JavaScript HTTP Client with 100M+ Weekly Downloads - Trend Micro](https://www.trendmicro.com/en_us/research/26/c/axios-npm-package-compromised.html)
-[**zscaler.com**Supply Chain Attacks Surge in March 2026 | ThreatLabz - Zscaler, Inc.](https://www.zscaler.com/blogs/security-research/supply-chain-attacks-surge-march-2026)
-[**elastic.co**How we caught the Axios supply chain attack — Elastic Security Labs](https://www.elastic.co/security-labs/how-we-caught-the-axios-supply-chain-attack)
-[**cisa.gov**Supply Chain Compromise Impacts Axios Node Package Manager - CISA](https://www.cisa.gov/news-events/alerts/2026/04/20/supply-chain-compromise-impacts-axios-node-package-manager)
-[**unit42.paloaltonetworks.com**Threat Brief: Widespread Impact of the Axios Supply Chain Attack](https://unit42.paloaltonetworks.com/axios-supply-chain-attack/)
-[**orca.security**TanStack & 160+ npm Packages Compromised | Orca Security](https://orca.security/resources/blog/tanstack-npm-supply-chain-worm/)
-[**aikido.dev**Supply Chain Attack Targets Laravel-Lang Packages with ...](https://www.aikido.dev/blog/supply-chain-attack-targets-laravel-lang-packages-with-credential-stealer)
-[**thehackernews.com**TrapDoor Supply Chain Attack Spreads Credential-Stealing ...](https://thehackernews.com/2026/05/trapdoor-supply-chain-attack-spreads.html)
-[**news.bitcoin.com**Trapdoor Malware: The Massive Supply Chain Attack Targeting Crypto Developers](https://news.bitcoin.com/trapdoor-malware-the-massive-supply-chain-attack-targeting-crypto-developers/)
-[**en.wikipedia.org**2026 Canvas data breach - Wikipedia](https://en.wikipedia.org/wiki/2026_Canvas_data_breach)
-[**trendmicro.com**What Is the Instructure Canvas Breach? Impact, Risks, and What Institutions Should Do](https://www.trendmicro.com/en_us/research/26/e/What-Is-the-Instructure-Canvas-Breach.html)
-[**businessinsights.bitdefender.com**Technical Advisory: ShinyHunters Breach of Instructure Canvas LMS](https://businessinsights.bitdefender.com/technical-advisory-shinyhunters-breach-instructure-canvas-lms)
-[**rapidfort.com**PyPI, npm, and the New Frontline of Software Supply Chain Attacks - RapidFort](https://www.rapidfort.com/blog/pypi-npm-and-the-new-frontline-of-software-supply-chain-attacks)
-[**about.gitlab.com**3月のサプライチェーン攻撃から学ぶパイプラインセキュリティ - GitLab](https://about.gitlab.com/ja-jp/blog/pipeline-security-lessons-from-march-supply-chain-incidents/)
-[**learning.uic.edu**Canvas Breach and Higher Education Anxiety | Learning Technology Solutions | University of Illinois Chicago](https://learning.uic.edu/news-stories/canvas-breach-and-higher-education-anxiety/)
-[**it.impress.co.jp**TIS、サプライチェーン攻撃対策のコンサルティング、取引先企業の経産省新制度準拠を伴走支援](https://it.impress.co.jp/articles/-/29379)
-[**japan.box.com**サプライチェーン強化に向けたセキュリティ対策評価制度（SCS評価制度）とは？ | Box](https://japan.box.com/box-can-solve/supply-chain-security)
-[**canon.jp**2026年度末開始のセキュリティ対策（SCS）評価制度。事前に取り組める「SECURITY ACTION宣言」とは？｜ビジネストレンド - キヤノン](https://canon.jp/biz/trend/securityaction)
-[**meti.go.jp**「サプライチェーン強化に向けたセキュリティ対策評価制度に関する制度構築方針」（SCS評価制度の構築方針）を公表しました - 経済産業省](https://www.meti.go.jp/press/2025/03/20260327001/20260327001.html)
-[**japan.zdnet.com**【2026年対応】サプライチェーン評価制度“★3以上”を狙うための実践対策セミナー ～防御×バックアップで実現するランサムウェア対策](https://japan.zdnet.com/event_info/30014900/)
-[**lanscope.jp**「SCS評価制度（セキュリティ対策評価制度）」とは？全体像や ...](https://www.lanscope.jp/blogs/cyber_attack_pfs_blog/20250325_25987/)
+| | **Axios NPM 侵害** | [Google Cloud Blog](https://cloud.google.com/blog/topics/threat-intelligence/north-korea-threat-actor-targets-axios-npm-package) |
+| | **Axios NPM 侵害** | [CISA Alert](https://www.cisa.gov/news-events/alerts/2026/04/20/supply-chain-compromise-impacts-axios-node-package-manager) |
+| | **Axios NPM 侵害** | [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/04/01/mitigating-the-axios-npm-supply-chain-compromise/) |
+| | **Axios NPM 侵害** | [Palo Alto Unit 42](https://unit42.paloaltonetworks.com/axios-supply-chain-attack/) |
+| | **Axios NPM 侵害** | [Trend Micro](https://www.trendmicro.com/en_us/research/26/c/axios-npm-package-compromised.html) |
+| | **Trivy / LiteLLM / Telnyx** | [RapidFort Blog](https://www.rapidfort.com/blog/pypi-npm-and-the-new-frontline-of-software-supply-chain-attacks) |
+| | **Trivy からの連鎖侵害** | [Elastic Security Labs](https://www.elastic.co/security-labs/how-we-caught-the-axios-supply-chain-attack) |
+| | **Canvas LMS 侵害** | [Wikipedia](https://en.wikipedia.org/wiki/2026_Canvas_data_breach) |
+| | **Canvas LMS 侵害** | [Trend Micro](https://www.trendmicro.com/en_us/research/26/e/What-Is-the-Instructure-Canvas-Breach.html) |
+| | **Canvas LMS 侵害** | [Bitdefender](https://businessinsights.bitdefender.com/technical-advisory-shinyhunters-breach-instructure-canvas-lms) |
+| | **Canvas LMS 侵害** | [UIC LTS](https://learning.uic.edu/news-stories/canvas-breach-and-higher-education-anxiety/) |
+| | **SCS評価制度** | [経済産業省](https://www.meti.go.jp/press/2025/03/20260327001/20260327001.html) |
+| | **SCS評価制度** | [IT leaders (Impress)](https://it.impress.co.jp/articles/-/29379) |
+| | **SCS評価制度** | [Box Japan](https://japan.box.com/box-can-solve/supply-chain-security) |
+| | **SCS評価制度** | [キヤノン ビジネストレンド](https://canon.jp/biz/trend/securityaction) |
+| | **SCS評価制度** | [ZDNET Japan](https://japan.zdnet.com/event_info/30014900/) |
+| | **SCS評価制度** | [LANSCOPE](https://www.lanscope.jp/blogs/cyber_attack_pfs_blog/20250325_25987/) |
