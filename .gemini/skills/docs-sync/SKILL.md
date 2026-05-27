@@ -44,9 +44,9 @@ description: >
 
 ## いつ、どのタイミングで、どの仕様書を更新するか
 
-開発中に発生する操作（イベント）と、更新が必要な仕様書の対応関係は以下の通りです。イベント発生後、**直ちに（次のタスクに移る前に）**対象 of 仕様書をすべて更新しなければなりません。
+開発中に発生する操作（イベント）と、更新が必要な仕様書の対応関係は以下の通りです。イベント発生後、**直ちに（次のタスクに移る前に）**対象の仕様書をすべて更新しなければなりません。
 
-```
+```text
 Event 1: 新規ドキュメント・ページ追加
   ├── CLAUDE.md (ルート) のアーキテクチャ・パス同期
   ├── GEMINI.md の Project Overview/Architecture 整合
@@ -83,7 +83,7 @@ ls security-docs/src/app/docs/
 # C. テストファイル実数の取得 (Bunユニットテスト)
 find security-docs/src/ -name "*.test.ts" -o -name "*.test.tsx" 2>/dev/null | sort
 
-# D. テスト実行結果 of 取得
+# D. テスト実行結果の取得
 cd security-docs
 bun test
 ```
@@ -162,4 +162,3 @@ git commit -m "chore(docs): sync spec files — <具体的な更新理由や同�
 
 > [!NOTE]
 > プロジェクトの規約により、`.claude/skills/` および `.gemini/skills/` の配下にある `SKILL.md` ファイルでは、ローカライズされたキーではなく、英語のフロントマターキー `description` を必ず使用する必要があります。
-。

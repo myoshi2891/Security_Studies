@@ -143,6 +143,8 @@ This skill provides rules and best practices to ensure all Markdown documents (`
 
 ## ワークフロー (検証と修正の手順)
 
+※すべての bun/npm コマンドは `security-docs` ディレクトリ内から実行する必要があります。
+
 AI エージェントは Markdown ファイルを新規作成・修正した際、コミットする前に必ず以下の手順を実行しなければなりません。
 
 ### Step 1: 自動整形スクリプトの実行（初期修正）
@@ -150,7 +152,8 @@ AI エージェントは Markdown ファイルを新規作成・修正した際�
 プロジェクトに用意されている自動フォーマットスクリプトを実行し、基本的な見出し前後の空行や末尾改行などを自動的に一括修正します。
 
 ```bash
-bun security-docs/scripts/format-markdown.mjs <file_path>
+cd security-docs
+bun scripts/format-markdown.mjs <file_path>
 ```
 
 > [!CAUTION]
@@ -162,6 +165,7 @@ bun security-docs/scripts/format-markdown.mjs <file_path>
 
 ```bash
 # Bun を使用して markdownlint-cli を実行
+cd security-docs
 bun x markdownlint-cli <file_path>
 ```
 
@@ -176,4 +180,3 @@ git diff --cached | grep -E '^\+[^+]' | grep -E '(/Users/|/home/|C:\\Users\\)' |
 ```
 
 検証が成功（何も検出されない）したことを確認してから、コミットを適用してください。
-�
