@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-23（P-07 `bun audit` CI 組み込み完了・脆弱性チェック自動化）  
+> **最終更新**: 2026-05-27（search.ts エラーパスカバレッジ補完・118ケース）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **114件** | `bun test` 全 pass |
+| テストケース総数 | **118件** | `bun test` 全 pass |
 | テストファイル数 | **22 / 22 ファイル** | 100% カバー |
 | Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -40,7 +40,7 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証（初期フォーカステスト修正） |
 | `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
-| `src/lib/search.test.ts` | 7 | ✅ 2026-05-20 追加 |
+| `src/lib/search.test.ts` | 11 | ✅ 2026-05-20 追加 (2026-05-27 エラーパステスト追加・カバレッジ100%化) |
 | `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
 | `src/app/docs/layout.test.tsx` | 8 | ✅ 2026-05-23 追加 |
 | `src/proxy.test.ts` | 6 | ✅ 2026-05-23 追加（CSP ディレクティブ固定化） |
@@ -97,14 +97,19 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| ファイル | 最終更新 | 内容 |
-|---|---|---|
-| `CLAUDE.md` (ルート) | 2026-05-20 | CSP 静的構成・Terminal 仕様・ESLint v9 反映 |
-| `security-docs/CLAUDE.md` | 2026-05-20 | CI 設定・テスト構成・ESLint v9 詳細追記 |
-| `docs/test-coverage-dashboard.html` | 2026-05-23 | P-05 CSP テスト反映（114 cases / 22 files / 100% File Unit Coverage） |
-| `docs/csp-fix-report-2026-05-19.md` | 2026-05-19 | Issue #32 対応記録（7フェーズ） |
-| `docs/progress.md` (本ファイル) | 2026-05-23 | P-05 CSP ヘッダー検証テスト完了を反映（プロンプトブロック整理） |
+| `CLAUDE.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `GEMINI.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `README.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `security-docs/CLAUDE.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `security-docs/README.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
+| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期および search カバレッジ 100% 反映 (118 cases) |
+| `docs/progress.md` (本ファイル) | 2026-05-27 | カバレッジ 100% 補完に伴うテスト数 (118件) 更新 |
+| `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
+| `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
+| `.gemini/skills/docs-sync/SKILL.md` | 2026-05-27 | プロジェクトローカルの .gemini/skills に移行し適用 |
+| `.claude/skills/markdown-formatter/SKILL.md` | 2026-05-27 | マークダウンフォーマッタ規約スキルファイル |
+| `.gemini/skills/markdown-formatter/SKILL.md` | 2026-05-27 | 新規作成、プロジェクトローカル .gemini/skills に移行し適用 |
 
 ---
 
@@ -134,6 +139,7 @@ form-action 'self'
 | P-05 | **CSP ヘッダー検証テスト**<br>`src/proxy.ts` の CSP ディレクティブ（`script-src` の env 分岐、`frame-ancestors`/`base-uri`/`form-action`/`default-src`）を `src/proxy.test.ts` で固定化。`NODE_ENV` を切り替えながらディレクティブ単位でアサートし、意図しない緩和をリグレッション検出可能に。<br>**タグ**: `CSP` / `Unit Test` \| **コスト**: 小 \| **効果**: XSS 防御後退の即時検知 | 2026-05-23 |
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
+| P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
 
 ---
 

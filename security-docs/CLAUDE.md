@@ -1,5 +1,7 @@
 # Includes / Directives
 
+Updated 2026-05-27
+
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
 @AGENTS.md

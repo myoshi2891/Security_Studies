@@ -1,5 +1,7 @@
 # Security Studies
 
+Updated 2026-05-27
+
 ## Project Overview
 
 This is a Next.js-based documentation application focused on security studies. It uses a custom MDX implementation (via `@next/mdx`) with hand-crafted React components — Fumadocs has been fully removed. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, and PQC (Post-Quantum Cryptography).

@@ -30,6 +30,12 @@ export const docsConfig = {
         { title: "AppSec Certifications", href: "/docs/certifications" },
       ],
     },
+    {
+      title: "Archive",
+      items: [
+        { title: "Security Approach (March 2026)", href: "/docs/archive/approach" },
+      ],
+    },
   ],
 };
 
