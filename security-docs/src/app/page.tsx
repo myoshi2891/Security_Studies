@@ -1,74 +1,214 @@
 import Link from "next/link";
+import {
+  Archive,
+  ArrowRight,
+  BookOpen,
+  Boxes,
+  BrainCircuit,
+  ChevronRight,
+  LockKeyhole,
+  Radar,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { docsConfig } from "@/config/docs";
 
-/**
- * Render the site's home page: header with navigation, a centered hero section, a grid of documentation category links, and a footer.
- *
- * @returns The React element representing the complete home page layout.
- */
+const sectionMeta = [
+  { icon: BookOpen, label: "Foundation", tone: "cyan" },
+  { icon: BrainCircuit, label: "Applied security", tone: "violet" },
+  { icon: Boxes, label: "Deep dives", tone: "amber" },
+  { icon: Radar, label: "Field resources", tone: "green" },
+  { icon: Archive, label: "Previous editions", tone: "slate" },
+] as const;
+
 export default function HomePage() {
+  const articleCount = docsConfig.sidebarNav.reduce(
+    (total, section) => total + section.items.length,
+    0,
+  );
+  const domainCount = docsConfig.sidebarNav.length;
+
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950">
-      <header className="border-b dark:border-zinc-800">
-        <div className="container flex items-center justify-between h-16">
-          <div className="font-black text-xl tracking-tight text-zinc-900 dark:text-zinc-50">
-            Security Studies 2026
-          </div>
-          <nav className="flex gap-6">
-            <Link href="/docs/approach" className="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50 transition-colors no-underline">
-              Documentation
+    <div className="landing-shell">
+      <header className="landing-header">
+        <div className="landing-container landing-nav">
+          <Link href="/" className="brand" aria-label="Security Studies 2026 home">
+            <span className="brand-mark" aria-hidden="true">
+              <ShieldCheck size={18} strokeWidth={2.2} />
+            </span>
+            <span>Security Studies</span>
+            <span className="brand-year">/ 2026</span>
+          </Link>
+
+          <nav className="landing-nav-links" aria-label="Main navigation">
+            <a href="#library">Library</a>
+            <Link href="/docs/approach" className="nav-cta">
+              Documentation <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </nav>
         </div>
       </header>
 
-      <main className="flex-1">
-        <section className="py-32 text-center bg-zinc-50 dark:bg-zinc-900/50">
-          <div className="container max-w-5xl">
-            <h1 className="text-6xl md:text-7xl font-black tracking-tighter mb-6 leading-[1.1] text-zinc-900 dark:text-zinc-50">
-              Master Software Security <br /> for 2026.
-            </h1>
-            <p className="text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              高度に産業化されたサイバー脅威、AIの兵器化、耐量子計算機暗号。
-              現代のエンジニアが知るべき、セキュア開発のすべてを体系化した完全版ガイドブック。
-            </p>
-            <Link
-              href="/docs/approach"
-              className="inline-flex h-14 items-center justify-center rounded-full bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 px-10 text-base font-bold transition-transform hover:scale-105 no-underline"
-            >
-              Get Started
-            </Link>
+      <main>
+        <section className="hero-section">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-glow hero-glow-one" aria-hidden="true" />
+          <div className="hero-glow hero-glow-two" aria-hidden="true" />
+
+          <div className="landing-container hero-layout">
+            <div className="hero-copy">
+              <div className="eyebrow">
+                <span className="live-dot" />
+                2026 SECURITY FIELD GUIDE
+                <span className="eyebrow-separator" />
+                <Sparkles size={13} aria-hidden="true" />
+                UPDATED
+              </div>
+
+              <h1>
+                Build software that is
+                <span className="hero-accent"> ready for what&apos;s next.</span>
+              </h1>
+
+              <p className="hero-description">
+                産業化するサイバー脅威、AIの兵器化、耐量子計算機暗号。
+                変化の先を読み、実装に落とし込むためのセキュリティ・ナレッジベース。
+              </p>
+
+              <div className="hero-actions">
+                <Link href="/docs/approach" className="primary-button">
+                  ガイドをはじめる
+                  <ArrowRight size={17} aria-hidden="true" />
+                </Link>
+                <a href="#library" className="secondary-button">
+                  収録内容を見る
+                </a>
+              </div>
+
+              <div className="hero-metrics" role="group" aria-label="Guide statistics">
+                <div>
+                  <strong>{String(articleCount).padStart(2, "0")}</strong>
+                  <span>FIELD GUIDES</span>
+                </div>
+                <div>
+                  <strong>{String(domainCount).padStart(2, "0")}</strong>
+                  <span>DOMAINS</span>
+                </div>
+                <div>
+                  <strong>2026</strong>
+                  <span>THREAT READY</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="security-visual" aria-hidden="true">
+              <div className="visual-status visual-status-top">
+                <span>POSTURE</span>
+                <strong>HARDENED</strong>
+              </div>
+              <div className="visual-status visual-status-bottom">
+                <span>THREAT INTEL</span>
+                <strong>ACTIVE</strong>
+              </div>
+
+              <div className="orbit orbit-outer">
+                <span className="orbit-node" />
+              </div>
+              <div className="orbit orbit-middle">
+                <span className="orbit-node" />
+              </div>
+              <div className="orbit orbit-inner" />
+
+              <div className="core-wrap">
+                <div className="core-halo" />
+                <div className="security-core">
+                  <div className="core-grid" />
+                  <LockKeyhole size={54} strokeWidth={1.35} />
+                  <span>ZERO TRUST</span>
+                </div>
+              </div>
+
+              <div className="scan-line" />
+              <span className="coordinate coordinate-one">35.6762° N</span>
+              <span className="coordinate coordinate-two">139.6503° E</span>
+            </div>
+          </div>
+
+          <div className="hero-marquee" aria-hidden="true">
+            <div>
+              <span>SECURE BY DESIGN</span><i />
+              <span>AI SECURITY</span><i />
+              <span>POST-QUANTUM</span><i />
+              <span>SUPPLY CHAIN</span><i />
+              <span>ZERO TRUST</span><i />
+              <span>SECURE BY DESIGN</span><i />
+              <span>AI SECURITY</span><i />
+              <span>POST-QUANTUM</span><i />
+              <span>SUPPLY CHAIN</span><i />
+              <span>ZERO TRUST</span><i />
+            </div>
           </div>
         </section>
 
-        <section className="py-24">
-          <div className="container">
-            <h2 className="text-3xl font-black text-center mb-16 tracking-tight text-zinc-900 dark:text-zinc-50">
-              Documentation Categories
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {docsConfig.sidebarNav.map((section) => (
-                <div key={section.title} className="p-8 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="text-lg font-bold mb-6 text-zinc-900 dark:text-zinc-50">{section.title}</h3>
-                  <ul className="grid gap-3 list-none p-0">
-                    {section.items.map((item) => (
-                      <li key={item.href}>
-                        <Link href={item.href} className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors no-underline text-sm flex items-center gap-3 group">
-                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-700 group-hover:bg-zinc-900 dark:group-hover:bg-zinc-50 transition-colors" />
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+        <section id="library" className="library-section">
+          <div className="landing-container">
+            <div className="section-heading">
+              <div>
+                <span className="section-kicker">KNOWLEDGE LIBRARY</span>
+                <h2>Navigate the threat landscape.</h2>
+              </div>
+              <p>
+                基礎設計からAIセキュリティ、サプライチェーン、PQCまで。
+                必要な知識へすぐにアクセスできます。
+              </p>
+            </div>
+
+            <div className="category-grid">
+              {docsConfig.sidebarNav.map((section, index) => {
+                const meta = sectionMeta[index] ?? sectionMeta[0];
+                const Icon = meta.icon;
+
+                return (
+                  <article
+                    key={section.title}
+                    className={`category-card category-${meta.tone}`}
+                  >
+                    <div className="card-topline">
+                      <span className="card-number">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="card-icon"><Icon size={21} /></span>
+                    </div>
+                    <span className="card-label">{meta.label}</span>
+                    <h3>{section.title}</h3>
+                    <ul>
+                      {section.items.map((item) => (
+                        <li key={item.href}>
+                          <Link href={item.href}>
+                            <span>{item.title}</span>
+                            <ChevronRight size={15} aria-hidden="true" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="card-noise" aria-hidden="true" />
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="py-16 border-t border-zinc-200 dark:border-zinc-800 text-center text-zinc-500 dark:text-zinc-400 text-sm bg-zinc-50 dark:bg-zinc-900/50">
-        <p>© 2026 Security Studies Project. Advanced Security Guidance.</p>
+      <footer className="landing-footer">
+        <div className="landing-container footer-inner">
+          <div className="brand footer-brand">
+            <span className="brand-mark"><ShieldCheck size={16} /></span>
+            <span>Security Studies</span>
+          </div>
+          <p>Advanced security guidance for engineers building the future.</p>
+          <span>© 2026</span>
+        </div>
       </footer>
     </div>
   );

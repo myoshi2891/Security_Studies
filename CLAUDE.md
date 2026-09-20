@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-05-27
+Updated 2026-09-20
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -58,7 +58,7 @@ make clean            # コンテナ・イメージ・ボリューム完全削�
 Security_Studies/
 ├── Makefile                    # Docker 操作ショートカット
 ├── docker-compose.yml          # dev/prod サービス定義
-├── security-docs/          # Next.js 16.2.x アプリ (本体)
+├── security-docs/          # Next.js 16.3.5 アプリ (本体)
 │   ├── netlify.toml            # Netlify ビルド設定（@netlify/plugin-nextjs）
 │   ├── .nvmrc                  # Node.js バージョン固定 (22)
 │   ├── Dockerfile              # マルチステージビルド
