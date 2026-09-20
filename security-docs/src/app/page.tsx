@@ -84,7 +84,7 @@ export default function HomePage() {
                 </a>
               </div>
 
-              <div className="hero-metrics" aria-label="Guide statistics">
+              <div className="hero-metrics" role="group" aria-label="Guide statistics">
                 <div>
                   <strong>{String(articleCount).padStart(2, "0")}</strong>
                   <span>FIELD GUIDES</span>
