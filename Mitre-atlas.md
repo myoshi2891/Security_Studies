@@ -297,9 +297,9 @@ ATLASのMitigationsは`AML.M00xx`というIDで管理されており、1つのTe
 | AML.M0020 | GenAI Guardrails | モデルとユーザーの間にフィルタを設置し、攻撃的な入力を到達前にブロックする |
 | AML.M0023 | AI Bill of Materials(AI BOM) | 使用しているモデル・データセット・依存パッケージを台帳管理し、サプライチェーンリスクを可視化する |
 | AML.M0024 | AI Telemetry Logging | 推論への入力を記録し、インジェクションパターンなどを事後的に検知できるようにする |
-| AML.M0026 | 最小権限の原則(Least Privilege) | AIエージェントに付与するツール権限を必要最小限にする |
-| AML.M0029 | Human-in-the-loop承認 | 重大な操作を行う前に人間の承認を必須にする |
-| AML.M0030 | Restrict Tool Invocation | 信頼できないデータ(RAG結果など)を根拠にしたツール呼び出しを制限する |
+| AML.M0026 | Privileged AI Agent Permissions Configuration | AIエージェントに付与するツール権限を必要最小限にする |
+| AML.M0029 | Human In-the-Loop for AI Agent Actions | 重大な操作を行う前に人間の承認を必須にする |
+| AML.M0030 | Restrict AI Agent Tool Invocation on Untrusted Data | 信頼できないデータ(RAG結果など)を根拠にしたツール呼び出しを制限する |
 
 > 注: Mitigation IDと内容の対応関係は継続的に更新されるため、正確な最新の一覧は必ず公式ページ[https://atlas.mitre.org/mitigations](https://atlas.mitre.org/mitigations)を参照してください。本表は代表例の紹介であり、全網羅ではありません。
 
