@@ -729,9 +729,9 @@
                         参照:
                         <a href="https://atlas.mitre.org/" target="_blank">atlas.mitre.org</a> /
                         <a
-                            href="https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml"
+                            href="https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml"
                             target="_blank"
-                            >atlas-data (公式YAML)</a
+                            >atlas-data (公式YAML, v2026.07)</a
                         >
                     </p>
                 </section>
@@ -1653,12 +1653,16 @@
             (async function () {
                 const DIAGRAMS = {
                     structure: `flowchart TD
+    accTitle: 図1 ATLASのデータモデル
+    accDescr: Tactic配下にTechniqueがあり、Techniqueはさらに Sub-technique、Mitigation、Case Studyへ分岐する関係を示す
     A["Tactic - 攻撃者が達成したい目的"] --> B["Technique - 目的を達成する具体的な手法"]
     B --> C["Sub-technique - 手法をさらに細分化した実装方法"]
     B --> D["Mitigation - その手法に対する緩和策"]
     B --> E["Case Study - 実際に観測された攻撃事例"]`,
 
                     lifecycle: `flowchart LR
+    accTitle: 図2 攻撃者ライフサイクル
+    accDescr: 16のTacticsを準備、侵入とモデルアクセス、居座りと回避、探索と展開、攻撃準備と制御、目的達成の6フェーズに整理した流れを示す
     subgraph P1["フェーズ1 - 準備"]
     direction TB
     T1["Reconnaissance 偵察"]
@@ -1696,6 +1700,8 @@
     P1 --> P2 --> P3 --> P4 --> P5 --> P6`,
 
                     jailbreak: `flowchart TD
+    accTitle: 図3 LLM Jailbreak手法分類
+    accDescr: LLM Jailbreak手法を指示の上書き、ロールプレイ、フィクション化、多段階エスカレーション、出力形式の強制、難読化の6種類に分類する関係を示す
     J["LLM Jailbreak 手法"] --> J1["指示の上書き - 直前の指示を無視させる"]
     J --> J2["ロールプレイ - 別人格を演じさせる"]
     J --> J3["フィクション化 - 物語や仮定の話として出力させる"]
@@ -1704,6 +1710,8 @@
     J --> J6["難読化 - Base64やROT13, 他言語で回避"]`,
 
                     ragchain: `flowchart LR
+    accTitle: 図4 RAGを踏み台とした攻撃チェーン
+    accDescr: 偵察によるRAG対象の把握から、リソース開発、RAGポイズニングによる永続化、偽エントリ注入による防御回避、間接プロンプトインジェクションの実行、データ持ち出し、風評被害という影響に至る一連の攻撃連鎖を示す
     A["Reconnaissance: Gather RAG-Indexed Targets"] --> B["Resource Development: Retrieval Content Crafting"]
     B --> C["Persistence: RAG Poisoning"]
     C --> D["Defense Evasion: False RAG Entry Injection"]
@@ -1711,6 +1719,14 @@
     E --> F["Exfiltration: LLM Data Leakage"]
     F --> G["Impact: Reputational Harm"]`,
                 };
+
+                if (typeof window.mermaid === 'undefined') {
+                    document.querySelectorAll('.mermaid-diagram').forEach((container) => {
+                        container.innerHTML =
+                            '<p class="diagram-error">図の描画ライブラリの読み込みに失敗しました</p>';
+                    });
+                    return;
+                }
 
                 mermaid.initialize({
                     startOnLoad: false,
