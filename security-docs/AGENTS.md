@@ -1,9 +1,9 @@
 <!-- BEGIN:nextjs-agent-rules -->
-# Next.js 16.3.5 (App Router) Guidelines
 
-This project uses Next.js 16.3.5 with the App Router. Please refer to the official documentation for APIs and conventions.
+# This is NOT the Next.js you know
 
-- **Docs**: [https://nextjs.org/docs](https://nextjs.org/docs)
-- **Local Content**: All MDX documentation lives in `security-docs/src/app/docs/<slug>/page.mdx`. This is the **authoritative** content location. After adding a new page, register its slug in `security-docs/src/config/docs.ts`.
-- **Styling**: Tailwind CSS v4 is used.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
 <!-- END:nextjs-agent-rules -->
