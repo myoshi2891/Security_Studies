@@ -34,3 +34,4 @@ yarn-error.log*
 .vercel
 .netlify
 /plans/
+/advisor-plans/

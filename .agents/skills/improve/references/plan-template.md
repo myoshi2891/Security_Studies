@@ -21,8 +21,9 @@ File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
 > verification command and confirm the expected result before moving to the
 > next step. If anything in the "STOP conditions" section occurs, stop and
 > report — do not improvise. When done, update the status row for this plan
-> in `plans/README.md` — unless a reviewer dispatched you and told you they
-> maintain the index.
+> in the plan index (`plans/README.md`, or `advisor-plans/README.md` if that
+> directory was used instead — see SKILL.md) — unless a reviewer dispatched
+> you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat <planned-at SHA>..HEAD -- <in-scope paths>`
 > If any in-scope file changed since this plan was written, compare the
@@ -133,7 +134,7 @@ Machine-checkable. ALL must hold:
 - [ ] `pnpm test` exits 0; new tests for <X> exist and pass
 - [ ] `grep -rn "<old pattern>" src/` returns no matches
 - [ ] No files outside the in-scope list are modified (`git status`)
-- [ ] `plans/README.md` status row updated — unless a reviewer dispatched you and is responsible for maintaining the index (see closing-the-loop.md)
+- [ ] Plan index (`plans/README.md`, or `advisor-plans/README.md` if that directory was used) status row updated — unless a reviewer dispatched you and is responsible for maintaining the index (see closing-the-loop.md)
 
 ## STOP conditions
 
