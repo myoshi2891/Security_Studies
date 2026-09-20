@@ -743,7 +743,7 @@
                     </p>
 
                     <h3>5-1. 学習データ・モデルへの攻撃</h3>
-                    <h4><span class="tag">AML.T0020</span>Poison Training Data</h4>
+                    <h4><span class="tag">AML.T0020</span>Training Data Poisoning</h4>
                     <p>
                         攻撃者が学習データやそのラベルを改ざんし、モデルに気づかれにくい欠陥や裏口(バックドア)を埋め込む攻撃です。ラベルを変えなくても成立する場合があり、仕込んだ欠陥は特定の入力パターン(<code
                             >AML.T0043.004 Insert Backdoor Trigger</code
@@ -797,6 +797,13 @@
                                 <td>Container Registry</td>
                                 <td>
                                     コンテナレジストリ内のイメージを改ざんし、CI/CDパイプライン経由で配布させる
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>AML.T0010.005</code></td>
+                                <td>AI Agent Tool</td>
+                                <td>
+                                    AIエージェントが利用するツール(MCPサーバーなど)を狙い、悪意ある定義や隠れた実行ロジック、汚染されたレスポンスを仕込んでエージェントの権限や他ツールへのアクセスを乗っ取る
                                 </td>
                             </tr>
                         </tbody>
@@ -1070,19 +1077,26 @@
                             </tr>
                             <tr>
                                 <td><code>AML.M0004</code></td>
-                                <td>Restrict Number of Queries</td>
+                                <td>Limit AI Service Query Volume and Rate</td>
                                 <td>推論APIへのクエリ数を制限し、モデル抽出を難しくする</td>
                             </tr>
                             <tr>
-                                <td><code>AML.M0013 / M0014</code></td>
-                                <td>供給元・アーティファクトの検証</td>
+                                <td><code>AML.M0013</code></td>
+                                <td>Code Signing</td>
                                 <td>
-                                    外部から取得したデータセットやモデルの出所・整合性を検証する
+                                    AIソフトウェアやモデル、SBOM/AIBOMにデジタル署名検証を強制し、未署名・改ざんされたコードの実行を防ぐ
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>AML.M0014</code></td>
+                                <td>Verify AI Artifacts</td>
+                                <td>
+                                    外部から取得したデータセットやモデルファイルの暗号学的チェックサムを検証し、改ざんされていないことを確認する
                                 </td>
                             </tr>
                             <tr>
                                 <td><code>AML.M0015</code></td>
-                                <td>Adversarial Input Detection</td>
+                                <td>Predictive AI Adversarial Input Detection</td>
                                 <td>通常の利用パターンから統計的に逸脱する入力をML的に検知する</td>
                             </tr>
                             <tr>
@@ -1178,42 +1192,42 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><code>AML.CS0031</code></td>
+                                <td><code>AML.CS0028</code></td>
                                 <td>誤設定コンテナレジストリからのAIモデル露出</td>
                                 <td>
                                     インターネット上に公開された、書き込み権限まで許可された誤設定コンテナレジストリを大量に発見し、機密性の高いAIモデルを多数収集できてしまった事例
                                 </td>
                             </tr>
                             <tr>
-                                <td>-</td>
+                                <td><code>AML.CS0021</code></td>
                                 <td>ChatGPT Plugin Privacy Leak(2023)</td>
                                 <td>
                                     悪意あるWebサイトをChatGPTプラグイン経由で読み込ませることで間接プロンプトインジェクションを成立させ、チャットセッションを乗っ取って会話履歴を持ち出せることを示した事例
                                 </td>
                             </tr>
                             <tr>
-                                <td>-</td>
+                                <td><code>AML.CS0016</code></td>
                                 <td>MathGPT Code Execution(2023)</td>
                                 <td>
                                     GPT-3を利用した数学問題解答サービスに対しプロンプトインジェクションを行い、ホストシステムの環境変数やアプリケーションコードへのアクセスを奪取した事例
                                 </td>
                             </tr>
                             <tr>
-                                <td>-</td>
+                                <td><code>AML.CS0024</code></td>
                                 <td>Morris II(自己複製プロンプトワーム)</td>
                                 <td>
                                     メールに埋め込んだプロンプトが、RAGによるメール本文の取り込みを通じてユーザー操作なしに実行され、個人情報を持ち出しつつ自分自身を複製して他のエージェントにも感染を広げた実証実験
                                 </td>
                             </tr>
                             <tr>
-                                <td>-</td>
+                                <td><code>AML.CS0009</code></td>
                                 <td>Microsoft Tay(2016)</td>
                                 <td>
                                     公開チャットボットがユーザー入力を学習し続けたことで、悪意あるユーザー群の大量投稿によって不適切な発言をするよう誘導された、生成AI以前からの古典的な事例
                                 </td>
                             </tr>
                             <tr>
-                                <td>-</td>
+                                <td><code>AML.CS0034</code></td>
                                 <td>Deepfakeによるモバイル本人確認突破</td>
                                 <td>
                                     ソーシャルエンジニアリングで得た情報からディープフェイクを生成し、仮想カメラで物理カメラ要件を回避、銀行アプリの生体認証(liveness
@@ -1469,11 +1483,11 @@
                             >
                         </li>
                         <li>
-                            ATLAS公式データ(YAML):
+                            ATLAS公式データ(固定版YAML, v2026.07):
                             <a
-                                href="https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml"
+                                href="https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml"
                                 target="_blank"
-                                >https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml</a
+                                >https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml</a
                             >
                         </li>
                         <li>

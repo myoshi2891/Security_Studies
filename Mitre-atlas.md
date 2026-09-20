@@ -290,9 +290,10 @@ ATLASのMitigationsは`AML.M00xx`というIDで管理されており、1つのTe
 |---|---|---|
 | AML.M0000 | Limit Public Release of Information | 組織のAIスタックに関する技術情報の公開範囲を制限する。偵察(Reconnaissance)対策の基本 |
 | AML.M0001 | Limit Model Artifact Release | 本番で使用しているデータ・アルゴリズム・モデルアーキテクチャの公開を制限する |
-| AML.M0004 | Restrict Number of Queries | 推論APIへのクエリ数を制限し、Cost HarvestingやModel Extractionを難しくする |
-| AML.M0013/M0014 | 供給元・アーティファクトの検証 | 外部から取得したデータセットやモデルの出所・整合性を検証する |
-| AML.M0015 | Adversarial Input Detection | 通常の利用パターンから統計的に逸脱する入力をML的に検知する |
+| AML.M0004 | Limit AI Service Query Volume and Rate | 推論APIへのクエリ数を制限し、Cost HarvestingやModel Extractionを難しくする |
+| AML.M0013 | Code Signing | AIソフトウェアやモデル、SBOM/AIBOMにデジタル署名検証を強制し、未署名・改ざんされたコードの実行を防ぐ |
+| AML.M0014 | Verify AI Artifacts | 外部から取得したデータセットやモデルファイルの暗号学的チェックサムを検証し、改ざんされていないことを確認する |
+| AML.M0015 | Predictive AI Adversarial Input Detection | 通常の利用パターンから統計的に逸脱する入力をML的に検知する |
 | AML.M0020 | GenAI Guardrails | モデルとユーザーの間にフィルタを設置し、攻撃的な入力を到達前にブロックする |
 | AML.M0023 | AI Bill of Materials(AI BOM) | 使用しているモデル・データセット・依存パッケージを台帳管理し、サプライチェーンリスクを可視化する |
 | AML.M0024 | AI Telemetry Logging | 推論への入力を記録し、インジェクションパターンなどを事後的に検知できるようにする |
@@ -402,7 +403,7 @@ ATLASは単独で使うものではなく、他のフレームワークと組み
 - ATLAS Mitigations一覧: [https://atlas.mitre.org/mitigations](https://atlas.mitre.org/mitigations)
 - ATLAS Navigator: [https://mitre-atlas.github.io/atlas-navigator/](https://mitre-atlas.github.io/atlas-navigator/)
 - ATLASデータ(GitHubリポジトリ、YAML/JSON/STIX形式): [https://github.com/mitre-atlas/atlas-data](https://github.com/mitre-atlas/atlas-data)
-- ATLAS公式データ(レガシーYAML、非推奨だが参照可能): [https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml](https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/ATLAS.yaml)
+- ATLAS公式データ(固定版YAML, v2026.07): [https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml](https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml)
 - MITRE公式プレスリリース(生成AI拡張、2023年11月): [https://www.mitre.org/news-insights/news-release/mitre-and-microsoft-collaborate-address-generative-ai-security-risks](https://www.mitre.org/news-insights/news-release/mitre-and-microsoft-collaborate-address-generative-ai-security-risks)
 - ATLAS概要説明(MITRE ATLASリード, NIST発表資料 2025年9月): [https://csrc.nist.gov/csrc/media/Presentations/2025/mitre-atlas/TuePM2.1-MITRE%20ATLAS%20Overview%20Sept%202025.pdf](https://csrc.nist.gov/csrc/media/Presentations/2025/mitre-atlas/TuePM2.1-MITRE%20ATLAS%20Overview%20Sept%202025.pdf)
 - MITRE ATLAS for Agentic AI(2026年最新動向の解説): [https://anomity.ai/blog/mitre-atlas-agentic-ai-threats-guide/](https://anomity.ai/blog/mitre-atlas-agentic-ai-threats-guide/)
