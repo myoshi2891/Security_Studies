@@ -269,7 +269,7 @@ body {
     box-shadow: inset 0 0 16px rgba(109, 231, 242, 0.06);
 }
 
-.brand-year { color: #667180; font-weight: 600; }
+.brand-year { color: #818c97; font-weight: 600; }
 .landing-nav-links { display: flex; align-items: center; gap: 30px; }
 .landing-nav-links a {
     color: #9ca5b0;

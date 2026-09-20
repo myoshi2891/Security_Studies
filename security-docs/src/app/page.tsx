@@ -26,6 +26,7 @@ export default function HomePage() {
     (total, section) => total + section.items.length,
     0,
   );
+  const domainCount = docsConfig.sidebarNav.length;
 
   return (
     <div className="landing-shell">
@@ -90,7 +91,7 @@ export default function HomePage() {
                   <span>FIELD GUIDES</span>
                 </div>
                 <div>
-                  <strong>05</strong>
+                  <strong>{String(domainCount).padStart(2, "0")}</strong>
                   <span>DOMAINS</span>
                 </div>
                 <div>
