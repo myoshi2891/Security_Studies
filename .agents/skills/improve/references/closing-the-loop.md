@@ -11,7 +11,7 @@ The founding rule survives unchanged: **the advisor never edits source code.** I
 ### Preconditions (check all before dispatching)
 
 - The repo is a git repository (worktree isolation requires it). If not: stop and say so.
-- The plan file exists and its dependencies show DONE in the plan index (`plans/README.md`, or `advisor-plans/README.md` if that directory was chosen — see SKILL.md). If not: stop, name the missing dependency.
+- The plan file exists and its dependencies show DONE in the plan index (`PLAN_DIR/README.md` — see SKILL.md for how `PLAN_DIR` was resolved). If not: stop, name the missing dependency.
 - Run the plan's drift check yourself. If in-scope files changed since `Planned at`, reconcile the plan first (see below) — don't hand a stale plan to an executor.
 
 ### Dispatch
@@ -20,7 +20,7 @@ Spawn **one** `general-purpose` subagent with `isolation: "worktree"`. Executor 
 
 The subagent prompt must contain:
 
-1. **The full plan file text, inlined.** The worktree contains only committed files — if `plans/` is uncommitted, the executor can't read it. Never assume; always inline.
+1. **The full plan file text, inlined.** The worktree contains only committed files — if `PLAN_DIR` is uncommitted, the executor can't read it. Never assume; always inline.
 2. The executor preamble:
 
 > You are the executor for the implementation plan below. Follow it step by
@@ -28,7 +28,7 @@ The subagent prompt must contain:
 > moving on. Touch only the files listed as in scope. If any STOP condition
 > occurs, stop immediately and report. Do not improvise around obstacles.
 > Commit your work in the worktree following the plan's git workflow section.
-> One override: SKIP the plan's instruction to update `plans/README.md` —
+> One override: SKIP the plan's instruction to update `PLAN_DIR/README.md` —
 > your reviewer maintains the index. Before reporting, audit every claim in
 > your report against an actual tool result from this session — only report
 > what you can point to evidence for; if a verification failed or was
@@ -52,7 +52,7 @@ Note on fresh worktrees: they share git history but not `node_modules` or build 
 Review like a tech lead reviewing a PR against the spec — never fix anything yourself:
 
 1. **Re-run every done criterion** in the worktree. Don't trust the executor's report — verify.
-2. **Scope compliance**: `git -C <worktree> diff --stat` against the plan's in-scope list. Any file outside scope fails review, full stop.
+2. **Scope compliance**: `git -C <worktree> diff --stat <planned-at SHA>..HEAD` against the plan's in-scope list — not a bare `diff --stat`, which only shows uncommitted changes and misses anything the executor already committed. Any file outside scope fails review, full stop.
 3. **Read the full diff.** Judge it against "Why this matters" (does it solve the actual problem?) and the repo conventions named in the plan (does it look like the rest of the codebase?).
 4. **Audit the new tests.** Executors game criteria — a test that asserts nothing meaningful passes `pnpm test` and proves nothing. Read what the tests assert.
 
@@ -70,9 +70,9 @@ Running verification commands inside the executor's worktree is fine — it's is
 
 ---
 
-## `reconcile` — keep `plans/` alive
+## `reconcile` — keep `PLAN_DIR` alive
 
-Process what happened since the last session. Read `plans/README.md` and every plan file, then per status:
+Process what happened since the last session. Read `PLAN_DIR/README.md` and every plan file, then per status:
 
 - **DONE** — spot-check that the done criteria still hold on the current HEAD (cheap ones only). Mark verified in the index. Don't delete plan files — they're the record.
 - **BLOCKED** — read the reason. Investigate the underlying obstacle in the codebase. Either rewrite the plan around it (new number if the approach changed fundamentally, in-place refresh otherwise) or mark REJECTED with one line of rationale.

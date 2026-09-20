@@ -79,10 +79,12 @@ Wait for the selection. Do not write 30 plans nobody asked for. If running non-i
 
 ### Phase 4 — Write the plans
 
+First, fix `PLAN_DIR`: `plans/` by default, or `advisor-plans/` if `plans/` already exists for an unrelated purpose (say so when this happens). Every reference below to `PLAN_DIR` — here, in plan-template.md, and in closing-the-loop.md — means this same resolved directory; never mix the two names within one run.
+
 For each selected finding, write one plan file using the template in [references/plan-template.md](references/plan-template.md) — read it before writing the first plan. Plans go in:
 
 ```
-plans/
+PLAN_DIR/
   README.md          ← index: priority order, dependency graph, status table
   001-<slug>.md
   002-<slug>.md
@@ -90,7 +92,7 @@ plans/
 
 **Excerpts come from your own reads, never from a subagent's report.** Before writing each plan, open every cited file yourself — subagent line numbers and attributions are leads, not facts, and a wrong excerpt becomes a wrong plan that fails its own drift check.
 
-Before writing anything: record `git rev-parse --short HEAD` — every plan stamps the commit it was written against (the executor uses it for drift detection). If `plans/` already exists from a previous run, **reconcile, don't duplicate**: read `plans/README.md`, keep numbering monotonic, skip findings already planned or listed as rejected, and mark superseded plans stale in the index. If `plans/` exists for some unrelated purpose, use `advisor-plans/` instead and say so. Whichever directory is chosen, use it consistently for the rest of this run — the plan template's status-update and drift-check instructions, and closing-the-loop.md's `execute`/`reconcile` steps, all assume the same chosen directory.
+Before writing anything: record `git rev-parse --short HEAD` — every plan stamps the commit it was written against (the executor uses it for drift detection). If `PLAN_DIR` already exists from a previous run, **reconcile, don't duplicate**: read `PLAN_DIR/README.md`, keep numbering monotonic, skip findings already planned or listed as rejected, and mark superseded plans stale in the index. Whichever directory `PLAN_DIR` resolved to, use it consistently for the rest of this run — the plan template's status-update and drift-check instructions, and closing-the-loop.md's `execute`/`reconcile` steps, all assume the same `PLAN_DIR`.
 
 Write each plan **for the weakest plausible executor**. That means:
 
@@ -102,7 +104,7 @@ Write each plan **for the weakest plausible executor**. That means:
 - A maintenance note (what future changes will interact with this, what to watch in review).
 - Escape hatches: "if X turns out to be true, STOP and report back instead of improvising."
 
-Finish by writing `plans/README.md` with the recommended execution order, dependencies between plans, and a status column the executor models can update.
+Finish by writing `PLAN_DIR/README.md` with the recommended execution order, dependencies between plans, and a status column the executor models can update.
 
 ## Invocation variants
 

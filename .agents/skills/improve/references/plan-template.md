@@ -8,7 +8,7 @@ Three properties make a plan executable by a weaker model:
 2. **Verification gates** — every step ends with a command and its expected result. The executor never has to *judge* whether it succeeded.
 3. **Hard boundaries and escape hatches** — explicit out-of-scope list, and "STOP and report" conditions instead of letting the model improvise when reality doesn't match the plan.
 
-File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
+File naming: `PLAN_DIR/NNN-short-slug.md`, numbered in recommended execution order. `PLAN_DIR` is the directory chosen in SKILL.md Phase 4 (`plans/` by default, `advisor-plans/` if `plans/` is taken) — substitute the actual resolved path when instantiating a plan.
 
 ---
 
@@ -21,9 +21,9 @@ File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
 > verification command and confirm the expected result before moving to the
 > next step. If anything in the "STOP conditions" section occurs, stop and
 > report — do not improvise. When done, update the status row for this plan
-> in the plan index (`plans/README.md`, or `advisor-plans/README.md` if that
-> directory was used instead — see SKILL.md) — unless a reviewer dispatched
-> you and told you they maintain the index.
+> in the plan index (`PLAN_DIR/README.md` — see SKILL.md for how `PLAN_DIR`
+> was resolved) — unless a reviewer dispatched you and told you they maintain
+> the index.
 >
 > **Drift check (run first)**: `git diff --stat <planned-at SHA>..HEAD -- <in-scope paths>`
 > If any in-scope file changed since this plan was written, compare the
@@ -35,7 +35,7 @@ File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
 - **Priority**: P1 | P2 | P3
 - **Effort**: S | M | L
 - **Risk**: LOW | MED | HIGH
-- **Depends on**: plans/NNN-*.md (or "none")
+- **Depends on**: PLAN_DIR/NNN-*.md (or "none")
 - **Category**: bug | security | perf | tests | tech-debt | migration | dx | docs | direction
 - **Planned at**: commit `<short SHA>`, <YYYY-MM-DD>
 - **Issue**: <GitHub issue URL — only when published via `--issues`; omit otherwise>
@@ -133,8 +133,8 @@ Machine-checkable. ALL must hold:
 - [ ] `pnpm typecheck` exits 0
 - [ ] `pnpm test` exits 0; new tests for <X> exist and pass
 - [ ] `grep -rn "<old pattern>" src/` returns no matches
-- [ ] No files outside the in-scope list are modified (`git status`)
-- [ ] Plan index (`plans/README.md`, or `advisor-plans/README.md` if that directory was used) status row updated — unless a reviewer dispatched you and is responsible for maintaining the index (see closing-the-loop.md)
+- [ ] `git diff --name-only <planned-at SHA>..HEAD` lists only files from the in-scope list (not `git status` — that misses already-committed changes)
+- [ ] Plan index (`PLAN_DIR/README.md`) status row updated — unless a reviewer dispatched you and is responsible for maintaining the index (see closing-the-loop.md)
 
 ## STOP conditions
 
@@ -158,7 +158,7 @@ For the human/agent who owns this code after the change lands:
 
 ---
 
-## Index file: `plans/README.md`
+## Index file: `PLAN_DIR/README.md`
 
 Written once by the advisor after all plans, updated by executors:
 
