@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-05-27
+Updated 2026-09-20
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ This is a Next.js-based documentation application focused on security studies. I
 
 ### Key Technologies
 
-- **Framework:** Next.js 16.2.2 (App Router)
+- **Framework:** Next.js 16.3.5 (App Router)
 - **UI Library:** React 19
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 with PostCSS

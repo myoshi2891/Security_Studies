@@ -1,6 +1,6 @@
 # Includes / Directives
 
-Updated 2026-05-27
+Updated 2026-09-20
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
@@ -18,7 +18,7 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ## Technical Standards
 
-- **Next.js**: 16.2.6, App Router, TypeScript (strict).
+- **Next.js**: 16.3.5, App Router, TypeScript (strict).
 - **Content**: MDX via `@next/mdx`. All pages live in `src/app/docs/<slug>/page.mdx`. Register new slugs in `src/config/docs.ts`.
 - **Components**: Custom docs components in `src/components/docs/` (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
 - **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes only.

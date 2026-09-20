@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-05-27
+Updated 2026-09-20
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
