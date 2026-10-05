@@ -46,8 +46,6 @@ jobs:
         with:
           files: security-docs/coverage/lcov.info
           fail_ci_if_error: false
-          # cli.codecov.io が TLS ハンドシェイクを拒否する事象への対策として CLI を PyPI から取得する
-          use_pypi: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
   audit:
@@ -82,3 +80,7 @@ jobs:
         # GHSA-vfj7-8cjw-p6xm (braces <=3.0.3): パッチ未提供・dev 依存のみ（eslint-config-next 経由）。
         # 見直し期限: 2026-11-05（docs/progress.md 参照）
         run: bun audit --audit-level=high --ignore=GHSA-vfj7-8cjw-p6xm
+
+      # 本番依存のみを除外指定なしで監査し、一時除外が本番依存に波及していないことを保証する
+      - name: Run production dependency audit
+        run: bun audit --prod --audit-level=high
