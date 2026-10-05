@@ -20,7 +20,7 @@
 9. [方法論の地図（STRIDE / PASTA / LINDDUN ほか）](#9-方法論の地図stride--pasta--linddun-ほか)
 10. [自動化と Threat Modeling as Code](#10-自動化と-threat-modeling-as-code)
 11. [継続的 Threat Modeling（Agile / DevOps との統合）](#11-継続的-threat-modelingagile--devops-との統合)
-12. [2026年の動向: クラウドと AI / エージェント](#12-2026年の動向クラウドと-ai--エージェント)
+12. [2026年の動向: クラウドと AI / エージェント](#12-2026年の動向-クラウドと-ai--エージェント)
 13. [Threat Modeling Champion になる（組織導入 FAQ）](#13-threat-modeling-champion-になる組織導入-faq)
 14. [ハンズオン: 最初の60分セッション](#14-ハンズオン-最初の60分セッション)
 15. [アンチパターンとチェックリスト](#15-アンチパターンとチェックリスト)
@@ -316,7 +316,7 @@ sequenceDiagram
     A->>I: コードをトークンに交換
     I-->>A: アクセストークン
     A-->>B: セッション Cookie を発行
-    Note over B,A: 信頼境界をまたぐのは 2 → 5 → 7 の通信
+    Note over B,I: 信頼境界をまたぐのは 2〜7 の通信（ブラウザ・IdP・API 間）
 ```
 
 ### 5.7 良いシステムモデルの条件（チェックリスト）
