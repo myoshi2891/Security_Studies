@@ -76,4 +76,6 @@ jobs:
       #      docs/progress.md の「セキュリティ / CSP」セクションに対応期限とともに記録する
       #   4. `bun audit` が利用不能な環境では `npm audit --audit-level=high` に切り替える
       - name: Run security audit
-        run: bun audit --audit-level=high
+        # GHSA-vfj7-8cjw-p6xm (braces <=3.0.3): パッチ未提供・dev 依存のみ（eslint-config-next 経由）。
+        # 見直し期限: 2026-11-05（docs/progress.md 参照）
+        run: bun audit --audit-level=high --ignore=GHSA-vfj7-8cjw-p6xm

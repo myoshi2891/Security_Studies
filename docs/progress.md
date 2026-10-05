@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-27（search.ts エラーパスカバレッジ補完・118ケース）  
+> **最終更新**: 2026-10-05（next 16.3.8 へ更新・braces 脆弱性の一時除外）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -57,6 +57,8 @@
 | API セキュリティヘッダー | ❌ **未検証** | `GET /api/search` の CSP 応用未テスト |
 | 入力サニタイズ | ❌ **未テスト** | SearchModal XSS 耐性テストなし |
 | 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行 |
+| next RCE（GHSA-vcvr-r3jv-pc5j） | ✅ **解消** | 2026-10-05: `next` / `eslint-config-next` を 16.3.5 → 16.3.8 へ更新 |
+| braces DoS（GHSA-vfj7-8cjw-p6xm） | ⚠️ **一時除外** | パッチ未提供（<=3.0.3 全版が対象）。`eslint-config-next` 経由の dev 依存のみで、本番バンドル・ユーザー入力経路に含まれない。CI で `--ignore` 指定、**期限 2026-11-05** までに修正版の有無を再確認 |
 
 #### CSP 現行構成（2026-05-20）
 
