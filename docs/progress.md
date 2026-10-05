@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-05（next 16.3.8 へ更新・braces 脆弱性の一時除外）  
+> **最終更新**: 2026-10-05（next 16.3.8 へ更新・braces 脆弱性の一時除外・Codecov 障害対応）  
 > **ブランチ**: `dev` → `main` マージ済み (#34)  
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -122,7 +122,7 @@ form-action 'self'
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
-| カバレッジ CI 連携 | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov.info) ※CODECOV_TOKEN 要手動追加 |
+| カバレッジ CI 連携 | ⚠️ **送信停止中** | `bun test --coverage` + Codecov (lcov.info)。2026-10-05 時点で Codecov 側に接続不可（TLS ハンドシェイク拒否）。`codecov-action` v7.1.1 + `use_pypi` + `continue-on-error` で CI は通過させている。CODECOV_TOKEN 未登録 → 次のアクション #11 |
 | `bun audit` CI 組み込み | ✅ **稼働中** | `audit` job として並列実行（`--audit-level=high`、高・重大のみ failure 扱い） |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
 
@@ -154,6 +154,20 @@ form-action 'self'
 #### 5. SearchModal A11y テスト追加
 
 17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
+
+#### 11. Codecov 復旧後の対応（2026-10-05 起票）
+
+**経緯**: 2026-10-05、`codecov/codecov-action@v4` が `cli.codecov.io` からの CLI 取得時に `SSL alert number 40`（handshake_failure）で失敗し、`quality` job が落ちた。ローカルの `curl` / `openssl s_client` でも同じ症状が再現し、`ingest.codecov.io` は証明書の期限切れを返していたため、Codecov 側の障害と判断した。Codecov のサイトにも接続できない状態。
+
+**実施済み（`ci.yml`）**: `codecov-action` を v7.1.1（SHA 固定）へ更新、`use_pypi: true` で CLI を PyPI から取得、トークンを `token:` 入力で渡すよう変更、`continue-on-error: true` を追加（カバレッジ送信は品質ゲートではないため）。
+
+**Codecov 復旧後に行うこと**:
+
+- [ ] `curl -sS -o /dev/null -w '%{http_code}\n' https://cli.codecov.io/` で TLS 接続の復旧を確認する
+- [ ] https://app.codecov.io/gh/myoshi2891/Security_Studies/config/general から Repository upload token を取得し、`gh secret set CODECOV_TOKEN -R myoshi2891/Security_Studies` で登録する（現状シークレット未登録で、`dev` は protected branch のためトークンなしの送信は警告対象）
+- [ ] CI を再実行し、Codecov ステップのログで `use_pypi` 経由のアップロード成功と、Codecov 上でのカバレッジ反映を確認する
+- [ ] 代替案の検討: トークン管理を不要にする OIDC（`use_oidc: true` + `permissions: id-token: write`）。ワークフロー権限の拡大を伴うため要判断
+- [ ] 完了後、`continue-on-error` を残すか判断し、上記「CI / CD・インフラ」表のステータスを ✅ に戻す
 
 ---
 

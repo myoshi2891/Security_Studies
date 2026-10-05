@@ -40,12 +40,15 @@ jobs:
         run: bun test --coverage
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        # カバレッジ送信は品質ゲートではないため、Codecov 側の障害（TLS 拒否等）で CI を落とさない
+        continue-on-error: true
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           files: security-docs/coverage/lcov.info
           fail_ci_if_error: false
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          # cli.codecov.io が TLS ハンドシェイクを拒否する事象への対策として CLI を PyPI から取得する
+          use_pypi: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   audit:
     name: Security Audit
