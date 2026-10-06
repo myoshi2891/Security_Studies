@@ -16,7 +16,7 @@
 2. [なぜ今、脅威モデリングなのか（2026年の文脈）](#2-なぜ今脅威モデリングなのか2026年の文脈)
 3. [全体像：4つの質問（Four Question Framework）](#3-全体像4つの質問four-question-framework)
 4. [Step 0：準備（スコープ・参加者・成果物）](#4-step-0準備スコープ参加者成果物)
-5. [Step 1：What are we working on?（システムをモデル化する）](#5-step-1what-are-we-workingonシステムをモデル化する)
+5. [Step 1：What are we working on?（システムをモデル化する）](#5-step-1what-are-we-working-onシステムをモデル化する)
 6. [Step 2：What can go wrong?（脅威を見つける）](#6-step-2what-can-go-wrong脅威を見つける)
 7. [Step 3：What are we going to do about it?（対処する）](#7-step-3what-are-we-going-to-do-about-it対処する)
 8. [Step 4：Did we do a good enough job?（検証する）](#8-step-4did-we-do-a-good-enough-job検証する)
