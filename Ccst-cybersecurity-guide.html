@@ -99,18 +99,27 @@ pre code.hljs{background:transparent;padding:0}
 .qa p{margin:0}
 .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .opt{padding:2px 12px;background:var(--tint-indigo);border-radius:6px}
+.nav-toggle{display:none;position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:70;width:56px;height:56px;border-radius:50%;border:2px solid var(--color-surface);background:var(--color-indigo);color:var(--color-surface);align-items:center;justify-content:center;cursor:pointer;padding:0}
+.nav-toggle .ti{font-size:1.75rem}
+.nav-toggle:focus-visible{outline:3px solid var(--color-gold);outline-offset:3px}
+.nav-backdrop{display:none}
 @media (max-width:1000px){
-.sidebar{position:static;width:auto;max-height:50vh;border-right:0;border-bottom:1px solid var(--color-line)}
-.main{margin-left:0;padding:0 20px 64px}
+.main{margin-left:0;padding:0 20px 104px}
 .hero{padding:32px 0 24px}
-.hero h1{font-size:1.5rem}
-.chapter-head h1{font-size:1.5rem}
+.hero h1,.chapter-head h1{font-size:1.5rem}
+.nav-toggle{display:inline-flex}
+.sidebar{width:min(86vw,320px);z-index:60;transform:translateX(-100%);visibility:hidden;transition:transform .28s ease,visibility 0s linear .28s}
+body.nav-open .sidebar{transform:none;visibility:visible;transition:transform .28s ease}
+.nav-backdrop{display:block;position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--color-ink) 45%,transparent);opacity:0;pointer-events:none;transition:opacity .28s ease}
+body.nav-open .nav-backdrop{opacity:1;pointer-events:auto}
+body.nav-open{overflow:hidden}
 }
+@media (prefers-reduced-motion:reduce){.sidebar,.nav-backdrop{transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="layout">
-<aside class="sidebar"><div class="brand"><svg class="crest" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle class="ring" cx="20" cy="20" r="18"/><path class="shield" d="M20 9l9 3.5v7.2c0 5.4-3.7 9.4-9 11.3-5.3-1.9-9-5.9-9-11.3v-7.2z"/><path class="tick" d="M15.5 20.5l3.2 3.2 6-6.4"/></svg><div><div class="brand-t">CCST サイバーセキュリティ</div><div class="brand-s">100-160 学習ガイド</div></div></div><nav><div class="nav-group">はじめに</div><ul><li><a href="#s0">0. このガイドの使い方</a></li><li><a href="#s1">1. 試験の概要</a></li><li><a href="#s2">2. 学習ロードマップ</a></li><li><a href="#s3">3. 試験範囲マップ（全 23 目標）</a></li></ul><div class="nav-group"><a href=#ch1>第1章 Essential Security Principles（セキュリティの基本原則）</a></div><ul><li><a href="#s1-1">1.1 基本的なセキュリティ原則の定義</a></li><li><a href="#s1-2">1.2 一般的な脅威と脆弱性の説明</a></li><li><a href="#s1-3">1.3 アクセス管理の原則の説明</a></li><li><a href="#s1-4">1.4 暗号化の方式と用途の説明</a></li></ul><div class="nav-group"><a href=#ch2>第2章 Basic Network Security Concepts（ネットワークセキュリティの基礎）</a></div><ul><li><a href="#s2-1">2.1 TCP/IP プロトコルの脆弱性</a></li><li><a href="#s2-2">2.2 ネットワークアドレスがセキュリティに与える影響</a></li><li><a href="#s2-3">2.3 ネットワークインフラと関連技術</a></li><li><a href="#s2-4">2.4 SoHo 無線ネットワークの安全な設定</a></li><li><a href="#s2-5">2.5 セキュアなアクセス技術の実装</a></li></ul><div class="nav-group"><a href=#ch3>第3章 Endpoint Security Concepts（エンドポイントセキュリティ）</a></div><ul><li><a href="#s3-1">3.1 OS のセキュリティ概念</a></li><li><a href="#s3-2">3.2 セキュリティ評価情報を収集するエンドポイントツール</a></li><li><a href="#s3-3">3.3 エンドポイントがポリシー・標準を満たすことの確認</a></li><li><a href="#s3-4">3.4 ソフトウェアとハードウェアの更新</a></li><li><a href="#s3-5">3.5 システムログの解釈</a></li><li><a href="#s3-6">3.6 マルウェア除去の基礎</a></li></ul><div class="nav-group"><a href=#ch4>第4章 Vulnerability Assessment and Risk Management（脆弱性評価とリスク管理）</a></div><ul><li><a href="#s4-1">4.1 脆弱性管理の説明</a></li><li><a href="#s4-2">4.2 脅威インテリジェンスによるネットワークの脆弱性の特定</a></li><li><a href="#s4-3">4.3 リスク管理の説明</a></li><li><a href="#s4-4">4.4 災害復旧と事業継続計画の重要性</a></li></ul><div class="nav-group"><a href=#ch5>第5章 Incident Handling（インシデント対応）</a></div><ul><li><a href="#s5-1">5.1 セキュリティイベントの監視とエスカレーションの判断</a></li><li><a href="#s5-2">5.2 デジタルフォレンジックと攻撃者の特定プロセス</a></li><li><a href="#s5-3">5.3 コンプライアンスフレームワークがインシデント対応に与える影響</a></li><li><a href="#s5-4">5.4 サイバーセキュリティインシデント対応の要素</a></li></ul><div class="nav-group"><a href=#ch6>第6章 総まとめ（頻出ポイント・用語集・確認問題）</a></div><ul><li><a href="#s6-1">6.1 紛らわしい用語の比較（直前確認用）</a></li><li><a href="#s6-2">6.2 数字で覚える</a></li><li><a href="#s6-3">6.3 用語集（日本語 / English）</a></li><li><a href="#s6-4">6.4 確認問題（25 問）</a></li><li><a href="#s6-5">6.5 受験直前チェックリスト</a></li><li><a href="#s6-6">6.6 試験当日の戦略</a></li></ul><div class="nav-group"><a href=#refs>参考文献・ソース一覧</a></div><ul><li><a href="#ref-a">A. Cisco 公式（試験の根拠）</a></li><li><a href="#ref-b">B. 標準・フレームワーク（NIST / MITRE / FIRST / IETF）</a></li><li><a href="#ref-c">C. 法令・規制・コンプライアンス</a></li><li><a href="#ref-d">D. 日本の公的機関・実務情報</a></li><li><a href="#ref-e">E. 技術・ツールの公式ドキュメント</a></li><li><a href="#ref-f">F. 本ガイドの注意事項</a></li></ul></nav></aside>
+<aside class="sidebar" id="sidebar"><div class="brand"><svg class="crest" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle class="ring" cx="20" cy="20" r="18"/><path class="shield" d="M20 9l9 3.5v7.2c0 5.4-3.7 9.4-9 11.3-5.3-1.9-9-5.9-9-11.3v-7.2z"/><path class="tick" d="M15.5 20.5l3.2 3.2 6-6.4"/></svg><div><div class="brand-t">CCST<br>サイバーセキュリティ</div><div class="brand-s">100-160 学習ガイド</div></div></div><nav><div class="nav-group">はじめに</div><ul><li><a href="#s0">0. このガイドの使い方</a></li><li><a href="#s1">1. 試験の概要</a></li><li><a href="#s2">2. 学習ロードマップ</a></li><li><a href="#s3">3. 試験範囲マップ（全 23 目標）</a></li></ul><div class="nav-group"><a href=#ch1>第1章 Essential Security Principles（セキュリティの基本原則）</a></div><ul><li><a href="#s1-1">1.1 基本的なセキュリティ原則の定義</a></li><li><a href="#s1-2">1.2 一般的な脅威と脆弱性の説明</a></li><li><a href="#s1-3">1.3 アクセス管理の原則の説明</a></li><li><a href="#s1-4">1.4 暗号化の方式と用途の説明</a></li></ul><div class="nav-group"><a href=#ch2>第2章 Basic Network Security Concepts（ネットワークセキュリティの基礎）</a></div><ul><li><a href="#s2-1">2.1 TCP/IP プロトコルの脆弱性</a></li><li><a href="#s2-2">2.2 ネットワークアドレスがセキュリティに与える影響</a></li><li><a href="#s2-3">2.3 ネットワークインフラと関連技術</a></li><li><a href="#s2-4">2.4 SoHo 無線ネットワークの安全な設定</a></li><li><a href="#s2-5">2.5 セキュアなアクセス技術の実装</a></li></ul><div class="nav-group"><a href=#ch3>第3章 Endpoint Security Concepts（エンドポイントセキュリティ）</a></div><ul><li><a href="#s3-1">3.1 OS のセキュリティ概念</a></li><li><a href="#s3-2">3.2 セキュリティ評価情報を収集するエンドポイントツール</a></li><li><a href="#s3-3">3.3 エンドポイントがポリシー・標準を満たすことの確認</a></li><li><a href="#s3-4">3.4 ソフトウェアとハードウェアの更新</a></li><li><a href="#s3-5">3.5 システムログの解釈</a></li><li><a href="#s3-6">3.6 マルウェア除去の基礎</a></li></ul><div class="nav-group"><a href=#ch4>第4章 Vulnerability Assessment and Risk Management（脆弱性評価とリスク管理）</a></div><ul><li><a href="#s4-1">4.1 脆弱性管理の説明</a></li><li><a href="#s4-2">4.2 脅威インテリジェンスによるネットワークの脆弱性の特定</a></li><li><a href="#s4-3">4.3 リスク管理の説明</a></li><li><a href="#s4-4">4.4 災害復旧と事業継続計画の重要性</a></li></ul><div class="nav-group"><a href=#ch5>第5章 Incident Handling（インシデント対応）</a></div><ul><li><a href="#s5-1">5.1 セキュリティイベントの監視とエスカレーションの判断</a></li><li><a href="#s5-2">5.2 デジタルフォレンジックと攻撃者の特定プロセス</a></li><li><a href="#s5-3">5.3 コンプライアンスフレームワークがインシデント対応に与える影響</a></li><li><a href="#s5-4">5.4 サイバーセキュリティインシデント対応の要素</a></li></ul><div class="nav-group"><a href=#ch6>第6章 総まとめ（頻出ポイント・用語集・確認問題）</a></div><ul><li><a href="#s6-1">6.1 紛らわしい用語の比較（直前確認用）</a></li><li><a href="#s6-2">6.2 数字で覚える</a></li><li><a href="#s6-3">6.3 用語集（日本語 / English）</a></li><li><a href="#s6-4">6.4 確認問題（25 問）</a></li><li><a href="#s6-5">6.5 受験直前チェックリスト</a></li><li><a href="#s6-6">6.6 試験当日の戦略</a></li></ul><div class="nav-group"><a href=#refs>参考文献・ソース一覧</a></div><ul><li><a href="#ref-a">A. Cisco 公式（試験の根拠）</a></li><li><a href="#ref-b">B. 標準・フレームワーク（NIST / MITRE / FIRST / IETF）</a></li><li><a href="#ref-c">C. 法令・規制・コンプライアンス</a></li><li><a href="#ref-d">D. 日本の公的機関・実務情報</a></li><li><a href="#ref-e">E. 技術・ツールの公式ドキュメント</a></li><li><a href="#ref-f">F. 本ガイドの注意事項</a></li></ul></nav></aside>
 <main class="main">
 <header class="hero"><div class="eyebrow">Cisco Certified Support Technician</div><h1>Cisco Certified Support Technician (CCST) サイバーセキュリティ 初学者向け完全ガイド</h1><div class="stats"><div class=stat><div class=sv>50 分</div><div class=sl>試験時間</div></div><div class=stat><div class=sv>5</div><div class=sl>試験ドメイン</div></div><div class=stat><div class=sv>23</div><div class=sl>試験目標</div></div><div class=stat><div class=sv>50</div><div class=sl>Mermaid 図</div></div></div><div class="meta"><div class=mc><div class=mk>対象試験</div><div class=mv>100-160 Cisco Certified Support Technician (CCST) Cybersecurity</div></div><div class=mc><div class=mk>想定読者</div><div class=mv>IT・セキュリティの実務経験がほぼない初学者、学生、ヘルプデスクや運用から SOC / セキュリティ職を目指す方</div></div><div class=mc><div class=mk>作成日</div><div class=mv>2026-10-05（試験範囲は Cisco 公式の試験トピックに基づく。受験前に必ず最新版を確認してください）</div></div><div class=mc><div class=mk>方針</div><div class=mv>専門用語は初出時に日本語＋英語で説明し、各項目に「ベストプラクティス」と「試験での狙われ方」を付けています。図はすべて Mermaid または Markdown 表で表現しています。</div></div></div></header>
 <section class="sec" id="s0"><h2>0. このガイドの使い方</h2>
@@ -524,6 +533,61 @@ pre code.hljs{background:transparent;padding:0}
 <h4>(3) 多層防御 (Defense in Depth)</h4>
 <p>1 つの対策が破られても、<strong>次の層で止める</strong>考え方です。「城の堀・城壁・門・見張り・金庫」のように、複数の防御を重ねます。</p>
 <div class="diagram" data-d="d3" role="img" aria-label="図 4"></div>
+<p><strong>図の読み方</strong>：攻撃者は上から順に各層へ挑みます。<strong>どの層でも「検知・阻止」できればそこで攻撃は止まり</strong>、突破された場合だけ次の層へ進みます。すべての層が破られたときに初めて資産が被害を受けるため、層を重ねるほど安全になります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>守る対象</th>
+<th>代表的な対策</th>
+<th>この層が破られても…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>層1 人と運用</td>
+<td>利用者の行動・業務手順</td>
+<td>ポリシー、教育、模擬訓練、手順書</td>
+<td>だまされても、他の層が被害を食い止める</td>
+</tr>
+<tr>
+<td>層2 物理</td>
+<td>建物・機器・媒体</td>
+<td>入退室管理、施錠、監視カメラ</td>
+<td>機器に触れられても、ディスク暗号化とログインで守る</td>
+</tr>
+<tr>
+<td>層3 ネットワーク境界</td>
+<td>外部との出入口</td>
+<td>ファイアウォール、IPS、VPN</td>
+<td>境界を越えられても、内部の分離で広がりを抑える</td>
+</tr>
+<tr>
+<td>層4 内部ネットワーク</td>
+<td>社内の通信</td>
+<td>セグメンテーション、NAC</td>
+<td>1 台が侵害されても、他のセグメントへ広げさせない</td>
+</tr>
+<tr>
+<td>層5 ホスト</td>
+<td>PC・サーバー</td>
+<td>パッチ、EDR、ホスト型 FW</td>
+<td>マルウェアが動いても、アプリとデータの層で止める</td>
+</tr>
+<tr>
+<td>層6 アプリ</td>
+<td>アプリケーション</td>
+<td>入力検証、認証、WAF</td>
+<td>脆弱性を突かれても、データ側の保護で漏えいを防ぐ</td>
+</tr>
+<tr>
+<td>層7 データ</td>
+<td>情報そのもの</td>
+<td>暗号化、バックアップ、アクセス制御</td>
+<td>盗まれても読めず、消されても復元できる</td>
+</tr>
+</tbody>
+</table></div>
 <h4>(4) CIA トライアド（情報セキュリティの 3 要素）</h4>
 <div class="table-wrap"><table>
 <thead>
@@ -6640,6 +6704,8 @@ Get-WinEvent -FilterHashtable @{ LogName='Security'; Id=4625; StartTime=(Get-Dat
 </section>
 </main>
 </div>
+<div class="nav-backdrop" id="nav-backdrop"></div>
+<button type="button" class="nav-toggle" id="nav-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="目次を開く"><i class="ti ti-menu-2" aria-hidden="true"></i></button>
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/powershell.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
@@ -6676,19 +6742,32 @@ I --> R["リスク<br/>確率 × 影響度で評価"]
 `,
 d3: `
 flowchart TB
-subgraph L1["層1: 人と運用 (ポリシー・教育・手順)"]
-subgraph L2["層2: 物理 (入退室管理・施錠・監視カメラ)"]
-subgraph L3["層3: ネットワーク境界 (ファイアウォール・IPS・VPN)"]
-subgraph L4["層4: 内部ネットワーク (セグメンテーション・NAC)"]
-subgraph L5["層5: ホスト (パッチ・EDR・ホスト型FW)"]
-subgraph L6["層6: アプリ (入力検証・認証・WAF)"]
-L7["層7: データ (暗号化・バックアップ・アクセス制御)"]
-end
-end
-end
-end
-end
-end
+ATK["攻撃者・マルウェア<br/>外部や内部から侵入を試みる"] --> L1
+L1["層1 人と運用<br/>ポリシー・教育・手順"]
+L1 -->|"突破"| L2
+L2["層2 物理<br/>入退室管理・施錠・監視カメラ"]
+L2 -->|"突破"| L3
+L3["層3 ネットワーク境界<br/>ファイアウォール・IPS・VPN"]
+L3 -->|"突破"| L4
+L4["層4 内部ネットワーク<br/>セグメンテーション・NAC"]
+L4 -->|"突破"| L5
+L5["層5 ホスト<br/>パッチ・EDR・ホスト型FW"]
+L5 -->|"突破"| L6
+L6["層6 アプリ<br/>入力検証・認証・WAF"]
+L6 -->|"突破"| L7
+L7["層7 データ<br/>暗号化・バックアップ・アクセス制御"]
+L7 -->|"突破"| ASSET["すべて突破されると<br/>重要な情報資産に被害が出る"]
+L1 -.-> S1["検知・阻止"]
+L2 -.-> S2["検知・阻止"]
+L3 -.-> S3["検知・阻止"]
+L4 -.-> S4["検知・阻止"]
+L5 -.-> S5["検知・阻止"]
+L6 -.-> S6["検知・阻止"]
+L7 -.-> S7["検知・阻止"]
+class S1,S2,S3,S4,S5,S6,S7 done
+class ASSET hub
+classDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26
+classDef hub fill:#2E3F72,stroke:#2E3F72,color:#FFFFFF
 `,
 d4: `
 flowchart TD
@@ -7173,6 +7252,21 @@ OK -- "なし" --> PI["事後活動へ"]
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
   document.querySelectorAll('section[id]').forEach(function (s) { io.observe(s); });
+})();
+(function () {
+  var btn = document.getElementById('nav-toggle'), bd = document.getElementById('nav-backdrop');
+  var mq = window.matchMedia('(max-width:1000px)'), icon = btn.querySelector('.ti');
+  function set(open) {
+    document.body.classList.toggle('nav-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? '目次を閉じる' : '目次を開く');
+    icon.className = 'ti ' + (open ? 'ti-x' : 'ti-menu-2');
+  }
+  btn.addEventListener('click', function () { set(!document.body.classList.contains('nav-open')); });
+  bd.addEventListener('click', function () { set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+  document.querySelectorAll('.sidebar nav a').forEach(function (a) { a.addEventListener('click', function () { if (mq.matches) set(false); }); });
+  mq.addEventListener('change', function (e) { if (!e.matches) set(false); });
 })();
 (async function () {
   if (!window.mermaid || !window.DIAGRAMS) return;
