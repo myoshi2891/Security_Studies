@@ -806,7 +806,7 @@ tm.process()
 | 目的 | コマンド（pytm の README に基づく例） |
 |---|---|
 | 図を生成する | `python3 tm.py --dfd` を Graphviz に渡す |
-| 脅威レポートを生成する | `python3 tm.py --report` を使う |
+| 脅威レポートを生成する | `python3 tm.py --report docs/basic_template.md` を使う（テンプレートは pytm リポジトリ内の `docs/basic_template.md`。Markdown が出力されるので、必要なら pandoc で HTML に変換する） |
 
 ### 12.3 「コードとしての脅威モデル」の利点と注意
 

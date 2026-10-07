@@ -796,17 +796,10 @@ AI を含むシステムでは、これまでの「入力 → 処理 → 出力�
 | **MITRE ATLAS** | AI システムに対する敵対的な戦術・技法の知識ベース（継続更新） | ◎ |
 | **CSA MAESTRO** | エージェント型 AI を**7つの層**に分解して脅威を洗い出す枠組み（Cloud Security Alliance の2025年のブログで提唱） | ○ |
 | **LINDDUN の GenAI 拡張** | 2026年の研究。LINDDUN の7種のうち3種を拡張し、約100件の GenAI 向け事例を知識ベースに追加 | ○（プレプリント） |
-| **AI Threat Modeling Manifesto** | AI/エージェント/自律システム向けの価値と原則を提案するコミュニティの取り組み | △（新しく、普及度は未確認） |
 | OWASP Cheat Sheet Series の AI 関連シート | AI Agent Security、MCP Security、RAG Security、LLM Prompt Injection Prevention など | ◎ |
 
 > OWASP の GenAI Security Project のサイトには、2026年8月3日付で「OWASP GenAI LLM Top 10 2026」も掲載されています（本ガイドでは存在の確認にとどめ、内容の詳細は公式資料で確認してください）。
 > MAESTRO の層の名称・番号は資料によって表記にばらつきが見られるため、**CSA の公式ブログで確認**してください。
-
-**AI Threat Modeling Manifesto が掲げる方向性**（公開リポジトリの記述から）:
-
-- 価値: 「アーキテクチャの記述だけでなく、**振る舞い・権限・結果**のモデリング」「一度きりでなく、**変更をきっかけにした継続的な**実施」
-- 原則の例: 脅威モデルを**モデル・プロンプト・ツール・設定のバージョンと紐づけて**管理する／脅威シナリオから**敵対的評価**を導く／間接的・下流への害も明示的にモデル化する
-- アンチパターンの例: **Diagram Freeze**（アーキテクチャが変わらなければ脅威モデルも変わらないと考える）、**Happy-Path Intent**（想定ユーザーと想定タスクだけをモデル化する）
 
 ### 12.3 例: AI アシスタント付き TaskBoard の DFD
 
@@ -1187,7 +1180,6 @@ flowchart TD
 | CSA: Agentic AI Threat Modeling Framework: MAESTRO | https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro | ○ | 12 |
 | MITRE ATLAS | https://atlas.mitre.org/ | ◎ | 12 |
 | CSA Labs: MITRE ATT&CK/ATLAS Agentic Gap Analysis | https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/ | ○ | 12 |
-| AI Threat Modeling Manifesto（GitHub） | https://github.com/ai-security-project/ai-threat-modeling-manifesto | △ | 12 |
 | Augment Code: AI/Agentic Threat Modeling | https://www.augmentcode.com/guides/ai-agentic-threat-modeling | △ | 12 |
 | NHI Management Group: Threat Modelling AI Agents ワークショップガイド | https://nhimg.org/ai-agent-threat-modelling-guide | △ | 12 |
 
