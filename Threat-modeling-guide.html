@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threat Modeling 入門ガイド（初学者向け・ステップバイステップ）</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+:root{
+  --color-background-primary:#07111e;
+  --color-background-secondary:#0c1b30;
+  --color-background-tertiary:#112441;
+  --color-background-info:#0f2347;
+  --color-background-danger:#3a1620;
+  --color-background-success:#0f2f27;
+  --color-background-warning:#33280f;
+  --color-text-primary:#f3f5fa;
+  --color-text-secondary:#c6d0e3;
+  --color-text-tertiary:#93a1bd;
+  --color-text-info:#9db8ff;
+  --color-text-danger:#f5a3a3;
+  --color-text-success:#7fd8b6;
+  --color-text-warning:#f0c674;
+  --color-border-tertiary:#1e2f4d;
+  --color-border-secondary:#2d456e;
+  --color-border-primary:#3e5c8f;
+  --accent:#7c9eff;
+  --font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Noto Sans Mono CJK JP",monospace;
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --border-radius-xl:16px;
+  --sidebar-w:300px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);font-size:1rem;line-height:1.7;font-weight:400;-webkit-text-size-adjust:100%}
+a{color:var(--color-text-info);text-decoration:none}
+a:hover{text-decoration:underline}
+strong,b{font-weight:500;color:var(--color-text-primary)}
+em{font-style:italic}
+
+/* sidebar */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);overflow-y:auto;z-index:40;padding:20px 14px 28px}
+.brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:14px}
+.brand i{font-size:1.9rem;color:var(--accent)}
+.brand .b1{font-size:1rem;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.brand .b2{font-size:1rem;color:var(--color-text-tertiary);line-height:1.3}
+.sidebar nav ul{list-style:none;margin:0;padding:0}
+.sidebar nav li{padding-left:0;margin:2px 0}
+.sidebar nav li::before{content:none}
+.sidebar nav a{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:1rem;line-height:1.45;border:1px solid transparent}
+.sidebar nav a:hover{background:var(--color-background-tertiary);text-decoration:none;color:var(--color-text-primary)}
+.sidebar nav a .n{flex:0 0 1.8rem;color:var(--color-text-tertiary);font-weight:500}
+.sidebar nav a.active{background:var(--color-background-tertiary);border-color:var(--color-border-secondary);color:var(--color-text-primary)}
+.sidebar nav a.active .n{color:var(--accent)}
+
+/* layout */
+.layout{display:block;margin-left:var(--sidebar-w)}
+.main{padding:0 clamp(20px,4vw,64px) 64px}
+.hero{padding:56px 0 28px;border-bottom:1px solid var(--color-border-tertiary)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:500;font-size:1rem;margin-bottom:14px}
+.hero h1{font-size:2.25rem;line-height:1.3;font-weight:500;margin:0 0 16px;color:var(--color-text-primary)}
+.hero .lead{margin:0 0 24px;color:var(--color-text-secondary);font-size:1.125rem}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.meta-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg)}
+.meta-card>i{font-size:1.5rem;color:var(--accent);margin-top:2px}
+.meta-label{color:var(--color-text-tertiary);font-size:1rem}
+.meta-val{color:var(--color-text-primary)}
+section{padding-top:44px}
+h2{display:flex;align-items:center;gap:14px;font-size:1.75rem;font-weight:500;line-height:1.35;margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid var(--color-border-secondary)}
+.h-num{display:inline-grid;place-items:center;min-width:2.6rem;height:2.6rem;padding:0 10px;border-radius:var(--border-radius-md);background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-size:1.125rem;font-weight:500}
+h3{font-size:1.3rem;font-weight:500;margin:34px 0 12px;color:var(--color-text-primary);line-height:1.4;scroll-margin-top:24px}
+h4{font-size:1.125rem;font-weight:500;margin:24px 0 8px}
+p{margin:0 0 14px;color:var(--color-text-secondary)}
+
+/* lists */
+ul,ol{margin:0 0 16px;padding:0;list-style:none;color:var(--color-text-secondary)}
+ul>li{position:relative;padding-left:1.5rem;margin:6px 0}
+ul>li::before{content:"";position:absolute;left:.4rem;top:.78em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+ol{counter-reset:step}
+ol>li{position:relative;counter-increment:step;padding-left:2.6rem;margin:10px 0;min-height:1.9rem}
+ol>li::before{content:counter(step);position:absolute;left:0;top:.1rem;width:1.9rem;height:1.9rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-size:1rem;font-weight:500;line-height:1}
+li>ul,li>ol{margin:6px 0 4px}
+
+/* tables */
+.table-wrap{overflow-x:auto;margin:6px 0 22px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-secondary)}
+table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.55}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;white-space:nowrap;border-bottom:1px solid var(--color-border-secondary)}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--color-text-primary)}
+td:first-child{color:var(--color-text-primary)}
+
+/* code */
+code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:1px 6px;color:#e6c88a;word-break:break-word}
+.code-head{display:flex;align-items:center;gap:8px;margin-top:6px;padding:8px 14px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-bottom:none;border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0;color:var(--color-text-tertiary);font-size:1rem}
+pre{margin:0 0 22px;padding:16px 18px;background:#050d18;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto;line-height:1.6}
+.code-head+pre{border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)}
+pre code{background:transparent;border:none;padding:0;color:inherit;word-break:normal;white-space:pre}
+pre code.hljs{background:transparent;padding:0}
+
+/* callouts */
+.callout{display:flex;gap:14px;align-items:flex-start;margin:6px 0 22px;padding:14px 18px;border-radius:var(--border-radius-lg);border:1px solid var(--color-border-secondary)}
+.callout>i{font-size:1.4rem;margin-top:2px}
+.callout-body{flex:1 1 auto;min-width:0}
+.callout-body p{margin:0 0 8px}
+.callout-body p:last-child{margin-bottom:0}
+.callout.info{background:var(--color-background-info);border-color:var(--color-border-primary)}
+.callout.info>i{color:var(--color-text-info)}
+.callout.warn{background:var(--color-background-warning);border-color:#6b5320}
+.callout.warn>i{color:var(--color-text-warning)}
+
+/* diagrams */
+figure.diagram{margin:10px 0 26px;padding:18px 14px 12px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.mermaid{display:flex;justify-content:center}
+.mermaid svg{overflow:visible}
+figcaption{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px;color:var(--color-text-tertiary);font-size:1rem}
+
+/* checklist cards */
+.check-list{display:grid;gap:10px;margin:8px 0 24px;counter-reset:ck}
+.check-item{display:flex;gap:14px;align-items:flex-start;padding:12px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary)}
+.check-item:hover{border-color:var(--color-border-primary)}
+.ck-num{flex:0 0 1.9rem;height:1.9rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500;line-height:1}
+.check-item input{position:absolute;opacity:0;pointer-events:none}
+.box{flex:0 0 1.6rem;height:1.6rem;display:grid;place-items:center;border:2px solid var(--color-border-primary);border-radius:6px;background:var(--color-background-primary);margin-top:.15rem}
+.box i{opacity:0;color:var(--color-background-primary);font-size:1.1rem}
+.check-item input:checked + .box{background:var(--color-text-success);border-color:var(--color-text-success)}
+.check-item input:checked + .box i{opacity:1}
+.check-item input:focus-visible + .box{outline:2px solid var(--accent);outline-offset:2px}
+.check-item:has(input:checked){border-color:#2a6b57;background:var(--color-background-success)}
+.check-item:has(input:checked) .ck-text{text-decoration:line-through;color:var(--color-text-tertiary)}
+.ck-text{flex:1 1 auto;min-width:0}
+
+/* exercises */
+.exercise{margin:22px 0;padding:6px 22px 20px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-xl)}
+.exercise h3{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 14px}
+.ex-badge{display:inline-block;padding:3px 14px;border-radius:999px;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500}
+details.answer{margin-top:14px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-primary);overflow:hidden}
+details.answer summary{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;color:var(--color-text-info);font-weight:500;list-style:none}
+details.answer summary::-webkit-details-marker{display:none}
+.chev{margin-left:auto;color:var(--color-text-tertiary);transition:transform .2s ease}
+details.answer[open] .chev{transform:rotate(180deg)}
+details.answer[open] summary{border-bottom:1px solid var(--color-border-tertiary);background:var(--color-background-tertiary)}
+.answer-body{padding:14px 18px 6px}
+.answer-body .code-head{margin-top:0}
+
+/* references */
+.ref-list{display:grid;gap:10px;margin:8px 0 26px}
+.ref-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.ref-num{flex:0 0 2.2rem;height:2.2rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500;line-height:1}
+.ref-body{flex:1 1 auto;min-width:0}
+.ref-title{color:var(--color-text-primary);font-weight:500;margin-bottom:2px}
+.ref-url{display:block;word-break:break-all;margin-bottom:8px}
+.ref-meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:var(--color-text-tertiary)}
+.badge{display:inline-block;padding:1px 12px;border-radius:999px;border:1px solid;font-weight:500}
+.rel-a{color:var(--color-text-success);border-color:#2a6b57;background:var(--color-background-success)}
+.rel-b{color:var(--color-text-info);border-color:var(--color-border-primary);background:var(--color-background-info)}
+.rel-c{color:var(--color-text-warning);border-color:#6b5320;background:var(--color-background-warning)}
+
+.footer{margin-top:56px;padding:22px 0;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary);display:flex;gap:10px;align-items:center}
+
+/* mobile drawer */
+.menu-btn,.backdrop{display:none}
+@media (max-width:1024px){
+  .layout{margin-left:0}
+  .sidebar{transform:translateX(-100%);transition:transform .25s ease;width:min(86vw,320px);z-index:60}
+  body.nav-open .sidebar{transform:translateX(0)}
+  .backdrop{display:block;position:fixed;inset:0;background:rgba(3,8,16,.65);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:50}
+  body.nav-open .backdrop{opacity:1;pointer-events:auto}
+  .menu-btn{display:grid;place-items:center;position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#07111e;border:none;font-size:1.6rem;cursor:pointer;z-index:70}
+  .hero h1{font-size:1.75rem}
+  h2{font-size:1.45rem}
+}
+@media (max-width:640px){
+  .main{padding:0 16px 80px}
+  .exercise{padding:4px 14px 16px}
+  th{white-space:normal}
+}
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><i class="ti ti-shield-lock"></i><div><div class="b1">Threat Modeling</div><div class="b2">初学者向けガイド</div></div></div>
+  <nav><ul>
+<li><a href="#ch1"><span class="n">1</span><span class="t">このガイドについて</span></a></li>
+<li><a href="#ch2"><span class="n">2</span><span class="t">Threat Modeling とは何か</span></a></li>
+<li><a href="#ch3"><span class="n">3</span><span class="t">基本用語を整理する</span></a></li>
+<li><a href="#ch4"><span class="n">4</span><span class="t">全体像: 4つの質問（Four Question Framework）</span></a></li>
+<li><a href="#ch5"><span class="n">5</span><span class="t">Step 1: 何を作っているか（システムのモデリング）</span></a></li>
+<li><a href="#ch6"><span class="n">6</span><span class="t">Step 2: 何がうまくいかない可能性があるか（脅威の洗い出し）</span></a></li>
+<li><a href="#ch7"><span class="n">7</span><span class="t">Step 3: どう対処するか（リスク評価と対策）</span></a></li>
+<li><a href="#ch8"><span class="n">8</span><span class="t">Step 4: 十分にできたか（検証とレビュー）</span></a></li>
+<li><a href="#ch9"><span class="n">9</span><span class="t">方法論の地図（STRIDE / PASTA / LINDDUN ほか）</span></a></li>
+<li><a href="#ch10"><span class="n">10</span><span class="t">自動化と Threat Modeling as Code</span></a></li>
+<li><a href="#ch11"><span class="n">11</span><span class="t">継続的 Threat Modeling（Agile / DevOps との統合）</span></a></li>
+<li><a href="#ch12"><span class="n">12</span><span class="t">2026年の動向: クラウドと AI / エージェント</span></a></li>
+<li><a href="#ch13"><span class="n">13</span><span class="t">Threat Modeling Champion になる（組織導入 FAQ）</span></a></li>
+<li><a href="#ch14"><span class="n">14</span><span class="t">ハンズオン: 最初の60分セッション</span></a></li>
+<li><a href="#ch15"><span class="n">15</span><span class="t">アンチパターンとチェックリスト</span></a></li>
+<li><a href="#ch16"><span class="n">16</span><span class="t">演習問題と解答例</span></a></li>
+<li><a href="#ch17"><span class="n">17</span><span class="t">学習ロードマップ</span></a></li>
+<li><a href="#ch18"><span class="n">18</span><span class="t">参考文献（根拠となるソース URL）</span></a></li>
+  </ul></nav>
+</aside>
+<div class="backdrop" id="backdrop"></div>
+<button class="menu-btn" id="menuBtn" aria-label="目次を開く"><i class="ti ti-menu-2"></i></button>
+
+<div class="layout">
+<main class="main">
+  <header class="hero">
+    <div class="eyebrow"><i class="ti ti-shield-lock"></i>Threat Modeling beginner guide</div>
+    <h1>Threat Modeling 入門ガイド（初学者向け・ステップバイステップ）</h1>
+    <p class="lead">設計の段階で「何がうまくいかない可能性があるか」をチームで考え、先に手を打つための入門ガイドです。4つの質問に沿って、手順・例題・演習・根拠となる URL まで通して学べます。</p>
+    <div class="meta-grid"><div class="meta-card"><i class="ti ti-users"></i><div><div class="meta-label">対象読者</div><div class="meta-val">開発者・QA・アーキテクト・セキュリティ初学者（セキュリティの専門知識がなくても読めるように書いています）</div></div></div><div class="meta-card"><i class="ti ti-target"></i><div><div class="meta-label">ゴール</div><div class="meta-val">読み終えたあとに、自分のチームで「30〜60分の最初の Threat Modeling セッション」を回せるようになること</div></div></div><div class="meta-card"><i class="ti ti-calendar"></i><div><div class="meta-label">情報の基準日</div><div class="meta-val">2026-10-05（Web 調査に基づく。参考 URL は末尾の「参考文献」に一覧）</div></div></div><div class="meta-card"><i class="ti ti-book"></i><div><div class="meta-label">ベース書籍</div><div class="meta-val"><em>Threat Modeling</em>（Izar Tarandach / Matthew J. Coles, O'Reilly, 2020年11月, ISBN 9781492056546）</div></div></div></div>
+  </header>
+<section id="ch1"><h2><span class="h-num">1</span><span>このガイドについて</span></h2><h3 id="s1-1">1.1 ベース書籍の位置づけ</h3>
+<p>O'Reilly の <em>Threat Modeling</em>（Tarandach &amp; Coles）は、O'Reilly 上で難易度 <strong>Beginner</strong> と表示されている実践書です。書籍ページの概要では、次の考え方が打ち出されています。</p>
+<ul>
+<li>Threat Modeling は<strong>高度なセキュリティ知識がなくても始められる</strong></li>
+<li>継続するのに<strong>途方もない努力は不要</strong></li>
+<li>コードが書かれる<strong>前</strong>に、低コストで問題を見つけられる点が価値</li>
+</ul>
+<p>公開されている目次から、書籍の構成は次のとおりです（本ガイドの章立ても、これを意識して対応づけています）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>書籍の章</th>
+<th>主なテーマ（目次の見出しに基づく）</th>
+<th>本ガイドの対応章</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Introduction</td>
+<td>Threat Modeling の基本、SDLC での位置づけ、基本概念と用語、リスク/重大度、Core Properties、Fundamental Controls、安全な設計パターン</td>
+<td>2, 3</td>
+</tr>
+<tr>
+<td>1. Modeling Systems</td>
+<td>DFD・シーケンス図・プロセスフロー図・攻撃ツリー・フィッシュボーン図</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2. A Generalized Approach</td>
+<td>基本ステップ、「よくある容疑者」、発見できないもの、Threat Intelligence</td>
+<td>4, 6</td>
+</tr>
+<tr>
+<td>3. Threat Modeling Methodologies</td>
+<td>STRIDE、PASTA、Trike、LINDDUN、SPARTA、INCLUDES NO DIRT、カードゲーム（Elevation of Privilege 等）</td>
+<td>6, 9</td>
+</tr>
+<tr>
+<td>4. Automated Threat Modeling</td>
+<td>コードからの/コードによるモデリング、pytm、Threagile、各種ツール、ML/AI</td>
+<td>10</td>
+</tr>
+<tr>
+<td>5. Continuous Threat Modeling</td>
+<td>Autodesk の継続的手法、Baselining、Threat Model Every Story</td>
+<td>11</td>
+</tr>
+<tr>
+<td>6. Own Your Role as a Champion</td>
+<td>経営層・チームの巻き込み、失敗感、方法論選び、悪いニュースの伝え方</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Appendix A. A Worked Example</td>
+<td>最初のシステムモデルからの実例</td>
+<td>5〜8, 14</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout warn"><i class="ti ti-alert-triangle"></i><div class="callout-body"><p><strong>注意（同名の別書籍）</strong>: 「Threat Modeling」という題名の書籍には、Adam Shostack 著 <em>Threat Modeling: Designing for Security</em>（Wiley）もあります。こちらは別の書籍です。本ガイドは Tarandach &amp; Coles 版をベースにしつつ、Shostack の「4つの質問」など、業界で広く参照される一次情報も併用します。</p></div></div>
+<h3 id="s1-2">1.2 著作権と情報源についての方針</h3>
+<ul>
+<li>書籍の本文は転載していません。<strong>公開されている目次・概要</strong>と、<strong>著者・標準化団体・OWASP などの公開資料</strong>に基づき、自分の言葉で再構成しています。</li>
+<li>各章の根拠は「参考文献」にまとめ、信頼度（◎一次情報・標準 / ○著名実務家・研究 / △ベンダー・二次情報）を付けました。</li>
+<li>2025〜2026年に登場した新しい資料（AI/エージェント関連など）は、<strong>成熟度がまだ高くないもの</strong>があります。該当箇所に注意書きを入れています。</li>
+</ul>
+<h3 id="s1-3">1.3 読み進め方</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>読む章</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最短で最初のセッションを回したい</td>
+<td>2章、4章、5章、6章、7章、8章、14章（ハンズオン）</td>
+</tr>
+<tr>
+<td>理解を深めたい</td>
+<td>9章、10章、11章</td>
+</tr>
+<tr>
+<td>最新トピック（クラウド・AI）を知りたい</td>
+<td>12章</td>
+</tr>
+<tr>
+<td>組織に広めたい</td>
+<td>13章、15章</td>
+</tr>
+</tbody>
+</table></div></section>
+<section id="ch2"><h2><span class="h-num">2</span><span>Threat Modeling とは何か</span></h2><h3 id="s2-1">2.1 一言でいうと</h3>
+<p><strong>「作ろうとしているものを図にして、『何がうまくいかない可能性があるか』をチームで考え、先に手を打つ活動」</strong> です。</p>
+<p>Threat Modeling Manifesto（2020年、実務家・研究者・著者ら約15名が策定）は、これを「システムの表現（図や説明）を分析し、セキュリティとプライバシーの懸念を浮かび上がらせること」と定義しています。ここで大事なのは次の3点です。</p>
+<ol>
+<li><strong>設計段階</strong>（コードを書く前後を問わず「早く」）で行う</li>
+<li><strong>システムの表現</strong>（ホワイトボードの図でもよい）を材料にする</li>
+<li><strong>セキュリティだけでなくプライバシー</strong>も対象にする</li>
+</ol>
+<h3 id="s2-2">2.2 なぜ必要なのか</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>コスト</td>
+<td>設計段階で見つけた問題は、本番稼働後に見つけるより修正が安く済む（OWASP は「後付け（bolted-on）ではなく作り込み（built-in）」と表現）</td>
+</tr>
+<tr>
+<td>抜け漏れ</td>
+<td>脆弱性スキャンやペンテストは「実装済みのもの」しか調べられない。設計上の欠陥（認可の穴・信頼境界の誤り）は設計レビューで見つけやすい</td>
+</tr>
+<tr>
+<td>共通理解</td>
+<td>図を囲んで議論することで、開発・QA・運用・セキュリティが同じ理解を持てる</td>
+</tr>
+<tr>
+<td>根拠の提示</td>
+<td>「なぜこの対策をするのか」を説明できる記録（assurance の根拠）になる</td>
+</tr>
+<tr>
+<td>教育効果</td>
+<td>「攻撃者の視点」で考える経験が、チーム全体のセキュリティ感度を上げる</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s2-3">2.3 Threat Modeling は「何ではない」か（よくある誤解）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>誤解</th>
+<th>実際</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>セキュリティ専門家だけの仕事</td>
+<td>Manifesto は「<strong>特別な才能は不要。誰でもできるし、すべきだ</strong>」と明言（アンチパターン: <em>Hero Threat Modeler</em>）</td>
+</tr>
+<tr>
+<td>1回やれば終わり</td>
+<td>システムが変われば脅威も変わる。<strong>継続して更新</strong>するもの（OWASP も「一度きりにしない」と明記）</td>
+</tr>
+<tr>
+<td>分厚い文書を作ること</td>
+<td>価値の中心は<strong>対話</strong>。文書は理解を記録し、測定を可能にするためのもの</td>
+</tr>
+<tr>
+<td>脆弱性スキャンやペンテストの代わり</td>
+<td>補完関係。Threat Modeling は「設計」を、テストは「実装・運用」を見る</td>
+</tr>
+<tr>
+<td>完璧な脅威リストを作ること</td>
+<td>目的は<strong>システムを改善すること</strong>。「十分にできたか」を問い続ける</td>
+</tr>
+<tr>
+<td>攻撃者の最新手口の暗記</td>
+<td>現在観測されている攻撃だけに固執すると、未知の脅威を見落とす（Shostack の指摘）</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>ポイント</strong>: Manifesto の価値宣言は「Threat Modeling を<strong>語る</strong>より<strong>行う</strong>」ことを優先する、という趣旨です。完璧を待たず、小さく始めてください。</p></div></div></section>
+<section id="ch3"><h2><span class="h-num">3</span><span>基本用語を整理する</span></h2><h3 id="s3-1">3.1 用語集</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>たとえ話（自宅の防犯）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Asset（資産）</strong></td>
+<td>守る価値のあるもの（データ、機能、評判、可用性）</td>
+<td>家の中の貴重品、家族</td>
+</tr>
+<tr>
+<td><strong>Threat（脅威）</strong></td>
+<td>資産に害を与えうる「起こりうること」</td>
+<td>空き巣に入られる</td>
+</tr>
+<tr>
+<td><strong>Threat Actor（脅威主体）</strong></td>
+<td>脅威を実行しうる人・組織・プログラム（外部/内部、悪意/うっかり）</td>
+<td>泥棒、鍵を無くした家族</td>
+</tr>
+<tr>
+<td><strong>Vulnerability（脆弱性）</strong></td>
+<td>脅威に悪用される弱点</td>
+<td>施錠されない窓</td>
+</tr>
+<tr>
+<td><strong>Attack（攻撃）</strong></td>
+<td>脆弱性を突いて脅威を実現する行為</td>
+<td>窓を割って侵入する</td>
+</tr>
+<tr>
+<td><strong>Risk（リスク）</strong></td>
+<td>脅威が実現する可能性と、その影響の大きさの組み合わせ</td>
+<td>「窓が割られやすく、貴重品が多い」状態</td>
+</tr>
+<tr>
+<td><strong>Control / Mitigation（対策）</strong></td>
+<td>脅威を防ぐ・弱める・検知する仕組み</td>
+<td>補助錠、センサー、保険</td>
+</tr>
+<tr>
+<td><strong>Attack Surface（攻撃面）</strong></td>
+<td>攻撃者が接触できる入口の総体</td>
+<td>ドア、窓、ベランダ</td>
+</tr>
+<tr>
+<td><strong>Trust Boundary（信頼境界）</strong></td>
+<td>信頼の度合いが変わる境目</td>
+<td>玄関（外と内の境目）</td>
+</tr>
+<tr>
+<td><strong>Assumption（前提）</strong></td>
+<td>「こうなっているはず」と置いた条件（後で検証する）</td>
+<td>「隣家は信頼できる」</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>脅威と脆弱性の違い</strong>: 脆弱性は「弱点（状態）」、脅威は「その弱点を突いて起こりうる出来事」です。たとえば「API が個人情報を漏らす」は弱点で、「攻撃者がそれを見つけて悪用し、個人情報を入手する」が脅威です。</p></div></div>
+<h3 id="s3-2">3.2 セキュリティの基本特性（Core Properties）</h3>
+<p>脅威を考えるときの物差しになります。STRIDE（6章）の各脅威は、これらの特性の侵害に対応します。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>英語</th>
+<th>意味</th>
+<th>侵害される例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>機密性</td>
+<td>Confidentiality</td>
+<td>許可された人だけが見られる</td>
+<td>他人の注文履歴が見える</td>
+</tr>
+<tr>
+<td>完全性</td>
+<td>Integrity</td>
+<td>許可なく改ざんされない</td>
+<td>金額が書き換えられる</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>Availability</td>
+<td>必要なときに使える</td>
+<td>サービスが落ちて使えない</td>
+</tr>
+<tr>
+<td>認証</td>
+<td>Authentication</td>
+<td>相手が本人だと確認できる</td>
+<td>他人になりすましてログイン</td>
+</tr>
+<tr>
+<td>認可</td>
+<td>Authorization</td>
+<td>許された操作だけができる</td>
+<td>一般ユーザーが管理画面を操作</td>
+</tr>
+<tr>
+<td>否認防止・説明責任</td>
+<td>Non-repudiation / Accounting</td>
+<td>「やった/やらない」を後で示せる</td>
+<td>操作ログが残らず、誰がやったか不明</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s3-3">3.3 セキュリティ・プライバシー・安全性</h3>
+<p>書籍の概要は、<strong>セキュリティ、プライバシー、セーフティ（人命・環境への影響）の関係</strong>を理解することも目標に挙げています。たとえば医療機器や車載では、セキュリティ上の欠陥がそのまま「安全」の問題になります。プライバシーは、攻撃者がいなくても（組織自身のデータ利用方法によって）侵害されうる点が、セキュリティと違います（9章の LINDDUN で扱います）。</p></section>
+<section id="ch4"><h2><span class="h-num">4</span><span>全体像: 4つの質問（Four Question Framework）</span></h2><h3 id="s4-1">4.1 4つの質問</h3>
+<p>Adam Shostack が提唱した「<strong>Four Question Frame</strong>」は、現在の Threat Modeling のほぼ共通の骨格です。Threat Modeling Manifesto や OWASP の Cheat Sheet も、この4つの質問で構成されています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>質問（英語）</th>
+<th>日本語</th>
+<th>この章での対応</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>What are we working on?</td>
+<td>私たちは何に取り組んでいるのか</td>
+<td>5章</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>What can go wrong?</td>
+<td>何がうまくいかない可能性があるか</td>
+<td>6章</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>What are we going to do about it?</td>
+<td>それに対して何をするか</td>
+<td>7章</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Did we do a good enough job?</td>
+<td>十分にできたか</td>
+<td>8章</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>表現の細かな経緯</strong>: Shostack のリポジトリによれば、質問は初出（<em>Designing for Security</em>）から進化しています。「you」ではなく「we」にして協働を強調し、第3質問は「should」ではなく「are」で行動寄りにし、「building」ではなく「working on」にしてウォーターフォール的な発想を避けています。また Manifesto チームは第4質問に <strong>「enough（十分に）」</strong> を加えました。目的は「Threat Modeling が上手になること」ではなく、<strong>システムを改善すること</strong>だからです。</p></div></div>
+<h3 id="s4-2">4.2 フロー</h3>
+<figure class="diagram"><div class="mermaid" data-diagram="d1"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 1: 4.2 フロー</figcaption></figure>
+<h3 id="s4-3">4.3 各質問の「活動」と「成果物」</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>質問</th>
+<th>主な活動</th>
+<th>代表的な成果物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>スコープ決定、DFD 作成、資産・信頼境界・前提の明記</td>
+<td>DFD、資産リスト、前提リスト</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>STRIDE などで脅威を列挙、攻撃ツリー、悪用ケース</td>
+<td>脅威リスト（どの要素に・どの脅威か）</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>リスクの見積もり、対応方針（軽減/排除/移転/受容）、要件化</td>
+<td>対応方針つき脅威リスト、セキュリティ要件・チケット</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>レビュー、対策のテスト、振り返り</td>
+<td>レビュー記録、残存リスク、次回見直し時期</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s4-4">4.4 スケールを変えて使える</h3>
+<p>Shostack は、この4つの質問は<strong>さまざまな粒度で使える</strong>と述べています。システム全体にも、1つのユーザーストーリーにも、1回のスプリントの変更にも適用できます。まずは小さな単位（1機能、1つの API）から始めるのがコツです。</p></section>
+<section id="ch5"><h2><span class="h-num">5</span><span>Step 1: 何を作っているか（システムのモデリング）</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>目的: 「何を守るのか」「どこが入口か」「どこで信頼が変わるか」を<strong>図と短い文章</strong>で共有する。</p></div></div>
+<h3 id="s5-1">5.1 まずスコープを決める</h3>
+<p>OWASP の整理では、第1質問は「スコープを決める質問」です。広すぎると終わらず、狭すぎると穴が残ります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>決めること</th>
+<th>例（本ガイドの題材 TaskBoard）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>対象</td>
+<td>「チーム向けタスク管理 SaaS『TaskBoard』のログインとタスク共有機能」</td>
+</tr>
+<tr>
+<td>対象外</td>
+<td>請求・決済は別モデルで扱う（今回は対象外と明記）</td>
+</tr>
+<tr>
+<td>目的</td>
+<td>本番公開前の設計レビュー</td>
+</tr>
+<tr>
+<td>参加者</td>
+<td>開発2名、QA1名、運用1名、プロダクトオーナー1名</td>
+</tr>
+<tr>
+<td>時間</td>
+<td>60分</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s5-2">5.2 題材: TaskBoard の概要</h3>
+<ul>
+<li>メンバーは、ブラウザから HTTPS で API サーバーにアクセスし、タスクを作成・共有する</li>
+<li>認証は外部の ID プロバイダー（IdP）による OAuth ログイン</li>
+<li>データはクラウド上の PostgreSQL に保存、添付ファイルはオブジェクトストレージに保存</li>
+<li>管理者は別の管理画面からテナント（会社単位）を管理する</li>
+<li>通知メールは外部のメール配信サービスを使う</li>
+</ul>
+<h3 id="s5-3">5.3 DFD（Data Flow Diagram）の5つの部品</h3>
+<p>OWASP の Cheat Sheet は、システムモデリングで最も一般的な手法として DFD を挙げ、<strong>信頼境界・データフロー・データストア・プロセス・外部実体</strong>が見えることを求めています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>部品</th>
+<th>意味</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>外部実体（External Entity）</strong></td>
+<td>システムの制御外にある人・外部システム</td>
+<td>メンバー、管理者、IdP、メール配信サービス</td>
+</tr>
+<tr>
+<td><strong>プロセス（Process）</strong></td>
+<td>システムが制御するコード・処理</td>
+<td>Web/API サーバー、ワーカー</td>
+</tr>
+<tr>
+<td><strong>データストア（Data Store）</strong></td>
+<td>保存されているデータ（at rest）</td>
+<td>PostgreSQL、オブジェクトストレージ、ログ</td>
+</tr>
+<tr>
+<td><strong>データフロー（Data Flow）</strong></td>
+<td>流れているデータ（in transit）</td>
+<td>HTTPS リクエスト、DB クエリ</td>
+</tr>
+<tr>
+<td><strong>信頼境界（Trust Boundary）</strong></td>
+<td>信頼度が変わる境目</td>
+<td>インターネットと社内/VPC の間、テナント間</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>信頼境界の見つけ方</strong>: 「ここを越えると、相手が別の権限・別の組織・別のネットワークになる」場所を探します。信頼境界を<strong>またぐデータフロー</strong>は、攻撃の入口になりやすく、特に注意して脅威を考えます。</p></div></div>
+<h3 id="s5-4">5.4 TaskBoard の DFD</h3>
+<figure class="diagram"><div class="mermaid" data-diagram="d2"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 2: 5.4 TaskBoard の DFD</figcaption></figure>
+<p><strong>この図から最初に見える「注目ポイント」</strong>（まだ脅威を挙げる前の観察）:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>注目点</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1・D2・D4（境界 A/C → B をまたぐフロー）</td>
+<td>外部からの入力が最初に入る場所。認証・入力検証が必要</td>
+</tr>
+<tr>
+<td>1つの DB に複数テナントのデータがある</td>
+<td>テナント間の分離が破れると影響が大きい</td>
+</tr>
+<tr>
+<td>管理者と一般メンバーが同じ API を使う</td>
+<td>認可（権限昇格）の設計が重要</td>
+</tr>
+<tr>
+<td>添付ファイルのアップロード</td>
+<td>悪意あるファイル、巨大ファイルの扱い</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s5-5">5.5 資産・前提・対象外を書き出す</h3>
+<p>図だけでは足りません。次の3つを短く書き添えます。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>種類</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>資産（Assets）</strong></td>
+<td>顧客のタスク内容（機密性）、テナント分離（完全性）、サービスの稼働（可用性）、監査ログの信頼性</td>
+</tr>
+<tr>
+<td><strong>前提（Assumptions）</strong></td>
+<td>「IdP は正しくトークンを署名する」「VPC 内部のネットワークは外部から到達不能」</td>
+</tr>
+<tr>
+<td><strong>対象外（Out of scope）</strong></td>
+<td>「クラウド事業者の物理セキュリティ」「請求機能」</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>前提は必ず書く</strong>: 前提は将来「崩れる」ことがあります（たとえば、設定ミスで VPC が外部公開される）。OWASP のガイドも、後から検証・見直せるよう<strong>前提の一覧を脅威モデルに含める</strong>ことを勧めています。</p></div></div>
+<h3 id="s5-6">5.6 DFD 以外のモデルも使い分ける</h3>
+<p>書籍の第1章は、DFD に加えて複数のモデル表現を紹介しています。目的に応じて使い分けます。Manifesto も「<strong>理想の単一ビューは存在せず、複数の表現が別の問題を照らす</strong>」という趣旨の考え方を示しています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>向いている場面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>データフロー図（DFD）</td>
+<td>全体構造、信頼境界、データの流れを見たい</td>
+</tr>
+<tr>
+<td>シーケンス図</td>
+<td>認証・決済など「順序」が重要な処理</td>
+</tr>
+<tr>
+<td>プロセスフロー図</td>
+<td>業務フローや承認フローの悪用を考えたい</td>
+</tr>
+<tr>
+<td>攻撃ツリー</td>
+<td>「攻撃者の目的」から逆算して経路を整理したい（6章）</td>
+</tr>
+<tr>
+<td>フィッシュボーン図</td>
+<td>問題の原因を分類して整理したい</td>
+</tr>
+</tbody>
+</table></div>
+<p>シーケンス図の例（ログインの流れ）:</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d3"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 3: 5.6 DFD 以外のモデルも使い分ける</figcaption></figure>
+<h3 id="s5-7">5.7 良いシステムモデルの条件（チェックリスト）</h3>
+<div class="check-list"><label class="check-item"><span class="ck-num">1</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">対象範囲（スコープ）と対象外が書いてある</span></label><label class="check-item"><span class="ck-num">2</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">信頼境界が明示されている</span></label><label class="check-item"><span class="ck-num">3</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">すべてのデータフローに「何が流れるか」「プロトコル」がある</span></label><label class="check-item"><span class="ck-num">4</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">外部実体（人・外部サービス）が漏れていない</span></label><label class="check-item"><span class="ck-num">5</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">資産が書かれている（何を守るかが分かる）</span></label><label class="check-item"><span class="ck-num">6</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">前提が書かれている</span></label><label class="check-item"><span class="ck-num">7</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text"><strong>実際のシステムと一致している</strong>（設計図と実装の乖離は脅威の見落としにつながる）</span></label><label class="check-item"><span class="ck-num">8</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">全員が理解できる粒度（細かすぎても粗すぎてもいけない）</span></label></div></section>
+<section id="ch6"><h2><span class="h-num">6</span><span>Step 2: 何がうまくいかない可能性があるか（脅威の洗い出し）</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>目的: 図の上の<strong>どの要素・どのフローに、どんな脅威があるか</strong>を、構造化された問いかけで列挙する。</p></div></div>
+<p>Shostack は、この第2質問を <strong>「Threat Modeling の中心であり、最も難しい部分」</strong> と位置づけています。同時に、まず「何がうまくいかない？」と<strong>素朴に問うだけでも非常に強力</strong>だとも述べています。構造（STRIDE やキルチェーン）は、その問いに答えやすくするための補助です。</p>
+<h3 id="s6-1">6.1 STRIDE（まず覚える1つの方法）</h3>
+<p>STRIDE は、Microsoft の Praerit Garg と Loren Kohnfelder が考案した、脅威を6種類に分類する覚え方です。各脅威は、3章で見たセキュリティ特性の<strong>侵害</strong>に対応します（下表は OWASP Cheat Sheet の対応に基づく）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>頭文字</th>
+<th>脅威</th>
+<th>侵害される特性</th>
+<th>TaskBoard での例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td>Spoofing（なりすまし）</td>
+<td>認証</td>
+<td>盗んだセッショントークンで他人としてタスクを操作</td>
+</tr>
+<tr>
+<td><strong>T</strong></td>
+<td>Tampering（改ざん）</td>
+<td>完全性</td>
+<td>API に細工したリクエストを送り、他テナントのタスクを更新</td>
+</tr>
+<tr>
+<td><strong>R</strong></td>
+<td>Repudiation（否認）</td>
+<td>説明責任</td>
+<td>管理者が操作したのに、ログが残らず「やっていない」と主張できる</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td>Information Disclosure（情報漏えい）</td>
+<td>機密性</td>
+<td>エラーメッセージや API 応答から他人のデータが見える</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Denial of Service（サービス拒否）</td>
+<td>可用性</td>
+<td>大量リクエストや巨大ファイルでサービスを停止</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td>Elevation of Privilege（権限昇格）</td>
+<td>認可</td>
+<td>トークン内の role を書き換えて管理者機能を実行</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s6-2">6.2 STRIDE per Element（要素ごとに当てはめる）</h3>
+<p>6種類すべてを全要素に当てはめると多すぎます。そこで、<strong>DFD の要素の種類ごとに起こりやすい脅威</strong>に絞ります。これが書籍でも扱われる <em>STRIDE per Element</em> です（Microsoft Threat Modeling Tool もこの考え方で脅威を提示します）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>DFD の要素</th>
+<th style="text-align: center;">S</th>
+<th style="text-align: center;">T</th>
+<th style="text-align: center;">R</th>
+<th style="text-align: center;">I</th>
+<th style="text-align: center;">D</th>
+<th style="text-align: center;">E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>外部実体</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>プロセス</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+</tr>
+<tr>
+<td>データストア</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">△</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>データフロー</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;">○</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table></div>
+<p>（○: 一般に検討対象　△: ログを格納するデータストアなど、条件つき）</p>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>発展として、要素単体ではなく<strong>フロー（相互作用）ごと</strong>に見る <em>STRIDE per Interaction</em> もあります（書籍の第3章で扱われています）。慣れてきたら試してください。</p></div></div>
+<h3 id="s6-3">6.3 その他の「問いかけの道具」</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>道具</th>
+<th>内容</th>
+<th>いつ使う？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>攻撃ツリー</strong></td>
+<td>攻撃者の目的を頂点に、達成経路を分解する</td>
+<td>重要な資産への攻撃経路を整理したいとき</td>
+</tr>
+<tr>
+<td><strong>悪用ケース（Misuse / Abuse case）</strong></td>
+<td>正規の機能を「順序違い」「連打」「同時実行」「意図外の目的」で使う</td>
+<td>ビジネスロジックの悪用を考えたいとき</td>
+</tr>
+<tr>
+<td><strong>キルチェーン / ATT&amp;CK 的視点</strong></td>
+<td>攻撃者の段階（侵入→横展開→目的達成）で考える</td>
+<td>侵入後の被害拡大を考えたいとき</td>
+</tr>
+<tr>
+<td><strong>脅威カードゲーム</strong></td>
+<td>Elevation of Privilege、OWASP Cornucopia など</td>
+<td>楽しく、非専門家が参加しやすい</td>
+</tr>
+<tr>
+<td><strong>ブレインストーミング</strong></td>
+<td>付箋やホワイトボードで自由に挙げる</td>
+<td>非技術者が多い、ビジネス寄りのとき</td>
+</tr>
+</tbody>
+</table></div>
+<p>攻撃ツリーの例（目的: 他テナントのタスクを閲覧する）:</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d4"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 4: 6.3 その他の「問いかけの道具」</figcaption></figure>
+<p>読み方: 頂点の目的は、<strong>A・B・C のどれか1つ</strong>（OR）で達成できます。対策は「全経路を塞ぐ」か「最も安価に塞げる共通点（例: すべての API で一貫したテナント認可）を作る」かを考えます。</p>
+<h3 id="s6-4">6.4 洗い出しの手順（ステップバイステップ）</h3>
+<ol>
+<li>DFD を全員が見える場所に置く（ホワイトボード / 画面共有）</li>
+<li><strong>信頼境界をまたぐフロー</strong>から始める（D1, D2, D4 など）</li>
+<li>1つのフローに対して STRIDE の6文字を順に問いかける<ul>
+<li>「このフローで、誰かになりすませる？（S）」「途中で書き換えられる？（T）」…</li>
+</ul>
+</li>
+<li>出た脅威を<strong>1行ずつ</strong>表に書く（要素、STRIDE、脅威の説明）</li>
+<li>次に、プロセスとデータストアについても同様に行う</li>
+<li>詰まったら、攻撃ツリーや悪用ケースで視点を変える</li>
+<li><strong>時間を区切る</strong>（Security Compass の記事では「議論は最大30分程度、その後すぐ Threat Modeling を行う」という進め方が紹介されています）</li>
+</ol>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>重要</strong>: この段階では「対策の議論」に入りすぎないこと。まず<strong>幅広く挙げる</strong>ことを優先します。</p></div></div>
+<h3 id="s6-5">6.5 TaskBoard の脅威リスト（例）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>対象</th>
+<th>STRIDE</th>
+<th>脅威</th>
+<th>影響（資産）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-01</td>
+<td>D4 トークン受け渡し</td>
+<td>S</td>
+<td>攻撃者が他人の認可コードを横取りしてログインする</td>
+<td>機密性（他人のデータ）</td>
+</tr>
+<tr>
+<td>T-02</td>
+<td>D1 タスク操作</td>
+<td>E</td>
+<td>リクエスト内のテナント ID を書き換えて他テナントを操作</td>
+<td>テナント分離</td>
+</tr>
+<tr>
+<td>T-03</td>
+<td>API サーバー</td>
+<td>T</td>
+<td>入力値にSQL断片を混入して DB を改ざん</td>
+<td>完全性</td>
+</tr>
+<tr>
+<td>T-04</td>
+<td>API サーバー</td>
+<td>I</td>
+<td>エラー応答にスタックトレースや内部情報が含まれる</td>
+<td>機密性</td>
+</tr>
+<tr>
+<td>T-05</td>
+<td>API サーバー</td>
+<td>D</td>
+<td>1 ユーザーが大量リクエストで他テナントの利用を妨げる</td>
+<td>可用性</td>
+</tr>
+<tr>
+<td>T-06</td>
+<td>監査ログ</td>
+<td>R</td>
+<td>管理者操作が記録されない／ログが書き換え可能</td>
+<td>説明責任</td>
+</tr>
+<tr>
+<td>T-07</td>
+<td>添付ファイル保存</td>
+<td>I</td>
+<td>添付ファイルの URL が推測でき、認証なしで取得できる</td>
+<td>機密性</td>
+</tr>
+<tr>
+<td>T-08</td>
+<td>D9 メール送信</td>
+<td>T</td>
+<td>通知メールのテンプレートに任意の文面を差し込める</td>
+<td>完全性・信用</td>
+</tr>
+<tr>
+<td>T-09</td>
+<td>管理者画面（D2）</td>
+<td>S</td>
+<td>管理者アカウントが単一要素認証で乗っ取られる</td>
+<td>全テナント</td>
+</tr>
+<tr>
+<td>T-10</td>
+<td>IdP（外部実体）</td>
+<td>D</td>
+<td>IdP 障害でログインできなくなる</td>
+<td>可用性</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s6-6">6.6 「見つけられないもの」にも期待しすぎない</h3>
+<p>書籍の第2章には <em>What You Should Not Expect to Discover</em> という見出しがあります。Threat Modeling は設計の分析であり、たとえば<strong>コード中の具体的なバグ</strong>（バッファオーバーフローの実装ミスなど）を網羅的に見つける手段ではありません。そこはコードレビュー、静的解析、ペンテストなど別の活動で補います。</p></section>
+<section id="ch7"><h2><span class="h-num">7</span><span>Step 3: どう対処するか（リスク評価と対策）</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>目的: 見つけた脅威に<strong>優先順位</strong>をつけ、<strong>対応方針</strong>を決め、実行可能な<strong>要件</strong>に落とす。</p></div></div>
+<h3 id="s7-1">7.1 リスクの見積もり</h3>
+<p>理屈の上では、リスクは「起こりやすさ（Likelihood）× 影響（Impact）」で評価します。OWASP の Cheat Sheet は、「<strong>この2つは正確に算出するのが難しく、しかも対策にかかる労力が反映されない</strong>」ことも指摘しています。完璧な数値化に時間をかけず、<strong>相対的な優先順位</strong>が付けば十分です。</p>
+<p>初学者向けの簡易マトリクス:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>影響 ＼ 起こりやすさ</th>
+<th>低</th>
+<th>中</th>
+<th>高</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>高</strong></td>
+<td>中</td>
+<td>高</td>
+<td><strong>最優先</strong></td>
+</tr>
+<tr>
+<td><strong>中</strong></td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>低</strong></td>
+<td>低</td>
+<td>低</td>
+<td>中</td>
+</tr>
+</tbody>
+</table></div>
+<p>TaskBoard の例（一部）:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>起こりやすさ</th>
+<th>影響</th>
+<th>優先度</th>
+<th>根拠メモ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-02</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+<td>マルチテナントの根幹。1件でも漏れれば信用を失う</td>
+</tr>
+<tr>
+<td>T-07</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+<td>URL が推測可能なら自動化された攻撃で見つかる</td>
+</tr>
+<tr>
+<td>T-09</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+<td>管理者権限は全テナントに及ぶ</td>
+</tr>
+<tr>
+<td>T-05</td>
+<td>高</td>
+<td>中</td>
+<td>高</td>
+<td>無料枠のユーザーでも実行可能</td>
+</tr>
+<tr>
+<td>T-10</td>
+<td>低</td>
+<td>中</td>
+<td>低</td>
+<td>外部依存。代替手段（再試行・案内表示）で十分</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>脆弱性のスコア（CVSS など）との違い</strong>: CVSS は「見つかった脆弱性」の深刻度を評価する枠組みです。Threat Modeling の段階では、まだ脆弱性が確定していない「設計上の脅威」なので、簡易な評価で十分です。評価方法はチームで統一し、記録しておきます。</p></div></div>
+<h3 id="s7-2">7.2 4つの対応方針</h3>
+<p>Shostack は、脅威への対応を次の4つに整理しています（OWASP Cheat Sheet でも紹介）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方針</th>
+<th>意味</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mitigate（軽減）</strong></td>
+<td>起こりにくくする／被害を小さくする</td>
+<td>すべての API でテナント認可を強制する</td>
+</tr>
+<tr>
+<td><strong>Eliminate（排除）</strong></td>
+<td>機能・部品自体を取り除く</td>
+<td>使われていない管理者向けエクスポート機能を削除</td>
+</tr>
+<tr>
+<td><strong>Transfer（移転）</strong></td>
+<td>契約や保険で責任を他者に移す</td>
+<td>決済処理を認定済みの外部事業者に委託</td>
+</tr>
+<tr>
+<td><strong>Accept（受容）</strong></td>
+<td>対策しないと<strong>意識的に</strong>決める</td>
+<td>IdP 障害時のログイン不可は許容する</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>移転は「リスクが消える」わけではありません</strong>。OWASP は、移転しても発生確率や影響そのものは減らないため、<strong>残りの対策と残存リスクの責任者を記録する</strong>よう注意しています。<br />
+<strong>受容は「放置」ではありません</strong>。理由・承認者・見直し時期を記録します。</p></div></div>
+<p>対応方針の選び方のフロー:</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d5"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 5: 7.2 4つの対応方針</figcaption></figure>
+<h3 id="s7-3">7.3 脅威から対策へ（STRIDE 別の代表的な対策）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>脅威</th>
+<th>代表的な対策の方向性</th>
+<th>TaskBoard での具体例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S なりすまし</td>
+<td>強い認証、MFA、トークンの短寿命化、証明書検証</td>
+<td>OAuth の state・PKCE 利用、管理者に MFA を必須化</td>
+</tr>
+<tr>
+<td>T 改ざん</td>
+<td>入力検証、パラメータ化クエリ、署名、整合性チェック</td>
+<td>プレースホルダ付きクエリ、書き込み権限の最小化</td>
+</tr>
+<tr>
+<td>R 否認</td>
+<td>改ざん困難な監査ログ、時刻同期</td>
+<td>管理操作を追記専用ログへ記録</td>
+</tr>
+<tr>
+<td>I 情報漏えい</td>
+<td>暗号化、アクセス制御、最小限の応答、エラー処理</td>
+<td>添付ファイルは署名付き一時 URL、本番ではスタックトレース非表示</td>
+</tr>
+<tr>
+<td>D サービス拒否</td>
+<td>レート制限、クォータ、タイムアウト、冗長化</td>
+<td>テナント単位のレート制限とファイルサイズ上限</td>
+</tr>
+<tr>
+<td>E 権限昇格</td>
+<td>最小権限、サーバー側での認可、ロールの検証</td>
+<td>すべてのリクエストでサーバー側がテナントと role を再検証</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>ポイント</strong>: 認可チェックは<strong>クライアントを信用せず、サーバー側で一貫して</strong>行います。T-02 のような問題は、個別のエンドポイントで対応するより、「共通の認可レイヤー」を設計パターンとして用意するほうが、抜け漏れが起きにくくなります。書籍の Introduction でも、基本的なコントロールと<strong>安全なシステムのための設計パターン</strong>が扱われています。</p></div></div>
+<h3 id="s7-4">7.4 対策を「実行できる形」に落とす</h3>
+<p>Threat Modeling の成果は、<strong>要件・チケット・テスト</strong>になって初めて価値を持ちます。OWASP は、NIST SP 800-218（SSDF）の PW.1.2 を引き、決定事項を実行可能なセキュリティ要件にして最新に保つことを勧めています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>脅威 ID</th>
+<th>対応方針</th>
+<th>セキュリティ要件（例）</th>
+<th>担当</th>
+<th>確認方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-02</td>
+<td>Mitigate</td>
+<td>すべての API は、リクエストのテナント ID ではなくセッションのテナント ID で認可する</td>
+<td>API チーム</td>
+<td>自動テスト（他テナント ID でアクセスして 403 を確認）</td>
+</tr>
+<tr>
+<td>T-07</td>
+<td>Mitigate</td>
+<td>添付ファイルは認証後に発行する有効期限付き URL のみで取得できる</td>
+<td>API チーム</td>
+<td>期限切れ URL・未認証アクセスのテスト</td>
+</tr>
+<tr>
+<td>T-09</td>
+<td>Mitigate</td>
+<td>管理者ログインに MFA を必須化する</td>
+<td>運用チーム</td>
+<td>設定確認、ログイン E2E テスト</td>
+</tr>
+<tr>
+<td>T-10</td>
+<td>Accept</td>
+<td>IdP 障害時は案内を表示。復旧まで待つ（承認: PO、見直し: 半年後）</td>
+<td>PO</td>
+<td>判断記録の保管</td>
+</tr>
+</tbody>
+</table></div></section>
+<section id="ch8"><h2><span class="h-num">8</span><span>Step 4: 十分にできたか（検証とレビュー）</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>目的: 「脅威モデルは現実に即しているか」「対策は効いているか」を確認し、改善の学びを次に活かす。</p></div></div>
+<h3 id="s8-1">8.1 レビューの観点（OWASP のチェック項目に基づく）</h3>
+<p>OWASP の Cheat Sheet は、第4質問に対して<strong>開発・セキュリティ双方を含む全ステークホルダーでレビューする</strong>ことを求めています。観点は次のとおりです。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>確認内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデルの正確さ</td>
+<td>DFD（または相当する図）は実際のシステムを正しく表しているか</td>
+</tr>
+<tr>
+<td>網羅性</td>
+<td>重要な脅威の抜けはないか（別の視点: 攻撃ツリー等で再点検）</td>
+</tr>
+<tr>
+<td>対応の合意</td>
+<td>各脅威に対応方針が決まっているか</td>
+</tr>
+<tr>
+<td>十分性</td>
+<td>「軽減」と決めた脅威について、リスクが許容範囲まで下がるか</td>
+</tr>
+<tr>
+<td>記録と保管</td>
+<td>成果物は文書化され、必要な人だけがアクセスできるか</td>
+</tr>
+<tr>
+<td>テスト可能性</td>
+<td>対策の成否をテストや計測で確かめられるか</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s8-2">8.2 QA・テストとの接続（QA エンジニア向け）</h3>
+<p>Threat Modeling の出力は、そのままテスト観点になります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>脅威</th>
+<th>テスト観点の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-02 テナント越え</td>
+<td>認可テスト: 他テナントのリソース ID を指定して 403/404 を確認</td>
+</tr>
+<tr>
+<td>T-05 レート超過</td>
+<td>負荷テスト: 上限を超えたときに 429 が返り、他テナントに影響しない</td>
+</tr>
+<tr>
+<td>T-04 情報漏えい</td>
+<td>異常系テスト: エラー応答に内部情報が含まれない</td>
+</tr>
+<tr>
+<td>T-06 否認</td>
+<td>ログ検証: 管理操作が必ず記録され、改ざん不可</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s8-3">8.3 振り返り（Retrospective）</h3>
+<p>Shostack のポッドキャストでは、第4質問に関連して<strong>振り返り</strong>の重要性が語られています。セッションの後に次を話し合います。</p>
+<ul>
+<li>脅威の洗い出しで時間がかかった/効果があった部分は？</li>
+<li>実際に起きたインシデントや外部の指摘と比較して、見落としはあったか？</li>
+<li>次回、手順やツールを変えるべきか？</li>
+</ul>
+<h3 id="s8-4">8.4 見直しのタイミング（トリガー）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>トリガー</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>設計変更</td>
+<td>新しい外部サービスの追加、認証方式の変更、データの保存先変更</td>
+</tr>
+<tr>
+<td>新機能</td>
+<td>ファイル共有、API 公開、AI 機能の追加</td>
+</tr>
+<tr>
+<td>外部情報</td>
+<td>利用ライブラリの重大な脆弱性、類似サービスでのインシデント</td>
+</tr>
+<tr>
+<td>前提の崩壊</td>
+<td>「VPC 内部は安全」という前提が崩れる構成変更</td>
+</tr>
+<tr>
+<td>定期見直し</td>
+<td>リリースサイクルごと、または半年〜1年ごと</td>
+</tr>
+</tbody>
+</table></div></section>
+<section id="ch9"><h2><span class="h-num">9</span><span>方法論の地図（STRIDE / PASTA / LINDDUN ほか）</span></h2><p>OWASP の Cheat Sheet は「<strong>業界で普遍的に認められた唯一の標準プロセスは存在せず、すべてのケースに当てはまる正解もない</strong>」と明言しています。多くの手法は、<strong>システムのモデル化・脅威の特定・リスクへの対応</strong>を何らかの形で含みます。違いは「どこに焦点を置くか」です。</p>
+<h3 id="s9-1">9.1 主な方法論の比較</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法論</th>
+<th>焦点</th>
+<th>一言でいうと</th>
+<th>向いている場面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>STRIDE</strong></td>
+<td>ソフトウェアの設計（技術的な脅威）</td>
+<td>6種類の脅威を DFD に当てはめる</td>
+<td>技術設計のレビュー。<strong>最初の1つはこれ</strong></td>
+</tr>
+<tr>
+<td><strong>攻撃ツリー</strong></td>
+<td>攻撃者の目的・多段階の攻撃</td>
+<td>目的から逆算して経路を分解</td>
+<td>重要資産への攻撃経路の整理</td>
+</tr>
+<tr>
+<td><strong>悪用ケース</strong></td>
+<td>正規ワークフローの悪用</td>
+<td>順序違い・連打・意図外の使い方を考える</td>
+<td>ビジネスロジックの悪用</td>
+</tr>
+<tr>
+<td><strong>LINDDUN</strong></td>
+<td>プライバシー</td>
+<td>7種類のプライバシー脅威を検討</td>
+<td>個人データを扱う機能</td>
+</tr>
+<tr>
+<td><strong>PASTA</strong></td>
+<td>事業目標とリスク（リスク中心）</td>
+<td>攻撃者の視点を重視する 7 段階のプロセス。事業・ミッションへの影響で脅威を優先順位づけ</td>
+<td>事業影響を重視したい、経営層に説明したい</td>
+</tr>
+<tr>
+<td><strong>OCTAVE</strong></td>
+<td>組織全体のリスク</td>
+<td>3 段階（資産ベースの脅威プロファイル作成、インフラの脆弱性の特定、セキュリティ戦略・計画の策定）</td>
+<td>組織レベルのリスクマネジメント</td>
+</tr>
+<tr>
+<td><strong>VAST</strong></td>
+<td>アジャイル開発・自動化</td>
+<td>開発ワークフローと連携し、プロセスフロー図でアプリケーションをモデル化する</td>
+<td>反復的な開発サイクルに合わせたいとき</td>
+</tr>
+<tr>
+<td><strong>Trike</strong></td>
+<td>システムのモデル化とリスク管理</td>
+<td>要件モデル（利害関係者・資産・許可される行動）に実装モデルと DFD を組み合わせ、脅威とリスクを割り当てる</td>
+<td>利害関係者と許可される行動を明確にしたいとき</td>
+</tr>
+<tr>
+<td><strong>特化型</strong>（SPARTA、INCLUDES NO DIRT など）</td>
+<td>特定分野</td>
+<td>書籍が紹介する特化型の手法</td>
+<td>宇宙システム等、特定領域</td>
+</tr>
+</tbody>
+</table></div>
+<p>（OWASP Cheat Sheet の比較表、書籍の目次、CSA（Cloud Security Alliance）の MAESTRO 解説記事にある各手法の概要に基づく整理。SEI/CMU も「手法ごとに関心事が違い、組み合わせて使える」と整理しています。）</p>
+<p><strong>PASTA の 7 段階</strong>（CSA の記事による）: ① Define Objectives（目標の定義）→ ② Define Technical Scope（技術スコープの定義）→ ③ Application Decomposition（アプリケーションの分解）→ ④ Threat Analysis（脅威分析）→ ⑤ Vulnerability and Weakness Analysis（脆弱性・弱点の分析）→ ⑥ Attack Modeling（攻撃のモデル化）→ ⑦ Risk and Impact Analysis（リスクと影響の分析）</p>
+<div class="callout warn"><i class="ti ti-alert-triangle"></i><div class="callout-body"><p><strong>注意</strong>: OWASP は「<strong>包括的に見せるためだけに手法を足さない</strong>」ことを勧めています。各手法を使う理由と、<strong>その手法が扱わない懸念</strong>を記録しておくのがコツです。</p></div></div>
+<h3 id="s9-2">9.2 STRIDE と LINDDUN の関係（セキュリティ × プライバシー）</h3>
+<p>STRIDE はセキュリティの6特性の侵害を扱いますが、プライバシーの問題（たとえば「データを集めすぎる」「利用者が知らされない」）は十分に表現できません。そこで <strong>LINDDUN</strong>（KU Leuven が 2010 年に最初に公開）を補完として使います。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>LINDDUN の頭文字</th>
+<th>脅威タイプ</th>
+<th>意味（TaskBoard での例）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L</strong></td>
+<td>Linking（関連付け）</td>
+<td>別々のデータが結びつけられ、個人の行動が追跡される</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td>Identifying（特定）</td>
+<td>匿名のはずのデータから個人が特定される</td>
+</tr>
+<tr>
+<td><strong>N</strong></td>
+<td>Non-repudiation（否認不可）</td>
+<td>本人が否認できない形で行動が記録され、不利益になる</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Detecting（検知）</td>
+<td>「その人がサービスを使っていること」自体が分かってしまう</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Data Disclosure（データ開示）</td>
+<td>必要以上のデータが共有・開示される</td>
+</tr>
+<tr>
+<td><strong>U</strong></td>
+<td>Unawareness（認識不足）※</td>
+<td>利用者がデータの扱いを知らず、制御できない</td>
+</tr>
+<tr>
+<td><strong>N</strong></td>
+<td>Non-compliance（不遵守）</td>
+<td>法令や自社ポリシーへの違反</td>
+</tr>
+</tbody>
+</table></div>
+<p>※ 最新の更新では <strong>Unawareness and Unintervenability</strong>（認識不足と介入不能）と表記されています。</p>
+<p>LINDDUN には、軽量版の <strong>LINDDUN GO</strong>（カード形式）や、体系的・網羅的な <strong>LINDDUN PRO</strong> があります。また、ISO 27550（プライバシーエンジニアリング）に含まれたことが、Open University の資料で紹介されています。</p>
+<h3 id="s9-3">9.3 手法の選び方</h3>
+<figure class="diagram"><div class="mermaid" data-diagram="d6"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 6: 9.3 手法の選び方</figcaption></figure></section>
+<section id="ch10"><h2><span class="h-num">10</span><span>自動化と Threat Modeling as Code</span></h2><p>書籍の第4章は、<strong>なぜ自動化するのか</strong>、<strong>コードから（from code）モデルを得る方法</strong>、<strong>コードで（with code）モデルを書く方法</strong>、各種ツール、<strong>ML/AI の活用</strong>を扱います。</p>
+<h3 id="s10-1">10.1 自動化の目的と限界</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一貫性</td>
+<td>毎回同じ観点で脅威候補を出す</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>図の作成・レポート作成の手間を減らす</td>
+</tr>
+<tr>
+<td>追跡可能性</td>
+<td>モデルをバージョン管理し、変更点をレビューできる</td>
+</tr>
+<tr>
+<td>スケール</td>
+<td>多数のチームで同じ水準を保つ</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout warn"><i class="ti ti-alert-triangle"></i><div class="callout-body"><p><strong>限界</strong>: ツールは<strong>脅威の「候補」</strong>を出すだけです。Manifesto の原則どおり、<strong>対話が共通理解を作り、文書はそれを記録する</strong>もの。自動生成の結果を鵜呑みにせず、チームで確認します。</p></div></div>
+<h3 id="s10-2">10.2 主なツール</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>種別</th>
+<th>特徴</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OWASP Threat Dragon</strong></td>
+<td>OSS（Web / デスクトップ）</td>
+<td>図の作成と、ルールエンジンによる脅威・対策の自動生成。STRIDE / LINDDUN / CIA / DIE / PLOT4ai に対応</td>
+<td>OWASP のプロジェクトページで Production 扱い。Manifesto の価値と原則に従うと記載</td>
+</tr>
+<tr>
+<td><strong>Microsoft Threat Modeling Tool</strong></td>
+<td>無料ツール</td>
+<td>Microsoft SDL の中核要素。STRIDE per Element による脅威と対策の分析</td>
+<td>非セキュリティ専門家を想定して設計されたと説明されている</td>
+</tr>
+<tr>
+<td><strong>OWASP pytm</strong></td>
+<td>OSS（Python）</td>
+<td>Python コードでシステムを記述し、DFD・シーケンス図・脅威を自動生成</td>
+<td>Python 3.11 以上、Graphviz が必要。要素に LLM と Agent が追加されている</td>
+</tr>
+<tr>
+<td><strong>Threagile</strong></td>
+<td>OSS（YAML）</td>
+<td>アジャイルな脅威モデリング用ツールキット。リスクレポートを生成</td>
+<td>CI への組み込みを想定</td>
+</tr>
+<tr>
+<td>IriusRisk / SD Elements / ThreatModeler</td>
+<td>商用</td>
+<td>アーキテクチャから脅威・対策を自動生成、管理機能</td>
+<td>書籍でも紹介される</td>
+</tr>
+<tr>
+<td>CAIRIS / Mozilla SeaSponge / Tutamen Threat Model Automator</td>
+<td>OSS・研究系</td>
+<td>設計や要件との連携など、それぞれ特色あり</td>
+<td>書籍で紹介。最新の保守状況は各リポジトリで確認</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>ファイル形式の互換性</strong>: OWASP Threat Dragon の Wiki には、Threat Dragon（1.x / 2.x）のファイル形式が pytm・Threagile・Open Threat Model（OTM）と互換でないことが書かれています。そのため、<strong>共通の Threat Model File（TMF）形式</strong>の検討が進められています。ツール選びでは「出力を他へ移せるか」も確認しましょう。</p>
+<h3 id="s10-3">10.3 pytm で「コードとして」モデルを書く（最小例）</h3>
+<p>pytm は、システムの構成要素を Python のオブジェクトとして書き、図やレポートを生成します。以下は TaskBoard の一部を表した最小例です。</p>
+<div class="code-head"><i class="ti ti-code"></i>python</div><pre><code class="language-python">#!/usr/bin/env python3
+from pytm import TM, Actor, Boundary, Dataflow, Datastore, Server
+
+tm = TM(&quot;TaskBoard&quot;)
+tm.description = &quot;チーム向けタスク管理 SaaS: ログインとタスク共有&quot;
+tm.isOrdered = True
+
+internet = Boundary(&quot;Internet&quot;)
+vpc = Boundary(&quot;VPC&quot;)
+
+member = Actor(&quot;Member&quot;)
+member.inBoundary = internet
+
+api = Server(&quot;API Server&quot;)
+api.inBoundary = vpc
+
+db = Datastore(&quot;PostgreSQL&quot;)
+db.inBoundary = vpc
+
+Dataflow(member, api, &quot;D1 HTTPS: タスク操作&quot;)
+Dataflow(api, db, &quot;D5 SQL&quot;)
+
+tm.process()
+</code></pre>
+<ul>
+<li>公式 README（https://github.com/OWASP/pytm）では、次の形で図とレポートを生成します。<code>./tm.py --dfd | dot -Tpng -o dfd.png</code>（DFD）、<code>./tm.py --seq | java -jar plantuml.jar -tpng -pipe &gt; seq.png</code>（シーケンス図、Java と PlantUML が必要）、<code>./tm.py --report docs/basic_template.md | pandoc -f markdown -t html &gt; report.html</code>（レポート）。</li>
+<li>利用できる要素は TM、Element、Server、ExternalEntity、Datastore、Actor、Process、SetOfProcesses、Dataflow、Boundary、Lambda、<strong>LLM</strong>、<strong>Agent</strong> です（README 記載）。<code>--list</code> で組み込みの脅威を確認でき、LLM01〜LLM09（直接/間接プロンプトインジェクション、過剰な権限のツール利用など）も含まれます。</li>
+<li><code>--stale_days</code> で、モデルのスクリプトと実際のコードとの更新日の差を確認できます。<strong>「脅威モデルが古くなっていないか」を機械的に測る</strong>用途に使えます。</li>
+<li>ファイルをリポジトリに置けば、<strong>プルリクエストでモデルの変更をレビュー</strong>できます（コードと同じ運用）。</li>
+</ul>
+<h3 id="s10-4">10.4 「Threat Modeling as Code」の運用の考え方</h3>
+<ol>
+<li>モデル（DFD と脅威リスト）を<strong>リポジトリに保存</strong>する（JSON / YAML / Python）</li>
+<li>設計変更のプルリクエストと<strong>同時にモデルも更新</strong>する</li>
+<li>CI でレポートを生成し、<strong>新しい脅威候補が増えていないか</strong>を確認する</li>
+<li>重要な判断（受容・移転）は、コードではなく<strong>議論の記録</strong>として別に残す</li>
+</ol>
+<h3 id="s10-5">10.5 LLM を使った支援（慎重に）</h3>
+<p>学術研究（NDSS 2024 併設ワークショップの論文など）では、設計文書を LLM で解析して脅威候補を出す試みが報告され、STRIDE-GPT のようなツールも登場しています。<strong>有用な下書きにはなりますが</strong>、次の点に注意します。</p>
+<ul>
+<li>LLM は<strong>システム固有の前提</strong>（信頼境界や運用実態）を知らない。人間が文脈を補う</li>
+<li>出力を<strong>根拠なく採用しない</strong>（誤り・抜けがありうる）</li>
+<li>機密性の高い設計情報を<strong>外部サービスに送ってよいか</strong>を事前に確認する</li>
+</ul></section>
+<section id="ch11"><h2><span class="h-num">11</span><span>継続的 Threat Modeling（Agile / DevOps との統合）</span></h2><h3 id="s11-1">11.1 なぜ「継続的」なのか</h3>
+<p>アジャイルでは設計が開発とともに変化し続けるため、「最初に1回だけ大きな脅威モデルを作る」方式は陳腐化しやすくなります。Manifesto の原則も、<strong>開発の進め方に合わせ、管理可能な範囲に区切って、繰り返し行う</strong>ことを求めています。</p>
+<h3 id="s11-2">11.2 Autodesk の Continuous Threat Modeling（CTM）</h3>
+<p>書籍の第5章で扱われる、Autodesk の Izar Tarandach が主導した手法です。公開リポジトリでは、<strong>最小限のセキュリティ知識しかないチームでも、セキュリティ専門家への依存を減らして実施できる</strong>ことを狙う、進化的で動的な手法だと説明されています。</p>
+<p>「<strong>Threat Model Every Story</strong>」（すべてのストーリーで Threat Modeling する）の運用は、公開講演の要約によると次のようなものです。</p>
+<ol>
+<li>開発者が<strong>各ストーリー</strong>について「セキュリティ上の関連があるか？」を自問する</li>
+<li>関連があれば、<strong>その場で対処</strong>して「軽減済みの発見」として記録する、または「脅威モデル候補の発見」としてキュレーター（担当者）にレビューを依頼する</li>
+<li>Autodesk では Jira のチケットにラベルを付けて追跡する</li>
+<li><strong>「もしこれなら、あれを確認」形式のチェックリスト</strong>で、関連する項目だけを確認する</li>
+</ol>
+<figure class="diagram"><div class="mermaid" data-diagram="d7"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 7: 11.2 Autodesk の Continuous Threat Modeling（CTM）</figcaption></figure>
+<h3 id="s11-3">11.3 ベースライン（Baselining）</h3>
+<p>書籍の第5章には <em>Baselining</em> と <em>Baseline Analysis</em> という見出しがあります。ざっくり言うと、<strong>システムの現状を基準点（ベースライン）として記録し、以後の変更を差分として分析する</strong>考え方です。毎回ゼロから全体を見直さず、変更部分に集中できます。</p>
+<h3 id="s11-4">11.4 Threat Modeling Capabilities（組織としての成熟）</h3>
+<p>Manifesto の作成チームは 2024 年に <strong>Threat Modeling Capabilities</strong> を公開しました。組織の Threat Modeling 活動を作り込む・見直すための「できること」のカタログで、<strong>7つのプロセス領域</strong>にまとめられています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>プロセス領域</th>
+<th>意味（概要）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strategy</td>
+<td>方針・目的を定める</td>
+</tr>
+<tr>
+<td>Education</td>
+<td>学び方・教育を整える</td>
+</tr>
+<tr>
+<td>Creating Threat Models</td>
+<td>脅威モデルを作る力</td>
+</tr>
+<tr>
+<td>Acting on Threat Models</td>
+<td>結果を実際の対応につなげる力</td>
+</tr>
+<tr>
+<td>Communications</td>
+<td>結果を関係者へ伝える力</td>
+</tr>
+<tr>
+<td>Measurement</td>
+<td>効果を測る力</td>
+</tr>
+<tr>
+<td>Program Management</td>
+<td>活動全体を運営する力</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>チーム単位では、まず「<strong>Creating</strong> と <strong>Acting</strong>」（作る・対応につなげる）を安定させ、その後に Education・Measurement に広げるのが無理のない順序です（本ガイドの提案であり、公式の推奨順序ではありません）。</p></div></div></section>
+<section id="ch12"><h2><span class="h-num">12</span><span>2026年の動向: クラウドと AI / エージェント</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>この章は、<strong>変化が速く、成熟度の異なる資料が混在</strong>しています。一次情報（OWASP・MITRE など）と、ベンダー・個人ブログ・プレプリントを区別して読んでください。</p></div></div>
+<h3 id="s12-1">12.1 クラウドネイティブでの Threat Modeling</h3>
+<p>OWASP の Cheat Sheet は、クラウド環境では STRIDE や DFD といった従来技法に<strong>調整が必要</strong>だとし、次の観点を挙げています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>具体的に考えること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>責任共有モデル</td>
+<td>どの対策を事業者が、どれを自分たちが担うか</td>
+</tr>
+<tr>
+<td>マネージドサービスと API</td>
+<td>設定ミス、権限の過剰付与、API 経由の操作</td>
+</tr>
+<tr>
+<td>マルチテナントと ID 連携</td>
+<td>テナント分離、フェデレーション設定</td>
+</tr>
+<tr>
+<td>動的なインフラ</td>
+<td>IaC、サーバーレス、コンテナの短命なリソース</td>
+</tr>
+<tr>
+<td>コンプライアンスとデータ所在地</td>
+<td>法域ごとの要件</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s12-2">12.2 AI / LLM / エージェントを含むシステム</h3>
+<p>AI を含むシステムでは、これまでの「入力 → 処理 → 出力」の前提が崩れる部分があります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>従来のシステム</th>
+<th>AI / エージェントを含むシステム</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>振る舞いはコードでほぼ決まる</td>
+<td>振る舞いが<strong>モデルの出力</strong>やプロンプトに左右される</td>
+</tr>
+<tr>
+<td>信頼できない入力は主に「ユーザー入力」</td>
+<td>メール・Web ページ・文書・ツール出力など<strong>あらゆるデータが入力経路</strong>になりうる</td>
+</tr>
+<tr>
+<td>権限は人間が操作するときに行使される</td>
+<td>エージェントが<strong>自律的に</strong>ツールを呼び出し、権限を行使する</td>
+</tr>
+<tr>
+<td>アーキテクチャ図が変わらなければ脅威も変わらない</td>
+<td>モデル・プロンプト・ツール構成の変更で<strong>脅威が変わる</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h4>主な参照枠組み（2026年10月時点で確認できたもの）</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>枠組み</th>
+<th>概要</th>
+<th>信頼度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OWASP Top 10 for Agentic Applications 2026</strong></td>
+<td>2025年12月9日公開。100名超の専門家の協力で作成された、自律的/エージェント型 AI の重大リスク一覧</td>
+<td>◎</td>
+</tr>
+<tr>
+<td><strong>OWASP Agentic AI – Threats and Mitigations</strong></td>
+<td>2025年2月公開。エージェント設計・メモリ・計画/自律性・ツール利用・デプロイ/運用などの観点で脅威と対策を整理</td>
+<td>◎</td>
+</tr>
+<tr>
+<td><strong>MITRE ATLAS</strong></td>
+<td>AI システムに対する敵対的な戦術・技法の知識ベース（継続更新）</td>
+<td>◎</td>
+</tr>
+<tr>
+<td><strong>CSA MAESTRO</strong></td>
+<td>エージェント型 AI を<strong>7つの層</strong>に分解し、層ごと・層をまたぐ脅威を洗い出す枠組み。2025年2月6日、Ken Huang（CSA AI Safety WG 共同議長）が CSA のブログで提唱</td>
+<td>○</td>
+</tr>
+<tr>
+<td><strong>LINDDUN の GenAI 拡張</strong></td>
+<td>2026年の研究。LINDDUN の7種のうち3種を拡張し、約100件の GenAI 向け事例を知識ベースに追加</td>
+<td>○（プレプリント）</td>
+</tr>
+<tr>
+<td>OWASP Cheat Sheet Series の AI 関連シート</td>
+<td>AI Agent Security、MCP Security、RAG Security、LLM Prompt Injection Prevention など</td>
+<td>◎</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>OWASP の GenAI Security Project のサイトには、2026年8月3日付で「OWASP GenAI LLM Top 10 2026」も掲載されています（本ガイドでは存在の確認にとどめ、内容の詳細は公式資料で確認してください）。<br />
+MAESTRO の 7 層は、CSA のブログ記事で確認できました（次の表）。ただし発表から時間が経っており、後継の資料や拡張がないかは、CSA のサイトで確認してください。</p></div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>名称</th>
+<th>代表的な脅威（CSA の記事より）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layer 7</td>
+<td>Agent Ecosystem</td>
+<td>エージェントのなりすまし、ツールの悪用、ゴールの操作、エージェント登録簿の改ざん</td>
+</tr>
+<tr>
+<td>Layer 6</td>
+<td>Security and Compliance（縦断的な層）</td>
+<td>セキュリティ AI エージェントの回避・乗っ取り、説明可能性の欠如</td>
+</tr>
+<tr>
+<td>Layer 5</td>
+<td>Evaluation and Observability</td>
+<td>評価指標の操作、可観測性ツールの侵害、ログ経由のデータ漏えい</td>
+</tr>
+<tr>
+<td>Layer 4</td>
+<td>Deployment and Infrastructure</td>
+<td>コンテナイメージの侵害、オーケストレーション攻撃、IaC の改ざん、横展開</td>
+</tr>
+<tr>
+<td>Layer 3</td>
+<td>Agent Frameworks</td>
+<td>フレームワーク部品の侵害、バックドア、サプライチェーン攻撃</td>
+</tr>
+<tr>
+<td>Layer 2</td>
+<td>Data Operations</td>
+<td>データポイズニング、データ窃取、RAG パイプラインの侵害</td>
+</tr>
+<tr>
+<td>Layer 1</td>
+<td>Foundation Models</td>
+<td>敵対的サンプル、モデル窃取、メンバーシップ推論、バックドア</td>
+</tr>
+</tbody>
+</table></div>
+<p>この枠組みは、<strong>層をまたぐ脅威</strong>（サプライチェーン攻撃、横展開、権限昇格、データ漏えい、ゴールの誤りの連鎖）も明示的に扱います。使い方は「①システムを 7 層に分解 → ②層ごとに脅威を特定 → ③層をまたぐ脅威を特定 → ④リスク評価 → ⑤対策計画 → ⑥実装と継続的な監視」の6段階です。</p>
+<h3 id="s12-3">12.3 例: AI アシスタント付き TaskBoard の DFD</h3>
+<p>TaskBoard に「メール内容からタスクを自動作成する AI エージェント」を追加したとします。</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d8"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 8: 12.3 例: AI アシスタント付き TaskBoard の DFD</figcaption></figure>
+<p><strong>この図で考えるべき問い</strong>（従来の STRIDE の問いに、AI 特有の問いを足す）:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>問い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>入力</td>
+<td>E1・E2 の内容に<strong>隠れた指示</strong>が含まれていたら、エージェントはそれに従ってしまうか？</td>
+</tr>
+<tr>
+<td>権限</td>
+<td>エージェントが持つ権限（メール送信、タスク作成）は<strong>最小限</strong>か？ 人間の承認点はあるか？</td>
+</tr>
+<tr>
+<td>分離</td>
+<td>「信頼できない文書を読む役割」と「外部へ送る役割」を<strong>同じエージェントに持たせていないか</strong>？</td>
+</tr>
+<tr>
+<td>メモリ</td>
+<td>E3 に悪意ある内容が書き込まれ、<strong>後の処理に影響</strong>しないか？</td>
+</tr>
+<tr>
+<td>監査</td>
+<td>エージェントの判断・ツール呼び出しが<strong>記録され、後から追える</strong>か？</td>
+</tr>
+<tr>
+<td>変更管理</td>
+<td>モデル・プロンプト・ツール定義が変わったとき、<strong>脅威モデルも更新</strong>されるか？</td>
+</tr>
+</tbody>
+</table></div>
+<p>実務家向けのワークショップ資料（NHI Management Group）には、<strong>「メール内の隠れた指示でチケットが外部へ転送される」</strong>という例と、その対策（送信先を社内ドメインに制限する、信頼できないメールの読み取りと送信を分離する、外部送信にアラートを出す）が紹介されています。上の「分離」の問いと同じ発想です。</p></section>
+<section id="ch13"><h2><span class="h-num">13</span><span>Threat Modeling Champion になる（組織導入 FAQ）</span></h2><p>書籍の第6章は、現場で Threat Modeling を広める人（<strong>Champion</strong>）が直面する疑問に答える構成です。見出しに沿って、公開されている一般的な知見を整理します。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>質問</th>
+<th>実践のヒント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>経営層をどう巻き込む？</td>
+<td>「脅威モデルは<strong>ステークホルダーにとって価値がある</strong>とき意味を持つ」（Manifesto）。技術用語でなく、<strong>事業リスク・手戻りコスト・顧客の信頼</strong>で語る。小さな成功事例を1つ作る</td>
+</tr>
+<tr>
+<td>開発チームの抵抗にどう向き合う？</td>
+<td>OWASP が挙げる課題は、<strong>知識不足・時間の制約・部署間の連携不足</strong>。大がかりな手順を持ち込まず、<strong>30分の小さなセッション</strong>から始める。セキュリティ担当をセッションに招き、教える・学ぶ場にする</td>
+</tr>
+<tr>
+<td>「失敗した」という感覚をどう扱う？</td>
+<td>「Threat Modeling が上手になること」ではなく<strong>システムの改善</strong>が目的。第4質問の「十分に」を共有し、完璧を求めない</td>
+</tr>
+<tr>
+<td>方法論が多すぎて選べない</td>
+<td>9章のとおり、<strong>最初は STRIDE + DFD</strong>。足りない視点（プライバシー等）が出たら手法を足す</td>
+</tr>
+<tr>
+<td>「悪いニュース」をどう伝える？</td>
+<td>責める言い方を避け、<strong>事実・影響・選択肢（4つの対応方針）</strong>の順に伝える。誰かのミスではなく、<strong>設計上の課題</strong>として扱う</td>
+</tr>
+<tr>
+<td>受容された発見にどう対処する？</td>
+<td>理由・承認者・見直し時期を記録し、<strong>前提が崩れたら再検討</strong>する（7章）</td>
+</tr>
+<tr>
+<td>見落としていないか？</td>
+<td>完全には防げない。<strong>視点を変える</strong>（攻撃ツリー、悪用ケース）、<strong>多様な参加者</strong>を入れる（Manifesto の <em>Varied Viewpoints</em>）、<strong>事後の振り返り</strong>を行う</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s13-1">13.1 最初の90日の進め方（提案）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>期間</th>
+<th>やること</th>
+<th>成果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1〜2週目</td>
+<td>小さな機能を1つ選び、60分セッションを1回実施（14章）</td>
+<td>最初の脅威リストと要件</td>
+</tr>
+<tr>
+<td>3〜6週目</td>
+<td>同じ手順を別の機能で2〜3回。結果を<strong>チケットとテストに反映</strong></td>
+<td>対応までの流れが回る実感</td>
+</tr>
+<tr>
+<td>7〜10週目</td>
+<td>「Threat Model Every Story」型の軽いチェックリストを導入（11章）</td>
+<td>日常業務への組み込み</td>
+</tr>
+<tr>
+<td>11〜13週目</td>
+<td>振り返りを行い、成果（見つけた問題数・修正コスト）を共有</td>
+<td>経営層・他チームへの説明材料</td>
+</tr>
+</tbody>
+</table></div></section>
+<section id="ch14"><h2><span class="h-num">14</span><span>ハンズオン: 最初の60分セッション</span></h2><h3 id="s14-1">14.1 準備（セッションの前日まで）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>準備</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>題材を1つ選ぶ</td>
+<td>小さめの機能（例: ログイン、ファイルアップロード、新しい外部連携）</td>
+</tr>
+<tr>
+<td>参加者を集める</td>
+<td>開発・QA・運用・プロダクトオーナー（<strong>多様な視点</strong>が大切）。3〜6名が目安</td>
+</tr>
+<tr>
+<td>叩き台を用意</td>
+<td>既存の設計資料から<strong>ラフな DFD</strong> を1枚だけ用意（完璧でなくてよい）</td>
+</tr>
+<tr>
+<td>道具</td>
+<td>ホワイトボードまたは共有ドキュメント、付箋、タイマー</td>
+</tr>
+<tr>
+<td>事前周知</td>
+<td>目的（問題を責めるのではなく設計を良くする）と所要時間を伝える</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s14-2">14.2 当日の進行</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>時間</th>
+<th>質問</th>
+<th>やること</th>
+<th>成果物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0〜5分</td>
+<td>—</td>
+<td>目的・ルール・スコープを確認</td>
+<td>スコープ宣言</td>
+</tr>
+<tr>
+<td>5〜20分</td>
+<td>Q1</td>
+<td>DFD を全員で確認・修正。信頼境界、資産、前提を書き足す</td>
+<td>修正版 DFD、資産・前提リスト</td>
+</tr>
+<tr>
+<td>20〜40分</td>
+<td>Q2</td>
+<td>信頼境界をまたぐフローから STRIDE で脅威を挙げる</td>
+<td>脅威リスト</td>
+</tr>
+<tr>
+<td>40〜50分</td>
+<td>Q3</td>
+<td>優先度の高い脅威（上位3〜5件）に対応方針を決める</td>
+<td>対応方針つきの表</td>
+</tr>
+<tr>
+<td>50〜60分</td>
+<td>Q4</td>
+<td>見落とし・前提・次の一手を確認。振り返り</td>
+<td>アクション項目（チケット化）、次回見直し日</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s14-3">14.3 ファシリテーションのコツ</h3>
+<ol>
+<li><strong>最初に「正解探しではない」と宣言</strong>する。変な指摘や素朴な質問ほど歓迎する</li>
+<li><strong>記録係と進行役を分ける</strong></li>
+<li>対策の議論が長くなったら<strong>駐車場（Parking Lot）</strong>に書いて Q3 に回す</li>
+<li>技術者以外が置いていかれたら、<strong>ブレインストーミングやカードゲーム</strong>に切り替える</li>
+<li>セッション終了時に<strong>「次にやること」を必ずチケットにする</strong>（記録だけで終わらせない）</li>
+</ol>
+<h3 id="s14-4">14.4 記録テンプレート（コピーして使えます）</h3>
+<div class="code-head"><i class="ti ti-code"></i>markdown</div><pre><code class="language-markdown"># 脅威モデル: &lt;対象システム/機能名&gt;
+
+- 日付 / 参加者:
+- 対象範囲（スコープ）:
+- 対象外:
+- 版数 / 次回見直し予定:
+
+## 1. システムモデル（Q1）
+（DFD またはシーケンス図を貼る）
+
+### 資産
+| 資産 | 守るべき特性（機密性/完全性/可用性など） |
+|---|---|
+
+### 前提
+| ID | 前提 | 検証方法・期限 |
+|---|---|---|
+
+## 2. 脅威（Q2）
+| ID | 対象要素 | STRIDE | 脅威の説明 | 影響 |
+|---|---|---|---|---|
+
+## 3. 対応（Q3）
+| ID | 優先度 | 方針（軽減/排除/移転/受容） | セキュリティ要件・対策 | 担当 | 期限 | チケット |
+|---|---|---|---|---|---|---|
+
+## 4. 検証と振り返り（Q4）
+- レビュー参加者:
+- 対策のテスト方法:
+- 見落としの可能性・残存リスク:
+- 振り返りメモ:
+</code></pre></section>
+<section id="ch15"><h2><span class="h-num">15</span><span>アンチパターンとチェックリスト</span></h2><h3 id="s15-1">15.1 Manifesto が示す考え方（一部）</h3>
+<p>Threat Modeling Manifesto は、<strong>価値・原則・パターン・アンチパターン</strong>で構成されています。ここでは、公開資料で確認できたものを紹介します（完全な一覧は公式サイトで確認してください）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>種別</th>
+<th>名称</th>
+<th>要旨（本ガイドの言い換え）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>価値</td>
+<td>Doing over talking</td>
+<td>語るより、実際に行う</td>
+</tr>
+<tr>
+<td>原則</td>
+<td>早く・頻繁に</td>
+<td>セキュリティとプライバシーの向上には、<strong>早期かつ頻繁な分析</strong>が最も効果的</td>
+</tr>
+<tr>
+<td>原則</td>
+<td>開発の進め方に合わせる</td>
+<td>設計変更に追従し、<strong>扱える大きさに区切って</strong>反復する</td>
+</tr>
+<tr>
+<td>原則</td>
+<td>関係者にとって価値がある</td>
+<td>成果が<strong>ステークホルダーの役に立つ</strong>とき意味を持つ</td>
+</tr>
+<tr>
+<td>原則</td>
+<td>対話が鍵</td>
+<td>対話が共通理解を生み、文書がそれを記録し、測定を可能にする</td>
+</tr>
+<tr>
+<td>パターン</td>
+<td>Systematic Approach</td>
+<td>網羅性と再現性のある進め方</td>
+</tr>
+<tr>
+<td>パターン</td>
+<td>Informed Creativity</td>
+<td>専門家の創意を重んじる</td>
+</tr>
+<tr>
+<td>パターン</td>
+<td>Varied Viewpoints</td>
+<td>多様な視点・部署横断の協力</td>
+</tr>
+<tr>
+<td>アンチパターン</td>
+<td><strong>Hero Threat Modeler</strong></td>
+<td>特別な才能を持つ一人に頼る。<strong>誰でもできるし、すべきである</strong></td>
+</tr>
+<tr>
+<td>アンチパターン</td>
+<td>Tendency to Overfocus</td>
+<td>一部の側面に偏りすぎる</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s15-2">15.2 よくある落とし穴（本ガイドのまとめ）</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>落とし穴</th>
+<th>症状</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>図だけ作って終わり</td>
+<td>脅威リストや要件に結びつかない</td>
+<td>14章の記録テンプレートで Q3・Q4 まで必ず回す</td>
+</tr>
+<tr>
+<td>巨大すぎるスコープ</td>
+<td>何カ月も終わらない</td>
+<td>1機能・1フロー単位に分割。<strong>小さく繰り返す</strong></td>
+</tr>
+<tr>
+<td>脅威を挙げて満足</td>
+<td>対応が決まらず放置</td>
+<td>各脅威に必ず方針（軽減/排除/移転/受容）を付ける</td>
+</tr>
+<tr>
+<td>「受容」の乱用</td>
+<td>理由なく「許容」にする</td>
+<td>理由・承認者・見直し時期を必須にする</td>
+</tr>
+<tr>
+<td>実装との乖離</td>
+<td>図が古く、見落としが生まれる</td>
+<td>変更時に更新。コード化（10章）も検討</td>
+</tr>
+<tr>
+<td>手法の足しすぎ</td>
+<td>包括的に見えるが実務で使われない</td>
+<td>使う理由と対象外を記録（OWASP の勧め）</td>
+</tr>
+<tr>
+<td>人に依存</td>
+<td>担当者の異動で止まる</td>
+<td>参加者を多様化、手順とテンプレートを共有</td>
+</tr>
+<tr>
+<td>外部資料を鵜呑み</td>
+<td>AI 生成の脅威リストをそのまま採用</td>
+<td>人間が文脈を補い、チームで確認</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s15-3">15.3 最終チェックリスト</h3>
+<div class="check-list"><label class="check-item"><span class="ck-num">1</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">スコープ・対象外・前提を書いた</span></label><label class="check-item"><span class="ck-num">2</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">DFD に信頼境界・データフロー・データストア・外部実体がある</span></label><label class="check-item"><span class="ck-num">3</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">信頼境界をまたぐフローから脅威を洗い出した</span></label><label class="check-item"><span class="ck-num">4</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">各脅威に優先度と対応方針がある</span></label><label class="check-item"><span class="ck-num">5</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">「軽減」の脅威はセキュリティ要件・チケット・テストに落とした</span></label><label class="check-item"><span class="ck-num">6</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">「受容」「移転」の理由・責任者・見直し時期を記録した</span></label><label class="check-item"><span class="ck-num">7</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">開発とセキュリティを含む関係者でレビューした</span></label><label class="check-item"><span class="ck-num">8</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">次回の見直しトリガーを決めた</span></label><label class="check-item"><span class="ck-num">9</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">振り返りを行い、次回に活かす点を残した</span></label></div></section>
+<section id="ch16"><h2><span class="h-num">16</span><span>演習問題と解答例</span></h2><article class="exercise"><h3 id="s16-1"><span class="ex-badge">演習 1</span>信頼境界を見つける</h3>
+<p>次の説明から、<strong>信頼境界</strong>になりうる場所を3つ以上挙げてください。</p>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>利用者はスマートフォンアプリから API ゲートウェイに接続する。ゲートウェイの背後にはマイクロサービス群と、会社ごとのデータを入れた共有データベースがある。決済は外部の決済事業者に委託している。</p></div></div>
+<details class="answer"><summary><i class="ti ti-eye"></i><span>解答例を表示</span><i class="ti ti-chevron-down chev"></i></summary><div class="answer-body"><ol>
+<li><strong>スマホアプリとゲートウェイの間</strong>（インターネットと自社システムの境目）</li>
+<li><strong>自社システムと決済事業者の間</strong>（別組織との境目）</li>
+<li><strong>ゲートウェイとマイクロサービスの間</strong>（サービス間で権限や信頼度が違う場合）</li>
+<li><strong>会社ごとのデータの間</strong>（テナントの境目。共有データベース内の論理的な信頼境界）</li>
+</ol>
+<p>ポイント: ネットワーク上の境目だけでなく、<strong>権限・組織・テナントが変わる境目</strong>も信頼境界です。</p></div></details>
+</article><article class="exercise"><h3 id="s16-2"><span class="ex-badge">演習 2</span>STRIDE で分類する</h3>
+<p>次の6つの事象は、STRIDE のどれに近いですか。</p>
+<ol>
+<li>管理操作のログを、管理者自身が削除できてしまう</li>
+<li>API の応答に他人のメールアドレスが含まれている</li>
+<li>1 回のリクエストで大量のメモリを確保させられ、サービスが落ちる</li>
+<li>一般ユーザーが、管理者向け API を直接呼び出して実行できる</li>
+<li>パスワードを無制限に試行でき、他人のアカウントに入れる</li>
+<li>URL 中のタスク ID を書き換えると、他人のタスクを更新できる</li>
+</ol>
+<details class="answer"><summary><i class="ti ti-eye"></i><span>解答例を表示</span><i class="ti ti-chevron-down chev"></i></summary><div class="answer-body"><ol>
+<li><strong>R（否認）</strong>。ログの改ざん（T）の側面もあります</li>
+<li><strong>I（情報漏えい）</strong></li>
+<li><strong>D（サービス拒否）</strong></li>
+<li><strong>E（権限昇格）</strong></li>
+<li><strong>S（なりすまし）</strong>。認証の突破にあたります</li>
+<li><strong>E（権限昇格）</strong>（認可の不備）と <strong>T（改ざん）</strong> の両面</li>
+</ol>
+<p>注: 1つの事象が複数の分類にまたがることは普通です。<strong>分類の正確さより、漏れなく考えること</strong>が目的です。</p></div></details>
+</article><article class="exercise"><h3 id="s16-3"><span class="ex-badge">演習 3</span>対応方針を選ぶ</h3>
+<p>次の3つの脅威に対し、Mitigate / Eliminate / Transfer / Accept のどれを選びますか。理由も書いてください。</p>
+<ul>
+<li>(a) 使われていない「全データ CSV エクスポート」機能が、管理者権限で誰でもダウンロード可能</li>
+<li>(b) カード番号の保管・処理に関する脅威（自社で保管する設計）</li>
+<li>(c) 外部 IdP が数時間停止するとログインできなくなる</li>
+</ul>
+<details class="answer"><summary><i class="ti ti-eye"></i><span>解答例を表示</span><i class="ti ti-chevron-down chev"></i></summary><div class="answer-body"><ul>
+<li>(a) <strong>Eliminate</strong>。使われていない機能は削除すれば脅威自体が消える</li>
+<li>(b) <strong>Eliminate または Transfer</strong>。自社で保管しない設計（外部の認定事業者に委託）にするのが基本。<strong>委託しても自社の責任がゼロにならない</strong>ため、残るコントロールと責任者を記録する</li>
+<li>(c) <strong>Accept</strong>（または一部 Mitigate）。外部依存で、停止の頻度・影響が小さければ受容もありうる。理由・承認者・見直し時期を記録する</li>
+</ul></div></details>
+</article><article class="exercise"><h3 id="s16-4"><span class="ex-badge">演習 4</span>攻撃ツリーを描く</h3>
+<p>目的を「<strong>管理者アカウントを乗っ取る</strong>」として、攻撃ツリー（Mermaid の flowchart）の枝を3つ以上考えてください。</p>
+<details class="answer"><summary><i class="ti ti-eye"></i><span>解答例を表示</span><i class="ti ti-chevron-down chev"></i></summary><div class="answer-body"><figure class="diagram"><div class="mermaid" data-diagram="d9"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 9: 演習 4: 攻撃ツリーを描く</figcaption></figure>
+<p>対策の例: 管理者へのフィッシング耐性の高い MFA、サポートでの本人確認手順の強化、退職者アカウントの自動停止。</p></div></details>
+</article><article class="exercise"><h3 id="s16-5"><span class="ex-badge">演習 5</span>AI エージェントの脅威を考える</h3>
+<p>「社内文書を検索して要約し、結果をメールで送るエージェント」について、<strong>信頼境界</strong>と<strong>最も注意すべきフロー</strong>を挙げ、対策案を2つ書いてください。</p>
+<details class="answer"><summary><i class="ti ti-eye"></i><span>解答例を表示</span><i class="ti ti-chevron-down chev"></i></summary><div class="answer-body"><ul>
+<li>信頼境界: ①社外から来る文書・メール（信頼できない入力）と自社システムの間、②エージェントとメール送信ツールの間（外部へ出る権限）</li>
+<li>最も注意すべきフロー: <strong>信頼できない文書の内容 → エージェント → メール送信ツール</strong>。文書内の隠れた指示により、機密を外部へ送る恐れがある</li>
+<li>対策案: ①メール送信先を<strong>社内ドメインに制限</strong>する、②信頼できない文書を読む処理と外部送信する処理を<strong>分離</strong>し、外部送信は<strong>人間の承認</strong>を挟む（さらに外部送信の監査ログとアラート）</li>
+</ul></div></details></article></section>
+<section id="ch17"><h2><span class="h-num">17</span><span>学習ロードマップ</span></h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>レベル</th>
+<th>目標</th>
+<th>やること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入門</strong></td>
+<td>概念と4つの質問を理解する</td>
+<td>本ガイドの 2〜8 章を読む。Threat Modeling Manifesto（短い）を読む</td>
+</tr>
+<tr>
+<td><strong>実践</strong></td>
+<td>チームで実施できる</td>
+<td>14章のセッションを 2〜3 回実施。OWASP Threat Modeling Cheat Sheet を通読</td>
+</tr>
+<tr>
+<td><strong>中級</strong></td>
+<td>手法を使い分ける</td>
+<td>書籍（Tarandach &amp; Coles）で方法論・自動化・継続的手法を学ぶ。pytm または Threat Dragon を試す。LINDDUN GO でプライバシーを検討</td>
+</tr>
+<tr>
+<td><strong>上級</strong></td>
+<td>組織の仕組みにする</td>
+<td>Shostack の <em>Threat Modeling: Designing for Security</em> を読む。Threat Modeling Capabilities で現状評価。AI/エージェント向け枠組み（12章）を取り入れる</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p><strong>おすすめの順序</strong>: 「読む」より先に「小さく1回やってみる」ほうが、理解が速くなります（Manifesto の価値: Doing over talking）。</p></div></div></section>
+<section id="ch18"><h2><span class="h-num">18</span><span>参考文献（根拠となるソース URL）</span></h2><div class="callout info"><i class="ti ti-info-circle"></i><div class="callout-body"><p>取得日: 2026-10-05（Web 調査）。信頼度: ◎=一次情報・標準・公式 / ○=著名実務家・研究 / △=ベンダー・二次情報・プレプリント</p></div></div>
+<h3 id="s18-1">18.1 書籍・著者</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">1</span><div class="ref-body"><div class="ref-title">O'Reilly: <em>Threat Modeling</em>（Tarandach &amp; Coles）書籍ページ（目次・概要）</div><a class="ref-url" href="https://www.oreilly.com/library/view/threat-modeling/9781492056546/" target="_blank" rel="noopener noreferrer">https://www.oreilly.com/library/view/threat-modeling/9781492056546/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 1, 5, 9, 10, 11, 13</span></div></div></div><div class="ref-card"><span class="ref-num">2</span><div class="ref-body"><div class="ref-title">O'Reilly: <em>Threat Modeling</em>（Adam Shostack, Wiley）※別書籍</div><a class="ref-url" href="https://www.oreilly.com/library/view/-/9781118810057/" target="_blank" rel="noopener noreferrer">https://www.oreilly.com/library/view/-/9781118810057/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 1（同名書籍の注意）</span></div></div></div><div class="ref-card"><span class="ref-num">3</span><div class="ref-body"><div class="ref-title">Izar Tarandach: Continuous Threat Modeling（GitHub）</div><a class="ref-url" href="https://github.com/izar/continuous-threat-modeling" target="_blank" rel="noopener noreferrer">https://github.com/izar/continuous-threat-modeling</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 11</span></div></div></div><div class="ref-card"><span class="ref-num">4</span><div class="ref-body"><div class="ref-title">tl;dr sec: Threat Model Every Story（講演要約）</div><a class="ref-url" href="https://tldrsec.com/p/appsec-threat-model-every-story-practical-continuous-threat-modeling-work-for-your-team" target="_blank" rel="noopener noreferrer">https://tldrsec.com/p/appsec-threat-model-every-story-practical-continuous-threat-modeling-work-for-your-team</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 11</span></div></div></div><div class="ref-card"><span class="ref-num">5</span><div class="ref-body"><div class="ref-title">O'Reilly Software Architecture Conference 講演概要（Tarandach）</div><a class="ref-url" href="https://conferences.oreilly.com/software-architecture/sa-ny-2019/public/schedule/detail/71585.html" target="_blank" rel="noopener noreferrer">https://conferences.oreilly.com/software-architecture/sa-ny-2019/public/schedule/detail/71585.html</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 11</span></div></div></div></div>
+<h3 id="s18-2">18.2 Threat Modeling Manifesto / Four Question Frame（Shostack ほか）</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">6</span><div class="ref-body"><div class="ref-title">Threat Modeling Manifesto（公式）</div><a class="ref-url" href="https://www.threatmodelingmanifesto.org/" target="_blank" rel="noopener noreferrer">https://www.threatmodelingmanifesto.org/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 2, 4, 15</span></div></div></div><div class="ref-card"><span class="ref-num">7</span><div class="ref-body"><div class="ref-title">Threat Modeling Capabilities（公式）</div><a class="ref-url" href="https://www.threatmodelingmanifesto.org/capabilities/" target="_blank" rel="noopener noreferrer">https://www.threatmodelingmanifesto.org/capabilities/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 11</span></div></div></div><div class="ref-card"><span class="ref-num">8</span><div class="ref-body"><div class="ref-title">Adam Shostack: 4QuestionFrame（GitHub）</div><a class="ref-url" href="https://github.com/adamshostack/4QuestionFrame" target="_blank" rel="noopener noreferrer">https://github.com/adamshostack/4QuestionFrame</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 4</span></div></div></div><div class="ref-card"><span class="ref-num">9</span><div class="ref-body"><div class="ref-title">Shostack: Threat Modeling Capabilities Released（ブログ）</div><a class="ref-url" href="https://shostack.org/blog/threat-modeling-capabilities/" target="_blank" rel="noopener noreferrer">https://shostack.org/blog/threat-modeling-capabilities/</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 11</span></div></div></div><div class="ref-card"><span class="ref-num">10</span><div class="ref-body"><div class="ref-title">Shostack + Associates: Threat Modeling（リソース）</div><a class="ref-url" href="https://shostack.org/resources/threat-modeling" target="_blank" rel="noopener noreferrer">https://shostack.org/resources/threat-modeling</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 4</span></div></div></div><div class="ref-card"><span class="ref-num">11</span><div class="ref-body"><div class="ref-title">The Threat Modeling Podcast: The Four Question Framework with Adam Shostack</div><a class="ref-url" href="https://threatmodel.buzzsprout.com/2152378/episodes/12826352-the-four-question-framework-with-adam-shostack" target="_blank" rel="noopener noreferrer">https://threatmodel.buzzsprout.com/2152378/episodes/12826352-the-four-question-framework-with-adam-shostack</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 4, 6, 8</span></div></div></div><div class="ref-card"><span class="ref-num">12</span><div class="ref-body"><div class="ref-title">Tromzo: Adam Shostack インタビュー（4つの質問のスケール）</div><a class="ref-url" href="https://tromzo.com/podcasts/adam-shostack-threat-modeling" target="_blank" rel="noopener noreferrer">https://tromzo.com/podcasts/adam-shostack-threat-modeling</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 4</span></div></div></div><div class="ref-card"><span class="ref-num">13</span><div class="ref-body"><div class="ref-title">Lean AppSec: The Four Question Framework（書き起こし）</div><a class="ref-url" href="https://www.leanappsec.com/resources/the-four-question-framework-for-threat-modeling" target="_blank" rel="noopener noreferrer">https://www.leanappsec.com/resources/the-four-question-framework-for-threat-modeling</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 4, 6</span></div></div></div><div class="ref-card"><span class="ref-num">14</span><div class="ref-body"><div class="ref-title">Security Compass: Threat Modeling Manifesto 活用（Doing over Talking など）</div><a class="ref-url" href="https://devici.com/resources/blog/elevating-your-threat-modeling-game-how-to-use-the-threat-modeling-manifesto" target="_blank" rel="noopener noreferrer">https://devici.com/resources/blog/elevating-your-threat-modeling-game-how-to-use-the-threat-modeling-manifesto</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 6, 15</span></div></div></div><div class="ref-card"><span class="ref-num">15</span><div class="ref-body"><div class="ref-title">Simone On Security: Manifesto の注釈</div><a class="ref-url" href="https://simoneonsecurity.com/2020/11/26/threat-modeling-manifesto/" target="_blank" rel="noopener noreferrer">https://simoneonsecurity.com/2020/11/26/threat-modeling-manifesto/</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 15</span></div></div></div><div class="ref-card"><span class="ref-num">16</span><div class="ref-body"><div class="ref-title">Security Compass: Threat Modeling Capabilities の活用</div><a class="ref-url" href="https://www.securitycompass.com/blog/threat-modeling-capabilities/" target="_blank" rel="noopener noreferrer">https://www.securitycompass.com/blog/threat-modeling-capabilities/</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 11</span></div></div></div></div>
+<h3 id="s18-3">18.3 OWASP・標準・公式ドキュメント</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">17</span><div class="ref-body"><div class="ref-title">OWASP Threat Modeling Cheat Sheet</div><a class="ref-url" href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer">https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 2, 4〜9, 12</span></div></div></div><div class="ref-card"><span class="ref-num">18</span><div class="ref-body"><div class="ref-title">OWASP Developer Guide: Threat modeling in practice</div><a class="ref-url" href="https://devguide.owasp.org/en/04-design/01-threat-modeling/07-practical-threat-modeling/" target="_blank" rel="noopener noreferrer">https://devguide.owasp.org/en/04-design/01-threat-modeling/07-practical-threat-modeling/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 5, 10</span></div></div></div><div class="ref-card"><span class="ref-num">19</span><div class="ref-body"><div class="ref-title">OWASP Community: Threat Modeling</div><a class="ref-url" href="https://owasp.org/www-community/Threat_Modeling" target="_blank" rel="noopener noreferrer">https://owasp.org/www-community/Threat_Modeling</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 2</span></div></div></div><div class="ref-card"><span class="ref-num">20</span><div class="ref-body"><div class="ref-title">SEI/CMU: Threat Modeling — A Summary of Available Methods</div><a class="ref-url" href="https://www.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/" target="_blank" rel="noopener noreferrer">https://www.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 9</span></div></div></div><div class="ref-card"><span class="ref-num">21</span><div class="ref-body"><div class="ref-title">NIST SP 800-218（SSDF）</div><a class="ref-url" href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf" target="_blank" rel="noopener noreferrer">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 7</span></div></div></div><div class="ref-card"><span class="ref-num">22</span><div class="ref-body"><div class="ref-title">Microsoft Threat Modeling Tool（Microsoft Learn）</div><a class="ref-url" href="https://learn.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool" target="_blank" rel="noopener noreferrer">https://learn.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 6, 10</span></div></div></div><div class="ref-card"><span class="ref-num">23</span><div class="ref-body"><div class="ref-title">Microsoft Learn: Power Platform の脅威分析（STRIDE の位置づけ）</div><a class="ref-url" href="https://learn.microsoft.com/en-us/power-platform/well-architected/security/threat-model" target="_blank" rel="noopener noreferrer">https://learn.microsoft.com/en-us/power-platform/well-architected/security/threat-model</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 6</span></div></div></div><div class="ref-card"><span class="ref-num">24</span><div class="ref-body"><div class="ref-title">Wikipedia: Threat model（歴史・概要）</div><a class="ref-url" href="https://en.wikipedia.org/wiki/Threat_model" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Threat_model</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 2</span></div></div></div></div>
+<h3 id="s18-4">18.4 プライバシー（LINDDUN）</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">25</span><div class="ref-body"><div class="ref-title">LINDDUN（KU Leuven 公式）</div><a class="ref-url" href="https://linddun.org/" target="_blank" rel="noopener noreferrer">https://linddun.org/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 9</span></div></div></div><div class="ref-card"><span class="ref-num">26</span><div class="ref-body"><div class="ref-title">LINDDUN: Privacy Threat Knowledge Support</div><a class="ref-url" href="https://linddun.org/threats/" target="_blank" rel="noopener noreferrer">https://linddun.org/threats/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 9</span></div></div></div><div class="ref-card"><span class="ref-num">27</span><div class="ref-body"><div class="ref-title">LINDDUN PRO チュートリアル</div><a class="ref-url" href="https://downloads.linddun.org/tutorials/pro/v0/tutorial.pdf" target="_blank" rel="noopener noreferrer">https://downloads.linddun.org/tutorials/pro/v0/tutorial.pdf</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 9</span></div></div></div><div class="ref-card"><span class="ref-num">28</span><div class="ref-body"><div class="ref-title">Open University: Privacy Threat Modeling Frameworks（ISO 27550 への言及）</div><a class="ref-url" href="https://www.open.edu/openlearncreate/mod/page/view.php?id=201450" target="_blank" rel="noopener noreferrer">https://www.open.edu/openlearncreate/mod/page/view.php?id=201450</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 9</span></div></div></div><div class="ref-card"><span class="ref-num">29</span><div class="ref-body"><div class="ref-title">arXiv: A LINDDUN-based Privacy Threat Modeling Framework for GenAI</div><a class="ref-url" href="https://arxiv.org/html/2603.06051" target="_blank" rel="noopener noreferrer">https://arxiv.org/html/2603.06051</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究（プレプリント）</span><span class="ref-ch">根拠となった章: 12</span></div></div></div></div>
+<h3 id="s18-5">18.5 ツール</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">30</span><div class="ref-body"><div class="ref-title">OWASP Threat Dragon</div><a class="ref-url" href="https://owasp.github.io/www-project-threat-dragon/" target="_blank" rel="noopener noreferrer">https://owasp.github.io/www-project-threat-dragon/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 10</span></div></div></div><div class="ref-card"><span class="ref-num">31</span><div class="ref-body"><div class="ref-title">Threat Dragon Wiki: Threat Model File (TMF) format</div><a class="ref-url" href="https://github.com/OWASP/threat-dragon/wiki/Threat-Model-File-(TMF)-format" target="_blank" rel="noopener noreferrer">https://github.com/OWASP/threat-dragon/wiki/Threat-Model-File-(TMF)-format</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 10</span></div></div></div><div class="ref-card"><span class="ref-num">32</span><div class="ref-body"><div class="ref-title">OWASP pytm（README で最新の使い方を確認）</div><a class="ref-url" href="https://github.com/OWASP/pytm" target="_blank" rel="noopener noreferrer">https://github.com/OWASP/pytm</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 10</span></div></div></div><div class="ref-card"><span class="ref-num">33</span><div class="ref-body"><div class="ref-title">DeepStrike: Threat Modeling 2026（ツール動向の概観）</div><a class="ref-url" href="https://deepstrike.io/blog/threat-modeling" target="_blank" rel="noopener noreferrer">https://deepstrike.io/blog/threat-modeling</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 10</span></div></div></div><div class="ref-card"><span class="ref-num">34</span><div class="ref-body"><div class="ref-title">NDSS 2024 AISCC: Facilitating Threat Modeling by Leveraging LLMs</div><a class="ref-url" href="https://www.ndss-symposium.org/wp-content/uploads/aiscc2024-16-paper.pdf" target="_blank" rel="noopener noreferrer">https://www.ndss-symposium.org/wp-content/uploads/aiscc2024-16-paper.pdf</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 10</span></div></div></div></div>
+<h3 id="s18-6">18.6 AI / エージェント</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-num">35</span><div class="ref-body"><div class="ref-title">OWASP Top 10 for Agentic Applications for 2026</div><a class="ref-url" href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" target="_blank" rel="noopener noreferrer">https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">36</span><div class="ref-body"><div class="ref-title">OWASP: Agentic AI – Threats and Mitigations</div><a class="ref-url" href="https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/" target="_blank" rel="noopener noreferrer">https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">37</span><div class="ref-body"><div class="ref-title">CSA: Agentic AI Threat Modeling Framework: MAESTRO</div><a class="ref-url" href="https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro" target="_blank" rel="noopener noreferrer">https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">38</span><div class="ref-body"><div class="ref-title">MITRE ATLAS</div><a class="ref-url" href="https://atlas.mitre.org/" target="_blank" rel="noopener noreferrer">https://atlas.mitre.org/</a><div class="ref-meta"><span class="badge rel-a">◎ 一次情報・公式</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">39</span><div class="ref-body"><div class="ref-title">CSA Labs: MITRE ATT&amp;CK/ATLAS Agentic Gap Analysis</div><a class="ref-url" href="https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/" target="_blank" rel="noopener noreferrer">https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/</a><div class="ref-meta"><span class="badge rel-b">○ 著名実務家・研究</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">40</span><div class="ref-body"><div class="ref-title">Augment Code: AI/Agentic Threat Modeling</div><a class="ref-url" href="https://www.augmentcode.com/guides/ai-agentic-threat-modeling" target="_blank" rel="noopener noreferrer">https://www.augmentcode.com/guides/ai-agentic-threat-modeling</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 12</span></div></div></div><div class="ref-card"><span class="ref-num">41</span><div class="ref-body"><div class="ref-title">NHI Management Group: Threat Modelling AI Agents ワークショップガイド</div><a class="ref-url" href="https://nhimg.org/ai-agent-threat-modelling-guide" target="_blank" rel="noopener noreferrer">https://nhimg.org/ai-agent-threat-modelling-guide</a><div class="ref-meta"><span class="badge rel-c">△ ベンダー・二次情報</span><span class="ref-ch">根拠となった章: 12</span></div></div></div></div>
+<h3 id="s18-7">18.7 調査の限界と、読者への注意</h3>
+<ul>
+<li><strong>書籍の本文は有料のため読んでいません</strong>。O'Reilly の公開ページ（目次・概要）と、著者・OWASP 等の公開資料から構成しています。書籍固有の詳細な手順や事例は、書籍本体でご確認ください。</li>
+<li><strong>一般知識に基づく記述</strong>があります（今回の調査で一次情報を直接確認していないもの）: SPARTA / INCLUDES NO DIRT の対象領域、STRIDE per Element の対応表の細部、シーケンス図・DFD・攻撃ツリーなどの具体例。採用前に公式資料で確認してください。なお PASTA の 7 段階、OCTAVE・Trike・VAST の概要、MAESTRO の 7 層、pytm の使い方は、CSA の記事と pytm の README で確認しました。</li>
+<li><strong>変化の速い領域</strong>（12章）のうち、OWASP GenAI LLM Top 10 2026 の内容は<strong>今回は検証していません</strong>。最新は各公式サイトを参照してください。</li>
+<li>例題の TaskBoard は、<strong>説明用の架空のシステム</strong>です。実在の製品・実際のインシデントに基づくものではありません。</li>
+</ul></section>
+  <footer class="footer"><i class="ti ti-calendar"></i><span>情報の基準日: 2026-10-05 / Markdown 版（threat-modeling-guide.md）と同一内容</span></footer>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+<script>
+window.DIAGRAMS = {};
+window.DIAGRAMS["d1"] = `flowchart TD
+Q1["Q1 何に取り組んでいる? What are we working on? スコープを決め、システムを図にする"]
+Q2["Q2 何がうまくいかない? What can go wrong? STRIDE 等で脅威を洗い出す"]
+Q3["Q3 どう対処する? What are we going to do about it? 優先順位をつけ、対応を決める"]
+Q4{"Q4 十分にできた? Did we do a good enough job?"}
+OUT["記録を残し、実装・テストへ反映"]
+CHG["システムが変わる / 新しい情報が出る"]
+
+Q1 --> Q2 --> Q3 --> Q4
+Q4 -->|"No: 不足あり"| Q1
+Q4 -->|"Yes: 十分"| OUT
+OUT --> CHG
+CHG --> Q1
+classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class Q4 dec
+classDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE
+class OUT okay`;
+window.DIAGRAMS["d2"] = `flowchart LR
+subgraph TB1["信頼境界 A: インターネット(信頼しない)"]
+U["外部実体: メンバー (ブラウザ)"]
+AD["外部実体: 管理者"]
+end
+
+subgraph TB3["信頼境界 C: 外部サービス"]
+IDP["外部実体: ID プロバイダー(OAuth)"]
+MAIL["外部実体: メール配信サービス"]
+end
+
+subgraph TB2["信頼境界 B: 自社クラウド(VPC)"]
+API(["プロセス: Web / API サーバー"])
+WK(["プロセス: 通知ワーカー"])
+DB[("データストア: PostgreSQL タスク・ユーザー・テナント")]
+OBJ[("データストア: 添付ファイル保存")]
+LOG[("データストア: 監査ログ")]
+end
+
+U -->|"D1 HTTPS: タスク操作"| API
+AD -->|"D2 HTTPS: テナント管理"| API
+U -->|"D3 ログイン要求"| IDP
+IDP -->|"D4 認可コード / トークン"| API
+API -->|"D5 SQL"| DB
+API -->|"D6 ファイル書き込み / 読み出し"| OBJ
+API -->|"D7 操作の記録"| LOG
+API -->|"D8 通知ジョブ"| WK
+WK -->|"D9 メール送信 API"| MAIL
+classDef ext fill:#712B13,stroke:#F5C4B3,color:#FAECE7
+class U,AD,IDP,MAIL ext
+classDef proc fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class API,WK proc
+classDef store fill:#085041,stroke:#9FE1CB,color:#E1F5EE
+class DB,OBJ,LOG store`;
+window.DIAGRAMS["d3"] = `sequenceDiagram
+autonumber
+actor M as メンバー
+participant B as ブラウザ
+participant A as API サーバー
+participant I as IdP
+
+M->>B: ログインをクリック
+B->>I: 認可リクエスト(state 付き)
+I-->>B: 認可コード
+B->>A: 認可コードを送信
+A->>I: コードをトークンに交換
+I-->>A: アクセストークン
+A-->>B: セッション Cookie を発行
+Note over B,I: 信頼境界をまたぐのは 2〜7 の通信(ブラウザ・IdP・API 間)`;
+window.DIAGRAMS["d4"] = `flowchart TD
+G["目的: 他テナントのタスクを閲覧する"]
+A1["A. 認可チェックの不備を突く"]
+A2["B. 他テナントの正規ユーザーになりすます"]
+A3["C. 保存データに直接アクセスする"]
+
+A1a["タスク ID を連番で試す (IDOR)"]
+A1b["テナント ID をリクエストで書き換える"]
+A2a["セッショントークンを盗む"]
+A2b["パスワードを使い回しで試す"]
+A3a["添付ファイルの URL が推測可能"]
+A3b["バックアップが公開設定になっている"]
+
+G --> A1
+G --> A2
+G --> A3
+A1 --> A1a
+A1 --> A1b
+A2 --> A2a
+A2 --> A2b
+A3 --> A3a
+A3 --> A3b
+classDef goal fill:#712B13,stroke:#F5C4B3,color:#FAECE7
+class G goal`;
+window.DIAGRAMS["d5"] = `flowchart TD
+S["脅威を1つ選ぶ"] --> Q1{"その機能/部品は 本当に必要か?"}
+Q1 -->|"不要"| E["Eliminate: 取り除く"]
+Q1 -->|"必要"| Q2{"技術的に 軽減できるか?"}
+Q2 -->|"できる"| M["Mitigate: 対策を設計・実装する"]
+Q2 -->|"できない / 割に合わない"| Q3{"契約・保険などで 責任を移せるか?"}
+Q3 -->|"移せる"| T["Transfer: 責任者と残存リスクを記録"]
+Q3 -->|"移せない"| A["Accept: 理由・承認者・見直し時期を記録"]
+M --> R["残存リスクを確認"]
+T --> R
+A --> R
+E --> R
+classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class Q1,Q2,Q3 dec`;
+window.DIAGRAMS["d6"] = `flowchart TD
+S["Threat Modeling を始める"] --> Q1{"対象は何か?"}
+Q1 -->|"技術設計・新機能"| ST["STRIDE(DFD + STRIDE per Element)"]
+Q1 -->|"個人データの扱い"| LI["STRIDE + LINDDUN GO"]
+Q1 -->|"重要資産への攻撃経路"| AT["攻撃ツリーを併用"]
+Q1 -->|"ビジネスロジックの悪用"| AB["悪用ケースを併用"]
+Q1 -->|"事業リスクや経営層への説明"| PA["PASTA を検討"]
+Q1 -->|"AI / エージェントを含む"| AI["STRIDE + AI 向けの枠組み (12章)"]
+ST --> N{"チームは慣れている?"}
+N -->|"初めて"| CARD["カードゲーム(EoP / Cornucopia)で導入"]
+N -->|"慣れている"| TOOL["ツール / コード化(10章)"]
+classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class Q1,N dec`;
+window.DIAGRAMS["d7"] = `flowchart TD
+ST["新しいストーリー / 変更"] --> Q{"セキュリティに 関連するか? (認証・認可・データ・外部連携など)"}
+Q -->|"いいえ"| DONE["通常どおり開発"]
+Q -->|"はい"| CK["チェックリストで関連項目を確認"]
+CK --> FIX{"その場で 対処できるか?"}
+FIX -->|"できる"| MIT["対処し『軽減済みの発見』として記録"]
+FIX -->|"難しい"| CAND["『脅威モデル候補の発見』として キュレーターにレビュー依頼"]
+CAND --> REV["小さなセッションで検討"]
+MIT --> DONE
+REV --> DONE
+classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class Q,FIX dec
+classDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE
+class DONE okay`;
+window.DIAGRAMS["d8"] = `flowchart LR
+subgraph TBX["信頼境界 X: 信頼できないコンテンツ"]
+EM["外部実体: 外部からのメール"]
+WEB["外部実体: 参照される Web ページ"]
+end
+
+subgraph TBY["信頼境界 Y: 自社システム"]
+AG(["プロセス: AI エージェント (LLM + オーケストレーション)"])
+MEM[("データストア: エージェントのメモリ / 検索インデックス")]
+TL1(["プロセス: タスク作成ツール"])
+TL2(["プロセス: メール送信ツール"])
+API(["プロセス: TaskBoard API"])
+end
+
+EM -->|"E1 本文(信頼できない入力)"| AG
+WEB -->|"E2 取得したコンテンツ"| AG
+AG -->|"E3 読み書き"| MEM
+AG -->|"E4 ツール呼び出し"| TL1
+AG -->|"E5 ツール呼び出し"| TL2
+TL1 -->|"E6 タスク作成"| API
+TL2 -->|"E7 外部へ送信"| EM
+classDef ext fill:#712B13,stroke:#F5C4B3,color:#FAECE7
+class EM,WEB ext
+classDef proc fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
+class AG,TL1,TL2,API proc
+classDef store fill:#085041,stroke:#9FE1CB,color:#E1F5EE
+class MEM store`;
+window.DIAGRAMS["d9"] = `flowchart TD
+G["目的: 管理者アカウントを乗っ取る"]
+A["A. 認証情報を入手する"]
+B["B. 認証を回避する"]
+C["C. 運用プロセスを悪用する"]
+A1["フィッシングメール"]
+A2["他サービスから漏れたパスワードの使い回し"]
+B1["セッショントークンの窃取"]
+B2["MFA の回避(疲労攻撃など)"]
+C1["サポート窓口になりすましてリセットを依頼"]
+C2["退職者アカウントが無効化されていない"]
+
+G --> A
+G --> B
+G --> C
+A --> A1
+A --> A2
+B --> B1
+B --> B2
+C --> C1
+C --> C2
+classDef goal fill:#712B13,stroke:#F5C4B3,color:#FAECE7
+class G goal`;
+</script>
+<script>
+(function(){
+  // highlight
+  document.querySelectorAll('pre code').forEach(function(el){ try{ hljs.highlightElement(el); }catch(e){} });
+
+  // drawer
+  var body=document.body, btn=document.getElementById('menuBtn'), bd=document.getElementById('backdrop');
+  function setNav(open){ body.classList.toggle('nav-open',open); btn.querySelector('i').className='ti '+(open?'ti-x':'ti-menu-2'); btn.setAttribute('aria-label',open?'目次を閉じる':'目次を開く'); }
+  btn.addEventListener('click',function(){ setNav(!body.classList.contains('nav-open')); });
+  bd.addEventListener('click',function(){ setNav(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setNav(false); });
+  document.querySelectorAll('.sidebar nav a').forEach(function(a){ a.addEventListener('click',function(){ setNav(false); }); });
+
+  // active nav (IntersectionObserver)
+  var links={}; document.querySelectorAll('.sidebar nav a').forEach(function(a){ links[a.getAttribute('href').slice(1)]=a; });
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        Object.keys(links).forEach(function(k){ links[k].classList.remove('active'); });
+        var a=links[en.target.id]; if(a){ a.classList.add('active'); var sb=document.getElementById('sidebar'); var r=a.getBoundingClientRect(), s=sb.getBoundingClientRect(); if(r.top<s.top+40||r.bottom>s.bottom-40){ sb.scrollTop+=r.top-s.top-s.height/3; } }
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){ io.observe(s); });
+
+  // mermaid
+  function themeVars(){ return {
+    fontFamily:'"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif', fontSize:'16px',
+    background:'#0c1b30', primaryColor:'#16294a', primaryTextColor:'#f3f5fa', primaryBorderColor:'#4a6fb0',
+    secondaryColor:'#112441', tertiaryColor:'#0c1b30', lineColor:'#8fa6d6', textColor:'#f3f5fa',
+    mainBkg:'#16294a', nodeBorder:'#4a6fb0', clusterBkg:'#0a1729', clusterBorder:'#3e5c8f', titleColor:'#c6d0e3',
+    edgeLabelBackground:'#0c1b30',
+    actorBkg:'#16294a', actorBorder:'#4a6fb0', actorTextColor:'#f3f5fa', actorLineColor:'#8fa6d6',
+    signalColor:'#c6d0e3', signalTextColor:'#f3f5fa', labelBoxBkgColor:'#112441', labelBoxBorderColor:'#4a6fb0', labelTextColor:'#f3f5fa',
+    loopTextColor:'#f3f5fa', noteBkgColor:'#2a2560', noteTextColor:'#eeedfe', noteBorderColor:'#cecbf6',
+    activationBkgColor:'#112441', activationBorderColor:'#4a6fb0', sequenceNumberColor:'#07111e'
+  }; }
+  async function renderAll(){
+    mermaid.initialize({ startOnLoad:false, theme:'dark', securityLevel:'loose', themeVariables:themeVars(),
+      flowchart:{ useMaxWidth:false, htmlLabels:true, nodeSpacing:45, rankSpacing:50, curve:'basis', wrappingWidth:260 },
+      sequence:{ useMaxWidth:false, actorMargin:60, messageMargin:40, mirrorActors:false } });
+    try{ await document.fonts.ready; }catch(e){}
+    var els=document.querySelectorAll('.mermaid[data-diagram]');
+    for(var i=0;i<els.length;i++){
+      var el=els[i], id=el.getAttribute('data-diagram'), src=(window.DIAGRAMS||{})[id];
+      if(!src) continue;
+      try{
+        var res=await mermaid.render('mmd-'+id, src);
+        el.innerHTML=res.svg;
+        var svg=el.querySelector('svg'); if(!svg) continue;
+        var vb=(svg.getAttribute('viewBox')||'').split(/[ ,]+/).map(Number);
+        if(vb.length===4){
+          var extra=/^\s*(sequenceDiagram|stateDiagram)/.test(src)?110:15;
+          vb[3]+=extra; svg.setAttribute('viewBox',vb.join(' '));
+          svg.removeAttribute('width'); svg.removeAttribute('height');
+          svg.style.width=Math.round(vb[2])+'px';
+        }
+        svg.style.maxWidth='100%'; svg.style.height='auto'; svg.style.overflow='visible';
+      }catch(e){
+        el.textContent='diagram render error: '+id;
+        console.error(id,e);
+      }
+    }
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
