@@ -609,7 +609,7 @@ details.answer[open] summary{border-bottom:1px solid var(--color-border-tertiary
 <h3 id="s5-2">5.2 題材: TaskBoard の概要</h3>
 <ul>
 <li>メンバーは、ブラウザから HTTPS で API サーバーにアクセスし、タスクを作成・共有する</li>
-<li>認証は外部の ID プロバイダー（IdP）による OAuth ログイン</li>
+<li>認証は外部の ID プロバイダー（IdP）による OpenID Connect（OIDC）の認可コードフロー。API サーバーは IdP から受け取った <strong>ID トークン</strong>（署名・<code>iss</code>・<code>aud</code>・<code>exp</code>・<code>nonce</code>）を検証してユーザーの身元を確認する。アクセストークンは API 呼び出しの認可用であり、本人確認の証拠としては使わない</li>
 <li>データはクラウド上の PostgreSQL に保存、添付ファイルはオブジェクトストレージに保存</li>
 <li>管理者は別の管理画面からテナント（会社単位）を管理する</li>
 <li>通知メールは外部のメール配信サービスを使う</li>
@@ -739,7 +739,7 @@ details.answer[open] summary{border-bottom:1px solid var(--color-border-tertiary
 </tr>
 </tbody>
 </table></div>
-<p>シーケンス図の例（ログインの流れ）:</p>
+<p>シーケンス図の例（ログインの流れ: OIDC 認可コードフロー）:</p>
 <figure class="diagram"><div class="mermaid" data-diagram="d3"></div><figcaption><i class="ti ti-chart-dots-3"></i>図 3: 5.6 DFD 以外のモデルも使い分ける</figcaption></figure>
 <h3 id="s5-7">5.7 良いシステムモデルの条件（チェックリスト）</h3>
 <div class="check-list"><label class="check-item"><span class="ck-num">1</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">対象範囲（スコープ）と対象外が書いてある</span></label><label class="check-item"><span class="ck-num">2</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">信頼境界が明示されている</span></label><label class="check-item"><span class="ck-num">3</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">すべてのデータフローに「何が流れるか」「プロトコル」がある</span></label><label class="check-item"><span class="ck-num">4</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">外部実体（人・外部サービス）が漏れていない</span></label><label class="check-item"><span class="ck-num">5</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">資産が書かれている（何を守るかが分かる）</span></label><label class="check-item"><span class="ck-num">6</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">前提が書かれている</span></label><label class="check-item"><span class="ck-num">7</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text"><strong>実際のシステムと一致している</strong>（設計図と実装の乖離は脅威の見落としにつながる）</span></label><label class="check-item"><span class="ck-num">8</span><input type="checkbox"><span class="box"><i class="ti ti-check"></i></span><span class="ck-text">全員が理解できる粒度（細かすぎても粗すぎてもいけない）</span></label></div></section>
@@ -2226,14 +2226,15 @@ classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
 class Q4 dec
 classDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE
 class OUT okay`;
-window.DIAGRAMS["d2"] = `flowchart LR
+window.DIAGRAMS["d2"] = `%%{init: {"flowchart": {"rankSpacing": 90}}}%%
+flowchart TB
 subgraph TB1["信頼境界 A: インターネット(信頼しない)"]
 U["外部実体: メンバー (ブラウザ)"]
 AD["外部実体: 管理者"]
 end
 
 subgraph TB3["信頼境界 C: 外部サービス"]
-IDP["外部実体: ID プロバイダー(OAuth)"]
+IDP["外部実体: ID プロバイダー(OIDC)"]
 MAIL["外部実体: メール配信サービス"]
 end
 
@@ -2268,14 +2269,15 @@ participant A as API サーバー
 participant I as IdP
 
 M->>B: ログインをクリック
-B->>I: 認可リクエスト(state 付き)
+B->>I: 認可リクエスト(scope=openid、state・nonce 付き)
 I-->>B: 認可コード
 B->>A: 認可コードを送信
 A->>I: コードをトークンに交換
-I-->>A: アクセストークン
+I-->>A: ID トークン＋アクセストークン
+Note over A: ID トークンの署名・iss・aud・exp・nonce を検証し、sub でユーザーを識別
 A-->>B: セッション Cookie を発行
 Note over B,I: 信頼境界をまたぐのは 2〜7 の通信(ブラウザ・IdP・API 間)`;
-window.DIAGRAMS["d4"] = `flowchart TD
+window.DIAGRAMS["d4"] = `flowchart LR
 G["目的: 他テナントのタスクを閲覧する"]
 A1["A. 認可チェックの不備を突く"]
 A2["B. 他テナントの正規ユーザーになりすます"]
@@ -2313,7 +2315,7 @@ A --> R
 E --> R
 classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
 class Q1,Q2,Q3 dec`;
-window.DIAGRAMS["d6"] = `flowchart TD
+window.DIAGRAMS["d6"] = `flowchart LR
 S["Threat Modeling を始める"] --> Q1{"対象は何か?"}
 Q1 -->|"技術設計・新機能"| ST["STRIDE(DFD + STRIDE per Element)"]
 Q1 -->|"個人データの扱い"| LI["STRIDE + LINDDUN GO"]
@@ -2340,7 +2342,8 @@ classDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
 class Q,FIX dec
 classDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE
 class DONE okay`;
-window.DIAGRAMS["d8"] = `flowchart LR
+window.DIAGRAMS["d8"] = `%%{init: {"flowchart": {"rankSpacing": 90}}}%%
+flowchart TB
 subgraph TBX["信頼境界 X: 信頼できないコンテンツ"]
 EM["外部実体: 外部からのメール"]
 WEB["外部実体: 参照される Web ページ"]
@@ -2367,7 +2370,7 @@ classDef proc fill:#3C3489,stroke:#CECBF6,color:#EEEDFE
 class AG,TL1,TL2,API proc
 classDef store fill:#085041,stroke:#9FE1CB,color:#E1F5EE
 class MEM store`;
-window.DIAGRAMS["d9"] = `flowchart TD
+window.DIAGRAMS["d9"] = `flowchart LR
 G["目的: 管理者アカウントを乗っ取る"]
 A["A. 認証情報を入手する"]
 B["B. 認証を回避する"]
@@ -2430,8 +2433,8 @@ class G goal`;
   }; }
   async function renderAll(){
     mermaid.initialize({ startOnLoad:false, theme:'dark', securityLevel:'loose', themeVariables:themeVars(),
-      flowchart:{ useMaxWidth:false, htmlLabels:true, nodeSpacing:45, rankSpacing:50, curve:'basis', wrappingWidth:260 },
-      sequence:{ useMaxWidth:false, actorMargin:60, messageMargin:40, mirrorActors:false } });
+      flowchart:{ useMaxWidth:false, htmlLabels:true, nodeSpacing:40, rankSpacing:44, curve:'basis', wrappingWidth:270, subGraphTitleMargin:{top:12,bottom:32} },
+      sequence:{ useMaxWidth:false, actorMargin:60, messageMargin:40 } });
     try{ await document.fonts.ready; }catch(e){}
     var els=document.querySelectorAll('.mermaid[data-diagram]');
     for(var i=0;i<els.length;i++){
@@ -2443,8 +2446,9 @@ class G goal`;
         var svg=el.querySelector('svg'); if(!svg) continue;
         var vb=(svg.getAttribute('viewBox')||'').split(/[ ,]+/).map(Number);
         if(vb.length===4){
-          var extra=/^\s*(sequenceDiagram|stateDiagram)/.test(src)?110:15;
-          vb[3]+=extra; svg.setAttribute('viewBox',vb.join(' '));
+          // size the viewBox to the real drawn bounds (fixed padding left blank space under sequence diagrams)
+          var bb=svg.getBBox(), need=(bb.y+bb.height+16)-vb[1];
+          vb[3]=Math.max(vb[3],need); svg.setAttribute('viewBox',vb.join(' '));
           svg.removeAttribute('width'); svg.removeAttribute('height');
           svg.style.width=Math.round(vb[2])+'px';
         }
