@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-09（CCIE Security移行: 統合Green・154件成功・lintと型検査成功・目視確認待ち）
+> **最終更新**: 2026-10-09（CCIE Security移行: 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **154件** | `bun test`: 154 pass / 0 fail（統合Green・154件成功・lintと型検査成功・目視確認待ち） |
+| テストケース総数 | **154件** | `bun test`: 154 pass / 0 fail（移行・整理完了・154件成功・lintと型検査成功・目視確認待ち） |
 | テストファイル数 | **28ファイル** | 実行ファイル数。ロジック単位は 24/24、ページ移行テストは別集計 |
-| Strategy Coverage | **15%** | 40カテゴリ×ドメインセル中 6セル相当 |
+| Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
@@ -97,7 +97,7 @@ form-action 'self'
 | 検索インデックス (`src/lib/search.ts`) | ✅ 稼働中 | — |
 | 検索 UI (`SearchModal`) | ✅ 稼働中 | — |
 | DisclaimerModal | ✅ 稼働中 | — |
-| Docs ページ (11ページ、Archive含む) | ✅ 稼働中 | — |
+| Docs ページ (12ページ、Archive含む) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
 | DocsSidebar のクライアントコンポーネント化とアクティブ状態の aria-current 制御 | ✅ 完了 | 2026-05-23 |
 
@@ -105,13 +105,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `GEMINI.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `README.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `security-docs/CLAUDE.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `security-docs/README.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期および search カバレッジ 100% 反映 (118 cases) |
-| `docs/progress.md` (本ファイル) | 2026-05-27 | カバレッジ 100% 補完に伴うテスト数 (118件) 更新 |
+| `CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `GEMINI.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `README.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `security-docs/README.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
+| `docs/progress.md` | 2026-10-09 | CCIE移行・新カテゴリー・実測154テストを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -148,6 +148,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。35件の移行・描画テストとナビ検証、全154件成功。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
 
@@ -251,3 +252,10 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-09: 全13章Green・143件成功・lintと型検査成功。143 pass / 0 fail、27テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗。146 pass / 8 fail、28テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 統合Green・154件成功・lintと型検査成功・目視確認待ち。154 pass / 0 fail、28テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち。154 pass / 0 fail、28テストファイル。npm・Next.jsビルド未実行。
+
+### CCIE Security 再開・目視確認
+
+- 実装HEAD: `7e9d7c9`。テスト154 pass / 0 fail、28ファイル。lint・型検査成功。
+- 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
+- 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。

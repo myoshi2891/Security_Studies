@@ -21,7 +21,7 @@ The following directive is used to include agent-specific rules and context. Thi
 - **Next.js**: 16.3.8, App Router, TypeScript (strict).
 - **Content**: MDX via `@next/mdx`. All pages live in `src/app/docs/<slug>/page.mdx`. Register new slugs in `src/config/docs.ts`.
 - **Components**: Custom docs components in `src/components/docs/` (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
-- **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes only.
+- **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes by default; the CCIE migration uses page-scoped CSS to preserve the original styling.
 - **Testing**: Bun test with React Testing Library.
 - **Syntax Highlighting**: `highlight.js` (v11) — tree-shaken via `highlight.js/lib/core` + per-language static imports. Supported languages: `bash`, `typescript`, `yaml`, `json`, `markdown`. Theme applied via `highlight.js/styles/github-dark.css`. `<Terminal>` is a **synchronous** component; language is auto-detected from the `title` prop file extension (`.sh`→bash / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown; unrecognised extensions fall back to `typescript`).
 - **Security / CSP**: `src/proxy.ts` implements Next.js Proxy (Next.js 16 renamed the convention from `middleware.ts` to `proxy.ts`). It sets a **static** `Content-Security-Policy` response header without nonces or `'strict-dynamic'`.
@@ -32,4 +32,12 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 統合Green・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
+
+### CCIE Security migration details
+
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Sidebar: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
+- 35 CCIE fidelity/lifecycle tests plus 9 layout tests; all project tests: 154 across 28 files. Existing 22 logic files plus MermaidFigure/PythonCode are tracked separately from MDX test files (24/24).
+- Review checklist: `docs/migration-inventory/ccie-security-review.md`. Build not run; browser visual review pending with user.

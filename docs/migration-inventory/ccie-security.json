@@ -10,7 +10,8 @@
     "lists": 49,
     "listItems": 196,
     "checks": 7,
-    "references": 59
+    "references": 59,
+    "heroHeadings": 1
   },
   "diagramIds": [
     0,
@@ -75,5 +76,9 @@
     59,
     60
   ],
-  "status": "TDD Red; migration not implemented"
+  "status": "Implemented; 154 tests passed, lint/type checks passed; build not run; user visual review pending",
+  "route": "/docs/ccie-security",
+  "category": "Security Certifications",
+  "implementationCommit": "7e9d7c9",
+  "updated": "2026-10-09"
 }

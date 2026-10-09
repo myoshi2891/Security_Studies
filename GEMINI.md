@@ -48,7 +48,7 @@ Commands should be executed within the `security-docs` directory.
 ## Development Conventions
 
 - **Content Authoring:** All new documentation content should be authored in MDX and placed within `security-docs/src/app/docs/<slug>/page.mdx`. Use custom UI components from `src/components/docs/` (e.g. `<HeroSection>`, `<ThreatCard>`, `<DataTable>`). Register any new slug in `src/config/docs.ts`.
-- **Styling:** The project uses Tailwind CSS v4. Utility classes only — no custom CSS unless adding to `globals.css`.
+- **Styling:** The project uses Tailwind CSS v4. Utility classes by default. The CCIE migration uses isolated `ccie-security.css` to preserve the source markers and counters.
 - **Type Safety:** Run `bun run types:check` before committing. `any` is prohibited; use `unknown` + type guards.
 - **Linting:** Run `bun run lint` before committing. Unused variables/args prefixed with `_` are ignored (signature-preservation convention).
 
@@ -74,4 +74,12 @@ All steps execute in the `security-docs/` working directory.
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 統合Green・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
+
+### CCIE Security migration details
+
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Sidebar: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
+- 35 CCIE fidelity/lifecycle tests plus 9 layout tests; all project tests: 154 across 28 files. Existing 22 logic files plus MermaidFigure/PythonCode are tracked separately from MDX test files (24/24).
+- Review checklist: `docs/migration-inventory/ccie-security-review.md`. Build not run; browser visual review pending with user.
