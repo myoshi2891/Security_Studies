@@ -137,6 +137,7 @@ const _typeContract: SearchResult = {
     description: 'y',
     href: '/docs/x',
     content: 'z',
+    headings: [],
 };
 void _typeContract;
 

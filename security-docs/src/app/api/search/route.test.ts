@@ -31,12 +31,14 @@ describe("GET /api/search API Contract", () => {
         description: "Post-Quantum Cryptography basics.",
         href: "/docs/post-quantum-cryptography",
         content: "Post-quantum cryptography refers to cryptographic algorithms...",
+        headings: [],
       },
       {
         title: "OWASP Top 10",
         description: "Overview of OWASP vulnerabilities.",
         href: "/docs/owasp-top-10",
         content: "The OWASP Top 10 is a standard awareness document...",
+        headings: [],
       },
     ];
     mockGetSearchIndex.mockImplementation(async () => mockData);

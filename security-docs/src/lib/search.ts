@@ -9,6 +9,7 @@ export interface SearchResult {
   description: string;
   href: string;
   content: string;
+  headings: string[];
 }
 
 /**
@@ -17,6 +18,36 @@ export interface SearchResult {
  */
 function stripMdxEsm(content: string): string {
   return content.replace(/^(?:import|export)\s[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/gm, "").trimStart();
+}
+
+const JSX_HEADING_PATTERN = /<(?:E\.)?h[1-6]\b[^>]*>\{("(?:[^"\\]|\\.)*")\}<\/(?:E\.)?h[1-6]>/g;
+
+/**
+ * Decodes a double-quoted JS string literal; falls back to the raw inner text
+ * when it uses escapes that JSON does not accept (e.g. `\'`).
+ */
+function decodeStringLiteral(literal: string): string {
+  try {
+    const parsed: unknown = JSON.parse(literal);
+    return typeof parsed === "string" ? parsed : literal.slice(1, -1);
+  } catch {
+    return literal.slice(1, -1);
+  }
+}
+
+/**
+ * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`) so chapter terms
+ * beyond the 500-character content snippet remain searchable.
+ */
+function extractHeadings(content: string): string[] {
+  const headings: string[] = [];
+  for (const match of content.matchAll(JSX_HEADING_PATTERN)) {
+    const literal = match[1];
+    if (literal === undefined) continue;
+    const heading = decodeStringLiteral(literal).trim();
+    if (heading !== "") headings.push(heading);
+  }
+  return headings;
 }
 
 /**
@@ -45,6 +76,7 @@ async function scanDirectory(dir: string, baseDir: string): Promise<SearchResult
           description: data.description || "",
           href: `/docs/${relativePath}`,
           content: stripMdxEsm(content).slice(0, 500), // Keep first 500 characters for search
+          headings: extractHeadings(content),
         });
       } catch (error) {
         console.error(`Error reading search index for ${fullPath}:`, error);
