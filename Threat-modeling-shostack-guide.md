@@ -579,8 +579,11 @@ flowchart LR
     subgraph EXT["信頼境界C: 外部サービス"]
         IDP["外部IdP"]
     end
-    U -->|"1 ログイン要求"| IDP
-    IDP -->|"2 認証結果 トークン"| U
+    U -->|"1 認可要求 PKCE code_challenge"| IDP
+    IDP -->|"2 認可コード リダイレクト"| U
+    U -->|"2a 認可コードの受け渡し"| API
+    API -->|"2b Token Endpoint 認可コード＋code_verifier"| IDP
+    IDP -->|"2c IDトークン・アクセストークン"| API
     U -->|"3 メモ操作 HTTPS"| API
     V -->|"4 共有リンク閲覧 HTTPS"| API
     API -->|"5 メモの読み書き SQL"| DB

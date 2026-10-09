@@ -218,6 +218,9 @@ kubectl version
 
 # ラボ用の Namespace を作成
 kubectl create namespace lab
+
+# Step 10 の ValidatingAdmissionPolicy(namespaceSelector: policy=enforced)の対象にする
+kubectl label namespace lab policy=enforced
 ```
 
 > **注意**: `kind` の既定 CNI が NetworkPolicy を強制するかは、バージョンや構成によって異なります。Step 5 で NetworkPolicy を試す際は、**Calico や Cilium など NetworkPolicy 対応 CNI を導入するか、実際に通信が遮断されるかを必ず確認** してください。
@@ -436,7 +439,7 @@ spec:
 
 | 設定 | 守るもの |
 |---|---|
-| `runAsNonRoot` / `runAsUser` | 脱出されても、ホスト上で root にならない |
+| `runAsNonRoot` / `runAsUser` | UID 0(root)でのコンテナ起動を拒否し、非 root UID で実行させる。脱出後にホスト上で root にならないことまでは保証しない(それは `hostUsers: false` の UID マッピングの役割) |
 | `seccompProfile: RuntimeDefault` | 危険なシステムコールの呼び出しを制限。2026年のカーネル脆弱性の一部では、この設定が緩和策として明記された(Step 3 参照) [S13] |
 | `allowPrivilegeEscalation: false` | プロセスが親より高い権限を得る経路を塞ぐ |
 | `readOnlyRootFilesystem` | 攻撃者がツールを書き込みにくくする |
@@ -753,6 +756,27 @@ spec:
     ports:
     - protocol: TCP
       port: 8080
+---
+# egress を既定拒否している場合、送信側(frontend)にも対応する許可が必要
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-egress-to-backend
+  namespace: lab
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: backend
+    ports:
+    - protocol: TCP
+      port: 8080
 ```
 
 **手順3: DNS の問い合わせを許可する(egress を拒否した場合に必須)**
@@ -1002,8 +1026,8 @@ metadata:
   namespace: lab
 rules:
 - apiGroups: [""]
-  resources: ["pods", "pods/log"]
-  verbs: ["get", "list", "watch"]
+  resources: ["pods/log"]
+  verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
