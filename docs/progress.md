@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-09（CCIE Security移行: 表示基盤Red・6件の期待どおりの失敗）
+> **最終更新**: 2026-10-09（CCIE Security移行: 表示基盤Green・124件成功・lintと型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **124件** | `bun test`: 118 pass / 6 fail（表示基盤Red・6件の期待どおりの失敗） |
-| テストファイル数 | **23ファイル** | 実行ファイル数。ロジック単位は 22/22、ページ移行テストは別集計 |
+| テストケース総数 | **124件** | `bun test`: 124 pass / 0 fail（表示基盤Green・124件成功・lintと型検査成功） |
+| テストファイル数 | **23ファイル** | 実行ファイル数。ロジック単位は 23/23、ページ移行テストは別集計 |
 | Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -41,10 +41,10 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
 | `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 9 | 3 pass / 6 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
-| `src/app/docs/ccie-security/foundation.test.tsx` | 6 | 0 pass / 6 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 6 | 6 pass / 0 fail |
 
 ---
 
@@ -234,3 +234,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## CCIE Security 移行記録
 
 - 2026-10-09: 表示基盤Red・6件の期待どおりの失敗。118 pass / 6 fail、23テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 表示基盤Green・124件成功・lintと型検査成功。124 pass / 0 fail、23テストファイル。npm・Next.jsビルド未実行。
