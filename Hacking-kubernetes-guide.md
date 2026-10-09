@@ -1094,10 +1094,10 @@ AKS のセキュリティ情報は、Kubernetes Security Team がこの挙動を
 **あなたが今すぐ確認すること(読み取りのみ)**
 
 ```bash
-# nodes/proxy を含む Role / ClusterRole を洗い出す
+# nodes/proxy(またはワイルドカード "*")を含む Role / ClusterRole を洗い出す
 kubectl get clusterroles,roles -A -o json | jq -r '
   .items[]
-  | select(any(.rules[]?; (.resources // []) | index("nodes/proxy")))
+  | select(any(.rules[]?; any((.resources // [])[]; . == "nodes/proxy" or . == "*")))
   | "\(.kind)/\(.metadata.namespace // "-")/\(.metadata.name)"'
 ```
 
