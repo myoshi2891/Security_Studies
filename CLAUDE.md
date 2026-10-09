@@ -187,4 +187,4 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 第8〜9章Green・136件成功・lintと型検査成功. Bun tests: 136 pass / 0 fail (26 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 第10〜13章Red・参考文献とチェックを含む7件の期待どおりの失敗. Bun tests: 136 pass / 7 fail (27 files). npm / Next.js build not run; visual verification by user.
