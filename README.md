@@ -163,4 +163,4 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 第1〜4章Red・5件の期待どおりの失敗. Bun tests: 125 pass / 5 fail (24 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 比較基盤補正・130件成功・第1〜4章実装検証中. Bun tests: 130 pass / 0 fail (24 files). npm / Next.js build not run; visual verification by user.

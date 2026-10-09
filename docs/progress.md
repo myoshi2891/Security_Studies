@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-09（CCIE Security移行: 第1〜4章Red・5件の期待どおりの失敗）
+> **最終更新**: 2026-10-09（CCIE Security移行: 比較基盤補正・130件成功・第1〜4章実装検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **130件** | `bun test`: 125 pass / 5 fail（第1〜4章Red・5件の期待どおりの失敗） |
+| テストケース総数 | **130件** | `bun test`: 130 pass / 0 fail（比較基盤補正・130件成功・第1〜4章実装検証中） |
 | テストファイル数 | **24ファイル** | 実行ファイル数。ロジック単位は 23/23、ページ移行テストは別集計 |
 | Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -41,11 +41,11 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
 | `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 8 | 3 pass / 5 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 6 | 6 pass / 0 fail |
-| `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 1 pass / 5 fail |
+| `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
 
 ---
 
@@ -237,3 +237,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-09: 表示基盤Red・6件の期待どおりの失敗。118 pass / 6 fail、23テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 表示基盤Green・124件成功・lintと型検査成功。124 pass / 0 fail、23テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 第1〜4章Red・5件の期待どおりの失敗。125 pass / 5 fail、24テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 比較基盤補正・130件成功・第1〜4章実装検証中。130 pass / 0 fail、24テストファイル。npm・Next.jsビルド未実行。
