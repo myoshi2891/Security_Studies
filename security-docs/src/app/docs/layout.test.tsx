@@ -45,7 +45,7 @@ describe('DocsLayout', () => {
     });
 
     describe('sidebar rendering', () => {
-        test('sidebarNav に定義された全エントリ (11 件) がリンクとして描画される', async () => {
+        test('sidebarNav に定義された全エントリ (12 件) がリンクとして描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
@@ -55,17 +55,17 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(11);
+            expect(allItems.length).toBe(12);
         });
 
-        test('セクション見出し (5 件) が描画される', async () => {
+        test('セクション見出し (6 件) が描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
             for (const section of docsConfig.sidebarNav) {
                 expect(screen.getByText(section.title)).toBeInTheDocument();
             }
-            expect(docsConfig.sidebarNav.length).toBe(5);
+            expect(docsConfig.sidebarNav.length).toBe(6);
         });
 
         test('サイドバー全体が nav 要素として描画される', async () => {
@@ -79,6 +79,12 @@ describe('DocsLayout', () => {
     });
 
     describe('active link', () => {
+        test('CCIE Security の新カテゴリーに現在ページ表示を付与する', async () => {
+            currentPath = '/docs/ccie-security';
+            await renderLayout();
+            expect(screen.getByText('Security Certifications')).toBeInTheDocument();
+            expect(screen.getByRole('link', { name: 'CCIE Security' })).toHaveAttribute('aria-current', 'page');
+        });
         test('現在のパスに対応するリンクが aria-current="page" になる', async () => {
             currentPath = '/docs/owasp';
             await renderLayout();

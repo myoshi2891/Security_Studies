@@ -10,6 +10,14 @@ const here = import.meta.dir;
 const source = readFileSync(resolve(here, '../../../../../Ccie-security-guide.html'), 'utf8');
 
 describe('CCIE faithful display foundation', () => {
+  test('preserves every original Mermaid theme variable, including pie labels and borders', () => {
+    const implementation = readFileSync(resolve(here, 'MermaidFigure.tsx'), 'utf8');
+    const theme = source.match(/themeVariables:\{([^}]+)\}/)![1];
+    for (const [, key, value] of theme.matchAll(/(\w+):'([^']*)'/g)) {
+      const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      expect(implementation, key).toMatch(new RegExp(`\\b${key}:\\s*['"]${escaped}['"]`));
+    }
+  });
   test('preserves original marker, counter, color and responsive CSS contracts in an isolated scope', () => {
     const css = readFileSync(resolve(here, 'ccie-security.css'), 'utf8');
     const original = postcss.parse(source.match(/<style>([\s\S]*?)<\/style>/)![1]);
@@ -32,6 +40,7 @@ describe('CCIE faithful display foundation', () => {
     });
     expect(css).toContain('(max-width:1024px)');
     expect(css).toContain('(prefers-reduced-motion:reduce)');
+    expect(css).toContain('minmax(min(260px,100%),1fr)');
   });
 
   test('keeps intrinsic elements independent of shared MDX element overrides', async () => {
@@ -49,6 +58,8 @@ describe('CCIE faithful display foundation', () => {
     await waitFor(() => expect(container.querySelector('svg')).not.toBeNull());
     expect(container.querySelector('figure')).toHaveAttribute('data-d', '0');
     expect(container.querySelector('[role="img"]')).toHaveAttribute('aria-label', '図 1');
+    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '0 0 100 65');
+    expect(container.querySelector('svg')?.style.maxWidth).toBe('100%');
     expect(calls).toHaveLength(1);
   });
 

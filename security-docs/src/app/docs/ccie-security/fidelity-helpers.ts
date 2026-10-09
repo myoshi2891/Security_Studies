@@ -28,20 +28,22 @@ export function canonical(node: Node): unknown {
 }
 
 let markup: Promise<string> | undefined;
-async function evaluatePage() {
+let evaluated: ReturnType<typeof evaluate> | undefined;
+export async function evaluatedPage() {
+  if (evaluated) return evaluated;
   const page = readFileSync(resolve(import.meta.dir, 'page.mdx'), 'utf8');
   // Styling is separately tested against the real CSS AST. Only asset imports are omitted
   // from this in-memory MDX evaluation; content and component imports remain untouched.
   const mdx = page.replace(/^import ['"](?:\.\/ccie-security\.css|@fontsource-variable\/source-serif-4)['"];?\s*$/gm, '');
-  const { default: Page } = await evaluate(mdx, {
+  evaluated = evaluate(mdx, {
     ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url),
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
   });
-  return renderToStaticMarkup(runtime.jsx(Page, {}));
+  return evaluated;
 }
 
 export async function renderedPage() {
-  markup ??= evaluatePage();
+  markup ??= evaluatedPage().then(({ default: Page }) => renderToStaticMarkup(runtime.jsx(Page, {})));
   return new DOMParser().parseFromString(await markup, 'text/html');
 }
 
