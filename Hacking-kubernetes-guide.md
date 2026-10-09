@@ -1361,7 +1361,7 @@ spec:
 |---|---|---|---|
 | 1 | `ingress-nginx` を使っていないか確認し、使っていれば移行計画を立てる | `kubectl get pods -A --selector app.kubernetes.io/name=ingress-nginx` | [S6] |
 | 2 | RBAC で `nodes/proxy`、`create pods`、`secrets list`、`impersonate/bind/escalate` の付与先を棚卸し | Step 8 の点検コマンド | [S9][S10] |
-| 3 | 全 Namespace に PSA の `warn` / `audit`(restricted)を入れて違反を可視化 | Step 2 のコマンド | [S8] |
+| 3 | `lab` Namespace に PSA の `warn` / `audit`(restricted)を入れて違反を可視化(自クラスタでは対象 Namespace ごとに同じコマンドを適用) | Step 2 のコマンド | [S8] |
 
 ---
 
