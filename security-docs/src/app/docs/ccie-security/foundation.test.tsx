@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, mock, test } from 'bun:test';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -146,6 +146,30 @@ describe('CCIE faithful display foundation', () => {
     expect(entries).toHaveLength(61);
     for (const [key, definition] of entries) {
       expect((describeDiagram(definition) as string[]).length, key).toBeGreaterThan(1);
+    }
+  });
+
+  test('initializes the bundled Mermaid engine once with strict settings and renders through it', async () => {
+    // mock.module はプロセス全体に残るため、実モジュールを退避して finally で復元する（integration.test は実パーサーを使う）
+    const realMermaid = { ...(await import('mermaid')) };
+    const initialize = mock((_config: Record<string, unknown>) => {});
+    const renders: [string, string][] = [];
+    const fakeMermaid = {
+      initialize,
+      render: async (id: string, code: string) => { renders.push([id, code]); return { svg: `<svg data-id="${id}"></svg>` }; },
+    };
+    mock.module('mermaid', () => ({ default: fakeMermaid }));
+    try {
+      const { renderDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+
+      expect(await renderDiagram('first', 'flowchart LR\nA-->B')).toEqual({ svg: '<svg data-id="first"></svg>' });
+      await renderDiagram('second', 'pie\n"A" : 1');
+
+      expect(initialize).toHaveBeenCalledTimes(1);
+      expect(initialize.mock.calls[0]?.[0]).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict' });
+      expect(renders).toEqual([['first', 'flowchart LR\nA-->B'], ['second', 'pie\n"A" : 1']]);
+    } finally {
+      mock.module('mermaid', () => realMermaid);
     }
   });
 

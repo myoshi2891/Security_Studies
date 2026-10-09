@@ -120,6 +120,13 @@ describe('getSearchIndex', () => {
 
         expect(extractHeadings(mdx)).toEqual(['TrustSec 概要', 'SGT の割り当て', '末尾記号付き']);
     });
+
+    test('falls back to the raw inner text when a JSX heading uses escapes JSON rejects', () => {
+        // JS では有効だが JSON では不正な \' エスケープ → JSON.parse が失敗し生テキストを返す
+        const mdx = String.raw`<E.h4 id="q">{"Cisco\'s ISE"}</E.h4>`;
+
+        expect(extractHeadings(mdx)).toEqual([String.raw`Cisco\'s ISE`]);
+    });
 });
 
 // DOCS_DIR 配下のすべてのディレクトリを再帰的に走査し、page.mdx を含むものを列挙する。
