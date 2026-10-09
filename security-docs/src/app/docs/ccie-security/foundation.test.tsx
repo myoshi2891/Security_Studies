@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createElement } from 'react';
 import postcss from 'postcss';
+import { compareCssRule } from './fidelity-helpers';
 
 // happy-dom の IntersectionObserver は交差を通知しないため、既定では observe 直後に表示域へ入ったものとして扱う
 const originalObserver = globalThis.IntersectionObserver;
@@ -31,20 +32,12 @@ describe('CCIE faithful display foundation', () => {
   });
   test('preserves original marker, counter, color and responsive CSS contracts in an isolated scope', () => {
     const css = readFileSync(resolve(here, 'ccie-security.css'), 'utf8');
-    const original = postcss.parse(source.match(/<style>([\s\S]*?)<\/style>/)![1]);
     const migrated = postcss.parse(css);
     const required = ['.section ul>li::before', '.section ol', '.section ol>li', '.section ol>li::before', '.callout.practice ul>li::before', '.callout.source ul>li::before', '.callout.note ul>li::before', '.check::before', '.check input:checked+.box', '.check:focus-within', '.table-wrap', '.code pre', '.ref-n'];
     for (const selector of required) {
-      const expected: string[] = [];
-      const actual: string[] = [];
-      original.walkRules(selector, rule => { rule.walkDecls(d => { expected.push(`${d.prop}:${d.value}`); }); });
-      migrated.walkRules(rule => {
-        if (rule.selector === `.ccie-guide.ccie-guide ${selector}`) {
-          rule.walkDecls(d => { actual.push(`${d.prop}:${d.value}`); });
-        }
-      });
+      const { expected, actual, matches } = compareCssRule(migrated, selector);
       expect(actual, selector).toEqual(expected);
-      expect(expected.length).toBeGreaterThan(0);
+      expect(matches, selector).toBe(true);
     }
     migrated.walkRules(rule => {
       expect(rule.selector.split(',').every(s => s.trim().startsWith('.ccie-guide.ccie-guide'))).toBe(true);

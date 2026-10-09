@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkGfm from 'remark-gfm';
+import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
 export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../Ccie-security-guide.html'), 'utf8');
@@ -25,6 +26,24 @@ export function canonical(node: Node): unknown {
   if (el.matches('code.language-python')) return ['python', el.textContent];
   return [el.tagName, el.getAttribute('id'), el.getAttribute('class'), el.getAttribute('href'),
     el.getAttribute('type'), [...el.childNodes].map(canonical).filter(v => v !== null)];
+}
+
+export const sourceStylesheet = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '');
+
+function declarations(root: Root, selector: string): string[] {
+  const found: string[] = [];
+  root.walkRules(rule => {
+    if (rule.selector === selector) rule.walkDecls(d => { found.push(`${d.prop}:${d.value}`); });
+  });
+  return found;
+}
+
+/** 元HTMLのルールと、移行CSSの `.ccie-guide.ccie-guide` スコープ付きルールの宣言を比較する */
+export function compareCssRule(migrated: Root, selector: string) {
+  const expected = declarations(sourceStylesheet, selector);
+  const actual = declarations(migrated, `.ccie-guide.ccie-guide ${selector}`);
+  const matches = expected.length > 0 && actual.length === expected.length && actual.every((decl, i) => decl === expected[i]);
+  return { expected, actual, matches };
 }
 
 let markup: Promise<string> | undefined;

@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, definitions, evaluatedPage, renderedPage, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { canonical, compareCssRule, definitions, evaluatedPage, renderedPage, sourceDocument } from './fidelity-helpers';
 
 describe('CCIE complete migration', () => {
   test('matches the full body inventory, including all inline emphasis and CLI token spans', async () => {
@@ -87,16 +87,12 @@ describe('CCIE complete migration', () => {
   });
 
   test('the stylesheet comparison detects missing dots and missing ordered numbers', () => {
-    const source = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
     const migrated = postcss.parse(readFileSync(new URL('./ccie-security.css', import.meta.url), 'utf8'));
     for (const selector of ['.section ul>li::before', '.section ol>li::before']) {
-      const expected: string[] = [];
-      source.walkRules(selector, rule => { rule.walkDecls(d => { expected.push(`${d.prop}:${d.value}`); }); });
+      expect(compareCssRule(migrated, selector).matches, `intact ${selector}`).toBe(true);
       const damaged = migrated.clone();
       damaged.walkRules(`.ccie-guide.ccie-guide ${selector}`, rule => { rule.remove(); });
-      const actual: string[] = [];
-      damaged.walkRules(`.ccie-guide.ccie-guide ${selector}`, rule => { rule.walkDecls(d => { actual.push(`${d.prop}:${d.value}`); }); });
-      expect(actual).not.toEqual(expected);
+      expect(compareCssRule(damaged, selector).matches, `damaged ${selector}`).toBe(false);
     }
   });
 });
