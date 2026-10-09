@@ -10,20 +10,22 @@ import remarkGfm from 'remark-gfm';
 import { expect, test } from 'bun:test';
 
 export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../Ccie-security-guide.html'), 'utf8');
-export const sourceDocument = new DOMParser().parseFromString(sourceHtml, 'text/html');
+// Parse only inert source markup: never load the legacy CDN styles or scripts in tests.
+export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
 export const definitions = new Map([...sourceHtml.slice(sourceHtml.indexOf('window.DIAGRAMS')).matchAll(/(\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
 
 export function canonical(node: Node): unknown {
   if (node.nodeType === Node.TEXT_NODE) return node.textContent?.replace(/\s+/g, ' ').trim() || null;
   if (node.nodeType !== Node.ELEMENT_NODE) return null;
   const el = node as Element;
-  if (['I', 'SVG', 'NOSCRIPT'].includes(el.tagName)) return null;
+  if (['I', 'SVG', 'NOSCRIPT'].includes(el.tagName.toUpperCase())) return null;
   if (el.matches('figure.diagram')) return ['diagram', el.getAttribute('data-d')];
   return [el.tagName, el.getAttribute('id'), el.getAttribute('class'), el.getAttribute('href'),
     el.getAttribute('type'), [...el.childNodes].map(canonical).filter(v => v !== null)];
 }
 
-export async function renderedPage() {
+let markup: Promise<string> | undefined;
+async function evaluatePage() {
   const page = readFileSync(resolve(import.meta.dir, 'page.mdx'), 'utf8');
   // Styling is separately tested against the real CSS AST. Only asset imports are omitted
   // from this in-memory MDX evaluation; content and component imports remain untouched.
@@ -32,7 +34,12 @@ export async function renderedPage() {
     ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url),
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
   });
-  return new DOMParser().parseFromString(renderToStaticMarkup(runtime.jsx(Page, {})), 'text/html');
+  return renderToStaticMarkup(runtime.jsx(Page, {}));
+}
+
+export async function renderedPage() {
+  markup ??= evaluatePage();
+  return new DOMParser().parseFromString(await markup, 'text/html');
 }
 
 export function chapterContracts(first: number, last: number) {
@@ -44,11 +51,14 @@ export function chapterContracts(first: number, last: number) {
       expect(canonical(migrated!)).toEqual(canonical(original));
       for (const selector of ['p', 'li', 'th', 'td', 'h2', 'h3', 'h4', '.ref-title', '.ref-status']) {
         const text = (el: Element) => el.textContent?.replace(/\s+/g, ' ').trim();
-        expect([...migrated!.querySelectorAll(selector)].map(text), selector).toEqual([...original.querySelectorAll(selector)].map(text));
+        const content = (section: Element) => [...section.querySelectorAll(selector)].filter(el => !el.closest('figure.diagram')).map(text);
+        expect(content(migrated!), selector).toEqual(content(original));
       }
       expect([...migrated!.querySelectorAll('pre')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre')].map(el => el.textContent));
       for (const figure of migrated!.querySelectorAll('figure.diagram')) {
-        expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-d')!));
+        const id = figure.getAttribute('data-d')!;
+        expect(definitions.has(id)).toBe(true);
+        expect(figure.getAttribute('data-definition')).toBe(definitions.get(id) ?? null);
       }
     });
   }
