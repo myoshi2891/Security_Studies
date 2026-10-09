@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-09（CCIE Security移行: 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち）
+> **最終更新**: 2026-10-09（CCIE Security移行: レイアウト再構成Red・hydration再現を含む15件の失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **154件** | `bun test`: 154 pass / 0 fail（移行・整理完了・154件成功・lintと型検査成功・目視確認待ち） |
-| テストファイル数 | **28ファイル** | 実行ファイル数。ロジック単位は 24/24、ページ移行テストは別集計 |
+| テストケース総数 | **167件** | `bun test`: 152 pass / 15 fail（レイアウト再構成Red・hydration再現を含む15件の失敗） |
+| テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 24/24、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -41,8 +41,8 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
 | `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
-| `src/app/docs/layout.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 18 | 3 pass / 15 fail |
+| `src/app/docs/layout.test.tsx` | 10 | 7 pass / 3 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
@@ -50,6 +50,8 @@
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-10-13.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/app/docs/ccie-security/hydration.test.tsx` | 2 | 0 pass / 2 fail |
+| `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 0 pass / 10 fail |
 
 ---
 
@@ -259,3 +261,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 実装HEAD: `7e9d7c9`。テスト154 pass / 0 fail、28ファイル。lint・型検査成功。
 - 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
 - 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
+- 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。

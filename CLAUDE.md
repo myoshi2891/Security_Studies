@@ -187,12 +187,12 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): レイアウト再構成Red・hydration再現を含む15件の失敗. Bun tests: 152 pass / 15 fail (30 files). npm / Next.js build not run; visual verification by user.
 
 ### CCIE Security migration details
 
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Sidebar: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 35 CCIE fidelity/lifecycle tests plus 9 layout tests; all project tests: 154 across 28 files. Existing 22 logic files plus MermaidFigure/PythonCode are tracked separately from MDX test files (24/24).
+- 47 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 167 across 30 files (152 pass / 15 fail). Existing 22 logic files plus MermaidFigure/PythonCode are tracked separately from MDX test files (24/24).
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. Build not run; browser visual review pending with user.

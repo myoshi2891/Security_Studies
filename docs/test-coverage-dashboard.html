@@ -60,8 +60,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">154</div>
-                        <div class="summary-sub">28 ファイル · 154 pass / 0 fail · CCIE移行</div>
+                        <div class="summary-value">167</div>
+                        <div class="summary-sub">30 ファイル · 152 pass / 15 fail · CCIE移行</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -85,7 +85,7 @@
         </section>
 
 <!-- CCIE migration status -->
-        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち · 154 pass / 0 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
+        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: レイアウト再構成Red・hydration再現を含む15件の失敗 · 152 pass / 15 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -325,7 +325,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">9 layout + 35 CCIE tests · 3/5 logic files</span>
+                                            <span class="cell-count">10 layout + 47 CCIE tests · 3/5 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 60%"></div>
                                             </div>
@@ -334,10 +334,10 @@
                                             <div class="tt-title">⚠️ Partial — 3/5 ロジックファイル</div>
                                             docs layout と CCIE の描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/app/docs/layout.test.tsx (9 tests)</li>
+                                                <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 16 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 47 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1172,7 +1172,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-09</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 28 files · 154 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 30 files · 167 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
