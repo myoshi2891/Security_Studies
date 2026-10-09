@@ -1134,9 +1134,9 @@ spec:
     - apiGroups: [""]
       apiVersions: ["v1"]
       operations: ["CREATE", "UPDATE"]
-      resources: ["pods"]
+      resources: ["pods", "pods/ephemeralcontainers"]
   validations:
-  - expression: "object.spec.containers.all(c, !c.image.endsWith(':latest')) && (!has(object.spec.initContainers) || object.spec.initContainers.all(c, !c.image.endsWith(':latest')))"
+  - expression: "object.spec.containers.all(c, !c.image.endsWith(':latest')) && (!has(object.spec.initContainers) || object.spec.initContainers.all(c, !c.image.endsWith(':latest'))) && (!has(object.spec.ephemeralContainers) || object.spec.ephemeralContainers.all(c, !c.image.endsWith(':latest')))"
     message: "latest タグのイメージは使用できません"
 ---
 apiVersion: admissionregistration.k8s.io/v1
@@ -1259,7 +1259,7 @@ spec:
   - Egress
 ```
 
-> **重要**: 標準の NetworkPolicy は **許可ルールの足し算(和集合)** で評価され、「拒否」で既存ポリシーを **上書きできません**。上の quarantine ポリシーだけでは、同じ Pod を選択する既存の許可ポリシーがあれば通信は通ったままです。確実に隔離するには、(1) 既存ポリシーの `podSelector` に `matchExpressions: [{key: quarantine, operator: NotIn, values: ["true"]}]` を加えて quarantine=true の Pod を許可対象から外す、または (2) Cilium / Calico / AdminNetworkPolicy など **拒否の優先順位をサポートする CNI のポリシー** で deny を最優先に適用してください。
+> **重要**: 標準の NetworkPolicy は **許可ルールの足し算(和集合)** で評価され、「拒否」で既存ポリシーを **上書きできません**。上の quarantine ポリシーだけでは、同じ Pod を選択する既存の許可ポリシーがあれば通信は通ったままです。確実に隔離するには、(1) 上の quarantine ポリシー(default-deny)は維持したまま、既存の許可ポリシーの `podSelector` に `matchExpressions: [{key: quarantine, operator: NotIn, values: ["true"]}]` を加えて quarantine=true の Pod を許可対象から外し、さらに既存ルールの `ingress.from` / `egress.to` の `podSelector` にも同じ条件を加えて、他の Pod の許可ルールが quarantine Pod を通信相手として指さないようにする、または (2) Cilium / Calico / AdminNetworkPolicy など **拒否の優先順位をサポートする CNI のポリシー** で deny を最優先に適用してください。
 
 > **フォレンジクスの注意**: コンテナのチェックポイント/復元機能は、証拠保全に便利な反面、2026年には **信頼できないチェックポイントからの復元がセキュリティ設定を回避する** 問題が報告されています(Step 3)[S13]。信頼できるチェックポイントだけを扱い、機能の利用範囲を制限してください。
 
