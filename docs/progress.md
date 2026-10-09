@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **173件** | `bun test`: 173 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
+| テストケース総数 | **176件** | `bun test`: 176 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
 | テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -40,11 +40,11 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
-| `src/lib/search.test.ts` | 13 | 13 pass / 0 fail |
+| `src/lib/search.test.ts` | 14 | 14 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
-| `src/app/docs/ccie-security/foundation.test.tsx` | 10 | 10 pass / 0 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-05-07.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
@@ -107,13 +107,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `GEMINI.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `security-docs/README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
-| `docs/progress.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・実測167テストを同期 |
+| `CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `GEMINI.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/progress.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測176テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -150,7 +150,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
+| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は176件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
 
@@ -258,8 +258,12 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ### CCIE Security 再開・目視確認
 
-- 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル。lint・型検査成功。
+- 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル（当時。最新は下記時系列の176件）。lint・型検査成功。
 - 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
 - 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
 - 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。170 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 検索インデックスのMDX import/export除去（`search.test.ts` +1）。171 pass / 0 fail、30テストファイル。
+- 2026-10-09: 見出しベース検索索引（`search.test.ts` +1、`search-modal.test.tsx` +1）。173 pass / 0 fail、30テストファイル。
+- 2026-10-09: レビュー対応（Mermaid遅延描画・図説明の縦積み: `foundation.test.tsx` +2、Markdown見出し索引: `search.test.ts` +1）。**176 pass / 0 fail、30テストファイル（最新実測・5,959 expect）**。
+- 件数の推移: 167件は表示レイアウト再構成前の旧同期値、170件はレイアウト修正Green時点、171件・173件はその後の検索改修、176件はレビュー対応（Mermaid遅延描画・図レイアウト・Markdown見出し索引）による追加。仕様書の基準値は最新実測の176件。
