@@ -1,10 +1,21 @@
-import { afterEach, describe, expect, test } from 'bun:test';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createElement } from 'react';
 import postcss from 'postcss';
 
+// happy-dom の IntersectionObserver は交差を通知しないため、既定では observe 直後に表示域へ入ったものとして扱う
+const originalObserver = globalThis.IntersectionObserver;
+class ImmediateObserver {
+  constructor(private readonly callback: IntersectionObserverCallback) {}
+  observe(target: Element) { this.callback([{ isIntersecting: true, target } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
+  unobserve() {}
+  disconnect() {}
+  takeRecords() { return []; }
+}
+beforeEach(() => { globalThis.IntersectionObserver = ImmediateObserver as unknown as typeof IntersectionObserver; });
+afterEach(() => { globalThis.IntersectionObserver = originalObserver; });
 afterEach(cleanup);
 const here = import.meta.dir;
 const source = readFileSync(resolve(here, '../../../../../Ccie-security-guide.html'), 'utf8');
@@ -41,6 +52,50 @@ describe('CCIE faithful display foundation', () => {
     expect(css).toContain('(max-width:1024px)');
     expect(css).toContain('(prefers-reduced-motion:reduce)');
     expect(css).toContain('minmax(min(260px,100%),1fr)');
+  });
+
+  test('stacks the diagram description below the SVG and scrolls only the graphic horizontally', () => {
+    const migrated = postcss.parse(readFileSync(resolve(here, 'ccie-security.css'), 'utf8'));
+    const decls = (selector: string) => {
+      const found = new Map<string, string>();
+      migrated.walkRules(rule => {
+        if (rule.selector === `.ccie-guide.ccie-guide ${selector}`) rule.walkDecls(d => { found.set(d.prop, d.value); });
+      });
+      return found;
+    };
+    const figure = decls('.diagram');
+    expect(figure.get('flex-direction')).toBe('column');
+    expect(figure.get('overflow-x')).not.toBe('auto');
+    expect(decls('.diagram [role="img"]').get('overflow-x')).toBe('auto');
+  });
+
+  test('defers Mermaid rendering until the figure nears the viewport and disconnects on unmount', async () => {
+    const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    let notify: IntersectionObserverCallback | undefined;
+    let options: IntersectionObserverInit | undefined;
+    let disconnected = 0;
+    class ControlledObserver {
+      constructor(cb: IntersectionObserverCallback, init?: IntersectionObserverInit) { notify = cb; options = init; }
+      observe() {}
+      unobserve() {}
+      disconnect() { disconnected += 1; }
+      takeRecords() { return []; }
+    }
+    globalThis.IntersectionObserver = ControlledObserver as unknown as typeof IntersectionObserver;
+    const calls: string[] = [];
+    const renderer = async (id: string) => { calls.push(id); return { svg: '<svg viewBox="0 0 10 10"></svg>' }; };
+    const { container, unmount } = render(createElement(MermaidFigure, { id: 3, source: 'flowchart LR\nA-->B', renderer }));
+
+    expect(calls).toHaveLength(0);
+    expect(options?.rootMargin).toBeTruthy();
+    const figure = container.querySelector('figure');
+    if (!figure || !notify) throw new Error('observer was not attached to the figure');
+    const callback = notify;
+    act(() => callback([{ isIntersecting: true, target: figure } as IntersectionObserverEntry], {} as IntersectionObserver));
+    await waitFor(() => expect(calls).toHaveLength(1));
+
+    unmount();
+    expect(disconnected).toBeGreaterThan(0);
   });
 
   test('keeps intrinsic elements independent of shared MDX element overrides', async () => {

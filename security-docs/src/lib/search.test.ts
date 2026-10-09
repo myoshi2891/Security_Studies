@@ -1,7 +1,7 @@
 import { describe, expect, mock, test } from 'bun:test';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getSearchIndex, type SearchResult } from './search';
+import { extractHeadings, getSearchIndex, type SearchResult } from './search';
 
 const REQUIRED_KEYS = ['content', 'description', 'headings', 'href', 'title'] as const;
 const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
@@ -106,6 +106,19 @@ describe('getSearchIndex', () => {
         const ccie = results.find(item => item.href === '/docs/ccie-security');
         expect(ccie?.content).not.toContain('TrustSec');
         expect(ccie?.headings.some(heading => heading.includes('TrustSec'))).toBe(true);
+    });
+
+    test('collects Markdown headings in document order alongside JSX headings, skipping code fences', () => {
+        const mdx = [
+            '## TrustSec 概要',
+            '<E.h3 id="x">{"SGT の割り当て"}</E.h3>',
+            '```bash',
+            '# コメントは見出しではない',
+            '```',
+            '### 末尾記号付き ###',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['TrustSec 概要', 'SGT の割り当て', '末尾記号付き']);
     });
 });
 
