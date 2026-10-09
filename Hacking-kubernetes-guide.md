@@ -461,7 +461,7 @@ Kubernetes v1.36 で **User Namespaces が GA** になりました(Linux 専用�
 # 1) 特権コンテナを使っている Pod を洗い出す(要 jq)
 kubectl get pods -A -o json | jq -r '
   .items[]
-  | select(any(.spec.containers[]?; .securityContext.privileged == true))
+  | select(any((.spec.containers[]?, .spec.initContainers[]?); .securityContext.privileged == true))
   | "\(.metadata.namespace)/\(.metadata.name)"'
 
 # 2) hostPath を使っている Pod を洗い出す
@@ -889,7 +889,9 @@ flowchart TD
 
 ### 8.5 Pod 向けの短命な証明書(Pod Certificates)
 
-v1.37 では、**Pod certificates と ClusterTrustBundles が Stable** になりました。Pod に **短命の X.509 証明書** を渡す標準的な方法で、`PodCertificateRequest` API で発行し、`PodCertificate` の projected volume で kubelet が鍵と証明書を Pod へ配り、**自動でローテーション** します [S2][S31]。
+v1.37 では、**Pod certificates と ClusterTrustBundles が Stable** になりました。Pod に **短命の X.509 証明書** を渡す標準的な方法で、kubelet が鍵ペアを生成して `PodCertificateRequest` を作成し、`PodCertificate` の projected volume で鍵と証明書を Pod へ配り、**自動でローテーション** します [S2][S31]。
+
+> **注意**: Kubernetes 本体には `PodCertificateRequest` を処理する **署名者(signer)は含まれていません**。リクエストを承認・署名して証明書を発行するコントローラーを **別途デプロイ** する必要があり、projected volume は **発行後の証明書を配布するだけ** です。signer がなければ Pod は証明書を受け取れません。
 
 | 従来の課題 | Pod Certificates による改善の方向 |
 |---|---|
@@ -904,10 +906,15 @@ v1.37 では、**Pod certificates と ClusterTrustBundles が Stable** になり
 kubectl auth can-i get secrets -n lab --as=system:serviceaccount:lab:default
 kubectl auth can-i list secrets -n lab --as=system:serviceaccount:lab:default
 
-# Secret をボリュームや環境変数として使っている Pod の洗い出し(環境変数)
+# Secret をボリュームや環境変数として使っている Pod の洗い出し
+# (env の secretKeyRef / envFrom の secretRef / secret ボリューム。initContainers も対象)
 kubectl get pods -A -o json | jq -r '
   .items[]
-  | select(any(.spec.containers[]?; any(.env[]?; .valueFrom.secretKeyRef != null)))
+  | select(
+      any((.spec.containers[]?, .spec.initContainers[]?);
+          any(.env[]?; .valueFrom.secretKeyRef != null)
+          or any(.envFrom[]?; .secretRef != null))
+      or any(.spec.volumes[]?; .secret != null))
   | "\(.metadata.namespace)/\(.metadata.name)"'
 ```
 
@@ -1105,7 +1112,7 @@ spec:
       operations: ["CREATE", "UPDATE"]
       resources: ["pods"]
   validations:
-  - expression: "object.spec.containers.all(c, !c.image.endsWith(':latest'))"
+  - expression: "object.spec.containers.all(c, !c.image.endsWith(':latest')) && (!has(object.spec.initContainers) || object.spec.initContainers.all(c, !c.image.endsWith(':latest')))"
     message: "latest タグのイメージは使用できません"
 ---
 apiVersion: admissionregistration.k8s.io/v1
@@ -1227,6 +1234,8 @@ spec:
   - Ingress
   - Egress
 ```
+
+> **重要**: 標準の NetworkPolicy は **許可ルールの足し算(和集合)** で評価され、「拒否」で既存ポリシーを **上書きできません**。上の quarantine ポリシーだけでは、同じ Pod を選択する既存の許可ポリシーがあれば通信は通ったままです。確実に隔離するには、(1) 既存ポリシーの `podSelector` に `matchExpressions: [{key: quarantine, operator: NotIn, values: ["true"]}]` を加えて quarantine=true の Pod を許可対象から外す、または (2) Cilium / Calico / AdminNetworkPolicy など **拒否の優先順位をサポートする CNI のポリシー** で deny を最優先に適用してください。
 
 > **フォレンジクスの注意**: コンテナのチェックポイント/復元機能は、証拠保全に便利な反面、2026年には **信頼できないチェックポイントからの復元がセキュリティ設定を回避する** 問題が報告されています(Step 3)[S13]。信頼できるチェックポイントだけを扱い、機能の利用範囲を制限してください。
 
