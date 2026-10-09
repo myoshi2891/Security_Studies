@@ -76,9 +76,9 @@
     59,
     60
   ],
-  "status": "Implemented; 154 tests passed, lint/type checks passed; build not run; user visual review pending",
+  "status": "Implemented with header navigation, original left sidebar and full-width content; 167 tests passed, lint/type checks passed; 85 tables checked for hydration warnings; build not run; user visual review pending",
   "route": "/docs/ccie-security",
   "category": "Security Certifications",
-  "implementationCommit": "7e9d7c9",
+  "implementationCommit": "96cc635",
   "updated": "2026-10-09"
 }

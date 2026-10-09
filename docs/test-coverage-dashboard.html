@@ -49,7 +49,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            24 ロジックファイル中 24 ファイルに<br />Unit テストあり（MDX移行テストは別集計）
+                            26 ロジックファイル中 26 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1。MDXテストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -61,7 +61,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
                         <div class="summary-value">167</div>
-                        <div class="summary-sub">30 ファイル · 152 pass / 15 fail · CCIE移行</div>
+                        <div class="summary-sub">30 ファイル · 167 pass / 0 fail · CCIE移行</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -85,7 +85,7 @@
         </section>
 
 <!-- CCIE migration status -->
-        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: レイアウト再構成Red・hydration再現を含む15件の失敗 · 152 pass / 15 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
+        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green · 167 pass / 0 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -235,13 +235,13 @@
                             <tr>
                                 <th scope="col">Category</th>
                                 <th scope="col" data-dom="d1">
-                                    docs/Components<small>src/components/docs/ · 16 files</small>
+                                    docs/Components<small>src/components/docs/ · 17 tracked files</small>
                                 </th>
                                 <th scope="col" data-dom="d2">
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 10×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 12×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -268,15 +268,16 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">64 tests · 16/16 files</span>
+                                            <span class="cell-count">64 unit + 10 layout tests · 17/17 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">✅ Good — 16/16 ファイル</div>
+                                            <div class="tt-title">✅ Good — 17/17 対象ファイル</div>
                                             全ファイルに十分なテストあり。バリアント・エッジケース等もカバー。
                                             <ul class="tt-files">
+                                                <li>✓ DocsHeaderNav: layout.test.tsx (10 tests、App/Pagesと共有)</li>
                                                 <li>✓ Callout.test.tsx (4 tests)</li>
                                                 <li>✓ DocsSubheading.test.tsx (4 tests)</li>
                                                 <li>✓ SectionCard.test.tsx (3 tests)</li>
@@ -325,16 +326,17 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 47 CCIE tests · 3/5 logic files</span>
+                                            <span class="cell-count">10 layout + 47 CCIE tests · 4/6 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 60%"></div>
+                                                <div class="cell-bar-fill" style="width: 67%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 3/5 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 4/6 ロジックファイル</div>
                                             docs layout と CCIE の描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
+                                                <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの47件で検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
                                                 <li>✓ CCIE Security: 47 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>

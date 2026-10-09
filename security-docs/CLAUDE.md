@@ -32,12 +32,14 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): レイアウト再構成Red・hydration再現を含む15件の失敗. Bun tests: 152 pass / 15 fail (30 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green. Bun tests: 167 pass / 0 fail (30 files). npm / Next.js build not run; visual verification by user.
 
 ### CCIE Security migration details
 
-- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Sidebar: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 47 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 167 across 30 files (152 pass / 15 fail). Existing 22 logic files plus MermaidFigure/PythonCode are tracked separately from MDX test files (24/24).
+- 47 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 167 across 30 files (167 pass / 0 fail). Baseline 22 tracked logic files plus MermaidFigure/PythonCode/GuideSidebar/DocsHeaderNav are tracked separately from MDX test files (26/26).
+- Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
+- All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. Build not run; browser visual review pending with user.
