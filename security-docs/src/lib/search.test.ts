@@ -80,6 +80,17 @@ describe('getSearchIndex', () => {
         expect(approach?.title).toBe('2026年 サプライチェーンセキュリティ＆SCS評価制度 対策アプローチ');
         expect(approach?.content).toContain('SCS評価制度');
     });
+
+    test('strips MDX import/export statements and keeps the page body', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            expect(item.content).not.toMatch(/^\s*(import|export)\s/m);
+        }
+
+        const ccie = results.find(item => item.href === '/docs/ccie-security');
+        expect(ccie?.content).toContain('Cisco Certified Internetwork Expert / Security');
+    });
 });
 
 // DOCS_DIR 配下のすべてのディレクトリを再帰的に走査し、page.mdx を含むものを列挙する。
