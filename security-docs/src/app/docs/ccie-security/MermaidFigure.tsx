@@ -32,6 +32,8 @@ async function getEngine() {
         noteTextColor: '#161B26', activationBkgColor: '#EEF1F8', activationBorderColor: '#2E3F72', sequenceNumberColor: '#FFFFFF',
         pie1: '#C9D3EA', pie2: '#F1DDAE', pie3: '#BFE0DB', pie4: '#E8C7D6', pie5: '#D9DDE6',
         pieStrokeColor: '#F6F7F9', pieStrokeWidth: '2px', pieSectionTextColor: '#161B26',
+        pieLegendTextColor: '#161B26', pieTitleTextColor: '#161B26', pieTitleTextSize: '18px',
+        pieSectionTextSize: '16px', pieLegendTextSize: '16px', pieOuterStrokeColor: '#F6F7F9',
       },
     });
     return mermaid;

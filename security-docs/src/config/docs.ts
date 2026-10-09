@@ -25,6 +25,12 @@ export const docsConfig = {
       ],
     },
     {
+      title: "Security Certifications",
+      items: [
+        { title: "CCIE Security", href: "/docs/ccie-security" },
+      ],
+    },
+    {
       title: "Resources",
       items: [
         { title: "AppSec Certifications", href: "/docs/certifications" },
