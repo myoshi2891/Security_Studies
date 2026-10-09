@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { getSearchIndex, type SearchResult } from './search';
 
-const REQUIRED_KEYS = ['content', 'description', 'href', 'title'] as const;
+const REQUIRED_KEYS = ['content', 'description', 'headings', 'href', 'title'] as const;
 const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
 const HREF_PATTERN = /^\/docs\/(.+)$/;
 
@@ -15,7 +15,7 @@ describe('getSearchIndex', () => {
         expect(results.length).toBeGreaterThan(0);
     });
 
-    test('each result has exactly title/description/href/content keys', async () => {
+    test('each result has exactly title/description/href/content/headings keys', async () => {
         const results = await getSearchIndex();
 
         for (const item of results) {
@@ -90,6 +90,22 @@ describe('getSearchIndex', () => {
 
         const ccie = results.find(item => item.href === '/docs/ccie-security');
         expect(ccie?.content).toContain('Cisco Certified Internetwork Expert / Security');
+    });
+
+    test('collects JSX heading text so chapter terms beyond the content snippet are searchable', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            expect(Array.isArray(item.headings)).toBe(true);
+            for (const heading of item.headings) {
+                expect(typeof heading).toBe('string');
+                expect(heading.trim()).not.toBe('');
+            }
+        }
+
+        const ccie = results.find(item => item.href === '/docs/ccie-security');
+        expect(ccie?.content).not.toContain('TrustSec');
+        expect(ccie?.headings.some(heading => heading.includes('TrustSec'))).toBe(true);
     });
 });
 
