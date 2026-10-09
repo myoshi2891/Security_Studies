@@ -27,7 +27,10 @@ export function GuideSidebar({ items }: { items: readonly GuideChapter[] }) {
     queueMicrotask(onHash);
     window.addEventListener('hashchange', onHash);
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
-      for (const entry of entries) if (entry.isIntersecting) select(entry.target.id);
+      // コールバック内の順序は DOM 順と一致しないため、最も上にある交差要素を選ぶ
+      const topmost = entries.filter(entry => entry.isIntersecting)
+        .reduce<IntersectionObserverEntry | undefined>((best, entry) => !best || entry.boundingClientRect.top < best.boundingClientRect.top ? entry : best, undefined);
+      if (topmost) select(topmost.target.id);
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const item of items) {
       for (const id of [item.id, ...item.children.map(child => child.id)]) {

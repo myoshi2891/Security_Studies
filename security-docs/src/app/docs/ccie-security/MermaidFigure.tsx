@@ -136,11 +136,12 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
     renderer(svgId, source).then(({ svg }) => {
       const sized = sizeSvg(svg, source);
       if (active) setResult({ source, svg: sized });
-    }).catch(() => {
+    }).catch((error: unknown) => {
+      console.error(`Mermaid figure ${id} failed to render`, error);
       if (active) setResult({ source, failed: true });
     });
     return () => { active = false; };
-  }, [nearView, renderer, source, svgId]);
+  }, [id, nearView, renderer, source, svgId]);
 
   const current = result?.source === source ? result : undefined;
   return (
