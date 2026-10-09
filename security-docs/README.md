@@ -54,4 +54,4 @@ bun run build
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 第10〜13章Red・参考文献とチェックを含む7件の期待どおりの失敗. Bun tests: 136 pass / 7 fail (27 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 全13章Green・143件成功・lintと型検査成功. Bun tests: 143 pass / 0 fail (27 files). npm / Next.js build not run; visual verification by user.
