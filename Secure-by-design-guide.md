@@ -643,7 +643,9 @@ catch (SQLException e) {
 // 良い例: 内部には詳細ログ、外には最小限
 catch (SQLException e) {
     String errorId = UUID.randomUUID().toString();
-    log.error("口座取得失敗 errorId={}", errorId, e);          // 詳細は内部ログのみ(機密はマスク)
+    // 例外本体(メッセージ・スタックトレース)は SQL 文や値を含みうるため渡さない
+    log.error("口座取得失敗 errorId={} sqlState={} errorCode={}",
+              errorId, e.getSQLState(), e.getErrorCode());
     throw new ServiceUnavailableException("処理に失敗しました。ID: " + errorId);
 }
 ```
