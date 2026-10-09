@@ -74,4 +74,4 @@ All steps execute in the `security-docs/` working directory.
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 比較基盤補正・130件成功・第1〜4章実装検証中. Bun tests: 130 pass / 0 fail (24 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 第1〜4章Green・130件成功・lintと型検査成功. Bun tests: 130 pass / 0 fail (24 files). npm / Next.js build not run; visual verification by user.
