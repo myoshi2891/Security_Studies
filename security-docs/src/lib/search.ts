@@ -12,6 +12,14 @@ export interface SearchResult {
 }
 
 /**
+ * Removes MDX ESM blocks (`import` / `export` paragraphs, which run until a blank line)
+ * so the search snippet starts with the page body instead of module statements.
+ */
+function stripMdxEsm(content: string): string {
+  return content.replace(/^(?:import|export)\s[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/gm, "").trimStart();
+}
+
+/**
  * Recursively scans the directory to find page.mdx files and extract search results.
  */
 async function scanDirectory(dir: string, baseDir: string): Promise<SearchResult[]> {
@@ -36,7 +44,7 @@ async function scanDirectory(dir: string, baseDir: string): Promise<SearchResult
           title: data.title || relativePath,
           description: data.description || "",
           href: `/docs/${relativePath}`,
-          content: content.slice(0, 500), // Keep first 500 characters for search
+          content: stripMdxEsm(content).slice(0, 500), // Keep first 500 characters for search
         });
       } catch (error) {
         console.error(`Error reading search index for ${fullPath}:`, error);
