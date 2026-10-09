@@ -1,0 +1,7 @@
+// Extracted from the original HTML without evaluating its scripts.
+export const diagrams: Record<number, string> = {
+  "0": "\nflowchart LR\nA[\"前提知識<br/>CCNA / CCNP Security 相当\"] --> B[\"Step 1: クオリファイ試験<br/>SCOR 350-701\"]\nB --> C[\"Step 2: ラボ試験<br/>CCIE Security v6.1\"]\nC --> D[\"CCIE Security 認定<br/>有効期間 3 年\"]\nB -. \"合格でスペシャリスト認定も取得\" .-> E[\"Cisco Certified Specialist<br/>Security Core\"]\nD --> F[\"再認定<br/>継続教育クレジット or 試験\"]\n",
+  "1": "\npie showData\ntitle CCIE Security v6.1 ドメイン別配点(%)\n\"1 境界防御と侵入防止\" : 20\n\"2 セキュア接続とセグメンテーション\" : 20\n\"3 セキュリティインフラ\" : 15\n\"4 アイデンティティとアクセス制御\" : 25\n\"5 高度な脅威防御とコンテンツセキュリティ\" : 20\n",
+  "2": "\nflowchart TD\nS0[\"Phase 0: 基礎固め<br/>TCP/IP, ルーティング, スイッチング, PKI, IPsec の基礎\"] --> S1\nS1[\"Phase 1: Domain 3 の一部<br/>ハードニング・L2 セキュリティ・Python/REST の基礎\"] --> S2\nS2[\"Phase 2: Domain 1<br/>ASA / FTD / FMC / ZBFW\"] --> S3\nS3[\"Phase 3: Domain 2<br/>VPN・VRF・TrustSec 入門\"] --> S4\nS4[\"Phase 4: Domain 4(最重要)<br/>ISE を軸に 802.1X, Guest, BYOD, Posture, pxGrid, Duo\"] --> S5\nS5[\"Phase 5: Domain 5<br/>AMP, Umbrella, WSA, ESA, SNA 等の連携\"] --> S6\nS6[\"Phase 6: 統合ラボ演習<br/>設計→導入→運用→最適化を通しで反復\"] --> S7\nS7[\"Phase 7: 時間管理・検証力・自動化の仕上げ\"]\n",
+  "3": "\nflowchart LR\nA[\"1. 概念を理解<br/>何を守る機能か\"] --> B[\"2. 構成を描く<br/>トポロジと通信の流れ\"]\nB --> C[\"3. 設定する<br/>最小構成から\"]\nC --> D[\"4. 検証する<br/>show / packet-tracer / ログ\"]\nD --> E[\"5. 壊して直す<br/>トラブルシュート\"]\nE --> F[\"6. 最適化する<br/>ベストプラクティス適用\"]\nF --> A\n"
+};
