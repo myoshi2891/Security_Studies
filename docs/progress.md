@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **171件** | `bun test`: 171 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
+| テストケース総数 | **173件** | `bun test`: 173 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
 | テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -39,8 +39,8 @@
 | `src/components/docs/Tag.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
-| `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
-| `src/lib/search.test.ts` | 12 | 12 pass / 0 fail |
+| `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
+| `src/lib/search.test.ts` | 13 | 13 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
@@ -162,7 +162,7 @@ form-action 'self'
 
 #### 5. SearchModal A11y テスト追加
 
-17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
+18件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
 
 #### 11. Codecov 復旧後の対応（2026-10-05 起票）
 
