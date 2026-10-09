@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **167件** | `bun test`: 167 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
+| テストケース総数 | **171件** | `bun test`: 171 pass / 0 fail（ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green） |
 | テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -40,11 +40,11 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
-| `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
+| `src/lib/search.test.ts` | 12 | 12 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
-| `src/app/docs/ccie-security/foundation.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-05-07.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
@@ -150,7 +150,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。47件の移行・描画・目次・hydrationテストと10件のナビ検証、全167件成功。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
+| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
 
@@ -258,8 +258,8 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ### CCIE Security 再開・目視確認
 
-- 実装HEAD: `96cc635`。テスト167 pass / 0 fail、30ファイル。lint・型検査成功。
+- 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル。lint・型検査成功。
 - 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
 - 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
 - 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。
-- 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。167 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。170 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
