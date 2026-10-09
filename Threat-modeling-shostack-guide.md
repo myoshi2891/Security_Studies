@@ -579,10 +579,10 @@ flowchart LR
     subgraph EXT["信頼境界C: 外部サービス"]
         IDP["外部IdP"]
     end
-    U -->|"1 認可要求 PKCE code_challenge"| IDP
+    U -->|"1 認可要求 PKCE code_challenge<br/>code_challenge_method=S256"| IDP
     IDP -->|"2 認可コード リダイレクト"| U
     U -->|"2a 認可コードの受け渡し"| API
-    API -->|"2b Token Endpoint 認可コード＋code_verifier"| IDP
+    API -->|"2b Token Endpoint 認可コード＋code_verifier<br/>IdPがS256でcode_challengeと照合"| IDP
     IDP -->|"2c IDトークン・アクセストークン"| API
     U -->|"3 メモ操作 HTTPS"| API
     V -->|"4 共有リンク閲覧 HTTPS"| API
@@ -596,7 +596,7 @@ flowchart LR
 | ID | 対象 | STRIDE | 脅威 | 重大度 |
 |---|---|---|---|---|
 | TM-001 | フロー4（共有リンク） | I | リンクIDが推測可能で、他人の非公開メモが読める | High |
-| TM-002 | フロー2c（IdP→Web/API の ID トークン・アクセストークン返却） | S | 盗まれたトークンで他人になりすませる | High |
+| TM-002 | フロー2c（IdP→Web/API のアクセストークン返却） | S | 盗まれたアクセストークンを再利用して API を呼び出し、他人になりすませる | High |
 | TM-003 | Web/API | S | トークン検証が不十分で、偽造トークンを受け入れる | High |
 | TM-004 | フロー3（メモ操作） | T, E | メモIDを書き換えて他人のメモを編集できる（IDOR） | High |
 | TM-005 | Web/API | E | 一般ユーザーが管理用エンドポイントを呼べる | High |
