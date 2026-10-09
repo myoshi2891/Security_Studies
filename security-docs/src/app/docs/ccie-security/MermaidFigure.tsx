@@ -65,9 +65,53 @@ function sizeSvg(svgMarkup: string, source: string) {
   return holder.innerHTML;
 }
 
+/** ラベル中の <br/> 等の HTML を読み上げ用のプレーンテキストに変換する */
+const plain = (text: string) => text.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
+/** 図の定義からテキスト説明（1行目が図の種類と概要、以降が内容）を生成する */
+export function describeDiagram(source: string): string[] {
+  const lines = source.trim().split('\n').map(line => line.trim()).filter(Boolean);
+  const header = lines[0] ?? '';
+
+  if (header.startsWith('pie')) {
+    const title = lines.find(line => line.startsWith('title '))?.slice('title '.length) ?? '';
+    const slices = lines.flatMap(line => {
+      const slice = line.match(/^"([^"]*)"\s*:\s*(.+)$/);
+      return slice ? [`${plain(slice[1])}: ${slice[2].trim()}`] : [];
+    });
+    return [`円グラフ: ${plain(title)}`, ...slices];
+  }
+
+  if (header.startsWith('sequenceDiagram')) {
+    const names = new Map<string, string>();
+    const steps: string[] = [];
+    for (const line of lines.slice(1)) {
+      const participant = line.match(/^(?:participant|actor)\s+(\S+)(?:\s+as\s+(.+))?$/);
+      if (participant) {
+        names.set(participant[1], plain(participant[2] ?? participant[1]));
+        continue;
+      }
+      const message = line.match(/^([^\s-]+)\s*--?(?:>>|>|x|\))[+-]?\s*([^\s:]+)\s*:\s*(.*)$/);
+      if (message) {
+        const name = (key: string) => names.get(key) ?? key;
+        steps.push(`${name(message[1])} → ${name(message[2])}: ${plain(message[3])}`);
+        continue;
+      }
+      const note = line.match(/^Note\s+[^:]+:\s*(.*)$/i);
+      if (note) steps.push(`注記: ${plain(note[1])}`);
+    }
+    return [`シーケンス図: ${[...names.values()].join('、')}`, ...steps];
+  }
+
+  const labels = [...new Set([...source.matchAll(/"([^"]*)"/g)].map(match => plain(match[1])).filter(Boolean))];
+  // 引用符付きラベルがない定義は、定義本文をそのまま説明として使う
+  return ['フローチャート', ...(labels.length > 0 ? labels : lines.slice(1))];
+}
+
 export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidFigureProps) {
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const svgId = `ccie-mermaid-${id}-${unique}`;
+  const descriptionId = `${svgId}-description`;
   const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
 
   useEffect(() => {
@@ -85,7 +129,13 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   return (
     <figure className="diagram" data-d={id} data-definition={source}>
       {current?.svg ? (
-        <div role="img" aria-label={`図 ${id + 1}`} dangerouslySetInnerHTML={{ __html: current.svg }} />
+        <>
+          <div role="img" aria-label={`図 ${id + 1}`} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
+          <details className="diagram-description">
+            <summary>図 {id + 1} のテキスト説明</summary>
+            <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
+          </details>
+        </>
       ) : current?.failed ? (
         <div className="diagram-error">
           <p role="alert">図 {id + 1} を描画できませんでした。</p>

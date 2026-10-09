@@ -63,6 +63,37 @@ describe('CCIE faithful display foundation', () => {
     expect(calls).toHaveLength(1);
   });
 
+  test('links a content-specific text description to a successfully rendered diagram', async () => {
+    const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    const renderer = async () => ({ svg: '<svg viewBox="0 0 10 10"></svg>' });
+    const { container, getByText } = render(createElement(MermaidFigure, { id: 5, source: 'flowchart LR\nA["開始<br/>入口"] --> B["終了"]', renderer }));
+    await waitFor(() => expect(container.querySelector('svg')).not.toBeNull());
+    const descriptionId = container.querySelector('[role="img"]')?.getAttribute('aria-describedby');
+    expect(descriptionId).toBeTruthy();
+    const description = container.querySelector(`[id="${descriptionId}"]`);
+    expect(description).toHaveTextContent('開始 入口');
+    expect(description).toHaveTextContent('終了');
+    expect(getByText('図 6 のテキスト説明')).toBeInTheDocument();
+    expect(container.querySelector('[role="alert"]')).toBeNull();
+  });
+
+  test('describes flowchart, pie and sequence definitions by their content', async () => {
+    const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    expect(describeDiagram('pie showData\ntitle 配点\n"Domain 1" : 20\n"Domain 2" : 80')).toEqual(['円グラフ: 配点', 'Domain 1: 20', 'Domain 2: 80']);
+    expect(describeDiagram('sequenceDiagram\nparticipant C as クライアント\nparticipant S as サーバ\nC->>S: 要求\nS-->>C: 応答')).toEqual(['シーケンス図: クライアント、サーバ', 'クライアント → サーバ: 要求', 'サーバ → クライアント: 応答']);
+    expect(describeDiagram('flowchart TD\nA["入口"] -->|"検査"| B["出口"]')).toEqual(['フローチャート', '入口', '検査', '出口']);
+  });
+
+  test('gives every original diagram a non-empty description', async () => {
+    const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
+    const entries = Object.entries(diagrams as Record<string, string>);
+    expect(entries).toHaveLength(61);
+    for (const [key, definition] of entries) {
+      expect((describeDiagram(definition) as string[]).length, key).toBeGreaterThan(1);
+    }
+  });
+
   test('does not reuse render identifiers across figures', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     const ids: string[] = [];
