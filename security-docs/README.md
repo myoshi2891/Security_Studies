@@ -1,6 +1,6 @@
 # Security Studies 2026
 
-最終更新日: 2026-05-27
+最終更新日: 2026-10-09
 
 Next.js-based documentation application focused on security studies, leveraging MDX for high-fidelity content authoring.
 
@@ -50,3 +50,8 @@ Create a production build:
 ```bash
 bun run build
 ```
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-09): 表示基盤Red・6件の期待どおりの失敗. Bun tests: 118 pass / 6 fail (23 files). npm / Next.js build not run; visual verification by user.

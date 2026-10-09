@@ -1,11 +1,11 @@
 # Security Studies
 
-最終更新日: 2026-09-20
+最終更新日: 2026-10-09
 
 [![CI](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml/badge.svg)](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/myoshi2891/Security_Studies/graph/badge.svg)](https://codecov.io/gh/myoshi2891/Security_Studies)
 
-Next.js 16.3.5 (App Router) と カスタム MDX コンポーネントを活用した、セキュリティ学習のためのドキュメントアプリケーションです。Fumadocs は廃止済みで、`@next/mdx` と独自の React コンポーネント群でコンテンツを構築しています。
+Next.js 16.3.8 (App Router) と カスタム MDX コンポーネントを活用した、セキュリティ学習のためのドキュメントアプリケーションです。Fumadocs は廃止済みで、`@next/mdx` と独自の React コンポーネント群でコンテンツを構築しています。
 
 ## 概要
 
@@ -159,3 +159,8 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 - **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、Tailwind のユーティリティクラスを利用してください。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
 - **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-09): 表示基盤Red・6件の期待どおりの失敗. Bun tests: 118 pass / 6 fail (23 files). npm / Next.js build not run; visual verification by user.

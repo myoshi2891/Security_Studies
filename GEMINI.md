@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-09-20
+Updated 2026-10-09
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ This is a Next.js-based documentation application focused on security studies. I
 
 ### Key Technologies
 
-- **Framework:** Next.js 16.3.5 (App Router)
+- **Framework:** Next.js 16.3.8 (App Router)
 - **UI Library:** React 19
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 with PostCSS
@@ -70,3 +70,8 @@ All steps execute in the `security-docs/` working directory.
 - Assertions: `@testing-library/jest-dom` (types extended to `bun:test` in `src/jest-dom.d.ts`)
 - Test files co-located with source as `*.test.tsx` / `*.test.ts`
 - Key test files: `src/lib/search.test.ts`, `src/components/search-modal.test.tsx`, `src/components/docs/DocsSubheading.test.tsx`
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-09): 表示基盤Red・6件の期待どおりの失敗. Bun tests: 118 pass / 6 fail (23 files). npm / Next.js build not run; visual verification by user.

@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-09-20
+Updated 2026-10-09
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -58,7 +58,7 @@ make clean            # コンテナ・イメージ・ボリューム完全削�
 Security_Studies/
 ├── Makefile                    # Docker 操作ショートカット
 ├── docker-compose.yml          # dev/prod サービス定義
-├── security-docs/          # Next.js 16.3.5 アプリ (本体)
+├── security-docs/          # Next.js 16.3.8 アプリ (本体)
 │   ├── netlify.toml            # Netlify ビルド設定（@netlify/plugin-nextjs）
 │   ├── .nvmrc                  # Node.js バージョン固定 (22)
 │   ├── Dockerfile              # マルチステージビルド
@@ -183,3 +183,8 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 4. `bun test`
 
 作業ディレクトリは `security-docs/` 固定。
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-09): 表示基盤Red・6件の期待どおりの失敗. Bun tests: 118 pass / 6 fail (23 files). npm / Next.js build not run; visual verification by user.

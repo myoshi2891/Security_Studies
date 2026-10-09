@@ -1,7 +1,7 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-05（next 16.3.8 へ更新・braces 脆弱性の一時除外・Codecov 障害対応）  
-> **ブランチ**: `dev` → `main` マージ済み (#34)  
+> **最終更新**: 2026-10-09（CCIE Security移行: 表示基盤Red・6件の期待どおりの失敗）
+> **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
 ---
@@ -12,38 +12,39 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **118件** | `bun test` 全 pass |
-| テストファイル数 | **22 / 22 ファイル** | 100% カバー |
+| テストケース総数 | **124件** | `bun test`: 118 pass / 6 fail（表示基盤Red・6件の期待どおりの失敗） |
+| テストファイル数 | **23ファイル** | 実行ファイル数。ロジック単位は 22/22、ページ移行テストは別集計 |
 | Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-05-23 時点）
+#### ファイル別テスト数（2026-10-09 実測）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/components/docs/Callout.test.tsx` | 4 | variant・children 検証あり |
-| `src/components/docs/DocsSubheading.test.tsx` | 4 | ✅ 2026-05-20 追加 |
-| `src/components/docs/SectionCard.test.tsx` | 3 | |
-| `src/components/docs/AttackFlow.test.tsx` | 2 | |
-| `src/components/docs/DefenseList.test.tsx` | 2 | |
-| `src/components/docs/RiskBadge.test.tsx` | 2 | |
-| `src/components/docs/Terminal.test.tsx` | 2 | |
-| `src/components/docs/Checklist.test.tsx` | 5 | ✅ 2026-05-21 拡張 (prop variation, 空データなど) |
-| `src/components/docs/CompareGrid.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/DataTable.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/HeroSection.test.tsx` | 3 | ✅ 2026-05-21 拡張 (ReactNode, オプショナル非表示) |
-| `src/components/docs/HighlightBox.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
-| `src/components/docs/SourceReferences.test.tsx` | 4 | ✅ 2026-05-21 拡張 (description有無, classNameなど) |
-| `src/components/docs/StepTimeline.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/Tag.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
-| `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
-| `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証（初期フォーカステスト修正） |
-| `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
-| `src/lib/search.test.ts` | 11 | ✅ 2026-05-20 追加 (2026-05-27 エラーパステスト追加・カバレッジ100%化) |
-| `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
-| `src/app/docs/layout.test.tsx` | 8 | ✅ 2026-05-23 追加 |
-| `src/proxy.test.ts` | 6 | ✅ 2026-05-23 追加（CSP ディレクティブ固定化） |
+| `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/components/docs/AttackFlow.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/DefenseList.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/RiskBadge.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/Terminal.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/Checklist.test.tsx` | 5 | 5 pass / 0 fail |
+| `src/components/docs/CompareGrid.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/DataTable.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/HeroSection.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/components/docs/HighlightBox.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/docs/SourceReferences.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/StepTimeline.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/Tag.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
+| `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 9 | 3 pass / 6 fail |
+| `src/app/docs/layout.test.tsx` | 8 | 8 pass / 0 fail |
+| `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 6 | 0 pass / 6 fail |
 
 ---
 
@@ -91,7 +92,7 @@ form-action 'self'
 | 検索インデックス (`src/lib/search.ts`) | ✅ 稼働中 | — |
 | 検索 UI (`SearchModal`) | ✅ 稼働中 | — |
 | DisclaimerModal | ✅ 稼働中 | — |
-| Docs ページ (10ページ) | ✅ 稼働中 | — |
+| Docs ページ (11ページ、Archive含む) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
 | DocsSidebar のクライアントコンポーネント化とアクティブ状態の aria-current 制御 | ✅ 完了 | 2026-05-23 |
 
@@ -228,3 +229,8 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ---
 
 *プロンプトは実行前に必要に応じてリポジトリ名・ブランチ名・パスを確認・調整してください。*
+
+
+## CCIE Security 移行記録
+
+- 2026-10-09: 表示基盤Red・6件の期待どおりの失敗。118 pass / 6 fail、23テストファイル。npm・Next.jsビルド未実行。
