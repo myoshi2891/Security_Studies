@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 export type DiagramRenderer = (id: string, source: string) => Promise<{ svg: string }>;
 export interface MermaidFigureProps {
@@ -113,8 +113,25 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   const svgId = `ccie-mermaid-${id}-${unique}`;
   const descriptionId = `${svgId}-description`;
   const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
+  const figureRef = useRef<HTMLElement>(null);
+  // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
+  const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
+
+  // 表示域に近づくまで描画を遅らせ、61図の一斉描画で初期表示が重くなるのを防ぐ
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure || nearView) return;
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      setNearView(true);
+      observer.disconnect();
+    }, { rootMargin: '600px 0px' });
+    observer.observe(figure);
+    return () => observer.disconnect();
+  }, [nearView]);
 
   useEffect(() => {
+    if (!nearView) return;
     let active = true;
     renderer(svgId, source).then(({ svg }) => {
       const sized = sizeSvg(svg, source);
@@ -123,11 +140,11 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
       if (active) setResult({ source, failed: true });
     });
     return () => { active = false; };
-  }, [renderer, source, svgId]);
+  }, [nearView, renderer, source, svgId]);
 
   const current = result?.source === source ? result : undefined;
   return (
-    <figure className="diagram" data-d={id} data-definition={source}>
+    <figure ref={figureRef} className="diagram" data-d={id} data-definition={source}>
       {current?.svg ? (
         <>
           <div role="img" aria-label={`図 ${id + 1}`} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />

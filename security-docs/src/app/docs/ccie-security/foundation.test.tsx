@@ -9,7 +9,7 @@ import postcss from 'postcss';
 const originalObserver = globalThis.IntersectionObserver;
 class ImmediateObserver {
   constructor(private readonly callback: IntersectionObserverCallback) {}
-  observe(target: Element) { this.callback([{ isIntersecting: true, target } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
+  observe(target: Element) { this.callback([{ isIntersecting: true, target } as unknown as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
   unobserve() {}
   disconnect() {}
   takeRecords() { return []; }
@@ -91,7 +91,7 @@ describe('CCIE faithful display foundation', () => {
     const figure = container.querySelector('figure');
     if (!figure || !notify) throw new Error('observer was not attached to the figure');
     const callback = notify;
-    act(() => callback([{ isIntersecting: true, target: figure } as IntersectionObserverEntry], {} as IntersectionObserver));
+    act(() => callback([{ isIntersecting: true, target: figure } as unknown as IntersectionObserverEntry], {} as IntersectionObserver));
     await waitFor(() => expect(calls).toHaveLength(1));
 
     unmount();

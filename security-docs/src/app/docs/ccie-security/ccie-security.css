@@ -255,16 +255,18 @@
 }
 .ccie-guide.ccie-guide .diagram {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: .6rem;
   margin: 1.2rem 0;
   padding: 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  overflow-x: auto
+  min-width: 0
 }
 .ccie-guide.ccie-guide .diagram svg {
-  display: block
+  display: block;
+  margin-inline: auto
 }
 .ccie-guide.ccie-guide .diagram-error {
   color: var(--color-plum);
@@ -487,6 +489,7 @@
 }
 .ccie-guide.ccie-guide .diagram [role="img"] {
   max-width: 100%;
+  overflow-x: auto;
 }
 .ccie-guide.ccie-guide .diagram [role="img"] p {
   margin: 0;

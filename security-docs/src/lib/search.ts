@@ -35,19 +35,41 @@ function decodeStringLiteral(literal: string): string {
   }
 }
 
+const MARKDOWN_HEADING_PATTERN = /^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$/;
+const CODE_FENCE_PATTERN = /^ {0,3}(?:```|~~~)/;
+
+/** Returns ATX Markdown headings (`## TrustSec`) with their offsets, ignoring fenced code. */
+function collectMarkdownHeadings(content: string): { index: number; text: string }[] {
+  const found: { index: number; text: string }[] = [];
+  let offset = 0;
+  let inFence = false;
+  for (const line of content.split("\n")) {
+    if (CODE_FENCE_PATTERN.test(line)) {
+      inFence = !inFence;
+    } else if (!inFence) {
+      const text = line.match(MARKDOWN_HEADING_PATTERN)?.[1];
+      if (text !== undefined) found.push({ index: offset, text });
+    }
+    offset += line.length + 1;
+  }
+  return found;
+}
+
 /**
- * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`) so chapter terms
- * beyond the 500-character content snippet remain searchable.
+ * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`) and Markdown headings
+ * in document order so chapter terms beyond the 500-character content snippet remain searchable.
  */
-function extractHeadings(content: string): string[] {
-  const headings: string[] = [];
+export function extractHeadings(content: string): string[] {
+  const found = collectMarkdownHeadings(content);
   for (const match of content.matchAll(JSX_HEADING_PATTERN)) {
     const literal = match[1];
     if (literal === undefined) continue;
-    const heading = decodeStringLiteral(literal).trim();
-    if (heading !== "") headings.push(heading);
+    found.push({ index: match.index, text: decodeStringLiteral(literal) });
   }
-  return headings;
+  return found
+    .sort((a, b) => a.index - b.index)
+    .map(({ text }) => text.trim())
+    .filter(text => text !== "");
 }
 
 /**
