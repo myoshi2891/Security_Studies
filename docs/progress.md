@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-09（CCIE Security移行: 統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗）
+> **最終更新**: 2026-10-09（CCIE Security移行: 統合Green・154件成功・lintと型検査成功・目視確認待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **154件** | `bun test`: 146 pass / 8 fail（統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗） |
+| テストケース総数 | **154件** | `bun test`: 154 pass / 0 fail（統合Green・154件成功・lintと型検査成功・目視確認待ち） |
 | テストファイル数 | **28ファイル** | 実行ファイル数。ロジック単位は 24/24、ページ移行テストは別集計 |
-| Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
+| Strategy Coverage | **15%** | 40カテゴリ×ドメインセル中 6セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
@@ -41,15 +41,15 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 17 | 17 pass / 0 fail |
 | `src/lib/search.test.ts` | 11 | 11 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 11 | 3 pass / 8 fail |
-| `src/app/docs/layout.test.tsx` | 9 | 6 pass / 3 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
-| `src/app/docs/ccie-security/foundation.test.tsx` | 7 | 5 pass / 2 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-05-07.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-10-13.test.tsx` | 7 | 7 pass / 0 fail |
-| `src/app/docs/ccie-security/integration.test.tsx` | 9 | 6 pass / 3 fail |
+| `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
 
 ---
 
@@ -250,3 +250,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-09: 第10〜13章Red・参考文献とチェックを含む7件の期待どおりの失敗。136 pass / 7 fail、27テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 全13章Green・143件成功・lintと型検査成功。143 pass / 0 fail、27テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗。146 pass / 8 fail、28テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 統合Green・154件成功・lintと型検査成功・目視確認待ち。154 pass / 0 fail、28テストファイル。npm・Next.jsビルド未実行。

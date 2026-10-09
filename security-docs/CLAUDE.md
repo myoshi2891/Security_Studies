@@ -32,4 +32,4 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-09): 統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗. Bun tests: 146 pass / 8 fail (28 files). npm / Next.js build not run; visual verification by user.
+CCIE Security migration (2026-10-09): 統合Green・154件成功・lintと型検査成功・目視確認待ち. Bun tests: 154 pass / 0 fail (28 files). npm / Next.js build not run; visual verification by user.
