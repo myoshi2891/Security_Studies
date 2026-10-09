@@ -20,6 +20,9 @@ export function canonical(node: Node): unknown {
   const el = node as Element;
   if (['I', 'SVG', 'NOSCRIPT'].includes(el.tagName.toUpperCase())) return null;
   if (el.matches('figure.diagram')) return ['diagram', el.getAttribute('data-d')];
+  // Python was highlighted by the legacy browser script. Compare its literal code;
+  // migrated highlighting is independently asserted by the chapter 5–7 contract.
+  if (el.matches('code.language-python')) return ['python', el.textContent];
   return [el.tagName, el.getAttribute('id'), el.getAttribute('class'), el.getAttribute('href'),
     el.getAttribute('type'), [...el.childNodes].map(canonical).filter(v => v !== null)];
 }
