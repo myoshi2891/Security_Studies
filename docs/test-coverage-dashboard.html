@@ -49,7 +49,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            23 ロジックファイル中 23 ファイルに<br />Unit テストあり（MDX移行テストは別集計）
+                            24 ロジックファイル中 24 ファイルに<br />Unit テストあり（MDX移行テストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -61,7 +61,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
                         <div class="summary-value">134</div>
-                        <div class="summary-sub">25 ファイル · 130 pass / 4 fail · CCIE移行</div>
+                        <div class="summary-sub">25 ファイル · 134 pass / 0 fail · CCIE移行</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -85,7 +85,7 @@
         </section>
 
 <!-- CCIE migration status -->
-        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: 第5〜7章Red・Python強調を含む4件の期待どおりの失敗 · 130 pass / 4 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
+        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: 第5〜7章Green・134件成功・lintと型検査成功 · 134 pass / 0 fail · npm・Next.jsビルド未実行、目視確認はユーザー担当。</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -325,19 +325,19 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">8 tests · 1/3 files</span>
+                                            <span class="cell-count">8 layout + 16 CCIE tests · 3/5 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 33%"></div>
+                                                <div class="cell-bar-fill" style="width: 60%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 1/3 ファイル</div>
-                                            docs レイアウトのみ統合テスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 3/5 ロジックファイル</div>
+                                            docs layout と CCIE の描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (8 tests)</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>— 10 × docs/*/page.mdx（テスト対象外）</li>
+                                                <li>✓ CCIE Security: 16 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
