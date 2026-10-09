@@ -1,0 +1,96 @@
+'use client';
+
+import { useEffect, useId, useState } from 'react';
+
+export type DiagramRenderer = (id: string, source: string) => Promise<{ svg: string }>;
+export interface MermaidFigureProps {
+  id: number;
+  source: string;
+  /** Optional renderer for isolated lifecycle tests; pages use the bundled Mermaid renderer. */
+  renderer?: DiagramRenderer;
+}
+
+let engine: Promise<typeof import('mermaid')['default']> | undefined;
+
+async function getEngine() {
+  engine ??= import('mermaid').then(({ default: mermaid }) => {
+    mermaid.initialize({
+      startOnLoad: false, theme: 'base', securityLevel: 'strict',
+      fontFamily: '"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif',
+      flowchart: { useMaxWidth: false, htmlLabels: true, nodeSpacing: 45, rankSpacing: 45, curve: 'basis', padding: 12 },
+      sequence: { useMaxWidth: false, actorMargin: 50, messageMargin: 36 },
+      pie: { useMaxWidth: false },
+      themeVariables: {
+        fontSize: '16px', primaryColor: '#EEF1F8', primaryBorderColor: '#2E3F72', primaryTextColor: '#161B26',
+        secondaryColor: '#FAF1DF', secondaryBorderColor: '#B8802A', secondaryTextColor: '#161B26',
+        tertiaryColor: '#F6F7F9', tertiaryBorderColor: '#B9C0D0', tertiaryTextColor: '#161B26',
+        lineColor: '#2E3F72', textColor: '#161B26', mainBkg: '#EEF1F8', nodeBorder: '#2E3F72', nodeTextColor: '#161B26',
+        clusterBkg: '#F6F7F9', clusterBorder: '#B9C0D0', edgeLabelBackground: '#F6F7F9', titleColor: '#161B26',
+        actorBkg: '#EEF1F8', actorBorder: '#2E3F72', actorTextColor: '#161B26', actorLineColor: '#B9C0D0',
+        signalColor: '#2E3F72', signalTextColor: '#161B26', labelBoxBkgColor: '#FAF1DF', labelBoxBorderColor: '#B8802A',
+        labelTextColor: '#161B26', loopTextColor: '#161B26', noteBkgColor: '#FAF1DF', noteBorderColor: '#B8802A',
+        noteTextColor: '#161B26', activationBkgColor: '#EEF1F8', activationBorderColor: '#2E3F72', sequenceNumberColor: '#FFFFFF',
+        pie1: '#C9D3EA', pie2: '#F1DDAE', pie3: '#BFE0DB', pie4: '#E8C7D6', pie5: '#D9DDE6',
+        pieStrokeColor: '#F6F7F9', pieStrokeWidth: '2px', pieSectionTextColor: '#161B26',
+      },
+    });
+    return mermaid;
+  });
+  return engine;
+}
+
+export const renderDiagram: DiagramRenderer = async (id, source) => {
+  await document.fonts?.ready;
+  return (await getEngine()).render(id, source);
+};
+
+function sizeSvg(svgMarkup: string, source: string) {
+  const holder = document.createElement('div');
+  holder.innerHTML = svgMarkup;
+  const svg = holder.querySelector('svg');
+  if (!svg) throw new Error('Mermaid returned no SVG');
+  const box = (svg.getAttribute('viewBox') ?? '').trim().split(/\s+/).map(Number);
+  if (box.length === 4 && box.every(Number.isFinite)) {
+    box[3] += /^(sequenceDiagram|stateDiagram)/.test(source.trim()) ? 110 : 15;
+    svg.setAttribute('viewBox', box.join(' '));
+    svg.style.width = `${box[2]}px`;
+  }
+  svg.removeAttribute('width');
+  svg.removeAttribute('height');
+  svg.style.maxWidth = '100%';
+  svg.style.height = 'auto';
+  svg.style.overflow = 'visible';
+  return holder.innerHTML;
+}
+
+export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidFigureProps) {
+  const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
+  const svgId = `ccie-mermaid-${id}-${unique}`;
+  const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
+
+  useEffect(() => {
+    let active = true;
+    renderer(svgId, source).then(({ svg }) => {
+      const sized = sizeSvg(svg, source);
+      if (active) setResult({ source, svg: sized });
+    }).catch(() => {
+      if (active) setResult({ source, failed: true });
+    });
+    return () => { active = false; };
+  }, [renderer, source, svgId]);
+
+  const current = result?.source === source ? result : undefined;
+  return (
+    <figure className="diagram" data-d={id} data-definition={source}>
+      {current?.svg ? (
+        <div role="img" aria-label={`図 ${id + 1}`} dangerouslySetInnerHTML={{ __html: current.svg }} />
+      ) : current?.failed ? (
+        <div className="diagram-error">
+          <p role="alert">図 {id + 1} を描画できませんでした。</p>
+          <details><summary>図の定義</summary><pre>{source}</pre></details>
+        </div>
+      ) : <p role="status">図 {id + 1} を描画中…</p>}
+      <noscript>図の表示にはJavaScriptが必要です。</noscript>
+    </figure>
+  );
+}
