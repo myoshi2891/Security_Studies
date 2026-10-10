@@ -236,6 +236,8 @@ flowchart LR
     end
     subgraph TB2["信頼境界B: 自社バックエンド"]
         W["Web/API<br/>プロセス"]
+    end
+    subgraph TB4["信頼境界D: データ層"]
         DB[("Database<br/>データストア")]
     end
     subgraph TB3["信頼境界C: 外部サービス"]
