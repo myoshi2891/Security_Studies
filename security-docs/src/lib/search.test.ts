@@ -133,6 +133,21 @@ describe('getSearchIndex', () => {
         expect(extractHeadings(mdx)).toEqual(['本物の見出し', '後続の見出し']);
     });
 
+    test('closes a fenced block only on a fence of the same character and at least the opening length', () => {
+        const mdx = [
+            '````md',
+            '```bash',
+            '# 内側フェンス内のコメント',
+            '```',
+            '~~~~',
+            '## 外側フェンス内の見出し',
+            '````',
+            '## フェンス後の見出し',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['フェンス後の見出し']);
+    });
+
     test('collects plain-text JSX headings and headings rendered by docs components in document order', () => {
         const mdx = [
             '<HeroSection section="Guide" title="ヒーロー見出し" description="説明" />',

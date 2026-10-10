@@ -41,7 +41,8 @@ function decodeStringLiteral(literal: string): string {
 }
 
 const MARKDOWN_HEADING_PATTERN = /^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$/;
-const CODE_FENCE_PATTERN = /^ {0,3}(?:```|~~~)/;
+/** Captures the fence run (3+ backticks or tildes) and the rest of the line. */
+const CODE_FENCE_PATTERN = /^ {0,3}(`{3,}|~{3,})(.*)$/;
 
 /**
  * Returns ATX Markdown headings (`## TrustSec`) with their offsets, ignoring fenced code,
@@ -51,22 +52,25 @@ function scanMarkdown(content: string): { headings: { index: number; text: strin
   const headings: { index: number; text: string }[] = [];
   const fences: [number, number][] = [];
   let offset = 0;
-  let fenceStart: number | undefined;
+  let open: { start: number; marker: string } | undefined;
   for (const line of content.split("\n")) {
-    if (CODE_FENCE_PATTERN.test(line)) {
-      if (fenceStart === undefined) {
-        fenceStart = offset;
-      } else {
-        fences.push([fenceStart, offset + line.length]);
-        fenceStart = undefined;
+    const fence = line.match(CODE_FENCE_PATTERN);
+    if (open !== undefined) {
+      // CommonMark: only a fence of the same character, at least as long and without an info string closes the block.
+      const marker = fence?.[1];
+      if (marker !== undefined && marker[0] === open.marker[0] && marker.length >= open.marker.length && fence?.[2]?.trim() === "") {
+        fences.push([open.start, offset + line.length]);
+        open = undefined;
       }
-    } else if (fenceStart === undefined) {
+    } else if (fence?.[1] !== undefined) {
+      open = { start: offset, marker: fence[1] };
+    } else {
       const text = line.match(MARKDOWN_HEADING_PATTERN)?.[1];
       if (text !== undefined) headings.push({ index: offset, text });
     }
     offset += line.length + 1;
   }
-  if (fenceStart !== undefined) fences.push([fenceStart, content.length]);
+  if (open !== undefined) fences.push([open.start, content.length]);
   return { headings, fences };
 }
 
