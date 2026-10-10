@@ -47,6 +47,22 @@ describe('CCIE faithful display foundation', () => {
     expect(css).toContain('minmax(min(260px,100%),1fr)');
   });
 
+  test('uses the darker gold token for gold text while keeping the brand gold for decoration', () => {
+    const migrated = postcss.parse(readFileSync(resolve(here, 'ccie-security.css'), 'utf8'));
+    const colorOf = (selector: string) => {
+      let color: string | undefined;
+      migrated.walkRules(rule => {
+        if (rule.selector === `.ccie-guide.ccie-guide ${selector}`) rule.walkDecls('color', d => { color = d.value; });
+      });
+      return color;
+    };
+
+    for (const selector of ['.eyebrow', 'a:hover', '.hljs-literal']) {
+      expect(colorOf(selector), selector).toBe('var(--gold-d)');
+    }
+    expect(colorOf('.seal')).toBe('var(--color-gold)');
+  });
+
   test('stacks the diagram description below the SVG and scrolls only the graphic horizontally', () => {
     const migrated = postcss.parse(readFileSync(resolve(here, 'ccie-security.css'), 'utf8'));
     const decls = (selector: string) => {
@@ -129,7 +145,34 @@ describe('CCIE faithful display foundation', () => {
     const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     expect(describeDiagram('pie showData\ntitle 配点\n"Domain 1" : 20\n"Domain 2" : 80')).toEqual(['円グラフ: 配点', 'Domain 1: 20', 'Domain 2: 80']);
     expect(describeDiagram('sequenceDiagram\nparticipant C as クライアント\nparticipant S as サーバ\nC->>S: 要求\nS-->>C: 応答')).toEqual(['シーケンス図: クライアント、サーバ', 'クライアント → サーバ: 要求', 'サーバ → クライアント: 応答']);
-    expect(describeDiagram('flowchart TD\nA["入口"] -->|"検査"| B["出口"]')).toEqual(['フローチャート', '入口', '検査', '出口']);
+    expect(describeDiagram('flowchart TD\nA["入口"] -->|"検査"| B["出口"]')).toEqual(['フローチャート', '入口 → 出口: 検査']);
+  });
+
+  test('describes flowchart connections with their direction so reversed diagrams differ', async () => {
+    const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    const forward = describeDiagram('flowchart LR\nA["開始"] --> B["終了"]');
+    const reverse = describeDiagram('flowchart LR\nB["終了"] --> A["開始"]');
+
+    expect(forward).toEqual(['フローチャート', '開始 → 終了']);
+    expect(reverse).toEqual(['フローチャート', '終了 → 開始']);
+    expect(describeDiagram('flowchart LR\nP["本社"] -- "VPN" --> Q["支社"]\nQ -. "監視" .-> R["SIEM"]\nX["A"] <-- "同期" --> Y["B"]\nY --- Z["C"]\nW1["旧"] --> W2["現"] --> W3["新"]\nN["孤立"]'))
+      .toEqual(['フローチャート', '本社 → 支社: VPN', '支社 → SIEM: 監視', 'A ↔ B: 同期', 'B — C', '旧 → 現', '現 → 新', '孤立']);
+  });
+
+  test('clears a rejected engine import so the next render retries it', async () => {
+    const { createEngineLoader } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+    let attempts = 0;
+    const load = async () => {
+      attempts += 1;
+      if (attempts === 1) throw new Error('chunk load failed');
+      return 'engine';
+    };
+    const getEngine = createEngineLoader(load);
+
+    await expect(getEngine()).rejects.toThrow('chunk load failed');
+    expect(await getEngine()).toBe('engine');
+    expect(await getEngine()).toBe('engine');
+    expect(attempts).toBe(2);
   });
 
   test('gives every original diagram a non-empty description', async () => {

@@ -121,6 +121,18 @@ describe('getSearchIndex', () => {
         expect(extractHeadings(mdx)).toEqual(['TrustSec 概要', 'SGT の割り当て', '末尾記号付き']);
     });
 
+    test('ignores JSX headings inside fenced code examples while keeping real JSX headings', () => {
+        const mdx = [
+            '<E.h2 id="a">{"本物の見出し"}</E.h2>',
+            '```tsx',
+            '<E.h3 id="b">{"コード例の見出し"}</E.h3>',
+            '```',
+            '<E.h3 id="c">{"後続の見出し"}</E.h3>',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['本物の見出し', '後続の見出し']);
+    });
+
     test('falls back to the raw inner text when a JSX heading uses escapes JSON rejects', () => {
         // JS では有効だが JSON では不正な \' エスケープ → JSON.parse が失敗し生テキストを返す
         const mdx = String.raw`<E.h4 id="q">{"Cisco\'s ISE"}</E.h4>`;
