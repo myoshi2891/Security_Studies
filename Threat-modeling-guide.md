@@ -320,7 +320,7 @@ sequenceDiagram
     B->>A: 認可コード＋state を送信
     Note over A: state をトランザクションの保存値と照合し、不一致なら中断
     A->>I: 認可コード＋code_verifier でトークンに交換
-    Note over I: SHA256(code_verifier) を認可リクエスト時の code_challenge と照合し、不一致なら拒否
+    Note over I: BASE64URL(SHA256(code_verifier)) を計算し、認可リクエスト時の code_challenge と照合。不一致なら拒否
     I-->>A: ID トークン＋アクセストークン
     Note over A: ID トークンの署名・iss・aud・exp を検証し、nonce クレームをトランザクションの保存値と照合（不一致なら拒否）。sub でユーザーを識別
     A-->>B: セッション Cookie を発行
@@ -357,7 +357,7 @@ STRIDE は、Microsoft の Praerit Garg と Loren Kohnfelder が考案した、�
 | **R** | Repudiation（否認） | 説明責任 | 管理者が操作したのに、ログが残らず「やっていない」と主張できる |
 | **I** | Information Disclosure（情報漏えい） | 機密性 | エラーメッセージや API 応答から他人のデータが見える |
 | **D** | Denial of Service（サービス拒否） | 可用性 | 大量リクエストや巨大ファイルでサービスを停止 |
-| **E** | Elevation of Privilege（権限昇格） | 認可 | トークン内の role を書き換えて管理者機能を実行 |
+| **E** | Elevation of Privilege（権限昇格） | 認可 | 署名検証の欠落・不備（未検証、`alg: none` の受け入れ等）により、role を書き換えたトークンが受け入れられ管理者機能を実行 |
 
 ### 6.2 STRIDE per Element（要素ごとに当てはめる）
 
