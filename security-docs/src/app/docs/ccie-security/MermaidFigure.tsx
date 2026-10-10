@@ -173,12 +173,14 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   useEffect(() => {
     if (!nearView) return;
     let active = true;
+    // 古い描画の結果・失敗ログは破棄する（定義変更やアンマウント後に完了した場合）
     renderer(svgId, source).then(({ svg }) => {
-      const sized = sizeSvg(svg, source);
-      if (active) setResult({ source, svg: sized });
+      if (!active) return;
+      setResult({ source, svg: sizeSvg(svg, source) });
     }).catch((error: unknown) => {
+      if (!active) return;
       console.error(`Mermaid figure ${id} failed to render`, error);
-      if (active) setResult({ source, failed: true });
+      setResult({ source, failed: true });
     });
     return () => { active = false; };
   }, [id, nearView, renderer, source, svgId]);
