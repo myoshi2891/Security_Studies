@@ -240,8 +240,17 @@ describe('CCIE faithful display foundation', () => {
     await waitFor(() => expect(finishFirst).toBeDefined());
     rerender(createElement(MermaidFigure, { ...props, source: 'new' }));
     await waitFor(() => expect(container.querySelector('svg')?.textContent).toBe('new'));
-    finishFirst({ svg: '<svg><text>old</text></svg>' });
-    await new Promise(r => setTimeout(r, 0));
+    // 古い描画が SVG なしで完了しても、sizeSvg の失敗ログを残さない
+    const originalError = console.error;
+    const errorSpy = mock(() => {});
+    console.error = errorSpy;
+    try {
+      finishFirst({ svg: '<p>old</p>' });
+      await new Promise(r => setTimeout(r, 0));
+    } finally {
+      console.error = originalError;
+    }
     expect(container.querySelector('svg')?.textContent).toBe('new');
+    expect(errorSpy).not.toHaveBeenCalled();
   });
 });
