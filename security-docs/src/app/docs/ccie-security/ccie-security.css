@@ -51,14 +51,14 @@
   text-underline-offset: 3px
 }
 .ccie-guide.ccie-guide a:hover {
-  color: var(--color-gold)
+  color: var(--gold-d)
 }
 .ccie-guide.ccie-guide .hero {
   padding: 1rem 0 1.6rem;
   border-bottom: 1px solid var(--border)
 }
 .ccie-guide.ccie-guide .eyebrow {
-  color: var(--color-gold);
+  color: var(--gold-d);
   font-weight: 500;
   letter-spacing: .06em;
   margin-bottom: .5rem
@@ -251,7 +251,7 @@
   color: var(--color-plum)
 }
 .ccie-guide.ccie-guide .hljs-literal {
-  color: var(--color-gold)
+  color: var(--gold-d)
 }
 .ccie-guide.ccie-guide .diagram {
   display: flex;

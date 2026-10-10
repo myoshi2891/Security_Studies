@@ -38,21 +38,31 @@ function decodeStringLiteral(literal: string): string {
 const MARKDOWN_HEADING_PATTERN = /^ {0,3}#{1,6}[ \t]+(.*?)(?:[ \t]+#+)?[ \t]*$/;
 const CODE_FENCE_PATTERN = /^ {0,3}(?:```|~~~)/;
 
-/** Returns ATX Markdown headings (`## TrustSec`) with their offsets, ignoring fenced code. */
-function collectMarkdownHeadings(content: string): { index: number; text: string }[] {
-  const found: { index: number; text: string }[] = [];
+/**
+ * Returns ATX Markdown headings (`## TrustSec`) with their offsets, ignoring fenced code,
+ * plus the `[start, end)` offset ranges of fenced code blocks (an unclosed fence runs to the end).
+ */
+function scanMarkdown(content: string): { headings: { index: number; text: string }[]; fences: [number, number][] } {
+  const headings: { index: number; text: string }[] = [];
+  const fences: [number, number][] = [];
   let offset = 0;
-  let inFence = false;
+  let fenceStart: number | undefined;
   for (const line of content.split("\n")) {
     if (CODE_FENCE_PATTERN.test(line)) {
-      inFence = !inFence;
-    } else if (!inFence) {
+      if (fenceStart === undefined) {
+        fenceStart = offset;
+      } else {
+        fences.push([fenceStart, offset + line.length]);
+        fenceStart = undefined;
+      }
+    } else if (fenceStart === undefined) {
       const text = line.match(MARKDOWN_HEADING_PATTERN)?.[1];
-      if (text !== undefined) found.push({ index: offset, text });
+      if (text !== undefined) headings.push({ index: offset, text });
     }
     offset += line.length + 1;
   }
-  return found;
+  if (fenceStart !== undefined) fences.push([fenceStart, content.length]);
+  return { headings, fences };
 }
 
 /**
@@ -60,10 +70,12 @@ function collectMarkdownHeadings(content: string): { index: number; text: string
  * in document order so chapter terms beyond the 500-character content snippet remain searchable.
  */
 export function extractHeadings(content: string): string[] {
-  const found = collectMarkdownHeadings(content);
+  const { headings: found, fences } = scanMarkdown(content);
   for (const match of content.matchAll(JSX_HEADING_PATTERN)) {
     const literal = match[1];
     if (literal === undefined) continue;
+    // Fenced code examples may show JSX headings; they are not page headings.
+    if (fences.some(([start, end]) => match.index >= start && match.index < end)) continue;
     found.push({ index: match.index, text: decodeStringLiteral(literal) });
   }
   return found

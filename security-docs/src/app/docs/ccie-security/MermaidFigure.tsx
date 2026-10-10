@@ -10,10 +10,20 @@ export interface MermaidFigureProps {
   renderer?: DiagramRenderer;
 }
 
-let engine: Promise<typeof import('mermaid')['default']> | undefined;
+/** 読み込みを1回に共有しつつ、失敗時はキャッシュを破棄して呼び出し元へ伝播し、次回の描画で再試行させる */
+export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> {
+  let cached: Promise<T> | undefined;
+  return () => {
+    cached ??= load().catch((error: unknown) => {
+      cached = undefined;
+      throw error;
+    });
+    return cached;
+  };
+}
 
-async function getEngine() {
-  engine ??= import('mermaid').then(({ default: mermaid }) => {
+const getEngine = createEngineLoader(() =>
+  import('mermaid').then(({ default: mermaid }) => {
     mermaid.initialize({
       startOnLoad: false, theme: 'base', securityLevel: 'strict',
       fontFamily: '"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif',
@@ -37,9 +47,7 @@ async function getEngine() {
       },
     });
     return mermaid;
-  });
-  return engine;
-}
+  }));
 
 export const renderDiagram: DiagramRenderer = async (id, source) => {
   await document.fonts?.ready;
@@ -103,9 +111,41 @@ export function describeDiagram(source: string): string[] {
     return [`シーケンス図: ${[...names.values()].join('、')}`, ...steps];
   }
 
-  const labels = [...new Set([...source.matchAll(/"([^"]*)"/g)].map(match => plain(match[1])).filter(Boolean))];
-  // 引用符付きラベルがない定義は、定義本文をそのまま説明として使う
-  return ['フローチャート', ...(labels.length > 0 ? labels : lines.slice(1))];
+  const edges = describeFlowchart(lines.slice(1));
+  // 接続もノードも読み取れない定義は、定義本文をそのまま説明として使う
+  return ['フローチャート', ...(edges.length > 0 ? edges : lines.slice(1))];
+}
+
+/** `A["x"]` / `C{"x"}` / `B("x")` のノード定義（ID とラベル） */
+const NODE_PATTERN = /(\w+)\s*(?:\[\[?|\(\(?|\{\{?)"([^"]*)"(?:\]\]?|\)\)?|\}\}?)/g;
+/**
+ * ノード定義を ID に置換した行から接続を読み取る（連鎖 `A --> B --> C` は先読みで終点を消費しない）。
+ * 1: 始点 / 2: `<`（双方向） / 3: 中間ラベル（`-- "x" -->`） / 4: 終端（`>` は有向、`-` は無向） / 5: パイプラベル / 6: 終点
+ */
+const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==))?(-?>|-)\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
+
+/** フローチャートの接続を「始点 → 終点: ラベル」形式で列挙し、接続のないノードはラベルのみ残す */
+function describeFlowchart(body: string[]): string[] {
+  const labels = new Map<string, string>();
+  const edges: { from: string; to: string; arrow: string; label: string }[] = [];
+  for (const line of body) {
+    const stripped = line.replace(NODE_PATTERN, (_match, id: string, label: string) => {
+      if (!labels.has(id)) labels.set(id, plain(label));
+      return id;
+    });
+    for (const [, from, back, midLabel, head, pipeLabel, to] of stripped.matchAll(EDGE_PATTERN)) {
+      const arrow = head.endsWith('>') ? (back ? '↔' : '→') : '—';
+      edges.push({ from, to, arrow, label: plain(midLabel ?? pipeLabel ?? '') });
+    }
+  }
+  // ノードのラベルは接続より後の行で定義されることがあるため、全行を読んでから解決する
+  const name = (id: string) => labels.get(id) || id;
+  const connected = new Set(edges.flatMap(({ from, to }) => [from, to]));
+  const isolated = [...labels].filter(([id, label]) => !connected.has(id) && label).map(([, label]) => label);
+  return [
+    ...edges.map(({ from, to, arrow, label }) => `${name(from)} ${arrow} ${name(to)}${label ? `: ${label}` : ''}`),
+    ...isolated,
+  ];
 }
 
 export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidFigureProps) {
