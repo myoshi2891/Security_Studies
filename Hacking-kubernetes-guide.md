@@ -1104,11 +1104,15 @@ AKS のセキュリティ情報は、Kubernetes Security Team がこの挙動を
 **あなたが今すぐ確認すること(読み取りのみ)**
 
 ```bash
-# nodes/proxy(またはワイルドカード "*")を含む Role / ClusterRole を洗い出す
-kubectl get clusterroles,roles -A -o json | jq -r '
+# nodes/proxy(またはワイルドカード "*")を含む ClusterRole を洗い出す
+# nodes はクラスタースコープのため、Namespace 内の Role では付与できない(対象外)
+# apiGroups に "" (core) または "*" を含む rule に限って resources を検査する
+kubectl get clusterroles -o json | jq -r '
   .items[]
-  | select(any(.rules[]?; any((.resources // [])[]; . == "nodes/proxy" or . == "*")))
-  | "\(.kind)/\(.metadata.namespace // "-")/\(.metadata.name)"'
+  | select(any(.rules[]?;
+      any((.apiGroups // [])[]; . == "" or . == "*")
+      and any((.resources // [])[]; . == "nodes/proxy" or . == "*")))
+  | "\(.kind)/\(.metadata.name)"'
 ```
 
 監視用途で置き換える場合の権限の例(v1.36 以降が前提。**自分の監視ツールが細分化された権限に対応しているか確認してから** 変更してください)。
@@ -1260,7 +1264,8 @@ kubectl cordon <ノード名>
 ```
 
 ```yaml
-# quarantine=true のラベルが付いた Pod の通信をすべて遮断する
+# quarantine=true のラベルが付いた Pod の Pod ネットワーク上の通信を遮断する
+# (loopback やノードからの通信の遮断は保証されない。下の注意を参照)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -1276,6 +1281,8 @@ spec:
 ```
 
 > **重要**: 標準の NetworkPolicy は **許可ルールの足し算(和集合)** で評価され、「拒否」で既存ポリシーを **上書きできません**。上の quarantine ポリシーだけでは、同じ Pod を選択する既存の許可ポリシーがあれば通信は通ったままです。確実に隔離するには、(1) 上の quarantine ポリシー(default-deny)は維持したまま、既存の許可ポリシーの `podSelector` に `matchExpressions: [{key: quarantine, operator: NotIn, values: ["true"]}]` を加えて quarantine=true の Pod を許可対象から外し、さらに既存ルールの `ingress.from` / `egress.to` の `podSelector` にも同じ条件を加えて、他の Pod の許可ルールが quarantine Pod を通信相手として指さないようにする、または (2) Cilium / Calico / AdminNetworkPolicy など **拒否の優先順位をサポートする CNI のポリシー** で deny を最優先に適用してください。
+
+> **NetworkPolicy の適用範囲**: 標準の NetworkPolicy が制限するのは **Pod ネットワーク上の通信** です。Pod 内の loopback(`localhost`)通信や、Pod が動いているノード自身からの通信は、遮断が保証されません(Kubernetes の仕様上、ノードからの通信は CNI 実装によって常に許可されることがあります)。また `hostNetwork: true` の Pod には効きません。完全に隔離する必要がある場合は、ノード側の制御も併用してください。たとえば、ノードのファイアウォール(iptables / nftables)やクラウドのセキュリティグループでノード単位の通信を制限する、ノードを隔離用のネットワークセグメントへ移す、kubelet(10250 番ポート)への到達性を絞る、といった方法があります。
 
 > **フォレンジクスの注意**: コンテナのチェックポイント/復元機能は、証拠保全に便利な反面、2026年には **信頼できないチェックポイントからの復元がセキュリティ設定を回避する** 問題が報告されています(Step 3)[S13]。信頼できるチェックポイントだけを扱い、機能の利用範囲を制限してください。
 
