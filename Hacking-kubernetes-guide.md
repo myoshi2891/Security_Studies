@@ -609,7 +609,7 @@ flowchart LR
 
 #### (1) Trivy 関連のサプライチェーン侵害(2026年3月)
 
-脆弱性スキャナ **Trivy** の提供元 Aqua Security は2026年3月、盗まれた認証情報を使って **悪意あるバイナリ、コンテナイメージ、GitHub Action のタグ** が公開される侵害を受けたと開示しました。影響を受けたのは Trivy v0.69.4、v0.69.4〜0.69.6 のコンテナイメージ、`trivy-action` の旧バージョン群(0.0.1〜0.34.2)、`setup-trivy` の旧バージョン群(0.2.0〜0.2.6)です。安全なバージョンとして Trivy v0.69.2 / v0.69.3、trivy-action 0.35.0、setup-trivy 0.2.6 が示されており、推奨対応として **GitHub Actions を不変のコミット SHA に固定すること** が挙げられています [S14]。
+脆弱性スキャナ **Trivy** の提供元 Aqua Security は2026年3月、盗まれた認証情報を使って **悪意あるバイナリ、コンテナイメージ、GitHub Action のタグ** が公開される侵害を受けたと開示しました。影響を受けたのは Trivy v0.69.4、v0.69.4〜0.69.6 のコンテナイメージ、`trivy-action` の旧バージョン群(0.0.1〜0.34.2)、`setup-trivy` の旧バージョン群(0.2.0〜0.2.5)です。安全なバージョンとして Trivy v0.69.2 / v0.69.3、trivy-action 0.35.0、setup-trivy 0.2.6 が示されており、推奨対応として **GitHub Actions を不変のコミット SHA に固定すること** が挙げられています [S14]。
 
 Cloud Security Alliance の研究ノートによれば、攻撃者は GitHub Actions のほぼ全てのバージョンタグを悪意あるコミットへ付け替え、CI/CD で使われる認証情報を収集する多段階の攻撃を行い、その認証情報を足がかりに他のエコシステムへも拡大したとされています [S15]。
 
@@ -931,11 +931,11 @@ kubectl auth can-i get secrets -n lab --as=system:serviceaccount:lab:default
 kubectl auth can-i list secrets -n lab --as=system:serviceaccount:lab:default
 
 # Secret をボリュームや環境変数として使っている Pod の洗い出し
-# (env の secretKeyRef / envFrom の secretRef / secret ボリューム。initContainers も対象)
+# (env の secretKeyRef / envFrom の secretRef / secret・projected ボリューム。initContainers・ephemeralContainers も対象)
 kubectl get pods -A -o json | jq -r '
   .items[]
   | select(
-      any((.spec.containers[]?, .spec.initContainers[]?);
+      any((.spec.containers[]?, .spec.initContainers[]?, .spec.ephemeralContainers[]?);
           any(.env[]?; .valueFrom.secretKeyRef != null)
           or any(.envFrom[]?; .secretRef != null))
       or any(.spec.volumes[]?; .secret != null or any(.projected.sources[]?; .secret != null)))

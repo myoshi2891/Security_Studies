@@ -384,14 +384,14 @@ public final class OrderQuantity {
 // Before: どれも String / long。取り違えても、範囲外でもコンパイルが通る
 void transfer(String fromAccount, String toAccount, long amount) { /* ... */ }
 
-// After: 型が意味を持つ。取り違えはコンパイルエラー、不正値は生成時に拒否
+// After: 型が意味を持つ。異なる概念の取り違えはコンパイルエラー、不正値は生成時に拒否(同じ型の from/to の入れ替えは防げない)
 void transfer(AccountNumber from, AccountNumber to, Money amount) { /* ... */ }
 ```
 
 | 観点 | Before(素の型) | After(ドメインプリミティブ) |
 |---|---|---|
 | 入力検証 | メソッドごとに自分で書く | 型の生成時に1回。以降は不要 |
-| 引数の取り違え | 気づけない | コンパイル時に検出 |
+| 引数の取り違え | 気づけない | 異なる型の概念(口座番号と金額など)の取り違えはコンパイル時に検出。同じ型同士(`from` と `to` など)の入れ替えは検出できない |
 | 読みやすさ | 型から意味が読めない | 型名が仕様書になる |
 | 開発者の認知負荷 | 毎回「検証したっけ?」と考える | 型があれば検証済みと信頼できる |
 
