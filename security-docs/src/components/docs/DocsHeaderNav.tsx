@@ -42,7 +42,7 @@ export function DocsHeaderNav() {
             <h4>{section.title}</h4>
             <ul>
               {section.items.map(item => {
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const active = pathname === item.href || (pathname ?? '').startsWith(`${item.href}/`);
                 return (
                   <li key={item.href}>
                     <Link href={item.href} aria-current={active ? 'page' : undefined} className={clsx('docs-nav-link', active && 'font-medium')} onClick={() => setOpen(false)}>{item.title}</Link>
