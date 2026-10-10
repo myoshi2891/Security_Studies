@@ -900,12 +900,14 @@ flowchart TD
 
 2026年9月16日の公式ブログで、v1.37 の **emptyDir のパーミッションモード** と **バインドマウントオプション** が紹介されました。たとえば、書き込み可能ボリュームから任意のバイナリを実行させない、コンテナ間でのファイル削除を禁止する、といったポリシーを、Kubernetes 上で直接実現できるようになります。具体的には、`noexec`、`nodev`、`nosuid` といったセキュリティ関連のマウントオプションを指定できるようになり、セキュリティベンチマークに合わせたボリュームの堅牢化がしやすくなります。両機能は追加的(additive)で、バージョンスキューに配慮した設計だと説明されています [S3]。
 
+> **注意: どちらも v1.37 時点で Alpha のため、既定では無効で使えません。** emptyDir のパーミッションモードは `EmptyDirVolumeMode`、バインドマウントオプションは `VolumeBindMountOptions` のフィーチャーゲートで制御され、使うにはそれぞれのゲートを関係するコンポーネント(API サーバーと kubelet)で有効化する必要があります。バインドマウントオプションはコンテナランタイム側の対応も必要です。Alpha の API は今後変わる可能性があり、マネージド Kubernetes では Alpha のゲートを有効にできないことがあります。
+
 また、v1.37 では **SELinuxMount と SELinuxChangePolicy が Stable** になり、既定で有効です。対応する CSI ドライバー(`CSIDriver` で `seLinuxMount: true` を宣言)では、ボリュームが再帰的な再ラベルではなく `-o context=` でマウントされます [S2]。
 
 | 機能(v1.37) | 守るもの | 状態 |
 |---|---|---|
-| bind mount オプション(`noexec` / `nodev` / `nosuid`) | 書き込み可能ボリューム経由の不正実行 | 新機能(詳細・成熟度は公式ブログで確認) [S3] |
-| emptyDir のパーミッションモード | 意図しないファイル操作の抑止 | 新機能 [S3] |
+| bind mount オプション(`noexec` / `nodev` / `nosuid`) | 書き込み可能ボリューム経由の不正実行 | Alpha(既定で無効、`VolumeBindMountOptions`) [S3] |
+| emptyDir のパーミッションモード | 意図しないファイル操作の抑止 | Alpha(既定で無効、`EmptyDirVolumeMode`) [S3] |
 | SELinuxMount / SELinuxChangePolicy | ボリュームのラベル付けの効率化と一貫性 | Stable [S2] |
 | 復号不能リソースの API 経由削除 | 暗号化運用の復旧性 | Beta [S2] |
 

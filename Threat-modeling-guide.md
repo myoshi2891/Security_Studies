@@ -312,15 +312,19 @@ sequenceDiagram
     participant I as IdP
 
     M->>B: ログインをクリック
-    B->>I: 認可リクエスト（scope=openid、state・nonce 付き）
+    B->>A: ログイン開始
+    Note over A: state・nonce・code_verifier を生成してログイン中のトランザクション（サーバー側セッション）に保存し、code_challenge = BASE64URL(SHA256(code_verifier)) を計算
+    A-->>B: IdP へリダイレクト（state・nonce・code_challenge、code_challenge_method=S256）
+    B->>I: 認可リクエスト（scope=openid、state・nonce・code_challenge 付き）
     I-->>B: 認可コード＋state（要求時と同じ値）
     B->>A: 認可コード＋state を送信
-    Note over A: state を開始時に保存した値と照合し、不一致なら中断
-    A->>I: コードをトークンに交換
+    Note over A: state をトランザクションの保存値と照合し、不一致なら中断
+    A->>I: 認可コード＋code_verifier でトークンに交換
+    Note over I: SHA256(code_verifier) を認可リクエスト時の code_challenge と照合し、不一致なら拒否
     I-->>A: ID トークン＋アクセストークン
-    Note over A: ID トークンの署名・iss・aud・exp・nonce を検証し、sub でユーザーを識別
+    Note over A: ID トークンの署名・iss・aud・exp を検証し、nonce クレームをトランザクションの保存値と照合（不一致なら拒否）。sub でユーザーを識別
     A-->>B: セッション Cookie を発行
-    Note over B,I: 信頼境界をまたぐのは 2〜7 の通信（ブラウザ・IdP・API 間）
+    Note over B,I: 信頼境界をまたぐのは 2〜9 の通信（ブラウザ・IdP・API 間）
 ```
 
 ### 5.7 良いシステムモデルの条件（チェックリスト）
