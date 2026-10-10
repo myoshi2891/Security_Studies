@@ -107,13 +107,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `GEMINI.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `security-docs/README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `docs/progress.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測178テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `GEMINI.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/README.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/progress.md` | 2026-10-09 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測182テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
