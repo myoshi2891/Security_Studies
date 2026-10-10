@@ -20,7 +20,12 @@ function stripMdxEsm(content: string): string {
   return content.replace(/^(?:import|export)\s[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/gm, "").trimStart();
 }
 
-const JSX_HEADING_PATTERN = /<(?:E\.)?h[1-6]\b[^>]*>\{("(?:[^"\\]|\\.)*")\}<\/(?:E\.)?h[1-6]>/g;
+/** JSX headings: a string literal (`<E.h3>{"..."}</E.h3>`) or plain text (`<h3 className="...">...</h3>`). */
+const JSX_HEADING_PATTERN = /<(?:E\.)?(h[1-6])\b[^>]*>(?:\{("(?:[^"\\]|\\.)*")\}|([^<{]+))<\/(?:E\.)?\1>/g;
+/** Docs components that render their `title` attribute as a heading. */
+const COMPONENT_TITLE_PATTERN = /<(?:HeroSection|SectionCard|ThreatCard)\b[^>]*?\stitle="([^"]*)"/g;
+/** `DocsSubheading` renders its plain-text children as a heading. */
+const SUBHEADING_PATTERN = /<DocsSubheading\b[^>]*>([^<{]+)<\/DocsSubheading>/g;
 
 /**
  * Decodes a double-quoted JS string literal; falls back to the raw inner text
@@ -65,18 +70,28 @@ function scanMarkdown(content: string): { headings: { index: number; text: strin
   return { headings, fences };
 }
 
+/** Collapses the line breaks and indentation of multi-line plain-text JSX children. */
+const collapseWhitespace = (text: string) => text.replace(/\s+/g, " ");
+
 /**
- * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`) and Markdown headings
- * in document order so chapter terms beyond the 500-character content snippet remain searchable.
+ * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`, `<h3>...</h3>`), headings rendered
+ * by docs components (`<SectionCard title="...">`, `<DocsSubheading>...</DocsSubheading>`) and Markdown
+ * headings in document order so chapter terms beyond the 500-character content snippet remain searchable.
  */
 export function extractHeadings(content: string): string[] {
   const { headings: found, fences } = scanMarkdown(content);
-  for (const match of content.matchAll(JSX_HEADING_PATTERN)) {
-    const literal = match[1];
-    if (literal === undefined) continue;
+  const jsxHeadings = [
+    ...[...content.matchAll(JSX_HEADING_PATTERN)].map(match => ({
+      index: match.index,
+      text: match[2] !== undefined ? decodeStringLiteral(match[2]) : collapseWhitespace(match[3] ?? ""),
+    })),
+    ...[...content.matchAll(COMPONENT_TITLE_PATTERN)].map(match => ({ index: match.index, text: match[1] ?? "" })),
+    ...[...content.matchAll(SUBHEADING_PATTERN)].map(match => ({ index: match.index, text: collapseWhitespace(match[1] ?? "") })),
+  ];
+  for (const heading of jsxHeadings) {
     // Fenced code examples may show JSX headings; they are not page headings.
-    if (fences.some(([start, end]) => match.index >= start && match.index < end)) continue;
-    found.push({ index: match.index, text: decodeStringLiteral(literal) });
+    if (fences.some(([start, end]) => heading.index >= start && heading.index < end)) continue;
+    found.push(heading);
   }
   return found
     .sort((a, b) => a.index - b.index)

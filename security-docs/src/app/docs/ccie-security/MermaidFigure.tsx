@@ -67,7 +67,7 @@ function sizeSvg(svgMarkup: string, source: string) {
   }
   svg.removeAttribute('width');
   svg.removeAttribute('height');
-  svg.style.maxWidth = '100%';
+  // 幅の広い図は自然な px 幅のまま、コンテナの横スクロール（overflow-x: auto）で読ませる
   svg.style.height = 'auto';
   svg.style.overflow = 'visible';
   return holder.innerHTML;
