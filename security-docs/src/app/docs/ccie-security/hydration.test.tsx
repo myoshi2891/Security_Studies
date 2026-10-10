@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, spyOn, test } from 'bun:test';
 import { cleanup, render } from '@testing-library/react';
-import { Children, createElement, isValidElement, type ReactElement, type ReactNode } from 'react';
+import { act, Children, createElement, isValidElement, type ReactElement, type ReactNode } from 'react';
+import { hydrateRoot, type Root } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { evaluatedPage } from './fidelity-helpers';
 
 afterEach(cleanup);
@@ -38,5 +40,25 @@ describe('CCIE table hydration regression', () => {
       render(createElement('div', {}, tables.map((table, key) => createElement('div', { key }, table))));
       expect(messages.filter(message => /whitespace|hydration|cannot be a child|validateDOMNesting/i.test(message))).toEqual([]);
     } finally { error.mockRestore(); }
+  });
+
+  test('hydrating the server-rendered 85 tables reports no recoverable errors', async () => {
+    const { default: Page } = await evaluatedPage();
+    const tables = nativeElements(Page({}), new Set(['table']));
+    const tree = createElement('div', {}, tables.map((table, key) => createElement('div', { key }, table)));
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(tree);
+    document.body.appendChild(container);
+    const recoverable: unknown[] = [];
+    let root: Root | undefined;
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, tree, { onRecoverableError: error => { recoverable.push(error); } });
+      });
+      expect(recoverable).toEqual([]);
+    } finally {
+      await act(async () => { root?.unmount(); });
+      container.remove();
+    }
   });
 });
