@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-10（レビュー対応: 検索索引に素のJSX見出しとdocsコンポーネント見出しを追加、Mermaid図の自然幅維持、ガイド修正）
+> **最終更新**: 2026-10-10（レビュー対応: 検索索引のコードフェンス閉じ判定を文字・長さ一致に修正、PSA `audit` モードの説明修正、目視確認ステータス統一）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **184件** | `bun test`: 184 pass / 0 fail（2026-10-10 レビュー対応Green） |
+| テストケース総数 | **185件** | `bun test`: 185 pass / 0 fail（2026-10-10 レビュー対応Green） |
 | テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -40,7 +40,7 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
-| `src/lib/search.test.ts` | 18 | 18 pass / 0 fail |
+| `src/lib/search.test.ts` | 19 | 19 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
@@ -107,13 +107,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `GEMINI.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `security-docs/README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
-| `docs/progress.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測184テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `GEMINI.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/progress.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測185テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -270,3 +270,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 件数の推移: 167件は表示レイアウト再構成前の旧同期値、170件はレイアウト修正Green時点、171件・173件はその後の検索改修、176件はレビュー対応（Mermaid遅延描画・図レイアウト・Markdown見出し索引）、178件はCodecovパッチカバレッジ対応による追加。仕様書の基準値は最新実測の178件。
 - 2026-10-10: レビュー対応（実装HEAD: `bd664b3`）。フローチャート説明を接続と向き（→ / ↔ / —）で列挙、Mermaid `import` 失敗時にキャッシュを破棄して再試行、`.eyebrow` / `a:hover` / `.hljs-literal` を `--gold-d` に変更、コードフェンス内のJSX見出しを検索索引から除外（`foundation.test.tsx` +3、`search.test.ts` +1）。**182 pass / 0 fail、30テストファイル、5,978 expect**。lint・型検査・`bun run build` 成功。CLAUDE.md・GEMINI.md・README.md・security-docs/{CLAUDE,README}.md・ダッシュボード・移行確認表も182件・ビルド成功へ同期済み（`8b27aae`）。続けてガイド修正（Trivy影響範囲、ephemeralContainersのSecret検査、型の取り違え検出範囲、TM-012の期限付き受容）を `7f5d793` で反映。
 - 2026-10-10: レビュー対応（Red: `c2378eb` / Green: `2e17306`）。検索索引に素のテキストのJSX見出し（`<h3>3. VEX…</h3>`）と、見出しを描画するdocsコンポーネント（`HeroSection` / `SectionCard` / `ThreatCard` の `title`、`DocsSubheading` の子テキスト）を追加し、`public/search-index.json` を再生成。Mermaid SVG の `max-width: 100%` を外し、幅の広い図は自然な px 幅のまま横スクロールで読めるようにした（`search.test.ts` +2、`foundation.test.tsx` は既存テストのアサーション変更）。**184 pass / 0 fail、30テストファイル、6,301 expect**（索引テストが見出しごとに検証するため expect が増加）。lint・型検査・`bun run build` 成功。ガイド修正（v1.37 ストレージ機能のAlphaとフィーチャーゲート、シークレット管理基盤の優先、OIDCシーケンスへのPKCEとnonce照合の追加）を `2bff45d` で反映。
+- 2026-10-10: レビュー対応。検索索引のコードフェンスを開きフェンスの文字と長さで管理し、同じ文字・同じ長さ以上・info string なしのフェンスでのみ閉じるよう修正（```` ````md ```` 内の ```` ``` ```` で外側ブロックが終了しない。`search.test.ts` +1）。`Hacking-kubernetes-guide.md` の PSA `audit` モードを「監査イベントへの注釈付与」と明記し、監査ログ記録には kube-apiserver の監査機能設定が必要である旨を追記。目視確認ステータスを全仕様書で「pending」に統一。**185 pass / 0 fail、30テストファイル、6,302 expect**。lint・型検査成功。
