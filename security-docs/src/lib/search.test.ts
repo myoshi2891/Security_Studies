@@ -1,9 +1,9 @@
 import { describe, expect, mock, test } from 'bun:test';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getSearchIndex, type SearchResult } from './search';
+import { extractHeadings, getSearchIndex, type SearchResult } from './search';
 
-const REQUIRED_KEYS = ['content', 'description', 'href', 'title'] as const;
+const REQUIRED_KEYS = ['content', 'description', 'headings', 'href', 'title'] as const;
 const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
 const HREF_PATTERN = /^\/docs\/(.+)$/;
 
@@ -15,7 +15,7 @@ describe('getSearchIndex', () => {
         expect(results.length).toBeGreaterThan(0);
     });
 
-    test('each result has exactly title/description/href/content keys', async () => {
+    test('each result has exactly title/description/href/content/headings keys', async () => {
         const results = await getSearchIndex();
 
         for (const item of results) {
@@ -80,6 +80,112 @@ describe('getSearchIndex', () => {
         expect(approach?.title).toBe('2026年 サプライチェーンセキュリティ＆SCS評価制度 対策アプローチ');
         expect(approach?.content).toContain('SCS評価制度');
     });
+
+    test('strips MDX import/export statements and keeps the page body', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            expect(item.content).not.toMatch(/^\s*(import|export)\s/m);
+        }
+
+        const ccie = results.find(item => item.href === '/docs/ccie-security');
+        expect(ccie?.content).toContain('Cisco Certified Internetwork Expert / Security');
+    });
+
+    test('collects JSX heading text so chapter terms beyond the content snippet are searchable', async () => {
+        const results = await getSearchIndex();
+
+        for (const item of results) {
+            expect(Array.isArray(item.headings)).toBe(true);
+            for (const heading of item.headings) {
+                expect(typeof heading).toBe('string');
+                expect(heading.trim()).not.toBe('');
+            }
+        }
+
+        const ccie = results.find(item => item.href === '/docs/ccie-security');
+        expect(ccie?.content).not.toContain('TrustSec');
+        expect(ccie?.headings.some(heading => heading.includes('TrustSec'))).toBe(true);
+    });
+
+    test('collects Markdown headings in document order alongside JSX headings, skipping code fences', () => {
+        const mdx = [
+            '## TrustSec 概要',
+            '<E.h3 id="x">{"SGT の割り当て"}</E.h3>',
+            '```bash',
+            '# コメントは見出しではない',
+            '```',
+            '### 末尾記号付き ###',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['TrustSec 概要', 'SGT の割り当て', '末尾記号付き']);
+    });
+
+    test('ignores JSX headings inside fenced code examples while keeping real JSX headings', () => {
+        const mdx = [
+            '<E.h2 id="a">{"本物の見出し"}</E.h2>',
+            '```tsx',
+            '<E.h3 id="b">{"コード例の見出し"}</E.h3>',
+            '```',
+            '<E.h3 id="c">{"後続の見出し"}</E.h3>',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['本物の見出し', '後続の見出し']);
+    });
+
+    test('closes a fenced block only on a fence of the same character and at least the opening length', () => {
+        const mdx = [
+            '````md',
+            '```bash',
+            '# 内側フェンス内のコメント',
+            '```',
+            '~~~~',
+            '## 外側フェンス内の見出し',
+            '````',
+            '## フェンス後の見出し',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual(['フェンス後の見出し']);
+    });
+
+    test('collects plain-text JSX headings and headings rendered by docs components in document order', () => {
+        const mdx = [
+            '<HeroSection section="Guide" title="ヒーロー見出し" description="説明" />',
+            '<SectionCard eyebrow="Section 01"',
+            '  title="セクション見出し">',
+            '<h3 className="text-lg font-bold">3. VEX（脆弱性悪用可能性交換）によるノイズ削減</h3>',
+            '<DocsSubheading color="emerald">',
+            '  サブ見出し',
+            '</DocsSubheading>',
+            '<ThreatCard title="① Slopsquatting" severity="critical">',
+            '```tsx',
+            '<h3>コード例の見出し</h3>',
+            '<SectionCard title="コード例のセクション">',
+            '```',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual([
+            'ヒーロー見出し',
+            'セクション見出し',
+            '3. VEX（脆弱性悪用可能性交換）によるノイズ削減',
+            'サブ見出し',
+            '① Slopsquatting',
+        ]);
+    });
+
+    test('indexes plain-text JSX headings from real pages', async () => {
+        const results = await getSearchIndex();
+
+        const approach = results.find(item => item.href === '/docs/approach');
+        expect(approach?.headings).toContain('3. VEX（脆弱性悪用可能性交換）によるノイズ削減');
+    });
+
+    test('falls back to the raw inner text when a JSX heading uses escapes JSON rejects', () => {
+        // JS では有効だが JSON では不正な \' エスケープ → JSON.parse が失敗し生テキストを返す
+        const mdx = String.raw`<E.h4 id="q">{"Cisco\'s ISE"}</E.h4>`;
+
+        expect(extractHeadings(mdx)).toEqual([String.raw`Cisco\'s ISE`]);
+    });
 });
 
 // DOCS_DIR 配下のすべてのディレクトリを再帰的に走査し、page.mdx を含むものを列挙する。
@@ -110,6 +216,7 @@ const _typeContract: SearchResult = {
     description: 'y',
     href: '/docs/x',
     content: 'z',
+    headings: [],
 };
 void _typeContract;
 

@@ -1,7 +1,7 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-05-27（search.ts エラーパスカバレッジ補完・118ケース）  
-> **ブランチ**: `dev` → `main` マージ済み (#34)  
+> **最終更新**: 2026-10-10（レビュー対応: 検索索引のコードフェンス閉じ判定を文字・長さ一致に修正、PSA `audit` モードの説明修正、目視確認ステータス統一）
+> **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
 ---
@@ -12,38 +12,46 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **118件** | `bun test` 全 pass |
-| テストファイル数 | **22 / 22 ファイル** | 100% カバー |
-| Strategy Coverage | **12.5%** | 40カテゴリ×ドメインセル中 5セル相当 |
+| テストケース総数 | **186件** | `bun test`: 186 pass / 0 fail（2026-10-10 レビュー対応Green） |
+| テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
+| Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
-| カバレッジレポート | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov) |
+| カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-05-23 時点）
+#### ファイル別テスト数（2026-10-10 実測）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/components/docs/Callout.test.tsx` | 4 | variant・children 検証あり |
-| `src/components/docs/DocsSubheading.test.tsx` | 4 | ✅ 2026-05-20 追加 |
-| `src/components/docs/SectionCard.test.tsx` | 3 | |
-| `src/components/docs/AttackFlow.test.tsx` | 2 | |
-| `src/components/docs/DefenseList.test.tsx` | 2 | |
-| `src/components/docs/RiskBadge.test.tsx` | 2 | |
-| `src/components/docs/Terminal.test.tsx` | 2 | |
-| `src/components/docs/Checklist.test.tsx` | 5 | ✅ 2026-05-21 拡張 (prop variation, 空データなど) |
-| `src/components/docs/CompareGrid.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/DataTable.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/HeroSection.test.tsx` | 3 | ✅ 2026-05-21 拡張 (ReactNode, オプショナル非表示) |
-| `src/components/docs/HighlightBox.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
-| `src/components/docs/SourceReferences.test.tsx` | 4 | ✅ 2026-05-21 拡張 (description有無, classNameなど) |
-| `src/components/docs/StepTimeline.test.tsx` | 4 | ✅ 2026-05-21 拡張 (ReactNode, classNameなど) |
-| `src/components/docs/Tag.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各colorバリアント, classNameなど) |
-| `src/components/docs/ThreatCard.test.tsx` | 7 | ✅ 2026-05-21 拡張 (各severityバリアント, classNameなど) |
-| `src/components/disclaimer-modal.test.tsx` | 9 | 表示/同意/storage/A11y 検証（初期フォーカステスト修正） |
-| `src/components/search-modal.test.tsx` | 17 | ✅ 2026-05-20 追加 |
-| `src/lib/search.test.ts` | 11 | ✅ 2026-05-20 追加 (2026-05-27 エラーパステスト追加・カバレッジ100%化) |
-| `src/app/api/search/route.test.ts` | 3 | ✅ 2026-05-21 追加 |
-| `src/app/docs/layout.test.tsx` | 8 | ✅ 2026-05-23 追加 |
-| `src/proxy.test.ts` | 6 | ✅ 2026-05-23 追加（CSP ディレクティブ固定化） |
+| `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/components/docs/AttackFlow.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/DefenseList.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/RiskBadge.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/Terminal.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/components/docs/Checklist.test.tsx` | 5 | 5 pass / 0 fail |
+| `src/components/docs/CompareGrid.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/DataTable.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/HeroSection.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/components/docs/HighlightBox.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/docs/SourceReferences.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/StepTimeline.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/components/docs/Tag.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
+| `src/lib/search.test.ts` | 19 | 19 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
+| `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
+| `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
+| `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
+| `src/app/docs/ccie-security/chapters-05-07.test.tsx` | 4 | 4 pass / 0 fail |
+| `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/app/docs/ccie-security/chapters-10-13.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/app/docs/ccie-security/hydration.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 10 pass / 0 fail |
 
 ---
 
@@ -56,7 +64,9 @@
 | Netlify CDP スクリプト | ✅ **解消** | nonce 廃止により衝突なし |
 | API セキュリティヘッダー | ❌ **未検証** | `GET /api/search` の CSP 応用未テスト |
 | 入力サニタイズ | ❌ **未テスト** | SearchModal XSS 耐性テストなし |
-| 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行 |
+| 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行。加えて `bun audit --prod --audit-level=high`（除外指定なし）で本番依存を監査 |
+| next RCE（GHSA-vcvr-r3jv-pc5j） | ✅ **解消** | 2026-10-05: `next` / `eslint-config-next` を 16.3.5 → 16.3.8 へ更新 |
+| braces DoS（GHSA-vfj7-8cjw-p6xm） | ⚠️ **一時除外** | パッチ未提供（<=3.0.3 全版が対象）。`eslint-config-next` 経由の dev 依存のみで、本番バンドル・ユーザー入力経路に含まれない。CI で `--ignore` 指定、**期限 2026-11-05** までに修正版の有無を再確認 |
 
 #### CSP 現行構成（2026-05-20）
 
@@ -89,21 +99,21 @@ form-action 'self'
 | 検索インデックス (`src/lib/search.ts`) | ✅ 稼働中 | — |
 | 検索 UI (`SearchModal`) | ✅ 稼働中 | — |
 | DisclaimerModal | ✅ 稼働中 | — |
-| Docs ページ (10ページ) | ✅ 稼働中 | — |
+| Docs ページ (12ページ、Archive含む) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
-| DocsSidebar のクライアントコンポーネント化とアクティブ状態の aria-current 制御 | ✅ 完了 | 2026-05-23 |
+| DocsHeaderNavへのグローバルナビ移設・CCIE元サイドバー復元・全幅本文・table hydration修正 | ✅ 完了 | 2026-10-09 |
 
 ---
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `GEMINI.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `README.md` (ルート) | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `security-docs/CLAUDE.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `security-docs/README.md` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期 |
-| `docs/test-coverage-dashboard.html` | 2026-05-27 | docs-sync スキル導入・適用による一斉同期および search カバレッジ 100% 反映 (118 cases) |
-| `docs/progress.md` (本ファイル) | 2026-05-27 | カバレッジ 100% 補完に伴うテスト数 (118件) 更新 |
+| `CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `GEMINI.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `security-docs/README.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
+| `docs/progress.md` | 2026-10-10 | CCIE移行・新カテゴリー・全幅レイアウト・hydration修正・最新実測186テスト（下記「CCIE Security 再開・目視確認」の時系列参照）を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -120,7 +130,7 @@ form-action 'self'
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
-| カバレッジ CI 連携 | ✅ **稼働中** | `bun test --coverage` + Codecov (lcov.info) ※CODECOV_TOKEN 要手動追加 |
+| カバレッジ CI 連携 | ⚠️ **送信停止中** | `bun test --coverage` による lcov.info 生成は稼働中、Codecov へのアップロードは停止中。2026-10-05 時点で Codecov 側に接続不可（TLS ハンドシェイク拒否）。`codecov-action` v7.1.1 + `continue-on-error` で CI は通過させている（CLI の署名・ハッシュ検証を維持するため `use_pypi` は不使用）。CODECOV_TOKEN 未登録 → 次のアクション #11 |
 | `bun audit` CI 組み込み | ✅ **稼働中** | `audit` job として並列実行（`--audit-level=high`、高・重大のみ failure 扱い） |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
 
@@ -140,6 +150,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
 
@@ -151,7 +162,21 @@ form-action 'self'
 
 #### 5. SearchModal A11y テスト追加
 
-17件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
+18件の Unit テストに加え、Escape 閉じる・フォーカス管理を WCAG 2.1 観点で検証。
+
+#### 11. Codecov 復旧後の対応（2026-10-05 起票）
+
+**経緯**: 2026-10-05、`codecov/codecov-action@v4` が `cli.codecov.io` からの CLI 取得時に `SSL alert number 40`（handshake_failure）で失敗し、`quality` job が落ちた。ローカルの `curl` / `openssl s_client` でも同じ症状が再現し、`ingest.codecov.io` は証明書の期限切れを返していたため、Codecov 側の障害と判断した。Codecov のサイトにも接続できない状態。
+
+**実施済み（`ci.yml`）**: `codecov-action` を v7.1.1（SHA 固定）へ更新、トークンを `token:` 入力で渡すよう変更、`continue-on-error: true` を追加（カバレッジ送信は品質ゲートではないため）。
+
+**Codecov 復旧後に行うこと**:
+
+- [ ] `curl -sS -o /dev/null -w '%{http_code}\n' https://cli.codecov.io/` で TLS 接続の復旧を確認する
+- [ ] https://app.codecov.io/gh/myoshi2891/Security_Studies/config/general から Repository upload token を取得し、`gh secret set CODECOV_TOKEN -R myoshi2891/Security_Studies` で登録する（現状シークレット未登録で、`dev` は protected branch のためトークンなしの送信は警告対象）
+- [ ] CI を再実行し、Codecov ステップのログでアップロード成功と、Codecov 上でのカバレッジ反映を確認する
+- [ ] 代替案の検討: トークン管理を不要にする OIDC（`use_oidc: true` + `permissions: id-token: write`）。ワークフロー権限の拡大を伴うため要判断
+- [ ] 完了後、`continue-on-error` を残すか判断し、上記「CI / CD・インフラ」表のステータスを ✅ に戻す
 
 ---
 
@@ -212,3 +237,38 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ---
 
 *プロンプトは実行前に必要に応じてリポジトリ名・ブランチ名・パスを確認・調整してください。*
+
+
+## CCIE Security 移行記録
+
+- 2026-10-09: 表示基盤Red・6件の期待どおりの失敗。118 pass / 6 fail、23テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 表示基盤Green・124件成功・lintと型検査成功。124 pass / 0 fail、23テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第1〜4章Red・5件の期待どおりの失敗。125 pass / 5 fail、24テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 比較基盤補正・130件成功・第1〜4章実装検証中。130 pass / 0 fail、24テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第1〜4章Green・130件成功・lintと型検査成功。130 pass / 0 fail、24テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第5〜7章Red・Python強調を含む4件の期待どおりの失敗。130 pass / 4 fail、25テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第5〜7章Green・134件成功・lintと型検査成功。134 pass / 0 fail、25テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第8〜9章Red・2件の期待どおりの失敗。134 pass / 2 fail、26テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第8〜9章Green・136件成功・lintと型検査成功。136 pass / 0 fail、26テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 第10〜13章Red・参考文献とチェックを含む7件の期待どおりの失敗。136 pass / 7 fail、27テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 全13章Green・143件成功・lintと型検査成功。143 pass / 0 fail、27テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 統合Red・カテゴリーとメタデータとテーマ等8件の期待どおりの失敗。146 pass / 8 fail、28テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 統合Green・154件成功・lintと型検査成功・目視確認待ち。154 pass / 0 fail、28テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 移行・整理完了・154件成功・lintと型検査成功・目視確認待ち。154 pass / 0 fail、28テストファイル。npm・Next.jsビルド未実行。
+
+### CCIE Security 再開・目視確認
+
+- 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル（当時。最新は下記時系列の186件）。lint・型検査成功。
+- 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
+- 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
+- 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。170 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
+- 2026-10-09: 検索インデックスのMDX import/export除去（`search.test.ts` +1）。171 pass / 0 fail、30テストファイル。
+- 2026-10-09: 見出しベース検索索引（`search.test.ts` +1、`search-modal.test.tsx` +1）。173 pass / 0 fail、30テストファイル。
+- 2026-10-09: レビュー対応（Mermaid遅延描画・図説明の縦積み: `foundation.test.tsx` +2、Markdown見出し索引: `search.test.ts` +1）。176 pass / 0 fail、30テストファイル。
+- 2026-10-09: Codecov `codecov/patch` 失敗（96.19% < 目標98.57%）対応。既定Mermaidエンジンの初期化・描画（`foundation.test.tsx` +1）とJSON非対応エスケープの見出し（`search.test.ts` +1）をテスト化し、`MermaidFigure.tsx`・`search.ts` の行カバレッジ100%。**178 pass / 0 fail、30テストファイル（当時の最新実測・5,966 expect。CSS比較ヘルパー共通化後）**。
+- 件数の推移: 167件は表示レイアウト再構成前の旧同期値、170件はレイアウト修正Green時点、171件・173件はその後の検索改修、176件はレビュー対応（Mermaid遅延描画・図レイアウト・Markdown見出し索引）、178件はCodecovパッチカバレッジ対応による追加。185件は2026-10-10のレビュー対応（コードフェンス索引）による追加。186件は hydrateRoot の recoverable error 検証による追加。仕様書の基準値は最新実測の186件。
+- 2026-10-10: レビュー対応（実装HEAD: `bd664b3`）。フローチャート説明を接続と向き（→ / ↔ / —）で列挙、Mermaid `import` 失敗時にキャッシュを破棄して再試行、`.eyebrow` / `a:hover` / `.hljs-literal` を `--gold-d` に変更、コードフェンス内のJSX見出しを検索索引から除外（`foundation.test.tsx` +3、`search.test.ts` +1）。**182 pass / 0 fail、30テストファイル、5,978 expect**。lint・型検査・`bun run build` 成功。CLAUDE.md・GEMINI.md・README.md・security-docs/{CLAUDE,README}.md・ダッシュボード・移行確認表も182件・ビルド成功へ同期済み（`8b27aae`）。続けてガイド修正（Trivy影響範囲、ephemeralContainersのSecret検査、型の取り違え検出範囲、TM-012の期限付き受容）を `7f5d793` で反映。
+- 2026-10-10: レビュー対応（Red: `c2378eb` / Green: `2e17306`）。検索索引に素のテキストのJSX見出し（`<h3>3. VEX…</h3>`）と、見出しを描画するdocsコンポーネント（`HeroSection` / `SectionCard` / `ThreatCard` の `title`、`DocsSubheading` の子テキスト）を追加し、`public/search-index.json` を再生成。Mermaid SVG の `max-width: 100%` を外し、幅の広い図は自然な px 幅のまま横スクロールで読めるようにした（`search.test.ts` +2、`foundation.test.tsx` は既存テストのアサーション変更）。**184 pass / 0 fail、30テストファイル、6,301 expect**（索引テストが見出しごとに検証するため expect が増加）。lint・型検査・`bun run build` 成功。ガイド修正（v1.37 ストレージ機能のAlphaとフィーチャーゲート、シークレット管理基盤の優先、OIDCシーケンスへのPKCEとnonce照合の追加）を `2bff45d` で反映。
+- 2026-10-10: レビュー対応。検索索引のコードフェンスを開きフェンスの文字と長さで管理し、同じ文字・同じ長さ以上・info string なしのフェンスでのみ閉じるよう修正（```` ````md ```` 内の ```` ``` ```` で外側ブロックが終了しない。`search.test.ts` +1）。`Hacking-kubernetes-guide.md` の PSA `audit` モードを「監査イベントへの注釈付与」と明記し、監査ログ記録には kube-apiserver の監査機能設定が必要である旨を追記。目視確認ステータスを全仕様書で「pending」に統一。**185 pass / 0 fail、30テストファイル、6,302 expect**。lint・型検査・`bun run build` 成功（185件時点で再実行し確認）。
+- 2026-10-11: レビュー対応（Red: `a814df4` / Green: `ba26742`）。`MermaidFigure` の描画完了・失敗処理で `active` を先に確認し、定義変更やアンマウント後に完了した古い描画では `sizeSvg` と `console.error` を実行しないよう修正（`foundation.test.tsx` の既存 stale テストにアサーション追加、件数増減なし）。**186 pass / 0 fail、30テストファイル、6,304 expect**。lint・型検査成功。

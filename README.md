@@ -1,11 +1,11 @@
 # Security Studies
 
-最終更新日: 2026-09-20
+最終更新日: 2026-10-11
 
 [![CI](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml/badge.svg)](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/myoshi2891/Security_Studies/graph/badge.svg)](https://codecov.io/gh/myoshi2891/Security_Studies)
 
-Next.js 16.3.5 (App Router) と カスタム MDX コンポーネントを活用した、セキュリティ学習のためのドキュメントアプリケーションです。Fumadocs は廃止済みで、`@next/mdx` と独自の React コンポーネント群でコンテンツを構築しています。
+Next.js 16.3.8 (App Router) と カスタム MDX コンポーネントを活用した、セキュリティ学習のためのドキュメントアプリケーションです。Fumadocs は廃止済みで、`@next/mdx` と独自の React コンポーネント群でコンテンツを構築しています。
 
 ## 概要
 
@@ -156,6 +156,21 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 ## 開発の規約
 
 - **コンテンツの作成:** 新しいドキュメントコンテンツはすべて MDX で作成し、`security-docs/src/app/docs/<slug>/page.mdx` に配置してください。追加後は `src/config/docs.ts` にもエントリを追加してください。
-- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、Tailwind のユーティリティクラスを利用してください。
+- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。CCIE移行ページは元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
 - **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-10): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 186 pass / 0 fail (30 files, 6,304 expects). `bun run build` succeeded; browser visual review pending with user.
+
+### CCIE Security migration details
+
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 186 across 30 files (186 pass / 0 fail, 6,304 expects). Baseline 22 tracked logic files plus MermaidFigure/PythonCode/GuideSidebar/DocsHeaderNav are tracked separately from MDX test files (26/26).
+- Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
+- All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
+- Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.

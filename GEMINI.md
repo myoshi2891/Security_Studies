@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-09-20
+Updated 2026-10-10
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ This is a Next.js-based documentation application focused on security studies. I
 
 ### Key Technologies
 
-- **Framework:** Next.js 16.3.5 (App Router)
+- **Framework:** Next.js 16.3.8 (App Router)
 - **UI Library:** React 19
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 with PostCSS
@@ -48,7 +48,7 @@ Commands should be executed within the `security-docs` directory.
 ## Development Conventions
 
 - **Content Authoring:** All new documentation content should be authored in MDX and placed within `security-docs/src/app/docs/<slug>/page.mdx`. Use custom UI components from `src/components/docs/` (e.g. `<HeroSection>`, `<ThreatCard>`, `<DataTable>`). Register any new slug in `src/config/docs.ts`.
-- **Styling:** The project uses Tailwind CSS v4. Utility classes only — no custom CSS unless adding to `globals.css`.
+- **Styling:** The project uses Tailwind CSS v4. Utility classes by default. The CCIE migration uses isolated `ccie-security.css` to preserve the source markers and counters.
 - **Type Safety:** Run `bun run types:check` before committing. `any` is prohibited; use `unknown` + type guards.
 - **Linting:** Run `bun run lint` before committing. Unused variables/args prefixed with `_` are ignored (signature-preservation convention).
 
@@ -70,3 +70,18 @@ All steps execute in the `security-docs/` working directory.
 - Assertions: `@testing-library/jest-dom` (types extended to `bun:test` in `src/jest-dom.d.ts`)
 - Test files co-located with source as `*.test.tsx` / `*.test.ts`
 - Key test files: `src/lib/search.test.ts`, `src/components/search-modal.test.tsx`, `src/components/docs/DocsSubheading.test.tsx`
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-10): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 185 pass / 0 fail (30 files, 6,302 expects). `bun run build` succeeded; browser visual review pending with user.
+
+### CCIE Security migration details
+
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 185 across 30 files (185 pass / 0 fail, 6,302 expects). Baseline 22 tracked logic files plus MermaidFigure/PythonCode/GuideSidebar/DocsHeaderNav are tracked separately from MDX test files (26/26).
+- Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
+- All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
+- Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.

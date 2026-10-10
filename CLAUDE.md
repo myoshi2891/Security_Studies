@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-09-20
+Updated 2026-10-10
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -58,7 +58,7 @@ make clean            # コンテナ・イメージ・ボリューム完全削�
 Security_Studies/
 ├── Makefile                    # Docker 操作ショートカット
 ├── docker-compose.yml          # dev/prod サービス定義
-├── security-docs/          # Next.js 16.3.5 アプリ (本体)
+├── security-docs/          # Next.js 16.3.8 アプリ (本体)
 │   ├── netlify.toml            # Netlify ビルド設定（@netlify/plugin-nextjs）
 │   ├── .nvmrc                  # Node.js バージョン固定 (22)
 │   ├── Dockerfile              # マルチステージビルド
@@ -183,3 +183,18 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 4. `bun test`
 
 作業ディレクトリは `security-docs/` 固定。
+
+
+### CCIE Security migration status
+
+CCIE Security migration (2026-10-10): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 185 pass / 0 fail (30 files, 6,302 expects). `bun run build` succeeded; browser visual review pending with user.
+
+### CCIE Security migration details
+
+- Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 185 across 30 files (185 pass / 0 fail, 6,302 expects). Baseline 22 tracked logic files plus MermaidFigure/PythonCode/GuideSidebar/DocsHeaderNav are tracked separately from MDX test files (26/26).
+- Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
+- All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
+- Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.

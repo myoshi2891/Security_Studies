@@ -1,0 +1,70 @@
+.docs-shell {
+  --docs-header-height: 4rem;
+  width: 100%;
+  min-height: 100vh;
+}
+.docs-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  width: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  border-bottom: 1px solid var(--border);
+}
+.docs-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: var(--docs-header-height);
+  padding: 0 2rem;
+}
+.docs-header-nav { margin-left: auto; }
+.docs-nav-toggle {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: .5rem;
+  cursor: pointer;
+  font-size: .875rem;
+}
+.docs-global-navigation {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - var(--docs-header-height));
+  overflow-y: auto;
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 .75rem 1.5rem rgb(0 0 0 / .12);
+}
+.docs-global-navigation:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+}
+.docs-global-navigation[hidden] { display: none; }
+.docs-nav-category h4 { margin: 0 0 .75rem; font-weight: 600; font-size: .8rem; }
+.docs-nav-category ul { list-style: none; padding: 0; margin: 0; }
+.docs-nav-link { display: block; padding: .5rem .75rem; border-radius: .375rem; text-decoration: none; font-size: .875rem; }
+.docs-nav-link:hover, .docs-nav-link[aria-current="page"] { background: var(--border); }
+.docs-nav-toggle:focus-visible, .docs-nav-link:focus-visible { outline: 2px solid #B8802A; outline-offset: 2px; }
+.docs-main { width: 100%; min-width: 0; padding: 2rem; }
+.docs-main:has(.ccie-guide) { padding: 0; }
+.prose.docs-article {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .docs-header-inner { padding: 0 .75rem; gap: .5rem; }
+  .docs-header-inner > div:first-child a { font-size: .875rem; }
+  .docs-nav-toggle { padding: .5rem; }
+  .docs-nav-toggle span, .docs-nav-toggle > svg:last-child { display: none; }
+  .docs-global-navigation { padding: 1rem; }
+  .docs-main { padding: 1rem; }
+}

@@ -1,0 +1,532 @@
+/* Scoped source styles: retain markers, counters and colors without affecting other pages. */
+.ccie-guide.ccie-guide {
+  --color-paper: #F6F7F9;
+  --color-ink: #161B26;
+  --color-indigo: #2E3F72;
+  --color-gold: #B8802A;
+  --color-forest: #1B6E6A;
+  --color-plum: #8C3A5C;
+  --surface: #FFFFFF;
+  --surface-2: #EEF1F8;
+  --border: #D9DDE6;
+  --border-strong: #B9C0D0;
+  --text-2: #475066;
+  --text-3: #667087;
+  --gold-bg: #FAF1DF;
+  --gold-d: #7E5314;
+  --forest-bg: #E6F3F1;
+  --forest-d: #14524F;
+  --plum-bg: #F7E9EF;
+  --plum-d: #6B2745;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --sidebar-w: 288px;
+  --font-sans: "Hiragino Sans","Noto Sans JP","Yu Gothic","Meiryo",system-ui,sans-serif;
+  --font-serif: "Source Serif 4 Variable","Source Serif 4","Hiragino Mincho ProN","Noto Serif JP","Yu Mincho",serif;
+  --font-mono: ui-monospace,"SFMono-Regular",Menlo,Consolas,"Noto Sans Mono CJK JP",monospace
+}
+.ccie-guide.ccie-guide * {
+  box-sizing: border-box
+}
+.ccie-guide.ccie-guide {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem
+}
+.ccie-guide.ccie-guide {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 400;
+  overflow-wrap: anywhere
+}
+.ccie-guide.ccie-guide strong,.ccie-guide.ccie-guide th,.ccie-guide.ccie-guide b {
+  font-weight: 500
+}
+.ccie-guide.ccie-guide a {
+  color: var(--color-indigo);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px
+}
+.ccie-guide.ccie-guide a:hover {
+  color: var(--gold-d)
+}
+.ccie-guide.ccie-guide .hero {
+  padding: 1rem 0 1.6rem;
+  border-bottom: 1px solid var(--border)
+}
+.ccie-guide.ccie-guide .eyebrow {
+  color: var(--gold-d);
+  font-weight: 500;
+  letter-spacing: .06em;
+  margin-bottom: .5rem
+}
+.ccie-guide.ccie-guide .hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 2.2rem;
+  line-height: 1.35;
+  margin: 0 0 1.2rem;
+  color: var(--color-ink)
+}
+.ccie-guide.ccie-guide .meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(min(260px,100%),1fr));
+  gap: .8rem;
+  margin: 0
+}
+.ccie-guide.ccie-guide .meta>div {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: .7rem 1rem
+}
+.ccie-guide.ccie-guide .meta dt {
+  color: var(--color-indigo);
+  font-weight: 500
+}
+.ccie-guide.ccie-guide .meta dd {
+  margin: 0;
+  color: var(--text-2)
+}
+.ccie-guide.ccie-guide .section {
+  padding-top: 1.2rem
+}
+.ccie-guide.ccie-guide .section>h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.4;
+  margin: 2.2rem 0 1rem;
+  padding-bottom: .6rem;
+  border-bottom: 3px solid var(--color-indigo);
+  color: var(--color-ink)
+}
+.ccie-guide.ccie-guide .section h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  margin: 2.4rem 0 .9rem;
+  padding-left: .8rem;
+  border-left: 4px solid var(--color-gold);
+  color: var(--color-ink)
+}
+.ccie-guide.ccie-guide .section h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin: 1.8rem 0 .6rem;
+  color: var(--color-indigo)
+}
+.ccie-guide.ccie-guide p {
+  margin: .8rem 0
+}
+.ccie-guide.ccie-guide .section ul,.ccie-guide.ccie-guide .section ol {
+  list-style: none;
+  margin: .8rem 0;
+  padding: 0
+}
+.ccie-guide.ccie-guide .section ul>li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin: .35rem 0
+}
+.ccie-guide.ccie-guide .section ul>li::before {
+  content: "";
+  position: absolute;
+  left: .3rem;
+  top: .8em;
+  width: .45rem;
+  height: .45rem;
+  border-radius: 2px;
+  background: var(--color-indigo)
+}
+.ccie-guide.ccie-guide .section ol {
+  counter-reset: li
+}
+.ccie-guide.ccie-guide .section ol>li {
+  position: relative;
+  counter-increment: li;
+  padding-left: 2.4rem;
+  margin: .5rem 0
+}
+.ccie-guide.ccie-guide .section ol>li::before {
+  content: counter(li);
+  position: absolute;
+  left: 0;
+  top: .2rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--color-indigo);
+  color: var(--surface);
+  display: grid;
+  place-items: center;
+  line-height: 1
+}
+.ccie-guide.ccie-guide code {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  background: var(--surface-2);
+  color: var(--color-indigo);
+  padding: .08rem .4rem;
+  border-radius: 4px
+}
+.ccie-guide.ccie-guide .table-wrap {
+  overflow-x: auto;
+  margin: 1.1rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface)
+}
+.ccie-guide.ccie-guide table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1rem
+}
+.ccie-guide.ccie-guide th {
+  background: var(--surface-2);
+  color: var(--color-indigo);
+  text-align: left;
+  padding: .65rem .9rem;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap
+}
+.ccie-guide.ccie-guide td {
+  padding: .6rem .9rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+  min-width: 7rem
+}
+.ccie-guide.ccie-guide tr:first-child td {
+  border-top: none
+}
+.ccie-guide.ccie-guide .code {
+  margin: 1.1rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  overflow: hidden
+}
+.ccie-guide.ccie-guide .code figcaption {
+  background: var(--surface-2);
+  color: var(--text-2);
+  padding: .35rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500
+}
+.ccie-guide.ccie-guide .code pre {
+  margin: 0;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  line-height: 1.65
+}
+.ccie-guide.ccie-guide .code pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-ink);
+  white-space: pre;
+  font-size: 1rem
+}
+.ccie-guide.ccie-guide .tok-c,.ccie-guide.ccie-guide .hljs-comment {
+  color: var(--text-3);
+  font-style: italic
+}
+.ccie-guide.ccie-guide .tok-k,.ccie-guide.ccie-guide .hljs-keyword {
+  color: var(--color-indigo)
+}
+.ccie-guide.ccie-guide .tok-n,.ccie-guide.ccie-guide .hljs-number {
+  color: var(--color-forest)
+}
+.ccie-guide.ccie-guide .tok-p,.ccie-guide.ccie-guide .hljs-built_in {
+  color: var(--color-plum)
+}
+.ccie-guide.ccie-guide .hljs-string {
+  color: var(--color-forest)
+}
+.ccie-guide.ccie-guide .hljs-title,.ccie-guide.ccie-guide .hljs-function {
+  color: var(--color-plum)
+}
+.ccie-guide.ccie-guide .hljs-literal {
+  color: var(--gold-d)
+}
+.ccie-guide.ccie-guide .diagram {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  margin: 1.2rem 0;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  min-width: 0
+}
+.ccie-guide.ccie-guide .diagram svg {
+  display: block;
+  margin-inline: auto
+}
+.ccie-guide.ccie-guide .diagram-error {
+  color: var(--color-plum);
+  white-space: pre-wrap
+}
+.ccie-guide.ccie-guide .callout {
+  margin: 1.3rem 0;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: var(--r-md);
+  padding: .8rem 1.1rem
+}
+.ccie-guide.ccie-guide .callout-head {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 500;
+  margin-bottom: .2rem
+}
+.ccie-guide.ccie-guide .callout-body>:first-child {
+  margin-top: .3rem
+}
+.ccie-guide.ccie-guide .callout-body>:last-child {
+  margin-bottom: .2rem
+}
+.ccie-guide.ccie-guide .callout.practice {
+  background: var(--gold-bg);
+  border-color: var(--color-gold)
+}
+.ccie-guide.ccie-guide .callout.practice .callout-head {
+  color: var(--gold-d)
+}
+.ccie-guide.ccie-guide .callout.source {
+  background: var(--forest-bg);
+  border-color: var(--color-forest)
+}
+.ccie-guide.ccie-guide .callout.source .callout-head {
+  color: var(--forest-d)
+}
+.ccie-guide.ccie-guide .callout.note {
+  background: var(--plum-bg);
+  border-color: var(--color-plum)
+}
+.ccie-guide.ccie-guide .callout.note .callout-head {
+  color: var(--plum-d)
+}
+.ccie-guide.ccie-guide .callout.practice ul>li::before {
+  background: var(--color-gold)
+}
+.ccie-guide.ccie-guide .callout.source ul>li::before {
+  background: var(--color-forest)
+}
+.ccie-guide.ccie-guide .callout.note ul>li::before {
+  background: var(--color-plum)
+}
+.ccie-guide.ccie-guide .lead {
+  margin: 1rem 0;
+  padding: .7rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--color-indigo);
+  border-radius: var(--r-md)
+}
+.ccie-guide.ccie-guide .lead-label {
+  display: inline-block;
+  color: var(--color-indigo);
+  font-weight: 500;
+  margin-bottom: .1rem
+}
+.ccie-guide.ccie-guide .lead p {
+  margin: .2rem 0
+}
+.ccie-guide.ccie-guide .refs {
+  display: grid;
+  gap: .8rem;
+  margin: 1rem 0
+}
+.ccie-guide.ccie-guide .ref {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: .9rem 1.1rem
+}
+.ccie-guide.ccie-guide .ref-n {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  background: var(--color-indigo);
+  color: var(--surface);
+  font-weight: 500
+}
+.ccie-guide.ccie-guide .ref-body {
+  min-width: 0
+}
+.ccie-guide.ccie-guide .ref-title {
+  font-weight: 500
+}
+.ccie-guide.ccie-guide .ref-body a {
+  display: block;
+  word-break: break-all
+}
+.ccie-guide.ccie-guide .ref-status {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: .3rem
+}
+.ccie-guide.ccie-guide .ref-status.ok {
+  color: var(--forest-d)
+}
+.ccie-guide.ccie-guide .ref-status.portal {
+  color: var(--text-2)
+}
+.ccie-guide.ccie-guide .checklist {
+  display: grid;
+  gap: .6rem;
+  margin: 1rem 0;
+  counter-reset: chk
+}
+.ccie-guide.ccie-guide .check {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: .7rem 1rem;
+  cursor: pointer;
+  counter-increment: chk
+}
+.ccie-guide.ccie-guide .check::before {
+  content: counter(chk);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--color-indigo);
+  font-weight: 500
+}
+.ccie-guide.ccie-guide .check input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none
+}
+.ccie-guide.ccie-guide .check .box {
+  flex: none;
+  position: relative;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 2px solid var(--color-indigo);
+  border-radius: 5px;
+  background: var(--surface)
+}
+.ccie-guide.ccie-guide .check input:checked+.box {
+  background: var(--color-forest);
+  border-color: var(--color-forest)
+}
+.ccie-guide.ccie-guide .check input:checked+.box::after {
+  content: "";
+  position: absolute;
+  left: .4rem;
+  top: .1rem;
+  width: .35rem;
+  height: .7rem;
+  border: solid var(--surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg)
+}
+.ccie-guide.ccie-guide .check:has(input:checked) {
+  border-color: var(--color-forest)
+}
+.ccie-guide.ccie-guide .check:has(input:checked) .txt {
+  text-decoration: line-through;
+  color: var(--text-3)
+}
+.ccie-guide.ccie-guide .check:focus-within {
+  outline: 2px solid var(--color-gold)
+}
+.ccie-guide.ccie-guide .footer {
+  margin-top: 3.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-2)
+}
+@media (max-width:1024px) {
+  .ccie-guide.ccie-guide .hero h1 {
+    font-size: 1.8rem
+  }
+  .ccie-guide.ccie-guide .section>h2 {
+    font-size: 1.5rem
+  }
+  .ccie-guide.ccie-guide .ref {
+    flex-direction: column;
+    gap: .5rem
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .ccie-guide.ccie-guide {
+    scroll-behavior: auto
+  }
+}
+.ccie-guide.ccie-guide .callout-head svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: none;
+}
+.ccie-guide.ccie-guide .ref-status svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+.ccie-guide.ccie-guide .diagram [role="img"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.ccie-guide.ccie-guide .diagram [role="img"] p {
+  margin: 0;
+}
+
+.ccie-guide.ccie-guide .sidebar{position:fixed;top:var(--docs-header-height);left:0;bottom:0;width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:1.2rem 0 2rem;z-index:30}
+.ccie-guide.ccie-guide .brand{display:flex;align-items:center;gap:.8rem;padding:0 1.2rem 1.1rem;border-bottom:1px solid var(--border);color:var(--color-indigo)}
+.ccie-guide.ccie-guide .seal{flex:none;color:var(--color-gold)}
+.ccie-guide.ccie-guide .brand-title{font-family:var(--font-serif);font-weight:500;font-size:1.25rem;line-height:1.3;color:var(--color-ink)}
+.ccie-guide.ccie-guide .brand-sub{font-size:1rem;color:var(--text-2);line-height:1.4}
+.ccie-guide.ccie-guide .sidebar nav ul{list-style:none;margin:0;padding:0}
+.ccie-guide.ccie-guide .sidebar nav li{padding-left:0}
+.ccie-guide.ccie-guide .sidebar nav li::before{content:none}
+.ccie-guide.ccie-guide .sidebar nav a{display:block;padding:.45rem 1.2rem;color:var(--text-2);text-decoration:none;border-left:3px solid transparent;line-height:1.5}
+.ccie-guide.ccie-guide .sidebar nav a:hover{background:var(--surface-2);color:var(--color-ink)}
+.ccie-guide.ccie-guide .sidebar nav li.top>a{color:var(--color-ink);font-weight:500;margin-top:.2rem}
+.ccie-guide.ccie-guide .sidebar nav li.top.open>a,.ccie-guide.ccie-guide .sidebar nav li.top>a.active{border-left-color:var(--color-gold);background:var(--surface-2);color:var(--color-indigo)}
+.ccie-guide.ccie-guide .sidebar nav ul.sub{display:none;margin:.1rem 0 .4rem}
+.ccie-guide.ccie-guide .sidebar nav li.open>ul.sub{display:block}
+.ccie-guide.ccie-guide .sidebar nav ul.sub a{padding-left:2rem}
+.ccie-guide.ccie-guide .sidebar nav ul.sub a.active{border-left-color:var(--color-forest);color:var(--color-forest);background:var(--forest-bg)}
+
+.ccie-guide.ccie-guide { padding: 0; border-radius: 0; text-align: left; width: 100%; max-width: none; }
+.ccie-guide.ccie-guide [id] { scroll-margin-top: calc(var(--docs-header-height) + 1.5rem); }
+.ccie-guide.ccie-guide .guide-main { display: block; margin-left: var(--sidebar-w); width: calc(100% - var(--sidebar-w)); max-width: none; padding: 2.5rem 3rem 3rem; }
+.ccie-guide.ccie-guide .menu-btn, .ccie-guide.ccie-guide .backdrop { display: none; }
+.ccie-guide.ccie-guide .sidebar a:focus-visible { outline: 2px solid var(--color-gold); outline-offset: -2px; }
+@media (max-width:1024px) {
+  .ccie-guide.ccie-guide .guide-main { margin-left: 0; width: 100%; padding: 1.5rem 1.2rem 6rem; }
+  .ccie-guide.ccie-guide .menu-btn { display: grid; place-items: center; position: fixed; right: 1rem; bottom: 1rem; width: 3.5rem; height: 3.5rem; border-radius: 50%; border: 1px solid var(--color-indigo); background: var(--color-indigo); color: var(--surface); cursor: pointer; z-index: 40; padding: 0; }
+  .ccie-guide.ccie-guide .menu-btn:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 2px; }
+  .ccie-guide.ccie-guide .backdrop { display: block; position: fixed; inset: var(--docs-header-height) 0 0; background: var(--color-ink); border: 0; opacity: 0; pointer-events: none; visibility: hidden; z-index: 20; transition: opacity .25s ease; }
+  .ccie-guide.ccie-guide .backdrop.open { opacity: .35; pointer-events: auto; visibility: visible; }
+  .ccie-guide.ccie-guide .sidebar { width: min(86vw,340px); border-right-color: var(--border-strong); padding: 1rem 0 6rem; transform: translateX(-100%); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; }
+  .ccie-guide.ccie-guide .sidebar.open { transform: translateX(0); visibility: visible; transition: transform .25s ease, visibility 0s; }
+}
+.ccie-guide.ccie-guide .backdrop[hidden] { display: none; }
+@media (prefers-reduced-motion:reduce) {
+  .ccie-guide.ccie-guide .sidebar, .ccie-guide.ccie-guide .backdrop { transition: none; }
+}

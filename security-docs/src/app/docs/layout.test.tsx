@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from 'bun:test';
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 // usePathname / useRouter を切替可能にする。
 // mock.module は import より前に評価されるため、layout 内で render される
@@ -24,6 +24,8 @@ const renderLayout = async (): Promise<ReturnType<typeof render>> => {
         await Promise.resolve();
         await Promise.resolve();
     });
+    const menu = screen.queryByRole('button', { name: 'ドキュメントメニュー' });
+    if (menu) fireEvent.click(menu);
     return result!;
 };
 
@@ -44,8 +46,16 @@ describe('DocsLayout', () => {
         cleanup();
     });
 
-    describe('sidebar rendering', () => {
-        test('sidebarNav に定義された全エントリ (11 件) がリンクとして描画される', async () => {
+    describe('header navigation', () => {
+        test('グローバルナビはヘッダー内にあり、本文の左サイドバーと幅制限を廃止する', async () => {
+            const { container } = await renderLayout();
+            const nav = screen.getByRole('navigation');
+            expect(nav.closest('header')).not.toBeNull();
+            expect(container.querySelector('aside')).toBeNull();
+            expect(container.querySelector('main')?.parentElement?.classList.contains('container')).toBe(false);
+            expect(container.querySelector('article')).toHaveClass('docs-article');
+        });
+        test('sidebarNav に定義された全エントリ (12 件) がリンクとして描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
@@ -55,30 +65,36 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(11);
+            expect(allItems.length).toBe(12);
         });
 
-        test('セクション見出し (5 件) が描画される', async () => {
+        test('セクション見出し (6 件) が描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
             for (const section of docsConfig.sidebarNav) {
                 expect(screen.getByText(section.title)).toBeInTheDocument();
             }
-            expect(docsConfig.sidebarNav.length).toBe(5);
+            expect(docsConfig.sidebarNav.length).toBe(6);
         });
 
-        test('サイドバー全体が nav 要素として描画される', async () => {
+        test('グローバルナビが名前付き nav 要素として描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
             // layout には他に nav 要素を持たないので getByRole で一意に取得できる
-            const nav = screen.getByRole('navigation');
+            const nav = screen.getByRole('navigation', { name: 'グローバルナビゲーション' });
             expect(nav).toBeInTheDocument();
         });
     });
 
     describe('active link', () => {
+        test('CCIE Security の新カテゴリーに現在ページ表示を付与する', async () => {
+            currentPath = '/docs/ccie-security';
+            await renderLayout();
+            expect(screen.getByText('Security Certifications')).toBeInTheDocument();
+            expect(screen.getByRole('link', { name: 'CCIE Security' })).toHaveAttribute('aria-current', 'page');
+        });
         test('現在のパスに対応するリンクが aria-current="page" になる', async () => {
             currentPath = '/docs/owasp';
             await renderLayout();
@@ -123,16 +139,17 @@ describe('DocsLayout', () => {
     });
 
     describe('mobile responsive', () => {
-        test('aside 要素は hidden lg:block クラスを持つ (lg 未満で折りたたみ)', async () => {
+        test('ヘッダーのメニューを開閉でき、Escapeで閉じてボタンにフォーカスを戻す', async () => {
             currentPath = '/docs/archive/approach';
-            const { container } = await renderLayout();
-
-            const aside = container.querySelector('aside');
-            expect(aside).not.toBeNull();
-            // happy-dom は実際のメディアクエリを評価しないため、
-            // CSS クラスが付与されていることを「折りたたみ仕様の DOM 表現」として検証する。
-            expect(aside?.className).toContain('hidden');
-            expect(aside?.className).toContain('lg:block');
+            await renderLayout();
+            const button = screen.getByRole('button', { name: 'ドキュメントメニュー' });
+            expect(button).toHaveAttribute('aria-expanded', 'true');
+            fireEvent.keyDown(document, { key: 'Escape' });
+            expect(button).toHaveAttribute('aria-expanded', 'false');
+            expect(button).toHaveFocus();
+            expect(screen.queryByRole('navigation', { name: 'グローバルナビゲーション' })).toBeNull();
+            fireEvent.click(button);
+            expect(screen.getByRole('navigation', { name: 'グローバルナビゲーション' })).toBeInTheDocument();
         });
     });
 });

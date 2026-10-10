@@ -1,6 +1,10 @@
-import { expect, test, describe, mock, afterEach } from "bun:test";
+import { expect, test, describe, mock, afterEach, afterAll } from "bun:test";
 import { GET, clearCache } from "./route";
 import type { SearchResult } from "@/lib/search";
+
+// mock.module はプロセス全体に残るため、実モジュールを退避して afterAll で復元する
+// （復元しないと後続ファイルが最後に設定したモック実装を参照してしまう）
+const realSearchModule = { ...(await import("@/lib/search")) };
 
 // Mock the getSearchIndex function from "@/lib/search"
 const mockGetSearchIndex = mock(async (): Promise<SearchResult[]> => []);
@@ -10,6 +14,10 @@ mock.module("@/lib/search", () => ({
 }));
 
 describe("GET /api/search API Contract", () => {
+  afterAll(() => {
+    mock.module("@/lib/search", () => realSearchModule);
+  });
+
   afterEach(() => {
     mockGetSearchIndex.mockClear();
     clearCache();
@@ -23,12 +31,14 @@ describe("GET /api/search API Contract", () => {
         description: "Post-Quantum Cryptography basics.",
         href: "/docs/post-quantum-cryptography",
         content: "Post-quantum cryptography refers to cryptographic algorithms...",
+        headings: [],
       },
       {
         title: "OWASP Top 10",
         description: "Overview of OWASP vulnerabilities.",
         href: "/docs/owasp-top-10",
         content: "The OWASP Top 10 is a standard awareness document...",
+        headings: [],
       },
     ];
     mockGetSearchIndex.mockImplementation(async () => mockData);

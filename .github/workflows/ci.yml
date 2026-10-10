@@ -40,12 +40,13 @@ jobs:
         run: bun test --coverage
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        # カバレッジ送信は品質ゲートではないため、Codecov 側の障害（TLS 拒否等）で CI を落とさない
+        continue-on-error: true
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           files: security-docs/coverage/lcov.info
           fail_ci_if_error: false
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   audit:
     name: Security Audit
@@ -76,4 +77,10 @@ jobs:
       #      docs/progress.md の「セキュリティ / CSP」セクションに対応期限とともに記録する
       #   4. `bun audit` が利用不能な環境では `npm audit --audit-level=high` に切り替える
       - name: Run security audit
-        run: bun audit --audit-level=high
+        # GHSA-vfj7-8cjw-p6xm (braces <=3.0.3): パッチ未提供・dev 依存のみ（eslint-config-next 経由）。
+        # 見直し期限: 2026-11-05（docs/progress.md 参照）
+        run: bun audit --audit-level=high --ignore=GHSA-vfj7-8cjw-p6xm
+
+      # 本番依存のみを除外指定なしで監査し、一時除外が本番依存に波及していないことを保証する
+      - name: Run production dependency audit
+        run: bun audit --prod --audit-level=high

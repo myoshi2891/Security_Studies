@@ -1,0 +1,5285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cisco Certified CyberOps Professional 初学者向けステップバイステップ完全ガイド</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.3.0/500.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<style>
+:root{
+--color-paper:#F6F7F9;--color-ink:#161B26;--color-indigo:#2E3F72;--color-gold:#B8802A;--color-forest:#1B6E6A;--color-plum:#8C3A5C;
+--surface:#FFFFFF;--line:#D5DAE5;--line-strong:#B7C0D4;--muted:#4B5878;--faint:#6B7690;
+--tint-indigo:#EEF1F8;--tint-gold:#FAF1DF;--tint-forest:#E6F2F0;--tint-plum:#F6E9EF;
+--font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,sans-serif;
+--font-serif:"Source Serif 4","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--sidebar:288px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-paper);color:var(--color-ink);font-family:var(--font-sans);font-size:1rem;line-height:1.75;font-weight:400;-webkit-text-size-adjust:100%}
+[id]{scroll-margin-top:24px}
+strong,b{font-weight:500;color:var(--color-indigo)}
+a{color:var(--color-indigo);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+a:hover{color:var(--color-gold)}
+.layout{display:block}
+
+/* sidebar */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);z-index:50;padding:20px 0 40px}
+.brand{display:flex;align-items:center;gap:12px;padding:0 20px 18px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.brand .seal{flex:none}
+.brand .seal .a{fill:none;stroke:var(--color-indigo);stroke-width:1.5}
+.brand .seal .b{fill:none;stroke:var(--color-gold);stroke-width:1}
+.brand .seal .c{fill:none;stroke:var(--color-forest);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.brand-t{font-family:var(--font-serif);font-weight:500;line-height:1.3;color:var(--color-indigo)}
+.brand-s{color:var(--faint);line-height:1.3}
+.sidebar ul{list-style:none;margin:0;padding:0}
+.sidebar li{padding-left:0}
+.sidebar li::before{content:none}
+.navgroup{padding:6px 0}
+.n1{display:block;padding:8px 20px;font-family:var(--font-serif);font-weight:500;color:var(--color-ink);text-decoration:none;line-height:1.4}
+span.n1{color:var(--muted)}
+.n2,.n3{display:block;text-decoration:none;color:var(--muted);line-height:1.45;border-left:3px solid transparent}
+.n2{padding:6px 20px 6px 28px}
+.n3{padding:5px 20px 5px 44px;color:var(--faint)}
+.sidebar a:hover{background:var(--tint-indigo);color:var(--color-indigo)}
+.sidebar a.active{background:var(--tint-indigo);color:var(--color-indigo);border-left-color:var(--color-gold);font-weight:500}
+.sub{display:none}
+li.open>.sub{display:block}
+.backdrop{display:none;position:fixed;inset:0;background:var(--color-ink);opacity:.4;z-index:40}
+.menu-btn{display:none;position:fixed;right:20px;bottom:20px;z-index:60;width:52px;height:52px;border-radius:50%;border:1px solid var(--color-indigo);background:var(--color-indigo);color:var(--color-paper);align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer}
+
+/* main: full width, no max-width cap */
+main{margin-left:var(--sidebar);padding:0 56px 80px}
+.hero{padding:56px 0 32px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.eyebrow{color:var(--color-gold);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.hero h1{font-family:var(--font-serif);font-weight:500;font-size:2.1rem;line-height:1.35;margin:0 0 24px;color:var(--color-indigo)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.metacard{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--color-indigo);border-radius:8px;padding:12px 16px}
+.metalabel{color:var(--faint)}
+.metaval{margin-top:2px}
+h1.part{font-family:var(--font-serif);font-weight:500;font-size:1.9rem;line-height:1.35;color:var(--color-indigo);margin:64px 0 16px;padding:14px 0 14px 20px;border-left:6px solid var(--color-gold);background:var(--tint-indigo);border-radius:0 8px 8px 0}
+h2{font-family:var(--font-serif);font-weight:500;font-size:1.5rem;line-height:1.4;margin:48px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line-strong);color:var(--color-ink)}
+h3{font-family:var(--font-serif);font-weight:500;font-size:1.25rem;line-height:1.45;margin:40px 0 12px;color:var(--color-indigo)}
+h3::before{content:"";display:inline-block;width:10px;height:10px;background:var(--color-gold);margin-right:10px;border-radius:2px}
+h4{font-weight:500;font-size:1rem;margin:24px 0 8px;color:var(--color-forest)}
+p{margin:0 0 1rem}
+p.lead{background:var(--tint-indigo);border:1px solid var(--line);border-left:4px solid var(--color-indigo);border-radius:8px;padding:12px 18px;font-family:var(--font-serif)}
+p.sublabel{margin:1.6rem 0 .5rem;color:var(--color-forest);padding-left:12px;border-left:3px solid var(--color-forest)}
+p.sublabel strong{color:var(--color-forest)}
+
+/* lists */
+main ul,main ol{list-style:none;margin:0 0 1rem;padding:0}
+main li{position:relative;padding-left:1.7rem;margin:.35rem 0}
+main ul>li::before{content:"";position:absolute;left:.45rem;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--color-gold)}
+main ol{counter-reset:n}
+main ol>li{counter-increment:n}
+main ol>li::before{content:counter(n);position:absolute;left:0;top:.2em;width:1.3rem;height:1.3rem;line-height:1.3rem;text-align:center;border-radius:50%;background:var(--color-indigo);color:var(--color-paper);font-weight:500;font-size:1rem}
+main ol>li{padding-left:2rem}
+
+/* tables */
+.table-wrap{overflow-x:auto;margin:1rem 0 1.4rem;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:1rem}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--tint-indigo);color:var(--color-indigo);font-weight:500;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td code{overflow-wrap:anywhere}
+
+/* code */
+code{font-family:var(--font-mono);font-size:1rem;background:var(--tint-indigo);color:var(--color-ink);padding:1px 6px;border-radius:4px}
+.codeblock{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:1rem 0 1.4rem;background:var(--surface)}
+.codehead{background:var(--tint-indigo);color:var(--faint);padding:6px 14px;border-bottom:1px solid var(--line);font-family:var(--font-mono)}
+.codeblock pre{margin:0;padding:14px 16px;overflow-x:auto;line-height:1.6}
+.codeblock pre code,pre code.hljs{background:transparent;padding:0;border-radius:0;color:var(--color-ink)}
+.hljs{background:transparent}
+
+/* callouts: practice / source / note */
+.callout{border:1px solid var(--line);border-left-width:4px;border-radius:8px;padding:14px 18px 6px;margin:1.3rem 0}
+.callout-title{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:8px}
+.callout-title i{font-size:1.25rem}
+.callout>*:last-child{margin-bottom:.6rem}
+.callout.practice{background:var(--tint-gold);border-color:var(--color-gold)}
+.callout.practice .callout-title{color:var(--color-gold)}
+.callout.source{background:var(--tint-forest);border-color:var(--color-forest)}
+.callout.source .callout-title{color:var(--color-forest)}
+.callout.note{background:var(--tint-plum);border-color:var(--color-plum)}
+.callout.note .callout-title{color:var(--color-plum)}
+
+/* diagrams */
+.diagram{display:flex;justify-content:center;overflow-x:auto;margin:1.2rem 0 1.6rem;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.diagram svg{overflow:visible}
+
+/* reference cards */
+.refgroup{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px;margin:1rem 0 1.6rem}
+.refcard{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px}
+.refnum{flex:none;width:2rem;height:2rem;line-height:2rem;text-align:center;border-radius:50%;background:var(--color-forest);color:var(--color-paper);font-weight:500}
+.refbody{min-width:0}
+.reftitle{font-weight:500;color:var(--color-ink);line-height:1.5}
+.refbody a{display:block;margin-top:2px}
+
+/* quiz */
+.quiz-ctl{display:flex;gap:10px;flex-wrap:wrap;margin:1rem 0}
+.quiz-ctl button{font:inherit;cursor:pointer;background:var(--surface);color:var(--color-indigo);border:1px solid var(--color-indigo);border-radius:8px;padding:8px 16px}
+.quiz-ctl button:hover{background:var(--tint-indigo)}
+.quiz{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px;margin-bottom:1.6rem}
+.qcard{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--color-indigo);border-radius:12px;padding:16px 18px}
+.qnum{flex:none;width:2.4rem;height:2.4rem;line-height:2.4rem;text-align:center;border-radius:50%;background:var(--color-indigo);color:var(--color-paper);font-weight:500}
+.qbody{min-width:0;flex:1}
+.qtext{margin:0 0 .8rem}
+details.ans summary{cursor:pointer;color:var(--color-forest);font-weight:500;list-style:none;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid var(--color-forest);border-radius:8px}
+details.ans summary::-webkit-details-marker{display:none}
+details.ans summary:hover{background:var(--tint-forest)}
+details.ans[open] summary{background:var(--tint-forest)}
+.anstext{margin-top:10px;padding:10px 14px;background:var(--tint-forest);border-left:4px solid var(--color-forest);border-radius:0 8px 8px 0}
+
+/* tablet and below: drawer */
+@media (max-width:1024px){
+.sidebar{transform:translateX(-100%);transition:transform .25s ease;width:min(320px,86vw)}
+.sidebar.open{transform:none}
+.backdrop.show{display:block}
+.menu-btn{display:flex}
+main{margin-left:0;padding:0 20px 96px}
+.hero{padding-top:32px}
+.hero h1{font-size:1.6rem}
+h1.part{font-size:1.5rem}
+.refgroup,.quiz{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" id="sidebar" aria-label="目次">
+<div class="brand">
+<svg class="seal" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><circle class="a" cx="20" cy="20" r="18"/><circle class="b" cx="20" cy="20" r="14.5"/><path class="a" d="M20 9l9 3.5v7c0 5.2-3.7 9.2-9 11-5.3-1.8-9-5.8-9-11v-7z"/><path class="c" d="M16 20l3 3 5-6"/></svg>
+<div><div class="brand-t">CyberOps Professional</div><div class="brand-s">350-201 CBRCOR / 300-215 CBRFIR</div></div>
+</div>
+<nav>
+<div class="navgroup"><span class="n1">はじめに</span><ul><li><a class="n2" href="#s1">0. このガイドの読み方</a><ul class="sub"><li><a class="n3" href="#s2">0.1 各トピックの構成</a></li><li><a class="n3" href="#s3">0.2 表記ルール</a></li><li><a class="n3" href="#s4">0.3 重要な注意（必読）</a></li></ul></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s5">第1部 認定の全体像</a><ul><li><a class="n2" href="#s6">1.1 認定の構成</a></li><li><a class="n2" href="#s7">1.2 2つの試験の比較</a><ul class="sub"><li><a class="n3" href="#s8">ドメイン配分の可視化</a></li></ul></li><li><a class="n2" href="#s9">1.3 認定名称・試験名称の整理</a></li><li><a class="n2" href="#s10">1.4 受験条件・有効期間</a></li><li><a class="n2" href="#s11">1.5 学習ロードマップ（初学者向け）</a><ul class="sub"><li><a class="n3" href="#s12">前提知識チェック</a></li></ul></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s13">第2部 コア試験 350-201 CBRCOR</a><ul><li><a class="n2" href="#s14">ドメイン1 基礎 (20%)</a><ul class="sub"><li><a class="n3" href="#s15">1.1 プレイブック内のコンポーネントの解釈</a></li><li><a class="n3" href="#s16">1.2 プレイブックのシナリオに基づいた必要なツールの判断</a></li><li><a class="n3" href="#s17">1.3 一般的なシナリオへのプレイブック適用</a></li><li><a class="n3" href="#s21">1.4 コンプライアンス規格と対象業界の推定</a></li><li><a class="n3" href="#s22">1.5 サイバーリスク保険の目的</a></li><li><a class="n3" href="#s23">1.6 リスク分析の要素（資産・脆弱性・脅威）</a></li><li><a class="n3" href="#s24">1.7 インシデント対応のワークフローの適用</a></li><li><a class="n3" href="#s25">1.8 インシデント対応メトリクスによる特徴と改善領域の説明</a></li><li><a class="n3" href="#s26">1.9 クラウド環境の種類の説明</a></li><li><a class="n3" href="#s27">1.10 クラウド（IaaS / PaaS）におけるセキュリティ運用上の考慮事項の比較</a></li></ul></li><li><a class="n2" href="#s28">ドメイン2 手法 (30%)</a><ul class="sub"><li><a class="n3" href="#s29">2.1 AI を活用したデータ分析手法の推奨</a></li><li><a class="n3" href="#s30">2.2 セキュリティ強化されたマシンイメージを使用した展開</a></li><li><a class="n3" href="#s31">2.3 資産のセキュリティ態勢を評価するプロセス</a></li><li><a class="n3" href="#s32">2.4 セキュリティ管理の評価・ギャップ診断・改善提案</a></li><li><a class="n3" href="#s33">2.5 システム強化のための業界標準・推奨リソース</a></li><li><a class="n3" href="#s34">2.6 パッチ適用の推奨</a></li><li><a class="n3" href="#s35">2.7 サービス無効化の推奨</a></li><li><a class="n3" href="#s36">2.8 ネットワークセグメンテーションの適用</a></li><li><a class="n3" href="#s37">2.9 ネットワーク制御によるネットワークセキュリティの強化</a></li><li><a class="n3" href="#s38">2.10 DevSecOps の推奨事項（影響）の判断</a></li><li><a class="n3" href="#s39">2.11 脅威インテリジェンスプラットフォーム（TIP）によるインテリジェンスの自動化</a></li><li><a class="n3" href="#s40">2.12 ツールを用いた AI 主導の脅威インテリジェンスの適用</a></li><li><a class="n3" href="#s41">2.13 データ損失・データ漏洩・移動中/使用中/保管中のデータ</a></li><li><a class="n3" href="#s42">2.14 DLP 手法の検出と適用の仕組み</a></li><li><a class="n3" href="#s43">2.15 ルール・フィルタ・ポリシーの調整・設定変更の推奨</a></li><li><a class="n3" href="#s44">2.16 セキュリティデータ管理の概念</a></li><li><a class="n3" href="#s45">2.17 SIEM ツールの使用と概念</a></li><li><a class="n3" href="#s46">2.18 SOAR ワークフローの推奨（問題の特定からエスカレーション・解決まで）</a></li><li><a class="n3" href="#s47">2.19 関係者向けダッシュボードデータの適用</a></li><li><a class="n3" href="#s48">2.20 SIEM データを用いた UEBA</a></li><li><a class="n3" href="#s49">2.21 ユーザー行動アラートに基づく次のアクションの判断</a></li><li><a class="n3" href="#s50">2.22 ネットワーク分析ツールとその制限事項</a></li><li><a class="n3" href="#s51">2.23 パケットキャプチャファイル内のアーティファクトとストリームの評価</a></li><li><a class="n3" href="#s52">2.24 既存の検出ルールのトラブルシュート</a></li><li><a class="n3" href="#s53">2.25 攻撃の戦術・技術・手順（TTP）の判断</a></li></ul></li><li><a class="n2" href="#s54">ドメイン3 プロセス (30%)</a><ul class="sub"><li><a class="n3" href="#s55">3.1 脅威モデルの構成要素の分析</a></li><li><a class="n3" href="#s56">3.2 一般的なタイプのケースを調査する手順の判断</a></li><li><a class="n3" href="#s57">3.3 マルウェア分析プロセスの概念と一連の手順</a></li><li><a class="n3" href="#s58">3.4 トラフィックパターンの AI 予測分析に基づく攻撃イベントの解釈</a></li><li><a class="n3" href="#s59">3.5 さまざまなプラットフォームにおける潜在的なエンドポイント侵入の調査</a></li><li><a class="n3" href="#s60">3.6 既知の侵害の指標（IOC）と攻撃の指標（IOA）</a></li><li><a class="n3" href="#s61">3.7 サンドボックス環境での IOC の判断（複雑な指標の生成を含む）</a></li><li><a class="n3" href="#s62">3.8 データ損失を調査するための手順（クラウド・エンドポイント・サーバー・DB・アプリ）</a></li><li><a class="n3" href="#s63">3.9 脆弱性の問題に対処するための一般的な緩和策</a></li><li><a class="n3" href="#s64">3.10 脆弱性トリアージとリスク分析（CVSS など）</a></li></ul></li><li><a class="n2" href="#s65">ドメイン4 自動化 (20%)</a><ul class="sub"><li><a class="n3" href="#s66">4.1 SOAR の概念、プラットフォーム、メカニズムの比較</a></li><li><a class="n3" href="#s67">4.2 基本的なスクリプト（Python など）の解釈</a></li><li><a class="n3" href="#s68">4.3 セキュリティ運用タスクの自動化（指定されたスクリプトの修正）</a></li><li><a class="n3" href="#s69">4.4 一般的なデータ形式（JSON、HTML、CSV、XML など）</a></li><li><a class="n3" href="#s70">4.5 SOAR プラットフォーム内での自動化・オーケストレーション・機械学習の機会</a></li><li><a class="n3" href="#s71">4.6 API を使う際の制約（レート制限、タイムアウト、ペイロード）</a></li><li><a class="n3" href="#s72">4.7 REST API に関連する一般的な HTTP レスポンスコード</a></li><li><a class="n3" href="#s73">4.8 HTTP レスポンスの構成要素（コード、ヘッダー、本文）の評価</a></li><li><a class="n3" href="#s74">4.9 API 認証メカニズム（ベーシック、カスタムトークン、API キー）</a></li><li><a class="n3" href="#s75">4.10 Bash コマンドの活用（ファイル管理、ディレクトリ操作、環境変数）</a></li><li><a class="n3" href="#s76">4.11 CI/CD パイプラインの構成要素</a></li><li><a class="n3" href="#s77">4.12 DevOps プラクティスの原則の適用</a></li><li><a class="n3" href="#s78">4.13 コードとしてのインフラストラクチャ（IaC）の原則</a></li></ul></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s79">第3部 コンセントレーション試験 300-215 CBRFIR</a><ul><li><a class="n2" href="#s80">F1 基礎 (20%)</a><ul class="sub"><li><a class="n3" href="#s81">F1.1 根本原因分析（RCA）レポートに必要なコンポーネント</a></li><li><a class="n3" href="#s82">F1.2 インフラストラクチャ・ネットワークデバイスのフォレンジック分析</a></li><li><a class="n3" href="#s83">F1.3 アンチフォレンジックの戦術・技術・手順</a></li><li><a class="n3" href="#s84">F1.4 エンコーディングおよび難読化の手法</a></li><li><a class="n3" href="#s85">F1.5 YARA ルール（基本）の使用と特徴</a></li><li><a class="n3" href="#s86">F1.6 DFIR で使用するツールの役割</a></li><li><a class="n3" href="#s87">F1.7 仮想環境（クラウドベンダー）からの証拠収集に関連する問題</a></li></ul></li><li><a class="n2" href="#s88">F2 フォレンジック手法 (20%)</a><ul class="sub"><li><a class="n3" href="#s89">F2.1 ファイルレスマルウェア分析に用いられる手法（MITRE ATT&amp;CK）</a></li><li><a class="n3" href="#s90">F2.2 ホスト上の必要なファイルとその場所</a></li><li><a class="n3" href="#s91">F2.3 ホスト上の IOC 識別のための出力の評価</a></li><li><a class="n3" href="#s92">F2.4 提供されたスニペットに基づくコードの種類の判断</a></li><li><a class="n3" href="#s93">F2.5 ログや複数データソースを解析・検索するスクリプトの作成（Python・PowerShell・Bash）</a></li><li><a class="n3" href="#s94">F2.6 ライブラリやツールの目的・使用方法・機能</a></li></ul></li><li><a class="n2" href="#s95">F3 インシデント対応手法 (30%)</a><ul class="sub"><li><a class="n3" href="#s96">F3.1 アラートログ（SIEM、IDS/IPS、syslog など）の解釈</a></li><li><a class="n3" href="#s97">F3.2 インシデントの種類に応じて関連付けるデータの判断</a></li><li><a class="n3" href="#s98">F3.3 攻撃ベクトル・攻撃対象領域の判断と緩和策の推奨</a></li><li><a class="n3" href="#s99">F3.4 インシデント発生後の分析に基づく対応策の推奨</a></li><li><a class="n3" href="#s100">F3.5 評価済みアラートに基づく緩和策の推奨（FW、SIEM、SOAR、IPS、Umbrella、SNA、XDR 等）</a></li><li><a class="n3" href="#s101">F3.6 ゼロデイ攻撃に対する対応策の推奨</a></li><li><a class="n3" href="#s102">F3.7 インテリジェンスアーティファクトに基づく対応策の推奨</a></li><li><a class="n3" href="#s103">F3.8 検出と防止のための Cisco セキュリティソリューションの推奨</a></li><li><a class="n3" href="#s104">F3.9 脅威インテリジェンスフィードの解釈（IOC・IOA の判断）</a></li><li><a class="n3" href="#s105">F3.10 脅威インテリジェンス由来のアーティファクトの評価による攻撃者プロファイルの判断</a></li><li><a class="n3" href="#s106">F3.11 脅威インテリジェンスに関連する Cisco セキュリティソリューションの機能</a></li></ul></li><li><a class="n2" href="#s107">F4 フォレンジックプロセス (15%)</a><ul class="sub"><li><a class="n3" href="#s108">F4.1 アンチフォレンジック手法の説明と検出</a></li><li><a class="n3" href="#s109">F4.2 Web アプリケーション/サーバー（Apache・NGINX）のログ分析</a></li><li><a class="n3" href="#s110">F4.3 ネットワークモニタリングツールによる悪意のあるアクティビティの分析（NetFlow、Wireshark）</a></li><li><a class="n3" href="#s111">F4.4 ファイルの特徴に基づく次のステップの推奨</a></li><li><a class="n3" href="#s112">F4.5 objdump や CLI ツールを用いたバイナリの解釈</a></li></ul></li><li><a class="n2" href="#s113">F5 インシデント対応プロセス (15%)</a><ul class="sub"><li><a class="n3" href="#s114">F5.1 インシデント対応の目標</a></li><li><a class="n3" href="#s115">F5.2 インシデント対応プレイブックに必要な要素の評価</a></li><li><a class="n3" href="#s116">F5.3 ThreatGrid（Cisco Secure Malware Analytics）レポートの関連コンポーネントの評価</a></li><li><a class="n3" href="#s117">F5.4 エンドポイント上のファイルの評価とアドホックスキャンの次のステップ</a></li><li><a class="n3" href="#s118">F5.5 STIX・TAXII 形式で提供される脅威インテリジェンスの分析</a></li></ul></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s119">第4部 Cisco セキュリティ製品マップ</a><ul><li><a class="n2" href="#s120">4.1 製品名の変遷（旧教材を読むときの対応表）</a></li><li><a class="n2" href="#s121">4.2 製品とドメインの対応</a></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s122">第5部 横断ベストプラクティスと学習計画</a><ul><li><a class="n2" href="#s123">5.1 SOC・IR 運用の横断ベストプラクティス</a></li><li><a class="n2" href="#s124">5.2 インシデント対応 全体フロー（総まとめ）</a></li><li><a class="n2" href="#s125">5.3 12週間の学習計画（目安）</a></li><li><a class="n2" href="#s126">5.4 ハンズオン環境（無料・公開ツール中心）</a></li><li><a class="n2" href="#s127">5.5 受験のコツ</a></li></ul></div>
+<div class="navgroup"><a class="n1" href="#s128">第6部 確認問題</a><ul></ul></div>
+<div class="navgroup"><a class="n1" href="#s129">第7部 用語集</a><ul></ul></div>
+<div class="navgroup"><a class="n1" href="#s130">第8部 参考URL一覧</a><ul><li><a class="n2" href="#s131">8.1 Cisco 公式（認定・試験）</a></li><li><a class="n2" href="#s132">8.2 標準・ガイドライン</a></li><li><a class="n2" href="#s133">8.3 脅威・脆弱性・解析</a></li><li><a class="n2" href="#s134">本ガイドの根拠と限界について</a></li></ul></div>
+</nav>
+</aside>
+<div class="backdrop" id="backdrop"></div>
+<button class="menu-btn" id="menuBtn" type="button" aria-label="目次を開く" aria-expanded="false"><i class="ti ti-menu-2"></i></button>
+<main>
+<header class="hero"><div class="eyebrow">Cisco certification study guide</div><h1 id="top">Cisco Certified CyberOps Professional 初学者向けステップバイステップ完全ガイド</h1><div class="meta"><div class="metacard"><div class="metalabel">対象認定</div><div class="metaval">Cisco Certified CyberOps Professional（2025年1月21日以降は <strong>Cybersecurity Professional</strong> へ名称変更。詳細は 1.3 節）</div></div><div class="metacard"><div class="metalabel">必須試験</div><div class="metaval">コア試験 <strong>350-201 CBRCOR</strong> ＋ コンセントレーション試験 <strong>300-215 CBRFIR</strong></div></div><div class="metacard"><div class="metalabel">想定読者</div><div class="metaval">セキュリティ運用（SOC）・インシデント対応（IR）を体系的に学びたい初学者〜中級者</div></div><div class="metacard"><div class="metalabel">作成基準日</div><div class="metaval">2026年10月5日（Cisco 公式ページおよび試験ブループリント v1.2 を参照）</div></div></div></header>
+<h2 id="s1">0. このガイドの読み方</h2><h3 id="s2">0.1 各トピックの構成</h3><p>各試験項目は、次の共通テンプレートで解説します。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>見出し</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ひとことで言うと</strong></td>
+<td>30秒で掴める要約</td>
+</tr>
+<tr>
+<td><strong>やさしい解説</strong></td>
+<td>初学者向けの用語説明・背景</td>
+</tr>
+<tr>
+<td><strong>手順（ステップ）</strong></td>
+<td>実務での進め方（Mermaid フローチャートや表）</td>
+</tr>
+<tr>
+<td><strong>ベストプラクティス</strong></td>
+<td>現場で推奨される実装・運用の勘所</td>
+</tr>
+<tr>
+<td><strong>試験のコツ</strong></td>
+<td>問われ方の傾向（筆者の学習上の見立て）</td>
+</tr>
+<tr>
+<td><strong>根拠・参考</strong></td>
+<td>参考にした一次情報の URL</td>
+</tr>
+</tbody>
+</table></div><h3 id="s3">0.2 表記ルール</h3><ul>
+<li>図解は <strong>Mermaid</strong> と <strong>Markdown の表</strong> のみを使用しています（ASCII アートは使用しません）。</li>
+<li>用語は日本語を主とし、英語の技術用語は原語を併記します。</li>
+<li>コード例・IP アドレス・ドメインは <strong>ドキュメント用の架空値</strong>（<code>203.0.113.0/24</code>、<code>example.com</code> など）です。実環境にそのまま適用しないでください。</li>
+<li>試験項目の番号（例: 2.17）は、Cisco 公式ブループリント（v1.2）の番号に対応しています。</li>
+</ul><h3 id="s4">0.3 重要な注意（必読）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>注意点</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ブループリントは変更されうる</td>
+<td>Cisco は出題内容を予告なく変更する場合があると明記しています。受験前に必ず最新版を確認してください。</td>
+</tr>
+<tr>
+<td>実試験には記載外の話題も出る</td>
+<td>ブループリントにない関連トピックが出題される場合があります。</td>
+</tr>
+<tr>
+<td>試験言語</td>
+<td>日本の Cisco 公式ページでは、両試験とも<strong>英語</strong>での提供と記載されています。英語の用語も覚えておきましょう。</td>
+</tr>
+<tr>
+<td>本ガイドの「試験のコツ」</td>
+<td>公式情報ではなく、筆者の学習上の見立てです。</td>
+</tr>
+<tr>
+<td>製品名の変遷</td>
+<td>Cisco 製品名は頻繁に変わります（第4部参照）。古い教材では旧名称が使われています。</td>
+</tr>
+</tbody>
+</table></div><h1 class="part" id="s5">第1部 認定の全体像</h1><h2 id="s6">1.1 認定の構成</h2><p class="lead"><strong>ひとことで言うと</strong>: 「コア試験」と「コンセントレーション試験」の <strong>2つ</strong> に合格すると Professional 認定を取得できます。</p><p>Cisco の日本語公式ページによると、本認定は SOC やインシデントレスポンス、クラウドセキュリティなどの役割における<strong>シニアアナリスト</strong>にふさわしい高度なスキルを証明するものです。また、各試験ごとに個別の<strong>スペシャリスト認定</strong>も取得できるため、途中経過も成果として認められます。</p><div class="diagram" data-d="d0"></div><h2 id="s7">1.2 2つの試験の比較</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>350-201 CBRCOR（コア）</th>
+<th>300-215 CBRFIR（コンセントレーション）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正式名称（v1.2）</td>
+<td>Performing Cybersecurity Using Cisco Security Technologies</td>
+<td>Conducting Forensic Analysis and Incident Response Using Cisco Technologies for Cybersecurity</td>
+</tr>
+<tr>
+<td>試験時間</td>
+<td>120 分</td>
+<td>90 分</td>
+</tr>
+<tr>
+<td>試験言語（日本ページ記載）</td>
+<td>英語</td>
+<td>英語</td>
+</tr>
+<tr>
+<td>出題の中心</td>
+<td>コアなセキュリティ運用（基礎・手法・プロセス・自動化）</td>
+<td>フォレンジック分析とインシデント対応</td>
+</tr>
+<tr>
+<td>ドメイン構成</td>
+<td>基礎20% / 手法30% / プロセス30% / 自動化20%</td>
+<td>基礎20% / フォレンジック手法20% / IR手法30% / フォレンジックプロセス15% / IRプロセス15%</td>
+</tr>
+<tr>
+<td>受験予約</td>
+<td>ピアソン VUE</td>
+<td>ピアソン VUE</td>
+</tr>
+</tbody>
+</table></div><h3 id="s8">ドメイン配分の可視化</h3><div class="diagram" data-d="d1"></div><div class="diagram" data-d="d2"></div><h2 id="s9">1.3 認定名称・試験名称の整理</h2><p>公式資料の間で名称が揺れているため、混乱しないよう整理します。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>時期・資料</th>
+<th>名称</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日本語の認定ページ（本ガイドの出発点）</td>
+<td>Cisco Certified CyberOps Professional</td>
+<td>ページ上の記述は旧情報（CBRCOR 研修の「2021年4月リリース予定」など）を含みます</td>
+</tr>
+<tr>
+<td>2025年1月21日以降（Cisco ブループリントの記載）</td>
+<td>Cybersecurity Professional</td>
+<td>Cisco のブループリント文書に「CyberOps Professional の名称が変更される」旨の記載があります</td>
+</tr>
+<tr>
+<td>試験ブループリント v1.2（日本語 PDF）</td>
+<td>CCNP Cybersecurity 認定に関連する試験</td>
+<td>認定名の表記が資料により異なります</td>
+</tr>
+<tr>
+<td>試験名（350-201）</td>
+<td>CyberOps → <strong>Cybersecurity</strong></td>
+<td>旧: Performing CyberOps Using Core Security Technologies / 現: Performing Cybersecurity Using Cisco Security Technologies</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>ポイント</strong>: 試験番号（<strong>350-201</strong>、<strong>300-215</strong>）は共通です。検索・受験予約は試験番号で行うのが確実です。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Cisco 日本語 認定ページ: <a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/certifications/professional/cyberops-professional.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/certifications/professional/cyberops-professional.html</a></li>
+<li>Cisco 350-201 ブループリント v1.2（英語・名称変更の記載）: <a href="https://learningcontent.cisco.com/documents/marketing/exam-topics/350-201-CBRCOR-v1.2_2024Oct01.pdf" rel="noopener" target="_blank">https://learningcontent.cisco.com/documents/marketing/exam-topics/350-201-CBRCOR-v1.2_2024Oct01.pdf</a></li>
+</ul></div><h2 id="s10">1.4 受験条件・有効期間</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容（日本語公式ページ）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前提条件</td>
+<td>正式な前提条件はなし</td>
+</tr>
+<tr>
+<td>推奨経験</td>
+<td>エンタープライズネットワークソリューションの実装経験 3〜5年</td>
+</tr>
+<tr>
+<td>有効期間</td>
+<td>3年間</td>
+</tr>
+<tr>
+<td>再認定</td>
+<td>Cisco の再認定ポリシーに従う</td>
+</tr>
+</tbody>
+</table></div><ul>
+<li>再認定ポリシー: <a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/recertification-policy.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/recertification-policy.html</a></li>
+</ul><h2 id="s11">1.5 学習ロードマップ（初学者向け）</h2><div class="diagram" data-d="d3"></div><h3 id="s12">前提知識チェック</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分野</th>
+<th>最低限わかっておきたいこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ネットワーク</td>
+<td>TCP/UDP、DNS、HTTP/HTTPS、サブネット、VLAN、NAT</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Windows のイベントログ・レジストリ、Linux のコマンドライン・ログの場所</td>
+</tr>
+<tr>
+<td>セキュリティ基礎</td>
+<td>CIA（機密性・完全性・可用性）、認証と認可、暗号の基礎</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>Python の基本（変数・ループ・関数・辞書・例外処理）、JSON の読み書き</td>
+</tr>
+<tr>
+<td>前段の資格</td>
+<td>CyberOps Associate（200-201 CBROPS）の内容は理解済みだとスムーズです</td>
+</tr>
+</tbody>
+</table></div><h1 class="part" id="s13">第2部 コア試験 350-201 CBRCOR</h1><p>試験の概要（公式）: コアなサイバーセキュリティ運用に関する知識を問う <strong>120分</strong> の試験。基礎・手法・プロセス・自動化を扱います。</p><h2 id="s14">ドメイン1 基礎 (20%)</h2><h3 id="s15">1.1 プレイブック内のコンポーネントの解釈</h3><p class="lead"><strong>ひとことで言うと</strong>: プレイブックは「この事象が起きたら、誰が・何を・どの順で行うか」を書いた<strong>対応手順書</strong>です。</p><p class="sublabel"><strong>やさしい解説</strong></p><ul>
+<li><strong>ポリシー</strong>（方針）は「何をすべきか」、<strong>プレイブック</strong>は「状況ごとの対応の流れ」、<strong>ランブック</strong>はより細かい「実行コマンドレベルの手順」を指すことが一般的です（組織により用法が異なります）。</li>
+<li>SOAR（後述）では、プレイブックを<strong>自動実行できる形</strong>（ワークフロー）で実装します。</li>
+</ul><p class="sublabel"><strong>プレイブックの主な構成要素</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>構成要素</th>
+<th>役割</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目的・適用範囲</td>
+<td>どの事象に使うか</td>
+<td>「フィッシングメール対応」</td>
+</tr>
+<tr>
+<td>トリガー（起動条件）</td>
+<td>開始のきっかけ</td>
+<td>メール報告ボタン、SIEM アラート</td>
+</tr>
+<tr>
+<td>役割と責任</td>
+<td>誰が何をするか</td>
+<td>一次分析担当、IR リード、法務</td>
+</tr>
+<tr>
+<td>前提条件・必要ツール</td>
+<td>事前に必要な権限・ツール</td>
+<td>EDR コンソール、サンドボックス</td>
+</tr>
+<tr>
+<td>手順（ステップ）</td>
+<td>検知・分析・封じ込め・根絶・復旧</td>
+<td>URL 評判確認 → 隔離</td>
+</tr>
+<tr>
+<td>判断分岐</td>
+<td>条件で処理が分かれる点</td>
+<td>「悪性なら隔離、無害ならクローズ」</td>
+</tr>
+<tr>
+<td>エスカレーション基準</td>
+<td>上位へ上げる条件</td>
+<td>重要資産に影響がある場合</td>
+</tr>
+<tr>
+<td>コミュニケーション</td>
+<td>連絡先・報告タイミング</td>
+<td>経営層報告、規制当局への通知</td>
+</tr>
+<tr>
+<td>証拠保全</td>
+<td>何を保存するか</td>
+<td>ログ、メール原本、メモリダンプ</td>
+</tr>
+<tr>
+<td>完了条件・事後対応</td>
+<td>終了の定義と振り返り</td>
+<td>チケットのクローズ、教訓の反映</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d4"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>ひとつの事象に1つの目的</strong>で書き、判断分岐を明記する。</li>
+<li><strong>机上演習（テーブルトップ）</strong> で定期的に検証し、改訂履歴を管理する。</li>
+<li>手順を MITRE ATT&amp;CK の戦術・技術に紐付け、検知ルールとの対応を取る。</li>
+<li>SOAR 化する際は、<strong>破壊的アクション（隔離・削除）に人間の承認ステップ</strong>を入れる。</li>
+<li>連絡先・権限の棚卸しを定期的に行う（古い連絡先が最大の落とし穴）。</li>
+</ol></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>試験のコツ</strong>: 「プレイブックの図やテキストを読み、足りない要素や正しい次の手順を選ぶ」形式を想定して、上の表の要素を言い換えられるようにしましょう。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-61 Rev.3（インシデント対応の推奨事項）: <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/61/r3/final</a></li>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/" rel="noopener" target="_blank">https://attack.mitre.org/</a></li>
+</ul></div><h3 id="s16">1.2 プレイブックのシナリオに基づいた必要なツールの判断</h3><p class="lead"><strong>ひとことで言うと</strong>: 事象の種類から「どのデータが必要か」を考え、そのデータを見せてくれるツールを選びます。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>シナリオ</th>
+<th>見たいデータ</th>
+<th>主なツール</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>フィッシング</td>
+<td>メールヘッダー、URL、添付ファイル</td>
+<td>メールセキュリティ、サンドボックス、URL 評判、SIEM</td>
+</tr>
+<tr>
+<td>ランサムウェア</td>
+<td>プロセス挙動、ファイル暗号化、横展開</td>
+<td>EDR（Secure Endpoint 等）、NDR、バックアップ</td>
+</tr>
+<tr>
+<td>DDoS</td>
+<td>トラフィック量、送信元分布</td>
+<td>NetFlow（Secure Network Analytics）、CDN/スクラビング、FW</td>
+</tr>
+<tr>
+<td>権限昇格</td>
+<td>認証ログ、特権付与、プロセス</td>
+<td>SIEM、EDR、IAM/PAM、AD 監査ログ</td>
+</tr>
+<tr>
+<td>Web サイト改ざん</td>
+<td>Web ログ、ファイル変更</td>
+<td>WAF、FIM（ファイル整合性監視）、Web サーバーログ</td>
+</tr>
+<tr>
+<td>データ持ち出し</td>
+<td>大量送信、クラウド共有</td>
+<td>DLP、プロキシ、CASB、NDR</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d5"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>ツールの目的別の分類</strong>（検知・調査・封じ込め・復旧）を頭に入れておく。</li>
+<li>「ツールが無い」場合は代替データ（例: EDR が無ければ Windows イベントログ＋Sysmon）を検討。</li>
+<li>ツール間の連携（SIEM ← EDR / FW / DNS）を前提に<strong>データソースの網羅</strong>を確認。</li>
+</ul></div><h3 id="s17">1.3 一般的なシナリオへのプレイブック適用</h3><p>試験ブループリントでは、<strong>不正な権限昇格、DoS/DDoS、Web サイト改ざん</strong>が例示されています。</p><h4 id="s18">(A) 不正な権限昇格</h4><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>フェーズ</th>
+<th>やること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>検知</td>
+<td>特権グループへの追加、予期しない管理者ログオン（例: Windows イベント 4672、4728/4732）を検出</td>
+</tr>
+<tr>
+<td>分析</td>
+<td>誰が・どこから・どの方法で昇格したか（脆弱性悪用か資格情報窃取か）</td>
+</tr>
+<tr>
+<td>封じ込め</td>
+<td>該当アカウント無効化、セッション/トークン失効、該当端末の隔離</td>
+</tr>
+<tr>
+<td>根絶</td>
+<td>悪用された脆弱性のパッチ適用、バックドア・不正アカウントの除去</td>
+</tr>
+<tr>
+<td>復旧</td>
+<td>権限の棚卸し、MFA 強制、ログ監視強化</td>
+</tr>
+<tr>
+<td>事後</td>
+<td><strong>最小権限の原則</strong>の徹底、PAM 導入、監査頻度の見直し</td>
+</tr>
+</tbody>
+</table></div><h4 id="s19">(B) DoS / DDoS</h4><div class="diagram" data-d="d6"></div><ul>
+<li>ベストプラクティス: <strong>事前に</strong> ISP・CDN と連絡経路を確立し、通常時のトラフィックのベースラインを把握しておく。攻撃が始まってから契約するのは困難です。</li>
+</ul><h4 id="s20">(C) Web サイト改ざん（Defacement）</h4><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ステップ</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>検知</td>
+<td>FIM のアラート、外部監視、利用者からの報告</td>
+</tr>
+<tr>
+<td>証拠保全</td>
+<td>改ざんされたページとサーバーのスナップショット、Web ログを保存</td>
+</tr>
+<tr>
+<td>初期侵入経路の特定</td>
+<td>脆弱な CMS/プラグイン、盗まれた管理者資格情報、アップロード機能</td>
+</tr>
+<tr>
+<td>封じ込め</td>
+<td>一時的にサイトをメンテナンス表示、侵入口の遮断</td>
+</tr>
+<tr>
+<td>復旧</td>
+<td><strong>クリーンなバックアップ</strong>から復元、ウェブシェル検索、全資格情報のリセット</td>
+</tr>
+<tr>
+<td>再発防止</td>
+<td>WAF、パッチ管理、管理画面の IP 制限、ファイル書き込み権限の最小化</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>試験のコツ</strong>: 「最初にすべきことは何か」では、通常 <strong>証拠保全・影響範囲の把握・封じ込め</strong> の優先順位を問われます。むやみに再起動・再構築しないことがポイントです。</p></div><h3 id="s21">1.4 コンプライアンス規格と対象業界の推定</h3><p class="lead"><strong>ひとことで言うと</strong>: 規格名を見て「どの業界・どのデータを守る規格か」を答えられるようにします。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>規格・法令</th>
+<th>主な対象</th>
+<th>一言解説</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PCI DSS</strong></td>
+<td>カード決済データを扱うすべての事業者（小売・EC・決済・金融）</td>
+<td>カード会員データ保護のための業界基準</td>
+</tr>
+<tr>
+<td><strong>FISMA</strong></td>
+<td>米国連邦政府機関とその委託事業者</td>
+<td>連邦情報システムのセキュリティ管理を義務付ける法律</td>
+</tr>
+<tr>
+<td><strong>FedRAMP</strong></td>
+<td>米国連邦政府にクラウドサービスを提供する事業者</td>
+<td>クラウドの標準化されたセキュリティ認可プログラム</td>
+</tr>
+<tr>
+<td><strong>SOC（SOC 1/2/3）</strong></td>
+<td>サービス提供組織（SaaS、データセンター、委託先）</td>
+<td>内部統制の第三者保証報告書。SOC 2 は信頼性サービス基準が中心</td>
+</tr>
+<tr>
+<td><strong>SOX（サーベンス・オクスリー法）</strong></td>
+<td>米国上場企業</td>
+<td>財務報告の内部統制（IT 統制を含む）</td>
+</tr>
+<tr>
+<td><strong>GDPR</strong></td>
+<td>EU 域内の個人データを扱う事業者（域外企業も該当しうる）</td>
+<td>個人データ保護規則。侵害は原則として<strong>72時間以内</strong>に監督機関へ通知</td>
+</tr>
+<tr>
+<td><strong>データプライバシー（例: HIPAA、日本の個人情報保護法）</strong></td>
+<td>医療・一般事業者など</td>
+<td>個人情報の取得・利用・漏えい対応のルール</td>
+</tr>
+<tr>
+<td><strong>ISO/IEC 27001</strong></td>
+<td>業界を問わない</td>
+<td>情報セキュリティマネジメントシステム（ISMS）の国際規格</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>補足</strong>: 日本語ブループリントには「ISO 27101」と記載されていますが、情報セキュリティ分野の代表的規格は <strong>ISO/IEC 27001</strong>（ISMS）です。筆者は誤記の可能性が高いと解釈していますが、試験では念のため原文の表記も意識してください。</p></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>規格は「<strong>どのデータ・どの業界に適用されるか</strong>」と「<strong>主な要求</strong>（アクセス制御・暗号化・ログ・インシデント通知）」をセットで覚える。</li>
+<li>複数規格に共通する要求（ログ保管、アクセス制御、変更管理）を<strong>統合したコントロール</strong>で運用すると効率的です。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>PCI Security Standards Council: <a href="https://www.pcisecuritystandards.org/" rel="noopener" target="_blank">https://www.pcisecuritystandards.org/</a></li>
+<li>FedRAMP: <a href="https://www.fedramp.gov/" rel="noopener" target="_blank">https://www.fedramp.gov/</a></li>
+<li>GDPR 条文: <a href="https://gdpr-info.eu/" rel="noopener" target="_blank">https://gdpr-info.eu/</a></li>
+<li>ISO/IEC 27001: <a href="https://www.iso.org/standard/27001" rel="noopener" target="_blank">https://www.iso.org/standard/27001</a></li>
+<li>個人情報保護委員会（日本）: <a href="https://www.ppc.go.jp/" rel="noopener" target="_blank">https://www.ppc.go.jp/</a></li>
+</ul></div><h3 id="s22">1.5 サイバーリスク保険の目的</h3><p class="lead"><strong>ひとことで言うと</strong>: セキュリティ対策を行っても残る<strong>金銭的損失リスクを移転（Transfer）</strong>するための保険です。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>区分</th>
+<th>補償される主な費用の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一者（自社の損害）</td>
+<td>フォレンジック調査費用、復旧費用、事業中断による損失、恐喝対応、通知費用</td>
+</tr>
+<tr>
+<td>第三者（他者への賠償）</td>
+<td>情報漏えいに伴う損害賠償、訴訟・法的対応費用、規制対応費用（保険可能な範囲）</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>リスク対応の4分類</strong></p><div class="diagram" data-d="d7"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>保険は<strong>セキュリティ対策の代替ではない</strong>。保険会社は通常、MFA、EDR、バックアップ、パッチ管理、IR 計画などの実施状況を審査します。</li>
+<li>免責事項（既知の未対応脆弱性、一部の戦争関連事由など）を契約前に確認する。</li>
+<li>事故発生時の<strong>連絡先・フォレンジック業者の指定</strong>が契約に含まれるか確認する。</li>
+</ul></div><h3 id="s23">1.6 リスク分析の要素（資産・脆弱性・脅威）</h3><p class="lead"><strong>ひとことで言うと</strong>: <strong>リスク = 資産の価値 × 脅威の起こりやすさ × 脆弱性の突かれやすさ</strong> を総合して考えます。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>説明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>資産</td>
+<td>守るべき価値のあるもの</td>
+<td>顧客データベース、基幹システム</td>
+</tr>
+<tr>
+<td>脅威</td>
+<td>資産に害を与えうる原因</td>
+<td>ランサムウェア集団、内部不正</td>
+</tr>
+<tr>
+<td>脆弱性</td>
+<td>脅威に悪用されうる弱点</td>
+<td>未パッチ、弱いパスワード</td>
+</tr>
+<tr>
+<td>影響（インパクト）</td>
+<td>被害の大きさ</td>
+<td>売上損失、信用失墜</td>
+</tr>
+<tr>
+<td>可能性（ライクリフッド）</td>
+<td>発生しやすさ</td>
+<td>過去の発生頻度、攻撃の容易さ</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>定量分析の考え方</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>計算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLE（単一損失予測額）</td>
+<td>1回の事故での損失額</td>
+<td>資産価値 × 曝露係数</td>
+</tr>
+<tr>
+<td>ARO（年間発生率）</td>
+<td>1年あたりの発生回数</td>
+<td>例: 0.5（2年に1回）</td>
+</tr>
+<tr>
+<td>ALE（年間損失予測額）</td>
+<td>年間の期待損失</td>
+<td>SLE × ARO</td>
+</tr>
+</tbody>
+</table></div><ul>
+<li>例: SLE が 1,000万円、ARO が 0.5 なら ALE は 500万円。対策費用が ALE を大きく超えるなら、費用対効果を再検討します。</li>
+</ul><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>定性（高・中・低）</strong> と <strong>定量（金額）</strong> を使い分ける。まず定性で優先度を付け、重要資産のみ定量化。</li>
+<li>リスク登録簿（Risk Register）に所有者・期限・対応方針を記録して<strong>定期レビュー</strong>。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST Cybersecurity Framework 2.0: <a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">https://www.nist.gov/cyberframework</a></li>
+</ul></div><h3 id="s24">1.7 インシデント対応のワークフローの適用</h3><p class="lead"><strong>ひとことで言うと</strong>: 「準備 → 検知・分析 → 封じ込め・根絶・復旧 → 事後活動」の<strong>ライフサイクル</strong>を回します。</p><div class="diagram" data-d="d8"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>フェーズ</th>
+<th>主な活動</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>準備</td>
+<td>IR 体制・手順整備、ツール導入、訓練、連絡網</td>
+</tr>
+<tr>
+<td>検知と分析</td>
+<td>アラート確認、トリアージ、影響範囲の特定、重大度判定</td>
+</tr>
+<tr>
+<td>封じ込め</td>
+<td>短期（隔離）と長期（恒久的な遮断）の2段階で拡大防止</td>
+</tr>
+<tr>
+<td>根絶</td>
+<td>マルウェア削除、脆弱性修正、不正アカウント削除</td>
+</tr>
+<tr>
+<td>復旧</td>
+<td>システム復元、監視強化、正常稼働の確認</td>
+</tr>
+<tr>
+<td>事後活動</td>
+<td>教訓の整理、レポート、プロセス改善</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>補足</strong>: NIST SP 800-61 は 2025年4月に Rev.3 が公開され、<strong>NIST CSF 2.0 の機能</strong>（統治・識別・防御・検知・対応・復旧）に沿った形に整理されました。従来の4フェーズ（Rev.2）は多くの教材で今も基本モデルとして使われています。SANS の6段階（準備・特定・封じ込め・根絶・復旧・教訓）と対応させて覚えると実務でも役立ちます。</p></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>NIST（従来の4フェーズ）</th>
+<th>SANS（6段階）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>準備</td>
+<td>準備</td>
+</tr>
+<tr>
+<td>検知と分析</td>
+<td>特定</td>
+</tr>
+<tr>
+<td>封じ込め・根絶・復旧</td>
+<td>封じ込め → 根絶 → 復旧</td>
+</tr>
+<tr>
+<td>事後活動</td>
+<td>教訓</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>証拠保全を封じ込めより先</strong>（または並行）に。揮発性の高い情報（メモリ、ネットワーク接続）は特に優先。</li>
+<li>重大度（Severity）と優先度（Priority）を分けて定義。</li>
+<li>「封じ込めで業務を止める判断」のために、<strong>事前に業務部門と合意</strong>しておく。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-61 Rev.3: <a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/61/r3/final</a></li>
+<li>JPCERT/CC（日本の CSIRT）: <a href="https://www.jpcert.or.jp/" rel="noopener" target="_blank">https://www.jpcert.or.jp/</a></li>
+</ul></div><h3 id="s25">1.8 インシデント対応メトリクスによる特徴と改善領域の説明</h3><p class="lead"><strong>ひとことで言うと</strong>: 「時間」と「量」の指標で SOC の強み・弱みを読み解きます。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th>意味</th>
+<th>長い/高いときに疑うこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTTD</strong>（平均検知時間）</td>
+<td>侵害発生から検知までの時間</td>
+<td>ログ収集不足、検知ルール不足</td>
+</tr>
+<tr>
+<td><strong>MTTA</strong>（平均確認時間）</td>
+<td>アラートから担当者が着手するまで</td>
+<td>人員不足、アラート疲れ、優先度付けの不備</td>
+</tr>
+<tr>
+<td><strong>MTTC</strong>（平均封じ込め時間）</td>
+<td>検知から封じ込めまで</td>
+<td>承認フローの遅れ、自動化不足</td>
+</tr>
+<tr>
+<td><strong>MTTR</strong>（平均対応/復旧時間）</td>
+<td>対応や復旧が完了するまで（組織により定義が異なる）</td>
+<td>手順の不備、バックアップ不良</td>
+</tr>
+<tr>
+<td><strong>滞留時間（Dwell Time）</strong></td>
+<td>攻撃者が気付かれずに潜伏していた期間</td>
+<td>検知能力全般の弱さ</td>
+</tr>
+<tr>
+<td>誤検知率</td>
+<td>アラートのうち誤りの割合</td>
+<td>ルール調整不足</td>
+</tr>
+<tr>
+<td>インシデント件数・種別</td>
+<td>発生の傾向</td>
+<td>特定の攻撃種別への備え不足</td>
+</tr>
+<tr>
+<td>自動化率</td>
+<td>自動処理されたアラートの割合</td>
+<td>手作業が多すぎる</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d9"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>指標の<strong>開始時刻・終了時刻の定義を文書化</strong>する（定義が曖昧だと比較できません）。</li>
+<li>平均だけでなく<strong>中央値・分布</strong>も見る（外れ値の影響を避けるため）。</li>
+<li>指標は<strong>個人評価ではなくプロセス改善</strong>に使う。</li>
+</ul></div><h3 id="s26">1.9 クラウド環境の種類の説明</h3><p class="lead"><strong>ひとことで言うと</strong>: クラウドには「<strong>配置モデル</strong>」と「<strong>サービスモデル</strong>」の2つの切り口があります。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>切り口</th>
+<th>種類</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置（デプロイ）モデル</td>
+<td>パブリック</td>
+<td>事業者が複数顧客に提供</td>
+</tr>
+<tr>
+<td></td>
+<td>プライベート</td>
+<td>単一組織専用</td>
+</tr>
+<tr>
+<td></td>
+<td>ハイブリッド</td>
+<td>オンプレとクラウドの組み合わせ</td>
+</tr>
+<tr>
+<td></td>
+<td>コミュニティ</td>
+<td>共通目的の組織群で共有</td>
+</tr>
+<tr>
+<td></td>
+<td>マルチクラウド</td>
+<td>複数事業者のクラウドを併用（実務で一般的な概念）</td>
+</tr>
+<tr>
+<td>サービスモデル</td>
+<td>IaaS</td>
+<td>仮想サーバー・ネットワーク・ストレージを提供</td>
+</tr>
+<tr>
+<td></td>
+<td>PaaS</td>
+<td>アプリ実行基盤・DB などを提供</td>
+</tr>
+<tr>
+<td></td>
+<td>SaaS</td>
+<td>完成したアプリを提供</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-145（クラウドの定義）: <a href="https://csrc.nist.gov/pubs/sp/800/145/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/145/final</a></li>
+</ul></div><h3 id="s27">1.10 クラウド（IaaS / PaaS）におけるセキュリティ運用上の考慮事項の比較</h3><p class="lead"><strong>ひとことで言うと</strong>: <strong>責任共有モデル</strong>により、モデルが上位になるほど利用者が管理できる範囲は狭くなります。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>管理対象</th>
+<th>オンプレ</th>
+<th>IaaS</th>
+<th>PaaS</th>
+<th>SaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理・ハイパーバイザー</td>
+<td>利用者</td>
+<td>事業者</td>
+<td>事業者</td>
+<td>事業者</td>
+</tr>
+<tr>
+<td>OS・パッチ</td>
+<td>利用者</td>
+<td><strong>利用者</strong></td>
+<td>事業者</td>
+<td>事業者</td>
+</tr>
+<tr>
+<td>ミドルウェア・ランタイム</td>
+<td>利用者</td>
+<td>利用者</td>
+<td>事業者（設定は利用者）</td>
+<td>事業者</td>
+</tr>
+<tr>
+<td>アプリケーション</td>
+<td>利用者</td>
+<td>利用者</td>
+<td><strong>利用者</strong></td>
+<td>事業者</td>
+</tr>
+<tr>
+<td>データ・ID・アクセス設定</td>
+<td>利用者</td>
+<td><strong>利用者</strong></td>
+<td><strong>利用者</strong></td>
+<td><strong>利用者</strong></td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>IaaS</th>
+<th>PaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ログ・可視性</td>
+<td>OS ログ・EDR エージェント・フローログを自前で収集可能</td>
+<td>OS へのアクセス不可。プラットフォームの監査ログ・アプリログが中心</td>
+</tr>
+<tr>
+<td>脆弱性管理</td>
+<td>OS・ミドルウェアのパッチは利用者責任</td>
+<td>ランタイムの更新は事業者、<strong>アプリの依存ライブラリは利用者</strong></td>
+</tr>
+<tr>
+<td>フォレンジック</td>
+<td>ディスクスナップショットの取得が可能</td>
+<td>取得できる証拠が限られる。事前のログ有効化が必須</td>
+</tr>
+<tr>
+<td>典型的な誤り</td>
+<td>セキュリティグループの全開放、公開ストレージ</td>
+<td>過剰な IAM 権限、秘密情報のコード埋め込み</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>IAM を最優先</strong>で整備（最小権限、MFA、長期アクセスキーの廃止）。</li>
+<li>クラウドの<strong>監査ログ</strong>（例: AWS CloudTrail、Azure Activity Log、Google Cloud Audit Logs）を全リージョン・全アカウントで有効化し、<strong>改ざん不可の保管先</strong>へ集約。</li>
+<li><strong>CSPM</strong>（クラウド設定の継続的チェック）で設定ミスを早期検出。</li>
+<li>一時的（エフェメラル）なリソースが多いため、<strong>インシデント時に取得できるよう事前にスナップショット運用</strong>を決める。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>AWS 責任共有モデル: <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" rel="noopener" target="_blank">https://aws.amazon.com/compliance/shared-responsibility-model/</a></li>
+<li>NIST SP 800-145: <a href="https://csrc.nist.gov/pubs/sp/800/145/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/145/final</a></li>
+</ul></div><h2 id="s28">ドメイン2 手法 (30%)</h2><h3 id="s29">2.1 AI を活用したデータ分析手法の推奨</h3><p class="lead"><strong>ひとことで言うと</strong>: 「何を知りたいか」に合わせて、<strong>適切な機械学習の型</strong>を選びます。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>知りたいこと</th>
+<th>向いている手法</th>
+<th>セキュリティでの例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ラベル付きデータで分類したい</td>
+<td>教師あり学習（分類）</td>
+<td>マルウェア/正常の判定、フィッシングメール判定</td>
+</tr>
+<tr>
+<td>数値を予測したい</td>
+<td>教師あり学習（回帰・時系列）</td>
+<td>通信量の予測、攻撃の発生見込み</td>
+</tr>
+<tr>
+<td>「いつもと違う」を見つけたい</td>
+<td>教師なし学習（異常検知・クラスタリング）</td>
+<td>UEBA、未知の振る舞い検出</td>
+</tr>
+<tr>
+<td>文章を扱いたい</td>
+<td>自然言語処理（LLM を含む）</td>
+<td>脅威レポートの要約、アラートの説明生成</td>
+</tr>
+<tr>
+<td>関係性を調べたい</td>
+<td>グラフ分析</td>
+<td>攻撃インフラの関連付け</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>制約と注意点</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>リスク</th>
+<th>内容</th>
+<th>対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>誤検知・見逃し</td>
+<td>精度は100%ではない</td>
+<td>人間によるレビューを組み込む（Human in the loop）</td>
+</tr>
+<tr>
+<td>データドリフト</td>
+<td>環境の変化で精度が劣化</td>
+<td>定期的な再学習・評価</td>
+</tr>
+<tr>
+<td>敵対的攻撃</td>
+<td>回避や汚染を狙われる</td>
+<td>多層防御、モデル入力の検証</td>
+</tr>
+<tr>
+<td>説明可能性</td>
+<td>なぜ判定したか不明</td>
+<td>根拠表示のあるツールを優先</td>
+</tr>
+<tr>
+<td>情報漏えい</td>
+<td>機密を外部 AI に入力</td>
+<td>利用ポリシーの策定、社内承認環境の利用</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>AI の出力は<strong>「証拠」ではなく「仮説・補助情報」</strong>として扱い、重要な判断は元データで裏取りします。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST AI Risk Management Framework: <a href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">https://www.nist.gov/itl/ai-risk-management-framework</a></li>
+<li>MITRE ATLAS（AI システムへの攻撃知識）: <a href="https://atlas.mitre.org/" rel="noopener" target="_blank">https://atlas.mitre.org/</a></li>
+</ul></div><h3 id="s30">2.2 セキュリティ強化されたマシンイメージを使用した展開</h3><p class="lead"><strong>ひとことで言うと</strong>: 最初から安全な設定に固めた「<strong>ゴールデンイメージ</strong>」を作り、そこからサーバーを展開します。</p><div class="diagram" data-d="d10"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li>不要なパッケージ・サービス・アカウントを<strong>最初から含めない</strong>。</li>
+<li>イメージ作成を <strong>自動化</strong>（例: Packer）し、手作業の差を排除。</li>
+<li><strong>不変インフラ</strong>: 稼働中サーバーにパッチを当てるのではなく、新しいイメージで置き換える。</li>
+<li>イメージを<strong>署名</strong>し、信頼できるレジストリから取得する。</li>
+<li>秘密情報（パスワード、鍵）をイメージに焼き込まない。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>CIS Benchmarks: <a href="https://www.cisecurity.org/cis-benchmarks" rel="noopener" target="_blank">https://www.cisecurity.org/cis-benchmarks</a></li>
+<li>NIST SP 800-190（コンテナセキュリティ）: <a href="https://csrc.nist.gov/pubs/sp/800/190/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/190/final</a></li>
+</ul></div><h3 id="s31">2.3 資産のセキュリティ態勢を評価するプロセス</h3><div class="diagram" data-d="d11"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>手順</th>
+<th>ポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>棚卸し</td>
+<td>「見えない資産（シャドー IT）」が最大のリスク。ネットワークスキャンとクラウド API で補完</td>
+</tr>
+<tr>
+<td>分類</td>
+<td>事業影響度（機密性・可用性）で重要度を決める</td>
+</tr>
+<tr>
+<td>スキャン</td>
+<td>認証付きスキャンの方が精度が高い</td>
+</tr>
+<tr>
+<td>構成チェック</td>
+<td>標準ベースラインとの差分を自動測定</td>
+</tr>
+<tr>
+<td>優先順位</td>
+<td>CVSS だけでなく<strong>悪用状況と資産重要度</strong>で決める（3.10 参照）</td>
+</tr>
+</tbody>
+</table></div><h3 id="s32">2.4 セキュリティ管理の評価・ギャップ診断・改善提案</h3><p class="sublabel"><strong>コントロールの分類</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分類軸</th>
+<th>種類</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>機能</td>
+<td>予防 / 検知 / 是正 / 抑止 / 補完</td>
+<td>FW（予防）、SIEM（検知）、バックアップ復元（是正）</td>
+</tr>
+<tr>
+<td>性質</td>
+<td>管理的 / 技術的 / 物理的</td>
+<td>ポリシー / 暗号化 / 施錠</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>ギャップ診断の進め方</strong></p><ol>
+<li>基準を決める（NIST CSF 2.0、CIS Controls、NIST SP 800-53、社内ポリシー）。</li>
+<li><strong>現状（As-Is）</strong> と <strong>目標（To-Be）</strong> を比較して差分を洗い出す。</li>
+<li>差分を<strong>リスク</strong>で優先順位付けする。</li>
+<li>改善案（技術・プロセス・人）と期限・責任者を決める。</li>
+<li><strong>補完コントロール</strong>（すぐに実装できない場合の代替策）も検討する。</li>
+</ol><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>CIS Critical Security Controls: <a href="https://www.cisecurity.org/controls" rel="noopener" target="_blank">https://www.cisecurity.org/controls</a></li>
+<li>NIST SP 800-53 Rev.5: <a href="https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final</a></li>
+</ul></div><h3 id="s33">2.5 システム強化のための業界標準・推奨リソース</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>リソース</th>
+<th>提供元</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CIS Benchmarks</td>
+<td>CIS</td>
+<td>OS・ミドルウェア・クラウドの具体的設定基準</td>
+</tr>
+<tr>
+<td>DISA STIG</td>
+<td>米国国防総省系</td>
+<td>厳格な設定ガイド</td>
+</tr>
+<tr>
+<td>NIST SP 800-123</td>
+<td>NIST</td>
+<td>サーバーセキュリティの一般ガイド</td>
+</tr>
+<tr>
+<td>NIST SP 800-53</td>
+<td>NIST</td>
+<td>セキュリティ/プライバシー管理策のカタログ</td>
+</tr>
+<tr>
+<td>OWASP ASVS / Top 10</td>
+<td>OWASP</td>
+<td>Web アプリのセキュリティ要件</td>
+</tr>
+<tr>
+<td>ベンダーの強化ガイド</td>
+<td>Cisco, Microsoft 等</td>
+<td>製品固有の設定ガイド（Cisco の機器ハードニングガイドなど）</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>業界標準を<strong>そのまま全適用せず、業務要件に合わせて例外を文書化</strong>する（例外には承認と期限を付ける）。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-123: <a href="https://csrc.nist.gov/pubs/sp/800/123/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/123/final</a></li>
+<li>DISA STIG: <a href="https://public.cyber.mil/stigs/" rel="noopener" target="_blank">https://public.cyber.mil/stigs/</a></li>
+<li>OWASP ASVS: <a href="https://owasp.org/www-project-application-security-verification-standard/" rel="noopener" target="_blank">https://owasp.org/www-project-application-security-verification-standard/</a></li>
+</ul></div><h3 id="s34">2.6 パッチ適用の推奨</h3><p class="lead"><strong>ひとことで言うと</strong>: 「全部すぐ」ではなく、<strong>悪用状況・資産の重要度・露出</strong>で優先度を決めます。</p><div class="diagram" data-d="d12"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>テスト環境で検証 → 段階的展開（パイロット → 本番）→ ロールバック手順</strong>。</li>
+<li>資産を<strong>メンテナンスグループ</strong>に分け、サービス影響の少ない順に実施（NIST SP 800-40 Rev.4 の考え方）。</li>
+<li>適用後に<strong>再スキャン</strong>して是正を確認する。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-40 Rev.4: <a href="https://csrc.nist.gov/pubs/sp/800/40/r4/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/40/r4/final</a></li>
+<li>CISA 既知の悪用された脆弱性（KEV）カタログ: <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" rel="noopener" target="_blank">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a></li>
+</ul></div><h3 id="s35">2.7 サービス無効化の推奨</h3><p class="lead"><strong>ひとことで言うと</strong>: 使っていない機能は<strong>攻撃面（アタックサーフェス）</strong>になるので止めます（<strong>最小機能の原則</strong>）。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>対象</th>
+<th>無効化・対策の例</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telnet / FTP</td>
+<td>SSH / SFTP へ置換</td>
+<td>平文通信</td>
+</tr>
+<tr>
+<td>SMBv1</td>
+<td>無効化</td>
+<td>既知の重大な脆弱性の温床</td>
+</tr>
+<tr>
+<td>未使用ポート・サービス</td>
+<td>停止・FW で遮断</td>
+<td>攻撃経路の削減</td>
+</tr>
+<tr>
+<td>Cisco 機器の HTTP サーバー</td>
+<td><code>no ip http server</code>（不要な場合）</td>
+<td>管理面の露出削減</td>
+</tr>
+<tr>
+<td>境界側での CDP/LLDP</td>
+<td>外部向けインターフェースで無効化</td>
+<td>機器情報の漏えい防止</td>
+</tr>
+<tr>
+<td>管理アクセス</td>
+<td><code>transport input ssh</code> で SSH のみに限定</td>
+<td>平文プロトコルの排除</td>
+</tr>
+</tbody>
+</table></div><p><strong>手順</strong>: ① 待受ポートを洗い出す（Linux の <code>ss -tulpn</code>、スキャナー）→ ② 依存関係を確認 → ③ 変更管理で停止 → ④ 監視して問題がないか確認 → ⑤ 設定をベースラインに反映。</p><h3 id="s36">2.8 ネットワークセグメンテーションの適用</h3><p class="lead"><strong>ひとことで言うと</strong>: ネットワークを<strong>ゾーンに分け、ゾーン間の通信を必要最小限</strong>にして、侵害時の被害の広がりを抑えます。</p><div class="diagram" data-d="d13"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VLAN + ACL</td>
+<td>基本的な論理分離</td>
+</tr>
+<tr>
+<td>ファイアウォール分離</td>
+<td>ゾーン間でステートフル検査・IPS</td>
+</tr>
+<tr>
+<td>マイクロセグメンテーション</td>
+<td>ワークロード単位の分離（例: Cisco Secure Workload）</td>
+</tr>
+<tr>
+<td>ID ベース分離</td>
+<td>ユーザー・デバイスのタグ（SGT）で制御（Cisco ISE / TrustSec）</td>
+</tr>
+<tr>
+<td>ゼロトラスト</td>
+<td>場所に依存せず、都度検証して最小権限を付与</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li>ゾーン間は <strong>デフォルト拒否</strong>、必要な通信のみ許可。</li>
+<li><strong>管理プレーンを分離</strong>し、踏み台（ジャンプホスト）経由に限定。</li>
+<li>IoT/OT や来客用ネットワークは<strong>業務ネットワークと分離</strong>。</li>
+<li>PCI DSS では、カード情報環境を分離することで<strong>監査範囲を縮小</strong>できる。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-207（ゼロトラスト・アーキテクチャ）: <a href="https://csrc.nist.gov/pubs/sp/800/207/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/207/final</a></li>
+</ul></div><h3 id="s37">2.9 ネットワーク制御によるネットワークセキュリティの強化</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>制御</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>アクセス</td>
+<td>802.1X / NAC（Cisco ISE）</td>
+<td>認証されたデバイスのみ接続</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>ポートセキュリティ、DHCP スヌーピング、DAI、IP ソースガード</td>
+<td>偽装・ARP スプーフィング対策</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>ACL、uRPF</td>
+<td>不正パケットの遮断・送信元詐称防止</td>
+</tr>
+<tr>
+<td>制御プレーン</td>
+<td>CoPP</td>
+<td>ルーター自体の保護</td>
+</tr>
+<tr>
+<td>検査</td>
+<td>NGFW、IPS</td>
+<td>脅威の検出・遮断</td>
+</tr>
+<tr>
+<td>DNS/Web</td>
+<td>DNS レイヤーセキュリティ（例: Cisco Umbrella）</td>
+<td>悪性ドメインへの接続防止</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>SSH、AAA（TACACS+）、SNMPv3、NTP 認証、ログ転送</td>
+<td>安全な運用</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p><strong>単一の対策に頼らず多層防御（Defense in Depth）</strong>。設定変更は必ず変更管理を通し、構成バックアップを取得します。</p></div><h3 id="s38">2.10 DevSecOps の推奨事項（影響）の判断</h3><p class="lead"><strong>ひとことで言うと</strong>: セキュリティを開発の<strong>最後ではなく最初から（シフトレフト）</strong>組み込みます。</p><div class="diagram" data-d="d14"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>実践</th>
+<th>影響（メリット）</th>
+<th>注意点（デメリット/コスト）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自動セキュリティテスト</td>
+<td>早期に低コストで修正</td>
+<td>誤検知の調整が必要</td>
+</tr>
+<tr>
+<td>パイプラインのゲート</td>
+<td>重大な脆弱性の混入防止</td>
+<td>ビルドが遅くなる、例外運用が必要</td>
+</tr>
+<tr>
+<td>SBOM（ソフトウェア部品表）</td>
+<td>サプライチェーン可視化</td>
+<td>運用負荷</td>
+</tr>
+<tr>
+<td>開発者教育</td>
+<td>根本的に品質向上</td>
+<td>時間と文化の醸成が必要</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-218（SSDF）: <a href="https://csrc.nist.gov/pubs/sp/800/218/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/218/final</a></li>
+<li>OWASP DevSecOps Guideline: <a href="https://owasp.org/www-project-devsecops-guideline/" rel="noopener" target="_blank">https://owasp.org/www-project-devsecops-guideline/</a></li>
+</ul></div><h3 id="s39">2.11 脅威インテリジェンスプラットフォーム（TIP）によるインテリジェンスの自動化</h3><p class="lead"><strong>ひとことで言うと</strong>: 脅威情報を<strong>集めて・整えて・評価して・各製品へ配る</strong>ための基盤です。</p><div class="diagram" data-d="d15"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li>IOC に<strong>信頼度・有効期限</strong>を付け、期限切れを自動で外す（古い IP のブロックは誤遮断の原因）。</li>
+<li><strong>TLP</strong>（共有範囲の表示）を守る。</li>
+<li>低信頼度の IOC は「ブロック」ではなく「アラート」から始める。</li>
+<li>配布後の<strong>ヒット率</strong>を測定して、有益なフィードを選別する。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-150（サイバー脅威情報共有）: <a href="https://csrc.nist.gov/pubs/sp/800/150/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/150/final</a></li>
+<li>OASIS STIX/TAXII ドキュメント: <a href="https://oasis-open.github.io/cti-documentation/" rel="noopener" target="_blank">https://oasis-open.github.io/cti-documentation/</a></li>
+<li>Cisco Talos: <a href="https://talosintelligence.com/" rel="noopener" target="_blank">https://talosintelligence.com/</a></li>
+</ul></div><h3 id="s40">2.12 ツールを用いた AI 主導の脅威インテリジェンスの適用</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用途</th>
+<th>AI の活用例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>レポートの要約</td>
+<td>長い脅威レポートを要約し、要点・IOC を抽出</td>
+</tr>
+<tr>
+<td>エンティティ抽出</td>
+<td>文章から IP・ハッシュ・マルウェア名を自動抽出</td>
+</tr>
+<tr>
+<td>ATT&amp;CK マッピング</td>
+<td>記述された行動を技術 ID に対応付け</td>
+</tr>
+<tr>
+<td>優先順位付け</td>
+<td>悪用予測（EPSS など）で対応順を決定</td>
+</tr>
+<tr>
+<td>調査支援</td>
+<td>XDR 内の AI アシスタントによるインシデントの説明・次の手順提案</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>ハルシネーション（誤生成）</strong>を前提に、IOC・CVE 番号などは必ず原典で確認。</li>
+<li>機密データを外部 AI に入力しない。<strong>プロンプトインジェクション</strong>（文書内の悪意ある指示）にも注意。</li>
+<li>AI の提案による自動実行は、<strong>承認フロー付き</strong>で段階導入。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>EPSS（悪用予測スコア）: <a href="https://www.first.org/epss/" rel="noopener" target="_blank">https://www.first.org/epss/</a></li>
+<li>OWASP GenAI セキュリティ: <a href="https://genai.owasp.org/" rel="noopener" target="_blank">https://genai.owasp.org/</a></li>
+</ul></div><h3 id="s41">2.13 データ損失・データ漏洩・移動中/使用中/保管中のデータ</h3><p class="sublabel"><strong>用語整理</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>データ損失（Data Loss）</td>
+<td>データが失われ利用できなくなる</td>
+<td>誤削除、ランサムウェア、媒体紛失</td>
+</tr>
+<tr>
+<td>データ漏洩（Data Leakage）</td>
+<td>意図せず外部に露出する</td>
+<td>誤送信、公開設定ミス</td>
+</tr>
+<tr>
+<td>データ持ち出し（Exfiltration）</td>
+<td>攻撃者などによる意図的な窃取</td>
+<td>C2 経由のアップロード</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>データの3つの状態と主な対策</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>状態</th>
+<th>説明</th>
+<th>主な対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保管中（At rest）</td>
+<td>ディスク・DB・バックアップ上</td>
+<td>ディスク/DB 暗号化、アクセス制御、鍵管理</td>
+</tr>
+<tr>
+<td>移動中（In motion/transit）</td>
+<td>ネットワーク上</td>
+<td>TLS、VPN、メール暗号化</td>
+</tr>
+<tr>
+<td>使用中（In use）</td>
+<td>メモリ上・画面上・処理中</td>
+<td>エンドポイント制御、アクセス権、機密コンピューティング</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>まず<strong>データ分類</strong>（公開・社内・機密・極秘）を定義し、分類に応じた保護を決める。分類がなければ DLP は機能しません。</p></div><h3 id="s42">2.14 DLP 手法の検出と適用の仕組み</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>適用箇所</th>
+<th>仕組みの例</th>
+<th>主な機能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2.14.a ホスト</strong></td>
+<td>エンドポイントエージェント</td>
+<td>USB・クリップボード・印刷・スクリーンショットの制御</td>
+</tr>
+<tr>
+<td><strong>2.14.b ネットワーク</strong></td>
+<td>プロキシ、メールゲートウェイ、TLS 検査</td>
+<td>外向き通信の内容検査</td>
+</tr>
+<tr>
+<td><strong>2.14.c アプリケーション</strong></td>
+<td>CASB、アプリ内ポリシー、フィールド暗号化</td>
+<td>SaaS・業務アプリ内での共有制限</td>
+</tr>
+<tr>
+<td><strong>2.14.d クラウド</strong></td>
+<td>クラウドネイティブな機密データ検出、CASB</td>
+<td>ストレージの公開設定・外部共有の検出</td>
+</tr>
+</tbody>
+</table></div><p><strong>検出手法</strong>: ① パターン（正規表現、カード番号の Luhn チェック）、② ドキュメントのフィンガープリント/完全一致、③ 機械学習による分類、④ 分類ラベルの利用。</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス（導入の流れ）</span></div></div><div class="diagram" data-d="d16"></div><h3 id="s43">2.15 ルール・フィルタ・ポリシーの調整・設定変更の推奨</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>症状</th>
+<th>原因の例</th>
+<th>推奨する調整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>誤検知が多い</td>
+<td>しきい値が低い、正常業務を想定していない</td>
+<td>除外条件の追加、しきい値の見直し、文脈（資産重要度）の追加</td>
+</tr>
+<tr>
+<td>見逃しがある</td>
+<td>ルールが狭い、ログが不足</td>
+<td>検知条件の拡張、ログソース追加</td>
+</tr>
+<tr>
+<td>業務が止まる</td>
+<td>ブロックが厳しすぎる</td>
+<td>検知のみ（モニターモード）へ変更し検証</td>
+</tr>
+<tr>
+<td>古いルールが残る</td>
+<td>棚卸し不足</td>
+<td>利用状況に基づく整理・無効化</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>変更は<strong>変更管理</strong>を通し、<strong>検証環境または検知のみモード</strong>でテスト。</li>
+<li>変更前後の効果（アラート数・検出率）を測定して記録。</li>
+<li>IPS シグネチャは<strong>資産のOS・サービスに合うものだけ有効化</strong>（不要な有効化は性能劣化と誤検知の原因）。</li>
+</ul></div><h3 id="s44">2.16 セキュリティデータ管理の概念</h3><div class="diagram" data-d="d17"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正規化</td>
+<td>異なる形式を共通スキーマにそろえる（CEF、LEEF、ECS、OCSF など）</td>
+</tr>
+<tr>
+<td>時刻同期</td>
+<td><strong>NTP で全機器を同期</strong>。相関分析の精度に直結</td>
+</tr>
+<tr>
+<td>保持期間</td>
+<td>規制・調査要件に基づき決定（ホット/ウォーム/コールドの階層化でコスト最適化）</td>
+</tr>
+<tr>
+<td>完全性</td>
+<td>ハッシュ、WORM ストレージで改ざん防止</td>
+</tr>
+<tr>
+<td>個人情報</td>
+<td>ログ内の個人情報を最小化・マスキング</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>NIST SP 800-92（ログ管理ガイド）: <a href="https://csrc.nist.gov/pubs/sp/800/92/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/92/final</a></li>
+</ul></div><h3 id="s45">2.17 SIEM ツールの使用と概念</h3><p class="lead"><strong>ひとことで言うと</strong>: 様々なログを集め、<strong>相関分析してアラートにする</strong>ツールです。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>機能</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>収集・正規化</td>
+<td>多様なログソースの取り込み</td>
+</tr>
+<tr>
+<td>相関ルール</td>
+<td>複数イベントの組み合わせで検知（例: 失敗ログイン連続後の成功）</td>
+</tr>
+<tr>
+<td>ベースライン</td>
+<td>通常状態の学習と逸脱検出</td>
+</tr>
+<tr>
+<td>ダッシュボード・レポート</td>
+<td>可視化、コンプライアンス報告</td>
+</tr>
+<tr>
+<td>ケース/アラート管理</td>
+<td>トリアージ、調査支援</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>検知ユースケースの例</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ユースケース</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ブルートフォース</td>
+<td>同一送信元から短時間に多数の認証失敗</td>
+</tr>
+<tr>
+<td>不可能な移動</td>
+<td>短時間に地理的に離れた場所からのログオン</td>
+</tr>
+<tr>
+<td>特権アカウント作成</td>
+<td>管理者グループへの追加イベント</td>
+</tr>
+<tr>
+<td>ビーコニング</td>
+<td>外部ホストへの一定間隔の通信</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>ユースケース駆動</strong>で導入する（ログを集めるだけでは意味がない）。</li>
+<li>MITRE ATT&amp;CK との<strong>カバレッジ</strong>を可視化し、不足を計画的に補う。</li>
+<li>検知ルールを<strong>コードとして管理</strong>（バージョン管理・テスト・レビュー）。</li>
+<li>重要ログソース（認証、DNS、プロキシ、EDR、クラウド監査）から優先的に取り込む。</li>
+</ol></div><h3 id="s46">2.18 SOAR ワークフローの推奨（問題の特定からエスカレーション・解決まで）</h3><div class="diagram" data-d="d18"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>自動化は<strong>可逆的で低リスクな処理</strong>（情報取得・チケット作成）から開始し、<strong>不可逆・業務影響が大きい処理は承認ゲート</strong>を挟みます。</p></div><h3 id="s47">2.19 関係者向けダッシュボードデータの適用</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>対象者</th>
+<th>見せたい内容</th>
+<th>指標の例</th>
+<th>頻度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技術者（アナリスト）</td>
+<td>運用状況</td>
+<td>アラートキュー、未対応件数、MTTA</td>
+<td>リアルタイム</td>
+</tr>
+<tr>
+<td>リーダー層</td>
+<td>傾向と改善点</td>
+<td>MTTD/MTTR、誤検知率、脆弱性 SLA 達成率</td>
+<td>週次・月次</td>
+</tr>
+<tr>
+<td>経営陣</td>
+<td>ビジネスリスク</td>
+<td>主要リスクの変化、重大インシデントの影響、コンプライアンス状況</td>
+<td>月次・四半期</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>相手の意思決定に必要な指標だけを<strong>少なく</strong>示し、専門用語を避け、<strong>ビジネスへの影響</strong>で語ります。</p></div><h3 id="s48">2.20 SIEM データを用いた UEBA</h3><p class="lead"><strong>ひとことで言うと</strong>: ユーザーやデバイスの<strong>「普段の行動」を学習</strong>し、逸脱を検出します。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>対象エンティティ</td>
+<td>ユーザー、ホスト、サービスアカウント、アプリ</td>
+</tr>
+<tr>
+<td>ベースライン</td>
+<td>時間帯、場所、アクセス先、データ量の通常パターン</td>
+</tr>
+<tr>
+<td>ピアグループ比較</td>
+<td>同じ役割の人と比べて異常か</td>
+</tr>
+<tr>
+<td>リスクスコア</td>
+<td>複数の小さな異常を累積して優先順位付け</td>
+</tr>
+</tbody>
+</table></div><p><strong>検出例</strong>: 深夜の大量ファイルダウンロード、初めてのシステムへのアクセス、不可能な移動、退職予定者の大量データ送信。</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>学習期間を確保し、<strong>文脈（出張・異動）を人事情報などと連携</strong>して誤検知を減らします。</p></div><h3 id="s49">2.21 ユーザー行動アラートに基づく次のアクションの判断</h3><div class="diagram" data-d="d19"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>アラートの種類</th>
+<th>次のアクション例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可能な移動</td>
+<td>本人確認、セッション失効、MFA 強制</td>
+</tr>
+<tr>
+<td>大量データのダウンロード</td>
+<td>内容確認、DLP ログ確認、上長・人事へ連絡</td>
+</tr>
+<tr>
+<td>特権の不審な利用</td>
+<td>即時エスカレーション、アカウント一時停止</td>
+</tr>
+</tbody>
+</table></div><h3 id="s50">2.22 ネットワーク分析ツールとその制限事項</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>データ種類</th>
+<th>ツール例</th>
+<th>できること</th>
+<th>制限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>パケットキャプチャ</td>
+<td>tcpdump、Wireshark、TShark</td>
+<td>全パケットの詳細解析</td>
+<td>容量が大きい、暗号化通信の中身は不可</td>
+</tr>
+<tr>
+<td>フロー（メタデータ）</td>
+<td>NetFlow/IPFIX（Secure Network Analytics）</td>
+<td>誰が誰とどれだけ通信したか</td>
+<td>ペイロード（中身）はない。サンプリングの場合は欠落あり</td>
+</tr>
+<tr>
+<td>ネットワーク解析基盤</td>
+<td>Zeek 等</td>
+<td>プロトコル別のログ生成</td>
+<td>設置位置に依存</td>
+</tr>
+<tr>
+<td>ログ</td>
+<td>FW、プロキシ、DNS</td>
+<td>接続の記録</td>
+<td>取得項目はソース次第</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>制限事項の整理</strong></p><ul>
+<li><strong>暗号化（TLS 1.3 など）</strong>: 中身は見えない。メタデータ（SNI、証明書、通信量・間隔）で補う。</li>
+<li><strong>SPAN ポートの取りこぼし</strong>: 高負荷時にパケットが落ちる。TAP の利用を検討。</li>
+<li><strong>時刻のずれ</strong>: 複数ソースの突き合わせに支障。</li>
+<li><strong>プライバシー・法令</strong>: 取得範囲・保存期間のルールが必要。</li>
+</ul><h3 id="s51">2.23 パケットキャプチャファイル内のアーティファクトとストリームの評価</h3><p class="sublabel"><strong>Wireshark の基本操作と代表的なフィルター（表示フィルター）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>フィルター例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特定 IP</td>
+<td><code>ip.addr == 203.0.113.10</code></td>
+</tr>
+<tr>
+<td>TCP の接続開始のみ</td>
+<td><code>tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></td>
+</tr>
+<tr>
+<td>HTTP POST</td>
+<td><code>http.request.method == "POST"</code></td>
+</tr>
+<tr>
+<td>DNS の問い合わせ</td>
+<td><code>dns.qry.name contains "example"</code></td>
+</tr>
+<tr>
+<td>TLS Client Hello</td>
+<td><code>tls.handshake.type == 1</code></td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Follow TCP Stream</td>
+<td>会話全体の流れを確認</td>
+</tr>
+<tr>
+<td>Export Objects（HTTP など）</td>
+<td>転送されたファイルを取り出し、ハッシュを算出</td>
+</tr>
+<tr>
+<td>Statistics → Conversations / Protocol Hierarchy</td>
+<td>通信の全体像、異常な通信先の発見</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>怪しいパターン</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>パターン</th>
+<th>兆候</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ビーコニング</td>
+<td>一定間隔の短い通信を繰り返す</td>
+</tr>
+<tr>
+<td>DNS トンネリング</td>
+<td>異常に長いサブドメイン、TXT レコードの多用</td>
+</tr>
+<tr>
+<td>データ持ち出し</td>
+<td>内部から外部への大量アップロード</td>
+</tr>
+<tr>
+<td>C2 通信</td>
+<td>不自然な User-Agent、まれな通信先、固定間隔</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>取り出したファイルは<strong>隔離環境で扱い、ハッシュを記録</strong>し、評判検索やサンドボックスへ回します。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Wireshark 表示フィルターリファレンス: <a href="https://www.wireshark.org/docs/dfref/" rel="noopener" target="_blank">https://www.wireshark.org/docs/dfref/</a></li>
+<li>Wireshark ユーザーガイド: <a href="https://www.wireshark.org/docs/wsug_html_chunked/" rel="noopener" target="_blank">https://www.wireshark.org/docs/wsug_html_chunked/</a></li>
+</ul></div><h3 id="s52">2.24 既存の検出ルールのトラブルシュート</h3><div class="diagram" data-d="d20"></div><p class="sublabel"><strong>Snort ルールの基本構造（例）</strong></p><div class="codeblock"><div class="codehead">text</div><pre><code class="language-text">alert tcp $EXTERNAL_NET any -&gt; $HOME_NET 80 (msg:"Example suspicious request"; flow:to_server,established; content:"/admin"; http_uri; sid:1000001; rev:1;)
+</code></pre></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>アクション（alert）</td>
+<td>検出時の動作</td>
+</tr>
+<tr>
+<td>プロトコル・送信元・宛先</td>
+<td>対象通信</td>
+</tr>
+<tr>
+<td>オプション（msg, content など）</td>
+<td>一致条件とメッセージ</td>
+</tr>
+<tr>
+<td>sid / rev</td>
+<td>ルール ID と改訂番号（ローカルルールは 1,000,000 以上が慣例）</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>ルールは<strong>テストデータ（既知の攻撃再現）で動作確認</strong>してから本番投入し、変更履歴を残します。</p></div><h3 id="s53">2.25 攻撃の戦術・技術・手順（TTP）の判断</h3><p class="lead"><strong>ひとことで言うと</strong>: 観測した行動を <strong>MITRE ATT&amp;CK</strong> の言葉で整理します。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>戦術（Tactic）</td>
+<td>攻撃者の目的（Why）</td>
+<td>初期アクセス、永続化</td>
+</tr>
+<tr>
+<td>技術（Technique）</td>
+<td>目的を達成する方法（How）</td>
+<td>フィッシング（T1566）</td>
+</tr>
+<tr>
+<td>手順（Procedure）</td>
+<td>具体的な実行方法</td>
+<td>特定の攻撃グループによるマクロ付き文書の使用</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>ATT&amp;CK Enterprise の14戦術</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>順</th>
+<th>戦術</th>
+<th>順</th>
+<th>戦術</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>偵察</td>
+<td>8</td>
+<td>認証情報アクセス</td>
+</tr>
+<tr>
+<td>2</td>
+<td>リソース開発</td>
+<td>9</td>
+<td>探索</td>
+</tr>
+<tr>
+<td>3</td>
+<td>初期アクセス</td>
+<td>10</td>
+<td>横展開</td>
+</tr>
+<tr>
+<td>4</td>
+<td>実行</td>
+<td>11</td>
+<td>収集</td>
+</tr>
+<tr>
+<td>5</td>
+<td>永続化</td>
+<td>12</td>
+<td>C2（コマンド&amp;コントロール）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>権限昇格</td>
+<td>13</td>
+<td>持ち出し</td>
+</tr>
+<tr>
+<td>7</td>
+<td>防御回避</td>
+<td>14</td>
+<td>影響</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>観測内容と技術 ID の対応例</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観測された行動</th>
+<th>技術 ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>悪意あるメール添付・リンク</td>
+<td>T1566</td>
+</tr>
+<tr>
+<td>PowerShell の不審な実行</td>
+<td>T1059.001</td>
+</tr>
+<tr>
+<td>正規アカウントの悪用</td>
+<td>T1078</td>
+</tr>
+<tr>
+<td>認証情報のダンプ</td>
+<td>T1003</td>
+</tr>
+<tr>
+<td>リモートサービスで横展開</td>
+<td>T1021</td>
+</tr>
+<tr>
+<td>ファイル暗号化（ランサムウェア）</td>
+<td>T1486</td>
+</tr>
+<tr>
+<td>公開アプリの脆弱性悪用</td>
+<td>T1190</td>
+</tr>
+<tr>
+<td>ログの削除</td>
+<td>T1070</td>
+</tr>
+</tbody>
+</table></div><p><strong>苦痛のピラミッド（Pyramid of Pain）</strong>: ハッシュや IP は攻撃者にとって変更が容易で、<strong>TTP は変更が最も難しい</strong>。そのため TTP ベースの検知は効果が高い、という考え方です。</p><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/" rel="noopener" target="_blank">https://attack.mitre.org/</a></li>
+<li>Pyramid of Pain（David Bianco）: <a href="https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html" rel="noopener" target="_blank">https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html</a></li>
+<li>MITRE D3FEND（防御技術の体系）: <a href="https://d3fend.mitre.org/" rel="noopener" target="_blank">https://d3fend.mitre.org/</a></li>
+</ul></div><h2 id="s54">ドメイン3 プロセス (30%)</h2><h3 id="s55">3.1 脅威モデルの構成要素の分析</h3><p class="lead"><strong>ひとことで言うと</strong>: 設計段階で「<strong>何を守り、どこが狙われ、どう防ぐか</strong>」を整理する作業です。</p><p class="sublabel"><strong>脅威モデリングの4つの問い</strong></p><ol>
+<li>何に取り組んでいるか（対象システムの理解）</li>
+<li>何がうまくいかなくなる可能性があるか（脅威の洗い出し）</li>
+<li>それに対して何をするか（対策）</li>
+<li>十分に対応できたか（検証）</li>
+</ol><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>構成要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>資産</td>
+<td>守る対象（データ、機能）</td>
+</tr>
+<tr>
+<td>エントリーポイント</td>
+<td>外部からの入口（API、ログイン画面）</td>
+</tr>
+<tr>
+<td>信頼境界</td>
+<td>権限・信頼度が変わる境目</td>
+</tr>
+<tr>
+<td>データフロー図（DFD）</td>
+<td>データの流れを可視化したもの</td>
+</tr>
+<tr>
+<td>脅威</td>
+<td>STRIDE 等で洗い出す</td>
+</tr>
+<tr>
+<td>緩和策</td>
+<td>脅威への対策</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>STRIDE 分類</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>頭文字</th>
+<th>脅威</th>
+<th>侵害される性質</th>
+<th>対策の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S</td>
+<td>なりすまし（Spoofing）</td>
+<td>認証</td>
+<td>MFA、証明書</td>
+</tr>
+<tr>
+<td>T</td>
+<td>改ざん（Tampering）</td>
+<td>完全性</td>
+<td>署名、ハッシュ</td>
+</tr>
+<tr>
+<td>R</td>
+<td>否認（Repudiation）</td>
+<td>否認防止</td>
+<td>監査ログ</td>
+</tr>
+<tr>
+<td>I</td>
+<td>情報漏えい（Information disclosure）</td>
+<td>機密性</td>
+<td>暗号化、アクセス制御</td>
+</tr>
+<tr>
+<td>D</td>
+<td>サービス拒否（Denial of service）</td>
+<td>可用性</td>
+<td>レート制限、冗長化</td>
+</tr>
+<tr>
+<td>E</td>
+<td>権限昇格（Elevation of privilege）</td>
+<td>認可</td>
+<td>最小権限</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>脅威モデルは<strong>一度作って終わりではなく</strong>、設計変更・新機能追加のたびに更新します。</p></div><h3 id="s56">3.2 一般的なタイプのケースを調査する手順の判断</h3><div class="diagram" data-d="d21"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ケース</th>
+<th>主なデータソース</th>
+<th>重点確認事項</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>フィッシング</td>
+<td>メールヘッダー、ゲートウェイログ、プロキシ</td>
+<td>受信者数、クリック有無、入力された資格情報</td>
+</tr>
+<tr>
+<td>マルウェア感染</td>
+<td>EDR、プロセスログ、サンドボックス</td>
+<td>感染経路、永続化、横展開</td>
+</tr>
+<tr>
+<td>アカウント侵害</td>
+<td>認証ログ、VPN/クラウドログ</td>
+<td>不審なログイン元、設定変更</td>
+</tr>
+<tr>
+<td>内部不正</td>
+<td>DLP、アクセスログ、HR 情報</td>
+<td>大量アクセス、時間帯、退職予定</td>
+</tr>
+<tr>
+<td>Web アプリ攻撃</td>
+<td>Web/WAF ログ、アプリログ</td>
+<td>攻撃パターン、侵害の有無</td>
+</tr>
+<tr>
+<td>情報漏えい</td>
+<td>通信ログ、クラウド監査ログ</td>
+<td>漏えいデータの種類・件数</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>調査は<strong>事実（観測）と推測を区別して記録</strong>し、<strong>時刻は UTC に統一</strong>します。</p></div><h3 id="s57">3.3 マルウェア分析プロセスの概念と一連の手順</h3><div class="diagram" data-d="d22"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>段階</th>
+<th>内容</th>
+<th>主なツール/観点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>抽出（3.3.a）</td>
+<td>パケットキャプチャやメールからファイルを取り出す</td>
+<td>Wireshark の Export Objects、メール添付</td>
+</tr>
+<tr>
+<td>静的解析（3.3.e）</td>
+<td>実行せずに調べる</td>
+<td>ハッシュ、文字列、PE ヘッダー、インポート関数、エントロピー</td>
+</tr>
+<tr>
+<td>動的解析（3.3.c）</td>
+<td>隔離環境で実行して挙動を観察</td>
+<td>プロセス、ファイル・レジストリ変更、通信（Secure Malware Analytics など）</td>
+</tr>
+<tr>
+<td>追加の静的解析が必要か（3.3.d）</td>
+<td>動的解析で得られない情報がある場合</td>
+<td>サンドボックス回避、時間待機、特定条件でのみ動作する場合</td>
+</tr>
+<tr>
+<td>リバースエンジニアリング（3.3.b）</td>
+<td>逆アセンブル・デバッグでコードを理解</td>
+<td>Ghidra など</td>
+</tr>
+<tr>
+<td>報告・共有（3.3.f）</td>
+<td>IOC、挙動、推奨対策をまとめる</td>
+<td>YARA ルール、STIX 形式</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>サンドボックスで追加の静的解析が必要となる典型例</strong></p><ul>
+<li>仮想環境を検知すると動作を止める（アンチサンドボックス）。</li>
+<li>一定時間後・特定日時・特定言語環境でのみ動作する。</li>
+<li>C2 サーバーが停止していて挙動が見えない。</li>
+</ul><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>隔離された分析ラボ</strong>（本番ネットワークから分離、スナップショット運用）で実施。</li>
+<li>実サンプルを扱う際は<strong>拡張子を無害化</strong>して保管し、誤実行を防止。</li>
+<li>IOC は共有時に<strong>デファング</strong>（<code>example[.]com</code> など）して誤クリックを防ぐ。</li>
+<li>共有範囲は <strong>TLP</strong> に従う。</li>
+</ol></div><h3 id="s58">3.4 トラフィックパターンの AI 予測分析に基づく攻撃イベントの解釈</h3><p class="lead"><strong>ひとことで言うと</strong>: AI が示した<strong>異常の時系列</strong>を、攻撃の段階（キルチェーン）に当てはめて理解します。</p><p class="sublabel"><strong>サイバーキルチェーン（7段階）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>段階</th>
+<th>内容</th>
+<th>トラフィック上の兆候</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 偵察</td>
+<td>標的の調査</td>
+<td>ポートスキャン、DNS 問い合わせの増加</td>
+</tr>
+<tr>
+<td>2 武器化</td>
+<td>攻撃コードの準備</td>
+<td>（攻撃者側のため通常は観測不可）</td>
+</tr>
+<tr>
+<td>3 配送</td>
+<td>メール・Web で届ける</td>
+<td>不審なメール、悪性サイトへのアクセス</td>
+</tr>
+<tr>
+<td>4 エクスプロイト</td>
+<td>脆弱性の悪用</td>
+<td>IPS アラート、異常なプロセス実行</td>
+</tr>
+<tr>
+<td>5 インストール</td>
+<td>永続化</td>
+<td>新規サービス・スケジュールタスク</td>
+</tr>
+<tr>
+<td>6 C2</td>
+<td>遠隔操作の確立</td>
+<td>ビーコニング、不審な外部通信</td>
+</tr>
+<tr>
+<td>7 目的の実行</td>
+<td>横展開・持ち出し・暗号化</td>
+<td>内部への大量通信、大量アップロード</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d23"></div><p><strong>注意点</strong>: AI 予測は<strong>確率的</strong>なので、元のログで裏取りし、誤検知の可能性を考慮します。</p><h3 id="s59">3.5 さまざまなプラットフォームにおける潜在的なエンドポイント侵入の調査</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>プラットフォーム</th>
+<th>主な証拠と確認ポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Windows</strong></td>
+<td>イベントログ（4624 ログオン成功、4625 失敗、4688 プロセス作成、4672 特権、4720 アカウント作成、7045 サービス作成、1102 ログ消去）、Run キー、スケジュールタスク、Prefetch、Amcache</td>
+</tr>
+<tr>
+<td><strong>Linux</strong></td>
+<td><code>/var/log/auth.log</code> または <code>/var/log/secure</code>、cron、<code>~/.ssh/authorized_keys</code>、<code>.bash_history</code>、systemd ユニット</td>
+</tr>
+<tr>
+<td><strong>macOS</strong></td>
+<td>統合ログ、LaunchAgents/LaunchDaemons、構成プロファイル</td>
+</tr>
+<tr>
+<td><strong>モバイル</strong></td>
+<td>MDM のコンプライアンス状態、不審アプリ、OS の改変（ルート化/脱獄）、証明書プロファイル</td>
+</tr>
+<tr>
+<td><strong>IoT</strong></td>
+<td>ファームウェアバージョン、初期認証情報、通信先の異常（機器内での調査が難しいためネットワーク観測が中心）</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d24"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>端末の種類ごとに<strong>調査用チェックリスト</strong>を事前に作成し、EDR で遠隔収集できる範囲を把握しておきます。</p></div><h3 id="s60">3.6 既知の侵害の指標（IOC）と攻撃の指標（IOA）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>IOC（Indicator of Compromise）</th>
+<th>IOA（Indicator of Attack）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>視点</td>
+<td><strong>事後的</strong>：侵害の証拠</td>
+<td><strong>進行中</strong>：攻撃者の意図・行動</td>
+</tr>
+<tr>
+<td>例</td>
+<td>悪性ハッシュ、C2 の IP/ドメイン、レジストリキー</td>
+<td>Office からの PowerShell 起動、LSASS メモリへのアクセス</td>
+</tr>
+<tr>
+<td>利点</td>
+<td>検知が明確で共有しやすい</td>
+<td>未知のマルウェアにも有効</td>
+</tr>
+<tr>
+<td>欠点</td>
+<td>攻撃者が容易に変更できる</td>
+<td>誤検知の調整が必要</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>IOC（早期のブロック）と IOA（行動ベース検知）を<strong>組み合わせて</strong>使います。</p></div><h3 id="s61">3.7 サンドボックス環境での IOC の判断（複雑な指標の生成を含む）</h3><p class="sublabel"><strong>手順</strong></p><ol>
+<li>サンドボックスレポートから <strong>ハッシュ、ドロップされたファイル、ミューテックス名、レジストリ、通信先、プロセスツリー</strong>を抽出。</li>
+<li>単独の指標（例: ドメイン）だけでなく、<strong>複数条件を組み合わせた複合指標</strong>を作成。</li>
+<li>YARA、Snort、Sigma、STIX パターンなど、用途に合う形式に変換。</li>
+<li><strong>正常なソフトウェアで誤検知しないか</strong>を検証して配布。</li>
+</ol><p class="sublabel"><strong>STIX パターン（複合指標）の例</strong></p><div class="codeblock"><div class="codehead">text</div><pre><code class="language-text">[file:hashes.'SHA-256' = 'EXAMPLE_HASH_VALUE'] OR [domain-name:value = 'malicious.example.com']
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>複合指標は<strong>精度（誤検知の少なさ）</strong>を重視し、有効期限と信頼度を付与します。</p></div><h3 id="s62">3.8 データ損失を調査するための手順（クラウド・エンドポイント・サーバー・DB・アプリ）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>環境</th>
+<th>確認する主なログ・観点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>クラウド</td>
+<td>監査ログ（誰がどのデータにアクセス・共有したか）、ストレージの公開設定、IAM の変更</td>
+</tr>
+<tr>
+<td>エンドポイント</td>
+<td>USB 接続履歴、EDR のファイル操作、クラウド同期クライアント、印刷ログ</td>
+</tr>
+<tr>
+<td>サーバー</td>
+<td>認証ログ、ファイルアクセス監査、大量の外向き通信</td>
+</tr>
+<tr>
+<td>データベース</td>
+<td>監査ログ・クエリログ（大量 SELECT、ダンプ）、特権の変更</td>
+</tr>
+<tr>
+<td>アプリケーション</td>
+<td>API ログ、エクスポート機能の利用、トークンの不審な使用</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d25"></div><h3 id="s63">3.9 脆弱性の問題に対処するための一般的な緩和策</h3><div class="diagram" data-d="d26"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>緩和策</th>
+<th>使いどころ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>パッチ/アップグレード</td>
+<td>根本対策。最優先</td>
+</tr>
+<tr>
+<td>仮想パッチ</td>
+<td>本体の修正が間に合わない場合（WAF/IPS で攻撃を遮断）</td>
+</tr>
+<tr>
+<td>設定変更・機能無効化</td>
+<td>脆弱な機能が不要な場合</td>
+</tr>
+<tr>
+<td>分離・アクセス制限</td>
+<td>修正できないレガシー資産</td>
+</tr>
+<tr>
+<td>監視強化</td>
+<td>補完として併用</td>
+</tr>
+<tr>
+<td>リスク受容</td>
+<td>例外承認と<strong>見直し期限</strong>が必須</td>
+</tr>
+</tbody>
+</table></div><h3 id="s64">3.10 脆弱性トリアージとリスク分析（CVSS など）</h3><p class="sublabel"><strong>CVSS（共通脆弱性評価システム）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>重大度</th>
+<th>スコア</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>なし</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>低</td>
+<td>0.1〜3.9</td>
+</tr>
+<tr>
+<td>中</td>
+<td>4.0〜6.9</td>
+</tr>
+<tr>
+<td>高</td>
+<td>7.0〜8.9</td>
+</tr>
+<tr>
+<td>緊急</td>
+<td>9.0〜10.0</td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>バージョン</th>
+<th>主な基本評価項目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CVSS v3.1</td>
+<td>攻撃元区分（AV）、攻撃条件の複雑さ（AC）、必要な特権（PR）、利用者の関与（UI）、スコープ（S）、機密性・完全性・可用性への影響（C/I/A）</td>
+</tr>
+<tr>
+<td>CVSS v4.0</td>
+<td>上記に加え、攻撃要件（AT）、後続システムへの影響などが追加。「基本（B）」だけでなく脅威（T）・環境（E）を加味したスコアの表記を使う</td>
+</tr>
+</tbody>
+</table></div><p><strong>ベクトルの読み方（例: v3.1）</strong>: <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code> は、ネットワーク経由・低複雑度・特権不要・利用者操作不要で、機密性・完全性・可用性が高く損なわれる脆弱性で、基本スコアは 9.8（緊急）です。</p><p class="sublabel"><strong>CVSS だけに頼らないための補助指標</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指標</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EPSS</td>
+<td>今後30日以内に悪用される確率の予測</td>
+</tr>
+<tr>
+<td>CISA KEV</td>
+<td>実際に悪用が確認された脆弱性の一覧</td>
+</tr>
+<tr>
+<td>資産の重要度・露出</td>
+<td>インターネット公開か、機密データを扱うか</td>
+</tr>
+<tr>
+<td>補完コントロールの有無</td>
+<td>WAF などで既に緩和されているか</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d27"></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>FIRST CVSS: <a href="https://www.first.org/cvss/" rel="noopener" target="_blank">https://www.first.org/cvss/</a></li>
+<li>FIRST EPSS: <a href="https://www.first.org/epss/" rel="noopener" target="_blank">https://www.first.org/epss/</a></li>
+<li>CISA KEV: <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" rel="noopener" target="_blank">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a></li>
+</ul></div><h2 id="s65">ドメイン4 自動化 (20%)</h2><h3 id="s66">4.1 SOAR の概念、プラットフォーム、メカニズムの比較</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自動化（Automation）</td>
+<td>単一タスクを人手なしで実行（例: IP 評判の自動取得）</td>
+</tr>
+<tr>
+<td>オーケストレーション（Orchestration）</td>
+<td>複数ツール・タスクを連携させた一連のワークフロー</td>
+</tr>
+<tr>
+<td>レスポンス</td>
+<td>封じ込め・修復などの対応アクション</td>
+</tr>
+<tr>
+<td>SOAR</td>
+<td>上記を統合し、ケース管理や人の承認も含めて運用する基盤</td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>比較軸</th>
+<th>SIEM</th>
+<th>SOAR</th>
+<th>XDR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主目的</td>
+<td>ログの収集・相関・検知</td>
+<td>対応の自動化・調整</td>
+<td>複数領域（エンドポイント・ネットワーク・メール等）の検知と対応の統合</td>
+</tr>
+<tr>
+<td>入力</td>
+<td>ログ</td>
+<td>アラート・ケース</td>
+<td>各製品のテレメトリ</td>
+</tr>
+<tr>
+<td>出力</td>
+<td>アラート</td>
+<td>実行結果・チケット更新</td>
+<td>相関済みインシデント・対応操作</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>SOAR の主な仕組み</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>仕組み</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>連携（コネクタ/インテグレーション）</td>
+<td>各ツールの API を呼び出す部品</td>
+</tr>
+<tr>
+<td>ワークフロー/プレイブック</td>
+<td>条件分岐を含む処理手順</td>
+</tr>
+<tr>
+<td>トリガー</td>
+<td>Webhook、スケジュール、アラート受信</td>
+</tr>
+<tr>
+<td>承認ステップ</td>
+<td>人間の確認を挟む</td>
+</tr>
+<tr>
+<td>ケース管理</td>
+<td>調査記録・証拠・担当者の管理</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>Cisco XDR にも自動化・オーケストレーションのワークフロー機能があります（旧 SecureX のオーケストレーションの流れを汲む）。製品名・機能は更新されるため、最新の公式ドキュメントで確認してください。</p></div><h3 id="s67">4.2 基本的なスクリプト（Python など）の解釈</h3><p>次のスクリプトを<strong>1行ずつ読む</strong>練習をします。</p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">import requests
+
+API = "https://api.example.com/v1/alerts"
+HEADERS = {"Authorization": "Bearer EXAMPLE_TOKEN"}
+
+resp = requests.get(API, headers=HEADERS, params={"severity": "high"}, timeout=10)
+resp.raise_for_status()
+
+for alert in resp.json()["items"]:
+    if alert["status"] == "open":
+        print(alert["id"], alert["src_ip"])
+</code></pre></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import requests</code></td>
+<td>HTTP 通信のライブラリを読み込む</td>
+</tr>
+<tr>
+<td><code>API</code>, <code>HEADERS</code></td>
+<td>接続先 URL と認証ヘッダー（Bearer トークン）</td>
+</tr>
+<tr>
+<td><code>requests.get(...)</code></td>
+<td>GET リクエスト。<code>params</code> は URL の <code>?severity=high</code> に相当。<code>timeout=10</code> は10秒で打ち切り</td>
+</tr>
+<tr>
+<td><code>raise_for_status()</code></td>
+<td>4xx/5xx の場合は例外を発生させる</td>
+</tr>
+<tr>
+<td><code>resp.json()["items"]</code></td>
+<td>応答の本文を JSON として解析し <code>items</code> を取り出す</td>
+</tr>
+<tr>
+<td><code>for ... if ...</code></td>
+<td>取り出した各アラートのうち <code>open</code> のものの ID と送信元 IP を表示</td>
+</tr>
+</tbody>
+</table></div><p><strong>読み取りのコツ</strong>: ① 何に接続するか ② 認証方法 ③ どんなデータを取得・加工するか ④ 出力先、の順に追います。</p><h3 id="s68">4.3 セキュリティ運用タスクの自動化（指定されたスクリプトの修正）</h3><p class="sublabel"><strong>修正の典型パターン</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>修正内容</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>エンドポイント/パラメータの変更</td>
+<td><code>severity</code> を <code>critical</code> に変更</td>
+</tr>
+<tr>
+<td>ページネーション対応</td>
+<td>次ページのトークンがある間、繰り返し取得</td>
+</tr>
+<tr>
+<td>エラー処理の追加</td>
+<td><code>try/except</code>、タイムアウト、リトライ</td>
+</tr>
+<tr>
+<td>ログ出力</td>
+<td><code>print</code> を <code>logging</code> に置き換え</td>
+</tr>
+<tr>
+<td>秘密情報の外出し</td>
+<td>トークンを環境変数から取得</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>改良版の例（環境変数・エラー処理・リトライ）</strong></p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">import os
+import time
+import requests
+
+API = "https://api.example.com/v1/alerts"
+TOKEN = os.environ["EXAMPLE_API_TOKEN"]  # コードに秘密情報を書かない
+HEADERS = {"Authorization": f"Bearer {TOKEN}"}
+
+def fetch_alerts(max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            resp = requests.get(API, headers=HEADERS, timeout=10)
+            if resp.status_code == 429:  # レート制限
+                wait = int(resp.headers.get("Retry-After", 2 ** attempt))
+                time.sleep(wait)
+                continue
+            resp.raise_for_status()
+            return resp.json()["items"]
+        except requests.exceptions.RequestException as e:
+            print(f"request failed: {e}")
+            time.sleep(2 ** attempt)
+    return []
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>自動化スクリプトは<strong>冪等（何度実行しても結果が同じ）</strong>にし、<strong>最初はドライラン（実行せず結果だけ表示）</strong>で検証します。</p></div><h3 id="s69">4.4 一般的なデータ形式（JSON、HTML、CSV、XML など）</h3><p>同じデータを4つの形式で表すと次のとおりです。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>形式</th>
+<th>例</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td><code>{"ip": "203.0.113.5", "score": 90}</code></td>
+<td>API で最も一般的。入れ子・配列を表現可能</td>
+</tr>
+<tr>
+<td>XML</td>
+<td><code>&lt;alert&gt;&lt;ip&gt;203.0.113.5&lt;/ip&gt;&lt;score&gt;90&lt;/score&gt;&lt;/alert&gt;</code></td>
+<td>タグ構造。古いシステム・SOAP で使用</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><code>ip,score</code> の次の行に <code>203.0.113.5,90</code></td>
+<td>表形式。区切り文字・引用符の扱いに注意</td>
+</tr>
+<tr>
+<td>YAML</td>
+<td><code>ip: 203.0.113.5</code> と <code>score: 90</code></td>
+<td>設定ファイルで多用（インデントが意味を持つ）</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td><code>&lt;td&gt;203.0.113.5&lt;/td&gt;</code></td>
+<td>Web ページ用。データ交換には不向き</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>Python での読み込み</strong></p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">import json, csv
+
+data = json.loads('{"ip": "203.0.113.5", "score": 90}')
+print(data["ip"])
+
+with open("alerts.csv", newline="", encoding="utf-8") as f:
+    for row in csv.DictReader(f):
+        print(row["ip"], row["score"])
+</code></pre></div><p><strong>セキュリティ上の注意</strong>: XML は <strong>XXE（外部エンティティ攻撃）</strong>に注意し、パーサーの外部エンティティ解決を無効化します。</p><h3 id="s70">4.5 SOAR プラットフォーム内での自動化・オーケストレーション・機械学習の機会</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>タスク</th>
+<th>自動化の適性</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IP/ドメイン/ハッシュの評判照会</td>
+<td>高</td>
+<td>低リスクで効果大</td>
+</tr>
+<tr>
+<td>フィッシングメールのトリアージ</td>
+<td>高</td>
+<td>抽出・サンドボックス・判定まで自動化可能</td>
+</tr>
+<tr>
+<td>チケット作成・通知</td>
+<td>高</td>
+<td>人手の転記作業を削減</td>
+</tr>
+<tr>
+<td>ブロックリストへの追加</td>
+<td>中</td>
+<td>誤遮断リスクのため承認を推奨</td>
+</tr>
+<tr>
+<td>端末の隔離</td>
+<td>中</td>
+<td>業務影響があるため条件付き・承認付き</td>
+</tr>
+<tr>
+<td>アカウント停止</td>
+<td>中〜低</td>
+<td>業務影響が大きく承認必須</td>
+</tr>
+<tr>
+<td>重大インシデントの最終判断</td>
+<td>低</td>
+<td>人間が判断</td>
+</tr>
+</tbody>
+</table></div><p><strong>機械学習の活用機会</strong>: アラートの優先順位付け、類似インシデントの推薦、フィッシング分類、異常検知。</p><p><strong>自動化レベルの考え方</strong>: 手動 → 情報収集のみ自動 → 提案付き（承認制）→ 自動実行（監視付き）。</p><h3 id="s71">4.6 API を使う際の制約（レート制限、タイムアウト、ペイロード）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>制約</th>
+<th>内容</th>
+<th>対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>レート制限</td>
+<td>単位時間あたりの呼び出し上限（超過は HTTP 429）</td>
+<td><code>Retry-After</code> を尊重、<strong>指数バックオフ＋ジッター</strong></td>
+</tr>
+<tr>
+<td>タイムアウト</td>
+<td>応答待ちの上限</td>
+<td>接続/読み取りのタイムアウトを明示し、再試行を設計</td>
+</tr>
+<tr>
+<td>ペイロードサイズ</td>
+<td>1リクエストの上限（超過は 413 など）</td>
+<td>分割送信、バッチ処理</td>
+</tr>
+<tr>
+<td>ページネーション</td>
+<td>一度に返す件数の上限</td>
+<td>次ページを繰り返し取得</td>
+</tr>
+<tr>
+<td>クォータ</td>
+<td>日・月単位の利用上限</td>
+<td>取得対象の絞り込み、キャッシュ</td>
+</tr>
+</tbody>
+</table></div><p><strong>指数バックオフの考え方</strong>: 失敗するたびに待ち時間を 1秒 → 2秒 → 4秒 のように倍にし、ランダムな揺らぎ（ジッター）を加えて、多数のクライアントが同時に再試行する集中を避けます。</p><h3 id="s72">4.7 REST API に関連する一般的な HTTP レスポンスコード</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>コード</th>
+<th>意味</th>
+<th>対処の考え方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200 OK</td>
+<td>成功</td>
+<td>結果を処理</td>
+</tr>
+<tr>
+<td>201 Created</td>
+<td>作成成功</td>
+<td><code>Location</code> ヘッダーを確認</td>
+</tr>
+<tr>
+<td>202 Accepted</td>
+<td>受理（非同期処理中）</td>
+<td>完了を後で確認</td>
+</tr>
+<tr>
+<td>204 No Content</td>
+<td>成功・本文なし</td>
+<td>削除成功などで使用</td>
+</tr>
+<tr>
+<td>301/302</td>
+<td>リダイレクト</td>
+<td><code>Location</code> へ再リクエスト</td>
+</tr>
+<tr>
+<td>304 Not Modified</td>
+<td>変更なし（キャッシュ利用）</td>
+<td>キャッシュを使用</td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>リクエスト不正</td>
+<td>パラメータ・形式を修正（再試行しても無駄）</td>
+</tr>
+<tr>
+<td>401 Unauthorized</td>
+<td><strong>認証</strong>が必要・失敗</td>
+<td>認証情報・トークン期限を確認</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td><strong>認可</strong>されていない</td>
+<td>権限（スコープ）を確認</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>リソースなし</td>
+<td>URL・ID を確認</td>
+</tr>
+<tr>
+<td>405 Method Not Allowed</td>
+<td>メソッド不可</td>
+<td>GET/POST などを見直す</td>
+</tr>
+<tr>
+<td>409 Conflict</td>
+<td>競合</td>
+<td>状態を確認して再実行</td>
+</tr>
+<tr>
+<td>415 Unsupported Media Type</td>
+<td>形式非対応</td>
+<td><code>Content-Type</code> を修正</td>
+</tr>
+<tr>
+<td>422 Unprocessable Entity</td>
+<td>構文は正しいが内容が不正</td>
+<td>値の検証</td>
+</tr>
+<tr>
+<td>429 Too Many Requests</td>
+<td>レート制限超過</td>
+<td><code>Retry-After</code> に従い待機</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>サーバー内部エラー</td>
+<td>一時的なら再試行、継続なら提供元へ</td>
+</tr>
+<tr>
+<td>502/503/504</td>
+<td>ゲートウェイ/サービス停止/タイムアウト</td>
+<td>バックオフ付きで再試行</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>覚え方</strong>: 2xx は成功、3xx は転送、<strong>4xx はクライアント側の問題（原則リトライしても直らない。ただし 429 は待てば再試行可）</strong>、5xx はサーバー側の問題（再試行が有効な場合がある）。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>RFC 9110（HTTP Semantics）: <a href="https://www.rfc-editor.org/rfc/rfc9110" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc9110</a></li>
+<li>RFC 6585（429 Too Many Requests）: <a href="https://www.rfc-editor.org/rfc/rfc6585" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc6585</a></li>
+</ul></div><h3 id="s73">4.8 HTTP レスポンスの構成要素（コード、ヘッダー、本文）の評価</h3><div class="codeblock"><div class="codehead">http</div><pre><code class="language-http" data-hl="1">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 58
+Cache-Control: no-store
+Strict-Transport-Security: max-age=31536000
+
+{"items": [{"id": "a1", "status": "open"}]}
+</code></pre></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>構成要素</th>
+<th>内容</th>
+<th>評価のポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ステータスライン</td>
+<td>プロトコル・コード・理由句</td>
+<td>成功か失敗かを最初に判断</td>
+</tr>
+<tr>
+<td>ヘッダー</td>
+<td>メタデータ</td>
+<td><code>Content-Type</code>（形式の確認）、<code>Retry-After</code>、<code>Location</code>、<code>Set-Cookie</code>、<code>WWW-Authenticate</code></td>
+</tr>
+<tr>
+<td>本文（ボディ）</td>
+<td>実際のデータ</td>
+<td>JSON として解析し必須項目を確認、エラー時は詳細メッセージを確認</td>
+</tr>
+</tbody>
+</table></div><p><strong>セキュリティ関連ヘッダー</strong>: <code>Strict-Transport-Security</code>（HTTPS を強制）、<code>Content-Security-Policy</code>、<code>X-Content-Type-Options</code> など。</p><h3 id="s74">4.9 API 認証メカニズム（ベーシック、カスタムトークン、API キー）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>仕組み</th>
+<th>リクエスト例</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ベーシック認証</td>
+<td><code>ユーザー名:パスワード</code> を Base64 エンコードして送信</td>
+<td><code>Authorization: Basic &lt;base64&gt;</code></td>
+<td><strong>Base64 は暗号化ではない</strong>。必ず TLS で使用</td>
+</tr>
+<tr>
+<td>カスタムトークン（Bearer 等）</td>
+<td>認証サーバーで取得した（有効期限付き）トークンを送信</td>
+<td><code>Authorization: Bearer &lt;token&gt;</code></td>
+<td>期限・スコープの管理、更新（リフレッシュ）</td>
+</tr>
+<tr>
+<td>API キー</td>
+<td>固定の鍵文字列で呼び出し元を識別</td>
+<td><code>X-API-Key: &lt;key&gt;</code>（ヘッダー名は製品により異なる）</td>
+<td>漏えい時の影響が大きい。ローテーションが必要</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d28"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li>秘密情報は<strong>シークレット管理基盤・環境変数</strong>に保管し、<strong>ソースコード・Git に含めない</strong>。</li>
+<li><strong>最小権限のスコープ</strong>を割り当てる。</li>
+<li><strong>定期的にローテーション</strong>し、漏えい時は即時失効。</li>
+<li>ログに認証ヘッダーを出力しない。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>OWASP API Security Top 10: <a href="https://owasp.org/API-Security/" rel="noopener" target="_blank">https://owasp.org/API-Security/</a></li>
+</ul></div><h3 id="s75">4.10 Bash コマンドの活用（ファイル管理、ディレクトリ操作、環境変数）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分類</th>
+<th>コマンド</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ディレクトリ</td>
+<td><code>pwd</code>, <code>cd</code>, <code>ls -la</code>, <code>mkdir -p</code></td>
+<td>位置確認・移動・一覧・作成</td>
+</tr>
+<tr>
+<td>ファイル</td>
+<td><code>cp</code>, <code>mv</code>, <code>rm</code>, <code>touch</code>, <code>cat</code>, <code>head</code>, <code>tail -f</code></td>
+<td>コピー・移動・削除・作成・閲覧</td>
+</tr>
+<tr>
+<td>検索</td>
+<td><code>find</code>, <code>grep</code></td>
+<td>ファイル/内容の検索</td>
+</tr>
+<tr>
+<td>権限</td>
+<td><code>chmod</code>, <code>chown</code></td>
+<td>権限・所有者の変更</td>
+</tr>
+<tr>
+<td>環境変数</td>
+<td><code>export VAR=value</code>, <code>echo "$VAR"</code>, <code>env</code>, <code>printenv</code></td>
+<td>変数の設定・参照</td>
+</tr>
+<tr>
+<td>テキスト処理</td>
+<td><code>awk</code>, <code>sed</code>, <code>cut</code>, <code>sort</code>, <code>uniq -c</code>, <code>wc -l</code></td>
+<td>ログの集計・加工</td>
+</tr>
+<tr>
+<td>通信</td>
+<td><code>curl</code>, <code>jq</code></td>
+<td>API 呼び出しと JSON 処理</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>実践例 1: 認証失敗の多い送信元 IP の上位を集計（Linux の SSH ログ）</strong></p><div class="codeblock"><div class="codehead">bash</div><pre><code class="language-bash" data-hl="1">grep "Failed password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr | head
+</code></pre></div><p class="sublabel"><strong>実践例 2: API を呼び、JSON から項目を抽出</strong></p><div class="codeblock"><div class="codehead">bash</div><pre><code class="language-bash" data-hl="1">curl -s -H "Authorization: Bearer $EXAMPLE_API_TOKEN" "https://api.example.com/v1/alerts" | jq -r '.items[].id'
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>スクリプトの先頭に <code>set -euo pipefail</code> を置き、<strong>エラーで止める</strong>。</li>
+<li>変数は <strong>常にダブルクォートで囲む</strong>（<code>"$VAR"</code>）。</li>
+<li><code>rm -rf</code> を変数と組み合わせる場合は、変数が空でないか<strong>必ず検証</strong>する。</li>
+<li>トークンを<strong>コマンド履歴に残さない</strong>（環境変数・ファイルから読み込む）。</li>
+</ul></div><h3 id="s76">4.11 CI/CD パイプラインの構成要素</h3><div class="diagram" data-d="d29"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要素</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CI（継続的インテグレーション）</td>
+<td>コード変更のたびに自動でビルド・テスト</td>
+</tr>
+<tr>
+<td>CD（継続的デリバリー/デプロイ）</td>
+<td>検証済みの成果物を自動でリリース可能な状態に/本番へ展開</td>
+</tr>
+<tr>
+<td>パイプライン定義</td>
+<td>YAML などで「コードとして」管理</td>
+</tr>
+<tr>
+<td>ランナー/エージェント</td>
+<td>ジョブを実行する環境</td>
+</tr>
+<tr>
+<td>シークレット管理</td>
+<td>認証情報を安全に注入</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>パイプライン定義の例（汎用的な YAML）</strong></p><div class="codeblock"><div class="codehead">yaml</div><pre><code class="language-yaml" data-hl="1">stages: [build, test, security, deploy]
+
+security_scan:
+  stage: security
+  script:
+    - run-sast-scan
+    - run-dependency-scan
+    - run-secret-scan
+  allow_failure: false   # 重大な指摘があればパイプラインを止める
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>ランナーの権限を最小化し、<strong>シークレットをログに出さない</strong>こと、<strong>ブランチ保護とレビュー必須化</strong>、<strong>成果物の署名</strong>を徹底します。</p></div><h3 id="s77">4.12 DevOps プラクティスの原則の適用</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>原則</th>
+<th>説明</th>
+<th>セキュリティ運用での応用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自動化</td>
+<td>繰り返し作業を自動化</td>
+<td>検知・対応の自動化</td>
+</tr>
+<tr>
+<td>継続的な改善</td>
+<td>小さな変更を頻繁に</td>
+<td>検知ルールの継続的チューニング</td>
+</tr>
+<tr>
+<td>共有</td>
+<td>開発と運用の協力</td>
+<td>SOC と開発・インフラの連携</td>
+</tr>
+<tr>
+<td>計測</td>
+<td>指標で判断</td>
+<td>MTTD/MTTR の測定</td>
+</tr>
+<tr>
+<td>フィードバック</td>
+<td>早く学ぶ</td>
+<td>事後レビュー（非難しない形式）</td>
+</tr>
+</tbody>
+</table></div><p><strong>3つの道（The Three Ways）</strong>: ① フロー（流れ）の最適化、② フィードバックの強化、③ 継続的な学習と実験。</p><p><strong>応用: Detection as Code</strong>: 検知ルールを Git で管理し、テスト・レビュー・自動展開を行う運用です。</p><h3 id="s78">4.13 コードとしてのインフラストラクチャ（IaC）の原則</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>原則</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宣言的</td>
+<td>「あるべき状態」を記述（例: Terraform）</td>
+</tr>
+<tr>
+<td>冪等性</td>
+<td>何度適用しても同じ結果</td>
+</tr>
+<tr>
+<td>バージョン管理</td>
+<td>変更履歴とレビューが可能</td>
+</tr>
+<tr>
+<td>再現性</td>
+<td>同じ環境を何度でも構築</td>
+</tr>
+<tr>
+<td>ドリフト検出</td>
+<td>実環境と定義のズレを検出</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>セキュアな IaC の例（Terraform: S3 バケットの公開をブロック）</strong></p><div class="codeblock"><div class="codehead">hcl</div><pre><code class="language-hcl">resource "aws_s3_bucket" "logs" {
+  bucket = "example-logs-bucket"
+}
+
+resource "aws_s3_bucket_public_access_block" "logs" {
+  bucket                  = aws_s3_bucket.logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>IaC スキャン</strong>（誤設定の事前検出）と <strong>ポリシーアズコード</strong>（例: OPA）でデプロイ前に違反を検出。</li>
+<li><strong>状態ファイル（state）に秘密情報が含まれる</strong>ため、暗号化・アクセス制限して保管。</li>
+<li>手動での設定変更を禁止し、<strong>すべて IaC 経由</strong>で変更する（ドリフト防止）。</li>
+</ol></div><h1 class="part" id="s79">第3部 コンセントレーション試験 300-215 CBRFIR</h1><p>試験の概要（公式）: フォレンジック分析とインシデント対応の基礎・手法・プロセスに関する知識を問う <strong>90分</strong> の試験です。日本語公式ページでは、出題の柱として「インシデント対応のプロセスとプレイブック」「脅威インテリジェンス」「デジタルフォレンジックのコンセプト」「エビデンスの収集と分析」「リバースエンジニアリングの原理」などが挙げられています。</p><p class="sublabel"><strong>デジタルフォレンジックの全体像</strong></p><div class="diagram" data-d="d30"></div><p><strong>揮発性の順序（Order of Volatility）</strong>: 失われやすいものから先に収集します（RFC 3227）。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>順</th>
+<th>証拠の種類</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>CPU レジスタ・キャッシュ</td>
+<td>（通常は取得困難）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>メモリ</td>
+<td>実行中プロセス、暗号鍵、メモリ上のマルウェア</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ネットワーク状態</td>
+<td>接続一覧、ARP、ルーティングテーブル</td>
+</tr>
+<tr>
+<td>4</td>
+<td>プロセス・システム状態</td>
+<td>実行中プロセス、ログオンセッション</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ディスク</td>
+<td>ファイル、ログ、レジストリ</td>
+</tr>
+<tr>
+<td>6</td>
+<td>リモートログ・監視データ</td>
+<td>SIEM、NetFlow</td>
+</tr>
+<tr>
+<td>7</td>
+<td>物理構成・アーカイブ</td>
+<td>バックアップ、物理媒体</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>RFC 3227（証拠の収集と保管ガイドライン）: <a href="https://www.rfc-editor.org/rfc/rfc3227" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc3227</a></li>
+<li>NIST SP 800-86（インシデント対応へのフォレンジック技術の統合）: <a href="https://csrc.nist.gov/pubs/sp/800/86/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/86/final</a></li>
+<li>Cisco 300-215 CBRFIR 試験ページ（日本語）: <a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/300-215-cbrfir.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/300-215-cbrfir.html</a></li>
+<li>Cisco 300-215 ブループリント（日本語 PDF）: <a href="https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/300-215-cbrfir.pdf" rel="noopener" target="_blank">https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/300-215-cbrfir.pdf</a></li>
+</ul></div><h2 id="s80">F1 基礎 (20%)</h2><h3 id="s81">F1.1 根本原因分析（RCA）レポートに必要なコンポーネント</h3><p class="lead"><strong>ひとことで言うと</strong>: 「何が起き、<strong>なぜ起き</strong>、どう防ぐか」を事実に基づいて文書化したレポートです。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>構成要素</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>エグゼクティブサマリー</td>
+<td>経営層向けの要約（影響・原因・対応状況）</td>
+</tr>
+<tr>
+<td>影響範囲</td>
+<td>影響を受けた資産・データ・期間・ビジネスへの影響</td>
+</tr>
+<tr>
+<td>タイムライン</td>
+<td>初期侵入から検知・封じ込め・復旧までの時系列（UTC 統一）</td>
+</tr>
+<tr>
+<td>根本原因</td>
+<td>直接原因と、その背後にある構造的原因</td>
+</tr>
+<tr>
+<td>寄与要因</td>
+<td>検知遅延や設定不備など、被害を拡大した要因</td>
+</tr>
+<tr>
+<td>検知・対応の評価</td>
+<td>うまくいった点・改善点（MTTD/MTTR など）</td>
+</tr>
+<tr>
+<td>証拠一覧</td>
+<td>ログ・ディスクイメージ・ハッシュ・保管場所（証拠の連続性）</td>
+</tr>
+<tr>
+<td>是正・再発防止策</td>
+<td>担当者・期限付きの対策</td>
+</tr>
+<tr>
+<td>IOC・付録</td>
+<td>共有可能な指標、技術的詳細</td>
+</tr>
+</tbody>
+</table></div><p><strong>根本原因の分析手法</strong>: 「<strong>なぜなぜ分析（5 Whys）</strong>」、特性要因図（フィッシュボーン）。</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>事実・推測・結論を分けて</strong>書く。</li>
+<li>個人の責任追及ではなく、<strong>仕組み（プロセス・技術）の改善</strong>に焦点を当てる（非難しない事後レビュー）。</li>
+<li>対策には<strong>担当者・期限・効果測定方法</strong>を付ける。</li>
+</ul></div><h3 id="s82">F1.2 インフラストラクチャ・ネットワークデバイスのフォレンジック分析</h3><p class="lead"><strong>ひとことで言うと</strong>: ルーター・スイッチ・ファイアウォールも侵害されます。<strong>再起動せずに揮発情報から先に採取</strong>します。</p><div class="diagram" data-d="d31"></div><p class="sublabel"><strong>Cisco IOS 系機器で確認する代表的なコマンド（例）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>コマンドの例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>実行中構成</td>
+<td><code>show running-config</code></td>
+</tr>
+<tr>
+<td>起動構成</td>
+<td><code>show startup-config</code></td>
+</tr>
+<tr>
+<td>稼働時間・バージョン</td>
+<td><code>show version</code></td>
+</tr>
+<tr>
+<td>ログ</td>
+<td><code>show logging</code></td>
+</tr>
+<tr>
+<td>ログインユーザー</td>
+<td><code>show users</code></td>
+</tr>
+<tr>
+<td>ルーティング</td>
+<td><code>show ip route</code></td>
+</tr>
+<tr>
+<td>ARP / MAC テーブル</td>
+<td><code>show arp</code>、<code>show mac address-table</code></td>
+</tr>
+<tr>
+<td>プロセス・CPU</td>
+<td><code>show processes cpu sorted</code></td>
+</tr>
+<tr>
+<td>サポート情報一括</td>
+<td><code>show tech-support</code></td>
+</tr>
+<tr>
+<td>イメージの完全性</td>
+<td><code>verify /md5 flash:&lt;イメージ名&gt;</code>（公式のハッシュと比較）</td>
+</tr>
+</tbody>
+</table></div><p><strong>確認すべき不審点</strong>: 未知のユーザーや特権レベルの設定、ACL・NAT・ルーティングの不正変更、GRE などのトンネル、SNMP コミュニティ、埋め込みパケットキャプチャ、不明な構成の差分。</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>再起動・電源断をしない</strong>（揮発情報が失われる）。</li>
+<li>平常時から<strong>構成バックアップ、NTP、syslog 集約、AAA ログ</strong>を整備し、「正常時の基準」を保持する。</li>
+<li>イメージは<strong>公式ハッシュと照合</strong>し、侵害が疑われる場合は<strong>クリーンなイメージで再構築</strong>。</li>
+</ul></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Cisco ネットワークセキュリティ対策（Cisco セキュリティガイダンス）: <a href="https://sec.cloudapps.cisco.com/security/center/resources/security_best_practices.html" rel="noopener" target="_blank">https://sec.cloudapps.cisco.com/security/center/resources/security_best_practices.html</a></li>
+<li>Cisco Guide to Harden Cisco IOS Devices: <a href="https://www.cisco.com/c/en/us/support/docs/ip/access-lists/13608-21.html" rel="noopener" target="_blank">https://www.cisco.com/c/en/us/support/docs/ip/access-lists/13608-21.html</a></li>
+</ul></div><h3 id="s83">F1.3 アンチフォレンジックの戦術・技術・手順</h3><p class="lead"><strong>ひとことで言うと</strong>: 攻撃者が<strong>証拠を消す・隠す・妨げる</strong>ための行為です。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>カテゴリ</th>
+<th>具体例</th>
+<th>ATT&amp;CK 技術（参考）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ログ改ざん・消去</td>
+<td>イベントログの削除（Windows イベント 1102）、ログ停止</td>
+<td>T1070 / T1562</td>
+</tr>
+<tr>
+<td>タイムスタンプ改変</td>
+<td>ファイルの作成・更新時刻を偽装（タイムストンプ）</td>
+<td>T1070.006</td>
+</tr>
+<tr>
+<td>データ破棄</td>
+<td>上書き消去ツール、シャドウコピー削除</td>
+<td>T1485 / T1490</td>
+</tr>
+<tr>
+<td>隠蔽</td>
+<td>NTFS 代替データストリーム、ステガノグラフィ、暗号化コンテナ</td>
+<td>T1564</td>
+</tr>
+<tr>
+<td>難読化</td>
+<td>パッキング、Base64、XOR</td>
+<td>T1027</td>
+</tr>
+<tr>
+<td>検知回避</td>
+<td>正規ツールの悪用（Living off the Land）、ファイルレス実行</td>
+<td>T1218 など</td>
+</tr>
+<tr>
+<td>痕跡の撹乱</td>
+<td>VPN/Tor/プロキシ経由、位置情報の偽装</td>
+<td>T1090</td>
+</tr>
+<tr>
+<td>分析妨害</td>
+<td>アンチ VM/サンドボックス、デバッガ検知</td>
+<td>T1497</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>対策の観点</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>対策</th>
+<th>効果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ログのリモート転送（WORM）</td>
+<td>端末上のログを消されても残る</td>
+</tr>
+<tr>
+<td>ファイル整合性監視（FIM）</td>
+<td>改ざんの検知</td>
+</tr>
+<tr>
+<td>メモリフォレンジック</td>
+<td>ディスク上に痕跡がない攻撃を発見</td>
+</tr>
+<tr>
+<td>EDR のテレメトリ</td>
+<td>端末外にもイベント履歴を保持</td>
+</tr>
+<tr>
+<td>「ログが無い」こと自体を異常とみなす</td>
+<td>ログの空白期間・シーケンス欠落は重要な手掛かり</td>
+</tr>
+</tbody>
+</table></div><h3 id="s84">F1.4 エンコーディングおよび難読化の手法</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>手法</th>
+<th>説明</th>
+<th>見分け方・対処</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base64</td>
+<td>バイナリを64文字で表現するエンコーディング（暗号ではない）</td>
+<td>英数字と <code>+</code>, <code>/</code>、末尾が <code>=</code> で終わることが多い</td>
+</tr>
+<tr>
+<td>16進（Hex）エンコード</td>
+<td>各バイトを2桁の16進数で表現</td>
+<td><code>0-9a-f</code> のみで構成</td>
+</tr>
+<tr>
+<td>URL エンコード</td>
+<td><code>%XX</code> 形式</td>
+<td>Web ログで多用される</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>単純な鍵との排他的論理和</td>
+<td>単一バイト鍵ならブルートフォース可能</td>
+</tr>
+<tr>
+<td>パッキング</td>
+<td>実行ファイルを圧縮・暗号化して包む</td>
+<td>高エントロピー、インポート関数が少ない</td>
+</tr>
+<tr>
+<td><strong>ポリモーフィック</strong></td>
+<td>暗号化・復号部分を毎回変え、<strong>本体の機能は同じ</strong></td>
+<td>シグネチャ回避。復号後の挙動で検知</td>
+</tr>
+<tr>
+<td><strong>メタモーフィック</strong></td>
+<td>コード自体を毎回<strong>書き換える</strong>（復号部を持たない）</td>
+<td>検知が非常に困難。挙動分析が重要</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>Python による解読の例（無害な文字列）</strong></p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">import base64
+
+encoded = "SGVsbG8gQ3liZXJPcHM="
+print(base64.b64decode(encoded).decode())        # Hello CyberOps
+
+hexstr = "48656c6c6f"
+print(bytes.fromhex(hexstr).decode())              # Hello
+
+def xor_decode(data: bytes, key: int) -&gt; bytes:
+    return bytes(b ^ key for b in data)
+
+cipher = xor_decode(b"Hello", 0x41)                # 暗号化（XOR は同じ操作で復号）
+print(xor_decode(cipher, 0x41))                    # b'Hello'
+</code></pre></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>補足</strong>: Windows PowerShell の <code>-EncodedCommand</code> は <strong>UTF-16LE の Base64</strong> です。デコード時は文字コードに注意します。</p></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>難読化は<strong>何層も重ねられる</strong>ため、「1層デコードして終わり」にせず、<strong>復号結果が平文になるまで繰り返し</strong>ます。実行はせず、必ず<strong>隔離環境</strong>で扱います。</p></div><h3 id="s85">F1.5 YARA ルール（基本）の使用と特徴</h3><p class="lead"><strong>ひとことで言うと</strong>: ファイルやメモリを「<strong>文字列やバイト列のパターン</strong>」で分類する、マルウェア識別用のルール言語です。</p><p class="sublabel"><strong>ルールの基本構造（例: 無害なデモ用）</strong></p><div class="codeblock"><div class="codehead">text</div><pre><code class="language-text">rule Demo_Suspicious_Downloader
+{
+    meta:
+        author      = "analyst"
+        description = "Demo rule: PE file containing suspicious strings"
+        date        = "2026-10-05"
+
+    strings:
+        $s1 = "example-c2.test" ascii wide nocase
+        $s2 = { 6A 40 68 00 30 00 00 }
+        $re = /https?:\/\/[a-z0-9\.\-]+\/gate\.php/
+
+    condition:
+        uint16(0) == 0x5A4D and filesize &lt; 2MB and (2 of ($s*) or $re)
+}
+</code></pre></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>セクション</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>meta</code></td>
+<td>作者・説明・日付・参照など（検索や管理に有用）</td>
+</tr>
+<tr>
+<td><code>strings</code></td>
+<td>テキスト（<code>ascii</code>, <code>wide</code>, <code>nocase</code>, <code>fullword</code> の修飾子）、16進バイト列（<code>{ ... }</code>）、正規表現</td>
+</tr>
+<tr>
+<td><code>condition</code></td>
+<td>一致条件。<code>uint16(0) == 0x5A4D</code> は先頭が「MZ」（PE ファイル）、<code>2 of ($s*)</code> は2つ以上一致、<code>filesize</code> でサイズ制限</td>
+</tr>
+</tbody>
+</table></div><p><strong>実行例</strong>: <code>yara -r rules.yar /path/to/scan</code>（<code>-r</code> は再帰的に検索）</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ol>
+<li><strong>ありふれた文字列だけで判定しない</strong>（誤検知の原因）。複数の特徴を組み合わせる。</li>
+<li><strong>正常ファイル群（グッドウェア）でテスト</strong>して誤検知を確認する。</li>
+<li>先頭バイトやサイズなど、<strong>軽い条件を先に書き</strong>て性能を確保。</li>
+<li><code>meta</code> に説明・参照・バージョンを記載し、<strong>命名規則とバージョン管理</strong>を徹底。</li>
+</ol></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>YARA 公式ドキュメント: <a href="https://yara.readthedocs.io/" rel="noopener" target="_blank">https://yara.readthedocs.io/</a></li>
+</ul></div><h3 id="s86">F1.6 DFIR で使用するツールの役割</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分類</th>
+<th>代表ツール</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hex エディタ</strong></td>
+<td>HxD、Hiew、Hexfiend</td>
+<td>バイナリを16進で直接確認・編集（ファイルシグネチャ確認、埋め込みデータの発見）</td>
+</tr>
+<tr>
+<td><strong>逆アセンブラ・デバッガ</strong></td>
+<td>Ghidra、Radare2、Evans Debugger（edb）</td>
+<td>実行ファイルのコード解析・ステップ実行</td>
+</tr>
+<tr>
+<td><strong>難読化解除ツール</strong></td>
+<td>XORBruteForcer、xortool、アンパッカー（UPX など）</td>
+<td>XOR 鍵の推定、パッカーの展開</td>
+</tr>
+<tr>
+<td><strong>メモリフォレンジック</strong></td>
+<td>Volatility など</td>
+<td>メモリダンプからプロセス・接続・注入コードを抽出</td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>主な使いどころ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hex エディタ</td>
+<td>ヘッダー（例: PE の <code>MZ</code>、ELF の <code>7F 45 4C 46</code>）を見て、拡張子偽装を見破る</td>
+</tr>
+<tr>
+<td>Ghidra / Radare2</td>
+<td>関数の流れ、文字列参照、通信先の特定</td>
+</tr>
+<tr>
+<td>xortool</td>
+<td>XOR でエンコードされた通信・設定データの鍵推定</td>
+</tr>
+<tr>
+<td>Volatility</td>
+<td>ディスクに痕跡がない（ファイルレス）攻撃の発見</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Ghidra: <a href="https://ghidra-sre.org/" rel="noopener" target="_blank">https://ghidra-sre.org/</a></li>
+<li>Volatility 3 ドキュメント: <a href="https://volatility3.readthedocs.io/" rel="noopener" target="_blank">https://volatility3.readthedocs.io/</a></li>
+</ul></div><h3 id="s87">F1.7 仮想環境（クラウドベンダー）からの証拠収集に関連する問題</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理アクセス不可</td>
+<td>ディスクやメモリを直接取得できない（API・スナップショット経由）</td>
+</tr>
+<tr>
+<td>マルチテナント</td>
+<td>他の顧客のデータが混在し、プライバシー・契約上の制約</td>
+</tr>
+<tr>
+<td>一時的なリソース</td>
+<td>インスタンスやコンテナは終了と同時に証拠が消える</td>
+</tr>
+<tr>
+<td>ログ保持期間</td>
+<td>既定の保持期間が短い場合がある</td>
+</tr>
+<tr>
+<td>管轄・データ所在地</td>
+<td>データがどの国・地域にあるかにより法的要件が異なる</td>
+</tr>
+<tr>
+<td>ベンダーの協力範囲</td>
+<td>取得できるログ・サポート範囲は契約・責任共有モデルによる</td>
+</tr>
+<tr>
+<td>時刻・ID の突き合わせ</td>
+<td>複数サービスのログの相関が必要</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d32"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li><strong>事前に</strong>: 監査ログの全面有効化、保持期間の延長、IR 用ロールの準備、スナップショット手順の訓練。</li>
+<li><strong>事後に</strong>: 証拠の連続性（Chain of Custody）の記録、法務部門との連携。</li>
+</ul></div><h2 id="s88">F2 フォレンジック手法 (20%)</h2><h3 id="s89">F2.1 ファイルレスマルウェア分析に用いられる手法（MITRE ATT&amp;CK）</h3><p class="lead"><strong>ひとことで言うと</strong>: ディスクにファイルを残さず、<strong>メモリ上や正規ツールで動作</strong>する攻撃です。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>手法</th>
+<th>説明</th>
+<th>ATT&amp;CK（参考）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PowerShell の悪用</td>
+<td>難読化したスクリプトをメモリ上で実行</td>
+<td>T1059.001</td>
+</tr>
+<tr>
+<td>WMI の悪用</td>
+<td>WMI イベント購読で永続化・実行</td>
+<td>T1047 / T1546.003</td>
+</tr>
+<tr>
+<td>プロセスインジェクション</td>
+<td>正規プロセスのメモリにコードを注入</td>
+<td>T1055</td>
+</tr>
+<tr>
+<td>反射型コードロード</td>
+<td>メモリ上に直接ロード</td>
+<td>T1620</td>
+</tr>
+<tr>
+<td>署名付きバイナリの悪用（LOLBins）</td>
+<td>正規の OS 付属ツールで悪意ある処理</td>
+<td>T1218</td>
+</tr>
+<tr>
+<td>レジストリ内に格納</td>
+<td>ペイロードをレジストリに保存して実行</td>
+<td>T1112 など</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>検知・調査</strong></p><ul>
+<li>PowerShell の<strong>スクリプトブロックログ（イベント 4104）</strong>、コマンドラインのログ取得、<strong>AMSI</strong>。</li>
+<li>Sysmon、EDR による親子プロセスの確認。</li>
+<li><strong>メモリフォレンジック</strong>（<code>malfind</code> 等）で注入コードを発見。</li>
+</ul><h3 id="s90">F2.2 ホスト上の必要なファイルとその場所</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>OS</th>
+<th>重要な証拠</th>
+<th>場所の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Windows</strong></td>
+<td>イベントログ</td>
+<td><code>C:\Windows\System32\winevt\Logs\</code></td>
+</tr>
+<tr>
+<td></td>
+<td>レジストリハイブ</td>
+<td><code>SYSTEM</code>, <code>SOFTWARE</code>, <code>SAM</code>, <code>SECURITY</code>、各ユーザーの <code>NTUSER.DAT</code></td>
+</tr>
+<tr>
+<td></td>
+<td>実行履歴</td>
+<td><code>C:\Windows\Prefetch\</code>、<code>Amcache.hve</code>、SRUM</td>
+</tr>
+<tr>
+<td></td>
+<td>ファイルシステムの記録</td>
+<td><code>$MFT</code>、USN ジャーナル</td>
+</tr>
+<tr>
+<td></td>
+<td>永続化</td>
+<td>スタートアップフォルダ、<code>C:\Windows\System32\Tasks\</code></td>
+</tr>
+<tr>
+<td></td>
+<td>メモリ関連</td>
+<td><code>pagefile.sys</code>、<code>hiberfil.sys</code></td>
+</tr>
+<tr>
+<td><strong>Linux</strong></td>
+<td>認証ログ</td>
+<td><code>/var/log/auth.log</code>（Debian 系）、<code>/var/log/secure</code>（RHEL 系）</td>
+</tr>
+<tr>
+<td></td>
+<td>システム・監査ログ</td>
+<td><code>/var/log/syslog</code>、<code>/var/log/messages</code>、<code>/var/log/audit/audit.log</code></td>
+</tr>
+<tr>
+<td></td>
+<td>ログイン履歴</td>
+<td><code>wtmp</code>、<code>btmp</code>、<code>lastlog</code></td>
+</tr>
+<tr>
+<td></td>
+<td>永続化</td>
+<td>cron（<code>/etc/cron*</code>、<code>crontab</code>）、systemd ユニット、<code>~/.ssh/authorized_keys</code></td>
+</tr>
+<tr>
+<td></td>
+<td>シェル履歴</td>
+<td><code>~/.bash_history</code></td>
+</tr>
+<tr>
+<td><strong>macOS</strong></td>
+<td>統合ログ、LaunchAgents/LaunchDaemons、ユーザーライブラリ</td>
+<td><code>/Library/LaunchDaemons/</code> など</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>ライブ調査では<strong>元のディスクに書き込まない</strong>（書き込み防止・読み取り専用でイメージ取得）。変更してしまった場合は記録に残します。</p></div><h3 id="s91">F2.3 ホスト上の IOC 識別のための出力の評価</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分析</th>
+<th>見るポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>プロセス分析</strong></td>
+<td>異常な親子関係（例: Word から PowerShell）、通常と異なるパスで動作するシステムプロセス名（偽装）、LSASS へのアクセス</td>
+</tr>
+<tr>
+<td><strong>ログ分析（クラウドネイティブ含む）</strong></td>
+<td>クラウド監査ログ、コンテナ/Kubernetes の監査ログ、サーバーレス関数の実行ログ、認証・権限変更</td>
+</tr>
+<tr>
+<td><strong>ネットワークトラフィック分析</strong></td>
+<td>通常と異なる宛先・時間帯・量、DNS の異常（逸脱検知）</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p><strong>複数のデータソースで裏取り</strong>（プロセスだけでなくネットワークやログと突き合わせ）し、時刻を UTC に統一します。</p></div><h3 id="s92">F2.4 提供されたスニペットに基づくコードの種類の判断</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>言語</th>
+<th>見分けるポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PowerShell</td>
+<td><code>Verb-Noun</code> 形式のコマンドレット（<code>Invoke-WebRequest</code>）、<code>$変数</code>、<code>-enc</code> / <code>-EncodedCommand</code></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>import</code>、<code>def</code>、インデントによるブロック</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td><code>function</code>、<code>var/let/const</code>、<code>eval</code>、<code>atob</code>（Base64 デコード）</td>
+</tr>
+<tr>
+<td>VBScript/VBA</td>
+<td><code>Sub</code>、<code>CreateObject("WScript.Shell")</code>、<code>Dim</code></td>
+</tr>
+<tr>
+<td>Bash</td>
+<td>先頭の <code>#!/bin/bash</code>、<code>$(...)</code>、<code>|</code> によるパイプ</td>
+</tr>
+<tr>
+<td>バッチ</td>
+<td><code>@echo off</code>、<code>%変数%</code></td>
+</tr>
+<tr>
+<td>PHP（Web シェルの疑い）</td>
+<td><code>&lt;?php</code> の中で、外部入力（<code>$_POST</code> など）を <code>eval</code> や <code>system</code> に渡している</td>
+</tr>
+<tr>
+<td>アセンブリ</td>
+<td><code>mov</code>、<code>push</code>、<code>call</code> などのニーモニック</td>
+</tr>
+</tbody>
+</table></div><p><strong>怪しさの手掛かり</strong>: 外部からのダウンロードと実行、Base64 や 16進の長大な文字列、<code>eval</code>/<code>exec</code> の多用、無意味な変数名や極端な難読化。</p><h3 id="s93">F2.5 ログや複数データソースを解析・検索するスクリプトの作成（Python・PowerShell・Bash）</h3><p><strong>対象データソース例</strong>: Cisco Umbrella、Cisco Secure Endpoint、Cisco Secure Network Analytics、pxGrid（ISE）。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>データソース</th>
+<th>取得できる情報</th>
+<th>利用の考え方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Umbrella</td>
+<td>DNS・Web アクセスのログ、ドメインの判定</td>
+<td>不審ドメインへの問い合わせ元の特定</td>
+</tr>
+<tr>
+<td>Secure Endpoint</td>
+<td>ファイル・プロセス・ネットワークのイベント、検出結果</td>
+<td>端末上の挙動とハッシュの追跡</td>
+</tr>
+<tr>
+<td>Secure Network Analytics</td>
+<td>フローデータ、ホストの挙動、アラート</td>
+<td>横展開・持ち出しの兆候確認</td>
+</tr>
+<tr>
+<td>pxGrid（ISE）</td>
+<td>ユーザー・デバイスのコンテキスト（誰がどの IP を使っていたか）</td>
+<td>IP を人・端末に紐付ける</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>各製品の API の URL・認証方式は製品・バージョンごとに異なります。実際のスクリプト作成では <strong>公式の API ドキュメント</strong>で確認してください。</p></div><p class="sublabel"><strong>Python の例: 複数ソースからの結果を共通形式にまとめる</strong></p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">import requests
+
+def normalize(source, record):
+    return {
+        "source": source,
+        "time": record.get("time"),
+        "host": record.get("host") or record.get("src_ip"),
+        "indicator": record.get("indicator"),
+    }
+
+def search_ioc(ioc, sources):
+    results = []
+    for name, url, headers in sources:
+        r = requests.get(url, headers=headers, params={"q": ioc}, timeout=10)
+        r.raise_for_status()
+        for rec in r.json().get("items", []):
+            results.append(normalize(name, rec))
+    return sorted(results, key=lambda x: x["time"] or "")
+</code></pre></div><p class="sublabel"><strong>PowerShell の例: Windows のログオン失敗イベントの抽出</strong></p><div class="codeblock"><div class="codehead">powershell</div><pre><code class="language-powershell" data-hl="1">Get-WinEvent -FilterHashtable @{ LogName='Security'; Id=4625 } -MaxEvents 100 |
+  Select-Object TimeCreated, Id, Message
+</code></pre></div><p class="sublabel"><strong>Bash の例: 複数ログから IOC の IP を検索</strong></p><div class="codeblock"><div class="codehead">bash</div><pre><code class="language-bash" data-hl="1">grep -rn "203.0.113.50" /var/log/ 2&gt;/dev/null
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>① 認証情報は環境変数・シークレット管理で扱う、② レート制限とタイムアウトに配慮、③ <strong>出力は共通スキーマ（時刻・ホスト・指標）にそろえて</strong>相関しやすくする、④ 読み取り専用の API 権限で実行する。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Cisco DevNet セキュリティ: <a href="https://developer.cisco.com/site/security/" rel="noopener" target="_blank">https://developer.cisco.com/site/security/</a></li>
+<li>Cisco pxGrid ドキュメント: <a href="https://developer.cisco.com/docs/pxgrid/" rel="noopener" target="_blank">https://developer.cisco.com/docs/pxgrid/</a></li>
+</ul></div><h3 id="s94">F2.6 ライブラリやツールの目的・使用方法・機能</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>目的</th>
+<th>使用例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Volatility</strong></td>
+<td>メモリダンプの解析</td>
+<td><code>vol -f mem.raw windows.pslist</code>（プロセス一覧）、<code>windows.pstree</code>、<code>windows.netscan</code>（ネットワーク接続）、<code>windows.malfind</code>（注入コード）、<code>windows.cmdline</code></td>
+</tr>
+<tr>
+<td><strong>Sysinternals</strong></td>
+<td>Windows の詳細調査</td>
+<td>Process Explorer（プロセス）、Autoruns（自動起動）、Process Monitor（ファイル・レジストリ操作）、TCPView（接続）、Sysmon（詳細ログ）</td>
+</tr>
+<tr>
+<td><strong>SIFT Workstation</strong></td>
+<td>フォレンジック用ツール集（SANS）</td>
+<td>ディスクイメージ・タイムライン分析の統合環境</td>
+</tr>
+<tr>
+<td><strong>tcpdump</strong></td>
+<td>パケット取得</td>
+<td><code>tcpdump -i eth0 -nn -s0 -w out.pcap host 203.0.113.10 and port 443</code></td>
+</tr>
+</tbody>
+</table></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>tcpdump オプション</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i eth0</code></td>
+<td>取得するインターフェース</td>
+</tr>
+<tr>
+<td><code>-nn</code></td>
+<td>名前解決をしない（高速化・正確性）</td>
+</tr>
+<tr>
+<td><code>-s0</code></td>
+<td>パケット全体を取得</td>
+</tr>
+<tr>
+<td><code>-w out.pcap</code></td>
+<td>ファイルへ保存</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>使用コマンドと結果は<strong>すべて作業記録に残し</strong>、<strong>ハッシュ付きで証拠を保管</strong>します。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>SANS SIFT Workstation: <a href="https://www.sans.org/tools/sift-workstation/" rel="noopener" target="_blank">https://www.sans.org/tools/sift-workstation/</a></li>
+<li>Microsoft Sysinternals: <a href="https://learn.microsoft.com/en-us/sysinternals/" rel="noopener" target="_blank">https://learn.microsoft.com/en-us/sysinternals/</a></li>
+</ul></div><h2 id="s95">F3 インシデント対応手法 (30%)</h2><h3 id="s96">F3.1 アラートログ（SIEM、IDS/IPS、syslog など）の解釈</h3><p class="sublabel"><strong>syslog の重大度（Severity）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>値</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Emergency（緊急）</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alert</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Warning</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Notice</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Informational</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Debug</td>
+</tr>
+</tbody>
+</table></div><p><strong>Snort/IPS アラートで見る項目</strong>: ルール ID（GID:SID:REV）、メッセージ、分類・優先度、送信元/宛先の IP とポート、プロトコル、時刻。</p><p class="sublabel"><strong>解釈の手順</strong></p><div class="diagram" data-d="d33"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>「アラートが出た」ことと「攻撃が<strong>成功した</strong>」ことは別です。<strong>後続の挙動（応答の内容、後続の通信）</strong>で成功を判断します。</p></div><h3 id="s97">F3.2 インシデントの種類に応じて関連付けるデータの判断</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>種類</th>
+<th>主なデータ</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ホストベース</strong></td>
+<td>プロセス、ファイル、レジストリ、認証、EDR</td>
+<td>不審なプロセス起動、永続化</td>
+</tr>
+<tr>
+<td><strong>ネットワークベース</strong></td>
+<td>フロー、DNS、プロキシ、FW、IDS/IPS、PCAP</td>
+<td>C2 通信、スキャン、持ち出し</td>
+</tr>
+</tbody>
+</table></div><p><strong>ピボット（突合）のキー</strong>: IP アドレス、ホスト名、ユーザー名、ファイルハッシュ、ドメイン、<strong>時刻</strong>。</p><div class="diagram" data-d="d34"></div><h3 id="s98">F3.3 攻撃ベクトル・攻撃対象領域の判断と緩和策の推奨</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>攻撃ベクトル</th>
+<th>緩和策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>メール（フィッシング、添付）</td>
+<td>メールセキュリティ、サンドボックス、利用者教育、DMARC</td>
+</tr>
+<tr>
+<td>公開 Web アプリ</td>
+<td>WAF、パッチ、入力検証、脆弱性診断</td>
+</tr>
+<tr>
+<td>リモートアクセス（RDP/VPN）</td>
+<td>MFA、公開範囲の制限、パッチ</td>
+</tr>
+<tr>
+<td>認証情報の窃取・使い回し</td>
+<td>MFA、パスワードの使い回し防止、PAM</td>
+</tr>
+<tr>
+<td>サプライチェーン</td>
+<td>依存関係の検証、SBOM、署名検証</td>
+</tr>
+<tr>
+<td>リムーバブルメディア</td>
+<td>USB 制御、EDR</td>
+</tr>
+<tr>
+<td>クラウドの設定不備</td>
+<td>CSPM、IAM の最小権限</td>
+</tr>
+<tr>
+<td>内部不正</td>
+<td>最小権限、DLP、UEBA、職務分掌</td>
+</tr>
+</tbody>
+</table></div><p><strong>攻撃対象領域管理（ASM）</strong>: 外部から見える資産（ドメイン、公開ポート、クラウド）を継続的に棚卸しし、不要な公開を縮小します。</p><h3 id="s99">F3.4 インシデント発生後の分析に基づく対応策の推奨</h3><p class="sublabel"><strong>事後レビュー（ポストインシデント）で整理する観点</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>問い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>検知</td>
+<td>なぜもっと早く検知できなかったか</td>
+</tr>
+<tr>
+<td>対応</td>
+<td>手順は有効だったか、連絡は円滑だったか</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>技術的・プロセス的な根本原因は何か</td>
+</tr>
+<tr>
+<td>再発防止</td>
+<td>どのコントロールを追加・強化するか</td>
+</tr>
+<tr>
+<td>学習</td>
+<td>プレイブック・訓練・検知ルールへどう反映するか</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>提言は<strong>測定可能（担当・期限・成功基準付き）</strong>にし、実施状況を追跡します。</p></div><h3 id="s100">F3.5 評価済みアラートに基づく緩和策の推奨（FW、SIEM、SOAR、IPS、Umbrella、SNA、XDR 等）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ツール/アラート</th>
+<th>推奨される緩和策の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ファイアウォール/IPS</td>
+<td>送信元のブロック、IPS ルールの有効化・調整、ACL 更新</td>
+</tr>
+<tr>
+<td>DNS セキュリティ（Umbrella）</td>
+<td>悪性ドメイン/カテゴリのブロック、問い合わせ元ホストの調査</td>
+</tr>
+<tr>
+<td>Secure Network Analytics</td>
+<td>異常ホストの特定、横展開・持ち出しの調査、ISE 連携による隔離</td>
+</tr>
+<tr>
+<td>Secure Endpoint</td>
+<td>ホストの隔離、ファイルの隔離、カスタム検知・ブロックリストへの追加、ファイル/デバイストラジェクトリで影響範囲を確認</td>
+</tr>
+<tr>
+<td>Cisco XDR</td>
+<td>複数製品を横断したインシデントの確認・対応アクションの実行</td>
+</tr>
+<tr>
+<td>SIEM/SOAR</td>
+<td>相関結果に基づくチケット化、プレイブックの実行</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d35"></div><h3 id="s101">F3.6 ゼロデイ攻撃に対する対応策の推奨</h3><p class="lead"><strong>ひとことで言うと</strong>: パッチが無い状態では、<strong>多層の補完策と監視</strong>で被害を最小化します。</p><div class="diagram" data-d="d36"></div><p><strong>AI を活用した予測的脆弱性管理</strong>: リスク評価、<strong>悪用予測</strong>（EPSS など）、SIEM データの収集・処理により、どの脆弱性が悪用されやすいかを予測して優先度を決めます。</p><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><ul>
+<li>「<strong>侵害されている前提（Assume Breach）</strong>」で調査する。</li>
+<li>仮想パッチ（IPS/WAF）で攻撃経路を狭めつつ、<strong>ベンダー公表を継続監視</strong>。</li>
+</ul></div><h3 id="s102">F3.7 インテリジェンスアーティファクトに基づく対応策の推奨</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>アーティファクト</th>
+<th>対応策の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IOC（ハッシュ、IP、ドメイン）</td>
+<td>ブロックリスト登録、過去ログの遡及検索（ハンティング）</td>
+</tr>
+<tr>
+<td>IOA/TTP</td>
+<td>行動ベースの検知ルール作成、レッドチーム・演習</td>
+</tr>
+<tr>
+<td>脆弱性情報</td>
+<td>パッチ優先度の見直し</td>
+</tr>
+<tr>
+<td>攻撃者プロファイル</td>
+<td>狙われやすい資産の防御強化</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p><strong>信頼度・鮮度・自社との関連性</strong>を評価し、低信頼の IOC は監視から開始します。</p></div><h3 id="s103">F3.8 検出と防止のための Cisco セキュリティソリューションの推奨</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>領域</th>
+<th>ソリューション</th>
+<th>主な役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ネットワーク</td>
+<td>Cisco Secure Firewall（Firepower）</td>
+<td>NGFW、IPS（Snort）、脅威検査</td>
+</tr>
+<tr>
+<td>ネットワーク可視化</td>
+<td>Cisco Secure Network Analytics</td>
+<td>フロー分析による異常・横展開検知</td>
+</tr>
+<tr>
+<td>エンドポイント</td>
+<td>Cisco Secure Endpoint</td>
+<td>EDR、ファイル評価、隔離</td>
+</tr>
+<tr>
+<td>DNS/Web</td>
+<td>Cisco Umbrella（Cisco Secure Access の SSE 構成要素として提供）</td>
+<td>DNS 層での防御、評判</td>
+</tr>
+<tr>
+<td>解析</td>
+<td>Cisco Secure Malware Analytics（旧 Threat Grid）</td>
+<td>サンドボックス解析</td>
+</tr>
+<tr>
+<td>ID/アクセス</td>
+<td>Cisco ISE、Duo</td>
+<td>認証・NAC・MFA</td>
+</tr>
+<tr>
+<td>統合</td>
+<td>Cisco XDR</td>
+<td>複数製品の統合検知・対応</td>
+</tr>
+<tr>
+<td>脅威インテリジェンス</td>
+<td>Cisco Talos</td>
+<td>脅威情報・シグネチャ提供</td>
+</tr>
+<tr>
+<td>ワークロード</td>
+<td>Cisco Secure Workload</td>
+<td>マイクロセグメンテーション</td>
+</tr>
+<tr>
+<td>ログ分析</td>
+<td>Splunk（Cisco が2024年に買収）</td>
+<td>SIEM、分析</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>製品名や提供形態は変更されることがあります。最新情報は Cisco の公式ページで確認してください。</p></div><h3 id="s104">F3.9 脅威インテリジェンスフィードの解釈（IOC・IOA の判断）</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ソース</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内部</td>
+<td>SIEM、過去の IR 案件、ハニーポット、EDR</td>
+</tr>
+<tr>
+<td>外部（公開・共有）</td>
+<td>CISA、JPCERT/CC、ISAC、MISP コミュニティ</td>
+</tr>
+<tr>
+<td>商用・ベンダー</td>
+<td>Cisco Talos など</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>評価の観点</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>問い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>鮮度</td>
+<td>いつ観測されたものか</td>
+</tr>
+<tr>
+<td>信頼度</td>
+<td>提供元・検証状況は</td>
+</tr>
+<tr>
+<td>関連性</td>
+<td>自社の業界・技術に関係するか</td>
+</tr>
+<tr>
+<td>文脈</td>
+<td>どの攻撃キャンペーンの一部か</td>
+</tr>
+</tbody>
+</table></div><h3 id="s105">F3.10 脅威インテリジェンス由来のアーティファクトの評価による攻撃者プロファイルの判断</h3><p><strong>ダイヤモンドモデル</strong>: 攻撃を「<strong>敵対者・能力・インフラ・被害者</strong>」の4要素で整理する分析モデルです。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>プロファイルの要素</th>
+<th>手掛かり</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>動機</td>
+<td>金銭、諜報、破壊、思想</td>
+</tr>
+<tr>
+<td>能力・TTP</td>
+<td>使用ツール、悪用する脆弱性、攻撃手順</td>
+</tr>
+<tr>
+<td>インフラ</td>
+<td>C2 ドメイン・IP、ホスティング事業者</td>
+</tr>
+<tr>
+<td>標的</td>
+<td>業界・地域（被害者の傾向）</td>
+</tr>
+<tr>
+<td>コードの特徴</td>
+<td>既知のマルウェアファミリーとのコード類似、コンパイル時刻、言語設定</td>
+</tr>
+</tbody>
+</table></div><p><strong>注意</strong>: <strong>帰属（誰の仕業か）の断定は難しい</strong>。偽装工作（フォールスフラグ）の可能性があるため、断定ではなく<strong>確度の表現</strong>を使います。</p><h3 id="s106">F3.11 脅威インテリジェンスに関連する Cisco セキュリティソリューションの機能</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>製品</th>
+<th>脅威インテリジェンスとの関わり</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cisco Umbrella</td>
+<td>ドメイン・IP の評判、DNS レベルでの悪性サイトのブロック。調査用の関連情報の参照</td>
+</tr>
+<tr>
+<td>Cisco Secure Firewall（Firepower）</td>
+<td><strong>セキュリティインテリジェンス</strong>（IP/URL/DNS のブロックリスト）、Talos が提供する IPS ルール</td>
+</tr>
+<tr>
+<td>Cisco Secure Endpoint</td>
+<td>クラウドでのファイル評判（ハッシュ照会）、検出後のさかのぼり検知</td>
+</tr>
+<tr>
+<td>Cisco Secure Network Analytics</td>
+<td>Talos 由来の脅威情報との照合で既知の悪性通信を検出（ライセンス・機能は構成による）</td>
+</tr>
+<tr>
+<td>Cisco Talos</td>
+<td>研究チーム。上記製品へ脅威情報・シグネチャを継続的に供給</td>
+</tr>
+</tbody>
+</table></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Cisco Talos Intelligence: <a href="https://talosintelligence.com/" rel="noopener" target="_blank">https://talosintelligence.com/</a></li>
+<li>Cisco Secure Firewall ドキュメント: <a href="https://www.cisco.com/c/en/us/support/security/firepower-ngfw/series.html" rel="noopener" target="_blank">https://www.cisco.com/c/en/us/support/security/firepower-ngfw/series.html</a></li>
+</ul></div><h2 id="s107">F4 フォレンジックプロセス (15%)</h2><h3 id="s108">F4.1 アンチフォレンジック手法の説明と検出</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>手法</th>
+<th>検知の手掛かり</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ログ消去</td>
+<td>イベント 1102（監査ログの消去）、ログのシーケンス番号の欠落、空白期間</td>
+</tr>
+<tr>
+<td>タイムスタンプ改変</td>
+<td><code>$MFT</code> の「標準情報」と「ファイル名」属性の時刻不一致、USN ジャーナルとの矛盾</td>
+</tr>
+<tr>
+<td>データ廃棄</td>
+<td><code>vssadmin delete shadows</code> の実行履歴、上書きツールの痕跡</td>
+</tr>
+<tr>
+<td>位置情報の偽装・匿名化</td>
+<td>VPN/Tor 出口ノードのリスト、地理的に不自然なログイン</td>
+</tr>
+<tr>
+<td>検知回避</td>
+<td>EDR/AV の停止・除外設定の変更（イベント・構成の変更履歴）</td>
+</tr>
+<tr>
+<td>分析妨害</td>
+<td>デバッガ・VM 検知による挙動の変化</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p><strong>複数のデータソース</strong>（端末外のログ、フロー、EDR）で<strong>矛盾</strong>を探します。端末内の痕跡だけに依存しないことが重要です。</p></div><h3 id="s109">F4.2 Web アプリケーション/サーバー（Apache・NGINX）のログ分析</h3><p><strong>ログの場所（例）</strong>: Apache は <code>/var/log/apache2/access.log</code>（Debian 系）または <code>/var/log/httpd/access_log</code>（RHEL 系）、NGINX は <code>/var/log/nginx/access.log</code>。</p><p class="sublabel"><strong>Combined 形式のログ例</strong></p><div class="codeblock"><div class="codehead">text</div><pre><code class="language-text">203.0.113.50 - - [05/Oct/2026:10:15:32 +0900] "GET /index.php?id=1%27%20OR%201=1-- HTTP/1.1" 200 5123 "-" "sqlmap/1.7"
+</code></pre></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>203.0.113.50</code></td>
+<td>クライアント IP</td>
+</tr>
+<tr>
+<td><code>[05/Oct/2026:10:15:32 +0900]</code></td>
+<td>時刻（タイムゾーンに注意）</td>
+</tr>
+<tr>
+<td><code>"GET /index.php?id=..."</code></td>
+<td>リクエスト行（メソッド・URL・プロトコル）</td>
+</tr>
+<tr>
+<td><code>200</code></td>
+<td>ステータスコード</td>
+</tr>
+<tr>
+<td><code>5123</code></td>
+<td>応答サイズ（バイト）</td>
+</tr>
+<tr>
+<td><code>"-"</code></td>
+<td>Referer</td>
+</tr>
+<tr>
+<td><code>"sqlmap/1.7"</code></td>
+<td>User-Agent（スキャナーのツール名が露出している例）</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>攻撃パターンの見分け方</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>攻撃</th>
+<th>ログ上の兆候</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL インジェクション</td>
+<td><code>UNION SELECT</code>、<code>' OR 1=1</code>、URL エンコードされた引用符（<code>%27</code>）</td>
+</tr>
+<tr>
+<td>ディレクトリトラバーサル</td>
+<td><code>../</code>、<code>%2e%2e%2f</code></td>
+</tr>
+<tr>
+<td>スキャン・探索</td>
+<td>同一 IP から大量の 404、ツール由来の User-Agent</td>
+</tr>
+<tr>
+<td>ブルートフォース</td>
+<td>ログインページへの大量の POST</td>
+</tr>
+<tr>
+<td>Web シェルの設置・利用</td>
+<td>アップロード先ディレクトリの不審なスクリプトへの POST、<code>200</code> で小さい応答サイズ</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>集計コマンドの例（IP 別の件数）</strong></p><div class="codeblock"><div class="codehead">bash</div><pre><code class="language-bash" data-hl="1">awk '{print $1}' /var/log/nginx/access.log | sort | uniq -c | sort -nr | head
+</code></pre></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p><strong>URL デコードして</strong>から判断し、<strong>ステータスコードと応答サイズ</strong>で攻撃の成否を推定します。リバースプロキシ配下では実クライアント IP を示す <code>X-Forwarded-For</code> の記録を確認します。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Apache HTTP Server ログ: <a href="https://httpd.apache.org/docs/current/logs.html" rel="noopener" target="_blank">https://httpd.apache.org/docs/current/logs.html</a></li>
+<li>NGINX ログ: <a href="https://docs.nginx.com/nginx/admin-guide/monitoring/logging/" rel="noopener" target="_blank">https://docs.nginx.com/nginx/admin-guide/monitoring/logging/</a></li>
+</ul></div><h3 id="s110">F4.3 ネットワークモニタリングツールによる悪意のあるアクティビティの分析（NetFlow、Wireshark）</h3><p><strong>NetFlow の主な項目</strong>: 送信元/宛先 IP・ポート、プロトコル、バイト数・パケット数、TCP フラグ、開始・終了時刻、入出力インターフェース。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>見つけたい活動</th>
+<th>NetFlow での兆候</th>
+<th>Wireshark での確認</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ポートスキャン</td>
+<td>1つの送信元が多数のポートへ短い通信</td>
+<td><code>tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code></td>
+</tr>
+<tr>
+<td>ビーコニング</td>
+<td>同一宛先へ一定間隔・小サイズの通信</td>
+<td>時間間隔の規則性、<code>Statistics &gt; Conversations</code></td>
+</tr>
+<tr>
+<td>データ持ち出し</td>
+<td>内部→外部の大容量・長時間通信</td>
+<td>対象の会話を <code>Follow TCP Stream</code></td>
+</tr>
+<tr>
+<td>DNS トンネリング</td>
+<td>DNS の通信量が異常に多い</td>
+<td><code>dns.qry.name</code> の長さ、TXT レコード</td>
+</tr>
+</tbody>
+</table></div><p><strong>NetFlow の利点</strong>: ペイロードは持たないが、<strong>容量が小さく長期保管でき、暗号化通信でも使える</strong>。<strong>Wireshark（PCAP）の利点</strong>: 詳細な中身を確認でき、ファイルの復元も可能。両者を<strong>使い分け</strong>ます。</p><h3 id="s111">F4.4 ファイルの特徴に基づく次のステップの推奨</h3><div class="diagram" data-d="d37"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>特徴</th>
+<th>疑うこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拡張子と実際のファイル種別の不一致</td>
+<td>偽装</td>
+</tr>
+<tr>
+<td>高いエントロピー、少ないインポート</td>
+<td>パッキング/暗号化</td>
+</tr>
+<tr>
+<td>不審な API（プロセス注入、ネットワーク関連）</td>
+<td>悪意ある機能</td>
+</tr>
+<tr>
+<td>署名なし・不正な署名</td>
+<td>正規ソフトの偽装</td>
+</tr>
+<tr>
+<td>Office のマクロ・PDF のスクリプト</td>
+<td>ドキュメント型マルウェア</td>
+</tr>
+</tbody>
+</table></div><h3 id="s112">F4.5 objdump や CLI ツールを用いたバイナリの解釈</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file sample</code></td>
+<td>ファイルの種別（ELF/PE 等）の判定</td>
+</tr>
+<tr>
+<td><code>strings -n 8 sample</code></td>
+<td>可読文字列（URL、コマンド等）の抽出</td>
+</tr>
+<tr>
+<td><code>readelf -h sample</code></td>
+<td>ELF ヘッダーの確認</td>
+</tr>
+<tr>
+<td><code>objdump -x sample</code></td>
+<td>ヘッダー・セクション・シンボル情報</td>
+</tr>
+<tr>
+<td><code>objdump -d -M intel sample</code></td>
+<td>逆アセンブル（Intel 構文）</td>
+</tr>
+<tr>
+<td><code>nm</code>、<code>ldd</code></td>
+<td>シンボル・依存ライブラリの確認</td>
+</tr>
+<tr>
+<td><code>strace</code>、<code>ltrace</code></td>
+<td>システムコール/ライブラリ呼び出しの追跡（隔離環境で実行）</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>x86 アセンブリの基本命令</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mov a, b</code></td>
+<td>値のコピー</td>
+</tr>
+<tr>
+<td><code>push</code> / <code>pop</code></td>
+<td>スタックへの積み/取り出し</td>
+</tr>
+<tr>
+<td><code>call</code> / <code>ret</code></td>
+<td>関数の呼び出し/復帰</td>
+</tr>
+<tr>
+<td><code>jmp</code> / <code>je</code> / <code>jne</code></td>
+<td>無条件/条件付きジャンプ</td>
+</tr>
+<tr>
+<td><code>cmp</code></td>
+<td>比較（後続の条件分岐のため）</td>
+</tr>
+<tr>
+<td><code>xor eax, eax</code></td>
+<td>レジスタを0にする（定番の書き方）</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>逆アセンブルの例（概念的な抜粋）</strong></p><div class="codeblock"><div class="codehead">text</div><pre><code class="language-text">push   0x0
+push   0x1
+push   0x2
+call   &lt;socket@plt&gt;
+</code></pre></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>上記は <code>socket()</code> 関数の呼び出し準備の様子の例です。ネットワーク機能（<code>socket</code>, <code>connect</code>）、プロセス実行（<code>execve</code>）、メモリ保護の変更（<code>mprotect</code>）、<code>ptrace</code>（デバッグ回避）などの<strong>呼び出しがあれば機能を推定</strong>できます。</p></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>解析は隔離環境で行い、<strong>静的な確認（<code>strings</code>、<code>objdump</code>）を先に</strong>、実行を伴う解析（<code>strace</code> 等）は後にします。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>GNU Binutils（objdump）: <a href="https://sourceware.org/binutils/docs/binutils/objdump.html" rel="noopener" target="_blank">https://sourceware.org/binutils/docs/binutils/objdump.html</a></li>
+</ul></div><h2 id="s113">F5 インシデント対応プロセス (15%)</h2><h3 id="s114">F5.1 インシデント対応の目標</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目標</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>被害の最小化</td>
+<td>拡大を防ぎ、影響を限定する</td>
+</tr>
+<tr>
+<td>事業の継続・復旧</td>
+<td>業務を早期に正常化する</td>
+</tr>
+<tr>
+<td>証拠の保全</td>
+<td>調査・法的対応に備える</td>
+</tr>
+<tr>
+<td>原因の解明</td>
+<td>侵入経路・根本原因を特定する</td>
+</tr>
+<tr>
+<td>再発防止</td>
+<td>教訓を対策へ反映する</td>
+</tr>
+<tr>
+<td>法令・契約の遵守</td>
+<td>通知義務や報告を果たす</td>
+</tr>
+</tbody>
+</table></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>目標が衝突する場面（例: 早期復旧 vs 証拠保全）を想定し、<strong>優先順位を事前に合意</strong>しておきます。人命・安全に関わる場合はそれが最優先です。</p></div><h3 id="s115">F5.2 インシデント対応プレイブックに必要な要素の評価</h3><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>チェック項目</th>
+<th>確認内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目的・適用範囲・トリガー</td>
+<td>どの事象に使うか明確か</td>
+</tr>
+<tr>
+<td>役割・責任（RACI）</td>
+<td>誰が何をするか</td>
+</tr>
+<tr>
+<td>重大度の定義</td>
+<td>レベル別の対応基準</td>
+</tr>
+<tr>
+<td>ステップ（検知〜復旧）</td>
+<td>判断分岐が明確か</td>
+</tr>
+<tr>
+<td>必要ツール・アクセス権</td>
+<td>事前に用意されているか</td>
+</tr>
+<tr>
+<td>連絡・通知</td>
+<td>社内・経営層・法務・規制当局・顧客</td>
+</tr>
+<tr>
+<td>証拠の取り扱い</td>
+<td>保全手順・保管・連続性</td>
+</tr>
+<tr>
+<td>エスカレーション基準</td>
+<td>上位への報告条件</td>
+</tr>
+<tr>
+<td>メトリクス・レビュー</td>
+<td>評価方法と改訂頻度</td>
+</tr>
+</tbody>
+</table></div><h3 id="s116">F5.3 ThreatGrid（Cisco Secure Malware Analytics）レポートの関連コンポーネントの評価</h3><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>Threat Grid は現在 <strong>Cisco Secure Malware Analytics</strong> と呼ばれます。試験ブループリントでは旧名称（ThreatGrid）で記載されています。</p></div><p class="sublabel"><strong>レポートの主な構成要素（例）</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>構成要素</th>
+<th>読み取ること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>脅威スコア・行動指標（Behavioral Indicators）</td>
+<td>疑わしい挙動の重大度と確信度</td>
+</tr>
+<tr>
+<td>サンプル情報</td>
+<td>ハッシュ（MD5/SHA-1/SHA-256）、ファイル種別、サイズ</td>
+</tr>
+<tr>
+<td>プロセスツリー</td>
+<td>親子関係、起動されたプロセス</td>
+</tr>
+<tr>
+<td>ネットワーク活動</td>
+<td>DNS、HTTP、接続先 IP・ポート</td>
+</tr>
+<tr>
+<td>ファイル・レジストリ活動</td>
+<td>作成・変更・削除、永続化箇所</td>
+</tr>
+<tr>
+<td>スクリーンショット・成果物</td>
+<td>実行時の画面、ドロップされたファイル、PCAP</td>
+</tr>
+<tr>
+<td>IOC</td>
+<td>抽出された指標（ブロック・検索用）</td>
+</tr>
+</tbody>
+</table></div><div class="diagram" data-d="d38"></div><div class="callout practice"><div class="callout-title"><i class="ti ti-bulb"></i><span>ベストプラクティス</span></div><p>スコアだけで判断せず、<strong>どの挙動が根拠か</strong>を確認します。サンドボックス回避の可能性（短時間で終了、挙動なし）も考慮します。</p></div><h3 id="s117">F5.4 エンドポイント上のファイルの評価とアドホックスキャンの次のステップ</h3><div class="diagram" data-d="d39"></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>手段</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ファイル評判の確認</td>
+<td>ハッシュをクラウドで照会（良性/悪性/不明）</td>
+</tr>
+<tr>
+<td>オンデマンド（アドホック）スキャン</td>
+<td>最新の定義で端末上を能動的にスキャン（フラッシュ/フル/カスタム）</td>
+</tr>
+<tr>
+<td>YARA によるスキャン</td>
+<td>独自のパターンで検索</td>
+</tr>
+<tr>
+<td>トラジェクトリ</td>
+<td>ファイル/端末の動き（どこから来て何をしたか）の確認</td>
+</tr>
+<tr>
+<td>隔離</td>
+<td>端末のネットワーク隔離</td>
+</tr>
+</tbody>
+</table></div><h3 id="s118">F5.5 STIX・TAXII 形式で提供される脅威インテリジェンスの分析</h3><p class="lead"><strong>ひとことで言うと</strong>: <strong>STIX は「脅威情報の表現形式」、TAXII は「それを配信するプロトコル」</strong>です。</p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>STIX 2.1</th>
+<th>TAXII 2.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>役割</td>
+<td>脅威情報の<strong>記述言語</strong>（JSON）</td>
+<td>脅威情報の<strong>交換方法</strong>（HTTPS 上の REST API）</td>
+</tr>
+<tr>
+<td>要素</td>
+<td>SDO（ドメインオブジェクト）、SRO（関係オブジェクト）、SCO（観測オブジェクト）</td>
+<td>コレクション、ディスカバリ、API ルート</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>主な STIX オブジェクト</strong></p><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>オブジェクト</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indicator</td>
+<td>検知パターン（IOC）</td>
+</tr>
+<tr>
+<td>Malware / Tool</td>
+<td>マルウェア・ツールの情報</td>
+</tr>
+<tr>
+<td>Threat Actor / Intrusion Set</td>
+<td>攻撃者・攻撃グループ</td>
+</tr>
+<tr>
+<td>Attack Pattern</td>
+<td>攻撃手法（ATT&amp;CK の技術に対応）</td>
+</tr>
+<tr>
+<td>Campaign</td>
+<td>攻撃キャンペーン</td>
+</tr>
+<tr>
+<td>Vulnerability</td>
+<td>脆弱性（CVE）</td>
+</tr>
+<tr>
+<td>Course of Action</td>
+<td>対応策</td>
+</tr>
+<tr>
+<td>Relationship</td>
+<td>オブジェクト間の関係（例: 「マルウェアが技術を使用する」）</td>
+</tr>
+<tr>
+<td>Sighting</td>
+<td>観測の記録</td>
+</tr>
+</tbody>
+</table></div><p class="sublabel"><strong>Indicator の例（簡略化・架空値）</strong></p><div class="codeblock"><div class="codehead">json</div><pre><code class="language-json" data-hl="1">{
+  "type": "indicator",
+  "spec_version": "2.1",
+  "id": "indicator--00000000-0000-4000-8000-000000000001",
+  "created": "2026-10-05T00:00:00.000Z",
+  "modified": "2026-10-05T00:00:00.000Z",
+  "name": "Example C2 domain",
+  "pattern": "[domain-name:value = 'malicious.example.com']",
+  "pattern_type": "stix",
+  "valid_from": "2026-10-05T00:00:00Z"
+}
+</code></pre></div><p class="sublabel"><strong>TAXII クライアントの例（Python・<code>taxii2-client</code> ライブラリ使用）</strong></p><div class="codeblock"><div class="codehead">python</div><pre><code class="language-python" data-hl="1">from taxii2client.v21 import Server
+
+server = Server("https://taxii.example.com/taxii2/", user="USER", password="PASSWORD")
+for root in server.api_roots:
+    for coll in root.collections:
+        print(coll.title)
+        objects = coll.get_objects()   # STIX バンドルを取得
+</code></pre></div><p class="sublabel"><strong>分析の手順</strong></p><ol>
+<li>取得したバンドルから <strong>Indicator</strong> を抽出し、<code>valid_from</code> / <code>valid_until</code>、信頼度（confidence）、TLP マーキングを確認。</li>
+<li><strong>Relationship</strong> をたどり、関連するマルウェア・攻撃者・攻撃手法を把握。</li>
+<li>自社環境に関係する IOC を SIEM/FW/EDR に配布。有効期限が切れた指標は削除。</li>
+</ol><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>OASIS STIX/TAXII ドキュメント: <a href="https://oasis-open.github.io/cti-documentation/" rel="noopener" target="_blank">https://oasis-open.github.io/cti-documentation/</a></li>
+<li>STIX 2.1 仕様: <a href="https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html" rel="noopener" target="_blank">https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html</a></li>
+<li>TAXII 2.1 仕様: <a href="https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html" rel="noopener" target="_blank">https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html</a></li>
+</ul></div><h1 class="part" id="s119">第4部 Cisco セキュリティ製品マップ</h1><h2 id="s120">4.1 製品名の変遷（旧教材を読むときの対応表）</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>旧名称</th>
+<th>現在の名称（一般に用いられる呼称）</th>
+<th>主な役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stealthwatch</td>
+<td>Cisco Secure Network Analytics</td>
+<td>フロー分析・ネットワーク検知</td>
+</tr>
+<tr>
+<td>AMP for Endpoints</td>
+<td>Cisco Secure Endpoint</td>
+<td>EDR・ファイル評価</td>
+</tr>
+<tr>
+<td>Threat Grid</td>
+<td>Cisco Secure Malware Analytics</td>
+<td>サンドボックス解析</td>
+</tr>
+<tr>
+<td>Tetration</td>
+<td>Cisco Secure Workload</td>
+<td>ワークロード保護・マイクロセグメンテーション</td>
+</tr>
+<tr>
+<td>SecureX</td>
+<td>Cisco XDR（2024年〜）</td>
+<td>統合検知・対応</td>
+</tr>
+<tr>
+<td>Firepower</td>
+<td>Cisco Secure Firewall</td>
+<td>NGFW・IPS</td>
+</tr>
+<tr>
+<td>Umbrella</td>
+<td>Cisco Umbrella（Secure Access の構成要素としても提供）</td>
+<td>DNS/Web 層の防御</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>試験ブループリントには旧名称（ThreatGrid、Firepower、Stealthwatch 系の記載など）と新名称が混在する場合があります。<strong>両方の名称を対応付けて</strong>覚えておきましょう。</p></div><div class="callout source"><div class="callout-title"><i class="ti ti-external-link"></i><span>ソース</span></div><ul>
+<li>Cisco セキュリティ製品一覧: <a href="https://www.cisco.com/site/us/en/products/security/index.html" rel="noopener" target="_blank">https://www.cisco.com/site/us/en/products/security/index.html</a></li>
+<li>学習者向けまとめ（名称変更の整理）: <a href="https://open-exam-prep.com/practice/cisco-350-201" rel="noopener" target="_blank">https://open-exam-prep.com/practice/cisco-350-201</a></li>
+</ul></div><h2 id="s121">4.2 製品とドメインの対応</h2><div class="diagram" data-d="d40"></div><h1 class="part" id="s122">第5部 横断ベストプラクティスと学習計画</h1><h2 id="s123">5.1 SOC・IR 運用の横断ベストプラクティス</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>領域</th>
+<th>ベストプラクティス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>準備</td>
+<td>プレイブックの整備・机上演習、連絡網の更新、IR 用権限・ツールの事前準備</td>
+</tr>
+<tr>
+<td>ログ</td>
+<td>時刻同期（NTP）、重要ログソースの優先取り込み、<strong>改ざん防止の集中保管</strong>、保持期間の設計</td>
+</tr>
+<tr>
+<td>検知</td>
+<td>ユースケース駆動、ATT&amp;CK でカバレッジ可視化、<strong>Detection as Code</strong>、定期的なルール棚卸し</td>
+</tr>
+<tr>
+<td>脆弱性</td>
+<td>CVSS＋EPSS＋KEV＋資産重要度でトリアージ、仮想パッチの活用、再スキャンで確認</td>
+</tr>
+<tr>
+<td>自動化</td>
+<td>低リスク処理から自動化、<strong>破壊的処理には承認ゲート</strong>、冪等性とログの確保</td>
+</tr>
+<tr>
+<td>認証・秘密情報</td>
+<td>MFA、最小権限、シークレット管理、ローテーション、コードへの埋め込み禁止</td>
+</tr>
+<tr>
+<td>フォレンジック</td>
+<td>揮発性の順序、証拠の連続性（Chain of Custody）、ハッシュ記録、<strong>原本に触れず複製で分析</strong></td>
+</tr>
+<tr>
+<td>脅威インテリジェンス</td>
+<td>信頼度・有効期限の付与、TLP の遵守、ヒット率で品質評価</td>
+</tr>
+<tr>
+<td>共有</td>
+<td>IOC はデファング、機密情報の取り扱いルールの遵守</td>
+</tr>
+<tr>
+<td>改善</td>
+<td>非難しない事後レビュー、メトリクスで継続改善</td>
+</tr>
+</tbody>
+</table></div><h2 id="s124">5.2 インシデント対応 全体フロー（総まとめ）</h2><div class="diagram" data-d="d41"></div><h2 id="s125">5.3 12週間の学習計画（目安）</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>週</th>
+<th>テーマ</th>
+<th>学習内容</th>
+<th>実践</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>全体像・基礎</td>
+<td>第1部、350-201 ドメイン1</td>
+<td>用語整理、NIST 800-61 の概要読解</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ハードニング・脆弱性</td>
+<td>2.2〜2.10、3.9〜3.10</td>
+<td>CIS Benchmark の確認、CVSS 計算の練習</td>
+</tr>
+<tr>
+<td>3</td>
+<td>脅威インテリジェンス・DLP</td>
+<td>2.11〜2.14</td>
+<td>MISP/OpenCTI のデモ環境</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SIEM・SOAR・UEBA</td>
+<td>2.15〜2.21</td>
+<td>検知ルール作成（Sigma 等）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ネットワーク解析</td>
+<td>2.22〜2.25</td>
+<td>Wireshark で PCAP 解析</td>
+</tr>
+<tr>
+<td>6</td>
+<td>プロセス（マルウェア・IOC）</td>
+<td>ドメイン3</td>
+<td>サンドボックスでの解析演習</td>
+</tr>
+<tr>
+<td>7</td>
+<td>自動化</td>
+<td>ドメイン4</td>
+<td>Python で REST API 呼び出し、Bash 集計</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>350-201 総復習・模擬問題</strong></td>
+<td>全体</td>
+<td>弱点の復習 → 350-201 受験</td>
+</tr>
+<tr>
+<td>9</td>
+<td>フォレンジック基礎</td>
+<td>F1、F2</td>
+<td>YARA ルール作成、Volatility 実習</td>
+</tr>
+<tr>
+<td>10</td>
+<td>IR 手法</td>
+<td>F3</td>
+<td>ログ解釈・相関分析の演習</td>
+</tr>
+<tr>
+<td>11</td>
+<td>フォレンジックプロセス</td>
+<td>F4、F5</td>
+<td>Apache ログ分析、objdump 実習、STIX/TAXII</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>300-215 総復習</strong></td>
+<td>全体</td>
+<td>模擬問題 → 300-215 受験</td>
+</tr>
+</tbody>
+</table></div><h2 id="s126">5.4 ハンズオン環境（無料・公開ツール中心）</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>ツール例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>パケット解析</td>
+<td>Wireshark、TShark、Zeek</td>
+</tr>
+<tr>
+<td>ログ・SIEM 学習</td>
+<td>Wazuh、Security Onion、Elastic Stack</td>
+</tr>
+<tr>
+<td>フォレンジック</td>
+<td>SIFT Workstation、Volatility 3、Autopsy</td>
+</tr>
+<tr>
+<td>マルウェア解析（隔離環境）</td>
+<td>REMnux、Ghidra、CAPE Sandbox</td>
+</tr>
+<tr>
+<td>脅威インテリジェンス</td>
+<td>MISP、OpenCTI</td>
+</tr>
+<tr>
+<td>検知ルール</td>
+<td>Sigma、YARA、Snort</td>
+</tr>
+<tr>
+<td>攻撃シミュレーション</td>
+<td>Atomic Red Team</td>
+</tr>
+<tr>
+<td>自動化・API</td>
+<td>Cisco DevNet サンドボックス、Python、jq</td>
+</tr>
+</tbody>
+</table></div><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p><strong>安全上の注意</strong>: マルウェアや攻撃シミュレーションは、<strong>必ず自分で管理する隔離環境</strong>（本番や社内ネットワークから切り離した仮想環境）で行い、<strong>権限のない他者のシステムには絶対に実行しない</strong>でください。</p></div><h2 id="s127">5.5 受験のコツ</h2><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>ポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>形式</td>
+<td>単一選択・複数選択のほか、並べ替えやシナリオ型が出題される可能性があります。公式の出題形式チュートリアルで確認してください</td>
+</tr>
+<tr>
+<td>言語</td>
+<td>日本の公式ページでは試験言語は英語。<strong>英語の用語・ログ・コードを読む練習</strong>を</td>
+</tr>
+<tr>
+<td>時間配分</td>
+<td>350-201 は 120 分、300-215 は 90 分。長文シナリオに時間をかけすぎない</td>
+</tr>
+<tr>
+<td>「最初に／次に」</td>
+<td>優先順位問題が多い。<strong>証拠保全 → 範囲把握 → 封じ込め → 根絶 → 復旧</strong> の順を基本に</td>
+</tr>
+<tr>
+<td>4xx/5xx</td>
+<td>4xx はクライアント側、5xx はサーバー側。429 のみ「待てば再試行可」</td>
+</tr>
+<tr>
+<td>旧・新名称</td>
+<td>製品名の対応を整理しておく</td>
+</tr>
+<tr>
+<td>ブループリント</td>
+<td>試験直前に最新版を確認</td>
+</tr>
+</tbody>
+</table></div><ul>
+<li>Cisco 出題形式チュートリアル: <a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/exam-tutorial.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/exam-tutorial.html</a></li>
+<li>ピアソン VUE（Cisco 日本）: <a href="https://www.pearsonvue.co.jp/cisco" rel="noopener" target="_blank">https://www.pearsonvue.co.jp/cisco</a></li>
+</ul><h1 class="part" id="s128">第6部 確認問題</h1><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>理解度チェック用の筆者作成問題です（実際の試験問題ではありません）。まず自分で考えてから解答を確認しましょう。</p></div><div class="quiz-ctl"><button data-q="open" type="button">すべての解答を開く</button><button data-q="close" type="button">すべて閉じる</button></div><div class="quiz"><div class="qcard"><span class="qnum">1</span><div class="qbody"><p class="qtext">インシデント対応のライフサイクル（NIST 800-61 の従来モデル）の4フェーズを順に挙げよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">準備 → 検知と分析 → 封じ込め・根絶・復旧 → 事後活動。</div></details></div></div><div class="qcard"><span class="qnum">2</span><div class="qbody"><p class="qtext">MTTD が長い SOC で最初に疑うべき点は何か。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">ログソースの不足、検知ルールの不足、ログ未収集の領域（検知エンジニアリングの弱さ）。</div></details></div></div><div class="qcard"><span class="qnum">3</span><div class="qbody"><p class="qtext">「データ損失」と「データ漏洩」の違いを説明せよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">損失はデータが失われ利用できなくなること（削除・暗号化など）、漏洩は意図せず外部に露出すること。</div></details></div></div><div class="qcard"><span class="qnum">4</span><div class="qbody"><p class="qtext">脆弱性のトリアージで、CVSS に加えて見るべき指標を2つ挙げよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">EPSS（悪用予測）、CISA KEV（悪用確認）、資産の重要度・露出、補完コントロールの有無などから2つ。</div></details></div></div><div class="qcard"><span class="qnum">5</span><div class="qbody"><p class="qtext">API が HTTP 429 を返した場合の適切な対処は何か。</p><details class="ans"><summary>解答を見る</summary><div class="anstext"><code>Retry-After</code> ヘッダーに従って待機し、指数バックオフ（＋ジッター）で再試行する。</div></details></div></div><div class="qcard"><span class="qnum">6</span><div class="qbody"><p class="qtext">401 と 403 の違いは何か。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">401 は認証の失敗・未認証、403 は認証済みだが権限（認可）がない。</div></details></div></div><div class="qcard"><span class="qnum">7</span><div class="qbody"><p class="qtext">ベーシック認証の Base64 は安全か。理由とともに答えよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">安全ではない。Base64 は単なるエンコーディングで暗号化ではないため、TLS で保護する必要がある。</div></details></div></div><div class="qcard"><span class="qnum">8</span><div class="qbody"><p class="qtext">IOC と IOA の違いを説明せよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">IOC は侵害後の証拠（ハッシュ、IP 等）、IOA は進行中の攻撃者の行動・意図（挙動パターン）。</div></details></div></div><div class="qcard"><span class="qnum">9</span><div class="qbody"><p class="qtext">ポリモーフィックとメタモーフィックの違いは何か。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">ポリモーフィックは復号・暗号化部分を変え本体は同じ。メタモーフィックはコード自体を書き換える。</div></details></div></div><div class="qcard"><span class="qnum">10</span><div class="qbody"><p class="qtext">YARA の <code>uint16(0) == 0x5A4D</code> は何を確認しているか。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">ファイル先頭が「MZ」（PE 実行ファイル）であること。</div></details></div></div><div class="qcard"><span class="qnum">11</span><div class="qbody"><p class="qtext">ネットワーク機器の侵害が疑われるとき、してはいけない操作は何か。その理由は。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">再起動・電源断。揮発性情報（実行中構成・セッション・ログ）が失われるため。</div></details></div></div><div class="qcard"><span class="qnum">12</span><div class="qbody"><p class="qtext">STIX と TAXII の役割の違いを説明せよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">STIX は脅威情報の表現形式（JSON）、TAXII はそれを配信・交換するプロトコル。</div></details></div></div><div class="qcard"><span class="qnum">13</span><div class="qbody"><p class="qtext">Windows でイベントログが消去されたことを示すイベント ID は。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">1102（セキュリティログの消去）。</div></details></div></div><div class="qcard"><span class="qnum">14</span><div class="qbody"><p class="qtext">サンドボックスで悪性挙動が見えなかったが疑いが残る。次の一手は。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">静的解析（および必要ならリバースエンジニアリング）を追加。サンドボックス回避や条件付き動作を疑う。</div></details></div></div><div class="qcard"><span class="qnum">15</span><div class="qbody"><p class="qtext">クラウドの PaaS 環境でフォレンジックが難しい理由を1つ挙げよ。</p><details class="ans"><summary>解答を見る</summary><div class="anstext">OS へアクセスできず取得できる証拠が限られる（プラットフォームのログに依存する）。</div></details></div></div></div><h1 class="part" id="s129">第7部 用語集</h1><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALE / SLE / ARO</td>
+<td>年間損失予測額 / 単一損失予測額 / 年間発生率</td>
+</tr>
+<tr>
+<td>ATT&amp;CK</td>
+<td>攻撃者の戦術・技術を体系化した MITRE の知識ベース</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>コマンド＆コントロール。攻撃者が遠隔操作する通信</td>
+</tr>
+<tr>
+<td>CASB</td>
+<td>クラウドアクセスセキュリティブローカー</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>継続的インテグレーション/デリバリー</td>
+</tr>
+<tr>
+<td>CSPM</td>
+<td>クラウドセキュリティ態勢管理</td>
+</tr>
+<tr>
+<td>CVSS / EPSS / KEV</td>
+<td>脆弱性の深刻度評価 / 悪用予測 / 悪用確認済みリスト</td>
+</tr>
+<tr>
+<td>DFIR</td>
+<td>デジタルフォレンジックとインシデント対応</td>
+</tr>
+<tr>
+<td>DLP</td>
+<td>データ損失防止</td>
+</tr>
+<tr>
+<td>EDR / XDR / NDR</td>
+<td>エンドポイント/拡張/ネットワーク の検知と対応</td>
+</tr>
+<tr>
+<td>IaC</td>
+<td>コードとしてのインフラストラクチャ</td>
+</tr>
+<tr>
+<td>IOC / IOA</td>
+<td>侵害の指標 / 攻撃の指標</td>
+</tr>
+<tr>
+<td>MTTD / MTTA / MTTC / MTTR</td>
+<td>平均検知/確認/封じ込め/対応（復旧）時間</td>
+</tr>
+<tr>
+<td>NetFlow / IPFIX</td>
+<td>ネットワークフロー情報の形式</td>
+</tr>
+<tr>
+<td>SIEM / SOAR</td>
+<td>ログ相関分析 / 対応の自動化・調整</td>
+</tr>
+<tr>
+<td>STIX / TAXII</td>
+<td>脅威情報の記述形式 / 交換プロトコル</td>
+</tr>
+<tr>
+<td>TIP</td>
+<td>脅威インテリジェンスプラットフォーム</td>
+</tr>
+<tr>
+<td>TLP</td>
+<td>情報共有範囲を示す色分け表示（Traffic Light Protocol）</td>
+</tr>
+<tr>
+<td>TTP</td>
+<td>戦術・技術・手順</td>
+</tr>
+<tr>
+<td>UEBA</td>
+<td>ユーザー・エンティティ行動分析</td>
+</tr>
+<tr>
+<td>YARA</td>
+<td>マルウェア識別用のパターンマッチ言語</td>
+</tr>
+<tr>
+<td>ダイヤモンドモデル</td>
+<td>攻撃を敵対者・能力・インフラ・被害者で整理する分析モデル</td>
+</tr>
+<tr>
+<td>揮発性の順序</td>
+<td>失われやすい証拠から先に収集する原則</td>
+</tr>
+<tr>
+<td>Chain of Custody</td>
+<td>証拠の保管・移管の連続性の記録</td>
+</tr>
+</tbody>
+</table></div><h1 class="part" id="s130">第8部 参考URL一覧</h1><div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><p>URL は 2026年10月5日時点で参照したもの、または標準的な公式ページです。ページ構成は変更されることがあるため、リンク切れの場合は各サイト内で検索してください。</p></div><h2 id="s131">8.1 Cisco 公式（認定・試験）</h2><div class="refgroup"><div class="refcard"><span class="refnum">1</span><div class="refbody"><div class="reftitle">Cisco Certified CyberOps Professional（日本語認定ページ）</div><a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/certifications/professional/cyberops-professional.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/certifications/professional/cyberops-professional.html</a></div></div><div class="refcard"><span class="refnum">2</span><div class="refbody"><div class="reftitle">350-201 CBRCOR 試験ページ（日本語）</div><a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/350-201-cbrcor.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/350-201-cbrcor.html</a></div></div><div class="refcard"><span class="refnum">3</span><div class="refbody"><div class="reftitle">350-201 試験ブループリント（日本語 PDF）</div><a href="https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/350-201-cbrcor.pdf" rel="noopener" target="_blank">https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/350-201-cbrcor.pdf</a></div></div><div class="refcard"><span class="refnum">4</span><div class="refbody"><div class="reftitle">350-201 試験ブループリント v1.2（英語 PDF）</div><a href="https://learningcontent.cisco.com/documents/marketing/exam-topics/350-201-CBRCOR-v1.2_2024Oct01.pdf" rel="noopener" target="_blank">https://learningcontent.cisco.com/documents/marketing/exam-topics/350-201-CBRCOR-v1.2_2024Oct01.pdf</a></div></div><div class="refcard"><span class="refnum">5</span><div class="refbody"><div class="reftitle">300-215 CBRFIR 試験ページ（日本語）</div><a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/300-215-cbrfir.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/exams/current-list/300-215-cbrfir.html</a></div></div><div class="refcard"><span class="refnum">6</span><div class="refbody"><div class="reftitle">300-215 試験ブループリント（日本語 PDF）</div><a href="https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/300-215-cbrfir.pdf" rel="noopener" target="_blank">https://www.cisco.com/c/dam/global/ja_jp/training-events/training-certifications/exam-topics/300-215-cbrfir.pdf</a></div></div><div class="refcard"><span class="refnum">7</span><div class="refbody"><div class="reftitle">Cisco Learning Network（CBRCOR）</div><a href="https://learningnetwork.cisco.com/s/cbrcor-350-201" rel="noopener" target="_blank">https://learningnetwork.cisco.com/s/cbrcor-350-201</a></div></div><div class="refcard"><span class="refnum">8</span><div class="refbody"><div class="reftitle">再認定ポリシー</div><a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/recertification-policy.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/recertification-policy.html</a></div></div><div class="refcard"><span class="refnum">9</span><div class="refbody"><div class="reftitle">出題形式チュートリアル</div><a href="https://www.cisco.com/c/ja_jp/training-events/training-certifications/exam-tutorial.html" rel="noopener" target="_blank">https://www.cisco.com/c/ja_jp/training-events/training-certifications/exam-tutorial.html</a></div></div><div class="refcard"><span class="refnum">10</span><div class="refbody"><div class="reftitle">ピアソン VUE（Cisco 日本）</div><a href="https://www.pearsonvue.co.jp/cisco" rel="noopener" target="_blank">https://www.pearsonvue.co.jp/cisco</a></div></div><div class="refcard"><span class="refnum">11</span><div class="refbody"><div class="reftitle">Cisco セキュリティ製品</div><a href="https://www.cisco.com/site/us/en/products/security/index.html" rel="noopener" target="_blank">https://www.cisco.com/site/us/en/products/security/index.html</a></div></div><div class="refcard"><span class="refnum">12</span><div class="refbody"><div class="reftitle">Cisco Talos</div><a href="https://talosintelligence.com/" rel="noopener" target="_blank">https://talosintelligence.com/</a></div></div><div class="refcard"><span class="refnum">13</span><div class="refbody"><div class="reftitle">Cisco DevNet セキュリティ</div><a href="https://developer.cisco.com/site/security/" rel="noopener" target="_blank">https://developer.cisco.com/site/security/</a></div></div><div class="refcard"><span class="refnum">14</span><div class="refbody"><div class="reftitle">Cisco pxGrid</div><a href="https://developer.cisco.com/docs/pxgrid/" rel="noopener" target="_blank">https://developer.cisco.com/docs/pxgrid/</a></div></div></div><h2 id="s132">8.2 標準・ガイドライン</h2><div class="refgroup"><div class="refcard"><span class="refnum">15</span><div class="refbody"><div class="reftitle">NIST SP 800-61 Rev.3（インシデント対応）</div><a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/61/r3/final</a></div></div><div class="refcard"><span class="refnum">16</span><div class="refbody"><div class="reftitle">NIST SP 800-86（フォレンジック）</div><a href="https://csrc.nist.gov/pubs/sp/800/86/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/86/final</a></div></div><div class="refcard"><span class="refnum">17</span><div class="refbody"><div class="reftitle">NIST SP 800-92（ログ管理）</div><a href="https://csrc.nist.gov/pubs/sp/800/92/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/92/final</a></div></div><div class="refcard"><span class="refnum">18</span><div class="refbody"><div class="reftitle">NIST SP 800-40 Rev.4（パッチ管理）</div><a href="https://csrc.nist.gov/pubs/sp/800/40/r4/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/40/r4/final</a></div></div><div class="refcard"><span class="refnum">19</span><div class="refbody"><div class="reftitle">NIST SP 800-53 Rev.5（管理策カタログ）</div><a href="https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final</a></div></div><div class="refcard"><span class="refnum">20</span><div class="refbody"><div class="reftitle">NIST SP 800-123（サーバーセキュリティ）</div><a href="https://csrc.nist.gov/pubs/sp/800/123/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/123/final</a></div></div><div class="refcard"><span class="refnum">21</span><div class="refbody"><div class="reftitle">NIST SP 800-145（クラウドの定義）</div><a href="https://csrc.nist.gov/pubs/sp/800/145/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/145/final</a></div></div><div class="refcard"><span class="refnum">22</span><div class="refbody"><div class="reftitle">NIST SP 800-150（脅威情報共有）</div><a href="https://csrc.nist.gov/pubs/sp/800/150/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/150/final</a></div></div><div class="refcard"><span class="refnum">23</span><div class="refbody"><div class="reftitle">NIST SP 800-190（コンテナ）</div><a href="https://csrc.nist.gov/pubs/sp/800/190/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/190/final</a></div></div><div class="refcard"><span class="refnum">24</span><div class="refbody"><div class="reftitle">NIST SP 800-207（ゼロトラスト）</div><a href="https://csrc.nist.gov/pubs/sp/800/207/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/207/final</a></div></div><div class="refcard"><span class="refnum">25</span><div class="refbody"><div class="reftitle">NIST SP 800-218（SSDF）</div><a href="https://csrc.nist.gov/pubs/sp/800/218/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/218/final</a></div></div><div class="refcard"><span class="refnum">26</span><div class="refbody"><div class="reftitle">NIST Cybersecurity Framework 2.0</div><a href="https://www.nist.gov/cyberframework" rel="noopener" target="_blank">https://www.nist.gov/cyberframework</a></div></div><div class="refcard"><span class="refnum">27</span><div class="refbody"><div class="reftitle">NIST AI Risk Management Framework</div><a href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">https://www.nist.gov/itl/ai-risk-management-framework</a></div></div><div class="refcard"><span class="refnum">28</span><div class="refbody"><div class="reftitle">RFC 3227（証拠の収集と保管）</div><a href="https://www.rfc-editor.org/rfc/rfc3227" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc3227</a></div></div><div class="refcard"><span class="refnum">29</span><div class="refbody"><div class="reftitle">RFC 9110（HTTP Semantics）</div><a href="https://www.rfc-editor.org/rfc/rfc9110" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc9110</a></div></div><div class="refcard"><span class="refnum">30</span><div class="refbody"><div class="reftitle">RFC 6585（HTTP 429）</div><a href="https://www.rfc-editor.org/rfc/rfc6585" rel="noopener" target="_blank">https://www.rfc-editor.org/rfc/rfc6585</a></div></div><div class="refcard"><span class="refnum">31</span><div class="refbody"><div class="reftitle">CIS Benchmarks</div><a href="https://www.cisecurity.org/cis-benchmarks" rel="noopener" target="_blank">https://www.cisecurity.org/cis-benchmarks</a></div></div><div class="refcard"><span class="refnum">32</span><div class="refbody"><div class="reftitle">CIS Critical Security Controls</div><a href="https://www.cisecurity.org/controls" rel="noopener" target="_blank">https://www.cisecurity.org/controls</a></div></div><div class="refcard"><span class="refnum">33</span><div class="refbody"><div class="reftitle">DISA STIG</div><a href="https://public.cyber.mil/stigs/" rel="noopener" target="_blank">https://public.cyber.mil/stigs/</a></div></div><div class="refcard"><span class="refnum">34</span><div class="refbody"><div class="reftitle">ISO/IEC 27001</div><a href="https://www.iso.org/standard/27001" rel="noopener" target="_blank">https://www.iso.org/standard/27001</a></div></div><div class="refcard"><span class="refnum">35</span><div class="refbody"><div class="reftitle">PCI Security Standards Council</div><a href="https://www.pcisecuritystandards.org/" rel="noopener" target="_blank">https://www.pcisecuritystandards.org/</a></div></div><div class="refcard"><span class="refnum">36</span><div class="refbody"><div class="reftitle">FedRAMP</div><a href="https://www.fedramp.gov/" rel="noopener" target="_blank">https://www.fedramp.gov/</a></div></div><div class="refcard"><span class="refnum">37</span><div class="refbody"><div class="reftitle">GDPR 条文</div><a href="https://gdpr-info.eu/" rel="noopener" target="_blank">https://gdpr-info.eu/</a></div></div><div class="refcard"><span class="refnum">38</span><div class="refbody"><div class="reftitle">個人情報保護委員会（日本）</div><a href="https://www.ppc.go.jp/" rel="noopener" target="_blank">https://www.ppc.go.jp/</a></div></div><div class="refcard"><span class="refnum">39</span><div class="refbody"><div class="reftitle">JPCERT/CC</div><a href="https://www.jpcert.or.jp/" rel="noopener" target="_blank">https://www.jpcert.or.jp/</a></div></div></div><h2 id="s133">8.3 脅威・脆弱性・解析</h2><div class="refgroup"><div class="refcard"><span class="refnum">40</span><div class="refbody"><div class="reftitle">MITRE ATT&amp;CK</div><a href="https://attack.mitre.org/" rel="noopener" target="_blank">https://attack.mitre.org/</a></div></div><div class="refcard"><span class="refnum">41</span><div class="refbody"><div class="reftitle">MITRE D3FEND</div><a href="https://d3fend.mitre.org/" rel="noopener" target="_blank">https://d3fend.mitre.org/</a></div></div><div class="refcard"><span class="refnum">42</span><div class="refbody"><div class="reftitle">MITRE ATLAS</div><a href="https://atlas.mitre.org/" rel="noopener" target="_blank">https://atlas.mitre.org/</a></div></div><div class="refcard"><span class="refnum">43</span><div class="refbody"><div class="reftitle">Pyramid of Pain</div><a href="https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html" rel="noopener" target="_blank">https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html</a></div></div><div class="refcard"><span class="refnum">44</span><div class="refbody"><div class="reftitle">FIRST CVSS</div><a href="https://www.first.org/cvss/" rel="noopener" target="_blank">https://www.first.org/cvss/</a></div></div><div class="refcard"><span class="refnum">45</span><div class="refbody"><div class="reftitle">FIRST EPSS</div><a href="https://www.first.org/epss/" rel="noopener" target="_blank">https://www.first.org/epss/</a></div></div><div class="refcard"><span class="refnum">46</span><div class="refbody"><div class="reftitle">CISA KEV カタログ</div><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" rel="noopener" target="_blank">https://www.cisa.gov/known-exploited-vulnerabilities-catalog</a></div></div><div class="refcard"><span class="refnum">47</span><div class="refbody"><div class="reftitle">OASIS STIX/TAXII ドキュメント</div><a href="https://oasis-open.github.io/cti-documentation/" rel="noopener" target="_blank">https://oasis-open.github.io/cti-documentation/</a></div></div><div class="refcard"><span class="refnum">48</span><div class="refbody"><div class="reftitle">STIX 2.1 仕様</div><a href="https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html" rel="noopener" target="_blank">https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html</a></div></div><div class="refcard"><span class="refnum">49</span><div class="refbody"><div class="reftitle">TAXII 2.1 仕様</div><a href="https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html" rel="noopener" target="_blank">https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html</a></div></div><div class="refcard"><span class="refnum">50</span><div class="refbody"><div class="reftitle">YARA ドキュメント</div><a href="https://yara.readthedocs.io/" rel="noopener" target="_blank">https://yara.readthedocs.io/</a></div></div><div class="refcard"><span class="refnum">51</span><div class="refbody"><div class="reftitle">Volatility 3</div><a href="https://volatility3.readthedocs.io/" rel="noopener" target="_blank">https://volatility3.readthedocs.io/</a></div></div><div class="refcard"><span class="refnum">52</span><div class="refbody"><div class="reftitle">Ghidra</div><a href="https://ghidra-sre.org/" rel="noopener" target="_blank">https://ghidra-sre.org/</a></div></div><div class="refcard"><span class="refnum">53</span><div class="refbody"><div class="reftitle">SANS SIFT Workstation</div><a href="https://www.sans.org/tools/sift-workstation/" rel="noopener" target="_blank">https://www.sans.org/tools/sift-workstation/</a></div></div><div class="refcard"><span class="refnum">54</span><div class="refbody"><div class="reftitle">Microsoft Sysinternals</div><a href="https://learn.microsoft.com/en-us/sysinternals/" rel="noopener" target="_blank">https://learn.microsoft.com/en-us/sysinternals/</a></div></div><div class="refcard"><span class="refnum">55</span><div class="refbody"><div class="reftitle">Wireshark 表示フィルター</div><a href="https://www.wireshark.org/docs/dfref/" rel="noopener" target="_blank">https://www.wireshark.org/docs/dfref/</a></div></div><div class="refcard"><span class="refnum">56</span><div class="refbody"><div class="reftitle">GNU Binutils objdump</div><a href="https://sourceware.org/binutils/docs/binutils/objdump.html" rel="noopener" target="_blank">https://sourceware.org/binutils/docs/binutils/objdump.html</a></div></div><div class="refcard"><span class="refnum">57</span><div class="refbody"><div class="reftitle">OWASP API Security</div><a href="https://owasp.org/API-Security/" rel="noopener" target="_blank">https://owasp.org/API-Security/</a></div></div><div class="refcard"><span class="refnum">58</span><div class="refbody"><div class="reftitle">OWASP DevSecOps Guideline</div><a href="https://owasp.org/www-project-devsecops-guideline/" rel="noopener" target="_blank">https://owasp.org/www-project-devsecops-guideline/</a></div></div><div class="refcard"><span class="refnum">59</span><div class="refbody"><div class="reftitle">OWASP ASVS</div><a href="https://owasp.org/www-project-application-security-verification-standard/" rel="noopener" target="_blank">https://owasp.org/www-project-application-security-verification-standard/</a></div></div><div class="refcard"><span class="refnum">60</span><div class="refbody"><div class="reftitle">OWASP GenAI Security</div><a href="https://genai.owasp.org/" rel="noopener" target="_blank">https://genai.owasp.org/</a></div></div><div class="refcard"><span class="refnum">61</span><div class="refbody"><div class="reftitle">AWS 責任共有モデル</div><a href="https://aws.amazon.com/compliance/shared-responsibility-model/" rel="noopener" target="_blank">https://aws.amazon.com/compliance/shared-responsibility-model/</a></div></div></div><h2 id="s134">本ガイドの根拠と限界について</h2><ul>
+<li><strong>試験範囲・時間・有効期間</strong>は、Cisco 日本語の認定ページ、試験ページ、およびブループリント PDF（v1.2）に基づいています。</li>
+<li><strong>各項目の解説・ベストプラクティス</strong>は、上記の NIST・MITRE・IETF・OWASP などの一般に公開された標準文書と、筆者の実務知識に基づく教育目的の整理です。Cisco が公表する試験の「正解」を保証するものではありません。</li>
+<li><strong>製品の機能・名称</strong>は変更が頻繁です。受験前に最新の Cisco 公式ドキュメントと最新のブループリントで確認してください。</li>
+<li>日本語ページの一部は旧情報（例: 研修コースの提供時期の記載、認定名称）を含んでいるため、<strong>英語の最新ブループリント</strong>も併せて確認することを推奨します。</li>
+</ul>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+<script>
+window.DIAGRAMS = {
+d0: `flowchart LR
+A["コア試験<br/>350-201 CBRCOR<br/>120分"] --> S1["Specialist 認定<br/>Core 系"]
+B["コンセントレーション試験<br/>300-215 CBRFIR<br/>90分"] --> S2["Specialist 認定<br/>Forensic Analysis and<br/>Incident Response 系"]
+A --> P["Professional 認定<br/>有効期間 3年"]
+B --> P`,
+d1: `pie showData
+title "350-201 CBRCOR ドメイン配分"
+"1.0 基礎" : 20
+"2.0 手法" : 30
+"3.0 プロセス" : 30
+"4.0 自動化" : 20`,
+d2: `pie showData
+title "300-215 CBRFIR ドメイン配分"
+"1.0 基礎" : 20
+"2.0 フォレンジック手法" : 20
+"3.0 インシデント対応手法" : 30
+"4.0 フォレンジックプロセス" : 15
+"5.0 インシデント対応プロセス" : 15`,
+d3: `flowchart TD
+S["スタート"] --> P0["Step0 前提知識<br/>TCP/IP, OS, Linux基礎, Python基礎"]
+P0 --> P1["Step1 ドメイン1 基礎<br/>プレイブック, リスク, IR, クラウド"]
+P1 --> P2["Step2 ドメイン2 手法<br/>ハードニング, SIEM, SOAR, DLP, パケット解析"]
+P2 --> P3["Step3 ドメイン3 プロセス<br/>脅威モデル, マルウェア解析, IOC, CVSS"]
+P3 --> P4["Step4 ドメイン4 自動化<br/>API, Python, Bash, CI/CD, IaC"]
+P4 --> E1["350-201 受験"]
+E1 --> Q1["Step5 CBRFIR 基礎<br/>RCA, YARA, 難読化, ツール"]
+Q1 --> Q2["Step6 フォレンジック手法・IR手法"]
+Q2 --> Q3["Step7 ログ解析・STIX/TAXII・ThreatGrid"]
+Q3 --> E2["300-215 受験"]
+E2 --> G["Professional 認定取得"]`,
+d4: `flowchart TD
+T["トリガー: アラート受信"] --> V{"誤検知か?"}
+V -- "はい" --> C1["クローズ・調整依頼"]
+V -- "いいえ" --> A["影響範囲の特定"]
+A --> S{"重大度は高いか?"}
+S -- "はい" --> E["IR リードへエスカレーション"]
+S -- "いいえ" --> R["標準手順で封じ込め"]
+E --> R
+R --> D["根絶・復旧"]
+D --> L["事後レビューと教訓の反映"]`,
+d5: `flowchart LR
+I["事象の種類"] --> Q["必要なデータは何か"]
+Q --> T["そのデータを提供するツールを選ぶ"]
+T --> C["不足データがあれば追加収集"]`,
+d6: `flowchart TD
+D["異常なトラフィック増加を検知"] --> C{"攻撃の種類は?"}
+C -- "ボリューム型" --> V["上流 ISP / スクラビングへ依頼"]
+C -- "プロトコル型 SYN flood など" --> P["SYN cookie, レート制限, FW 設定"]
+C -- "アプリケーション層" --> A["WAF ルール, ボット対策, キャッシュ"]
+V --> M["継続監視"]
+P --> M
+A --> M
+M --> R["事後: 容量計画と冗長化の見直し"]`,
+d7: `flowchart LR
+R["残存リスク"] --> A["受容 Accept"]
+R --> B["回避 Avoid"]
+R --> C["低減 Mitigate"]
+R --> D["移転 Transfer<br/>サイバー保険"]`,
+d8: `flowchart LR
+P["1 準備<br/>Preparation"] --> D["2 検知と分析<br/>Detection and Analysis"]
+D --> C["3 封じ込め・根絶・復旧<br/>Containment, Eradication, Recovery"]
+C --> L["4 事後活動<br/>Post-Incident Activity"]
+L --> P`,
+d9: `flowchart TD
+M1["MTTD が長い"] --> A1["改善: 検知エンジニアリング, ログ網羅, UEBA"]
+M2["MTTA が長い"] --> A2["改善: トリアージ自動化, 優先度設計"]
+M3["MTTC/MTTR が長い"] --> A3["改善: プレイブック整備, SOAR, 事前承認"]
+M4["誤検知率が高い"] --> A4["改善: ルールチューニング, 脅威インテル活用"]`,
+d10: `flowchart LR
+B["ベース OS"] --> H["ハードニング<br/>CIS Benchmark 等を適用"]
+H --> S["脆弱性スキャン"]
+S --> G["署名・バージョン付け<br/>ゴールデンイメージ登録"]
+G --> D["展開 IaC / オーケストレーション"]
+D --> M["継続監視・ドリフト検出"]
+M --> U["更新時はイメージを再作成"]
+U --> S`,
+d11: `flowchart TD
+A["1 資産の棚卸し"] --> B["2 重要度の分類"]
+B --> C["3 脆弱性スキャン"]
+C --> D["4 構成の適合性チェック<br/>CIS, STIG など"]
+D --> E["5 露出の評価<br/>外部公開・攻撃経路"]
+E --> F["6 リスクスコアリングと優先順位付け"]
+F --> G["7 是正と再評価"]
+G --> A`,
+d12: `flowchart TD
+V["脆弱性の公表"] --> K{"実際に悪用されているか?<br/>CISA KEV など"}
+K -- "はい" --> U["緊急対応: 数日以内"]
+K -- "いいえ" --> E{"外部公開資産か?<br/>重要資産か?"}
+E -- "はい" --> H["高優先: 短い SLA"]
+E -- "いいえ" --> N["通常サイクルで適用"]
+U --> T["検証 → 段階展開 → ロールバック計画"]
+H --> T
+N --> T
+T --> X{"今すぐ適用できない?"}
+X -- "はい" --> W["仮想パッチ: IPS / WAF / 設定変更"]
+X -- "いいえ" --> Z["適用完了・再スキャン"]`,
+d13: `flowchart LR
+I["インターネット"] --> FW1["境界ファイアウォール"]
+FW1 --> DMZ["DMZ<br/>公開サーバー"]
+FW1 --> FW2["内部ファイアウォール"]
+FW2 --> APP["アプリゾーン"]
+FW2 --> DB["データベースゾーン"]
+FW2 --> USR["ユーザーゾーン"]
+FW2 --> MGT["管理ゾーン"]
+FW2 --> IOT["IoT / OT ゾーン"]`,
+d14: `flowchart LR
+C["コード"] --> SAST["SAST<br/>静的解析"]
+SAST --> SCA["SCA<br/>依存関係・ライセンス"]
+SCA --> SEC["シークレット検出"]
+SEC --> B["ビルド・コンテナスキャン"]
+B --> IAC["IaC スキャン"]
+IAC --> DAST["DAST<br/>動的テスト"]
+DAST --> D["署名・デプロイ"]
+D --> R["実行時監視"]`,
+d15: `flowchart LR
+F1["外部フィード<br/>STIX/TAXII, 商用, ISAC"] --> N["正規化・重複排除"]
+F2["社内情報<br/>IR 案件, ハニーポット"] --> N
+N --> S["スコアリング・文脈付与"]
+S --> D["配信: SIEM, FW, EDR, DNS"]
+D --> FB["ヒット結果のフィードバック"]
+FB --> S`,
+d16: `flowchart LR
+A["データ分類"] --> B["監視モードで開始"]
+B --> C["誤検知の調整"]
+C --> D["通知・警告を段階導入"]
+D --> E["ブロック適用"]
+E --> F["例外申請プロセスと定期見直し"]`,
+d17: `flowchart LR
+S["ログソース"] --> C["収集<br/>syslog, エージェント, API"]
+C --> P["パース・正規化"]
+P --> E["エンリッチメント<br/>資産情報, 脅威情報"]
+E --> ST["保管 ホット/ウォーム/コールド"]
+ST --> A["分析・検索・可視化"]
+ST --> AR["保管期間後はアーカイブ/削除"]`,
+d18: `flowchart TD
+A["アラート受信"] --> B["自動エンリッチメント<br/>IP/ドメイン評判, 資産情報, ユーザー情報"]
+B --> C{"悪性の可能性は?"}
+C -- "低" --> D["自動クローズ + ログ記録"]
+C -- "高" --> E["自動封じ込め案の作成"]
+E --> F{"人間の承認"}
+F -- "承認" --> G["隔離・ブロック実行"]
+F -- "却下" --> H["アナリストが手動調査"]
+G --> I["チケット更新・通知"]
+H --> I
+I --> J{"重大インシデント?"}
+J -- "はい" --> K["IR チームへエスカレーション"]
+J -- "いいえ" --> L["解決・クローズ・教訓の反映"]`,
+d19: `flowchart TD
+A["ユーザー行動アラート"] --> B{"正当な理由があるか?<br/>出張, 異動, 業務変更"}
+B -- "確認できる" --> C["正常と記録・ベースライン調整"]
+B -- "不明" --> D["ユーザー本人・上長へ確認"]
+D --> E{"本人の操作か?"}
+E -- "はい" --> C
+E -- "いいえ / 応答なし" --> F["アカウント侵害の疑い"]
+F --> G["セッション/トークン失効<br/>パスワードリセット, MFA 再登録"]
+G --> H["関連端末の調査・必要なら隔離"]
+H --> I["IR へエスカレーション"]`,
+d20: `flowchart TD
+S["検知ルールが期待どおり動かない"] --> Q{"症状は?"}
+Q -- "アラートが出ない" --> A1["1 ルールは有効か"]
+A1 --> A2["2 ログは届いているか<br/>ログソース, 遅延"]
+A2 --> A3["3 パースされているか<br/>フィールド名の不一致"]
+A3 --> A4["4 条件式は正しいか<br/>大文字小文字, 範囲, 時間窓"]
+A4 --> A5["5 しきい値は適切か"]
+Q -- "アラートが多すぎる" --> B1["1 条件が広すぎないか"]
+B1 --> B2["2 正常な業務の除外設定"]
+B2 --> B3["3 しきい値・時間窓の調整"]
+B3 --> B4["4 資産重要度で優先順位付け"]`,
+d21: `flowchart TD
+A["受付: 事象の報告"] --> B["範囲と重大度の初期判断"]
+B --> C["証拠の収集・保全"]
+C --> D["分析: 時系列の再構築"]
+D --> E["仮説の立案と検証"]
+E --> F{"原因・影響は特定できたか?"}
+F -- "いいえ" --> C
+F -- "はい" --> G["封じ込め・是正の推奨"]
+G --> H["報告書の作成・共有"]`,
+d22: `flowchart TD
+A["3.3.a 分析対象サンプルの抽出・特定<br/>PCAP, 端末, メール"] --> B["ハッシュ計算・評判確認"]
+B --> C["3.3.e 静的解析"]
+C --> D["3.3.c 動的解析 サンドボックス"]
+D --> E{"3.3.d 追加の静的解析が必要か?"}
+E -- "はい" --> F["3.3.b リバースエンジニアリング"]
+E -- "いいえ" --> G["3.3.f 結果の取りまとめ・共有"]
+F --> G`,
+d23: `flowchart LR
+A["AI が異常を検知<br/>通信量・間隔・宛先"] --> B["ATT&CK / キルチェーンへマッピング"]
+B --> C["前後のイベントを時系列で結合"]
+C --> D["攻撃の段階と次の一手を推定"]
+D --> E["封じ込めと検知強化"]`,
+d24: `flowchart TD
+A["侵入の疑い"] --> B["端末の種類を特定"]
+B --> C["揮発性データを優先して保全<br/>メモリ, 接続, プロセス"]
+C --> D["永続化箇所・認証ログ・実行履歴の確認"]
+D --> E["横展開の痕跡を他端末で確認"]
+E --> F["隔離・復旧の判断"]`,
+d25: `flowchart TD
+A["データ損失の疑い"] --> B["損失データの種類・分類・範囲を特定"]
+B --> C["各環境のログを収集"]
+C --> D["誰が・いつ・どこへ・どの経路で を再構築"]
+D --> E["封じ込め: 共有停止, トークン失効, 経路遮断"]
+E --> F["法令・契約上の通知要否の判断"]`,
+d26: `flowchart TD
+V["脆弱性を確認"] --> P{"パッチは利用可能か?"}
+P -- "はい" --> A["パッチ適用"]
+P -- "いいえ" --> B{"代替策はあるか?"}
+B --> C["仮想パッチ IPS / WAF"]
+B --> D["設定変更・機能の無効化"]
+B --> E["ネットワーク分離・アクセス制限"]
+B --> F["監視強化"]
+B --> G["リスク受容 期限付き承認"]`,
+d27: `flowchart TD
+A["脆弱性"] --> B{"KEV に掲載 / 悪用が確認?"}
+B -- "はい" --> U["最優先"]
+B -- "いいえ" --> C{"CVSS 高以上 かつ 外部公開 または 重要資産?"}
+C -- "はい" --> H["高優先"]
+C -- "いいえ" --> D{"EPSS が高い?"}
+D -- "はい" --> H
+D -- "いいえ" --> N["通常対応"]`,
+d28: `flowchart LR
+A["クライアント"] --> B["認証サーバーへ資格情報 / クライアント ID を送信"]
+B --> C["アクセストークン発行 有効期限付き"]
+C --> D["API へトークン付きで要求"]
+D --> E["API が検証して応答"]`,
+d29: `flowchart LR
+A["ソース管理<br/>Git"] --> B["ビルド"]
+B --> C["自動テスト<br/>単体・結合・セキュリティ"]
+C --> D["成果物の保管<br/>レジストリ"]
+D --> E["デプロイ ステージング"]
+E --> F{"承認ゲート"}
+F --> G["本番デプロイ"]
+G --> H["監視・フィードバック"]`,
+d30: `flowchart LR
+A["特定<br/>何が証拠になるか"] --> B["保全<br/>改変せずに確保"]
+B --> C["収集<br/>複製の取得・ハッシュ"]
+C --> D["分析<br/>時系列・IOC・原因"]
+D --> E["報告<br/>再現可能な形でまとめる"]`,
+d31: `flowchart TD
+A["デバイスの侵害の疑い"] --> B["作業記録の開始<br/>日時・担当者・実施コマンド"]
+B --> C["揮発性情報の採取<br/>実行中構成, ログ, セッション, ARP/MAC, ルーティング"]
+C --> D["不揮発性情報の採取<br/>起動構成, イメージ, フラッシュ内ファイル"]
+D --> E["イメージ・構成の完全性検証"]
+E --> F["ログ・NetFlow・AAA 履歴の相関"]
+F --> G["不正な変更・アカウント・トンネルなどの特定"]
+G --> H["封じ込め・復旧・再構築"]`,
+d32: `flowchart TD
+A["クラウド上のインシデント"] --> B["IR 専用の権限・アカウントでアクセス"]
+B --> C["対象のスナップショット取得<br/>ディスク, 可能ならメモリ"]
+C --> D["隔離されたフォレンジック用アカウントへコピー"]
+D --> E["ハッシュを記録し改ざん防止ストレージへ保管"]
+E --> F["監査ログ・フローログ・アプリログを収集"]
+F --> G["分析(元の環境には触れない)"]`,
+d33: `flowchart TD
+A["アラート受信"] --> B["何のルール・イベントか確認"]
+B --> C["送信元・宛先・時刻・方向を確認"]
+C --> D["対象資産は脆弱か?<br/>攻撃は成功し得るか"]
+D --> E["関連ログと突合<br/>FW, プロキシ, EDR"]
+E --> F{"真陽性か?"}
+F -- "はい" --> G["インシデントとして対応"]
+F -- "いいえ" --> H["誤検知として記録・ルール調整"]`,
+d34: `flowchart LR
+A["ネットワークアラート<br/>外部への不審な通信"] --> B["送信元 IP をホストへ紐付け<br/>DHCP, pxGrid"]
+B --> C["EDR でそのホストのプロセスを確認"]
+C --> D["ハッシュで他ホストを検索"]
+D --> E["影響範囲の確定"]`,
+d35: `flowchart TD
+A["評価済みアラート"] --> B{"資産への影響は?"}
+B -- "端末" --> C["EDR で隔離・ファイル隔離"]
+B -- "ネットワーク" --> D["FW/IPS で遮断, ISE で隔離"]
+B -- "DNS/Web" --> E["Umbrella でドメインブロック"]
+B -- "アカウント" --> F["セッション失効・パスワードリセット"]
+C --> G["封じ込め後に根絶・復旧"]
+D --> G
+E --> G
+F --> G`,
+d36: `flowchart TD
+A["ゼロデイの情報入手"] --> B["影響を受ける資産の洗い出し"]
+B --> C["補完策の適用<br/>仮想パッチ, 設定変更, 機能停止, アクセス制限"]
+C --> D["検知強化<br/>IOC/IOA 監視, ログ追加"]
+D --> E["悪用の痕跡を能動的に調査 ハンティング"]
+E --> F{"侵害の兆候あり?"}
+F -- "はい" --> G["インシデント対応を開始"]
+F -- "いいえ" --> H["ベンダー情報を継続監視しパッチ公開後に迅速適用"]`,
+d37: `flowchart TD
+A["不審なファイル"] --> B["安全に保全・ハッシュ計算 SHA-256"]
+B --> C{"既知の悪性か?<br/>評判・Talos・VirusTotal 等"}
+C -- "はい" --> D["IOC として登録し、組織内を検索・ブロック"]
+C -- "不明" --> E["静的解析<br/>file, strings, エントロピー, PE ヘッダー, メタデータ"]
+E --> F{"怪しい特徴あり?<br/>パッキング, 拡張子偽装, 不審な API"}
+F -- "はい" --> G["サンドボックスで動的解析"]
+F -- "いいえ" --> H["継続監視・記録"]
+G --> I{"悪性挙動を確認?"}
+I -- "はい" --> J["IOC 抽出、YARA 作成、封じ込め・根絶"]
+I -- "解析が進まない" --> K["リバースエンジニアリング"]`,
+d38: `flowchart LR
+A["脅威スコア・行動指標を確認"] --> B["プロセスツリーで流れを把握"]
+B --> C["ネットワーク・ファイル・レジストリの変化を確認"]
+C --> D["IOC を抽出"]
+D --> E["組織内で検索・ブロック・YARA 作成"]`,
+d39: `flowchart TD
+A["エンドポイント上の不審なファイル"] --> B["ハッシュで評判を確認<br/>Secure Endpoint のファイル判定"]
+B --> C{"判定は?"}
+C -- "悪性" --> D["隔離・削除、端末の隔離検討"]
+C -- "不明" --> E["サンドボックスへ送付 / アドホックスキャン"]
+C -- "正常" --> F["記録して終了"]
+E --> G["結果に応じ カスタム検知 / ブロックリストへ登録"]
+D --> H["デバイス/ファイルトラジェクトリで他端末への影響を確認"]
+G --> H`,
+d40: `flowchart TD
+subgraph Detect["検知"]
+SNA["Secure Network Analytics"]
+SE["Secure Endpoint"]
+FW["Secure Firewall IPS"]
+end
+subgraph Analyze["解析"]
+SMA["Secure Malware Analytics"]
+TAL["Talos インテリジェンス"]
+end
+subgraph Respond["対応"]
+XDR["Cisco XDR"]
+ISE["ISE / pxGrid"]
+UMB["Umbrella"]
+end
+SNA --> XDR
+SE --> XDR
+FW --> XDR
+SMA --> XDR
+TAL --> SNA
+TAL --> SE
+TAL --> FW
+TAL --> UMB
+XDR --> ISE
+XDR --> UMB`,
+d41: `flowchart TD
+A["検知: アラート・報告"] --> B["トリアージ: 誤検知か 重大度は"]
+B --> C["エスカレーションと体制確立"]
+C --> D["証拠保全: 揮発性情報から"]
+D --> E["範囲特定: IOC/IOA で横展開を調査"]
+E --> F["封じ込め: 短期 → 長期"]
+F --> G["根絶: マルウェア・脆弱性・不正アカウント"]
+G --> H["復旧: 検証と監視強化"]
+H --> I["事後レビュー: RCA・教訓・改善"]
+I --> J["プレイブック・検知・訓練へ反映"]`
+};
+</script>
+<script>
+(function(){
+  var sb=document.getElementById('sidebar'),bd=document.getElementById('backdrop'),btn=document.getElementById('menuBtn');
+  function setMenu(o){sb.classList.toggle('open',o);bd.classList.toggle('show',o);btn.setAttribute('aria-expanded',o?'true':'false');btn.firstElementChild.className=o?'ti ti-x':'ti ti-menu-2';}
+  btn.addEventListener('click',function(){setMenu(!sb.classList.contains('open'));});
+  bd.addEventListener('click',function(){setMenu(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+  sb.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+
+  var map={};document.querySelectorAll('.sidebar a[href^="#"]').forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  var cur=null;
+  function setActive(id){
+    var a=map[id];if(!a||a===cur)return;
+    if(cur)cur.classList.remove('active');
+    document.querySelectorAll('.sidebar li.open').forEach(function(l){l.classList.remove('open');});
+    a.classList.add('active');cur=a;
+    var li=a.closest('li');if(li)li.classList.add('open');
+    var r=a.getBoundingClientRect(),s=sb.getBoundingClientRect();
+    if(r.top<s.top+80||r.bottom>s.bottom-30){sb.scrollTop+=r.top-s.top-s.height/3;}
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)setActive(e.target.id);});},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('main h1[id],main h2[id],main h3[id]').forEach(function(h){io.observe(h);});
+
+  document.querySelectorAll('.quiz-ctl button').forEach(function(b){
+    b.addEventListener('click',function(){var o=b.dataset.q==='open';document.querySelectorAll('details.ans').forEach(function(d){d.open=o;});});
+  });
+
+  document.querySelectorAll('pre code[data-hl]').forEach(function(c){try{hljs.highlightElement(c);}catch(e){}});
+
+  var TV={primaryColor:'#EEF1F8',primaryTextColor:'#161B26',primaryBorderColor:'#2E3F72',lineColor:'#4B5878',secondaryColor:'#FAF1DF',tertiaryColor:'#F6F7F9',
+    background:'#F6F7F9',mainBkg:'#EEF1F8',nodeBorder:'#2E3F72',clusterBkg:'#F6F7F9',clusterBorder:'#9AA5C0',edgeLabelBackground:'#F6F7F9',
+    titleColor:'#161B26',textColor:'#161B26',nodeTextColor:'#161B26',fontSize:'16px',
+    pie1:'#C9D3EA',pie2:'#F1DDAE',pie3:'#BFE0DB',pie4:'#E8C7D6',pie5:'#D8DCE4',pieStrokeColor:'#F6F7F9',pieOuterStrokeColor:'#F6F7F9',
+    pieStrokeWidth:'2px',pieOpacity:'1',pieSectionTextColor:'#161B26',pieLegendTextColor:'#161B26',pieTitleTextColor:'#161B26',pieTextColor:'#161B26'};
+  function fix(svg,src){
+    var vb=svg.viewBox&&svg.viewBox.baseVal;if(!vb||!vb.width)return;
+    var t=src.trim().split(/\s/)[0],extra=/^(sequenceDiagram|stateDiagram)/.test(t)?110:15;
+    svg.removeAttribute('width');svg.removeAttribute('height');
+    svg.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.width+' '+(vb.height+extra));
+    svg.style.width=vb.width+'px';svg.style.maxWidth='100%';svg.style.height='auto';svg.style.overflow='visible';
+  }
+  async function run(){
+    try{await document.fonts.ready;}catch(e){}
+    if(!window.mermaid){return;}
+    mermaid.initialize({startOnLoad:false,theme:'base',securityLevel:'loose',fontFamily:'"Hiragino Sans","Yu Gothic UI","Noto Sans JP",sans-serif',themeVariables:TV,
+      flowchart:{useMaxWidth:false,htmlLabels:true,nodeSpacing:40,rankSpacing:45,curve:'basis',padding:12},pie:{useMaxWidth:false}});
+    var els=document.querySelectorAll('.diagram[data-d]');
+    for(var i=0;i<els.length;i++){
+      var el=els[i],id=el.dataset.d,src=(window.DIAGRAMS||{})[id];if(!src)continue;
+      try{var r=await mermaid.render('m-'+id,src);el.innerHTML=r.svg;fix(el.querySelector('svg'),src);}
+      catch(e){console.error(id,e);var st=document.getElementById('dm-'+id);if(st)st.remove();el.textContent='Diagram render error: '+id;}
+    }
+  }
+  run();
+})();
+</script>
+</body>
+</html>
