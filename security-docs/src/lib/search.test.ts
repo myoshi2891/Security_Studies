@@ -133,6 +133,38 @@ describe('getSearchIndex', () => {
         expect(extractHeadings(mdx)).toEqual(['本物の見出し', '後続の見出し']);
     });
 
+    test('collects plain-text JSX headings and headings rendered by docs components in document order', () => {
+        const mdx = [
+            '<HeroSection section="Guide" title="ヒーロー見出し" description="説明" />',
+            '<SectionCard eyebrow="Section 01"',
+            '  title="セクション見出し">',
+            '<h3 className="text-lg font-bold">3. VEX（脆弱性悪用可能性交換）によるノイズ削減</h3>',
+            '<DocsSubheading color="emerald">',
+            '  サブ見出し',
+            '</DocsSubheading>',
+            '<ThreatCard title="① Slopsquatting" severity="critical">',
+            '```tsx',
+            '<h3>コード例の見出し</h3>',
+            '<SectionCard title="コード例のセクション">',
+            '```',
+        ].join('\n');
+
+        expect(extractHeadings(mdx)).toEqual([
+            'ヒーロー見出し',
+            'セクション見出し',
+            '3. VEX（脆弱性悪用可能性交換）によるノイズ削減',
+            'サブ見出し',
+            '① Slopsquatting',
+        ]);
+    });
+
+    test('indexes plain-text JSX headings from real pages', async () => {
+        const results = await getSearchIndex();
+
+        const approach = results.find(item => item.href === '/docs/approach');
+        expect(approach?.headings).toContain('3. VEX（脆弱性悪用可能性交換）によるノイズ削減');
+    });
+
     test('falls back to the raw inner text when a JSX heading uses escapes JSON rejects', () => {
         // JS では有効だが JSON では不正な \' エスケープ → JSON.parse が失敗し生テキストを返す
         const mdx = String.raw`<E.h4 id="q">{"Cisco\'s ISE"}</E.h4>`;

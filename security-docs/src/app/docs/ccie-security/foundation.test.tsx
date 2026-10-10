@@ -123,7 +123,9 @@ describe('CCIE faithful display foundation', () => {
     expect(container.querySelector('figure')).toHaveAttribute('data-d', '0');
     expect(container.querySelector('[role="img"]')).toHaveAttribute('aria-label', '図 1');
     expect(container.querySelector('svg')).toHaveAttribute('viewBox', '0 0 100 65');
-    expect(container.querySelector('svg')?.style.maxWidth).toBe('100%');
+    // 幅の広い図は自然な px 幅を保ち、コンテナの横スクロールで読む（コンテナ幅へ縮小しない）
+    expect(container.querySelector('svg')?.style.width).toBe('100px');
+    expect(container.querySelector('svg')?.style.maxWidth).toBe('');
     expect(calls).toHaveLength(1);
   });
 
