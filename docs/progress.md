@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **185件** | `bun test`: 185 pass / 0 fail（2026-10-10 レビュー対応Green） |
+| テストケース総数 | **186件** | `bun test`: 186 pass / 0 fail（2026-10-10 レビュー対応Green） |
 | テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -50,7 +50,7 @@
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-10-13.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
-| `src/app/docs/ccie-security/hydration.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/app/docs/ccie-security/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 10 pass / 0 fail |
 
 ---
