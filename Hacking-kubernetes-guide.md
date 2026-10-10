@@ -464,7 +464,7 @@ Kubernetes v1.36 で **User Namespaces が GA** になりました(Linux 専用�
 # 1) 特権コンテナを使っている Pod を洗い出す(要 jq)
 kubectl get pods -A -o json | jq -r '
   .items[]
-  | select(any((.spec.containers[]?, .spec.initContainers[]?); .securityContext.privileged == true))
+  | select(any((.spec.containers[]?, .spec.initContainers[]?, .spec.ephemeralContainers[]?); .securityContext.privileged == true))
   | "\(.metadata.namespace)/\(.metadata.name)"'
 
 # 2) hostPath を使っている Pod を洗い出す
@@ -473,14 +473,14 @@ kubectl get pods -A -o json | jq -r '
   | select(any(.spec.volumes[]?; .hostPath != null))
   | "\(.metadata.namespace)/\(.metadata.name)"'
 
-# 3) hostNetwork / hostPID を使っている Pod
+# 3) hostNetwork / hostPID / hostIPC を使っている Pod
 kubectl get pods -A -o json | jq -r '
   .items[]
-  | select(.spec.hostNetwork == true or .spec.hostPID == true)
+  | select(.spec.hostNetwork == true or .spec.hostPID == true or .spec.hostIPC == true)
   | "\(.metadata.namespace)/\(.metadata.name)"'
 
 # 4) Namespace ごとの PSA ラベルを確認
-kubectl get ns -L pod-security.kubernetes.io/enforce,pod-security.kubernetes.io/warn
+kubectl get ns -L pod-security.kubernetes.io/enforce,pod-security.kubernetes.io/audit,pod-security.kubernetes.io/warn
 ```
 
 ### 4.7 Step 2 の理解度チェック
@@ -938,7 +938,7 @@ kubectl get pods -A -o json | jq -r '
       any((.spec.containers[]?, .spec.initContainers[]?);
           any(.env[]?; .valueFrom.secretKeyRef != null)
           or any(.envFrom[]?; .secretRef != null))
-      or any(.spec.volumes[]?; .secret != null))
+      or any(.spec.volumes[]?; .secret != null or any(.projected.sources[]?; .secret != null)))
   | "\(.metadata.namespace)/\(.metadata.name)"'
 ```
 
@@ -1019,6 +1019,12 @@ flowchart LR
 **最小権限の見本(Pod のログを見るだけ)**
 
 ```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: log-viewer
+  namespace: lab
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -1175,6 +1181,12 @@ kubectl get clusterrolebindings -o json | jq -r '
   .items[]
   | select(.roleRef.name == "cluster-admin")
   | "\(.metadata.name): \([.subjects[]? | "\(.kind)/\(.name)"] | join(", "))"'
+
+# Namespace 内で cluster-admin を参照している RoleBinding の確認
+kubectl get rolebindings -A -o json | jq -r '
+  .items[]
+  | select(.roleRef.kind == "ClusterRole" and .roleRef.name == "cluster-admin")
+  | "\(.metadata.namespace)/\(.metadata.name): \([.subjects[]? | "\(.kind)/\(.name)"] | join(", "))"'
 ```
 
 ---
