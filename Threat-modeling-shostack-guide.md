@@ -587,8 +587,8 @@ flowchart LR
     U -->|"2a 認可コードの受け渡し"| API
     API -->|"2b Token Endpoint 認可コード＋code_verifier<br/>IdPがS256でcode_challengeと照合"| IDP
     IDP -->|"2c IDトークン・アクセストークン<br/>API側で保持しブラウザーへ渡さない"| API
-    API -->|"2d セッション Cookie（Set-Cookie） HTTPS"| U
-    U -->|"3 メモ操作 HTTPS<br/>Cookie: セッションID HttpOnly・Secure・SameSite"| API
+    API -->|"2d セッション Cookie 発行 HTTPS<br/>Set-Cookie: セッションID HttpOnly・Secure・SameSite"| U
+    U -->|"3 メモ操作 HTTPS<br/>Cookie: セッションID を送信"| API
     V -->|"4 共有リンク閲覧 HTTPS"| API
     API -->|"5 メモの読み書き SQL<br/>境界B内・境界を越えない"| DB
     API -->|"6 添付の保存と取得"| OBJ
