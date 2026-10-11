@@ -939,6 +939,7 @@ flowchart LR
 | 停止の理由 | OCSP は、訪問者の IP アドレスと訪問先サイトが CA に伝わるプライバシー上のリスクがあるため。運用の単純化も理由 |
 | OCSP Must Staple | 同時にサポートを終了 |
 | 6日証明書 | 2026年に一般提供（GA）。有効期間は **160時間**（6日強）。ACME クライアントで `shortlived` プロファイルを選ぶ。**オプトイン** で、既定にする予定は当面ない |
+| 通常プロファイルの既定変更 | `tlsserver`（45日）や `shortlived`（6日）の短命プロファイルを選ばない利用者には、**2027年2月10日以降、通常（classic）プロファイルで有効期間64日の証明書が既定で発行される**。Staging 環境は **2026年10月14日** に64日証明書へ切り替わる予定 |
 | IP アドレス証明書 | 一般提供。IPv4 と IPv6 に対応。**短命証明書のみ**（IP は変わりやすいため）。dns-01 は使えない |
 | 6日証明書の特徴（OCSP） | OCSP の URL を含まない |
 | 6日証明書の特徴（CRL） | 現在のプロファイルでは CRL の URL を含む |
@@ -948,6 +949,7 @@ flowchart LR
 - `ssl_stapling on;` は Let's Encrypt の証明書では意味がありません（OCSP の URL がない）。
 - 非ブラウザ（VPN など）が OCSP に依存していないかを確認してください。
 - 6日証明書を使うなら、**更新の失敗を数日以内に検知できる監視** が必須です。
+- 200日の上限を前提に約4か月ごとに更新していると、64日証明書は次の更新前に期限切れになり得ます。Let's Encrypt を使う場合は、更新周期を短くしてください（例: ACME Renewal Information（ARI）に従うか、残り3分の1程度で更新する）。本番切り替え前に Staging 環境で確認しておくと安全です。
 
 ### 10.3 serverAuth 専用の階層（clientAuth EKU の廃止）
 
@@ -1398,6 +1400,7 @@ flowchart LR
 | 一次 | Let's Encrypt: OCSP 終了のスケジュール | https://www.abetterinternet.org/post/ending-ocsp |
 | 一次 | Let's Encrypt: 6日証明書と IP 証明書の一般提供（Matthew McPherrin） | https://letsencrypt.org/2026/01/15/6day-and-ip-general-availability |
 | 一次 | Let's Encrypt: 6日証明書と IP 証明書の発表（2025年1月） | https://letsencrypt.org/2025/01/16/6-day-and-ip-certs |
+| 一次 | Let's Encrypt: 64日証明書への既定変更（2026年10月） | https://letsencrypt.org/2026/10/07/64-day-certs |
 | 一次 | ISRG による一般提供の告知 | https://isrg.org/post/ip-and-6day-general-availability/ |
 | 一次 | Mozilla: Server Side TLS ガイドライン | https://wiki.mozilla.org/Security/Server%20Side%20TLS |
 | 一次 | Mozilla: Encrypted Client Hello の実装状況 | https://wiki.mozilla.org/Security/Encrypted_Client_Hello |
