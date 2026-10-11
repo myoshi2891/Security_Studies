@@ -1,0 +1,2720 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hacking Kubernetes 完全入門ガイド(初学者向け・ステップバイステップ)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{
+--color-background-primary:#07111e;
+--color-background-secondary:#0d1b30;
+--color-background-tertiary:#12233f;
+--color-background-info:#142b52;
+--color-background-danger:#34202a;
+--color-background-success:#0f2e2a;
+--color-background-warning:#352c14;
+--color-text-primary:#f3f5fa;
+--color-text-secondary:#c6d0e3;
+--color-text-tertiary:#93a1bd;
+--color-text-info:#9db8ff;
+--color-text-danger:#ff9f8f;
+--color-text-success:#6fe0c4;
+--color-text-warning:#f2c66d;
+--color-border-tertiary:#1e2f4d;
+--color-border-secondary:#2d456e;
+--color-border-primary:#3e5c8f;
+--accent:#7c9eff;
+--font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP","Meiryo",system-ui,-apple-system,"Segoe UI",sans-serif;
+--font-mono:ui-monospace,"SF Mono","Cascadia Code","Menlo","Consolas","Noto Sans Mono CJK JP","Liberation Mono",monospace;
+--border-radius-md:8px;
+--border-radius-lg:12px;
+--border-radius-xl:16px;
+--sidebar-w:288px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{margin:0;background:var(--color-background-primary);color:var(--color-text-secondary);font-family:var(--font-sans);font-size:1rem;font-weight:400;line-height:1.7;-webkit-text-size-adjust:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+strong{font-weight:500;color:var(--color-text-primary)}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);padding:24px 14px 40px;z-index:70;scrollbar-width:thin;scrollbar-color:var(--color-border-primary) transparent}
+.brand{display:flex;align-items:center;gap:12px;padding:6px 10px 20px;color:var(--color-text-primary);border-bottom:1px solid var(--color-border-tertiary);margin-bottom:16px}
+.brand:hover{text-decoration:none}
+.brand .ti{font-size:2rem;color:var(--accent)}
+.brand-text{display:flex;flex-direction:column;line-height:1.35}
+.brand-title{font-size:1rem;font-weight:500;color:var(--color-text-primary)}
+.brand-sub{font-size:1rem;color:var(--color-text-tertiary)}
+.sidebar nav ul{list-style:none;margin:0;padding:0}
+.sidebar nav li{padding-left:0;margin:0}
+.sidebar nav li::before{content:none}
+.sidebar nav a{display:block;padding:6px 10px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:1rem;line-height:1.45}
+.sidebar nav a:hover{background:var(--color-background-tertiary);color:var(--color-text-primary);text-decoration:none}
+.sidebar nav a.active{background:var(--color-background-info);color:var(--accent);font-weight:500}
+.sidebar nav .sub{display:none;margin:2px 0 8px 14px;border-left:1px solid var(--color-border-tertiary)}
+.sidebar nav li.open>.sub{display:block}
+.sidebar nav .sub a{padding-left:12px;color:var(--color-text-tertiary)}
+.sidebar nav .sub a.active{color:var(--accent)}
+.layout{display:block;margin-left:var(--sidebar-w)}
+.hero{padding:64px 56px 40px;border-bottom:1px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.eyebrow{font-size:1rem;color:var(--accent);font-weight:500;margin-bottom:12px}
+.hero h1{margin:0 0 28px;font-size:2.25rem;line-height:1.35;font-weight:500;color:var(--color-text-primary)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:0}
+.meta-item{background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px 18px}
+.meta-item dt{font-size:1rem;color:var(--color-text-tertiary);margin:0 0 4px}
+.meta-item dd{margin:0;color:var(--color-text-primary)}
+.section{padding:48px 56px 24px;border-bottom:1px solid var(--color-border-tertiary)}
+.section>h2{margin:0 0 24px;padding-bottom:12px;font-size:1.75rem;line-height:1.4;font-weight:500;color:var(--color-text-primary);border-bottom:2px solid var(--color-border-secondary)}
+.subsection{margin:36px 0 12px}
+.subsection>h3{margin:0 0 14px;font-size:1.35rem;line-height:1.45;font-weight:500;color:var(--color-text-primary)}
+.section,.subsection{scroll-margin-top:16px}
+.prose h4{margin:28px 0 10px;font-size:1.125rem;font-weight:500;color:var(--color-text-primary)}
+.prose p{margin:12px 0}
+.prose ul{list-style:none;padding-left:0;margin:12px 0}
+.prose ul>li{position:relative;padding-left:1.4rem;margin:6px 0}
+.prose ul>li::before{content:"";position:absolute;left:.3rem;top:.78em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.prose ol{padding-left:1.6rem;margin:12px 0}
+.prose ol>li{margin:6px 0;padding-left:.3rem}
+.prose ol>li::marker{color:var(--accent);font-weight:500}
+code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:1px 6px;color:#cfe0ff;overflow-wrap:anywhere}
+pre{margin:16px 0;padding:16px 18px;background:#050d18;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto;font-family:var(--font-mono);font-size:1rem;line-height:1.6}
+pre code,pre code.hljs{display:block;padding:0;border:0;background:transparent;color:#e6edf7;font-size:1rem;overflow-wrap:normal;white-space:pre}
+.table-wrap{margin:16px 0;overflow-x:auto;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-secondary)}
+table{border-collapse:collapse;width:100%;font-size:1rem}
+th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;text-align:left;white-space:nowrap}
+th,td{padding:10px 14px;border-bottom:1px solid var(--color-border-tertiary);vertical-align:top;line-height:1.6}
+td{min-width:7rem}
+tr:last-child td{border-bottom:0}
+td code{white-space:normal}
+.bq{margin:16px 0;padding:14px 20px;border-left:4px solid var(--accent);border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0;background:var(--color-background-info)}
+.bq.warn{border-left-color:var(--color-text-danger);background:var(--color-background-danger)}
+.bq p{margin:6px 0}
+.cite{font-size:1rem;color:var(--color-text-info);white-space:nowrap}
+.diagram{margin:20px 0;padding:24px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.mermaid{display:flex;justify-content:center;min-height:2rem;color:var(--color-text-primary);font-size:1rem}
+.mermaid svg{overflow:visible}
+.ref-list{margin:16px 0}
+.ref-card{display:flex;gap:16px;align-items:flex-start;padding:14px 18px;margin:10px 0;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);scroll-margin-top:24px}
+.ref-card:target{border-color:var(--accent);background:var(--color-background-info)}
+.ref-badge{flex:none;min-width:3.5rem;text-align:center;padding:2px 10px;border-radius:999px;background:var(--color-background-info);color:var(--accent);border:1px solid var(--color-border-primary);font-weight:500}
+.ref-main{flex:1;min-width:0}
+.ref-title{color:var(--color-text-primary);margin-bottom:4px}
+.ref-urls a{display:flex;gap:8px;align-items:baseline;overflow-wrap:anywhere;word-break:break-all;margin:2px 0}
+.ref-urls .ti{flex:none}
+.chip{display:inline-block;padding:1px 10px;border-radius:999px;border:1px solid var(--color-border-primary);background:var(--color-background-tertiary);color:var(--color-text-secondary);font-size:1rem;line-height:1.6;font-weight:500;white-space:nowrap}
+.chip.kind.primary{background:var(--color-background-success);border-color:#2c7a6b;color:var(--color-text-success)}
+.chip.kind.secondary{background:var(--color-background-warning);border-color:#7d6528;color:var(--color-text-warning)}
+.chip.kind.mixed{background:var(--color-background-info);color:var(--color-text-info)}
+.chip.step{background:var(--color-background-info);color:var(--color-text-info)}
+.check-progress{margin:16px 0 8px;color:var(--color-text-primary);font-weight:500}
+.checklist{counter-reset:chk;margin:8px 0 16px}
+.check-card{counter-increment:chk;margin:10px 0;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.check-card label{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;cursor:pointer}
+.check-card input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.check-card .box{flex:none;position:relative;width:26px;height:26px;margin-top:2px;border:2px solid var(--color-border-primary);border-radius:7px;background:var(--color-background-primary)}
+.check-card .box::after{content:"";position:absolute;left:7px;top:2px;width:7px;height:13px;border:solid var(--color-background-primary);border-width:0 3px 3px 0;transform:rotate(45deg);opacity:0}
+.check-card input:checked+.box{background:var(--color-text-success);border-color:var(--color-text-success)}
+.check-card input:checked+.box::after{opacity:1}
+.check-card input:focus-visible+.box{outline:2px solid var(--accent);outline-offset:2px}
+.check-num{flex:none;min-width:2.25rem;height:2.25rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-background-info);color:var(--accent);font-weight:500}
+.check-num::before{content:counter(chk,decimal-leading-zero)}
+.check-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.check-top{display:flex;flex-wrap:wrap;gap:8px}
+.check-item{color:var(--color-text-primary);font-weight:500}
+.check-how{color:var(--color-text-secondary)}
+.check-how .lbl{display:inline-block;margin-right:10px;color:var(--color-text-tertiary)}
+.check-card:has(input:checked){border-color:#2c7a6b;background:var(--color-background-success)}
+.check-card:has(input:checked) .check-item{text-decoration:line-through;color:var(--color-text-tertiary)}
+.footer{padding:32px 56px 96px;color:var(--color-text-tertiary)}
+.nav-toggle{display:none;position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;border:1px solid var(--color-border-primary);background:var(--color-background-info);color:var(--accent);align-items:center;justify-content:center;font-size:1.75rem;cursor:pointer;z-index:90}
+.backdrop{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(3,8,16,.72);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.backdrop.show{opacity:1;pointer-events:auto}
+@media (max-width:1024px){
+.sidebar{width:min(86vw,320px);transform:translateX(-100%);transition:transform .25s ease}
+.sidebar.open{transform:translateX(0)}
+.layout{margin-left:0}
+.nav-toggle{display:flex}
+.hero{padding:40px 20px 28px}
+.hero h1{font-size:1.75rem}
+.section{padding:32px 20px 16px}
+.section>h2{font-size:1.5rem}
+.subsection>h3{font-size:1.25rem}
+.footer{padding:24px 20px 96px}
+.ref-card{flex-wrap:wrap}
+.check-card label{padding:12px 14px;gap:10px}
+}
+@media (max-width:560px){
+.check-num{display:none}
+}
+
+</style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar" aria-label="目次">
+<a class="brand" href="#top"><i class="ti ti-shield-lock"></i><span class="brand-text"><span class="brand-title">Hacking Kubernetes</span><span class="brand-sub">完全入門ガイド</span></span></a>
+<nav><ul>
+<li class="top"><a href="#s0">0. このガイドについて</a><ul class="sub"><li><a href="#s0-1">0.1 目的と対象読者</a></li><li><a href="#s0-2">0.2 重要な注意(倫理・法的事項)</a></li><li><a href="#s0-3">0.3 書籍情報</a></li><li><a href="#s0-4">0.4 「2021年の本」と「2026年10月の現実」の差分</a></li><li><a href="#s0-5">0.5 書籍の章構成と、このガイドの対応表</a></li><li><a href="#s0-6">0.6 学習の進め方(全体フロー)</a></li></ul></li><li class="top"><a href="#s1">1. 基礎編: Kubernetes の全体像と「攻撃面」</a><ul class="sub"><li><a href="#s1-1">1.1 構成要素マップ</a></li><li><a href="#s1-2">1.2 コンポーネント別・攻撃面の早見表</a></li><li><a href="#s1-3">1.3 攻撃の典型的な流れ(Kill Chain の簡易版)</a></li></ul></li><li class="top"><a href="#s2">2. Step 0: 安全な学習ラボを作る</a><ul class="sub"><li><a href="#s2-1">2.1 ラボの原則</a></li><li><a href="#s2-2">2.2 <code>kind</code> でローカルクラスタを作る(例)</a></li><li><a href="#s2-3">2.3 脆弱性学習用環境: Kubernetes Goat</a></li><li><a href="#s2-4">2.4 ラボ準備チェックリスト</a></li></ul></li><li class="top"><a href="#s3">3. Step 1: 脅威モデリング(書籍 第1章)</a><ul class="sub"><li><a href="#s3-1">3.1 なぜ最初に脅威モデリングなのか</a></li><li><a href="#s3-2">3.2 脅威アクター(Threat Actors)の整理</a></li><li><a href="#s3-3">3.3 Attack Tree(攻撃ツリー)の作り方</a></li><li><a href="#s3-4">3.4 初めての脅威モデル: ワークシート</a></li><li><a href="#s3-5">3.5 「すべてを防げるわけではない」という現実</a></li></ul></li><li class="top"><a href="#s4">4. Step 2: Pod レベルのリソース(書籍 第2章)</a><ul class="sub"><li><a href="#s4-1">4.1 なぜ Pod が最前線なのか</a></li><li><a href="#s4-2">4.2 危険な設定の早見表</a></li><li><a href="#s4-3">4.3 Pod Security Standards(PSS)と Pod Security Admission(PSA)</a></li><li><a href="#s4-4">4.4 堅牢化した Pod の見本(Hardened securityContext)</a></li><li><a href="#s4-5">4.5 User Namespaces が GA になった(2026年4月、v1.36)</a></li><li><a href="#s4-6">4.6 いまのクラスタを点検するコマンド集(読み取り専用)</a></li><li><a href="#s4-7">4.7 Step 2 の理解度チェック</a></li></ul></li><li class="top"><a href="#s5">5. Step 3: コンテナランタイムの分離(書籍 第3章)</a><ul class="sub"><li><a href="#s5-1">5.1 コンテナは「隔離されたプロセス」にすぎない</a></li><li><a href="#s5-2">5.2 隔離方式の比較</a></li><li><a href="#s5-3">5.3 RuntimeClass でサンドボックスを選ぶ</a></li><li><a href="#s5-4">5.4 2026年のケーススタディ: 「コンテナ脱出」が現実に続いた</a></li><li><a href="#s5-5">5.5 防御策のまとめ(多層防御)</a></li></ul></li><li class="top"><a href="#s6">6. Step 4: アプリケーションとサプライチェーン(書籍 第4章)</a><ul class="sub"><li><a href="#s6-1">6.1 サプライチェーンとは何か</a></li><li><a href="#s6-2">6.2 各段階の脅威と対策</a></li><li><a href="#s6-3">6.3 2026年に起きた現実の事例</a></li><li><a href="#s6-4">6.4 具体策1: digest で固定する</a></li><li><a href="#s6-5">6.5 具体策2: イメージ署名と検証(sigstore / cosign)</a></li><li><a href="#s6-6">6.6 具体策3: SBOM と脆弱性スキャン</a></li><li><a href="#s6-7">6.7 Admission で「未検証イメージを実行させない」</a></li><li><a href="#s6-8">6.8 Step 4 の実践ミニ課題</a></li></ul></li><li class="top"><a href="#s7">7. Step 5: ネットワーキング(書籍 第5章)</a><ul class="sub"><li><a href="#s7-1">7.1 Kubernetes ネットワークの「デフォルト」</a></li><li><a href="#s7-2">7.2 通信の流れと制御ポイント</a></li><li><a href="#s7-3">7.3 NetworkPolicy: 「全部拒否」から始める</a></li><li><a href="#s7-4">7.4 サービスメッシュ(mTLS)と eBPF</a></li><li><a href="#s7-5">7.5 2026年の重大トピック: Ingress NGINX の退役</a></li><li><a href="#s7-6">7.6 NSA/CISA の推奨(ネットワーク・監査)</a></li><li><a href="#s7-7">7.7 Step 5 の実践ミニ課題</a></li></ul></li><li class="top"><a href="#s8">8. Step 6: ストレージ(書籍 第6章)</a><ul class="sub"><li><a href="#s8-1">8.1 ストレージで守るもの</a></li><li><a href="#s8-2">8.2 Secret は「暗号化」されているわけではない</a></li><li><a href="#s8-3">8.3 ホストマウントの危険性</a></li><li><a href="#s8-4">8.4 v1.37 のストレージ堅牢化機能</a></li><li><a href="#s8-5">8.5 Pod 向けの短命な証明書(Pod Certificates)</a></li><li><a href="#s8-6">8.6 点検コマンド(読み取り専用)</a></li></ul></li><li class="top"><a href="#s9">9. Step 7: ハードマルチテナンシー(書籍 第7章)</a><ul class="sub"><li><a href="#s9-1">9.1 「同居」はどこまで安全か</a></li><li><a href="#s9-2">9.2 分離レイヤーの比較</a></li><li><a href="#s9-3">9.3 分離レベルの選び方</a></li><li><a href="#s9-4">9.4 コントロールプレーンの共有に注意</a></li><li><a href="#s9-5">9.5 実践の目安</a></li></ul></li><li class="top"><a href="#s10">10. Step 8: ポリシー(書籍 第8章)</a><ul class="sub"><li><a href="#s10-1">10.1 ポリシーの種類</a></li><li><a href="#s10-2">10.2 RBAC の基本</a></li><li><a href="#s10-3">10.3 RBAC の「危ない権限」早見表</a></li><li><a href="#s10-4">10.4 2026年の重要ケース: <code>nodes/proxy</code> GET の問題</a></li><li><a href="#s10-5">10.5 汎用ポリシーエンジン: 3つの選択肢</a></li><li><a href="#s10-6">10.6 監査(Auditing)と「破れ窓(Breakglass)」</a></li><li><a href="#s10-7">10.7 点検コマンド(読み取り専用)</a></li></ul></li><li class="top"><a href="#s11">11. Step 9: 侵入検知(書籍 第9章)</a><ul class="sub"><li><a href="#s11-1">11.1 「破られる前提」で考える</a></li><li><a href="#s11-2">11.2 検知の層</a></li><li><a href="#s11-3">11.3 検知の限界を知る(検知回避と死角)</a></li><li><a href="#s11-4">11.4 インシデント対応の流れ</a></li><li><a href="#s11-5">11.5 ハニーポットの考え方</a></li></ul></li><li class="top"><a href="#s12">12. Step 10: 組織(書籍 第10章)</a><ul class="sub"><li><a href="#s12-1">12.1 最も弱いのは「人と組織」</a></li><li><a href="#s12-2">12.2 責任共有モデル(Shared Responsibility)</a></li><li><a href="#s12-3">12.3 アカウントの衛生管理チェック</a></li><li><a href="#s12-4">12.4 脅威モデルの爆発と優先順位づけ</a></li><li><a href="#s12-5">12.5 SLO の圧力・ソーシャルエンジニアリング・規制</a></li></ul></li><li class="top"><a href="#s13">13. 2026年の重要トピック総まとめ</a><ul class="sub"><li><a href="#s13-1">13.1 時系列まとめ</a></li><li><a href="#s13-2">13.2 バージョン関連の補足</a></li><li><a href="#s13-3">13.3 今日からできる「3つの最優先アクション」</a></li></ul></li><li class="top"><a href="#s14">14. 6週間ハンズオン学習計画</a></li><li class="top"><a href="#s15">15. 総合セキュリティチェックリスト</a></li><li class="top"><a href="#s16">16. 用語集</a></li><li class="top"><a href="#s17">17. 参考文献(ソース一覧)</a><ul class="sub"><li><a href="#s17-1">17.1 書籍・著者・実務家</a></li><li><a href="#s17-2">17.2 Kubernetes プロジェクト(公式)</a></li><li><a href="#s17-3">17.3 脆弱性・インシデント情報</a></li><li><a href="#s17-4">17.4 エコシステム・ガイダンス・解説</a></li><li><a href="#s17-5">17.5 情報の鮮度を保つための確認先</a></li><li><a href="#s17-6">17.6 このガイドの限界と注意</a></li></ul></li>
+</ul></nav>
+</aside>
+<div class="backdrop" id="backdrop"></div>
+<button class="nav-toggle" id="navToggle" type="button" aria-label="目次を開く" aria-expanded="false" aria-controls="sidebar"><i class="ti ti-menu-2"></i></button>
+<main class="layout">
+<header class="hero" id="top">
+<div class="eyebrow">Kubernetes セキュリティ学習ガイド</div>
+<h1>Hacking Kubernetes 完全入門ガイド(初学者向け・ステップバイステップ)</h1>
+<dl class="meta"><div class="meta-item"><dt>対象書籍</dt><dd><em>Hacking Kubernetes</em>(Andrew Martin / Michael Hausenblas 著、O'Reilly Media)</dd></div><div class="meta-item"><dt>情報基準日</dt><dd>2026年10月9日(Kubernetes v1.37 世代までの情報を反映)</dd></div><div class="meta-item"><dt>文体方針</dt><dd>日本語を主とし、技術用語は英語表記を維持します</dd></div><div class="meta-item"><dt>表記ルール</dt><dd>文中の <code>[S1]</code> などは、末尾「参考文献(ソース一覧)」の番号に対応します</dd></div></dl>
+</header>
+<section class="section" id="s0"><h2>0. このガイドについて</h2><div class="prose"></div><section class="subsection" id="s0-1"><h3>0.1 目的と対象読者</h3><div class="prose"><p>このガイドは、次のような方を想定した <strong>「Hacking Kubernetes」の読解補助 + 最新情報アップデート</strong> です。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想定読者</th>
+<th>このガイドで得られること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes を触り始めた開発者・SRE</td>
+<td>「どこが、なぜ危ないのか」を攻撃者の視点で理解できる</td>
+</tr>
+<tr>
+<td>セキュリティエンジニア・QA エンジニア</td>
+<td>Kubernetes を脅威モデルで分解し、検証観点を作れる</td>
+</tr>
+<tr>
+<td>認定資格(CKS など)を目指す方</td>
+<td>章ごとの防御策と確認コマンドを体系的に整理できる</td>
+</tr>
+</tbody>
+</table></div>
+<p>前提知識は <strong>Linux の基本操作、Docker コンテナの概念、<code>kubectl</code> で Pod を作った経験</strong> 程度です。足りない部分は「1. 基礎編」で補います。</p></div></section><section class="subsection" id="s0-2"><h3>0.2 重要な注意(倫理・法的事項)</h3><div class="prose"><blockquote class="bq warn">
+<p><strong>許可のない環境への攻撃的な検証は、法律に違反する可能性があります。</strong>
+このガイドの検証手順は、<strong>自分で作成した使い捨てのローカルクラスタ</strong>、または <strong>書面で許可を得た環境</strong> でのみ実施してください。</p>
+</blockquote>
+<ul>
+<li>本ガイドは <strong>防御を理解するための攻撃者視点</strong> を扱います。実際の悪用手順(エクスプロイトコード等)は掲載しません。</li>
+<li>脆弱性は「概念・影響・検出方法・緩和策」のレベルで解説します。</li>
+<li>本番クラスタに「わざと脆弱な環境」を置いてはいけません(詳しくは Step 0)。</li>
+</ul></div></section><section class="subsection" id="s0-3"><h3>0.3 書籍情報</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>書名</td>
+<td>Hacking Kubernetes</td>
+</tr>
+<tr>
+<td>著者</td>
+<td>Andrew Martin, Michael Hausenblas</td>
+</tr>
+<tr>
+<td>出版社</td>
+<td>O'Reilly Media, Inc.</td>
+</tr>
+<tr>
+<td>ISBN</td>
+<td>9781492081722</td>
+</tr>
+<tr>
+<td>刊行</td>
+<td>2021年10月(O'Reilly 掲載情報。著者の経歴紹介などでは 2022 年と記載される場合あり)</td>
+</tr>
+<tr>
+<td>規模・難易度</td>
+<td>311ページ、O'Reilly の表記では「Intermediate to advanced」</td>
+</tr>
+<tr>
+<td>コンセプト</td>
+<td>コンポーネントごとに <strong>デフォルト設定 → 脅威モデル → 実際の攻撃と過去の CVE → 堅牢化の設定</strong> をたどる、脅威ベースの Kubernetes セキュリティ解説</td>
+</tr>
+</tbody>
+</table></div>
+<p>出典: <a class="cite" href="#ref-S1">[S1]</a></p>
+<p><strong>著者について(国際的に知られた実務家)</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>人物</th>
+<th>主な肩書・活動(公開プロフィールより)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Andrew Martin</td>
+<td>ControlPlane の創業者 CEO。KubeCon の CTF(Capture The Flag)運営や、Kubernetes の脅威モデリング、CIS Benchmarks への協力などの実績を紹介している <a class="cite" href="#ref-S21">[S21]</a><a class="cite" href="#ref-S22">[S22]</a><a class="cite" href="#ref-S23">[S23]</a></td>
+</tr>
+<tr>
+<td>Michael Hausenblas</td>
+<td>本書の共著者(O'Reilly 書誌より) <a class="cite" href="#ref-S1">[S1]</a></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>補足: このガイドで「実務家の発信」として参照している主な人物は、Rory McCune(CIS Benchmarks の主要著者の一人、Kubernetes SIG-Security メンバー) <a class="cite" href="#ref-S19">[S19]</a><a class="cite" href="#ref-S20">[S20]</a>、Tabitha Sable(Kubernetes Security Response Committee) <a class="cite" href="#ref-S7">[S7]</a>、Graham Helton(2026年1月の <code>nodes/proxy</code> 問題の報告者) <a class="cite" href="#ref-S10">[S10]</a>、Madhu Akula(Kubernetes Goat の作者) <a class="cite" href="#ref-S24">[S24]</a> などです。</p>
+</blockquote></div></section><section class="subsection" id="s0-4"><h3>0.4 「2021年の本」と「2026年10月の現実」の差分</h3><div class="prose"><p>書籍は2021年刊行ですが、Kubernetes は v1.37(2026年8月26日リリース)まで進んでいます <a class="cite" href="#ref-S2">[S2]</a>。<strong>本の考え方(脅威モデル中心の分解)は今も有効</strong> ですが、個々の機能・推奨設定は更新されています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>領域</th>
+<th>書籍刊行時の状況</th>
+<th>2026年10月時点で押さえるべき更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pod の制限</td>
+<td>PodSecurityPolicy(PSP)から Pod Security Admission(PSA)への移行期</td>
+<td>PSP は削除済み。<strong>Pod Security Standards(privileged / baseline / restricted)+ PSA</strong> が標準 <a class="cite" href="#ref-S8">[S8]</a></td>
+</tr>
+<tr>
+<td>root 権限の分離</td>
+<td>User Namespaces は実験段階</td>
+<td><strong>User Namespaces が v1.36 で GA</strong>(<code>hostUsers: false</code>) <a class="cite" href="#ref-S4">[S4]</a></td>
+</tr>
+<tr>
+<td>kubelet API の権限</td>
+<td><code>nodes/proxy</code> に権限が集中</td>
+<td>2026年1月に <code>nodes/proxy</code> GET 経由の問題が公開。<strong>v1.36 で Fine-grained Kubelet Authorization が GA</strong> <a class="cite" href="#ref-S5">[S5]</a><a class="cite" href="#ref-S10">[S10]</a></td>
+</tr>
+<tr>
+<td>Ingress</td>
+<td>ingress-nginx が事実上の標準</td>
+<td><strong>2026年3月に Ingress NGINX が退役</strong>(以後、修正・セキュリティパッチなし) <a class="cite" href="#ref-S6">[S6]</a></td>
+</tr>
+<tr>
+<td>ポリシーエンジン</td>
+<td>OPA が中心、Kyverno は新興</td>
+<td><strong>Kyverno が 2026年3月に CNCF Graduated</strong>(CEL へ全面対応) <a class="cite" href="#ref-S17">[S17]</a></td>
+</tr>
+<tr>
+<td>ランタイム検知</td>
+<td>Falco が登場</td>
+<td>Falco は 2024年2月29日に CNCF Graduated <a class="cite" href="#ref-S18">[S18]</a></td>
+</tr>
+<tr>
+<td>サプライチェーン</td>
+<td>SolarWinds(SUNBURST)直後</td>
+<td>2026年3月に <strong>Trivy 関連の GitHub Actions タグ改ざん</strong> など、CI/CD 自体が狙われる事例 <a class="cite" href="#ref-S14">[S14]</a><a class="cite" href="#ref-S15">[S15]</a></td>
+</tr>
+<tr>
+<td>コンテナ脱出</td>
+<td>runc の CVE が中心</td>
+<td>2026年は <strong>Linux カーネル起因の脱出系 CVE</strong> が相次ぐ(Step 3 参照) <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s0-5"><h3>0.5 書籍の章構成と、このガイドの対応表</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>書籍の章</th>
+<th>テーマ</th>
+<th>このガイドの節</th>
+<th>一言でいうと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Introduction</td>
+<td>脅威モデルの基本、Attack Trees</td>
+<td>Step 1</td>
+<td>「何を守り、誰が、どこから来るか」を整理する</td>
+</tr>
+<tr>
+<td>2. Pod-Level Resources</td>
+<td>Pod 設定と securityContext</td>
+<td>Step 2</td>
+<td>Pod 1つ1つの設定が最前線</td>
+</tr>
+<tr>
+<td>3. Container Runtime Isolation</td>
+<td>コンテナ・VM・サンドボックス</td>
+<td>Step 3</td>
+<td>コンテナは「共有カーネル上のプロセス」</td>
+</tr>
+<tr>
+<td>4. Applications and Supply Chain</td>
+<td>脆弱性、SBOM、署名</td>
+<td>Step 4</td>
+<td>「何を動かすか」を信頼できる状態にする</td>
+</tr>
+<tr>
+<td>5. Networking</td>
+<td>Pod 間通信、NetworkPolicy、サービスメッシュ、eBPF</td>
+<td>Step 5</td>
+<td>デフォルトは「全部つながる」</td>
+</tr>
+<tr>
+<td>6. Storage</td>
+<td>ボリューム、Secret、ホストマウント</td>
+<td>Step 6</td>
+<td>データと秘密情報の置き場所を守る</td>
+</tr>
+<tr>
+<td>7. Hard Multitenancy</td>
+<td>テナント分離</td>
+<td>Step 7</td>
+<td>「同居」はどこまで安全か</td>
+</tr>
+<tr>
+<td>8. Policy</td>
+<td>RBAC、OPA、Kyverno</td>
+<td>Step 8</td>
+<td>ルールを機械に強制させる</td>
+</tr>
+<tr>
+<td>9. Intrusion Detection</td>
+<td>Falco、フォレンジクス、ハニーポット</td>
+<td>Step 9</td>
+<td>破られたときにどう気づくか</td>
+</tr>
+<tr>
+<td>10. Organizations</td>
+<td>クラウド責任共有、人的要因</td>
+<td>Step 10</td>
+<td>最も弱いのは「人と組織」</td>
+</tr>
+</tbody>
+</table></div>
+<p>出典: 章構成は O'Reilly の目次 <a class="cite" href="#ref-S1">[S1]</a> による。</p></div></section><section class="subsection" id="s0-6"><h3>0.6 学習の進め方(全体フロー)</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d1" role="img" aria-label="フローチャート d1"></div></figure></div></section></section>
+<section class="section" id="s1"><h2>1. 基礎編: Kubernetes の全体像と「攻撃面」</h2><div class="prose"><p>攻撃を理解する最初の一歩は、<strong>部品と信頼関係(誰が誰を信用しているか)</strong> を知ることです。</p></div><section class="subsection" id="s1-1"><h3>1.1 構成要素マップ</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d2" role="img" aria-label="フローチャート d2"></div></figure></div></section><section class="subsection" id="s1-2"><h3>1.2 コンポーネント別・攻撃面の早見表</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>コンポーネント</th>
+<th>役割</th>
+<th>攻撃者にとっての魅力</th>
+<th>主な守り方(本ガイドの節)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kube-apiserver</td>
+<td>全 API の入口。認証・認可・Admission を実施</td>
+<td>乗っ取れば全権限</td>
+<td>認証・RBAC・監査ログ・インターネット非公開(Step 8, 9)</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>全リソース(Secret 含む)の保存先</td>
+<td>直接読めれば Secret 全取得</td>
+<td>保存時暗号化・アクセス制限(Step 6)</td>
+</tr>
+<tr>
+<td>kubelet</td>
+<td>ノード上の Pod 管理 API</td>
+<td>ノード上の任意 Pod でコマンド実行の足がかり</td>
+<td>認可の細分化・ネットワーク制限(Step 8)</td>
+</tr>
+<tr>
+<td>コンテナランタイム</td>
+<td>コンテナの生成・隔離</td>
+<td>脱出(container breakout)できればノード全体</td>
+<td>最新化・サンドボックス・seccomp(Step 3)</td>
+</tr>
+<tr>
+<td>Pod / コンテナ</td>
+<td>アプリの実行単位</td>
+<td>最初の侵入口(RCE の着地点)</td>
+<td>securityContext・PSA(Step 2)</td>
+</tr>
+<tr>
+<td>ServiceAccount トークン</td>
+<td>Pod が API を呼ぶための身分証</td>
+<td>盗めば API を叩ける</td>
+<td>自動マウント無効化・最小権限・短命化(Step 2, 8)</td>
+</tr>
+<tr>
+<td>CNI・Service</td>
+<td>通信経路</td>
+<td>横展開(lateral movement)</td>
+<td>NetworkPolicy・mTLS(Step 5)</td>
+</tr>
+<tr>
+<td>コンテナイメージ・CI/CD</td>
+<td>何を動かすか</td>
+<td>上流を汚せば全員に波及</td>
+<td>署名・digest 固定・最小権限(Step 4)</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s1-3"><h3>1.3 攻撃の典型的な流れ(Kill Chain の簡易版)</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d3" role="img" aria-label="フローチャート d3"></div></figure>
+<p>この流れの <strong>どこで止めるか</strong> を設計するのが、以降の各 Step の目的です。</p></div></section></section>
+<section class="section" id="s2"><h2>2. Step 0: 安全な学習ラボを作る</h2><div class="prose"></div><section class="subsection" id="s2-1"><h3>2.1 ラボの原則</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>原則</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>使い捨てのローカルクラスタを使う</td>
+<td>失敗しても影響がなく、すぐ作り直せる</td>
+</tr>
+<tr>
+<td>本番・社内ネットワークと分離する</td>
+<td>誤って脆弱な環境を公開してしまう事故を防ぐ</td>
+</tr>
+<tr>
+<td>クラウドの認証情報を置かない</td>
+<td>Pod 内から盗まれる練習をしても実害が出ない</td>
+</tr>
+<tr>
+<td>脆弱性学習用環境は「隔離クラスタ」限定</td>
+<td>下記の Kubernetes Goat の警告を参照</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s2-2"><h3>2.2 <code>kind</code> でローカルクラスタを作る(例)</h3><div class="prose"><p><code>kind</code>(Kubernetes IN Docker)は、Docker 上にクラスタを作る軽量ツールです。事前に Docker と <code>kubectl</code> を用意してください。</p>
+<pre><code class="language-bash"># クラスタ作成(名前は任意)
+kind create cluster --name hk-lab
+
+# 接続確認
+kubectl cluster-info --context kind-hk-lab
+kubectl get nodes -o wide
+
+# バージョン確認(サーバーとクライアントの差に注意)
+kubectl version
+
+# ラボ用の Namespace を作成
+kubectl create namespace lab
+
+# Step 10 の ValidatingAdmissionPolicy(namespaceSelector: policy=enforced)の対象にする
+kubectl label namespace lab policy=enforced
+</code></pre>
+<blockquote class="bq warn">
+<p><strong>注意</strong>: <code>kind</code> の既定 CNI が NetworkPolicy を強制するかは、バージョンや構成によって異なります。Step 5 で NetworkPolicy を試す際は、<strong>Calico や Cilium など NetworkPolicy 対応 CNI を導入するか、実際に通信が遮断されるかを必ず確認</strong> してください。</p>
+</blockquote></div></section><section class="subsection" id="s2-3"><h3>2.3 脆弱性学習用環境: Kubernetes Goat</h3><div class="prose"><p><strong>Kubernetes Goat</strong> は、Madhu Akula 氏が作成した <strong>「わざと脆弱に作られた」学習用 Kubernetes 環境</strong> で、コンテナ脱出、SSRF、DIND(Docker-in-Docker)攻撃、クラスタ侵害など多数のシナリオを実践できます <a class="cite" href="#ref-S24">[S24]</a>。</p>
+<blockquote class="bq warn">
+<p><strong>絶対に守ること</strong>: プロジェクト自身が「本番環境や機密リソースのあるクラスタに入れてはいけない」と明記しています <a class="cite" href="#ref-S24">[S24]</a>。<strong>必ず隔離したローカルクラスタ(kind など)で使い、終わったらクラスタごと削除</strong> してください。</p>
+</blockquote>
+<pre><code class="language-bash"># 使い終わったら必ずクラスタごと破棄
+kind delete cluster --name hk-lab
+</code></pre></div></section><section class="subsection" id="s2-4"><h3>2.4 ラボ準備チェックリスト</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>確認項目</th>
+<th>OK 条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>クラスタは使い捨てか</td>
+<td><code>kind delete cluster</code> でいつでも消せる</td>
+</tr>
+<tr>
+<td>認証情報は含まれていないか</td>
+<td>クラウドの鍵・本番 kubeconfig が入っていない</td>
+</tr>
+<tr>
+<td>ネットワークは分離されているか</td>
+<td>外部に公開するポートがない</td>
+</tr>
+<tr>
+<td>バージョンは把握しているか</td>
+<td><code>kubectl version</code> で確認済み</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s3"><h2>3. Step 1: 脅威モデリング(書籍 第1章)</h2><div class="prose"></div><section class="subsection" id="s3-1"><h3>3.1 なぜ最初に脅威モデリングなのか</h3><div class="prose"><p>書籍は、設定項目を羅列する前に <strong>「誰が・何を狙い・どこから来るか」を構造化する</strong> ことから始めます。章立ては「Threat Actors(脅威アクター)」「Your First Threat Model」「Attack Trees」「Prior Art(先行事例)」などです <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<p><strong>脅威モデリングの基本の問い</strong>(4つ):</p>
+<ol>
+<li><strong>何を守るのか?</strong>(資産: Secret、顧客データ、計算資源、評判)</li>
+<li><strong>誰が狙うのか?</strong>(脅威アクター)</li>
+<li><strong>どこから入るのか?</strong>(侵入経路・信頼境界)</li>
+<li><strong>どう防ぎ、どう気づくのか?</strong>(対策・検知)</li>
+</ol></div></section><section class="subsection" id="s3-2"><h3>3.2 脅威アクター(Threat Actors)の整理</h3><div class="prose"><p>下表は、一般的な分類を初学者向けに整理した例です(書籍の分類を要約・再構成したものではなく、考え方の例として提示しています)。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>アクター</th>
+<th>動機</th>
+<th>典型的な能力</th>
+<th>想定される侵入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>外部の攻撃者(機会主義)</td>
+<td>暗号資産マイニング、踏み台</td>
+<td>公開された脆弱性や設定ミスを自動スキャン</td>
+<td>公開された API/ダッシュボード、脆弱なアプリ</td>
+</tr>
+<tr>
+<td>標的型の攻撃者</td>
+<td>情報窃取、金銭、諜報</td>
+<td>時間をかけた調査、サプライチェーン攻撃</td>
+<td>汚染された依存関係、CI/CD 認証情報</td>
+</tr>
+<tr>
+<td>悪意ある内部者</td>
+<td>金銭、恨み</td>
+<td>正規の権限を持つ</td>
+<td>正規の kubectl・CI/CD</td>
+</tr>
+<tr>
+<td>不注意な内部者</td>
+<td>(なし。ミス)</td>
+<td>誤設定・認証情報の誤公開</td>
+<td>過剰な権限、公開リポジトリへの鍵漏えい</td>
+</tr>
+<tr>
+<td>敵対的テナント</td>
+<td>他テナントの情報</td>
+<td>クラスタ内でのコード実行</td>
+<td>同居する別ワークロード</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s3-3"><h3>3.3 Attack Tree(攻撃ツリー)の作り方</h3><div class="prose"><p><strong>Attack Tree</strong> は、攻撃者の最終目標を頂点に置き、それを達成する手段を枝分かれで書き出す手法です。書籍も「Example Attack Trees」として具体例を扱っています <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<p><strong>例: 目標「クラスタ内の Secret を盗む」</strong></p>
+<figure class="diagram"><div class="mermaid" data-diagram="d4" role="img" aria-label="フローチャート d4"></div></figure>
+<p><strong>この木から導く対策</strong>:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>枝</th>
+<th>対策</th>
+<th>該当 Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1/A2</td>
+<td>Secret を最小限に、読み取り専用で必要な Pod のみ</td>
+<td>Step 6</td>
+</tr>
+<tr>
+<td>B1/B2</td>
+<td>RBAC の最小権限化と定期棚卸し</td>
+<td>Step 8</td>
+</tr>
+<tr>
+<td>C1/C2</td>
+<td>etcd のネットワーク制限、保存時暗号化、バックアップの保護</td>
+<td>Step 6</td>
+</tr>
+<tr>
+<td>D1/D2</td>
+<td>ランタイム分離、hostPath 禁止</td>
+<td>Step 2, 3</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s3-4"><h3>3.4 初めての脅威モデル: ワークシート</h3><div class="prose"><p>次の表をコピーして、自分のクラスタに合わせて埋めてください。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>資産</th>
+<th>脅威アクター</th>
+<th>侵入経路</th>
+<th>攻撃シナリオ</th>
+<th>現在の対策</th>
+<th>不足している対策</th>
+<th>優先度(高/中/低)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>例: DB の認証情報</td>
+<td>外部の攻撃者</td>
+<td>アプリの RCE</td>
+<td>RCE → 環境変数から取得</td>
+<td>なし</td>
+<td>Secret を環境変数に出さない</td>
+<td>高</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s3-5"><h3>3.5 「すべてを防げるわけではない」という現実</h3><div class="prose"><p>Kubernetes プロジェクト自身も、<strong>修正されないまま残る設計上のリスク</strong> を公開しています。2026年5月、Security Response Committee は、修正版がないのに「fixed version」欄が入っていた古い CVE(CVE-2020-8554、CVE-2020-8561、CVE-2020-8562、CVE-2021-25740)の記録を、2026年6月1日に「全バージョンが影響を受ける」と正しく訂正しました。この結果、脆弱性スキャナでこれらが新たに検出される場合があるとされています <a class="cite" href="#ref-S7">[S7]</a>。</p>
+<blockquote class="bq note">
+<p>学び: 脅威モデルには <strong>「アーキテクチャ上受け入れるリスク」と「それを緩和する補完策」</strong> の欄が必要です。たとえば、admission webhook へのリダイレクト(CVE-2020-8561)や、Endpoints 経由のクロス Namespace 転送(CVE-2021-25740)は、設計の性質に由来するリスクとして扱われています <a class="cite" href="#ref-S7">[S7]</a>。</p>
+</blockquote></div></section></section>
+<section class="section" id="s4"><h2>4. Step 2: Pod レベルのリソース(書籍 第2章)</h2><div class="prose"></div><section class="subsection" id="s4-1"><h3>4.1 なぜ Pod が最前線なのか</h3><div class="prose"><p>多くの攻撃は <strong>「アプリの脆弱性で Pod 内にコードが実行される」ところから始まります</strong>(Remote Code Execution)。書籍も第2章で「What's the Worst That Could Happen?」として、<strong>Container Breakout(コンテナ脱出)</strong> を最悪ケースに置き、Pod 設定の各項目(環境変数、イメージ、Probe、リソース制限、DNS、securityContext、Service Account、Volume など)を脅威の観点で確認しています <a class="cite" href="#ref-S1">[S1]</a>。</p></div></section><section class="subsection" id="s4-2"><h3>4.2 危険な設定の早見表</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>設定項目</th>
+<th>何が危険か</th>
+<th>安全な方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>privileged: true</code></td>
+<td>ほぼ全ての隔離機構が無効化される <a class="cite" href="#ref-S8">[S8]</a></td>
+<td>常に <code>false</code>(原則禁止)</td>
+</tr>
+<tr>
+<td><code>hostPath</code> ボリューム</td>
+<td>ホストのファイルシステムが見える</td>
+<td>使わない。必要なら読み取り専用+限定パス</td>
+</tr>
+<tr>
+<td><code>hostNetwork</code> / <code>hostPID</code> / <code>hostIPC</code></td>
+<td>ホストのネットワーク・プロセス空間を共有</td>
+<td>使わない</td>
+</tr>
+<tr>
+<td><code>capabilities</code>(特に <code>NET_ADMIN</code>、<code>SYS_ADMIN</code>)</td>
+<td>カーネル機能の過剰付与</td>
+<td><code>drop: ["ALL"]</code> から必要分のみ追加</td>
+</tr>
+<tr>
+<td><code>allowPrivilegeEscalation: true</code>(既定)</td>
+<td>setuid 等で権限が上がる余地</td>
+<td><code>false</code> を明示</td>
+</tr>
+<tr>
+<td>root で実行</td>
+<td>脱出時にホスト root へ直結しやすい</td>
+<td><code>runAsNonRoot: true</code></td>
+</tr>
+<tr>
+<td>ServiceAccount トークンの自動マウント</td>
+<td>侵入後に API を叩く材料になる</td>
+<td>API を使わない Pod は <code>automountServiceAccountToken: false</code></td>
+</tr>
+<tr>
+<td><code>latest</code> タグ・タグ参照</td>
+<td>中身が知らぬ間に変わる</td>
+<td>digest(<code>@sha256:...</code>)で固定</td>
+</tr>
+<tr>
+<td>リソース制限なし</td>
+<td>暗号資産マイニングや DoS の温床</td>
+<td><code>requests</code> / <code>limits</code> を設定</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s4-3"><h3>4.3 Pod Security Standards(PSS)と Pod Security Admission(PSA)</h3><div class="prose"><p>Kubernetes には、Pod の安全度を3段階で定義した <strong>Pod Security Standards</strong> があります <a class="cite" href="#ref-S8">[S8]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>レベル</th>
+<th>意味</th>
+<th>使いどころ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Privileged</strong></td>
+<td>制限なし(通常の隔離をバイパスできる)</td>
+<td>システム用の特別な Namespace のみ</td>
+</tr>
+<tr>
+<td><strong>Baseline</strong></td>
+<td>既知の権限昇格を防ぐ最低限の制限</td>
+<td>既存アプリの最初の移行先</td>
+</tr>
+<tr>
+<td><strong>Restricted</strong></td>
+<td>現在の Pod 堅牢化のベストプラクティスに沿った強い制限</td>
+<td><strong>新規アプリの標準にする</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>これらを強制する組み込みの仕組みが <strong>Pod Security Admission(PSA)</strong> で、<strong>Namespace のラベル</strong> で設定します <a class="cite" href="#ref-S8">[S8]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enforce</code></td>
+<td>違反した Pod の作成を拒否</td>
+</tr>
+<tr>
+<td><code>audit</code></td>
+<td>違反を監査ログに記録(拒否はしない)</td>
+</tr>
+<tr>
+<td><code>warn</code></td>
+<td>違反時にユーザーへ警告を表示(拒否はしない)</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash"># まずは warn と audit で影響を調べ、問題なければ enforce にする
+kubectl label namespace lab \
+  pod-security.kubernetes.io/warn=restricted \
+  pod-security.kubernetes.io/audit=restricted
+
+# 影響の無いことを確認後、強制を有効化
+kubectl label namespace lab \
+  pod-security.kubernetes.io/enforce=restricted
+</code></pre>
+<blockquote class="bq warn">
+<p><strong>移行の鉄則</strong>: いきなり <code>enforce</code> にせず、<strong><code>warn</code> → <code>audit</code> → <code>enforce</code></strong> の順で進めます。PSP(PodSecurityPolicy)は既に削除されているため、古い資料の PSP の手順は使えません <a class="cite" href="#ref-S8">[S8]</a>。</p>
+</blockquote>
+<p><strong>動作確認(拒否されることを確かめる)</strong>: ラボで、わざと違反する Pod を作って拒否されることを確認します。</p>
+<pre><code class="language-yaml"># violating-pod.yaml (ラボ専用・拒否されることを確認する目的)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: violating-demo
+  namespace: lab
+spec:
+  containers:
+  - name: app
+    image: busybox:1.36
+    command: [&quot;sleep&quot;, &quot;3600&quot;]
+    securityContext:
+      privileged: true
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f violating-pod.yaml
+# restricted が enforce されていれば、作成は拒否される
+</code></pre></div></section><section class="subsection" id="s4-4"><h3>4.4 堅牢化した Pod の見本(Hardened securityContext)</h3><div class="prose"><p>書籍は「Using the securityContext Correctly」「Hardened securityContext」を取り上げています <a class="cite" href="#ref-S1">[S1]</a>。下記は、現在の推奨に沿った見本です。</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: hardened-demo
+  namespace: lab
+spec:
+  automountServiceAccountToken: false     # API を使わない Pod はトークンを渡さない
+  hostUsers: false                        # User Namespaces (v1.36 で GA。ノード側の対応が必要)
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault                # 既定の seccomp で危険なシステムコールを制限
+  containers:
+  - name: app
+    image: registry.example.com/app@sha256:&lt;digest&gt;   # タグではなく digest で固定
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: [&quot;ALL&quot;]
+    resources:
+      requests: { cpu: &quot;50m&quot;, memory: &quot;64Mi&quot; }
+      limits:   { cpu: &quot;200m&quot;, memory: &quot;128Mi&quot; }
+    volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+  volumes:
+  - name: tmp
+    emptyDir: {}
+</code></pre>
+<p><strong>各設定の「なぜ」</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>設定</th>
+<th>守るもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>runAsNonRoot</code> / <code>runAsUser</code></td>
+<td>UID 0(root)でのコンテナ起動を拒否し、非 root UID で実行させる。脱出後にホスト上で root にならないことまでは保証しない(それは <code>hostUsers: false</code> の UID マッピングの役割)</td>
+</tr>
+<tr>
+<td><code>seccompProfile: RuntimeDefault</code></td>
+<td>危険なシステムコールの呼び出しを制限。2026年のカーネル脆弱性の一部では、この設定が緩和策として明記された(Step 3 参照) <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td><code>allowPrivilegeEscalation: false</code></td>
+<td>プロセスが親より高い権限を得る経路を塞ぐ</td>
+</tr>
+<tr>
+<td><code>readOnlyRootFilesystem</code></td>
+<td>攻撃者がツールを書き込みにくくする</td>
+</tr>
+<tr>
+<td><code>capabilities: drop ALL</code></td>
+<td>カーネル機能を必要最小限に</td>
+</tr>
+<tr>
+<td><code>hostUsers: false</code></td>
+<td>コンテナ内の root をホスト上の非特権ユーザーに割り当てる(下記)</td>
+</tr>
+<tr>
+<td>digest 固定</td>
+<td>中身の差し替え(タグの付け替え)を防ぐ</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s4-5"><h3>4.5 User Namespaces が GA になった(2026年4月、v1.36)</h3><div class="prose"><p>Kubernetes v1.36 で <strong>User Namespaces が GA</strong> になりました(Linux 専用機能)。Pod の spec に <code>hostUsers: false</code> を設定するだけで、コンテナ内の root とホスト上のユーザーが分離されます <a class="cite" href="#ref-S4">[S4]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ポイント</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>効果</td>
+<td><code>CAP_NET_ADMIN</code> などの capability が <strong>名前空間内に限定</strong> され、ホストへ影響しにくくなる <a class="cite" href="#ref-S4">[S4]</a></td>
+</tr>
+<tr>
+<td>設定</td>
+<td>Pod spec に <code>hostUsers: false</code>。イメージの変更は不要 <a class="cite" href="#ref-S4">[S4]</a></td>
+</tr>
+<tr>
+<td>実績</td>
+<td>User Namespaces が有効なとき、深刻度 HIGH/CRITICAL の脆弱性のいくつかは悪用できなかったと公式ドキュメントが述べている <a class="cite" href="#ref-S4">[S4]</a></td>
+</tr>
+<tr>
+<td>注意</td>
+<td>ノード(カーネル・ランタイム)が対応している必要がある。対応ノードへスケジュールされるよう確認する <a class="cite" href="#ref-S4">[S4]</a></td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s4-6"><h3>4.6 いまのクラスタを点検するコマンド集(読み取り専用)</h3><div class="prose"><pre><code class="language-bash"># 1) 特権コンテナを使っている Pod を洗い出す(要 jq)
+kubectl get pods -A -o json | jq -r '
+  .items[]
+  | select(any((.spec.containers[]?, .spec.initContainers[]?, .spec.ephemeralContainers[]?); .securityContext.privileged == true))
+  | &quot;\(.metadata.namespace)/\(.metadata.name)&quot;'
+
+# 2) hostPath を使っている Pod を洗い出す
+kubectl get pods -A -o json | jq -r '
+  .items[]
+  | select(any(.spec.volumes[]?; .hostPath != null))
+  | &quot;\(.metadata.namespace)/\(.metadata.name)&quot;'
+
+# 3) hostNetwork / hostPID / hostIPC を使っている Pod
+kubectl get pods -A -o json | jq -r '
+  .items[]
+  | select(.spec.hostNetwork == true or .spec.hostPID == true or .spec.hostIPC == true)
+  | &quot;\(.metadata.namespace)/\(.metadata.name)&quot;'
+
+# 4) Namespace ごとの PSA ラベルを確認
+kubectl get ns -L pod-security.kubernetes.io/enforce,pod-security.kubernetes.io/audit,pod-security.kubernetes.io/warn
+</code></pre></div></section><section class="subsection" id="s4-7"><h3>4.7 Step 2 の理解度チェック</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>質問</th>
+<th>答えのヒント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>privileged: true</code> の Pod が危険な理由は?</td>
+<td>通常のコンテナ隔離機構の多くが無効になるため <a class="cite" href="#ref-S8">[S8]</a></td>
+</tr>
+<tr>
+<td>PSA の3モードの違いは?</td>
+<td>enforce は拒否、audit は記録、warn は警告</td>
+</tr>
+<tr>
+<td>新規アプリに推奨される PSS レベルは?</td>
+<td>Restricted</td>
+</tr>
+<tr>
+<td>タグではなく digest で固定する理由は?</td>
+<td>タグは付け替え可能で、中身が変わりうるため(Step 4 で詳述)</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s5"><h2>5. Step 3: コンテナランタイムの分離(書籍 第3章)</h2><div class="prose"></div><section class="subsection" id="s5-1"><h3>5.1 コンテナは「隔離されたプロセス」にすぎない</h3><div class="prose"><p>書籍は、コンテナ・仮想マシン・サンドボックスの違いを整理し、「What's Wrong with Containers?」として User Namespace の脆弱性などに触れ、<strong>gVisor、Firecracker、Kata Containers、rust-vmm</strong> といったサンドボックス技術と、<strong>Kubernetes RuntimeClass</strong> を紹介しています <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<p>最重要の考え方は次の1点です。</p>
+<blockquote class="bq note">
+<p><strong>通常のコンテナは、ホストと「同じカーネル」を共有している。</strong> カーネルに脆弱性があれば、コンテナの壁は破られうる。</p>
+</blockquote></div></section><section class="subsection" id="s5-2"><h3>5.2 隔離方式の比較</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>カーネルの扱い</th>
+<th>隔離の強さ</th>
+<th>性能・互換性の傾向</th>
+<th>代表例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通常のコンテナ</td>
+<td>ホストと共有</td>
+<td>中(カーネル脆弱性に弱い)</td>
+<td>高速・互換性が高い</td>
+<td>runc(containerd / CRI-O 経由)</td>
+</tr>
+<tr>
+<td>ユーザー空間カーネル型サンドボックス</td>
+<td>アプリ向けに別のカーネルを用意し、ホストへのシステムコールを限定</td>
+<td>高</td>
+<td>一部のシステムコールで互換性に制約</td>
+<td>gVisor(<code>runsc</code>)</td>
+</tr>
+<tr>
+<td>軽量 VM 型サンドボックス</td>
+<td>専用の軽量 VM 内で別カーネルを実行</td>
+<td>高</td>
+<td>起動時間・メモリのオーバーヘッドが増える傾向</td>
+<td>Kata Containers、Firecracker</td>
+</tr>
+<tr>
+<td>VM(従来型)</td>
+<td>ゲスト OS ごと分離</td>
+<td>高</td>
+<td>重い</td>
+<td>一般的な仮想マシン</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>表の「傾向」は一般的な特性の整理です。実際の性能は環境・ワークロードで変わるため、<strong>自分の環境で計測</strong> してください。</p>
+</blockquote></div></section><section class="subsection" id="s5-3"><h3>5.3 RuntimeClass でサンドボックスを選ぶ</h3><div class="prose"><pre><code class="language-yaml"># 1) ノード側にサンドボックスランタイム(例: gVisor の runsc)を導入済みであることが前提
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: gvisor
+handler: runsc
+---
+# 2) 信頼できないコードを動かす Pod で指定する
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sandboxed-demo
+  namespace: lab
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: app
+    image: busybox:1.36
+    command: [&quot;sleep&quot;, &quot;3600&quot;]
+</code></pre></div></section><section class="subsection" id="s5-4"><h3>5.4 2026年のケーススタディ: 「コンテナ脱出」が現実に続いた</h3><div class="prose"><p>Google の GKE セキュリティ情報(Security bulletins)には、2026年に公表された <strong>コンテナ脱出につながりうる Linux カーネル脆弱性</strong> が複数掲載されています <a class="cite" href="#ref-S13">[S13]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>公表日</th>
+<th>通称 / ID</th>
+<th>概要(要点)</th>
+<th>緩和・対策のポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-04-30</td>
+<td>Copy Fail(CVE-2026-31431)</td>
+<td>非特権のローカルユーザーがページキャッシュへ書き込みでき、権限昇格・コンテナ脱出につながりうる。<code>AF_ALG</code> と <code>splice()</code> を組み合わせた論理バグ</td>
+<td>カーネル修正の適用。GKE Sandbox 使用のコンテナは影響なしと記載 <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-05-11</td>
+<td>DirtyFrag(CVE-2026-43284 / CVE-2026-43500)</td>
+<td>非特権のローカル攻撃者がホスト root へ昇格しうる。2つの攻撃経路(esp4 / rxrpc)</td>
+<td>esp4 経路は <code>unshare</code> システムコールが必要で、<strong><code>RuntimeDefault</code> の seccomp を使うコンテナは呼べず影響を受けない</strong> と記載。ただし <code>CAP_NET_ADMIN</code> を明示付与したコンテナは影響を受ける <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-05-14</td>
+<td>Fragnesia(CVE-2026-46300)</td>
+<td>非特権のローカル攻撃者がホスト root へ昇格しうる。GKE では Ubuntu ノードが影響、COS ノードは影響なしと記載</td>
+<td>非 root 実行、<code>RuntimeDefault</code>、<code>allowPrivilegeEscalation: false</code> を推奨 <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-06-18</td>
+<td>containerd の複数脆弱性(CVE-2026-50195 ほか)</td>
+<td><strong>Pod を作成できる権限</strong> があれば、Kubernetes のセキュリティ境界を越えたホスト侵害、イメージキャッシュ汚染、DoS が可能</td>
+<td>Pod 作成権限(<code>create pods</code>)を信頼できる主体に限定。信頼できないワークロードでは <code>imagePullPolicy: Always</code>。<strong>containerd がホスト側でラベルや CDI マウントを解決してから gVisor を呼ぶため、GKE Sandbox(gVisor)ではこの経路を防げない</strong> と明記 <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-09-09</td>
+<td>containerd の checkpoint 復元の問題(GHSA-p7v4-vr35-mj6f、CVE は採番待ち)</td>
+<td>信頼できないチェックポイントから復元したコンテナが、宛先の security context を回避して高い権限で動く可能性</td>
+<td>containerd 2.3.4 以降 / 2.2.7 以降では既定で無効化。チェックポイント機能の利用を制限 <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>ここから学べること(重要)</strong></p>
+<ol>
+<li><strong>サンドボックスは万能ではない。</strong> カーネル系の脆弱性には強いが、containerd のようにホスト側で動くコンポーネントの欠陥は別問題 <a class="cite" href="#ref-S13">[S13]</a>。</li>
+<li><strong>「Pod を作れる権限」は事実上、ノードへの足がかりになりうる。</strong> RBAC で <code>create pods</code> を厳しく管理する <a class="cite" href="#ref-S13">[S13]</a>。</li>
+<li><strong>基本の堅牢化(非 root、<code>RuntimeDefault</code> seccomp、特権昇格禁止)は、未知の脆弱性にも効くことがある</strong> <a class="cite" href="#ref-S13">[S13]</a>。</li>
+<li><strong>ノード OS・ランタイムのパッチ適用の速度</strong> が防御力に直結する。</li>
+</ol>
+<p>過去の runc の脱出系脆弱性も押さえておきましょう。CVE-2024-21626 は、内部のファイル記述子のリークにより、コンテナからホストのファイルシステムへアクセスできる問題で、runc 1.1.12 以降で修正されました <a class="cite" href="#ref-S33">[S33]</a>。また、2025年にも runC に、マウント操作のシンボリックリンクや競合状態を利用してコンテナ脱出につながる3件の脆弱性(CVE-2025-31133、CVE-2025-52565、CVE-2025-52881)が報告されています <a class="cite" href="#ref-S34">[S34]</a>。</p></div></section><section class="subsection" id="s5-5"><h3>5.5 防御策のまとめ(多層防御)</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d5" role="img" aria-label="フローチャート d5"></div></figure></div></section></section>
+<section class="section" id="s6"><h2>6. Step 4: アプリケーションとサプライチェーン(書籍 第4章)</h2><div class="prose"></div><section class="subsection" id="s6-1"><h3>6.1 サプライチェーンとは何か</h3><div class="prose"><p>「サプライチェーン」は、<strong>自分たちが動かすソフトウェアが、誰の手を経て届くか</strong> の連鎖です。書籍の第4章は、CVE スキャン、OSS の取り込み、信頼する提供元の判断、CNCF Security TAG、SBOM、署名(Notary v1、sigstore、in-toto と TUF、GCP Binary Authorization、Grafeas)、インフラ側のサプライチェーン、そして <strong>SUNBURST への防御</strong> まで扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d6" role="img" aria-label="フローチャート d6"></div></figure></div></section><section class="subsection" id="s6-2"><h3>6.2 各段階の脅威と対策</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>段階</th>
+<th>脅威</th>
+<th>対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>依存関係</td>
+<td>脆弱な/悪意あるライブラリの混入</td>
+<td>SBOM の作成、脆弱性スキャン、信頼する提供元の限定</td>
+</tr>
+<tr>
+<td>ビルド(CI/CD)</td>
+<td>CI 認証情報の窃取、ワークフローの改ざん</td>
+<td>CI の権限最小化、Action を <strong>コミット SHA で固定</strong>、Secret のスコープ制限</td>
+</tr>
+<tr>
+<td>レジストリ</td>
+<td>イメージの上書き、偽イメージ</td>
+<td>署名・検証、<strong>digest で参照</strong>、プライベートレジストリ</td>
+</tr>
+<tr>
+<td>デプロイ(Admission)</td>
+<td>未署名・未検証イメージの実行</td>
+<td>ポリシーエンジンで署名検証を強制</td>
+</tr>
+<tr>
+<td>実行</td>
+<td>侵害後の挙動</td>
+<td>ランタイム検知(Step 9)</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s6-3"><h3>6.3 2026年に起きた現実の事例</h3><div class="prose"><h4>(1) Trivy 関連のサプライチェーン侵害(2026年3月)</h4>
+<p>脆弱性スキャナ <strong>Trivy</strong> の提供元 Aqua Security は2026年3月、盗まれた認証情報を使って <strong>悪意あるバイナリ、コンテナイメージ、GitHub Action のタグ</strong> が公開される侵害を受けたと開示しました。影響を受けたのは Trivy v0.69.4、v0.69.4〜0.69.6 のコンテナイメージ、<code>trivy-action</code> の旧バージョン群(0.0.1〜0.34.2)、<code>setup-trivy</code> の旧バージョン群(0.2.0〜0.2.5)です。安全なバージョンとして Trivy v0.69.2 / v0.69.3、trivy-action 0.35.0、setup-trivy 0.2.6 が示されており、推奨対応として <strong>GitHub Actions を不変のコミット SHA に固定すること</strong> が挙げられています <a class="cite" href="#ref-S14">[S14]</a>。</p>
+<p>Cloud Security Alliance の研究ノートによれば、攻撃者は GitHub Actions のほぼ全てのバージョンタグを悪意あるコミットへ付け替え、CI/CD で使われる認証情報を収集する多段階の攻撃を行い、その認証情報を足がかりに他のエコシステムへも拡大したとされています <a class="cite" href="#ref-S15">[S15]</a>。</p>
+<h4>(2) 悪意ある Docker イメージの公開(2026年4月)</h4>
+<p>The Hacker News は、Checkmarx の公式 Docker Hub リポジトリで、既存のタグ(v2.1.20 や alpine)が上書きされ、実在しない v2.1.21 タグが追加された事例を報じました。<strong>このイメージで Terraform・CloudFormation・Kubernetes 設定をスキャンしていた場合、そこで扱った Secret や認証情報は侵害された可能性があるものとして扱う</strong> よう警告されています <a class="cite" href="#ref-S16">[S16]</a>。</p>
+<p><strong>2つの事例の共通点と教訓</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>事例の特徴</th>
+<th>教訓</th>
+<th>具体策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>タグが付け替えられた</strong></td>
+<td>タグ(<code>v1</code>、<code>latest</code>、<code>alpine</code>)は不変ではない</td>
+<td><strong>digest(<code>@sha256:</code>)</strong> や <strong>コミット SHA</strong> で固定</td>
+</tr>
+<tr>
+<td><strong>セキュリティツール自体が狙われた</strong></td>
+<td>「守るためのツール」も供給網の一部</td>
+<td>ツールのバージョン固定・出所の検証・実行環境の権限を最小に</td>
+</tr>
+<tr>
+<td><strong>CI/CD の認証情報が足がかり</strong></td>
+<td>パイプラインは高価値の標的</td>
+<td>CI の Secret を短命化・スコープ限定・定期ローテーション</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s6-4"><h3>6.4 具体策1: digest で固定する</h3><div class="prose"><pre><code class="language-bash"># タグから digest を調べる(例: crane を使用)
+crane digest registry.example.com/app:1.2.3
+
+# マニフェストでは digest を直接指定する
+# image: registry.example.com/app@sha256:&lt;上で得た digest&gt;
+</code></pre>
+<p>GitHub Actions も同様に、タグではなくコミット SHA で固定します。</p>
+<pre><code class="language-yaml"># 悪い例: タグ参照(付け替えられる可能性がある)
+# - uses: some-org/some-action@v1
+
+# 良い例: コミット SHA で固定(コメントで元のバージョンを残す)
+- uses: some-org/some-action@&lt;40桁のコミットSHA&gt;   # v1.2.3
+</code></pre></div></section><section class="subsection" id="s6-5"><h3>6.5 具体策2: イメージ署名と検証(sigstore / cosign)</h3><div class="prose"><p><strong>sigstore</strong> は署名・検証の仕組みで、書籍でも取り上げられています <a class="cite" href="#ref-S1">[S1]</a>。<strong>cosign</strong> はそのコマンドラインツールです。</p>
+<pre><code class="language-bash"># 署名の検証(keyless 署名の場合: 署名した ID と発行元を指定して検証)
+cosign verify registry.example.com/app@sha256:&lt;digest&gt; \
+  --certificate-identity &quot;https://github.com/ORG/REPO/.github/workflows/release.yml@refs/heads/main&quot; \
+  --certificate-oidc-issuer &quot;https://token.actions.githubusercontent.com&quot;
+</code></pre>
+<blockquote class="bq note">
+<p>署名は「誰がビルドしたか」の証明であり、<strong>「中身が安全か」の証明ではありません。</strong> 脆弱性スキャン・SBOM と組み合わせて使います。</p>
+</blockquote></div></section><section class="subsection" id="s6-6"><h3>6.6 具体策3: SBOM と脆弱性スキャン</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>使い方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SBOM</strong>(Software Bill of Materials)</td>
+<td>ソフトウェアの部品表</td>
+<td>新しい CVE が出たとき、影響するイメージを即座に特定する</td>
+</tr>
+<tr>
+<td>脆弱性スキャナ</td>
+<td>既知の CVE を検出</td>
+<td>CI とレジストリで継続的に実行</td>
+</tr>
+<tr>
+<td><strong>in-toto / SLSA</strong></td>
+<td>ビルド工程の証跡・成熟度の枠組み</td>
+<td>「どう作られたか」を検証可能にする <a class="cite" href="#ref-S1">[S1]</a></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq warn">
+<p><strong>注意</strong>: スキャナ自体も更新・固定・検証の対象です(Trivy の事例 <a class="cite" href="#ref-S14">[S14]</a>)。</p>
+</blockquote></div></section><section class="subsection" id="s6-7"><h3>6.7 Admission で「未検証イメージを実行させない」</h3><div class="prose"><p>ポリシーエンジン(Kyverno や OPA Gatekeeper)で、署名検証や許可レジストリの強制ができます。Kyverno は2026年3月に CNCF の Graduated プロジェクトとなりました <a class="cite" href="#ref-S17">[S17]</a>。詳細は Step 8 で扱います。</p></div></section><section class="subsection" id="s6-8"><h3>6.8 Step 4 の実践ミニ課題</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th>目標</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自分のマニフェストから <code>latest</code> とタグ参照を探す</td>
+<td>全て digest 固定に置き換える計画を立てる</td>
+</tr>
+<tr>
+<td>CI の <code>uses:</code> 行を一覧化する</td>
+<td>タグ参照の Action をコミット SHA に置換する</td>
+</tr>
+<tr>
+<td>使っているスキャナのバージョンを確認する</td>
+<td>侵害対象バージョン(<a class="cite" href="#ref-S14">[S14]</a>)に該当しないことを確認</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s7"><h2>7. Step 5: ネットワーキング(書籍 第5章)</h2><div class="prose"></div><section class="subsection" id="s7-1"><h3>7.1 Kubernetes ネットワークの「デフォルト」</h3><div class="prose"><p>書籍は、まず <strong>Defaults(既定の状態)</strong> を確認します。Pod 内通信(Intra-Pod)、Pod 間通信(Inter-Pod)、Pod からワーカーノードへの通信、クラスタ外との通信を整理し、<strong>暗号化なし</strong>、<strong>ワークロード ID なし</strong> といった既定の弱点を指摘します <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>既定の性質</th>
+<th>リスク</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pod 同士は(既定では)制限なく通信できる</td>
+<td>1つの Pod の侵害が横展開につながる</td>
+</tr>
+<tr>
+<td>通信は既定で暗号化されない</td>
+<td>盗聴・なりすましの余地</td>
+</tr>
+<tr>
+<td>Pod にワークロード固有の ID がない</td>
+<td>「誰からの通信か」を信頼できない</td>
+</tr>
+<tr>
+<td>Pod からノードのサービス(kubelet の API など)へ届く場合がある</td>
+<td>ノードの管理機能が狙われる</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s7-2"><h3>7.2 通信の流れと制御ポイント</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d7" role="img" aria-label="フローチャート d7"></div></figure></div></section><section class="subsection" id="s7-3"><h3>7.3 NetworkPolicy: 「全部拒否」から始める</h3><div class="prose"><p><strong>NetworkPolicy</strong> は、どの Pod がどの Pod・IP と通信できるかを宣言するリソースです。<strong>CNI が NetworkPolicy に対応していないと、作っても効きません</strong>(Step 0 の注意参照)。</p>
+<p><strong>手順1: Namespace 内の通信をすべて拒否する(default deny)</strong></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: lab
+spec:
+  podSelector: {}          # Namespace 内の全 Pod が対象
+  policyTypes:
+  - Ingress
+  - Egress
+</code></pre>
+<p><strong>手順2: 必要な通信だけを許可する(例: frontend → backend の 8080 番)</strong></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: lab
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+---
+# egress を既定拒否している場合、送信側(frontend)にも対応する許可が必要
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-egress-to-backend
+  namespace: lab
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: backend
+    ports:
+    - protocol: TCP
+      port: 8080
+</code></pre>
+<p><strong>手順3: DNS の問い合わせを許可する(egress を拒否した場合に必須)</strong></p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns-egress
+  namespace: lab
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+</code></pre>
+<blockquote class="bq warn">
+<p><strong>よくある失敗</strong>: egress を全拒否すると DNS も止まり、「名前解決できない」障害になります。手順3を忘れないでください。</p>
+</blockquote></div></section><section class="subsection" id="s7-4"><h3>7.4 サービスメッシュ(mTLS)と eBPF</h3><div class="prose"><p>書籍は、サービスメッシュ(<strong>Linkerd</strong> での mTLS のケーススタディ)と <strong>eBPF</strong>(Go プログラムへのプローブ取り付けのケーススタディ)を扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>技術</th>
+<th>できること</th>
+<th>向いている目的</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NetworkPolicy</td>
+<td>L3/L4 の通信許可・拒否</td>
+<td>横展開の抑制、最初の一手</td>
+<td>L7 の細かい制御は不得手。CNI 依存</td>
+</tr>
+<tr>
+<td>サービスメッシュ(mTLS)</td>
+<td>通信の暗号化と相互認証、ワークロード ID</td>
+<td>「誰が呼んだか」の確認、盗聴対策</td>
+<td>運用の複雑さ・リソース消費</td>
+</tr>
+<tr>
+<td>eBPF 系(例: Cilium、Tetragon)</td>
+<td>カーネルレベルの可視化・制御</td>
+<td>高性能なネットワーク制御・検知</td>
+<td>カーネル/ノード要件の確認が必要</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s7-5"><h3>7.5 2026年の重大トピック: Ingress NGINX の退役</h3><div class="prose"><p>Kubernetes の Steering Committee と Security Response Committee は共同声明で、<strong>2026年3月に Ingress NGINX を退役</strong> させると発表しました。これは <strong>クラウドネイティブ環境の約半数が使っているとされる重要インフラ</strong> です。退役後は、バグ修正もセキュリティパッチも一切リリースされません。声明は、退役後も使い続けると <strong>利用者と顧客が攻撃を受けやすくなる</strong> と明確に警告しています <a class="cite" href="#ref-S6">[S6]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>退役時期</td>
+<td>2026年3月 <a class="cite" href="#ref-S6">[S6]</a></td>
+</tr>
+<tr>
+<td>影響</td>
+<td>以後、バグ修正・セキュリティパッチなし <a class="cite" href="#ref-S6">[S6]</a></td>
+</tr>
+<tr>
+<td>利用確認の方法</td>
+<td>クラスタ管理者権限で <code>kubectl get pods --all-namespaces --selector app.kubernetes.io/name=ingress-nginx</code> <a class="cite" href="#ref-S6">[S6]</a></td>
+</tr>
+<tr>
+<td>移行先の方向性</td>
+<td>Gateway API、または他の Ingress コントローラー。<strong>ただし完全な互換の代替はなく、計画と工数が必要</strong> <a class="cite" href="#ref-S6">[S6]</a><a class="cite" href="#ref-S29">[S29]</a></td>
+</tr>
+<tr>
+<td>注意点</td>
+<td>既存のデプロイは動き続けるため、<strong>確認しない限り気づかないまま侵害される恐れがある</strong> と指摘されている <a class="cite" href="#ref-S29">[S29]</a></td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash"># あなたのクラスタで ingress-nginx が動いているか確認(読み取りのみ)
+kubectl get pods --all-namespaces --selector app.kubernetes.io/name=ingress-nginx
+</code></pre>
+<blockquote class="bq note">
+<p>マネージドサービス側の注意: GKE は ingress-nginx を使用しておらず、その脆弱性の影響を受けないとしています。ただし、自分で導入したコンポーネントは各自で更新状況を確認する必要があります <a class="cite" href="#ref-S13">[S13]</a>。</p>
+</blockquote></div></section><section class="subsection" id="s7-6"><h3>7.6 NSA/CISA の推奨(ネットワーク・監査)</h3><div class="prose"><p>NSA と CISA の Kubernetes Hardening Guide(v1.2、2022年8月)は、ネットワークの分離・強化、ファイアウォールと暗号化、監査ログの取得・監視などを推奨しています。また、<strong>Kubernetes API サーバーをインターネットや信頼できないネットワークに公開しない</strong> ことも示されています <a class="cite" href="#ref-S25">[S25]</a><a class="cite" href="#ref-S36">[S36]</a>。</p></div></section><section class="subsection" id="s7-7"><h3>7.7 Step 5 の実践ミニ課題</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th>目標</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ラボで <code>default-deny-all</code> を適用し、Pod 間 <code>curl</code> が失敗することを確認</td>
+<td>NetworkPolicy が本当に効く環境かを検証</td>
+</tr>
+<tr>
+<td>許可ルールを追加して通信が復旧することを確認</td>
+<td>最小許可の感覚をつかむ</td>
+</tr>
+<tr>
+<td>自社クラスタで ingress-nginx の有無を確認</td>
+<td>退役対応の要否を判断</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s8"><h2>8. Step 6: ストレージ(書籍 第6章)</h2><div class="prose"></div><section class="subsection" id="s8-1"><h3>8.1 ストレージで守るもの</h3><div class="prose"><p>書籍の第6章は、ボリュームとデータストア、コンテナのボリュームとマウント(OverlayFS、tmpfs)、<strong>ボリュームマウントがコンテナ隔離を破るケース</strong>(<code>/proc/self/exe</code> の CVE)、保存時の機密情報、マウントされた Secret への攻撃、CSI(Container Storage Interface)、Projected Volumes、<strong>ホストマウントの危険性</strong>、データストアからの持ち出しまで扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>守る対象</th>
+<th>典型的な弱点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Secret(パスワード・トークン・鍵)</td>
+<td>環境変数への展開、ログ出力、広すぎる読み取り権限</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>ネットワーク露出、バックアップの無防備、暗号化されていない保存</td>
+</tr>
+<tr>
+<td>ノード上のファイル</td>
+<td><code>hostPath</code> によるホストの露出</td>
+</tr>
+<tr>
+<td>永続ボリューム(PV)</td>
+<td>他の Pod・テナントからのアクセス</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s8-2"><h3>8.2 Secret は「暗号化」されているわけではない</h3><div class="prose"><p>Kubernetes の Secret は既定では <strong>base64 でエンコードされているだけ</strong> で、暗号化ではありません(誰でもデコードできます)。守りの基本は次の3点です。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>対策</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RBAC で <code>secrets</code> の <code>get</code> / <code>list</code> / <code>watch</code> を最小化</td>
+<td><code>list</code> が使えると Namespace 内の全 Secret を取得できる</td>
+</tr>
+<tr>
+<td>etcd の保存時暗号化(encryption at rest)</td>
+<td>etcd のディスクやバックアップが漏れても読めないようにする</td>
+</tr>
+<tr>
+<td>外部の鍵管理(KMS)連携</td>
+<td>暗号鍵をクラスタの外で守る</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>v1.37 の関連更新</strong>: 保存時暗号化を使っていると、復号できなくなったリソースがクラスタに残り、管理者が etcd を直接触って復旧するしかない場合がありました。v1.37 では、<strong>API サーバーが復号できないリソースを特定し、Kubernetes API 経由で削除できる機能が Beta</strong> になりました <a class="cite" href="#ref-S2">[S2]</a>。</p></div></section><section class="subsection" id="s8-3"><h3>8.3 ホストマウントの危険性</h3><div class="prose"><p><code>hostPath</code> は、ノードのファイルシステムの一部を Pod に見せる機能です。広いパス(<code>/</code>、<code>/var/run</code>、<code>/etc</code> など)を渡すと、<strong>Pod が侵害された時点でノードが侵害されたのと同等</strong> になりえます。</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d8" role="img" aria-label="フローチャート d8"></div></figure>
+<p><strong>対策の整理</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>対策</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hostPath</code> を原則禁止</td>
+<td>PSS の Baseline 以上で制限される(HostPath ボリュームの扱いは Baseline/Restricted の制約対象)。必ず公式の Pod Security Standards で最新の制約を確認する <a class="cite" href="#ref-S8">[S8]</a></td>
+</tr>
+<tr>
+<td>必要な場合は読み取り専用+限定パス</td>
+<td><code>readOnly: true</code>、最小のサブパスのみ</td>
+</tr>
+<tr>
+<td>代替手段を使う</td>
+<td><code>emptyDir</code>、PersistentVolume、CSI ドライバー、Projected Volume</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s8-4"><h3>8.4 v1.37 のストレージ堅牢化機能</h3><div class="prose"><p>2026年9月16日の公式ブログで、v1.37 の <strong>emptyDir のパーミッションモード</strong> と <strong>バインドマウントオプション</strong> が紹介されました。たとえば、書き込み可能ボリュームから任意のバイナリを実行させない、コンテナ間でのファイル削除を禁止する、といったポリシーを、Kubernetes 上で直接実現できるようになります。具体的には、<code>noexec</code>、<code>nodev</code>、<code>nosuid</code> といったセキュリティ関連のマウントオプションを指定できるようになり、セキュリティベンチマークに合わせたボリュームの堅牢化がしやすくなります。両機能は追加的(additive)で、バージョンスキューに配慮した設計だと説明されています <a class="cite" href="#ref-S3">[S3]</a>。</p>
+<p>また、v1.37 では <strong>SELinuxMount と SELinuxChangePolicy が Stable</strong> になり、既定で有効です。対応する CSI ドライバー(<code>CSIDriver</code> で <code>seLinuxMount: true</code> を宣言)では、ボリュームが再帰的な再ラベルではなく <code>-o context=</code> でマウントされます <a class="cite" href="#ref-S2">[S2]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>機能(v1.37)</th>
+<th>守るもの</th>
+<th>状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bind mount オプション(<code>noexec</code> / <code>nodev</code> / <code>nosuid</code>)</td>
+<td>書き込み可能ボリューム経由の不正実行</td>
+<td>新機能(詳細・成熟度は公式ブログで確認) <a class="cite" href="#ref-S3">[S3]</a></td>
+</tr>
+<tr>
+<td>emptyDir のパーミッションモード</td>
+<td>意図しないファイル操作の抑止</td>
+<td>新機能 <a class="cite" href="#ref-S3">[S3]</a></td>
+</tr>
+<tr>
+<td>SELinuxMount / SELinuxChangePolicy</td>
+<td>ボリュームのラベル付けの効率化と一貫性</td>
+<td>Stable <a class="cite" href="#ref-S2">[S2]</a></td>
+</tr>
+<tr>
+<td>復号不能リソースの API 経由削除</td>
+<td>暗号化運用の復旧性</td>
+<td>Beta <a class="cite" href="#ref-S2">[S2]</a></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>注意: 機能の成熟度(Alpha / Beta / Stable)と既定値は、必ず自分が使うバージョンの公式ドキュメントで確認してください。</p>
+</blockquote></div></section><section class="subsection" id="s8-5"><h3>8.5 Pod 向けの短命な証明書(Pod Certificates)</h3><div class="prose"><p>v1.37 では、<strong>Pod certificates と ClusterTrustBundles が Stable</strong> になりました。Pod に <strong>短命の X.509 証明書</strong> を渡す標準的な方法で、kubelet が鍵ペアを生成して <code>PodCertificateRequest</code> を作成し、<code>PodCertificate</code> の projected volume で鍵と証明書を Pod へ配り、<strong>自動でローテーション</strong> します <a class="cite" href="#ref-S2">[S2]</a><a class="cite" href="#ref-S31">[S31]</a>。</p>
+<blockquote class="bq warn">
+<p><strong>注意</strong>: Kubernetes 本体には <code>PodCertificateRequest</code> を処理する <strong>署名者(signer)は含まれていません</strong>。リクエストを承認・署名して証明書を発行するコントローラーを <strong>別途デプロイ</strong> する必要があり、projected volume は <strong>発行後の証明書を配布するだけ</strong> です。signer がなければ Pod は証明書を受け取れません。</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>従来の課題</th>
+<th>Pod Certificates による改善の方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>長寿命のトークンや鍵が盗まれる</td>
+<td>短命の証明書で盗まれても影響期間を狭める</td>
+</tr>
+<tr>
+<td>鍵の配布・更新が手作業</td>
+<td>kubelet が配布し自動更新</td>
+</tr>
+<tr>
+<td>ワークロード ID が曖昧</td>
+<td>証明書を使った相互認証(mTLS)の土台になる</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s8-6"><h3>8.6 点検コマンド(読み取り専用)</h3><div class="prose"><pre><code class="language-bash"># Secret を読める権限(例: default ServiceAccount)の確認
+kubectl auth can-i get secrets -n lab --as=system:serviceaccount:lab:default
+kubectl auth can-i list secrets -n lab --as=system:serviceaccount:lab:default
+
+# Secret をボリュームや環境変数として使っている Pod の洗い出し
+# (env の secretKeyRef / envFrom の secretRef / secret・projected ボリューム。initContainers・ephemeralContainers も対象)
+kubectl get pods -A -o json | jq -r '
+  .items[]
+  | select(
+      any((.spec.containers[]?, .spec.initContainers[]?, .spec.ephemeralContainers[]?);
+          any(.env[]?; .valueFrom.secretKeyRef != null)
+          or any(.envFrom[]?; .secretRef != null))
+      or any(.spec.volumes[]?; .secret != null or any(.projected.sources[]?; .secret != null)))
+  | &quot;\(.metadata.namespace)/\(.metadata.name)&quot;'
+</code></pre></div></section></section>
+<section class="section" id="s9"><h2>9. Step 7: ハードマルチテナンシー(書籍 第7章)</h2><div class="prose"></div><section class="subsection" id="s9-1"><h3>9.1 「同居」はどこまで安全か</h3><div class="prose"><p>書籍の第7章は、Namespaced Resources、Node Pools、Node Taints、<strong>Soft Multitenancy</strong>、<strong>Hard Multitenancy</strong>、<strong>Hostile Tenants(敵対的なテナント)</strong>、サンドボックスとポリシー、パブリッククラウドでのマルチテナンシー、コントロールプレーン(API サーバーと etcd、スケジューラとコントローラーマネージャー)、データプレーン、クラスタ分離アーキテクチャ、セキュリティ監視まで扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+<th>想定するテナント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ソフトマルチテナンシー</td>
+<td>同じ組織内など、<strong>基本的に信頼できる</strong> チーム同士の共存</td>
+<td>社内の別チーム</td>
+</tr>
+<tr>
+<td>ハードマルチテナンシー</td>
+<td><strong>互いに信頼できない</strong>(敵対的でありうる)テナントの共存</td>
+<td>外部の顧客、コードを実行させるサービス</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s9-2"><h3>9.2 分離レイヤーの比較</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分離の仕組み</th>
+<th>何を分けるか</th>
+<th>限界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Namespace</td>
+<td>名前・RBAC・クォータの単位</td>
+<td><strong>それ自体はセキュリティ境界として弱い</strong>(カーネル、ノード、ネットワークは共有)</td>
+</tr>
+<tr>
+<td>NetworkPolicy</td>
+<td>Pod 間の通信</td>
+<td>CNI 依存。通信以外の隔離は提供しない</td>
+</tr>
+<tr>
+<td>ResourceQuota / LimitRange</td>
+<td>リソースの食い潰し防止</td>
+<td>脱出や情報漏えいは防げない</td>
+</tr>
+<tr>
+<td>Node Pool + Taint/Toleration</td>
+<td>テナントごとにノードを分ける</td>
+<td>ノード上の kubelet・ランタイムの欠陥は残る</td>
+</tr>
+<tr>
+<td>サンドボックス(RuntimeClass)</td>
+<td>カーネルの共有を弱める</td>
+<td>ホスト側コンポーネントの欠陥(Step 3 の containerd の例)は別途対策が必要 <a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>クラスタ分離(テナントごとに別クラスタ)</td>
+<td>コントロールプレーンまで分離</td>
+<td>運用コスト・費用が増える</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s9-3"><h3>9.3 分離レベルの選び方</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d9" role="img" aria-label="フローチャート d9"></div></figure></div></section><section class="subsection" id="s9-4"><h3>9.4 コントロールプレーンの共有に注意</h3><div class="prose"><p>同じクラスタを共有すると、<strong>API サーバーと etcd も共有</strong> します。1つのテナントの過剰な API 呼び出しが他へ影響したり、API サーバーのリダイレクトの性質に起因する、<strong>修正されないまま残る設計上のリスク</strong> もあります(Step 1 の CVE-2020-8561、CVE-2021-25740 など) <a class="cite" href="#ref-S7">[S7]</a>。</p></div></section><section class="subsection" id="s9-5"><h3>9.5 実践の目安</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>状況</th>
+<th>推奨</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自社の複数チーム</td>
+<td>Namespace 分離 + RBAC + NetworkPolicy + Quota + PSA(restricted)</td>
+</tr>
+<tr>
+<td>外部顧客のコードを動かす</td>
+<td><strong>別クラスタ</strong>、または少なくともサンドボックスと専用ノードの併用に加え、Pod 作成権限をテナントへ渡さない設計</td>
+</tr>
+<tr>
+<td>規制業界</td>
+<td>別クラスタを第一候補にし、監査の仕組みを用意</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s10"><h2>10. Step 8: ポリシー(書籍 第8章)</h2><div class="prose"></div><section class="subsection" id="s10-1"><h3>10.1 ポリシーの種類</h3><div class="prose"><p>書籍の第8章は、ポリシーを <strong>ネットワーク、リソース割り当て(ResourceQuota)、ランタイム、アクセス制御</strong> に分けて整理し、監査、認証・認可、ワークロード ID、<strong>RBAC</strong>、汎用ポリシーエンジン(<strong>OPA、Kyverno</strong>)を扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<figure class="diagram"><div class="mermaid" data-diagram="d10" role="img" aria-label="フローチャート d10"></div></figure></div></section><section class="subsection" id="s10-2"><h3>10.2 RBAC の基本</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>リソース</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Role</code> / <code>ClusterRole</code></td>
+<td>「何に対して何をしてよいか」の権限の束</td>
+</tr>
+<tr>
+<td><code>RoleBinding</code> / <code>ClusterRoleBinding</code></td>
+<td>権限を「誰に」付与するか(User / Group / ServiceAccount)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>最小権限の見本(Pod のログを見るだけ)</strong></p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: log-viewer
+  namespace: lab
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-log-reader
+  namespace: lab
+rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;pods/log&quot;]
+  verbs: [&quot;get&quot;]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-log-reader-binding
+  namespace: lab
+subjects:
+- kind: ServiceAccount
+  name: log-viewer
+  namespace: lab
+roleRef:
+  kind: Role
+  name: pod-log-reader
+  apiGroup: rbac.authorization.k8s.io
+</code></pre></div></section><section class="subsection" id="s10-3"><h3>10.3 RBAC の「危ない権限」早見表</h3><div class="prose"><p>Kubernetes 公式の RBAC Good Practices は、付与されると <strong>権限昇格</strong> につながりうる権限を明示し、Pod に強力な権限を持つ ServiceAccount を渡さないこと、既定の権限や冗長なエントリを定期的に見直すことを勧めています <a class="cite" href="#ref-S9">[S9]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>権限(verb / リソース)</th>
+<th>なぜ危険か</th>
+<th>出典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>escalate</code>(Role / ClusterRole)</td>
+<td>自分が持たない権限を含むロールを作れる(通常は組み込みの昇格防止が働く)</td>
+<td><a class="cite" href="#ref-S9">[S9]</a></td>
+</tr>
+<tr>
+<td><code>bind</code>(RoleBinding / ClusterRoleBinding)</td>
+<td>自分が持たない権限のロールへ紐付けできる</td>
+<td><a class="cite" href="#ref-S9">[S9]</a></td>
+</tr>
+<tr>
+<td><code>impersonate</code></td>
+<td>他のユーザー・グループ・ServiceAccount になりすませる</td>
+<td><a class="cite" href="#ref-S9">[S9]</a></td>
+</tr>
+<tr>
+<td><code>create pods</code>(Pod の作成)</td>
+<td>同一 Namespace の任意の ServiceAccount を Pod にマウントして、その権限を使える。ノードへの足がかりにもなりうる(Step 3)</td>
+<td><a class="cite" href="#ref-S28">[S28]</a><a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td><code>secrets</code> の <code>get</code> / <code>list</code> / <code>watch</code></td>
+<td>認証情報を取得できる</td>
+<td><a class="cite" href="#ref-S9">[S9]</a><a class="cite" href="#ref-S28">[S28]</a></td>
+</tr>
+<tr>
+<td><code>nodes/proxy</code></td>
+<td>kubelet API へのアクセスにつながる(次項)</td>
+<td><a class="cite" href="#ref-S5">[S5]</a><a class="cite" href="#ref-S10">[S10]</a></td>
+</tr>
+</tbody>
+</table></div>
+<figure class="diagram"><div class="mermaid" data-diagram="d11" role="img" aria-label="フローチャート d11"></div></figure></div></section><section class="subsection" id="s10-4"><h3>10.4 2026年の重要ケース: <code>nodes/proxy</code> GET の問題</h3><div class="prose"><p><strong>何が起きたか</strong></p>
+<p>2026年1月26日、セキュリティ研究者 Graham Helton 氏が、監視・可観測性ツールによく付与される RBAC 権限 <code>nodes/proxy</code> の <strong>GET</strong> が、読み取り専用だと思われていたにもかかわらず、<strong>kubelet API 経由で Pod 内の任意コマンド実行につながりうる</strong> ことを示しました <a class="cite" href="#ref-S10">[S10]</a><a class="cite" href="#ref-S32">[S32]</a>。</p>
+<p>原因は、WebSocket の接続開始が HTTP GET で行われるため、kubelet が <strong>GET を RBAC の <code>get</code> 動詞に対応づけて認可し、その後の実際の操作(exec など)に必要な <code>create</code> 権限を確認しない</strong> ことにあると説明されています <a class="cite" href="#ref-S5">[S5]</a>。Horizon3.ai も、<code>nodes/proxy</code> GET を持つ ServiceAccount が、kubelet への到達性があれば、到達可能なノード上の Pod(特権の system Pod やコントロールプレーンの Pod を含む)でコマンドを実行できると報告しています <a class="cite" href="#ref-S11">[S11]</a>。</p>
+<p><strong>Kubernetes 側の扱い</strong></p>
+<p>AKS のセキュリティ情報は、Kubernetes Security Team がこの挙動を「<strong>想定どおりの動作(working as intended)</strong>」と判断し、CVE を割り当てないとしたことを記載しています <a class="cite" href="#ref-S12">[S12]</a>。一方で、Kubernetes は仕組みで緩和する方向へ進みました。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>時期</th>
+<th>動き</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026年1月</td>
+<td>問題が公開される(Helton 氏) <a class="cite" href="#ref-S10">[S10]</a></td>
+</tr>
+<tr>
+<td>v1.33</td>
+<td>Fine-grained kubelet authorization が Beta・既定で有効(二次情報) <a class="cite" href="#ref-S32">[S32]</a></td>
+</tr>
+<tr>
+<td>2026年4月(v1.36)</td>
+<td><strong>Fine-Grained Kubelet API Authorization が GA</strong> <a class="cite" href="#ref-S5">[S5]</a></td>
+</tr>
+<tr>
+<td>2026年4月以降</td>
+<td>監視ツールは <code>nodes/proxy</code> ではなく <code>nodes/metrics</code>、<code>nodes/stats</code>、<code>nodes/pods</code> などを使うよう推奨 <a class="cite" href="#ref-S5">[S5]</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>あなたが今すぐ確認すること(読み取りのみ)</strong></p>
+<pre><code class="language-bash"># nodes/proxy(またはワイルドカード &quot;*&quot;)を含む Role / ClusterRole を洗い出す
+kubectl get clusterroles,roles -A -o json | jq -r '
+  .items[]
+  | select(any(.rules[]?; any((.resources // [])[]; . == &quot;nodes/proxy&quot; or . == &quot;*&quot;)))
+  | &quot;\(.kind)/\(.metadata.namespace // &quot;-&quot;)/\(.metadata.name)&quot;'
+</code></pre>
+<p>監視用途で置き換える場合の権限の例(v1.36 以降が前提。<strong>自分の監視ツールが細分化された権限に対応しているか確認してから</strong> 変更してください)。</p>
+<pre><code class="language-yaml">rules:
+- apiGroups: [&quot;&quot;]
+  resources: [&quot;nodes/metrics&quot;, &quot;nodes/stats&quot;, &quot;nodes/pods&quot;]
+  verbs: [&quot;get&quot;]
+</code></pre>
+<p><strong>補足(検知の観点)</strong>: 二次情報では、この経路は Kubernetes API の監査ログに痕跡が残りにくいと指摘されています <a class="cite" href="#ref-S32">[S32]</a>。そのため、Step 9 のランタイム検知(ノード側の可視化)と、kubelet(10250 番ポート)へのネットワーク到達性の制限を併用することが重要です。</p></div></section><section class="subsection" id="s10-5"><h3>10.5 汎用ポリシーエンジン: 3つの選択肢</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>特徴</th>
+<th>2026年10月時点のメモ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ValidatingAdmissionPolicy</strong>(組み込み)</td>
+<td>CEL 式で検証。外部コンポーネント不要</td>
+<td>Kubernetes 標準機能。まず検討する</td>
+</tr>
+<tr>
+<td><strong>Kyverno</strong></td>
+<td>Kubernetes のリソースの書き方に近い YAML でポリシーを記述</td>
+<td>2026年3月24日に CNCF Graduated。CEL に全面対応し、サードパーティのセキュリティ監査も完了 <a class="cite" href="#ref-S17">[S17]</a></td>
+</tr>
+<tr>
+<td><strong>OPA Gatekeeper</strong></td>
+<td>Rego 言語による汎用ポリシー</td>
+<td>書籍が取り上げる代表格 <a class="cite" href="#ref-S1">[S1]</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>ValidatingAdmissionPolicy の例(<code>:latest</code> タグを拒否)</strong></p>
+<pre><code class="language-yaml">apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicy
+metadata:
+  name: deny-latest-tag
+spec:
+  failurePolicy: Fail
+  matchConstraints:
+    resourceRules:
+    - apiGroups: [&quot;&quot;]
+      apiVersions: [&quot;v1&quot;]
+      operations: [&quot;CREATE&quot;, &quot;UPDATE&quot;]
+      resources: [&quot;pods&quot;, &quot;pods/ephemeralcontainers&quot;]
+  validations:
+  - expression: &quot;object.spec.containers.all(c, !c.image.endsWith(':latest')) &amp;&amp; (!has(object.spec.initContainers) || object.spec.initContainers.all(c, !c.image.endsWith(':latest'))) &amp;&amp; (!has(object.spec.ephemeralContainers) || object.spec.ephemeralContainers.all(c, !c.image.endsWith(':latest')))&quot;
+    message: &quot;latest タグのイメージは使用できません&quot;
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: deny-latest-tag-binding
+spec:
+  policyName: deny-latest-tag
+  validationActions: [Deny]
+  matchResources:
+    namespaceSelector:
+      matchLabels:
+        policy: enforced
+</code></pre>
+<blockquote class="bq note">
+<p>注意: この例は教材用で、<strong>タグ未指定(暗黙の latest)</strong> は拒否できません。実運用では「digest 指定を必須にする」ルールを検討してください。また、ポリシーはまず <code>validationActions</code> を <code>Warn</code> / <code>Audit</code> にして影響を測ってから <code>Deny</code> にします。</p>
+</blockquote>
+<p><strong>v1.37 の関連更新</strong>: <strong>マニフェストベースの Admission Control が Beta になった</strong> と報告されています。API サーバー起動時からポリシーを強制でき、etcd が使えなくても Admission が動き続け、API ベースの Admission リソース自体を変更から保護できる、という利点が挙げられています(二次情報のため、公式リリースノートで確認してください) <a class="cite" href="#ref-S31">[S31]</a>。</p></div></section><section class="subsection" id="s10-6"><h3>10.6 監査(Auditing)と「破れ窓(Breakglass)」</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>監査ログ</td>
+<td>誰が・いつ・何をしたかの記録。NSA/CISA は有効化・永続化・監視を推奨(既定では無効)<a class="cite" href="#ref-S25">[S25]</a><a class="cite" href="#ref-S36">[S36]</a></td>
+</tr>
+<tr>
+<td>Breakglass(緊急時の特権)</td>
+<td>障害時に一時的に強い権限を使う手順。<strong>事前に手順・承認・事後レビューを決めておく</strong></td>
+</tr>
+<tr>
+<td>認可の見直し</td>
+<td>既定の権限・冗長な権限・退職者やアカウントの棚卸しを定期的に実施 <a class="cite" href="#ref-S9">[S9]</a></td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s10-7"><h3>10.7 点検コマンド(読み取り専用)</h3><div class="prose"><pre><code class="language-bash"># ServiceAccount が持つ権限の一覧
+kubectl auth can-i --list -n lab --as=system:serviceaccount:lab:default
+
+# cluster-admin に紐付いている主体の確認
+kubectl get clusterrolebindings -o json | jq -r '
+  .items[]
+  | select(.roleRef.name == &quot;cluster-admin&quot;)
+  | &quot;\(.metadata.name): \([.subjects[]? | &quot;\(.kind)/\(.name)&quot;] | join(&quot;, &quot;))&quot;'
+
+# Namespace 内で cluster-admin を参照している RoleBinding の確認
+kubectl get rolebindings -A -o json | jq -r '
+  .items[]
+  | select(.roleRef.kind == &quot;ClusterRole&quot; and .roleRef.name == &quot;cluster-admin&quot;)
+  | &quot;\(.metadata.namespace)/\(.metadata.name): \([.subjects[]? | &quot;\(.kind)/\(.name)&quot;] | join(&quot;, &quot;))&quot;'
+</code></pre></div></section></section>
+<section class="section" id="s11"><h2>11. Step 9: 侵入検知(書籍 第9章)</h2><div class="prose"></div><section class="subsection" id="s11-1"><h3>11.1 「破られる前提」で考える</h3><div class="prose"><p>書籍の第9章は、従来型 IDS、eBPF ベースの IDS、Kubernetes・コンテナ向けの侵入検知、<strong>Falco</strong>、機械学習によるアプローチ、<strong>コンテナフォレンジクス</strong>、<strong>ハニーポット</strong>、監査、<strong>検知回避</strong>、SOC(Security Operations Center)までを扱います <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<blockquote class="bq note">
+<p>考え方: 予防策(Step 2〜8)を完璧にしても、未知の脆弱性や設定ミスで破られる可能性は残ります。<strong>「破られたことに早く気づき、被害を小さくする」</strong> のが検知の目的です。</p>
+</blockquote></div></section><section class="subsection" id="s11-2"><h3>11.2 検知の層</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>見るもの</th>
+<th>代表的な手段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes API</td>
+<td>誰が何の API を呼んだか</td>
+<td>監査ログ</td>
+</tr>
+<tr>
+<td>ノード・コンテナ(ランタイム)</td>
+<td>システムコール、プロセス、ファイル、ネットワーク</td>
+<td>Falco、eBPF ベースのツール</td>
+</tr>
+<tr>
+<td>ネットワーク</td>
+<td>不審な通信・外部への持ち出し</td>
+<td>NetworkPolicy ログ、フロー可視化</td>
+</tr>
+<tr>
+<td>設定の変化</td>
+<td>危険な設定の混入</td>
+<td>Admission / ポリシー違反の記録</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Falco</strong> は Linux 向けのランタイムセキュリティツールで、<strong>カーネルレベルのイベント(システムコールなど)をルールに基づいて監視・検知</strong> し、コンテナランタイムや Kubernetes のメタデータでイベントを補強できます。CNCF の Graduated プロジェクトで、公式ルールセットが提供されています <a class="cite" href="#ref-S18">[S18]</a>。</p>
+<p><strong>ルールの例(教材用: コンテナ内でシェルが起動されたら警告)</strong></p>
+<pre><code class="language-yaml">- rule: Shell spawned in container (demo)
+  desc: コンテナ内でシェルが起動されたことを検知する(学習用の簡易ルール)
+  condition: spawned_process and container and proc.name in (bash, sh)
+  output: &gt;
+    Shell in container (user=%user.name container=%container.name
+    image=%container.image.repository cmd=%proc.cmdline)
+  priority: WARNING
+</code></pre>
+<blockquote class="bq note">
+<p>実運用では、公式ルールセット(<code>falcosecurity/rules</code>)をベースに、誤検知(正当なデバッグ作業など)を調整します <a class="cite" href="#ref-S18">[S18]</a>。上記は構造を理解するための簡易例です。</p>
+</blockquote></div></section><section class="subsection" id="s11-3"><h3>11.3 検知の限界を知る(検知回避と死角)</h3><div class="prose"><p><code>nodes/proxy</code> の事例(Step 8)では、Kubernetes API の監査ログだけでは見えにくい経路があると指摘されています <a class="cite" href="#ref-S32">[S32]</a>。<strong>API 層だけでなく、ノード・ランタイム層でも観測する</strong> 設計が重要です。</p></div></section><section class="subsection" id="s11-4"><h3>11.4 インシデント対応の流れ</h3><div class="prose"><figure class="diagram"><div class="mermaid" data-diagram="d12" role="img" aria-label="フローチャート d12"></div></figure>
+<p><strong>封じ込めの具体例(隔離ラベル+ NetworkPolicy)</strong></p>
+<pre><code class="language-bash"># 疑わしい Pod に隔離用ラベルを付ける(Pod は消さない=証拠を残す)
+kubectl label pod &lt;pod名&gt; -n lab quarantine=true
+
+# ノードに新しい Pod が配置されないようにする
+kubectl cordon &lt;ノード名&gt;
+</code></pre>
+<pre><code class="language-yaml"># quarantine=true のラベルが付いた Pod の通信をすべて遮断する
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: quarantine
+  namespace: lab
+spec:
+  podSelector:
+    matchLabels:
+      quarantine: &quot;true&quot;
+  policyTypes:
+  - Ingress
+  - Egress
+</code></pre>
+<blockquote class="bq warn">
+<p><strong>重要</strong>: 標準の NetworkPolicy は <strong>許可ルールの足し算(和集合)</strong> で評価され、「拒否」で既存ポリシーを <strong>上書きできません</strong>。上の quarantine ポリシーだけでは、同じ Pod を選択する既存の許可ポリシーがあれば通信は通ったままです。確実に隔離するには、(1) 上の quarantine ポリシー(default-deny)は維持したまま、既存の許可ポリシーの <code>podSelector</code> に <code>matchExpressions: [{key: quarantine, operator: NotIn, values: ["true"]}]</code> を加えて quarantine=true の Pod を許可対象から外し、さらに既存ルールの <code>ingress.from</code> / <code>egress.to</code> の <code>podSelector</code> にも同じ条件を加えて、他の Pod の許可ルールが quarantine Pod を通信相手として指さないようにする、または (2) Cilium / Calico / AdminNetworkPolicy など <strong>拒否の優先順位をサポートする CNI のポリシー</strong> で deny を最優先に適用してください。</p>
+</blockquote>
+
+<blockquote class="bq warn">
+<p><strong>フォレンジクスの注意</strong>: コンテナのチェックポイント/復元機能は、証拠保全に便利な反面、2026年には <strong>信頼できないチェックポイントからの復元がセキュリティ設定を回避する</strong> 問題が報告されています(Step 3)<a class="cite" href="#ref-S13">[S13]</a>。信頼できるチェックポイントだけを扱い、機能の利用範囲を制限してください。</p>
+</blockquote></div></section><section class="subsection" id="s11-5"><h3>11.5 ハニーポットの考え方</h3><div class="prose"><p>ハニーポットは、<strong>攻撃者を誘い込む「おとり」</strong> です。書籍も取り上げています <a class="cite" href="#ref-S1">[S1]</a>。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>種類</th>
+<th>例</th>
+<th>得られるもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>おとりの Secret</td>
+<td>本物に見えるが使われない認証情報</td>
+<td>使われた時点で侵害の確実なシグナル</td>
+</tr>
+<tr>
+<td>おとりの Pod・Service</td>
+<td>魅力的な名前の偽リソース</td>
+<td>探索行動の早期検知</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>注意: ハニーポットは <strong>隔離された環境</strong> に置き、本物の資産と接続しないでください。</p>
+</blockquote></div></section></section>
+<section class="section" id="s12"><h2>12. Step 10: 組織(書籍 第10章)</h2><div class="prose"></div><section class="subsection" id="s12-1"><h3>12.1 最も弱いのは「人と組織」</h3><div class="prose"><p>書籍の第10章は、<strong>The Weakest Link(最も弱い環)</strong>、クラウドプロバイダーと<strong>責任共有モデル</strong>、<strong>アカウントの衛生管理</strong>、人やリソースのグルーピング、オンプレミス環境、<strong>脅威モデルの爆発(Threat Model Explosion)</strong>、SLO が与える圧力、<strong>ソーシャルエンジニアリング</strong>、プライバシーと規制上の懸念を扱います <a class="cite" href="#ref-S1">[S1]</a>。</p></div></section><section class="subsection" id="s12-2"><h3>12.2 責任共有モデル(Shared Responsibility)</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>領域</th>
+<th>マネージド Kubernetes(EKS / GKE / AKS など)</th>
+<th>自前運用(オンプレミス)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>コントロールプレーンの保守</td>
+<td>主にクラウド事業者</td>
+<td>自分たち</td>
+</tr>
+<tr>
+<td>ノード OS・ランタイムのパッチ</td>
+<td><strong>多くの場合、利用者側の責任(サービスにより異なる)</strong></td>
+<td>自分たち</td>
+</tr>
+<tr>
+<td>ワークロードの設定(Pod・RBAC・NetworkPolicy)</td>
+<td><strong>利用者</strong></td>
+<td>自分たち</td>
+</tr>
+<tr>
+<td>アプリ・イメージ・サプライチェーン</td>
+<td><strong>利用者</strong></td>
+<td>自分たち</td>
+</tr>
+<tr>
+<td>IAM・アカウント管理</td>
+<td><strong>利用者(事業者の仕組みを使って)</strong></td>
+<td>自分たち</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>例: GKE のセキュリティ情報では、脆弱性ごとに「GKE Autopilot は影響なし」「Ubuntu ノードのみ影響」「自分でインストールしたコンポーネントは各自で確認」のように、<strong>影響範囲と利用者の対応が異なる</strong> ことが示されています <a class="cite" href="#ref-S13">[S13]</a>。<strong>自分の環境のどこまでが自分の責任か</strong> を、サービスごとに把握しておく必要があります。</p>
+</blockquote></div></section><section class="subsection" id="s12-3"><h3>12.3 アカウントの衛生管理チェック</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>確認ポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多要素認証</td>
+<td>管理者・CI/CD の人間アカウントすべてで有効か</td>
+</tr>
+<tr>
+<td>長寿命の認証情報</td>
+<td>クラウドのアクセスキーや kubeconfig が長期間放置されていないか</td>
+</tr>
+<tr>
+<td>権限の棚卸し</td>
+<td>退職者・異動者の権限が残っていないか。同名アカウントの再作成による権限継承の危険にも注意 <a class="cite" href="#ref-S9">[S9]</a></td>
+</tr>
+<tr>
+<td>CI/CD の権限</td>
+<td>パイプラインが本番へ過剰な権限を持っていないか(Trivy の事例 <a class="cite" href="#ref-S14">[S14]</a><a class="cite" href="#ref-S15">[S15]</a>)</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s12-4"><h3>12.4 脅威モデルの爆発と優先順位づけ</h3><div class="prose"><p>クラスタ・クラウド・CI/CD・人が増えると、考慮すべき脅威は急増します(書籍の「Threat Model Explosion」)<a class="cite" href="#ref-S1">[S1]</a>。すべてに同時に対処しようとせず、次の順で優先順位をつけます。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>優先度</th>
+<th>基準</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最優先</td>
+<td><strong>悪用が容易で、影響が大きい</strong></td>
+<td>公開された API・退役済みコンポーネントの継続使用(ingress-nginx <a class="cite" href="#ref-S6">[S6]</a>)、<code>nodes/proxy</code> の過剰付与 <a class="cite" href="#ref-S10">[S10]</a></td>
+</tr>
+<tr>
+<td>高</td>
+<td>侵害の起点になりやすい</td>
+<td>特権 Pod、広い hostPath、<code>create pods</code> の過剰付与</td>
+</tr>
+<tr>
+<td>中</td>
+<td>多層防御の強化</td>
+<td>NetworkPolicy の default deny、署名検証、ランタイム検知</td>
+</tr>
+<tr>
+<td>低</td>
+<td>理論上のリスクで補完策がある</td>
+<td>設計上受け入れたリスク(Step 1 <a class="cite" href="#ref-S7">[S7]</a>)+ 補完策の記録</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s12-5"><h3>12.5 SLO の圧力・ソーシャルエンジニアリング・規制</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>論点</th>
+<th>リスク</th>
+<th>対策の方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLO(可用性目標)の圧力</td>
+<td>「止められない」ためにパッチ・ポリシー強化が後回しになる</td>
+<td>メンテナンス窓・カナリア・自動ロールバックを設計に組み込む</td>
+</tr>
+<tr>
+<td>ソーシャルエンジニアリング</td>
+<td>人を騙して認証情報を得る(サプライチェーン侵害の足がかりにもなる)</td>
+<td>教育、フィッシング耐性の高い認証、最小権限</td>
+</tr>
+<tr>
+<td>プライバシー・規制</td>
+<td>データの所在・保持・アクセス記録の要件</td>
+<td>データ分類、監査ログの保持、別クラスタ/別アカウントでの分離(Step 7)</td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s13"><h2>13. 2026年の重要トピック総まとめ</h2><div class="prose"></div><section class="subsection" id="s13-1"><h3>13.1 時系列まとめ</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>時期</th>
+<th>トピック</th>
+<th>影響・学び</th>
+<th>関連 Step</th>
+<th>出典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-02-29</td>
+<td>Falco が CNCF Graduated</td>
+<td>ランタイム検知の事実上の標準に</td>
+<td>9</td>
+<td><a class="cite" href="#ref-S18">[S18]</a></td>
+</tr>
+<tr>
+<td>2026-01</td>
+<td><code>nodes/proxy</code> GET の問題が公開</td>
+<td>「読み取り専用」と思っていた権限が Pod 内コマンド実行につながりうる</td>
+<td>8, 9</td>
+<td><a class="cite" href="#ref-S10">[S10]</a><a class="cite" href="#ref-S11">[S11]</a></td>
+</tr>
+<tr>
+<td>2026-01-29</td>
+<td>Ingress NGINX 退役の共同声明(退役は2026年3月)</td>
+<td>以後パッチなし。移行計画が必須</td>
+<td>5, 12</td>
+<td><a class="cite" href="#ref-S6">[S6]</a><a class="cite" href="#ref-S29">[S29]</a></td>
+</tr>
+<tr>
+<td>2026-03</td>
+<td>Trivy 関連の GitHub Actions タグ改ざん・悪意あるバイナリ/イメージ公開</td>
+<td>タグは不変でない。ツール自体も供給網</td>
+<td>4, 12</td>
+<td><a class="cite" href="#ref-S14">[S14]</a><a class="cite" href="#ref-S15">[S15]</a></td>
+</tr>
+<tr>
+<td>2026-03-24</td>
+<td>Kyverno が CNCF Graduated</td>
+<td>ポリシー as コードの成熟</td>
+<td>8</td>
+<td><a class="cite" href="#ref-S17">[S17]</a></td>
+</tr>
+<tr>
+<td>2026-04</td>
+<td>悪意ある Docker イメージの公開(タグ上書き)</td>
+<td>digest 固定・認証情報の扱い</td>
+<td>4</td>
+<td><a class="cite" href="#ref-S16">[S16]</a></td>
+</tr>
+<tr>
+<td>2026-04-22</td>
+<td>Kubernetes v1.36 リリース</td>
+<td>User Namespaces GA、Fine-Grained Kubelet Authorization GA</td>
+<td>2, 8</td>
+<td><a class="cite" href="#ref-S4">[S4]</a><a class="cite" href="#ref-S5">[S5]</a></td>
+</tr>
+<tr>
+<td>2026-04〜05</td>
+<td>Copy Fail / DirtyFrag / Fragnesia(カーネル起因のコンテナ脱出系)</td>
+<td>共有カーネルのリスク。<code>RuntimeDefault</code> seccomp などが緩和策に</td>
+<td>2, 3</td>
+<td><a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-05-26</td>
+<td>修正されない古い CVE 記録の訂正予告(6/1 実施)</td>
+<td>設計上のリスクは「受け入れ+補完策」で管理</td>
+<td>1, 7</td>
+<td><a class="cite" href="#ref-S7">[S7]</a></td>
+</tr>
+<tr>
+<td>2026-06-18</td>
+<td>containerd の複数脆弱性</td>
+<td>Pod 作成権限の重要性。サンドボックスでも防げない経路がある</td>
+<td>3, 8</td>
+<td><a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-08-26</td>
+<td>Kubernetes v1.37 リリース</td>
+<td>Pod Certificates・ClusterTrustBundles が Stable、SELinuxMount が Stable 等</td>
+<td>6</td>
+<td><a class="cite" href="#ref-S2">[S2]</a></td>
+</tr>
+<tr>
+<td>2026-09-09</td>
+<td>containerd checkpoint 復元の問題(GHSA-p7v4-vr35-mj6f)</td>
+<td>チェックポイント機能の利用制限</td>
+<td>3, 9</td>
+<td><a class="cite" href="#ref-S13">[S13]</a></td>
+</tr>
+<tr>
+<td>2026-09-16</td>
+<td>v1.37 のストレージ堅牢化(bind mount オプション等)</td>
+<td><code>noexec</code> / <code>nodev</code> / <code>nosuid</code> をネイティブに</td>
+<td>6</td>
+<td><a class="cite" href="#ref-S3">[S3]</a></td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s13-2"><h3>13.2 バージョン関連の補足</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>バージョン</th>
+<th>補足</th>
+<th>出典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.34</td>
+<td>AppArmor が非推奨化(seccomp や Pod Security Standards への移行を推奨と案内される)</td>
+<td><a class="cite" href="#ref-S26">[S26]</a></td>
+</tr>
+<tr>
+<td>v1.35</td>
+<td>cgroup v1 のサポートが非推奨となり、kubelet は既定で cgroup v1 のノードでの起動を拒否。containerd 1.x をサポートする最後のリリース</td>
+<td><a class="cite" href="#ref-S26">[S26]</a></td>
+</tr>
+<tr>
+<td>v1.36</td>
+<td>User Namespaces GA、Fine-Grained Kubelet Authorization GA</td>
+<td><a class="cite" href="#ref-S4">[S4]</a><a class="cite" href="#ref-S5">[S5]</a></td>
+</tr>
+<tr>
+<td>v1.37</td>
+<td>2026-08-26 リリース。セキュリティ上の変更が19件あるとの整理もある(Sysdig)</td>
+<td><a class="cite" href="#ref-S2">[S2]</a><a class="cite" href="#ref-S27">[S27]</a></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>自分のクラスタのバージョン(マネージドサービスの対応状況)を確認し、<strong>サポート期間内の最新に近いバージョン</strong> を保つことが、最も基本的で効果的な防御の一つです。</p>
+</blockquote></div></section><section class="subsection" id="s13-3"><h3>13.3 今日からできる「3つの最優先アクション」</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>アクション</th>
+<th>確認方法</th>
+<th>関連</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>ingress-nginx</code> を使っていないか確認し、使っていれば移行計画を立てる</td>
+<td><code>kubectl get pods -A --selector app.kubernetes.io/name=ingress-nginx</code></td>
+<td><a class="cite" href="#ref-S6">[S6]</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>RBAC で <code>nodes/proxy</code>、<code>create pods</code>、<code>secrets list</code>、<code>impersonate/bind/escalate</code> の付与先を棚卸し</td>
+<td>Step 8 の点検コマンド</td>
+<td><a class="cite" href="#ref-S9">[S9]</a><a class="cite" href="#ref-S10">[S10]</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>lab</code> Namespace に PSA の <code>warn</code> / <code>audit</code>(restricted)を入れて違反を可視化(自クラスタでは対象 Namespace ごとに同じコマンドを適用)</td>
+<td>Step 2 のコマンド</td>
+<td><a class="cite" href="#ref-S8">[S8]</a></td>
+</tr>
+</tbody>
+</table></div></div></section></section>
+<section class="section" id="s14"><h2>14. 6週間ハンズオン学習計画</h2><div class="prose"><p><strong>前提</strong>: Step 0 のラボ(kind 等の使い捨てクラスタ)で実施します。<strong>本番環境では実施しないでください。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>週</th>
+<th>テーマ</th>
+<th>やること</th>
+<th>成果物</th>
+<th>対応 Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ラボ構築と脅威モデル</td>
+<td>kind でクラスタ作成、第1章を読み、Attack Tree を1枚作る</td>
+<td>脅威モデルワークシート</td>
+<td>0, 1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pod の堅牢化</td>
+<td>PSA を <code>warn</code> → <code>enforce</code> へ。堅牢化 Pod を作り、違反 Pod が拒否されるのを確認</td>
+<td>堅牢化 Pod のテンプレート</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ネットワーク</td>
+<td>NetworkPolicy 対応 CNI を導入し、default deny → 最小許可。DNS 許可を忘れず</td>
+<td>NetworkPolicy 一式</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>RBAC と ポリシー</td>
+<td><code>auth can-i --list</code> で棚卸し、最小権限の Role を作る。ValidatingAdmissionPolicy を試す</td>
+<td>RBAC 点検レポート</td>
+<td>8</td>
+</tr>
+<tr>
+<td>5</td>
+<td>サプライチェーン</td>
+<td>digest 固定、cosign 検証、CI の <code>uses:</code> を SHA 固定に変更する計画</td>
+<td>供給網チェック表</td>
+<td>4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>検知と総合演習</td>
+<td>Falco を導入し簡易ルールを動かす。隔離クラスタで Kubernetes Goat のシナリオを1つ体験</td>
+<td>検知ルールと振り返りメモ</td>
+<td>9, 0</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="bq note">
+<p>Kubernetes Goat は、<strong>必ず隔離したローカルクラスタで実行し、終了後はクラスタごと削除</strong> してください <a class="cite" href="#ref-S24">[S24]</a>。</p>
+</blockquote></div></section>
+<section class="section" id="s15"><h2>15. 総合セキュリティチェックリスト</h2><div class="prose"><div class="check-progress"><span id="chkDone">0</span> / 24 項目を確認済み</div><div class="checklist"><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">バージョン</span><span class="chip step">全般</span></span><span class="check-item">サポート内のバージョンを使い、更新計画があるか</span><span class="check-how"><span class="lbl">確認</span><code>kubectl version</code>、マネージドサービスのサポート表</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">バージョン</span><span class="chip step">Step 3</span></span><span class="check-item">ノード OS・ランタイムを迅速にパッチしているか</span><span class="check-how"><span class="lbl">確認</span>ベンダーのセキュリティ情報を購読 <a class="cite" href="#ref-S13">[S13]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">Pod</span><span class="chip step">Step 2</span></span><span class="check-item">全 Namespace に PSA ラベルがあるか</span><span class="check-how"><span class="lbl">確認</span><code>kubectl get ns -L pod-security.kubernetes.io/enforce</code></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">Pod</span><span class="chip step">Step 2</span></span><span class="check-item">特権・hostPath・hostNetwork が不要に使われていないか</span><span class="check-how"><span class="lbl">確認</span>Step 2 の点検コマンド</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">Pod</span><span class="chip step">Step 2</span></span><span class="check-item">非 root・<code>RuntimeDefault</code>・<code>allowPrivilegeEscalation: false</code></span><span class="check-how"><span class="lbl">確認</span>マニフェスト/ポリシーで強制</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">Pod</span><span class="chip step">Step 2</span></span><span class="check-item"><code>hostUsers: false</code> を検討したか</span><span class="check-how"><span class="lbl">確認</span>ノードの対応状況を確認 <a class="cite" href="#ref-S4">[S4]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ランタイム</span><span class="chip step">Step 3</span></span><span class="check-item">信頼できないコードにサンドボックスを使っているか</span><span class="check-how"><span class="lbl">確認</span>RuntimeClass</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">サプライチェーン</span><span class="chip step">Step 4</span></span><span class="check-item">イメージを digest で参照しているか</span><span class="check-how"><span class="lbl">確認</span>マニフェストの <code>image:</code></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">サプライチェーン</span><span class="chip step">Step 4</span></span><span class="check-item">CI の Action・ツールを SHA/バージョン固定しているか</span><span class="check-how"><span class="lbl">確認</span>ワークフローの <code>uses:</code> <a class="cite" href="#ref-S14">[S14]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">サプライチェーン</span><span class="chip step">Step 4</span></span><span class="check-item">署名検証・SBOM・スキャンを実施しているか</span><span class="check-how"><span class="lbl">確認</span>cosign、SBOM、スキャナ</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ネットワーク</span><span class="chip step">Step 5</span></span><span class="check-item">各 Namespace に default deny があるか</span><span class="check-how"><span class="lbl">確認</span>NetworkPolicy 一覧と疎通テスト</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ネットワーク</span><span class="chip step">Step 5</span></span><span class="check-item">ingress-nginx を使っていないか</span><span class="check-how"><span class="lbl">確認</span>Step 5 のコマンド <a class="cite" href="#ref-S6">[S6]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ネットワーク</span><span class="chip step">Step 5, 8</span></span><span class="check-item">API サーバー・kubelet(10250)・etcd をインターネットに公開していないか</span><span class="check-how"><span class="lbl">確認</span>ネットワーク設定の確認 <a class="cite" href="#ref-S25">[S25]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ストレージ</span><span class="chip step">Step 6</span></span><span class="check-item">Secret の保存時暗号化(+KMS)を有効にしているか</span><span class="check-how"><span class="lbl">確認</span>API サーバー設定</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ストレージ</span><span class="chip step">Step 6</span></span><span class="check-item">広い hostPath がないか</span><span class="check-how"><span class="lbl">確認</span>Step 2 の点検コマンド</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">マルチテナント</span><span class="chip step">Step 7</span></span><span class="check-item">敵対的テナントを同じクラスタに入れていないか</span><span class="check-how"><span class="lbl">確認</span>設計レビュー</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">RBAC</span><span class="chip step">Step 8</span></span><span class="check-item"><code>nodes/proxy</code>・<code>create pods</code>・<code>secrets list</code>・<code>impersonate/bind/escalate</code> の付与先を把握しているか</span><span class="check-how"><span class="lbl">確認</span>Step 8 の点検コマンド <a class="cite" href="#ref-S9">[S9]</a><a class="cite" href="#ref-S10">[S10]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">RBAC</span><span class="chip step">Step 8</span></span><span class="check-item"><code>cluster-admin</code> の付与先は最小か</span><span class="check-how"><span class="lbl">確認</span>Step 8 の点検コマンド</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">ポリシー</span><span class="chip step">Step 8</span></span><span class="check-item">Admission(PSA / VAP / Kyverno / Gatekeeper)で強制しているか</span><span class="check-how"><span class="lbl">確認</span>ポリシー一覧 <a class="cite" href="#ref-S17">[S17]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">検知</span><span class="chip step">Step 9</span></span><span class="check-item">監査ログを有効化し永続化しているか</span><span class="check-how"><span class="lbl">確認</span>API サーバー設定 <a class="cite" href="#ref-S25">[S25]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">検知</span><span class="chip step">Step 9</span></span><span class="check-item">ノード/ランタイム層の検知(Falco 等)があるか</span><span class="check-how"><span class="lbl">確認</span>稼働状況 <a class="cite" href="#ref-S18">[S18]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">対応</span><span class="chip step">Step 9</span></span><span class="check-item">インシデント対応手順(隔離・証拠保全・認証情報ローテーション)があるか</span><span class="check-how"><span class="lbl">確認</span>手順書と訓練</span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">組織</span><span class="chip step">Step 10</span></span><span class="check-item">責任共有の範囲を把握しているか</span><span class="check-how"><span class="lbl">確認</span>クラウド事業者のドキュメント <a class="cite" href="#ref-S13">[S13]</a></span></span></label></div><div class="check-card"><label><input type="checkbox"><span class="box"></span><span class="check-num"></span><span class="check-body"><span class="check-top"><span class="chip area">組織</span><span class="chip step">Step 10</span></span><span class="check-item">MFA・権限棚卸し・CI 認証情報の短命化ができているか</span><span class="check-how"><span class="lbl">確認</span>IAM の確認</span></span></label></div></div></div></section>
+<section class="section" id="s16"><h2>16. 用語集</h2><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Admission Controller</td>
+<td>API リクエストを検証・変更する仕組み。永続化の前に動く</td>
+</tr>
+<tr>
+<td>Attack Tree</td>
+<td>攻撃の最終目標から手段を枝分かれで書き出す脅威分析の手法</td>
+</tr>
+<tr>
+<td>cgroup</td>
+<td>プロセスのリソース(CPU・メモリなど)を制限・管理する Linux の仕組み</td>
+</tr>
+<tr>
+<td>CEL</td>
+<td>Common Expression Language。Admission ポリシーの条件式に使われる言語</td>
+</tr>
+<tr>
+<td>Container Breakout</td>
+<td>コンテナからホスト(ノード)へ脱出する攻撃</td>
+</tr>
+<tr>
+<td>CNI</td>
+<td>Container Network Interface。Pod ネットワークを実装するプラグイン</td>
+</tr>
+<tr>
+<td>CSI</td>
+<td>Container Storage Interface。ストレージを接続する標準インターフェース</td>
+</tr>
+<tr>
+<td>digest</td>
+<td>イメージ内容のハッシュ値(<code>sha256:...</code>)。タグと違い内容が変わると値が変わる</td>
+</tr>
+<tr>
+<td>eBPF</td>
+<td>カーネル内で安全にプログラムを動かす仕組み。可視化・制御に使われる</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>Kubernetes の状態を保存する分散キーバリューストア</td>
+</tr>
+<tr>
+<td>Falco</td>
+<td>カーネルイベントを監視するランタイム検知ツール(CNCF Graduated)</td>
+</tr>
+<tr>
+<td>kubelet</td>
+<td>各ノード上で Pod を管理するエージェント</td>
+</tr>
+<tr>
+<td>mTLS</td>
+<td>相互 TLS。通信の両端が証明書で互いを認証し、暗号化する</td>
+</tr>
+<tr>
+<td>NetworkPolicy</td>
+<td>Pod 間などの通信許可を宣言するリソース</td>
+</tr>
+<tr>
+<td>PSA / PSS</td>
+<td>Pod Security Admission / Pod Security Standards</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Role-Based Access Control。役割ベースのアクセス制御</td>
+</tr>
+<tr>
+<td>RuntimeClass</td>
+<td>Pod が使うコンテナランタイム(サンドボックス等)を選ぶリソース</td>
+</tr>
+<tr>
+<td>SBOM</td>
+<td>ソフトウェア部品表</td>
+</tr>
+<tr>
+<td>seccomp</td>
+<td>プロセスが呼べるシステムコールを制限する Linux の仕組み</td>
+</tr>
+<tr>
+<td>ServiceAccount</td>
+<td>Pod が API を使うための身分</td>
+</tr>
+<tr>
+<td>User Namespaces</td>
+<td>コンテナ内のユーザー ID をホストの別 ID に対応づける仕組み(v1.36 で GA)</td>
+</tr>
+</tbody>
+</table></div></div></section>
+<section class="section" id="s17"><h2>17. 参考文献(ソース一覧)</h2><div class="prose"><blockquote class="bq note">
+<p><strong>種別の見方</strong>: 「一次」= プロジェクト・事業者・研究者の公式/原典に近い情報、「二次」= 解説・報道・第三者ブログ。<strong>二次情報は必ず一次情報で再確認してください。</strong> 情報基準日は 2026年10月9日です。</p>
+</blockquote></div><section class="subsection" id="s17-1"><h3>17.1 書籍・著者・実務家</h3><div class="prose"><div class="ref-list"><div class="ref-card" id="ref-S1"><span class="ref-badge">S1</span><div class="ref-main"><div class="ref-title">O'Reilly: Hacking Kubernetes(書誌・目次・概要)</div><div class="ref-urls"><a href="https://www.oreilly.com/library/view/hacking-kubernetes/9781492081722/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.oreilly.com/library/view/hacking-kubernetes/9781492081722/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S19"><span class="ref-badge">S19</span><div class="ref-main"><div class="ref-title">Rory McCune のプロフィール(CIS Benchmarks 主要著者、SIG-Security)</div><div class="ref-urls"><a href="https://sessionize.com/rory-mccune" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://sessionize.com/rory-mccune</span></a></div></div><span class="chip kind primary">一次(本人プロフィール)</span></div><div class="ref-card" id="ref-S20"><span class="ref-badge">S20</span><div class="ref-main"><div class="ref-title">Rory McCune 講演(RSAC 2025): So You've Deployed Kubernetes Everywhere, Now What?</div><div class="ref-urls"><a href="https://www.rsaconference.com/library/presentation/usa/2025/so-youve-deployed-kubernetes-everywhere-now-what" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.rsaconference.com/library/presentation/usa/2025/so-youve-deployed-kubernetes-everywhere-now-what</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S21"><span class="ref-badge">S21</span><div class="ref-main"><div class="ref-title">Andrew Martin の登壇者プロフィール(QCon London)</div><div class="ref-urls"><a href="https://qconlondon.com/speakers/andrewmartin" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://qconlondon.com/speakers/andrewmartin</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S22"><span class="ref-badge">S22</span><div class="ref-main"><div class="ref-title">ControlPlane: Kubernetes and the UK(Andrew Martin の経歴・本書への言及)</div><div class="ref-urls"><a href="https://control-plane.io/posts/kubernetes-and-the-uk/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://control-plane.io/posts/kubernetes-and-the-uk/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S23"><span class="ref-badge">S23</span><div class="ref-main"><div class="ref-title">ControlPlane at KubeCon EU 2024(CTF 運営・登壇)</div><div class="ref-urls"><a href="https://control-plane.io/posts/controlplane-at-kubecon-eu-2024/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://control-plane.io/posts/controlplane-at-kubecon-eu-2024/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S24"><span class="ref-badge">S24</span><div class="ref-main"><div class="ref-title">Kubernetes Goat(Madhu Akula 作成の学習用脆弱環境)</div><div class="ref-urls"><a href="https://github.com/madhuakula/kubernetes-goat" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://github.com/madhuakula/kubernetes-goat</span></a><a href="https://madhuakula.com/kubernetes-goat" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://madhuakula.com/kubernetes-goat</span></a></div></div><span class="chip kind primary">一次</span></div></div></div></section><section class="subsection" id="s17-2"><h3>17.2 Kubernetes プロジェクト(公式)</h3><div class="prose"><div class="ref-list"><div class="ref-card" id="ref-S2"><span class="ref-badge">S2</span><div class="ref-main"><div class="ref-title">Kubernetes v1.37: Garhwal(リリースブログ、2026-08-26)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/08/26/kubernetes-v1-37-release/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/08/26/kubernetes-v1-37-release/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S3"><span class="ref-badge">S3</span><div class="ref-main"><div class="ref-title">v1.37: Hardening Container Storage with Bind Mount Options and EmptyDir Permissions(2026-09-16)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/09/16/kubernetes-v1-37-hardening-container-storage/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/09/16/kubernetes-v1-37-hardening-container-storage/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S4"><span class="ref-badge">S4</span><div class="ref-main"><div class="ref-title">v1.36: User Namespaces in Kubernetes are finally GA(2026-04-23)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/04/23/kubernetes-v1-36-userns-ga/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/04/23/kubernetes-v1-36-userns-ga/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S5"><span class="ref-badge">S5</span><div class="ref-main"><div class="ref-title">v1.36: Fine-Grained Kubelet API Authorization Graduates to GA(2026-04-24)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/04/24/kubernetes-v1-36-fine-grained-kubelet-authorization-ga" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/04/24/kubernetes-v1-36-fine-grained-kubelet-authorization-ga</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S6"><span class="ref-badge">S6</span><div class="ref-main"><div class="ref-title">Ingress NGINX: Statement from the Kubernetes Steering and Security Response Committees(2026-01-29)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/01/29/ingress-nginx-statement/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/01/29/ingress-nginx-statement/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S7"><span class="ref-badge">S7</span><div class="ref-main"><div class="ref-title">Reconciling the Past: Correcting Records for Unfixed Kubernetes CVEs(2026-05-26、Tabitha Sable ほか)</div><div class="ref-urls"><a href="https://kubernetes.io/blog/2026/05/26/reconciling-unfixed-kubernetes-cves/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/blog/2026/05/26/reconciling-unfixed-kubernetes-cves/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S8"><span class="ref-badge">S8</span><div class="ref-main"><div class="ref-title">Pod Security Standards(公式ドキュメント)</div><div class="ref-urls"><a href="https://kubernetes.io/docs/concepts/security/pod-security-standards" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/docs/concepts/security/pod-security-standards</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S9"><span class="ref-badge">S9</span><div class="ref-main"><div class="ref-title">Role Based Access Control Good Practices(公式ドキュメント)</div><div class="ref-urls"><a href="https://kubernetes.io/docs/concepts/security/rbac-good-practices" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://kubernetes.io/docs/concepts/security/rbac-good-practices</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S30"><span class="ref-badge">S30</span><div class="ref-main"><div class="ref-title">v1.37 リリース計画(sig-release)</div><div class="ref-urls"><a href="https://github.com/kubernetes/sig-release/blob/master/releases/release-1.37/README.md" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://github.com/kubernetes/sig-release/blob/master/releases/release-1.37/README.md</span></a></div></div><span class="chip kind primary">一次</span></div></div></div></section><section class="subsection" id="s17-3"><h3>17.3 脆弱性・インシデント情報</h3><div class="prose"><div class="ref-list"><div class="ref-card" id="ref-S10"><span class="ref-badge">S10</span><div class="ref-main"><div class="ref-title">Graham Helton: <code>nodes/proxy</code> GET による RCE の報告(原典。本ガイド作成時は二次情報経由でリンクを確認したため、原典の記述は直接読んで確認してください)</div><div class="ref-urls"><a href="https://grahamhelton.com/blog/nodes-proxy-rce" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://grahamhelton.com/blog/nodes-proxy-rce</span></a></div></div><span class="chip kind primary">一次(原典)</span></div><div class="ref-card" id="ref-S11"><span class="ref-badge">S11</span><div class="ref-main"><div class="ref-title">Horizon3.ai: When "Read-Only" Isn't: K8s nodes/proxy GET to RCE(2026-02-27)</div><div class="ref-urls"><a href="https://horizon3.ai/attack-research/when-read-only-isnt-k8s-nodes-proxy-get-to-rce/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://horizon3.ai/attack-research/when-read-only-isnt-k8s-nodes-proxy-get-to-rce/</span></a></div></div><span class="chip kind secondary">二次(セキュリティベンダー分析)</span></div><div class="ref-card" id="ref-S12"><span class="ref-badge">S12</span><div class="ref-main"><div class="ref-title">Azure Kubernetes Service セキュリティ情報(nodes/proxy 問題の扱いなど)</div><div class="ref-urls"><a href="https://learn.microsoft.com/en-us/azure/aks/security-bulletins/overview" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://learn.microsoft.com/en-us/azure/aks/security-bulletins/overview</span></a></div></div><span class="chip kind primary">一次(事業者)</span></div><div class="ref-card" id="ref-S13"><span class="ref-badge">S13</span><div class="ref-main"><div class="ref-title">GKE Security bulletins(Copy Fail、DirtyFrag、Fragnesia、containerd 脆弱性など)</div><div class="ref-urls"><a href="https://docs.cloud.google.com/kubernetes-engine/security-bulletins" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://docs.cloud.google.com/kubernetes-engine/security-bulletins</span></a></div></div><span class="chip kind primary">一次(事業者)</span></div><div class="ref-card" id="ref-S14"><span class="ref-badge">S14</span><div class="ref-main"><div class="ref-title">Barracuda: Trivy Supply-Chain Compromise(Aqua Security の開示に基づく影響範囲・推奨対応)</div><div class="ref-urls"><a href="https://trust.barracuda.com/security/information/trivy-supply-chain-compromise" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://trust.barracuda.com/security/information/trivy-supply-chain-compromise</span></a></div></div><span class="chip kind secondary">二次(事業者による集約)</span></div><div class="ref-card" id="ref-S15"><span class="ref-badge">S15</span><div class="ref-main"><div class="ref-title">Cloud Security Alliance Labs: TeamPCP CI/CD 研究ノート(2026-04-03)</div><div class="ref-urls"><a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-teampcp-cicd-supply-chain-20260403-csa-sty/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://labs.cloudsecurityalliance.org/research/csa-research-note-teampcp-cicd-supply-chain-20260403-csa-sty/</span></a></div></div><span class="chip kind secondary">二次(業界団体の分析)</span></div><div class="ref-card" id="ref-S16"><span class="ref-badge">S16</span><div class="ref-main"><div class="ref-title">The Hacker News: 悪意ある KICS Docker イメージ(2026-04)</div><div class="ref-urls"><a href="https://thehackernews.com/2026/04/malicious-kics-docker-images-and-vs.html" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://thehackernews.com/2026/04/malicious-kics-docker-images-and-vs.html</span></a></div></div><span class="chip kind secondary">二次(報道)</span></div><div class="ref-card" id="ref-S33"><span class="ref-badge">S33</span><div class="ref-main"><div class="ref-title">CERT-EU Security Advisory 2024-016(runc CVE-2024-21626)</div><div class="ref-urls"><a href="https://cert.europa.eu/publications/security-advisories/2024-016/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://cert.europa.eu/publications/security-advisories/2024-016/</span></a></div></div><span class="chip kind primary">一次(CERT)</span></div><div class="ref-card" id="ref-S34"><span class="ref-badge">S34</span><div class="ref-main"><div class="ref-title">Techzine: runC の3件の脆弱性 / CVE ID の確認に使った資料</div><div class="ref-urls"><a href="https://www.techzine.eu/news/security/136197/runtime-behind-docker-and-kubernetes-contains-three-vulnerabilities/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.techzine.eu/news/security/136197/runtime-behind-docker-and-kubernetes-contains-three-vulnerabilities/</span></a><a href="https://www.gopher.security/news/critical-runc-vulnerabilities-allow-container-escape-in-docker-kubernetes" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.gopher.security/news/critical-runc-vulnerabilities-allow-container-escape-in-docker-kubernetes</span></a></div></div><span class="chip kind secondary">二次</span></div></div></div></section><section class="subsection" id="s17-4"><h3>17.4 エコシステム・ガイダンス・解説</h3><div class="prose"><div class="ref-list"><div class="ref-card" id="ref-S17"><span class="ref-badge">S17</span><div class="ref-main"><div class="ref-title">CNCF: Kyverno の Graduation 発表(2026-03-24)</div><div class="ref-urls"><a href="https://www.cncf.io/announcements/2026/03/24/cloud-native-computing-foundation-announces-kyvernos-graduation/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cncf.io/announcements/2026/03/24/cloud-native-computing-foundation-announces-kyvernos-graduation/</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S18"><span class="ref-badge">S18</span><div class="ref-main"><div class="ref-title">Falco(README。CNCF Graduated、公式ルールセット)/ CNCF による Graduation(2024-02-29)の関連記事</div><div class="ref-urls"><a href="https://github.com/draios/falco" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://github.com/draios/falco</span></a><a href="https://www.cncf.io/search/Falco/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cncf.io/search/Falco/</span></a></div></div><span class="chip kind mixed">一次/二次</span></div><div class="ref-card" id="ref-S25"><span class="ref-badge">S25</span><div class="ref-main"><div class="ref-title">NSA/CISA Kubernetes Hardening Guide v1.2(2022-08)</div><div class="ref-urls"><a href="https://media.defense.gov/2022/Aug/29/2003066362/1/1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://media.defense.gov/2022/Aug/29/2003066362/1/1/0/CTR_KUBERNETES_HARDENING_GUIDANCE_1.2_20220829.PDF</span></a></div></div><span class="chip kind primary">一次</span></div><div class="ref-card" id="ref-S36"><span class="ref-badge">S36</span><div class="ref-main"><div class="ref-title">Fairwinds: NSA Kubernetes Hardening Guide の解説</div><div class="ref-urls"><a href="https://fairwinds.com/blog/nsa-kubernetes-hardening-guide" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://fairwinds.com/blog/nsa-kubernetes-hardening-guide</span></a></div></div><span class="chip kind secondary">二次</span></div><div class="ref-card" id="ref-S26"><span class="ref-badge">S26</span><div class="ref-main"><div class="ref-title">Amazon EKS: Kubernetes バージョン情報(v1.34〜1.36 の注意事項)</div><div class="ref-urls"><a href="https://docs.aws.amazon.com/he_il/eks/latest/userguide/kubernetes-versions-standard.html" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://docs.aws.amazon.com/he_il/eks/latest/userguide/kubernetes-versions-standard.html</span></a></div></div><span class="chip kind primary">一次(事業者)</span></div><div class="ref-card" id="ref-S27"><span class="ref-badge">S27</span><div class="ref-main"><div class="ref-title">Sysdig: Kubernetes 1.37 - New security features</div><div class="ref-urls"><a href="https://www.sysdig.com/blog/kubernetes-1-37-new-security-features" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.sysdig.com/blog/kubernetes-1-37-new-security-features</span></a></div></div><span class="chip kind secondary">二次</span></div><div class="ref-card" id="ref-S28"><span class="ref-badge">S28</span><div class="ref-main"><div class="ref-title">Certitude: Kubernetes RBAC Security Pitfalls</div><div class="ref-urls"><a href="https://certitude.consulting/blog/en/kubernetes-rbac-security-pitfalls/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://certitude.consulting/blog/en/kubernetes-rbac-security-pitfalls/</span></a></div></div><span class="chip kind secondary">二次</span></div><div class="ref-card" id="ref-S29"><span class="ref-badge">S29</span><div class="ref-main"><div class="ref-title">Datadog Security Labs: Ingress NGINX 退役の警告</div><div class="ref-urls"><a href="https://securitylabs.datadoghq.com/articles/kubernetes-ingress-nginx-retirement-warning/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://securitylabs.datadoghq.com/articles/kubernetes-ingress-nginx-retirement-warning/</span></a></div></div><span class="chip kind secondary">二次</span></div><div class="ref-card" id="ref-S31"><span class="ref-badge">S31</span><div class="ref-main"><div class="ref-title">Medium: Kubernetes v1.37 リリース解説(マニフェストベース Admission の Beta、Pod certificates 等)。<strong>二次情報のため公式で要確認</strong></div><div class="ref-urls"><a href="https://medium.com/@balajibal/kubernetes-v1-37-release-resilience-smarter-scheduling-and-better-efficiency-aaef5d45dbd7" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://medium.com/@balajibal/kubernetes-v1-37-release-resilience-smarter-scheduling-and-better-efficiency-aaef5d45dbd7</span></a></div></div><span class="chip kind secondary">二次</span></div><div class="ref-card" id="ref-S32"><span class="ref-badge">S32</span><div class="ref-main"><div class="ref-title">zwindler: nodes/proxy GET(監査ログに残りにくい点、v1.33 の動き)/ Sweet Security の解説</div><div class="ref-urls"><a href="https://blog.zwindler.fr/en/2026/05/19/nodes/proxy-get-one-kubernetes-permission-too-many/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://blog.zwindler.fr/en/2026/05/19/nodes/proxy-get-one-kubernetes-permission-too-many/</span></a><a href="https://www.sweet.security/blog/almost-everybody-is-affected-kubernetes-privilege-escalation-can-lead-to-rce" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.sweet.security/blog/almost-everybody-is-affected-kubernetes-privilege-escalation-can-lead-to-rce</span></a></div></div><span class="chip kind secondary">二次</span></div></div></div></section><section class="subsection" id="s17-5"><h3>17.5 情報の鮮度を保つための確認先</h3><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>見る場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes のリリースと変更点</td>
+<td>Kubernetes 公式ブログ・リリースノート(S2、S30)</td>
+</tr>
+<tr>
+<td>Kubernetes の公式 CVE</td>
+<td>Security Response Committee が運営する公式 CVE フィード(S7 を参照)</td>
+</tr>
+<tr>
+<td>マネージドサービスの脆弱性対応</td>
+<td>GKE / AKS / EKS のセキュリティ情報(S12、S13)</td>
+</tr>
+<tr>
+<td>認定・演習</td>
+<td>学習用環境は隔離クラスタで(S24)</td>
+</tr>
+</tbody>
+</table></div></div></section><section class="subsection" id="s17-6"><h3>17.6 このガイドの限界と注意</h3><div class="prose"><ul>
+<li>本書(原著)の本文は引用していません。章の対応づけは O'Reilly の公開目次 <a class="cite" href="#ref-S1">[S1]</a> に基づき、解説は独自の言葉で再構成しています。<strong>詳細は原著をお読みください。</strong></li>
+<li>2026年の脆弱性・インシデント情報は、事業者のセキュリティ情報や報道に基づきます。<strong>影響範囲や修正バージョンは更新されることがある</strong> ため、対応の前に必ず最新の一次情報を確認してください。</li>
+<li>表中の「傾向」「目安」は一般的な整理です。<strong>自分の環境で検証</strong> してください。</li>
+<li>本ガイドのコマンド・YAML は教材用です。<strong>本番に適用する前に、使い捨てのラボで動作を確認</strong> してください。</li>
+</ul></div></section></section>
+<footer class="footer">作成日: 2026年10月9日 / 対象書籍: Hacking Kubernetes (O'Reilly, ISBN 9781492081722)</footer>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+<script>
+window.DIAGRAMS = {};
+window.DIAGRAM_CFG = {"d2": {"wrappingWidth": 150}, "d5": {"wrappingWidth": 100, "nodeSpacing": 25}, "d11": {"wrappingWidth": 120}};
+window.DIAGRAMS["d1"] = `
+flowchart TD
+    A["基礎編<br/>Kubernetes の構成要素を理解"] --> B["Step 0<br/>安全なラボを作る"]
+    B --> C["Step 1<br/>脅威モデリング"]
+    C --> D["Step 2〜3<br/>Pod とランタイムの堅牢化"]
+    D --> E["Step 4<br/>サプライチェーン対策"]
+    E --> F["Step 5〜6<br/>ネットワークとストレージ"]
+    F --> G["Step 7〜8<br/>マルチテナントとポリシー"]
+    G --> H["Step 9<br/>侵入検知と対応"]
+    H --> I["Step 10<br/>組織・運用の仕組み化"]
+    I --> J["総合チェックリストで定期点検"]
+`;
+window.DIAGRAMS["d2"] = `
+flowchart TB
+    subgraph USER["利用者・自動化"]
+        U1["kubectl / CI-CD / Operator"]
+    end
+    subgraph CP["コントロールプレーン"]
+        API["kube-apiserver<br/>全ての入口"]
+        ETCD["etcd<br/>クラスタの状態と Secret を保存"]
+        SCH["kube-scheduler"]
+        CM["kube-controller-manager"]
+    end
+    subgraph NODE["ワーカーノード"]
+        KL["kubelet<br/>ノードの代理人 (10250番ポート)"]
+        RT["コンテナランタイム<br/>containerd / CRI-O + runc"]
+        POD["Pod<br/>(コンテナ群)"]
+        CNI["CNI / kube-proxy<br/>ネットワーク"]
+    end
+    U1 --> API
+    API --> ETCD
+    SCH --> API
+    CM --> API
+    API --> KL
+    KL --> RT
+    RT --> POD
+    CNI --- POD
+`;
+window.DIAGRAMS["d3"] = `
+flowchart TD
+    S1["1. 初期侵入<br/>アプリの脆弱性 / 漏れた認証情報 / 汚染イメージ"] --> S2["2. Pod 内で実行<br/>コード実行 (RCE)"]
+    S2 --> S3["3. 探索<br/>ServiceAccount トークン・環境変数・ネットワークを調べる"]
+    S3 --> S4{"4. 権限昇格の入口は?"}
+    S4 -->|"過剰な RBAC"| S5["API 経由で権限拡大"]
+    S4 -->|"特権 Pod / ホストマウント"| S6["ノードへ脱出"]
+    S4 -->|"カーネル/ランタイムの脆弱性"| S6
+    S5 --> S7["5. 横展開と永続化"]
+    S6 --> S7
+    S7 --> S8["6. 目的の達成<br/>データ窃取 / 暗号資産マイニング / 破壊"]
+`;
+window.DIAGRAMS["d4"] = `
+flowchart LR
+    GOAL["目標: Secret を盗む"] --> A["Pod 内から読み取る"]
+    GOAL --> B["API 経由で取得する"]
+    GOAL --> C["etcd に直接アクセスする"]
+    GOAL --> D["ノード上のファイルから読む"]
+
+    A --> A1["環境変数に Secret が入っている"]
+    A --> A2["マウントされた Secret ファイルを読む"]
+    B --> B1["ServiceAccount に secrets の get/list 権限がある"]
+    B --> B2["過剰な RBAC に昇格する"]
+    C --> C1["etcd のポートがネットワークに露出"]
+    C --> C2["etcd バックアップが無防備"]
+    D --> D1["コンテナ脱出でノードへ"]
+    D --> D2["hostPath マウントでホストを読む"]
+`;
+window.DIAGRAMS["d5"] = `
+flowchart TD
+    Q1{"信頼できないコードを<br/>動かすか?"}
+    Q1 -->|"はい (マルチテナント・SaaS 等)"| P1["サンドボックス(RuntimeClass)を使う<br/>+ 別ノードプール"]
+    Q1 -->|"いいえ"| P2["通常のコンテナ + 堅牢化"]
+    P1 --> BASE["全ワークロード共通の土台"]
+    P2 --> BASE
+    BASE --> B1["非 root + RuntimeDefault seccomp"]
+    BASE --> B2["allowPrivilegeEscalation: false / capabilities drop ALL"]
+    BASE --> B3["User Namespaces (hostUsers: false)"]
+    BASE --> B4["ノード OS・ランタイムを迅速にパッチ"]
+    BASE --> B5["create pods 権限の厳格化"]
+`;
+window.DIAGRAMS["d6"] = `
+flowchart TB
+    SRC["ソースコード<br/>と依存関係"] --> BUILD["ビルド<br/>(CI/CD)"]
+    BUILD --> REG["コンテナレジストリ"]
+    REG --> ADM["Admission<br/>(ポリシー検証)"]
+    ADM --> RUN["クラスタで実行"]
+    SRC -.->|"汚染された依存関係"| BUILD
+    BUILD -.->|"盗まれた CI 認証情報・改ざんされた Action"| REG
+    REG -.->|"タグの上書き・偽イメージ"| RUN
+`;
+window.DIAGRAMS["d7"] = `
+flowchart TD
+    EXT["クラスタ外<br/>(インターネット・社内)"] --> GW["Gateway / Ingress"]
+    GW --> SVC["Service"]
+    SVC --> P1["Pod A (frontend)"]
+    P1 -->|"Pod 間通信"| P2["Pod B (backend)"]
+    P2 --> DB["Pod C (database)"]
+    P1 -.->|"侵害後の横展開"| DB
+    P2 -.->|"ノードの API を狙う"| NODEAPI["kubelet / ノードのサービス"]
+    P2 -.->|"外部への持ち出し(egress)"| OUT["外部サーバー"]
+
+    NP["制御: NetworkPolicy<br/>(許可した通信だけ通す)"] -.-> P1
+    NP -.-> P2
+    NP -.-> DB
+    MESH["制御: mTLS(サービスメッシュ)<br/>(暗号化 + 相互認証)"] -.-> P1
+    MESH -.-> P2
+`;
+window.DIAGRAMS["d8"] = `
+flowchart TD
+    A["Pod が侵害される"] --> B{"hostPath を<br/>マウントしている?"}
+    B -->|"いいえ"| C["影響は Pod 内に<br/>とどまりやすい"]
+    B -->|"はい (広いパス)"| D["ホストのファイルを<br/>読み書きできる"]
+    D --> E["他の Pod の Secret・<br/>ノードの認証情報を取得"]
+    D --> F["ホスト上のファイルを改ざん"]
+    E --> G["ノード全体・クラスタへ拡大"]
+    F --> G
+`;
+window.DIAGRAMS["d9"] = `
+flowchart TD
+    Q1{"テナントは互いに<br/>信頼できるか?"}
+    Q1 -->|"はい (同一組織・同じ責任範囲)"| S1["ソフトマルチテナンシー<br/>Namespace + RBAC + NetworkPolicy + Quota"]
+    Q1 -->|"いいえ / 不明"| Q2{"テナントが任意のコードを<br/>実行できるか?"}
+    Q2 -->|"いいえ (データだけ分ける)"| S2["Namespace + 厳格なポリシー<br/>+ 暗号化 + 監査"]
+    Q2 -->|"はい"| Q3{"規制・契約で<br/>強い分離が必須か?"}
+    Q3 -->|"はい"| S3["テナントごとに別クラスタ<br/>(または別アカウント)"]
+    Q3 -->|"いいえ"| S4["サンドボックス + 専用ノードプール<br/>+ 厳格なポリシー + 監視"]
+`;
+window.DIAGRAMS["d10"] = `
+flowchart TB
+    REQ["API リクエスト"] --> AUTHN["1. 認証<br/>(誰か)"]
+    AUTHN --> AUTHZ["2. 認可 (RBAC)<br/>(してよいか)"]
+    AUTHZ --> ADM["3. Admission<br/>(中身を検証・変更)"]
+    ADM --> PERSIST["4. etcd に保存"]
+    ADM -.-> POLICY["PSA / ValidatingAdmissionPolicy<br/>Kyverno / OPA Gatekeeper"]
+    AUTHZ -.-> AUDIT["監査ログ"]
+`;
+window.DIAGRAMS["d11"] = `
+flowchart LR
+    START["侵害された ServiceAccount"] --> Q1{"持っている<br/>危険な権限は?"}
+    Q1 -->|"create pods"| A1["より強い ServiceAccount を<br/>マウントした Pod を作る"]
+    Q1 -->|"impersonate"| A2["管理者になりすます"]
+    Q1 -->|"bind / escalate"| A3["自分に強いロールを紐付ける"]
+    Q1 -->|"secrets get/list"| A4["他の認証情報を取得して横展開"]
+    Q1 -->|"nodes/proxy"| A5["kubelet API 経由で<br/>Pod 内コマンド実行の恐れ"]
+    A1 --> END["クラスタ全体へ権限拡大"]
+    A2 --> END
+    A3 --> END
+    A4 --> END
+    A5 --> END
+`;
+window.DIAGRAMS["d12"] = `
+flowchart TD
+    D["検知<br/>(Falco / 監査ログ / アラート)"] --> T{"本物の侵害か?<br/>(トリアージ)"}
+    T -->|"誤検知"| FP["ルールを調整して終了"]
+    T -->|"侵害の疑い"| C["封じ込め"]
+    C --> C1["NetworkPolicy で対象 Pod を隔離"]
+    C --> C2["ノードを cordon(新規配置を停止)"]
+    C --> C3["漏れた可能性のある認証情報を失効・ローテーション"]
+    C1 --> E["証拠保全<br/>(ログ・メモリ・ディスクの記録)"]
+    C2 --> E
+    C3 --> E
+    E --> R["根絶と復旧<br/>(イメージ・ノードを再作成)"]
+    R --> L["教訓の反映<br/>(ポリシー・検知ルール・脅威モデルの更新)"]
+`;
+</script>
+<script>
+(function () {
+  document.querySelectorAll('pre code').forEach(function (el) {
+    if (/language-/.test(el.className) && window.hljs) {
+      try { window.hljs.highlightElement(el); } catch (e) { console.warn(e); }
+    }
+  });
+
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('backdrop');
+  var toggle = document.getElementById('navToggle');
+  var icon = toggle.querySelector('.ti');
+
+  function setDrawer(open) {
+    sidebar.classList.toggle('open', open);
+    backdrop.classList.toggle('show', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? '目次を閉じる' : '目次を開く');
+    icon.className = open ? 'ti ti-x' : 'ti ti-menu-2';
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  toggle.addEventListener('click', function () { setDrawer(!sidebar.classList.contains('open')); });
+  backdrop.addEventListener('click', function () { setDrawer(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setDrawer(false); });
+  sidebar.addEventListener('click', function (e) {
+    if (e.target.closest('a') && window.matchMedia('(max-width:1024px)').matches) setDrawer(false);
+  });
+  window.addEventListener('resize', function () {
+    if (!window.matchMedia('(max-width:1024px)').matches) setDrawer(false);
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sidebar nav a[href^="#"]'));
+  var linkMap = {};
+  links.forEach(function (a) { linkMap[a.getAttribute('href').slice(1)] = a; });
+  var secs = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
+  var visible = {};
+
+  function updateActive() {
+    var cur = null;
+    secs.forEach(function (s) { if (visible[s.id]) cur = s.id; });
+    links.forEach(function (a) { a.classList.remove('active'); });
+    document.querySelectorAll('.sidebar nav li.top').forEach(function (li) { li.classList.remove('open'); });
+    if (!cur || !linkMap[cur]) return;
+    var a = linkMap[cur];
+    a.classList.add('active');
+    var top = a.closest('li.top');
+    if (top) {
+      top.classList.add('open');
+      var topLink = top.querySelector(':scope > a');
+      if (topLink && topLink !== a) topLink.classList.add('active');
+    }
+    var sr = sidebar.getBoundingClientRect();
+    var ar = a.getBoundingClientRect();
+    if (ar.top < sr.top + 60 || ar.bottom > sr.bottom - 60) {
+      sidebar.scrollTop += ar.top - sr.top - sr.height / 2;
+    }
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) visible[e.target.id] = true; else delete visible[e.target.id];
+    });
+    updateActive();
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  secs.forEach(function (s) { io.observe(s); });
+
+  var checks = document.querySelectorAll('.check-card input');
+  var doneEl = document.getElementById('chkDone');
+  function updateProgress() {
+    if (!doneEl) return;
+    var n = 0;
+    checks.forEach(function (c) { if (c.checked) n += 1; });
+    doneEl.textContent = n;
+  }
+  checks.forEach(function (c) { c.addEventListener('change', updateProgress); });
+  updateProgress();
+})();
+
+(async function () {
+  if (!window.mermaid) { console.error('mermaid is not loaded'); return; }
+  var baseFlow = { useMaxWidth: false, htmlLabels: true, nodeSpacing: 45, rankSpacing: 50, curve: 'basis' };
+  var baseCfg = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: baseFlow,
+    themeVariables: {
+      fontSize: '16px',
+      fontFamily: '"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP","Meiryo",system-ui,sans-serif',
+      background: '#0d1b30',
+      primaryColor: '#16294a',
+      primaryTextColor: '#f3f5fa',
+      primaryBorderColor: '#7c9eff',
+      secondaryColor: '#12233f',
+      tertiaryColor: '#0d1b30',
+      lineColor: '#93a1bd',
+      textColor: '#f3f5fa',
+      mainBkg: '#16294a',
+      nodeBorder: '#7c9eff',
+      nodeTextColor: '#f3f5fa',
+      clusterBkg: '#0d1b30',
+      clusterBorder: '#3e5c8f',
+      edgeLabelBackground: '#0d1b30',
+      titleColor: '#f3f5fa'
+    }
+  };
+  if (document.fonts && document.fonts.ready) { await document.fonts.ready; }
+  var targets = document.querySelectorAll('.mermaid[data-diagram]');
+  for (var i = 0; i < targets.length; i++) {
+    var el = targets[i];
+    var id = el.getAttribute('data-diagram');
+    try {
+      var cfg = (window.DIAGRAM_CFG || {})[id];
+      var useCfg = cfg ? Object.assign({}, baseCfg, { flowchart: Object.assign({}, baseFlow, cfg) }) : baseCfg;
+      window.mermaid.initialize(useCfg);
+      var r = await window.mermaid.render('mmd-' + id, window.DIAGRAMS[id]);
+      el.innerHTML = r.svg;
+      var svg = el.querySelector('svg');
+      var vb = svg && svg.getAttribute('viewBox');
+      if (vb) {
+        var p = vb.split(/[\s,]+/).map(Number);
+        svg.setAttribute('viewBox', [p[0], p[1], p[2], p[3] + 15].join(' '));
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.width = Math.round(p[2]) + 'px';
+        svg.style.maxWidth = '100%';
+        svg.style.height = 'auto';
+        svg.style.overflow = 'visible';
+      }
+      el.setAttribute('data-rendered', 'true');
+    } catch (err) {
+      console.error('mermaid render failed', id, err);
+      el.textContent = '図の描画に失敗しました (' + id + ')';
+    }
+  }
+  document.documentElement.setAttribute('data-mermaid-done', 'true');
+})();
+
+</script>
+</body>
+</html>
