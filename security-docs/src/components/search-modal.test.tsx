@@ -189,6 +189,27 @@ describe('SearchModal', () => {
             expect(await screen.findByRole('button', { name: 'Open XSS' })).toBeInTheDocument();
         });
 
+        test('content に無い語でも headings にマッチすれば結果を描画する', async () => {
+            setUserAgent(WIN_UA);
+            mockFetchOnce([
+                {
+                    title: 'CCIE Security',
+                    description: 'Certification guide',
+                    href: '/docs/ccie-security',
+                    content: 'intro only',
+                    headings: ['6.6 Cisco TrustSec によるマイクロセグメンテーション'],
+                },
+            ]);
+            render(<SearchModal />);
+            await flushEffects();
+            await openModal();
+            await typeQuery('TrustSec');
+
+            expect(
+                await screen.findByRole('button', { name: 'Open CCIE Security' }),
+            ).toBeInTheDocument();
+        });
+
         test('結果クリックで router.push を呼びモーダルを閉じる', async () => {
             setUserAgent(WIN_UA);
             mockFetchOnce([

@@ -1,0 +1,208 @@
+'use client';
+
+import { useEffect, useId, useRef, useState } from 'react';
+
+export type DiagramRenderer = (id: string, source: string) => Promise<{ svg: string }>;
+export interface MermaidFigureProps {
+  id: number;
+  source: string;
+  /** Optional renderer for isolated lifecycle tests; pages use the bundled Mermaid renderer. */
+  renderer?: DiagramRenderer;
+}
+
+/** 読み込みを1回に共有しつつ、失敗時はキャッシュを破棄して呼び出し元へ伝播し、次回の描画で再試行させる */
+export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> {
+  let cached: Promise<T> | undefined;
+  return () => {
+    cached ??= load().catch((error: unknown) => {
+      cached = undefined;
+      throw error;
+    });
+    return cached;
+  };
+}
+
+const getEngine = createEngineLoader(() =>
+  import('mermaid').then(({ default: mermaid }) => {
+    mermaid.initialize({
+      startOnLoad: false, theme: 'base', securityLevel: 'strict',
+      fontFamily: '"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif',
+      flowchart: { useMaxWidth: false, htmlLabels: true, nodeSpacing: 45, rankSpacing: 45, curve: 'basis', padding: 12 },
+      sequence: { useMaxWidth: false, actorMargin: 50, messageMargin: 36 },
+      pie: { useMaxWidth: false },
+      themeVariables: {
+        fontSize: '16px', primaryColor: '#EEF1F8', primaryBorderColor: '#2E3F72', primaryTextColor: '#161B26',
+        secondaryColor: '#FAF1DF', secondaryBorderColor: '#B8802A', secondaryTextColor: '#161B26',
+        tertiaryColor: '#F6F7F9', tertiaryBorderColor: '#B9C0D0', tertiaryTextColor: '#161B26',
+        lineColor: '#2E3F72', textColor: '#161B26', mainBkg: '#EEF1F8', nodeBorder: '#2E3F72', nodeTextColor: '#161B26',
+        clusterBkg: '#F6F7F9', clusterBorder: '#B9C0D0', edgeLabelBackground: '#F6F7F9', titleColor: '#161B26',
+        actorBkg: '#EEF1F8', actorBorder: '#2E3F72', actorTextColor: '#161B26', actorLineColor: '#B9C0D0',
+        signalColor: '#2E3F72', signalTextColor: '#161B26', labelBoxBkgColor: '#FAF1DF', labelBoxBorderColor: '#B8802A',
+        labelTextColor: '#161B26', loopTextColor: '#161B26', noteBkgColor: '#FAF1DF', noteBorderColor: '#B8802A',
+        noteTextColor: '#161B26', activationBkgColor: '#EEF1F8', activationBorderColor: '#2E3F72', sequenceNumberColor: '#FFFFFF',
+        pie1: '#C9D3EA', pie2: '#F1DDAE', pie3: '#BFE0DB', pie4: '#E8C7D6', pie5: '#D9DDE6',
+        pieStrokeColor: '#F6F7F9', pieStrokeWidth: '2px', pieSectionTextColor: '#161B26',
+        pieLegendTextColor: '#161B26', pieTitleTextColor: '#161B26', pieTitleTextSize: '18px',
+        pieSectionTextSize: '16px', pieLegendTextSize: '16px', pieOuterStrokeColor: '#F6F7F9',
+      },
+    });
+    return mermaid;
+  }));
+
+export const renderDiagram: DiagramRenderer = async (id, source) => {
+  await document.fonts?.ready;
+  return (await getEngine()).render(id, source);
+};
+
+function sizeSvg(svgMarkup: string, source: string) {
+  const holder = document.createElement('div');
+  holder.innerHTML = svgMarkup;
+  const svg = holder.querySelector('svg');
+  if (!svg) throw new Error('Mermaid returned no SVG');
+  const box = (svg.getAttribute('viewBox') ?? '').trim().split(/\s+/).map(Number);
+  if (box.length === 4 && box.every(Number.isFinite)) {
+    box[3] += /^(sequenceDiagram|stateDiagram)/.test(source.trim()) ? 110 : 15;
+    svg.setAttribute('viewBox', box.join(' '));
+    svg.style.width = `${box[2]}px`;
+  }
+  svg.removeAttribute('width');
+  svg.removeAttribute('height');
+  // 幅の広い図は自然な px 幅のまま、コンテナの横スクロール（overflow-x: auto）で読ませる
+  svg.style.height = 'auto';
+  svg.style.overflow = 'visible';
+  return holder.innerHTML;
+}
+
+/** ラベル中の <br/> 等の HTML を読み上げ用のプレーンテキストに変換する */
+const plain = (text: string) => text.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
+/** 図の定義からテキスト説明（1行目が図の種類と概要、以降が内容）を生成する */
+export function describeDiagram(source: string): string[] {
+  const lines = source.trim().split('\n').map(line => line.trim()).filter(Boolean);
+  const header = lines[0] ?? '';
+
+  if (header.startsWith('pie')) {
+    const title = lines.find(line => line.startsWith('title '))?.slice('title '.length) ?? '';
+    const slices = lines.flatMap(line => {
+      const slice = line.match(/^"([^"]*)"\s*:\s*(.+)$/);
+      return slice ? [`${plain(slice[1])}: ${slice[2].trim()}`] : [];
+    });
+    return [`円グラフ: ${plain(title)}`, ...slices];
+  }
+
+  if (header.startsWith('sequenceDiagram')) {
+    const names = new Map<string, string>();
+    const steps: string[] = [];
+    for (const line of lines.slice(1)) {
+      const participant = line.match(/^(?:participant|actor)\s+(\S+)(?:\s+as\s+(.+))?$/);
+      if (participant) {
+        names.set(participant[1], plain(participant[2] ?? participant[1]));
+        continue;
+      }
+      const message = line.match(/^([^\s-]+)\s*--?(?:>>|>|x|\))[+-]?\s*([^\s:]+)\s*:\s*(.*)$/);
+      if (message) {
+        const name = (key: string) => names.get(key) ?? key;
+        steps.push(`${name(message[1])} → ${name(message[2])}: ${plain(message[3])}`);
+        continue;
+      }
+      const note = line.match(/^Note\s+[^:]+:\s*(.*)$/i);
+      if (note) steps.push(`注記: ${plain(note[1])}`);
+    }
+    return [`シーケンス図: ${[...names.values()].join('、')}`, ...steps];
+  }
+
+  const edges = describeFlowchart(lines.slice(1));
+  // 接続もノードも読み取れない定義は、定義本文をそのまま説明として使う
+  return ['フローチャート', ...(edges.length > 0 ? edges : lines.slice(1))];
+}
+
+/** `A["x"]` / `C{"x"}` / `B("x")` のノード定義（ID とラベル） */
+const NODE_PATTERN = /(\w+)\s*(?:\[\[?|\(\(?|\{\{?)"([^"]*)"(?:\]\]?|\)\)?|\}\}?)/g;
+/**
+ * ノード定義を ID に置換した行から接続を読み取る（連鎖 `A --> B --> C` は先読みで終点を消費しない）。
+ * 1: 始点 / 2: `<`（双方向） / 3: 中間ラベル（`-- "x" -->`） / 4: 終端（`>` は有向、`-` は無向） / 5: パイプラベル / 6: 終点
+ */
+const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==))?(-?>|-)\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
+
+/** フローチャートの接続を「始点 → 終点: ラベル」形式で列挙し、接続のないノードはラベルのみ残す */
+function describeFlowchart(body: string[]): string[] {
+  const labels = new Map<string, string>();
+  const edges: { from: string; to: string; arrow: string; label: string }[] = [];
+  for (const line of body) {
+    const stripped = line.replace(NODE_PATTERN, (_match, id: string, label: string) => {
+      if (!labels.has(id)) labels.set(id, plain(label));
+      return id;
+    });
+    for (const [, from, back, midLabel, head, pipeLabel, to] of stripped.matchAll(EDGE_PATTERN)) {
+      const arrow = head.endsWith('>') ? (back ? '↔' : '→') : '—';
+      edges.push({ from, to, arrow, label: plain(midLabel ?? pipeLabel ?? '') });
+    }
+  }
+  // ノードのラベルは接続より後の行で定義されることがあるため、全行を読んでから解決する
+  const name = (id: string) => labels.get(id) || id;
+  const connected = new Set(edges.flatMap(({ from, to }) => [from, to]));
+  const isolated = [...labels].filter(([id, label]) => !connected.has(id) && label).map(([, label]) => label);
+  return [
+    ...edges.map(({ from, to, arrow, label }) => `${name(from)} ${arrow} ${name(to)}${label ? `: ${label}` : ''}`),
+    ...isolated,
+  ];
+}
+
+export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidFigureProps) {
+  const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
+  const svgId = `ccie-mermaid-${id}-${unique}`;
+  const descriptionId = `${svgId}-description`;
+  const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
+  const figureRef = useRef<HTMLElement>(null);
+  // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
+  const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
+
+  // 表示域に近づくまで描画を遅らせ、61図の一斉描画で初期表示が重くなるのを防ぐ
+  useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure || nearView) return;
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      setNearView(true);
+      observer.disconnect();
+    }, { rootMargin: '600px 0px' });
+    observer.observe(figure);
+    return () => observer.disconnect();
+  }, [nearView]);
+
+  useEffect(() => {
+    if (!nearView) return;
+    let active = true;
+    // 古い描画の結果・失敗ログは破棄する（定義変更やアンマウント後に完了した場合）
+    renderer(svgId, source).then(({ svg }) => {
+      if (!active) return;
+      setResult({ source, svg: sizeSvg(svg, source) });
+    }).catch((error: unknown) => {
+      if (!active) return;
+      console.error(`Mermaid figure ${id} failed to render`, error);
+      setResult({ source, failed: true });
+    });
+    return () => { active = false; };
+  }, [id, nearView, renderer, source, svgId]);
+
+  const current = result?.source === source ? result : undefined;
+  return (
+    <figure ref={figureRef} className="diagram" data-d={id} data-definition={source}>
+      {current?.svg ? (
+        <>
+          <div role="img" aria-label={`図 ${id + 1}`} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
+          <details className="diagram-description">
+            <summary>図 {id + 1} のテキスト説明</summary>
+            <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
+          </details>
+        </>
+      ) : current?.failed ? (
+        <div className="diagram-error">
+          <p role="alert">図 {id + 1} を描画できませんでした。</p>
+          <details><summary>図の定義</summary><pre>{source}</pre></details>
+        </div>
+      ) : <p role="status">図 {id + 1} を描画中…</p>}
+      <noscript>図の表示にはJavaScriptが必要です。</noscript>
+    </figure>
+  );
+}

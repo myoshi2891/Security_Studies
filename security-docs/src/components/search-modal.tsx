@@ -30,7 +30,7 @@ export function SearchModal() {
             .then((data) => {
                 setFuse(
                     new Fuse(data, {
-                        keys: ['title', 'description', 'content'],
+                        keys: ['title', 'description', 'content', 'headings'],
                         threshold: 0.4,
                     }),
                 );

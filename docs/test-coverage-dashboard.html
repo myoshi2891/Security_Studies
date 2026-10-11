@@ -15,12 +15,12 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-05-27</span>
+                            <span><span class="live-dot"></span>Scanned 2026-10-11</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
                             <span>CI: ✅ GitHub Actions</span>
-                            <span>Coverage: ✅ Codecov (lcov)</span>
+                            <span>Coverage: lcov生成 · Codecov送信停止中</span>
                         </div>
                     </div>
                     <div class="stamp">Audit<br />Required</div>
@@ -32,16 +32,16 @@
         <section class="summary-section">
             <div class="container">
                 <div class="summary-grid">
-                    <div class="summary-card c-amber">
+                    <div class="summary-card c-red">
                         <div class="summary-label">Strategy Coverage</div>
-                        <div class="summary-value">12.5%</div>
+                        <div class="summary-value">17.5%</div>
                         <div class="summary-sub">
-                            カテゴリ戦略カバレッジ<br />（40 セル中 5 セル相当）
+                            カテゴリ戦略カバレッジ<br />（40 セル中 7 セル相当）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
-                                style="width: 12.5%; --bar-color: var(--status-partial-border)"
+                                style="width: 17.5%; --bar-color: var(--status-none-border)"
                             ></div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            22 ファイル中 22 ファイルに<br />Unit テストあり（proxy / layout 追加で完走）
+                            26 ロジックファイル中 26 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1。MDXテストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -60,8 +60,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">118</div>
-                        <div class="summary-sub">22 ファイル · search カバレッジ 100% 達成およびエラーパステスト追加</div>
+                        <div class="summary-value">186</div>
+                        <div class="summary-sub">30 ファイル · 186 pass / 0 fail · 6,304 expect · CCIE移行</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -72,7 +72,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">CI Pipeline</div>
                         <div class="summary-value">Active</div>
-                        <div class="summary-sub">GitHub Actions + Codecov<br />PR 自動テスト・カバレッジ計測</div>
+                        <div class="summary-sub">GitHub Actions<br />PR 自動テスト・lcov生成（Codecov送信停止中）</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -83,6 +83,9 @@
                 </div>
             </div>
         </section>
+
+<!-- CCIE migration status -->
+        <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green · 186 pass / 0 fail · 6,304 expect · bun run build 成功、ブラウザ目視確認はユーザー確認待ち。</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -232,13 +235,13 @@
                             <tr>
                                 <th scope="col">Category</th>
                                 <th scope="col" data-dom="d1">
-                                    docs/Components<small>src/components/docs/ · 16 files</small>
+                                    docs/Components<small>src/components/docs/ · 17 tracked files</small>
                                 </th>
                                 <th scope="col" data-dom="d2">
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 10×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 12×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -265,15 +268,16 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">64 tests · 16/16 files</span>
+                                            <span class="cell-count">64 unit + 10 layout tests · 17/17 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">✅ Good — 16/16 ファイル</div>
+                                            <div class="tt-title">✅ Good — 17/17 対象ファイル</div>
                                             全ファイルに十分なテストあり。バリアント・エッジケース等もカバー。
                                             <ul class="tt-files">
+                                                <li>✓ DocsHeaderNav: layout.test.tsx (10 tests、App/Pagesと共有)</li>
                                                 <li>✓ Callout.test.tsx (4 tests)</li>
                                                 <li>✓ DocsSubheading.test.tsx (4 tests)</li>
                                                 <li>✓ SectionCard.test.tsx (3 tests)</li>
@@ -293,7 +297,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">26 tests · 2/2 files</span>
+                                            <span class="cell-count">27 tests · 2/2 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -306,7 +310,7 @@
                                                 <li>
                                                     → 表示/非表示, consent, storage sync, Escape/A11y
                                                 </li>
-                                                <li>✓ search-modal.test.tsx (17 tests)</li>
+                                                <li>✓ search-modal.test.tsx (18 tests)</li>
                                                 <li>
                                                     → fetch/クエリ/ナビゲーション/キーボード
                                                 </li>
@@ -322,19 +326,20 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">8 tests · 1/3 files</span>
+                                            <span class="cell-count">10 layout + 56 CCIE tests · 4/6 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 33%"></div>
+                                                <div class="cell-bar-fill" style="width: 67%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 1/3 ファイル</div>
-                                            docs レイアウトのみ統合テスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 4/6 ロジックファイル</div>
+                                            docs layout と CCIE の描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/app/docs/layout.test.tsx (8 tests)</li>
+                                                <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
+                                                <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの56件で検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>— 10 × docs/*/page.mdx（テスト対象外）</li>
+                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -347,7 +352,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">11 tests · 2/2 files</span>
+                                            <span class="cell-count">22 tests · 2/2 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -356,7 +361,7 @@
                                             <div class="tt-title">✅ Good — 2/2 ファイル</div>
                                             search.ts および API ルート (Contractテスト) をカバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/lib/search.test.ts (11 tests)</li>
+                                                <li>✓ src/lib/search.test.ts (19 tests)</li>
                                                 <li>
                                                     → インデックス生成・SearchResult形式・エラーパスカバレッジ補完
                                                 </li>
@@ -367,21 +372,21 @@
                                 </td>
                                 <td data-dom="d5">
                                     <div
-                                        class="cell none"
+                                        class="cell partial"
                                         tabindex="0"
-                                        aria-label="Config/Nav Unit: 未実装"
+                                        aria-label="Config/Nav Unit: 新カテゴリー契約を検証"
                                     >
                                         <div class="cell-inner">
-                                            <span class="cell-icon">❌</span>
-                                            <span class="cell-count">0 tests</span>
+                                            <span class="cell-icon">⚠️</span>
+                                            <span class="cell-count">1 config contract · 1/1 files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill"></div>
+                                                <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">❌ 未実装</div>
+                                            <div class="tt-title">⚠️ Partial — CCIEカテゴリー契約</div>
                                             <ul class="tt-files">
-                                                <li>✗ src/config/docs.ts (sidebarNav)</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持（integration.test.tsx）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -884,7 +889,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">11 tests · 2/2 files</span>
+                                            <span class="cell-count">22 tests · 2/2 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -893,7 +898,7 @@
                                             <div class="tt-title">✅ Good — 2/2 ファイル</div>
                                             search.ts および API ルート (Contractテスト) をカバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/lib/search.test.ts (11 tests)</li>
+                                                <li>✓ src/lib/search.test.ts (19 tests)</li>
                                                 <li>
                                                     → インデックス生成・SearchResult 形式・href
                                                 </li>
@@ -1068,7 +1073,7 @@
                         <div class="action-card medium">
                             <div class="action-title">SearchModal A11y テスト追加</div>
                             <div class="action-desc">
-                                17 件の Unit テストに加え、Escape 閉じる・フォーカス管理・
+                                18 件の Unit テストに加え、Escape 閉じる・フォーカス管理・
                                 <code>role=combobox</code> 相当のキーボードナビゲーションを
                                 WCAG 2.1 AA の観点で検証する。
                             </div>
@@ -1167,10 +1172,10 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-05-27</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-11</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 22 files · 118 test cases · CI:
-                        GitHub Actions ✅ · Coverage: Codecov ✅</span
+                        >Runner: bun test --coverage · DOM: happy-dom · 30 files · 186 test cases · CI:
+                        GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
             </div>
