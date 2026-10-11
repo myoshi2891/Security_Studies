@@ -844,8 +844,11 @@ server {
     ssl_prefer_server_ciphers off;
 
     # 鍵交換グループ: ハイブリッド PQC を優先 (OpenSSL 3.5 以降など、対応環境が必要)
-    # 対応していない環境では X25519MLKEM768 を外す
-    ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp384r1;
+    # "/" で優先度タプルを分けると、クライアントが X25519 の鍵共有値だけを送ってきた場合でも
+    # X25519MLKEM768 を優先して選ぶ (必要なら HelloRetryRequest で要求する)
+    # 対応していない環境では "X25519:prime256v1:secp384r1" とする
+    # 実際に選ばれたグループは Step 7 の s_client 出力 (Negotiated TLS1.3 group) で確認する
+    ssl_ecdh_curve X25519MLKEM768/X25519:prime256v1:secp384r1;
 
     ssl_session_timeout 1d;
     ssl_session_cache shared:SSL:10m;
@@ -1186,10 +1189,10 @@ openssl verify -CAfile root.crt -untrusted int.crt leaf.crt
 
 ```bash
 # 基本: TLS 1.3 で接続して証明書を確認
-openssl s_client -connect example.com:443 -servername example.com -tls1_3 </dev/null
+openssl s_client -connect example.com:443 -servername example.com -verify_return_error -verify_hostname example.com -tls1_3 </dev/null
 
 # 証明書チェーン全体を表示
-openssl s_client -connect example.com:443 -servername example.com -showcerts </dev/null
+openssl s_client -connect example.com:443 -servername example.com -verify_return_error -verify_hostname example.com -showcerts </dev/null
 
 # 古いプロトコルが拒否されることの確認
 # 注意: OpenSSL 3.x の既定セキュリティレベル (SECLEVEL 1 以上) ではクライアント側が TLS 1.1 を送らない。
@@ -1199,7 +1202,7 @@ openssl s_client -connect example.com:443 -servername example.com -tls1_1 -ciphe
 # ClientHello 送信後にサーバーから protocol_version アラート等が返れば「サーバーが拒否」と判断できる
 
 # 鍵交換グループを指定して確認 (ハイブリッド PQC。OpenSSL 3.5 以降など対応環境のみ)
-openssl s_client -connect example.com:443 -servername example.com -groups X25519MLKEM768 </dev/null
+openssl s_client -connect example.com:443 -servername example.com -verify_return_error -verify_hostname example.com -groups X25519MLKEM768 </dev/null
 ```
 
 | 出力の見どころ | 意味 |
