@@ -406,9 +406,16 @@ flowchart TD
     D -- いいえ --> X
     D -- はい --> E{"SAN に接続先ホスト名が含まれるか"}
     E -- いいえ --> X
-    E -- はい --> F{"失効していないか<br/>(CRL / CRLSet など)"}
-    F -- いいえ --> X
-    F -- はい --> P{"クライアントまたは Root Program の<br/>ポリシーが CT を要求するか"}
+    E -- はい --> U{"Leaf の EKU が serverAuth を許可し<br/>Key Usage も TLS サーバー用途に適合するか<br/>(clientAuth のみの証明書は不可)"}
+    U -- いいえ --> X
+    U -- はい --> R{"クライアントの実装やポリシーで<br/>失効確認を適用するか"}
+    R -- いいえ --> P
+    R -- はい --> F{"失効確認の結果<br/>(CRL / CRLSet など)"}
+    F -- 失効が確認された --> X
+    F -- 確認できない --> SF{"ポリシーは hard-fail か"}
+    SF -- はい --> X
+    SF -- いいえ (soft-fail) --> P
+    F -- 失効していない --> P{"クライアントまたは Root Program の<br/>ポリシーが CT を要求するか"}
     P -- いいえ --> H["検証成功。ハンドシェイクを続行"]
     P -- はい --> G{"Certificate Transparency の<br/>SCT がポリシーを満たすか"}
     G -- いいえ --> X
@@ -808,7 +815,7 @@ Mozilla の **Server Side TLS** は、設定の事実上の標準リファレン
 
 ### Step 4：nginx の設定例（Intermediate 相当）
 
-以下は **学習用の例** です。本番では必ず Mozilla のジェネレーターで最新版を生成し、環境（OpenSSL のバージョンなど）に合わせて検証してください。
+以下は **学習用の例** です。本番では必ず Mozilla のジェネレーターで最新版を生成し、環境（OpenSSL のバージョンなど）に合わせて検証してください。この例の `http2 on;` は **nginx 1.25.1 以降** で追加されたディレクティブのため、例全体が nginx 1.25.1 以降を対象とします（それより古い版では `listen 443 ssl http2;` と書きます）。
 
 ```nginx
 server {
@@ -1312,7 +1319,7 @@ flowchart LR
 3. OCSP の停止に伴い、証明書に OCSP の URL が含まれないため。
 4. 従来の X25519（楕円曲線 DH）とポスト量子の ML-KEM-768。どちらかが安全なら全体が安全。
 5. 誤設定時の復旧に長い時間がかかるため。短い期間から段階的に延ばす。
-6. ClientHello 全体（接続先ホスト名 SNI を含む）。DNS の暗号化（DoH / DoT など）。
+6. ClientHelloInner（内側の ClientHello。本当の接続先ホスト名 SNI を含む）。ネットワーク上の ClientHelloOuter とその public_name は引き続き見える。DNS の暗号化（DoH / DoT など）。
 7. SNI を送らないと、別のサイトの証明書が返ることがあるため。
 
 </details>
