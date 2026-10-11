@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure by Design 入門ガイド 〜「設計」でセキュリティを実現する考え方を、ステップバイステップで学ぶ〜</title>
+<meta name="description" content="Manning刊『Secure by Design』をもとに、設計でセキュリティを実現する考え方を初学者向けにステップバイステップで解説するガイド(情報基準日 2026年10月8日)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+:root{
+  --color-background-primary:#07111e;
+  --color-background-secondary:#0d1b2e;
+  --color-background-tertiary:#13253d;
+  --color-background-info:#10264a;
+  --color-background-danger:#3a1620;
+  --color-background-success:#0f2f2a;
+  --color-background-warning:#3a2d12;
+  --color-text-primary:#f3f5fa;
+  --color-text-secondary:#c6d0e3;
+  --color-text-tertiary:#93a1bd;
+  --color-text-info:#9db8ff;
+  --color-text-danger:#ff9aa8;
+  --color-text-success:#7fe0c3;
+  --color-text-warning:#f0c674;
+  --color-border-tertiary:#1e2f4d;
+  --color-border-secondary:#2d456e;
+  --color-border-primary:#3e5c8f;
+  --accent:#7c9eff;
+  --font-sans:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP","Segoe UI",Roboto,sans-serif;
+  --font-serif:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",Georgia,serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --border-radius-xl:16px;
+  --sidebar-w:320px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);font-size:1rem;line-height:1.7;font-weight:400;overflow-wrap:anywhere}
+a{color:var(--accent)}
+strong,b{font-weight:500;color:var(--color-text-primary)}
+
+/* ---------- sidebar ---------- */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);padding:1.5rem 1rem 2rem;z-index:50}
+.brand{display:block;padding:0 .75rem 1.25rem;margin-bottom:1rem;border-bottom:1px solid var(--color-border-tertiary);text-decoration:none}
+.brand-name{display:block;color:var(--color-text-primary);font-weight:500;font-size:1.25rem;line-height:1.4}
+.brand-sub{display:block;color:var(--color-text-tertiary);margin-top:.25rem}
+.sidebar nav ul{list-style:none;margin:0;padding:0}
+.sidebar nav li{padding-left:0;margin:.125rem 0}
+.sidebar nav li::before{content:none}
+.sidebar nav a{display:block;padding:.5rem .75rem;border-radius:var(--border-radius-md);border-left:2px solid transparent;color:var(--color-text-secondary);text-decoration:none;line-height:1.5}
+.sidebar nav a:hover{background:var(--color-background-tertiary);color:var(--color-text-primary)}
+.sidebar nav a.active{background:var(--color-background-info);color:var(--color-text-info);border-left-color:var(--accent)}
+
+/* ---------- layout ---------- */
+.layout{display:block}
+.main{margin-left:var(--sidebar-w);padding:2rem 3rem 4rem}
+
+/* ---------- hero ---------- */
+.hero{padding:1.5rem 0 2rem;border-bottom:1px solid var(--color-border-tertiary)}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-info);font-weight:500}
+.hero h1{font-size:2.25rem;font-weight:500;line-height:1.3;margin:.5rem 0 .75rem;color:var(--color-text-primary)}
+.hero .sub{color:var(--color-text-secondary);font-size:1.25rem;margin:0 0 1.75rem;line-height:1.6}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:0}
+.meta-item{padding:1rem 1.25rem;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg)}
+.meta-item dt{color:var(--color-text-info);font-weight:500;margin:0 0 .25rem}
+.meta-item dd{margin:0;color:var(--color-text-secondary)}
+
+/* ---------- sections ---------- */
+.section{padding:2.5rem 0 1rem;border-top:1px solid var(--color-border-tertiary);scroll-margin-top:1rem}
+.hero + .section{border-top:none}
+.section>h2{font-size:1.6rem;font-weight:500;line-height:1.4;margin:0 0 1.25rem;padding-left:1rem;border-left:4px solid var(--accent);color:var(--color-text-primary)}
+.prose h3{font-size:1.25rem;font-weight:500;line-height:1.5;margin:2.25rem 0 .75rem;color:var(--color-text-info)}
+.prose h4{font-size:1rem;font-weight:500;margin:1.5rem 0 .5rem;color:var(--color-text-primary)}
+.prose p{margin:.9rem 0;color:var(--color-text-secondary)}
+.prose p strong{color:var(--color-text-primary)}
+.prose a{color:var(--accent);text-underline-offset:3px}
+
+.prose ul{list-style:none;margin:1rem 0;padding:0}
+.prose ul>li{position:relative;display:block;padding-left:1.5rem;margin:.5rem 0;color:var(--color-text-secondary)}
+.prose ul>li::before{content:"";position:absolute;left:.25rem;top:.78em;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent)}
+.prose ol{list-style:none;margin:1rem 0;padding:0;counter-reset:n}
+.prose ol>li{position:relative;display:block;padding-left:2.5rem;margin:.65rem 0;counter-increment:n;color:var(--color-text-secondary)}
+.prose ol>li::before{content:counter(n);position:absolute;left:0;top:.1rem;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--color-text-info);font-weight:500;text-align:center;line-height:1.65rem}
+
+/* ---------- inline code ---------- */
+code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:.05rem .4rem;color:var(--color-text-info);overflow-wrap:anywhere}
+
+/* ---------- tables ---------- */
+.table-wrap{overflow-x:auto;margin:1.25rem 0;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:1rem}
+th,td{padding:.75rem 1rem;text-align:left;vertical-align:top;line-height:1.6;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-secondary);overflow-wrap:anywhere}
+th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;white-space:nowrap}
+td strong{color:var(--color-text-primary)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:var(--color-background-secondary)}
+
+/* ---------- callouts ---------- */
+.callout{position:relative;margin:1.25rem 0;padding:1rem 1.25rem 1rem 3.5rem;border:1px solid var(--color-border-secondary);border-left:3px solid var(--accent);border-radius:var(--border-radius-lg);background:var(--color-background-info)}
+.callout>i.ti{position:absolute;left:1.1rem;top:1rem;font-size:1.5rem;line-height:1.4;color:var(--color-text-info)}
+.callout p{margin:.5rem 0;color:var(--color-text-primary)}
+.callout p:first-of-type{margin-top:0}
+.callout p:last-of-type{margin-bottom:0}
+.callout.tip{background:var(--color-background-success);border-color:var(--color-border-secondary);border-left-color:var(--color-text-success)}
+.callout.tip>i.ti{color:var(--color-text-success)}
+.callout.warn{background:var(--color-background-warning);border-left-color:var(--color-text-warning)}
+.callout.warn>i.ti{color:var(--color-text-warning)}
+.callout code{background:var(--color-background-primary)}
+
+/* ---------- code ---------- */
+.code-block{margin:1.25rem 0;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;background:#0a1626}
+.code-head{padding:.5rem 1rem;background:var(--color-background-tertiary);border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary);font-family:var(--font-mono);text-transform:lowercase}
+.code-block pre{margin:0;padding:1rem 1.25rem;overflow-x:auto;background:transparent}
+.code-block pre code,pre code.hljs{display:block;background:transparent;border:0;padding:0;border-radius:0;font-family:var(--font-mono);font-size:1rem;line-height:1.65;white-space:pre;overflow-wrap:normal;color:var(--color-text-primary)}
+
+/* ---------- diagrams ---------- */
+.diagram{margin:1.5rem 0;padding:1.5rem 1rem;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.mermaid-target{display:flex;justify-content:center;min-height:3rem;color:var(--color-text-tertiary)}
+.mermaid-target svg{max-width:100%;height:auto;overflow:visible}
+.diagram-error{color:var(--color-text-danger)}
+
+/* ---------- references ---------- */
+.ref-list{display:grid;gap:.75rem;margin:1rem 0 1.5rem}
+.ref-card{display:grid;grid-template-columns:2.5rem 1fr;gap:1rem;padding:1rem 1.25rem;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.ref-badge{display:flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:50%;background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--color-text-info);font-weight:500}
+.ref-tag{display:inline-block;padding:.1rem .6rem;border-radius:999px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);color:var(--color-text-info);font-weight:500}
+.ref-desc{margin:.5rem 0 .5rem;color:var(--color-text-primary)}
+.ref-url{display:inline-flex;align-items:flex-start;gap:.4rem;color:var(--accent);text-decoration:none;font-family:var(--font-mono);overflow-wrap:anywhere;word-break:break-all}
+.ref-url:hover{text-decoration:underline}
+.ref-url span{min-width:0}
+
+/* ---------- footer ---------- */
+.footer{margin-top:3rem;padding:1.5rem 0 0;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary)}
+.footer p{margin:.25rem 0}
+
+/* ---------- mobile / tablet drawer ---------- */
+.burger{display:none;position:fixed;right:1.25rem;bottom:1.25rem;width:3.5rem;height:3.5rem;padding:0;border-radius:50%;border:1px solid var(--color-border-primary);background:var(--color-background-info);color:var(--color-text-info);cursor:pointer;z-index:60;align-items:center;justify-content:center}
+.burger svg{width:1.5rem;height:1.5rem}
+.burger .ic-close{display:none}
+body.nav-open .burger .ic-open{display:none}
+body.nav-open .burger .ic-close{display:block}
+.backdrop{display:none}
+@media (max-width:1024px){
+  .sidebar{width:min(320px,86vw);transform:translateX(-100%);transition:transform .25s ease}
+  body.nav-open .sidebar{transform:translateX(0)}
+  .backdrop{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(3,8,15,.72);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40}
+  body.nav-open .backdrop{opacity:1;pointer-events:auto}
+  body.nav-open{overflow:hidden}
+  .burger{display:flex}
+  .main{margin-left:0;padding:1.25rem 1.25rem 5.5rem}
+  .hero h1{font-size:1.75rem}
+  .hero .sub{font-size:1.1rem}
+}
+@media (max-width:600px){
+  .main{padding:1rem 1rem 5.5rem}
+  .section>h2{font-size:1.35rem}
+  .callout{padding-left:3.25rem}
+  .ref-card{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sidebar,.backdrop{transition:none}
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar" aria-label="目次">
+  <a class="brand" href="#top">
+    <span class="brand-name">Secure by Design</span>
+    <span class="brand-sub">入門ガイド / 2026年10月8日時点</span>
+  </a>
+  <nav>
+    <ul>
+<li><a href="#sec-0">0. このガイドの使い方</a></li>
+<li><a href="#sec-1">1. Step 0 ── Secure by Design とは何か(まず全体像)</a></li>
+<li><a href="#sec-2">2. Step 1 ── セキュリティは「機能」ではなく「関心事」</a></li>
+<li><a href="#sec-3">3. Step 2 ── 「設計」とは何か、設計でセキュリティを駆動する</a></li>
+<li><a href="#sec-4">4. Step 3 ── DDD(ドメイン駆動設計)の最小知識</a></li>
+<li><a href="#sec-5">5. Step 4 ── コード構成要素: 不変性・フェイルファスト・バリデーション</a></li>
+<li><a href="#sec-6">6. Step 5 ── ドメインプリミティブ(本書の中核概念)</a></li>
+<li><a href="#sec-7">7. Step 6 ── 状態の完全性と複雑さの削減</a></li>
+<li><a href="#sec-8">8. Step 7 ── デリバリーパイプラインとテストでセキュリティを守る</a></li>
+<li><a href="#sec-9">9. Step 8 ── 失敗と可用性を設計する</a></li>
+<li><a href="#sec-10">10. Step 9 ── クラウド的思考がもたらすセキュリティ上の利点</a></li>
+<li><a href="#sec-11">11. Step 10 ── レガシーコードとマイクロサービスへの適用</a></li>
+<li><a href="#sec-12">12. Step 11 ── 政府機関の Secure by Design と、業界の流れ</a></li>
+<li><a href="#sec-13">13. Step 12 ── 実践: チェックリスト・演習・理解度確認</a></li>
+<li><a href="#sec-14">14. 用語集</a></li>
+<li><a href="#sec-15">15. 参考文献・根拠ソース一覧(URL)</a></li>
+<li><a href="#sec-16">16. 最後に</a></li>
+    </ul>
+  </nav>
+</aside>
+<div class="backdrop" id="backdrop"></div>
+<button class="burger" id="burger" type="button" aria-label="目次を開く" aria-expanded="false" aria-controls="sidebar">
+  <svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+
+<div class="layout">
+<main class="main">
+  <header class="hero" id="top">
+    <span class="eyebrow"><i class="ti ti-shield-lock"></i> Secure by Design</span>
+    <h1>Secure by Design 入門ガイド</h1>
+    <p class="sub">〜「設計」でセキュリティを実現する考え方を、ステップバイステップで学ぶ〜</p>
+    <dl class="meta">
+<div class="meta-item"><dt>対象読者</dt><dd>セキュリティの専門家ではないが、Java / C# / TypeScript など何らかの言語でアプリケーションを設計・実装・テストしている初学者〜中級者</dd></div>
+<div class="meta-item"><dt>情報の基準日</dt><dd>2026年10月8日時点(Web検索で確認できた範囲)</dd></div>
+<div class="meta-item"><dt>主な土台</dt><dd>Manning 刊『Secure by Design』(Dan Bergh Johnsson / Daniel Deogun / Daniel Sawano 著、2019年9月刊、400ページ)</dd></div>
+<div class="meta-item"><dt>補強資料</dt><dd>Google の Christoph Kern 氏の Safe Coding、IEEE Center for Secure Design、CISA ほか各国政府機関の Secure by Design 指針、Matt Raible 氏の書評・解説 ほか</dd></div>
+    </dl>
+  </header>
+
+<section class="section" id="sec-0"><h2>0. このガイドの使い方</h2><div class="prose"><h3>0.1 このガイドで分かること</h3>
+<ol>
+<li>「Secure by Design(設計によるセキュリティ)」とは何か、なぜ「あとから足すセキュリティ」より強いのか</li>
+<li>書籍が提案する <strong>コードレベルの具体的な設計テクニック</strong>(不変性・フェイルファスト・バリデーション・ドメインプリミティブ・エンティティの設計 など)</li>
+<li><strong>テスト・デリバリーパイプライン・障害設計・クラウド設計</strong> にまで広がる設計の考え方</li>
+<li>世の中でよく混同される「<strong>CISA などが推進する製品セキュリティ原則としての Secure by Design</strong>」との違いと関係</li>
+<li>明日から現場で使える <strong>チェックリスト・演習・理解度確認</strong></li>
+</ol>
+<h3>0.2 重要な前提(著作権・正確性について)</h3>
+<ul>
+<li>書籍の内容は <strong>目次・公式紹介ページ・著者の無料公開記事・公開スライド・書評</strong> をもとに、私(筆者)が自分の言葉で再構成しています。書籍本文の転載ではありません。<strong>詳細な議論やコード全体は必ず書籍で確認してください。</strong></li>
+<li>コード例は、考え方を説明するために <strong>本ガイド用に新しく書いたオリジナル</strong> です(書籍のコードそのものではありません)。</li>
+<li>Java のコード例は <code>List.copyOf</code>(JDK 10 以降)と <code>instanceof</code> のパターンマッチング(JDK 16 以降)を使うため、<strong>JDK 16 以降</strong> を前提とします。</li>
+<li>書籍の第12章(レガシー)・第13章(マイクロサービス)は、私が参照できた範囲では詳細な目次までは確認できませんでした。該当箇所は「<strong>書評・目次レベルで確認できた内容</strong>」と「<strong>筆者の一般的な整理</strong>」を区別して記載しています。</li>
+</ul>
+<h3>0.3 全体の学習ステップ</h3>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d1" role="img" aria-label="図1"></div></figure></div></section>
+<section class="section" id="sec-1"><h2>1. Step 0 ── Secure by Design とは何か(まず全体像)</h2><div class="prose"><h3>1.1 一言でいうと</h3>
+<div class="callout note"><i class="ti ti-info-circle"></i><p><strong>セキュリティを「あとから足す機能」ではなく、「良い設計の自然な結果」として手に入れる考え方。</strong></p></div>
+<p>書籍の公式紹介では、セキュリティは開発プロセスの自然な成果物であるべきだと述べられ、設計を主な推進力としてセキュリティを実現するアプローチが解説されています。また、著者らは「開発者は開発者であり、セキュリティは副次的な関心事になりがちだ」という現実を踏まえ、<strong>日々の設計習慣の中で自然に安全になる作り方</strong>を目指していると紹介されています。</p>
+<h3>1.2 「Secure by Design」という言葉が指す2つの文脈</h3>
+<p>同じ言葉が、少し違う意味で使われています。混同しないことが最初の重要ポイントです。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>① 書籍の Secure by Design</th>
+<th>② CISA 等の Secure by Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主な主体</td>
+<td>開発者・設計者(コードを書く人)</td>
+<td>ソフトウェア製造事業者(経営層を含む組織)</td>
+</tr>
+<tr>
+<td>主な関心</td>
+<td>コード・ドメインモデル・テスト・運用の <strong>設計技法</strong></td>
+<td>製品が顧客に与える <strong>セキュリティ成果</strong> と、その説明責任</td>
+</tr>
+<tr>
+<td>代表的な内容</td>
+<td>ドメインプリミティブ、不変性、フェイルファスト、レジリエンス</td>
+<td>顧客のセキュリティ成果への責任、徹底した透明性、トップの主導、7つのゴールの誓約</td>
+</tr>
+<tr>
+<td>性質</td>
+<td>技術書・設計の実践知</td>
+<td>政府機関の共同ガイダンス・自主的な誓約(pledge)</td>
+</tr>
+<tr>
+<td>両者の関係</td>
+<td><strong>「どう作るか」の具体的手段</strong></td>
+<td><strong>「何を目指し、どう説明するか」の方針</strong></td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout tip"><i class="ti ti-bulb"></i><p>初学者向けの整理: ①は「手を動かす人の設計ワザ」、②は「組織として何にコミットするかの宣言」。②の目標(例:脆弱性のクラス全体を減らす)を達成するための具体的手段として、①の技法が役に立ちます。</p></div>
+<h3>1.3 「あとから足す」vs「設計に織り込む」</h3>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d2" role="img" aria-label="図2"></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>比較項目</th>
+<th>あとから足す方式</th>
+<th>設計に織り込む方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>開発者に求める知識</td>
+<td>全員がセキュリティ専門家になる必要がある</td>
+<td>設計部品の使い方を知っていれば良い</td>
+</tr>
+<tr>
+<td>漏れの起きやすさ</td>
+<td>人が思い出さないと漏れる</td>
+<td>部品を使えば自動的に守られる</td>
+</tr>
+<tr>
+<td>コスト</td>
+<td>発見・修正を繰り返すため後半ほど高い</td>
+<td>初期に設計コストがかかるが、再発しにくい</td>
+</tr>
+<tr>
+<td>脆弱性への姿勢</td>
+<td>個々のバグ(インスタンス)を潰す</td>
+<td>バグが生まれる <strong>構造そのもの</strong> を潰す</td>
+</tr>
+</tbody>
+</table></div></div></section>
+<section class="section" id="sec-2"><h2>2. Step 1 ── セキュリティは「機能」ではなく「関心事」</h2><div class="prose"><p>(書籍 第1章 "Why design matters for security" の前半に相当)</p>
+<h3>2.1 機能(Feature)と関心事(Concern)の違い</h3>
+<p>書籍第1章の節見出しには「セキュリティは機能ではなく関心事である」という趣旨のものがあります。ここでの考え方を整理するとこうなります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>種類</th>
+<th>例</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>セキュリティ機能</strong></td>
+<td>ログイン画面、パスワードハッシュ、アクセス制御、暗号化ライブラリ</td>
+<td>バックログに積んで「作れば完了」にできる</td>
+</tr>
+<tr>
+<td><strong>セキュリティ関心事</strong></td>
+<td>入力が正しい範囲に収まっているか、状態が壊れないか、障害時に情報が漏れないか</td>
+<td>全ての機能・全てのコードに <strong>横断的に</strong> 関わる。「完了」の概念がない</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>例えるなら、<strong>「鍵」は機能ですが、「家の間取り・壁・窓の位置」は関心事</strong> です。いくら高級な鍵を付けても、壁に穴が空いていれば守れません。</p></div>
+<h3>2.2 セキュリティ関心事の分類: CIA-T</h3>
+<p>書籍は、セキュリティ関心事を <strong>CIA-T</strong> という4つの観点で整理します(CIA に T を加えたもの)。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>文字</th>
+<th>観点</th>
+<th>意味(平易な説明)</th>
+<th>よくある設計上の落とし穴の例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong></td>
+<td>Confidentiality(機密性)</td>
+<td>見てはいけない人に見せない</td>
+<td>ログや例外メッセージに個人情報が混ざる</td>
+</tr>
+<tr>
+<td><strong>I</strong></td>
+<td>Integrity(完全性)</td>
+<td>データ・状態が勝手に壊れない/改ざんされない</td>
+<td>不正な値(負の数量など)がシステムに入り込む</td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td>Availability(可用性)</td>
+<td>必要な時に使える</td>
+<td>1件の重い処理や外部障害で全体が止まる</td>
+</tr>
+<tr>
+<td><strong>T</strong></td>
+<td>Traceability(追跡可能性)</td>
+<td>誰が何をしたか後から追える</td>
+<td>監査ログが残らない/改ざんできる</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>書籍では T を Traceability として扱うと私は理解していますが、定義の細部は書籍本文で確認してください。</p></div>
+<h3>2.3 従来のセキュリティアプローチの限界</h3>
+<p>書籍第1章は、従来のやり方の問題点として次の3つの節を立てています。</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d3" role="img" aria-label="図3"></div></figure>
+<div class="callout tip"><i class="ti ti-bulb"></i><p>Matt Raible 氏(Java Champion、Okta の開発者支援担当として知られる)は書評で、<strong>開発者にセキュリティ関連 API 呼び出しを毎回思い出させる方式は難しく、セキュリティを設計に焼き込むほうが開発者は自然に安全になる</strong>、という趣旨で本書の第1章を評価しています。</p></div></div></section>
+<section class="section" id="sec-3"><h2>3. Step 2 ── 「設計」とは何か、設計でセキュリティを駆動する</h2><div class="prose"><h3>3.1 設計の定義(広く捉える)</h3>
+<p>書籍は「設計」をコード1行〜アーキテクチャ全体にまたがる活動として扱います。つまり <strong>クラス名・型・メソッドシグネチャの決め方も立派な設計</strong> です。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>設計のレベル</th>
+<th>具体例</th>
+<th>セキュリティへの効き方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>コード</td>
+<td>型の選び方、引数の型、例外の投げ方</td>
+<td>不正値を「そもそも表現できない」ようにする</td>
+</tr>
+<tr>
+<td>クラス/モジュール</td>
+<td>エンティティの作り方、公開APIの形</td>
+<td>不整合な状態を作れないようにする</td>
+</tr>
+<tr>
+<td>アーキテクチャ</td>
+<td>サービス分割、外部連携、設定管理</td>
+<td>障害や侵害が全体に波及しないようにする</td>
+</tr>
+<tr>
+<td>運用/パイプライン</td>
+<td>テスト、デプロイ、設定のコード化</td>
+<td>設定ミスや回帰を自動で検出する</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3.2 ユーザーそのものを Secure by Design にする</h3>
+<p>第1章には「ユーザーを secure by design にする」という趣旨の節があります。ここでの含意は次のとおりです。</p>
+<ul>
+<li>利用者(開発者を含む)が <strong>間違った使い方をしにくい</strong> 設計にする</li>
+<li>安全な使い方を <strong>いちばん楽な使い方</strong> にする(安全な方がデフォルト)</li>
+</ul>
+<p>これは後の章の「安全な部品(ドメインプリミティブ)を用意して、開発者はそれを使うだけ」という考え方につながります。</p>
+<h3>3.3 設計アプローチの利点と「折衷主義(eclectic)」</h3>
+<ul>
+<li>設計でセキュリティを駆動する利点: 開発者の日常作業に溶け込むため、継続しやすい</li>
+<li>ただし書籍は <strong>設計だけが万能ではなく、他の手法と併用する</strong> という姿勢(節見出し "Staying eclectic")も示しています。ペネトレーションテストや運用監視を捨てる話ではありません。</li>
+</ul>
+<h3>3.4 ケーススタディ: 「Billion Laughs」攻撃(XML)</h3>
+<p>第1章の後半では、文字列と XML を扱うときの <strong>Billion Laughs 攻撃</strong> を題材に、設計の考え方を適用します。</p>
+<p><strong>どんな攻撃か(要点)</strong>: XML の「内部エンティティ(置換用の名前)」を入れ子に定義して、パーサーに展開させると、小さな入力から巨大なデータが生成され、メモリや CPU を使い果たす(可用性の侵害)。</p>
+<p><strong>書籍の節構成が示す対処の流れ</strong>:</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d4" role="img" aria-label="図4"></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>対策の方向性</th>
+<th>狙い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>パーサー設定</td>
+<td>外部/巨大なエンティティ展開などの危険機能を無効にする</td>
+<td>攻撃経路そのものを塞ぐ</td>
+</tr>
+<tr>
+<td>設計</td>
+<td>本当に必要な XML の形だけを受け付ける</td>
+<td>「受け入れ範囲」を狭くする</td>
+</tr>
+<tr>
+<td>運用制約</td>
+<td>メモリ・CPU・タイムアウトなどの上限</td>
+<td>万一入り込んでも被害を限定</td>
+</tr>
+<tr>
+<td>多層防御</td>
+<td>上記を組み合わせる</td>
+<td>単一対策の抜けを補う</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>具体的なパーサー設定のプロパティ名は言語・ライブラリごとに異なります。使用中のライブラリの公式ドキュメントで必ず確認してください。</p></div></div></section>
+<section class="section" id="sec-4"><h2>4. Step 3 ── DDD(ドメイン駆動設計)の最小知識</h2><div class="prose"><p>(書籍 第3章 "Core concepts of Domain-Driven Design" に相当)</p>
+<p>書籍の第2章(中間章)ではオンライン書店を題材にした例が展開され、第3章で DDD の核心概念を押さえます。<strong>セキュリティの本ではありますが、DDD を知らないと次章以降の「ドメインプリミティブ」が理解しにくい</strong>ため、必要最小限をここで整理します。</p>
+<h3>4.1 用語集(初学者向け)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>平易な説明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ドメイン</td>
+<td>解きたい業務・問題領域</td>
+<td>オンライン書店、銀行、予約システム</td>
+</tr>
+<tr>
+<td>ユビキタス言語</td>
+<td>開発者と業務担当者が <strong>同じ言葉</strong> で話すための共通語彙</td>
+<td>「数量」「注文」「配送先」を全員が同じ意味で使う</td>
+</tr>
+<tr>
+<td>境界づけられたコンテキスト</td>
+<td>ある言葉の <strong>意味が成り立つ範囲</strong></td>
+<td>「顧客」の意味は営業とサポートで違うことがある</td>
+</tr>
+<tr>
+<td>値オブジェクト</td>
+<td><strong>値そのもの</strong> で同一性が決まる不変の概念</td>
+<td>金額、日付、メールアドレス</td>
+</tr>
+<tr>
+<td>エンティティ</td>
+<td><strong>ID</strong> で同一性が決まり、時間とともに状態が変わる概念</td>
+<td>注文、ユーザーアカウント</td>
+</tr>
+<tr>
+<td>集約</td>
+<td>一貫性を保つ単位としてまとめたエンティティ群</td>
+<td>注文と注文明細</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4.2 なぜセキュリティに効くのか</h3>
+<ul>
+<li>言葉の意味が <strong>曖昧</strong> だと、コードも曖昧になり、その隙間が脆弱性になる</li>
+<li>「この概念は何であり、何でないか」を詰める作業が、そのまま <strong>不正値を弾くルール(不変条件)</strong> の発見になる</li>
+</ul>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d5" role="img" aria-label="図5"></div></figure></div></section>
+<section class="section" id="sec-5"><h2>5. Step 4 ── コード構成要素: 不変性・フェイルファスト・バリデーション</h2><div class="prose"><p>(書籍 第4章 "Code constructs promoting security" に相当)</p>
+<p>第4章は3つの柱で構成され、それぞれが解く問題が対応づけられています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>柱</th>
+<th>主に解決する問題</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不変性(Immutability)</td>
+<td>データの完全性・可用性に関わる問題</td>
+</tr>
+<tr>
+<td>フェイルファスト(Failing fast)・契約</td>
+<td>不正な入力や不正な状態に関わる問題</td>
+</tr>
+<tr>
+<td>バリデーション(Validation)</td>
+<td>入力検証に関わる問題</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5.1 不変性(Immutability)</h3>
+<p><strong>考え方</strong>: 一度作ったオブジェクトを後から変えられないようにする。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>可変オブジェクト</th>
+<th>不変オブジェクト</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>値の信頼性</td>
+<td>渡した先で書き換えられる恐れ</td>
+<td>渡しても変わらない</td>
+</tr>
+<tr>
+<td>並行処理</td>
+<td>同時更新で壊れる恐れ</td>
+<td>共有しても安全</td>
+</tr>
+<tr>
+<td>検証のタイミング</td>
+<td>検証後に変更されると検証が無意味になる</td>
+<td>検証済みの値がそのまま保たれる</td>
+</tr>
+</tbody>
+</table></div>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">// 悪い例: 外部から中身を書き換えられるリスト
+public class Order {
+    private final List&lt;String&gt; itemIds;
+    public Order(List&lt;String&gt; itemIds) { this.itemIds = itemIds; }   // 参照をそのまま保持
+    public List&lt;String&gt; getItemIds() { return itemIds; }              // 参照をそのまま返す
+}
+
+// 良い例: コピーして保持し、読み取り専用で返す
+public final class SafeOrder {
+    private final List&lt;String&gt; itemIds;
+    public SafeOrder(List&lt;String&gt; itemIds) {
+        this.itemIds = List.copyOf(itemIds);   // 防御的コピー(不変リスト)
+    }
+    public List&lt;String&gt; itemIds() { return itemIds; }  // 不変なのでそのまま返しても安全
+}
+</code></pre></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>ポイント: 「検証した後に呼び出し元が中身を書き換える」という <strong>検査時と使用時のズレ</strong> を、不変性が構造的に防ぎます。</p></div>
+<h3>5.2 フェイルファスト(Failing fast)と契約</h3>
+<p><strong>考え方</strong>: 不正な入力や状態を <strong>できるだけ早い段階で、はっきりと失敗させる</strong>。曖昧に処理を続けると、後ろの方で予期せぬ動作を引き起こします。</p>
+<p>書籍の節見出しには「契約によるフェイルファスト」「不正な状態での失敗」などがあります。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>失敗のさせ方</th>
+<th>説明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>事前条件のチェック</td>
+<td>メソッド冒頭で引数を検査</td>
+<td>null や範囲外を即拒否</td>
+</tr>
+<tr>
+<td>状態のチェック</td>
+<td>許されない状態遷移を拒否</td>
+<td>出荷済みの注文のキャンセルを拒否</td>
+</tr>
+<tr>
+<td>表明(assert)ではなく例外で</td>
+<td>本番で無効化されうる assert に頼らない</td>
+<td>明示的な例外をスロー</td>
+</tr>
+</tbody>
+</table></div>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">public void cancel() {
+    if (status == OrderStatus.SHIPPED) {
+        throw new IllegalStateException(&quot;出荷済みの注文はキャンセルできません&quot;);
+    }
+    this.status = OrderStatus.CANCELLED;
+}
+</code></pre></div>
+<h3>5.3 バリデーション(検証)── 順序が大切</h3>
+<p>書籍第4章には、<strong>複数種類の検証を適切な順序で行う</strong> という趣旨の節があり、節見出しには「データの字句内容(lexical content)のチェック」が含まれます。私の理解では、検証は <strong>安価で粗い検査から、高価で細かい検査へ</strong> の順に並べるのが基本です。</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d6" role="img" aria-label="図6"></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>順</th>
+<th>検証の種類</th>
+<th>何を見るか</th>
+<th>例(ユーザー名)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>出所(Origin)</td>
+<td>想定した送信元・経路からのデータか</td>
+<td>想定する連携元システムや画面からの送信か</td>
+</tr>
+<tr>
+<td>2</td>
+<td>サイズ(Size)</td>
+<td>長さ・容量が許容範囲か</td>
+<td>3〜32文字、リクエスト本文の上限</td>
+</tr>
+<tr>
+<td>3</td>
+<td>字句内容(Lexical content)</td>
+<td>使ってよい文字だけか</td>
+<td>英小文字・数字・一部記号のみ</td>
+</tr>
+<tr>
+<td>4</td>
+<td>構文(Syntax)</td>
+<td>形式が正しいか</td>
+<td>先頭は英字、連続記号なし</td>
+</tr>
+<tr>
+<td>5</td>
+<td>意味(Semantics)</td>
+<td>業務ルール上、意味があるか</td>
+<td>予約語でない、重複しない</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>認証・認可は入力検証とは <strong>別の関心事</strong> です。「誰からのリクエストか」「その操作が許されるか」は認証・認可で確認し、上の表には含めません。<strong>認証済みのユーザーからの入力であっても</strong>、サイズ・字句・構文・意味の検証は省略せずに行います(正規ユーザーのアカウントが乗っ取られている場合や、正規ユーザー自身が悪意を持つ場合があるため)。</p>
+<p>注意: 上記の5段階の名称・順序は、書籍の節構成(字句内容の節が存在すること)と一般的な入力検証の定石に基づく私の整理です。<strong>正確な分類は書籍第4章で確認してください。</strong></p></div>
+<p><strong>やってはいけない例</strong>: データを検証する <strong>前に</strong> 「修復」してしまう(例: 危険な文字を黙って削除してから検証する)。書籍第9章の節見出しにも「検証の前にデータを修復しない」とあります。修復の結果が攻撃者の意図した形になる恐れがあるためです。</p></div></section>
+<section class="section" id="sec-6"><h2>6. Step 5 ── ドメインプリミティブ(本書の中核概念)</h2><div class="prose"><p>(書籍 第5章 "Domain primitives" に相当。著者らの無料公開記事も参照)</p>
+<h3>6.1 何が問題なのか: 「素の型」の曖昧さ</h3>
+<p>多くのコードは、概念を <code>String</code> や <code>int</code> で表します。しかしこれらの型は <strong>何でも入る</strong> ため、次の問題を起こします。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>問題</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不正値が通る</td>
+<td>数量に <code>-5</code> や <code>0</code>、メールアドレスに改行入りの文字列</td>
+</tr>
+<tr>
+<td>引数の取り違え</td>
+<td><code>transfer(from, to, amount)</code> で <code>from</code> と <code>to</code> を逆に渡す(どちらも <code>String</code>)</td>
+</tr>
+<tr>
+<td>検証の重複と漏れ</td>
+<td>あちこちで検証を書き、ある経路だけ検証が抜ける</td>
+</tr>
+<tr>
+<td>意味の不一致</td>
+<td>チームごとに「有効なメールアドレス」の定義が違う</td>
+</tr>
+</tbody>
+</table></div>
+<h3>6.2 ドメインプリミティブの定義</h3>
+<p>著者らの記事によれば、ドメインプリミティブとは <strong>「存在していること自体が、有効であることの証明になっている値オブジェクト」</strong> です。DDD の値オブジェクトに、セキュリティの観点で次の制約を加えたものと説明されています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>条件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不変条件(invariant)が存在する</td>
+<td>「何が有効か」を明文化している</td>
+</tr>
+<tr>
+<td>生成時に強制する</td>
+<td>コンストラクタ等で検証し、不正なら <strong>作れない</strong></td>
+</tr>
+<tr>
+<td>素の型・汎用型(null を含む)で概念を表さない</td>
+<td>ドメインの概念は専用の型で表す</td>
+</tr>
+<tr>
+<td>ドメイン内の意味を厳密に定義する</td>
+<td>外部標準と意味が違うなら用語を分ける</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d7" role="img" aria-label="図7"></div></figure>
+<h3>6.3 コード例(本ガイド用のオリジナル)</h3>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">// 注文数量: 1〜99 の整数のみ有効、と業務担当者と合意した想定
+public final class OrderQuantity {
+    private static final int MIN = 1;
+    private static final int MAX = 99;
+
+    private final int value;
+
+    public OrderQuantity(int value) {
+        if (value &lt; MIN || value &gt; MAX) {
+            throw new IllegalArgumentException(
+                &quot;数量は &quot; + MIN + &quot; から &quot; + MAX + &quot; の範囲で指定してください&quot;);
+        }
+        this.value = value;
+    }
+
+    public int value() { return value; }
+
+    // ドメイン上の操作は型の中に閉じ込める(ルールの置き忘れ防止)
+    public OrderQuantity plus(OrderQuantity other) {
+        return new OrderQuantity(this.value + other.value);   // 合計も範囲チェックされる
+    }
+
+    @Override public boolean equals(Object o) {
+        return o instanceof OrderQuantity q &amp;&amp; q.value == this.value;
+    }
+    @Override public int hashCode() { return Integer.hashCode(value); }
+}
+</code></pre></div>
+<p><strong>ポイント</strong>:</p>
+<ul>
+<li>「負の数量を送りつけて想定外の動作を引き起こす」という攻撃が、<strong>専用の対策コードを書かなくても</strong> 成立しなくなる</li>
+<li>足し算などの操作も型の中にあるため、ルールが変わっても修正箇所が1か所で済む</li>
+</ul>
+<h3>6.4 API を堅牢にする(引数・戻り値にドメインプリミティブを使う)</h3>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">// Before: どれも String / long。取り違えても、範囲外でもコンパイルが通る
+void transfer(String fromAccount, String toAccount, long amount) { /* ... */ }
+
+// After: 型が意味を持つ。取り違えはコンパイルエラー、不正値は生成時に拒否
+void transfer(AccountNumber from, AccountNumber to, Money amount) { /* ... */ }
+</code></pre></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>Before(素の型)</th>
+<th>After(ドメインプリミティブ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>入力検証</td>
+<td>メソッドごとに自分で書く</td>
+<td>型の生成時に1回。以降は不要</td>
+</tr>
+<tr>
+<td>引数の取り違え</td>
+<td>気づけない</td>
+<td>コンパイル時に検出</td>
+</tr>
+<tr>
+<td>読みやすさ</td>
+<td>型から意味が読めない</td>
+<td>型名が仕様書になる</td>
+</tr>
+<tr>
+<td>開発者の認知負荷</td>
+<td>毎回「検証したっけ?」と考える</td>
+<td>型があれば検証済みと信頼できる</td>
+</tr>
+</tbody>
+</table></div>
+<h3>6.5 コンテキストの境界が意味を決める</h3>
+<p>著者らの記事は、同じ言葉(例: メールアドレス)でも <strong>自分のドメインでの定義</strong> を優先してよい、と説明します。例えば、国際標準(RFC)上は有効でも、自サービスでは「英小文字・数字・ドットのみ許可」と定義する、といった具合です。</p>
+<p>一方、<strong>ISBN のように外部標準で厳密に定義された用語は、意味を変えると混乱の元</strong> になるため、再定義せず、別の用語(例: <code>BookId</code> が <code>ISBN</code> または <code>UnpublishedBookNumber</code> を包む)を導入するほうが安全、という考え方が示されています。</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d8" role="img" aria-label="図8"></div></figure>
+<h3>6.6 公開APIにドメインモデルをそのまま出さない</h3>
+<p>外部(インターネット向け REST API など)に公開する API では、内部のドメインオブジェクトをそのまま露出させません。</p>
+<ol>
+<li>公開API用には <strong>別表現(DTO)</strong> を用意する</li>
+<li>API の入口で <strong>DTO → ドメインプリミティブ</strong> に変換する(ここで検証される)</li>
+<li>こうすると、API と内部ドメインを <strong>独立して進化</strong> させられる</li>
+</ol>
+<h3>6.7 ドメインプリミティブライブラリを育てる</h3>
+<ul>
+<li>小さな概念まで含め、<strong>ほぼ全ての概念</strong> をドメインプリミティブとして整備する</li>
+<li>これは汎用ユーティリティクラスの寄せ集めではなく、<strong>ドメイン概念の共通語彙</strong> である</li>
+<li>結果として「型を使うだけで安全」な部品箱になる</li>
+</ul>
+<h3>6.8 リードワンスオブジェクト(Read-once objects)</h3>
+<p>第5章には、<strong>機密データの漏えい</strong> を防ぐための「読み取り一回限りのオブジェクト」の節があります。考え方は、パスワードやトークンのような機密値を、<strong>一度読んだら使えなくする</strong> というものです。</p>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">public final class SecretToken {
+    private char[] chars;
+
+    public SecretToken(char[] chars) { this.chars = chars.clone(); }
+
+    // ラッパーから配列を取り出せるのは1回だけ。2回目は失敗する(意図しない再利用の検知にもなる)
+    // 返した配列自体は使用不能にならない。読み取り後の消去・保持期間の管理は呼び出し側の責任
+    public synchronized char[] consume() {
+        if (chars == null) {
+            throw new IllegalStateException(&quot;この値はすでに使用済みです&quot;);
+        }
+        char[] out = chars;
+        chars = null;
+        return out;
+    }
+
+    @Override public String toString() { return &quot;[REDACTED]&quot;; }   // うっかりログに出ても漏れない
+}
+</code></pre></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>補足: <code>consume()</code> が保証するのは <strong>このラッパーから2回以上取り出せない</strong> ことだけです。返された配列は通常の配列なので、呼び出し側は読み取り・保持・コピーができてしまいます。使い終わったら <code>Arrays.fill(out, '\0')</code> で消去する、他所に保持しない、といった取り出し後の管理は呼び出し側の責任です。</p>
+<p><code>String</code> は内容を消去できないため、機密値には <code>char[]</code> を使う、といった言語固有の配慮も必要です。上記は考え方を示す簡略例です。</p></div>
+<h3>6.9 テイント分析の考え方</h3>
+<p>第5章は「テイント分析(taint analysis)」の発想にも触れます。テイント分析は、<strong>信頼できない入力(ソース)が危険な利用先(シンク)まで届く流れを追跡する</strong> 手法です。</p>
+<p>ドメインプリミティブによるドメイン境界での検証は、これと <strong>同じものではありません</strong>。専用型が保証するのは <strong>ドメインの不変条件を満たしていること(例: 数量が 1〜99 である)だけ</strong> で、HTML・SQL・シェルなど <strong>利用先での安全性は保証しません</strong>。例えばドメイン上は正しい「表示名」でも、<code>&lt;</code> や <code>'</code> を含めば HTML や SQL では危険になり得ます。そのため、ドメインプリミティブを使っていても、<strong>SQL はパラメータ化クエリで渡す</strong>、<strong>出力先(HTML・属性・URL・JavaScript など)に応じたエンコードを行う</strong> といった、利用先ごとの対策が別途必要です。</p>
+<h3>6.10 国際的な裏付け: Google の「Safe Coding」</h3>
+<p>Google の Christoph Kern 氏は、同社で長年、XSS や SQL インジェクションなどの脆弱性を <strong>フレームワーク・API・プラットフォームの設計</strong> によって防ぐ取り組みを率いてきた人物です。2025年の論文『Safe Coding』では次の要点が述べられています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要点</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>責任の移し替え</td>
+<td>安全性の責任を個々の開発者から、言語・ライブラリ・フレームワークへ移す</td>
+</tr>
+<tr>
+<td>安全な抽象</td>
+<td>危険な操作を、公開APIが安全な「安全な抽象(safe abstraction)」の内側に閉じ込める</td>
+</tr>
+<tr>
+<td>型不変条件</td>
+<td>安全のための前提条件を <strong>型の不変条件に引き上げる</strong></td>
+</tr>
+<tr>
+<td>成果</td>
+<td>Google で XSS や SQL インジェクションをほぼ撲滅できたと報告</td>
+</tr>
+</tbody>
+</table></div>
+<p>これは、ドメインプリミティブの発想(<strong>型の存在が安全性を保証する</strong>)と非常に近い考え方です。ただし書籍のドメインプリミティブは <strong>業務ドメインの概念</strong> を主眼に置き、Safe Coding は <strong>危険な操作を安全な型で包む</strong> 側面が強い、という違いがあります。</p></div></section>
+<section class="section" id="sec-7"><h2>7. Step 6 ── 状態の完全性と複雑さの削減</h2><div class="prose"><p>(書籍 第6章 "Ensuring integrity of state"、第7章 "Reducing complexity of state" に相当)</p>
+<h3>7.1 なぜ状態が問題か</h3>
+<p>システムの本質は <strong>状態の変化</strong>(カートに入れる → 支払う → 発送する)です。ところが状態が壊れる(不整合になる)と、セキュリティ上の問題になります。第7章の導入には、搭乗しなかった乗客の荷物を載せたまま飛行機が離陸するような例えが出てきます。</p>
+<h3>7.2 エンティティを正しく作る(第6章)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>論点</th>
+<th>悪い設計</th>
+<th>良い設計</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成時の一貫性</td>
+<td>引数なしコンストラクタで空のオブジェクトを作り、後から setter で埋める</td>
+<td><strong>必須項目は全てコンストラクタ引数</strong> にし、生成した瞬間から有効にする</td>
+</tr>
+<tr>
+<td>ORM との関係</td>
+<td>フレームワークの都合で引数なしコンストラクタを公開</td>
+<td>可視性を絞る・生成経路を限定するなど、工夫して整合性を守る</td>
+</tr>
+<tr>
+<td>複雑な制約</td>
+<td>呼び出し側の注意に頼る</td>
+<td>制約を <strong>コードで強制</strong>(生成時チェック)</td>
+</tr>
+<tr>
+<td>コレクション</td>
+<td>内部リストをそのまま返す</td>
+<td>防御的コピーや読み取り専用ビューで守る</td>
+</tr>
+</tbody>
+</table></div>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">// 悪い例: 空の状態が存在できてしまう
+public class Account {
+    private String id;
+    private Money balance;
+    public Account() {}                    // 引数なし
+    public void setId(String id) { ... }   // 後から設定
+}
+
+// 良い例: 作れた時点で有効
+public final class SafeAccount {
+    private final AccountNumber id;
+    private Money balance;
+
+    public SafeAccount(AccountNumber id, Money initialBalance) {
+        this.id = Objects.requireNonNull(id);
+        this.balance = Objects.requireNonNull(initialBalance);
+    }
+}
+</code></pre></div>
+<h3>7.3 状態の複雑さを減らす4つのパターン(第7章)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>パターン</th>
+<th>一言で言うと</th>
+<th>向いている場面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>部分的不変エンティティ</td>
+<td>変わらない部分は不変にして、変わる部分だけ可変にする</td>
+<td>一部の属性(IDや作成日時など)が不変のとき</td>
+</tr>
+<tr>
+<td>エンティティ状態オブジェクト</td>
+<td>状態遷移のルールを <strong>別オブジェクト</strong> に切り出す</td>
+<td>状態が多く、遷移が複雑なとき</td>
+</tr>
+<tr>
+<td>エンティティスナップショット</td>
+<td>ある時点の状態を <strong>不変オブジェクト</strong> として渡す</td>
+<td>読み取り専用で参照させたいとき</td>
+</tr>
+<tr>
+<td>エンティティのリレー</td>
+<td>変化を、フェーズごとに別のエンティティが受け継ぐ形で表す</td>
+<td>状態グラフをフェーズに分割できるとき</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>状態遷移を明示する例(注文)</strong>:</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d9" role="img" aria-label="図9"></div></figure>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>この図に <strong>書かれていない遷移</strong>(例: <code>Shipped → Cancelled</code>)は、コード上でも <strong>拒否される</strong> ように設計します。これがフェイルファストと状態管理の組み合わせです。</p></div>
+<h3>7.4 同時更新への備え</h3>
+<p>第7章は、2つの主体(スレッド)が同じエンティティを同時に変更する問題にも触れています。不変オブジェクトやスナップショット、排他制御の設計が <strong>完全性</strong> を守る要素になります。</p></div></section>
+<section class="section" id="sec-8"><h2>8. Step 7 ── デリバリーパイプラインとテストでセキュリティを守る</h2><div class="prose"><p>(書籍 第8章 "Leveraging your delivery pipeline for security" に相当)</p>
+<h3>8.1 基本姿勢: セキュリティテストも「ただのテスト」</h3>
+<p>第8章は、<strong>セキュリティテストを特別扱いせず、通常のテストと同じ頻度で自動実行する</strong> ことを主張します。毎コミットでペネトレーションテストを回せという意味ではなく、<strong>変更のたびにセキュリティ上の懸念が自動的に検証される仕組み</strong> を作るという考え方です。</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d10" role="img" aria-label="図10"></div></figure>
+<h3>8.2 セキュリティのためのユニットテスト 4観点</h3>
+<p>書籍の節見出しは「通常動作」「境界動作」「不正入力」「極端な入力」のテストです。<strong>QA 視点で最も取り入れやすい部分</strong> です。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>テスト観点</th>
+<th>目的</th>
+<th><code>OrderQuantity</code> での例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通常動作</td>
+<td>仕様どおり動くこと</td>
+<td>1, 50, 99 が生成できる</td>
+</tr>
+<tr>
+<td>境界動作</td>
+<td>境界値の扱い</td>
+<td>0 と 100 は拒否、1 と 99 は許可</td>
+</tr>
+<tr>
+<td>不正入力</td>
+<td>想定外の入力を拒否</td>
+<td>負数、極端に大きい値を拒否</td>
+</tr>
+<tr>
+<td>極端な入力</td>
+<td>限界でも壊れない</td>
+<td><code>Integer.MAX_VALUE</code>、許容範囲(1〜99)を超える加算</td>
+</tr>
+</tbody>
+</table></div>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">class OrderQuantityTest {
+
+    @Test void 通常範囲の値は生成できる() {
+        assertEquals(50, new OrderQuantity(50).value());
+    }
+
+    @Test void 境界値_下限1は許可_0は拒否() {
+        assertDoesNotThrow(() -&gt; new OrderQuantity(1));
+        assertThrows(IllegalArgumentException.class, () -&gt; new OrderQuantity(0));
+    }
+
+    @Test void 境界値_上限99は許可_100は拒否() {
+        assertDoesNotThrow(() -&gt; new OrderQuantity(99));
+        assertThrows(IllegalArgumentException.class, () -&gt; new OrderQuantity(100));
+    }
+
+    @Test void 不正入力_負数は拒否() {
+        assertThrows(IllegalArgumentException.class, () -&gt; new OrderQuantity(-1));
+    }
+
+    @Test void 極端な入力_加算結果が範囲を超えたら拒否() {
+        assertThrows(IllegalArgumentException.class,
+            () -&gt; new OrderQuantity(99).plus(new OrderQuantity(99)));
+    }
+}
+</code></pre></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>Matt Raible 氏は書評で、この章のコード例が JUnit 5 で書かれており、現在の Java のテスト実践に沿っていると評価しています。</p></div>
+<h3>8.3 第8章のその他のテーマ</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>テーマ</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>フィーチャートグルの安全性</td>
+<td>機能の ON/OFF 切替が、意図せず未検証の機能や危険な設定を有効にしないか</td>
+</tr>
+<tr>
+<td>自動セキュリティテスト</td>
+<td>セキュリティテストも自動化し、パイプラインの一部にする</td>
+</tr>
+<tr>
+<td>IaC(Infrastructure as Code)の活用</td>
+<td>環境構築をコード化し、再現性と検証可能性を高める</td>
+</tr>
+<tr>
+<td>可用性テスト</td>
+<td>負荷や障害でも動き続けるかを事前に確認する</td>
+</tr>
+<tr>
+<td>設定ミス</td>
+<td>設定の誤りが脆弱性を生む。設定も検証対象にする</td>
+</tr>
+</tbody>
+</table></div></div></section>
+<section class="section" id="sec-9"><h2>9. Step 8 ── 失敗と可用性を設計する</h2><div class="prose"><p>(書籍 第9章 "Handling failures securely" に相当)</p>
+<h3>9.1 なぜ「失敗」がセキュリティの話になるのか</h3>
+<p>第9章の導入では、<strong>多くのシステムは失敗したときに内部の秘密を漏らす</strong> こと、そして <strong>失敗への対処の仕方がシステムの安全性の水準を決める</strong> ことが示唆されています。</p>
+<h3>9.2 例外とそのペイロード(情報漏えいを防ぐ)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>悪い例</th>
+<th>良い例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例外メッセージ</td>
+<td>SQL文、テーブル名、内部IPアドレス、個人情報を含める</td>
+<td>利用者向けは一般的な文言+問い合わせ用の識別子</td>
+</tr>
+<tr>
+<td>例外の種類</td>
+<td>全て同じ例外で処理</td>
+<td><strong>業務例外</strong> と <strong>技術例外</strong> を区別する</td>
+</tr>
+<tr>
+<td>ログ</td>
+<td>機密値を平文で出す</td>
+<td>機密値はマスクし、相関IDで追跡できるようにする</td>
+</tr>
+</tbody>
+</table></div>
+<div class="code-block"><div class="code-head">java</div><pre><code class="language-java">// 悪い例: 内部情報をそのまま利用者へ返す
+catch (SQLException e) {
+    throw new RuntimeException(&quot;口座 &quot; + accountNo + &quot; の取得に失敗: &quot; + e.getMessage());
+}
+
+// 良い例: 内部には詳細ログ、外には最小限
+catch (SQLException e) {
+    String errorId = UUID.randomUUID().toString();
+    log.error(&quot;口座取得失敗 errorId={}&quot;, errorId, e);          // 詳細は内部ログのみ(機密はマスク)
+    throw new ServiceUnavailableException(&quot;処理に失敗しました。ID: &quot; + errorId);
+}
+</code></pre></div>
+<h3>9.3 「失敗は例外的ではない」</h3>
+<p>第9章には「失敗は例外的ではない」という趣旨の節があります。<strong>外部システムの遅延・停止・不正なデータは日常的に起きる</strong> ため、それを通常のフローとして設計に組み込みます。</p>
+<h3>9.4 可用性はセキュリティ目標(CIA の A)</h3>
+<p>Matt Raible 氏も書評で、<strong>データやシステムの可用性は重要なセキュリティ目標であり CIA の一部</strong> であることを指摘しています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>設計要素</th>
+<th>意味</th>
+<th>効果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>レジリエンス(回復力)</td>
+<td>障害から立ち直れる</td>
+<td>部分的な障害が全体停止にならない</td>
+</tr>
+<tr>
+<td>レスポンシブネス(応答性)</td>
+<td>遅くても応答を返す</td>
+<td>資源を握ったまま待たない</td>
+</tr>
+<tr>
+<td>タイムアウト</td>
+<td>待つ時間に上限を設ける</td>
+<td>スレッド枯渇を防ぐ</td>
+</tr>
+<tr>
+<td>サーキットブレーカー</td>
+<td>失敗が続く相手への呼び出しを一時遮断</td>
+<td>連鎖障害(カスケード障害)を防ぐ</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>サーキットブレーカーの動き</strong>:</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d11" role="img" aria-label="図11"></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>状態</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Closed(閉)</td>
+<td>通常どおり呼び出す。失敗を数える</td>
+</tr>
+<tr>
+<td>Open(開)</td>
+<td>すぐに失敗を返し、相手を呼ばない(相手と自分を守る)</td>
+</tr>
+<tr>
+<td>HalfOpen(半開)</td>
+<td>少数だけ試験的に呼び、回復を確認する</td>
+</tr>
+</tbody>
+</table></div>
+<h3>9.5 不正データの扱い</h3>
+<ul>
+<li><strong>検証前にデータを修復しない</strong>(第5章の「検証」と同じ原則)</li>
+<li>不正データは <strong>拒否して記録する</strong>。黙って補正しない</li>
+<li>ログに出す場合も、不正データがログの仕組み(ログインジェクション等)を悪用しないよう注意する</li>
+</ul></div></section>
+<section class="section" id="sec-10"><h2>10. Step 9 ── クラウド的思考がもたらすセキュリティ上の利点</h2><div class="prose"><p>(書籍 第10章 "Benefits of cloud thinking" に相当)</p>
+<h3>10.1 ポイント</h3>
+<p>第10章の趣旨は、<strong>クラウドネイティブ/12ファクターアプリの設計パターンが、副次的にセキュリティ上の利点をもたらす</strong> という点です。著者の一人 Daniel Sawano 氏の公開講演スライドでも、<strong>クラウドで動かしていなくても(オンプレミスでも)同じ利点が得られる</strong> と説明されています。</p>
+<h3>10.2 12ファクターの要素と、セキュリティ上の利点</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>12ファクターの要素</th>
+<th>内容</th>
+<th>セキュリティ上の利点(要旨)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Config</td>
+<td>設定は環境に置く</td>
+<td>秘密情報や設定をコードから分離し、差し替え・ローテーションしやすい</td>
+</tr>
+<tr>
+<td>Backing services</td>
+<td>DB やキューなどを <strong>付け替え可能な資源</strong> として扱う</td>
+<td>結合が緩く、侵害や障害の際に切り離しやすい</td>
+</tr>
+<tr>
+<td>Processes</td>
+<td>アプリは1つ以上の <strong>ステートレスなプロセス</strong> として実行</td>
+<td>可用性と完全性の向上(Sawano 氏のスライドで言及)</td>
+</tr>
+<tr>
+<td>Logs</td>
+<td>ログは <strong>イベントストリーム</strong> として扱う</td>
+<td>ログの集中管理・監視がしやすい(追跡可能性につながる)</td>
+</tr>
+<tr>
+<td>Admin processes</td>
+<td>管理作業は使い捨てのプロセスで実行</td>
+<td>常駐する特権経路を減らせる</td>
+</tr>
+</tbody>
+</table></div>
+<h3>10.3 3つの R: Rotate / Repave / Repair</h3>
+<p>Matt Raible 氏の書評では、書籍の内容として <strong>企業セキュリティの3つのR</strong> が紹介されています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>R</th>
+<th>内容</th>
+<th>目安(書評の記載)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rotate(ローテーション)</td>
+<td>秘密情報を頻繁に入れ替える</td>
+<td>数分〜数時間ごと</td>
+</tr>
+<tr>
+<td>Repave(再構築)</td>
+<td>サーバーやアプリを頻繁に作り直す</td>
+<td>数時間ごと</td>
+</tr>
+<tr>
+<td>Repair(修復)</td>
+<td>脆弱なソフトウェアを速やかに直す</td>
+<td>パッチ提供から数時間以内</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d12" role="img" aria-label="図12"></div></figure>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>「数時間」といった頻度は理想的な目標像です。自組織で実現可能な水準から段階的に近づけるのが現実的です。</p></div></div></section>
+<section class="section" id="sec-11"><h2>11. Step 10 ── レガシーコードとマイクロサービスへの適用</h2><div class="prose"><p>(書籍 第12章 "Guidance in legacy code"、第13章 "Guidance on microservices"、第14章 "A final word" に相当)</p>
+<div class="callout warn"><i class="ti ti-alert-triangle"></i><p>この章は、私が確認できた <strong>目次・書評レベルの情報</strong> と、<strong>筆者の一般的な整理</strong> を分けて記載します。</p></div>
+<h3>11.1 確認できた内容</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>章</th>
+<th>書評・目次で確認できた内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第12章 レガシー</td>
+<td>ドメインプリミティブをレガシーコードに導入する <strong>複数の選択肢</strong> が示される(Raible 氏の書評)</td>
+</tr>
+<tr>
+<td>第13章 マイクロサービス</td>
+<td>ログが機密データを漏らし得ること、ログが <strong>後から二次的な攻撃に使われ得る</strong> ことが興味深い論点として挙げられている(同書評)</td>
+</tr>
+<tr>
+<td>第14章 最後に</td>
+<td>コードレビューでのセキュリティの観点、ペネトレーションテストで設計に挑戦する、セキュリティをインスピレーションの源にする、といったガイドライン(同書評)</td>
+</tr>
+<tr>
+<td>第11章 中間章</td>
+<td>「保険を無料で手に入れる」という趣旨のタイトルの読み物章(タイトルからの理解)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>11.2 筆者の一般的な整理: レガシーへの現実的な進め方</h3>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d13" role="img" aria-label="図13"></div></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>ステップ</th>
+<th>内容</th>
+<th>狙い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>外部入力・外部連携の入口を洗い出す</td>
+<td>優先順位をつける</td>
+</tr>
+<tr>
+<td>2</td>
+<td>入口で素の型→ドメインプリミティブへ変換</td>
+<td>以降のコードが検証済みを前提にできる</td>
+</tr>
+<tr>
+<td>3</td>
+<td>引数の取り違えが起きやすい長い引数リストから型を導入</td>
+<td>事故が起きやすい箇所から減らす</td>
+</tr>
+<tr>
+<td>4</td>
+<td>既存の挙動を守るテストを追加してから置き換え</td>
+<td>回帰を防ぐ</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ログ・例外メッセージの機密漏えいを点検</td>
+<td>機密性の確保</td>
+</tr>
+</tbody>
+</table></div>
+<h3>11.3 筆者の一般的な整理: マイクロサービスでの視点</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>観点</th>
+<th>設計上の考え方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>サービス間の入力</td>
+<td>他サービスからの入力も <strong>信頼せず</strong>、入口でドメインプリミティブに変換</td>
+</tr>
+<tr>
+<td>公開API</td>
+<td>内部ドメインを露出させず、DTO で境界を作る(Step 5 の 6.6)</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>タイムアウト・サーキットブレーカーで連鎖障害を防ぐ(Step 8)</td>
+</tr>
+<tr>
+<td>ログ</td>
+<td>機密データを出さない。ログ基盤自体も攻撃対象になり得ると考える</td>
+</tr>
+<tr>
+<td>秘密情報</td>
+<td>設定を環境に置き、頻繁にローテーションする(Step 9)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>Matt Raible 氏は、本書の Java によるドメインプリミティブ例を気に入り、自身の「マイクロサービスアーキテクチャのセキュリティパターン」の記事で最初のパターン「Secure by Design であること」の説明に使ったと述べています。</p></div></div></section>
+<section class="section" id="sec-12"><h2>12. Step 11 ── 政府機関の Secure by Design と、業界の流れ</h2><div class="prose"><p>ここからは「②組織としての Secure by Design」です。書籍の技法が、<strong>製品を作る組織の方針</strong> とどう結びつくかを見ます。</p>
+<h3>12.1 3つの原則(CISA と国際パートナーの共同ガイダンス)</h3>
+<p>CISA と各国のサイバーセキュリティ機関が共同で公表したガイダンス『Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software』は、2023年4月に最初の版が公表され、同年10月に拡充版が出ました。3つの原則は次のとおりです。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>原則</th>
+<th>平易な説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 顧客のセキュリティ成果に責任を持つ</td>
+<td>「安全に使うのは顧客の責任」にせず、デフォルトで安全な製品にする</td>
+</tr>
+<tr>
+<td>② 徹底した透明性と説明責任を受け入れる</td>
+<td>脆弱性情報の開示など、情報を公開して顧客と防御側を助ける</td>
+</tr>
+<tr>
+<td>③ トップから主導する</td>
+<td>経営層がセキュリティを製品設計の最優先事項として推進する</td>
+</tr>
+</tbody>
+</table></div>
+<p>拡充版では、日本の NISC と JPCERT/CC を含む多数の国際機関が共同署名しています。また、一部の Secure by Design の実践には AI 特有の考慮が必要になる場合があるものの、<strong>3つの原則は AI システムにも当てはまる</strong> とされています。</p>
+<h3>12.2 CISA の Secure by Design 誓約(Pledge)の7つのゴール</h3>
+<p>2024年5月に公表された自主的な誓約です。対象は主に <strong>企業向けソフトウェア</strong>(オンプレミス、クラウド、SaaS)で、署名企業は署名から1年以内に、各ゴールで測定可能な進捗を示すことに誠意をもって取り組みます。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>ゴール</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>多要素認証(MFA)</td>
+<td>製品全体でMFAの利用を測定可能な形で増やす</td>
+</tr>
+<tr>
+<td>2</td>
+<td>デフォルトパスワード</td>
+<td>共通の初期パスワードを使わない、減らす</td>
+</tr>
+<tr>
+<td>3</td>
+<td>脆弱性の <strong>クラス全体</strong> を減らす</td>
+<td>個別修正ではなく、SQLi・XSS・メモリ安全性などの種類ごと減らす</td>
+</tr>
+<tr>
+<td>4</td>
+<td>セキュリティパッチ</td>
+<td>顧客によるパッチ適用が増えるようにする</td>
+</tr>
+<tr>
+<td>5</td>
+<td>脆弱性開示ポリシー(VDP)</td>
+<td>善意のテストを認め、報告窓口と公開方針を整える</td>
+</tr>
+<tr>
+<td>6</td>
+<td>CVE</td>
+<td>正確な CWE・CPE 情報を含め、透明性を高める</td>
+</tr>
+<tr>
+<td>7</td>
+<td>侵入の証拠</td>
+<td>顧客が侵入の証拠を収集できる能力を高める</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>書籍との接点(ゴール3)</strong>: CISA の誓約ページは、ゴール3の達成アプローチとして <strong>「特定の種類の脆弱性を作り込めない(または作り込みにくい)安全な関数やライブラリの部品を開発者に提供する」</strong> ことを挙げています。これは本書の <strong>ドメインプリミティブ</strong> や Google の <strong>Safe Coding</strong> と同じ発想です。</p>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d14" role="img" aria-label="図14"></div></figure>
+<h3>12.3 状況メモ(2026年10月8日時点で確認できた範囲)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>確認できた内容</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>署名企業数</td>
+<td>誓約開始時は68社。第三者の解説記事(2026年5月)は300社超と報告。CISA の署名者一覧ページには385社と表示されていた</td>
+<td>時点によって数字が異なる。最新は CISA の公式一覧で確認すること</td>
+</tr>
+<tr>
+<td>誓約の性質</td>
+<td>自主的で、法的拘束力はない。報告されている内容は自己申告ベース</td>
+<td>署名=製品が安全という保証ではない</td>
+</tr>
+<tr>
+<td>近年の動き</td>
+<td>CISA・FBI は「Product Security Bad Practices」ガイダンスで、メモリ安全でない言語で書かれた既存製品について <strong>2026年1月1日まで(2025年末)にメモリ安全性ロードマップを公開する</strong> よう推奨していた。この期限は情報基準日の時点で <strong>すでに経過している</strong></td>
+<td>期限経過後に各社がロードマップを公開したか、CISA が新たな期限を示したかは一次情報で確認できていない。<strong>過去の推奨事項</strong> として扱い、現状は CISA の公式情報で確認すること</td>
+</tr>
+<tr>
+<td>体制面</td>
+<td>報道によれば、2025年4月に主要な推進者が CISA を離れ、Secure by Design の取り組みは一時的に目立たなくなったと伝えられた</td>
+<td>報道ベース。組織の動向は変わり得る</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>実務上の含意: <strong>政府の旗振りの強弱にかかわらず、設計で脆弱性を減らすという技術的な価値は変わりません。</strong> 本書の技法は、制度の動向に依存せず使えます。</p></div>
+<h3>12.4 IEEE Center for Secure Design の「設計上の欠陥トップ10」</h3>
+<p>Google の Christoph Kern 氏が創設メンバーの一人として関わった IEEE Computer Society の Center for Secure Design は、2014年に報告書『Avoiding the Top 10 Software Security Design Flaws』を公表しました。<strong>実装上のバグ(bugs)ではなく、設計上の欠陥(flaws)に焦点を移す</strong> ことを目的としています。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>推奨事項(要旨)</th>
+<th>本書との関連</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>信頼は与えるか獲得するもの。決して <strong>仮定しない</strong></td>
+<td>外部入力・他サービスを信頼せず、入口で検証</td>
+</tr>
+<tr>
+<td>2</td>
+<td>迂回・改ざんできない認証メカニズムを使う</td>
+<td>認証はセキュリティ機能(関心事の一部)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>認証してから認可する</td>
+<td>アクセス制御の設計</td>
+</tr>
+<tr>
+<td>4</td>
+<td>データと制御命令を厳密に分離する</td>
+<td>インジェクション対策(Billion Laughs や SQLi の根本原因)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>全てのデータを <strong>明示的に検証</strong> する方針を定める</td>
+<td>バリデーション、ドメインプリミティブ</td>
+</tr>
+<tr>
+<td>6</td>
+<td>暗号を正しく使う</td>
+<td>暗号は自作せず、実績あるライブラリを使う</td>
+</tr>
+<tr>
+<td>7</td>
+<td>機密データを識別し、取り扱い方を決める</td>
+<td>機密性、リードワンスオブジェクト、ログ</td>
+</tr>
+<tr>
+<td>8</td>
+<td>常に利用者を考慮する</td>
+<td>使いやすさと安全性の両立</td>
+</tr>
+<tr>
+<td>9</td>
+<td>外部コンポーネントの統合が攻撃面をどう変えるか理解する</td>
+<td>依存関係・サプライチェーン</td>
+</tr>
+<tr>
+<td>10</td>
+<td>将来の変更に柔軟に対応できるようにする</td>
+<td>設計の進化可能性</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>上の10項目のうち、検索で直接確認できたのは #1・#3・#4 の見出しです。他の項目は同報告書の公開目次に基づく私の記憶による整理です。<strong>正確な文言は報告書の原文で確認してください。</strong></p></div></div></section>
+<section class="section" id="sec-13"><h2>13. Step 12 ── 実践: チェックリスト・演習・理解度確認</h2><div class="prose"><h3>13.1 設計レビュー用チェックリスト</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>チェック項目</th>
+<th>該当する書籍の概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>業務概念を <code>String</code>/<code>int</code> のまま使っていない?</td>
+<td>ドメインプリミティブ</td>
+</tr>
+<tr>
+<td>2</td>
+<td>生成された時点で有効なオブジェクトだけが存在する?</td>
+<td>不変条件・生成時検証</td>
+</tr>
+<tr>
+<td>3</td>
+<td>検証は「出所 → サイズ → 字句 → 構文 → 意味」の順?</td>
+<td>バリデーション</td>
+</tr>
+<tr>
+<td>4</td>
+<td>検証の前にデータを「修復」していない?</td>
+<td>不正データの扱い</td>
+</tr>
+<tr>
+<td>5</td>
+<td>値は不変? 内部コレクションを直接公開していない?</td>
+<td>不変性</td>
+</tr>
+<tr>
+<td>6</td>
+<td>不正な状態遷移を拒否している?</td>
+<td>フェイルファスト・状態管理</td>
+</tr>
+<tr>
+<td>7</td>
+<td>例外やログに機密情報・内部情報が出ていない?</td>
+<td>例外ペイロード・機密性</td>
+</tr>
+<tr>
+<td>8</td>
+<td>外部呼び出しにタイムアウトとサーキットブレーカーがある?</td>
+<td>可用性・レジリエンス</td>
+</tr>
+<tr>
+<td>9</td>
+<td>セキュリティ観点のテスト(通常/境界/不正/極端)が自動実行される?</td>
+<td>パイプライン</td>
+</tr>
+<tr>
+<td>10</td>
+<td>秘密情報はコードに埋め込まず、環境から注入・定期的に入れ替えている?</td>
+<td>12ファクター・Rotate</td>
+</tr>
+<tr>
+<td>11</td>
+<td>公開API用の DTO と内部ドメインを分離している?</td>
+<td>API の堅牢化</td>
+</tr>
+<tr>
+<td>12</td>
+<td>外部標準の用語の意味を勝手に変えていない?</td>
+<td>コンテキストの境界</td>
+</tr>
+</tbody>
+</table></div>
+<h3>13.2 ハンズオン演習(初学者向け)</h3>
+<p><strong>演習1: ドメインプリミティブを作る</strong></p>
+<ul>
+<li>課題: 「ユーザー名」を <code>String</code> で扱っている小さなコードを見つけ、<code>Username</code> 型に置き換える</li>
+<li>条件: 3〜20文字、英小文字・数字・アンダースコアのみ、先頭は英字</li>
+<li>ゴール: 不正値で生成すると例外になり、有効な <code>Username</code> だけが存在する</li>
+</ul>
+<p><strong>演習2: 4観点のテストを書く</strong></p>
+<ul>
+<li>課題: 演習1の <code>Username</code> に対し、通常・境界・不正入力・極端な入力のテストを書く</li>
+<li>ヒント: 2文字/3文字、20文字/21文字、空文字、非常に長い文字列、制御文字、全角文字</li>
+</ul>
+<p><strong>演習3: 例外メッセージの点検</strong></p>
+<ul>
+<li>課題: 自分のプロジェクトで <code>catch</code> している箇所を3つ選び、利用者に返る文言に内部情報が含まれていないか確認する</li>
+<li>ゴール: 外向きは一般的な文言+エラーID、内部ログに詳細</li>
+</ul>
+<p><strong>演習4: 状態遷移図を描く</strong></p>
+<ul>
+<li>課題: 身近なエンティティ(申請、予約、チケットなど)の状態遷移を Mermaid の <code>stateDiagram-v2</code> で描き、図にない遷移をコードで拒否する</li>
+</ul>
+<h3>13.3 理解度確認(自己採点)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>問い</th>
+<th>答えの要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>セキュリティが「機能」でなく「関心事」とはどういう意味か</td>
+<td>全ての機能・コードに横断的に関わり、ログイン機能を作れば完了、というものではない</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CIA-T の4文字は何か</td>
+<td>機密性・完全性・可用性・追跡可能性</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ドメインプリミティブが通常の値オブジェクトと違う点は</td>
+<td>不変条件の存在と生成時の強制、素の型や null での表現の禁止</td>
+</tr>
+<tr>
+<td>4</td>
+<td>なぜ <code>String</code> で業務概念を表すと危険か</td>
+<td>何でも入る・取り違えやすい・検証が漏れる・意味が人によって違う</td>
+</tr>
+<tr>
+<td>5</td>
+<td>検証の前に入力を修復してはいけないのはなぜ</td>
+<td>修復結果が攻撃者の意図した形になり得るため</td>
+</tr>
+<tr>
+<td>6</td>
+<td>可用性がセキュリティの話になる理由は</td>
+<td>使えなくすること自体が攻撃になるため(CIA の A)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>サーキットブレーカーの3状態は</td>
+<td>Closed / Open / HalfOpen</td>
+</tr>
+<tr>
+<td>8</td>
+<td>12ファクターの「ステートレスなプロセス」がもたらす利点は</td>
+<td>可用性・完全性の向上(状態を外部に出し、プロセスを使い捨てにできる)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>CISA の Secure by Design の3原則は</td>
+<td>顧客のセキュリティ成果への責任、徹底した透明性と説明責任、トップからの主導</td>
+</tr>
+<tr>
+<td>10</td>
+<td>本書の技法と CISA ゴール3の接点は</td>
+<td>安全な部品(型・ライブラリ)で、脆弱性のクラス全体を作り込めなくする</td>
+</tr>
+</tbody>
+</table></div>
+<h3>13.4 よくある誤解</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>誤解</th>
+<th>実際</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「Secure by Design なら診断や監視は不要」</td>
+<td>設計は主要な防御だが万能ではない。書籍も他の手法との併用を前提にしている</td>
+</tr>
+<tr>
+<td>「ドメインプリミティブはバリデーションライブラリの別名」</td>
+<td>検証を <strong>型の生成時に強制</strong> し、型の存在を有効性の証明にする設計であり、概念の厳密化がセットになる</td>
+</tr>
+<tr>
+<td>「CISA の誓約に署名した製品は安全」</td>
+<td>誓約は自主的・自己申告ベースで、署名は安全性の保証ではない</td>
+</tr>
+<tr>
+<td>「設計に時間がかかる」</td>
+<td>初期投資は必要だが、検証の重複や再発する脆弱性への対応コストを減らせる(書籍も、日々の習慣として自然に行えると述べる)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>13.5 今後の学習ロードマップ</h3>
+<figure class="diagram"><div class="mermaid-target" data-diagram="d15" role="img" aria-label="図15"></div></figure>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>関連する学習として <strong>脅威モデリング</strong> があります。Secure by Design が「安全な構造を作る」ことに重きを置くのに対し、脅威モデリングは「設計の段階で、どこに脅威があるかを洗い出す」手法で、両者は補完関係にあります。</p></div></div></section>
+<section class="section" id="sec-14"><h2>14. 用語集</h2><div class="prose"><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用語</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Secure by Design</td>
+<td>設計によってセキュリティを実現する考え方</td>
+</tr>
+<tr>
+<td>Secure by Default</td>
+<td>初期状態(デフォルト)で安全な設定にする考え方</td>
+</tr>
+<tr>
+<td>CIA-T</td>
+<td>機密性・完全性・可用性・追跡可能性</td>
+</tr>
+<tr>
+<td>不変条件(invariant)</td>
+<td>常に成り立つべき条件</td>
+</tr>
+<tr>
+<td>ドメインプリミティブ</td>
+<td>存在すること自体が有効性を示す、不変条件付きの値オブジェクト</td>
+</tr>
+<tr>
+<td>値オブジェクト</td>
+<td>値で同一性が決まる不変の概念</td>
+</tr>
+<tr>
+<td>エンティティ</td>
+<td>IDで同一性が決まり、状態が変化する概念</td>
+</tr>
+<tr>
+<td>フェイルファスト</td>
+<td>不正を早期に明確に失敗させる方針</td>
+</tr>
+<tr>
+<td>リードワンスオブジェクト</td>
+<td>一度だけ読み取れる機密値のためのオブジェクト</td>
+</tr>
+<tr>
+<td>テイント分析</td>
+<td>信頼できない値の流れを追跡する発想・手法</td>
+</tr>
+<tr>
+<td>サーキットブレーカー</td>
+<td>失敗が続く呼び出し先を一時的に遮断する仕組み</td>
+</tr>
+<tr>
+<td>12ファクターアプリ</td>
+<td>クラウド向けアプリの設計原則集</td>
+</tr>
+<tr>
+<td>IaC</td>
+<td>インフラ構成をコードで管理すること</td>
+</tr>
+<tr>
+<td>Safe Coding</td>
+<td>Google が提唱する、安全性を型・ライブラリ・フレームワークに移す設計実践</td>
+</tr>
+<tr>
+<td>Pledge(誓約)</td>
+<td>CISA の Secure by Design 自主的誓約</td>
+</tr>
+<tr>
+<td>VDP</td>
+<td>脆弱性開示ポリシー</td>
+</tr>
+</tbody>
+</table></div></div></section>
+<section class="section" id="sec-15"><h2>15. 参考文献・根拠ソース一覧(URL)</h2><div class="prose"><div class="callout note"><i class="ti ti-info-circle"></i><p>確認日: 2026年10月8日時点。URL の内容は更新される可能性があります。</p></div>
+<h3>15.1 書籍そのもの(一次情報)</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-badge">1</span><div class="ref-body"><span class="ref-tag">公式商品ページ</span><p class="ref-desc">Manning『Secure by Design』(ISBN 9781617294358、2019年9月、400ページ。日本語・ロシア語・簡体中国語版あり)</p><a class="ref-url" href="https://www.manning.com/books/secure-by-design" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.manning.com/books/secure-by-design</span></a></div></div><div class="ref-card"><span class="ref-badge">2</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第1章 Why design matters for security</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design</span></a></div></div><div class="ref-card"><span class="ref-badge">3</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第4章 Code constructs promoting security</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-4" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-4</span></a></div></div><div class="ref-card"><span class="ref-badge">4</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第5章 Domain primitives</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-5" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-5</span></a></div></div><div class="ref-card"><span class="ref-badge">5</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第6章 Ensuring integrity of state</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-6" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-6</span></a></div></div><div class="ref-card"><span class="ref-badge">6</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第7章 Reducing complexity of state</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-7" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-7</span></a></div></div><div class="ref-card"><span class="ref-badge">7</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第8章 Leveraging your delivery pipeline for security</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-8" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-8</span></a></div></div><div class="ref-card"><span class="ref-badge">8</span><div class="ref-body"><span class="ref-tag">目次(liveBook)</span><p class="ref-desc">第9章 Handling failures securely</p><a class="ref-url" href="https://livebook.manning.com/book/secure-by-design/chapter-9" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://livebook.manning.com/book/secure-by-design/chapter-9</span></a></div></div><div class="ref-card"><span class="ref-badge">9</span><div class="ref-body"><span class="ref-tag">著者の無料記事</span><p class="ref-desc">Domain primitives: what they are and how you can use them to make more secure software</p><a class="ref-url" href="https://freecontent.manning.com/domain-primitives-what-they-are-and-how-you-can-use-them-to-make-more-secure-software/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://freecontent.manning.com/domain-primitives-what-they-are-and-how-you-can-use-them-to-make-more-secure-software/</span></a></div></div><div class="ref-card"><span class="ref-badge">10</span><div class="ref-body"><span class="ref-tag">書誌・目次</span><p class="ref-desc">O'Reilly Learning 上の書誌・目次</p><a class="ref-url" href="https://oreilly.com/library/view/secure-by-design/9781617294358" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://oreilly.com/library/view/secure-by-design/9781617294358</span></a></div></div></div>
+<h3>15.2 著名な開発者・実務者の発信</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-badge">11</span><div class="ref-body"><span class="ref-tag">Matt Raible(Java Champion)</span><p class="ref-desc">本書の章ごとの書評(2020年5月)</p><a class="ref-url" href="https://raibledesigns.com/rd/entry/secure_by_design_book_review" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://raibledesigns.com/rd/entry/secure_by_design_book_review</span></a></div></div><div class="ref-card"><span class="ref-badge">12</span><div class="ref-body"><span class="ref-tag">Matt Raible</span><p class="ref-desc">「11 Patterns to Secure Microservice Architectures」(最初のパターンが Be Secure by Design)</p><a class="ref-url" href="https://dzone.com/articles/11-patterns-to-secure-microservice-architectures" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://dzone.com/articles/11-patterns-to-secure-microservice-architectures</span></a></div></div><div class="ref-card"><span class="ref-badge">13</span><div class="ref-body"><span class="ref-tag">Matt Raible</span><p class="ref-desc">同テーマの講演スライド(Speaker Deck)</p><a class="ref-url" href="https://speakerdeck.com/mraible/security-patterns-for-microservice-architectures-london-java-community-2020" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://speakerdeck.com/mraible/security-patterns-for-microservice-architectures-london-java-community-2020</span></a></div></div><div class="ref-card"><span class="ref-badge">14</span><div class="ref-body"><span class="ref-tag">Daniel Sawano(著者)</span><p class="ref-desc">講演「Creating secure software - benefits from cloud thinking」スライド</p><a class="ref-url" href="https://noti.st/sawano/CRZBTX/creating-secure-software-benefits-from-cloud-thinking" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://noti.st/sawano/CRZBTX/creating-secure-software-benefits-from-cloud-thinking</span></a></div></div><div class="ref-card"><span class="ref-badge">15</span><div class="ref-body"><span class="ref-tag">Christoph Kern(Google)</span><p class="ref-desc">USENIX Security での講演「Preventing Security Bugs through Software Design」</p><a class="ref-url" href="https://www.usenix.org/conference/usenixsecurity15/symposium-program/presentation/kern" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.usenix.org/conference/usenixsecurity15/symposium-program/presentation/kern</span></a></div></div><div class="ref-card"><span class="ref-badge">16</span><div class="ref-body"><span class="ref-tag">Christoph Kern(Google)</span><p class="ref-desc">論文「Safe Coding: Rigorous Modular Reasoning about Software Safety」(Queue 23(5)、2025)</p><a class="ref-url" href="https://research.google/pubs/safe-coding-rigorous-modular-reasoning-about-software-safety/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://research.google/pubs/safe-coding-rigorous-modular-reasoning-about-software-safety/</span></a></div></div><div class="ref-card"><span class="ref-badge">17</span><div class="ref-body"><span class="ref-tag">Christoph Kern</span><p class="ref-desc">OpenSSF ポッドキャスト #2</p><a class="ref-url" href="https://openssf.org/podcast/2024/04/23/whats-in-the-soss-podcast-2-christoph-kern-and-the-challenge-of-keeping-google-secure/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://openssf.org/podcast/2024/04/23/whats-in-the-soss-podcast-2-christoph-kern-and-the-challenge-of-keeping-google-secure/</span></a></div></div><div class="ref-card"><span class="ref-badge">18</span><div class="ref-body"><span class="ref-tag">IEEE Center for Secure Design</span><p class="ref-desc">報告書「Avoiding the Top 10 Software Security Design Flaws」(2014)</p><a class="ref-url" href="https://www.spinellis.gr/pubs/tr/2014-CSD-Flaws/html/CSD-avoid-top10-flaws.html" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.spinellis.gr/pubs/tr/2014-CSD-Flaws/html/CSD-avoid-top10-flaws.html</span></a></div></div><div class="ref-card"><span class="ref-badge">19</span><div class="ref-body"><span class="ref-tag">IEEE Cybersecurity</span><p class="ref-desc">第1項目「Earn or Give, but Never Assume, Trust」解説</p><a class="ref-url" href="https://cybersecurity.ieee.org/blog/2015/11/13/avoiding-the-top-10-software-security-design-flaws-earn-or-give-but-never-assume-trust/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://cybersecurity.ieee.org/blog/2015/11/13/avoiding-the-top-10-software-security-design-flaws-earn-or-give-but-never-assume-trust/</span></a></div></div><div class="ref-card"><span class="ref-badge">20</span><div class="ref-body"><span class="ref-tag">12factor.net</span><p class="ref-desc">The Twelve-Factor App</p><a class="ref-url" href="https://12factor.net/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://12factor.net/</span></a></div></div></div>
+<h3>15.3 政府機関・公的機関(組織としての Secure by Design)</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-badge">21</span><div class="ref-body"><span class="ref-tag">CISA</span><p class="ref-desc">Secure by Design トップページ</p><a class="ref-url" href="https://www.cisa.gov/securebydesign" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cisa.gov/securebydesign</span></a></div></div><div class="ref-card"><span class="ref-badge">22</span><div class="ref-body"><span class="ref-tag">CISA</span><p class="ref-desc">Secure by Design 誓約(ゴールと達成アプローチ)</p><a class="ref-url" href="https://www.cisa.gov/securebydesign/pledge" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cisa.gov/securebydesign/pledge</span></a></div></div><div class="ref-card"><span class="ref-badge">23</span><div class="ref-body"><span class="ref-tag">CISA</span><p class="ref-desc">誓約署名者一覧</p><a class="ref-url" href="https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers</span></a></div></div><div class="ref-card"><span class="ref-badge">24</span><div class="ref-body"><span class="ref-tag">CISA</span><p class="ref-desc">誓約への初期コミットメント発表(68社、7ゴール)</p><a class="ref-url" href="https://cisa.gov/news-events/news/cisa-announces-secure-design-commitments-leading-technology-providers" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://cisa.gov/news-events/news/cisa-announces-secure-design-commitments-leading-technology-providers</span></a></div></div><div class="ref-card"><span class="ref-badge">25</span><div class="ref-body"><span class="ref-tag">CISA ほか</span><p class="ref-desc">共同ガイダンス Shifting the Balance of Cybersecurity Risk(概要)</p><a class="ref-url" href="https://cisa.gov/resources-tools/resources/secure-by-design-and-default" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://cisa.gov/resources-tools/resources/secure-by-design-and-default</span></a></div></div><div class="ref-card"><span class="ref-badge">26</span><div class="ref-body"><span class="ref-tag">CISA・FBI</span><p class="ref-desc">Product Security Bad Practices(メモリ安全性ロードマップの公開期限を含む)</p><a class="ref-url" href="https://www.cisa.gov/resources-tools/resources/product-security-bad-practices" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cisa.gov/resources-tools/resources/product-security-bad-practices</span></a></div></div><div class="ref-card"><span class="ref-badge">27</span><div class="ref-body"><span class="ref-tag">CISA ほか</span><p class="ref-desc">2023年10月の拡充版の公表アラート(共同署名機関一覧)</p><a class="ref-url" href="https://cisa.gov/news-events/alerts/2023/10/16/cisa-nsa-fbi-and-international-partners-release-updated-secure-design-guidance" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://cisa.gov/news-events/alerts/2023/10/16/cisa-nsa-fbi-and-international-partners-release-updated-secure-design-guidance</span></a></div></div><div class="ref-card"><span class="ref-badge">28</span><div class="ref-body"><span class="ref-tag">ニュージーランド NCSC</span><p class="ref-desc">共同ガイダンスの解説ページ</p><a class="ref-url" href="https://www.ncsc.govt.nz/protect-your-organisation/principles-and-approaches-for-secure-by-design-software/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.ncsc.govt.nz/protect-your-organisation/principles-and-approaches-for-secure-by-design-software/</span></a></div></div></div>
+<h3>15.4 二次情報(最新動向の補助。一次情報での確認を推奨)</h3>
+<div class="ref-list"><div class="ref-card"><span class="ref-badge">29</span><div class="ref-body"><span class="ref-tag">Industrial Cyber</span><p class="ref-desc">拡充版ガイダンス(AI への言及を含む)の報道</p><a class="ref-url" href="https://industrialcyber.co/cisa/global-security-agencies-update-secure-by-design-principles-and-guidance-for-technology-providers/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://industrialcyber.co/cisa/global-security-agencies-update-secure-by-design-principles-and-guidance-for-technology-providers/</span></a></div></div><div class="ref-card"><span class="ref-badge">30</span><div class="ref-body"><span class="ref-tag">Safeguard(解説記事)</span><p class="ref-desc">CISA 誓約の解説(300社超、自己申告・非検証という指摘、2026年5月)</p><a class="ref-url" href="https://safeguard.sh/resources/blog/cisas-secure-by-design-pledge-explained" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://safeguard.sh/resources/blog/cisas-secure-by-design-pledge-explained</span></a></div></div><div class="ref-card"><span class="ref-badge">31</span><div class="ref-body"><span class="ref-tag">Safeguard(解説記事)</span><p class="ref-desc">誓約の2026年アップデート解説(2026年4月)</p><a class="ref-url" href="https://safeguard.sh/resources/blog/cisa-secure-by-design-pledge-update-2026" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://safeguard.sh/resources/blog/cisa-secure-by-design-pledge-update-2026</span></a></div></div><div class="ref-card"><span class="ref-badge">32</span><div class="ref-body"><span class="ref-tag">Cybersecurity Dive</span><p class="ref-desc">主要推進者の退任後に取り組みが目立たなくなったとの報道</p><a class="ref-url" href="https://www.cybersecuritydive.com/news/surveillance-camera-axis-signs-cisa-security-pledge/806907/" target="_blank" rel="noopener noreferrer"><i class="ti ti-external-link"></i><span>https://www.cybersecuritydive.com/news/surveillance-camera-axis-signs-cisa-security-pledge/806907/</span></a></div></div></div></div></section>
+<section class="section" id="sec-16"><h2>16. 最後に</h2><div class="prose"><p>Secure by Design の核心は、<strong>「開発者が毎回セキュリティを思い出さなくても、普通に作れば安全になる土台を設計で用意する」</strong> ことです。</p>
+<ol>
+<li>まずは <strong>小さな1つの概念(例: 数量、ユーザー名)をドメインプリミティブにする</strong></li>
+<li>その <strong>境界値テスト</strong> を書く</li>
+<li>例外メッセージの <strong>情報漏えい</strong> を点検する</li>
+</ol>
+<p>この3つだけでも、設計がセキュリティを支えるという感覚をつかめます。そこから、状態管理、パイプライン、可用性、クラウド的設計へと広げていってください。</p>
+<div class="callout note"><i class="ti ti-info-circle"></i><p>本ガイドは学習用の整理です。実際のシステムに適用する際は、書籍本文、使用言語・フレームワークの公式ドキュメント、自組織のセキュリティ要件を必ず確認してください。</p></div></div></section>
+
+  <footer class="footer">
+    <p>Secure by Design 入門ガイド(情報の基準日: 2026年10月8日)</p>
+    <p>書籍の内容は目次・公式紹介・著者の公開記事・書評などをもとに自分の言葉で再構成したものです。詳細は書籍本文と各ソースの原文を確認してください。</p>
+  </footer>
+</main>
+</div>
+
+<script>
+window.DIAGRAMS = {
+"d1": `flowchart TD
+S0["Step 0: 全体像をつかむ"] --> S1["Step 1: セキュリティは機能ではなく関心事"]
+S1 --> S2["Step 2: 設計が先、ツールは後"]
+S2 --> S3["Step 3: DDDの最小知識"]
+S3 --> S4["Step 4: 不変性・フェイルファスト・検証"]
+S4 --> S5["Step 5: ドメインプリミティブ"]
+S5 --> S6["Step 6: 状態の完全性と複雑さの削減"]
+S6 --> S7["Step 7: パイプラインとテスト"]
+S7 --> S8["Step 8: 失敗と可用性の設計"]
+S8 --> S9["Step 9: クラウド的思考"]
+S9 --> S10["Step 10: レガシーとマイクロサービスへの適用"]
+S10 --> S11["Step 11: 政府機関の原則と業界の流れ"]
+S11 --> S12["Step 12: チェックリストと演習"]`,
+"d2": `flowchart LR
+subgraph A["あとから足す方式"]
+A1["機能を実装"] --> A2["脆弱性診断で発見"] --> A3["個別に修正"] --> A4["また別の場所で再発"]
+end
+subgraph B["設計に織り込む方式"]
+B1["概念を厳密にモデル化"] --> B2["安全な部品を用意"] --> B3["部品を使うだけで安全"] --> B4["脆弱性の入り込む余地が減る"]
+end`,
+"d3": `flowchart TD
+T["従来のアプローチ"] --> P1["セキュリティを明示的に考えさせる"]
+T --> P2["全員にセキュリティ専門家になってもらう"]
+T --> P3["知り得ないことまで全て知ろうとする"]
+P1 --> R1["忙しいと忘れる。考えた人だけが守れる"]
+P2 --> R2["現実には専門家を全員分は用意できない"]
+P3 --> R3["未知の攻撃は事前に列挙できない"]`,
+"d4": `flowchart TD
+A["XMLパーサーをそのまま使う"] --> B["Billion Laughsで資源枯渇の恐れ"]
+B --> C["パーサー設定を見直す: 危険な機能を無効化する"]
+C --> D["設計の視点で考える: 受け入れる入力を狭く定義する"]
+D --> E["運用上の制約を設ける: メモリや処理時間の上限"]
+E --> F["多層防御: 一つ破られても他で止める"]`,
+"d5": `flowchart LR
+A["業務の言葉を厳密に定義する"] --> B["有効な値の範囲が明確になる"]
+B --> C["不変条件としてコードに書ける"]
+C --> D["不正値が入り込めない設計になる"]`,
+"d6": `flowchart LR
+V1["1 出所の確認"] --> V2["2 サイズの確認"] --> V3["3 字句内容の確認"] --> V4["4 構文の確認"] --> V5["5 意味の確認"]`,
+"d7": `flowchart TD
+IN["外部からの入力: 素の文字列や数値"] --> CONV["ドメインプリミティブの生成処理"]
+CONV -->|"不変条件を満たす"| OK["有効な値オブジェクトとして存在"]
+CONV -->|"満たさない"| NG["生成に失敗: 例外で即拒否"]
+OK --> USE["ドメイン内のどこで使っても検証済み"]`,
+"d8": `flowchart TD
+Q["その言葉は外部標準で厳密に定義されているか"] -->|"はい"| A["意味を変えない。別の新しい用語を導入する"]
+Q -->|"いいえ"| B["自ドメイン内での定義を決めてよい"]
+A --> C["元の用語は厳密な定義のまま保てる"]
+B --> D["不変条件を決めてコードに書く"]`,
+"d9": `stateDiagram-v2
+[*] --> Draft
+Draft --> Placed: 注文確定
+Placed --> Paid: 支払い完了
+Paid --> Shipped: 出荷
+Draft --> Cancelled: キャンセル
+Placed --> Cancelled: キャンセル
+Paid --> Cancelled: キャンセル
+Shipped --> [*]
+Cancelled --> [*]`,
+"d10": `flowchart LR
+C["コミット"] --> U["ユニットテスト: セキュリティ観点を含む"]
+U --> S["静的解析・依存関係チェック"]
+S --> I["統合テスト・自動セキュリティテスト"]
+I --> D["ステージングへデプロイ: IaCで環境を再現"]
+D --> A["可用性テスト"]
+A --> P["本番リリース"]
+U -->|"失敗"| X["修正して再コミット"]
+S -->|"失敗"| X
+I -->|"失敗"| X
+A -->|"失敗"| X`,
+"d11": `stateDiagram-v2
+[*] --> Closed
+Closed --> Open: 失敗が閾値を超えた
+Open --> HalfOpen: 一定時間経過
+HalfOpen --> Closed: 試験呼び出しが成功
+HalfOpen --> Open: 試験呼び出しが失敗`,
+"d12": `flowchart LR
+R1["Rotate: 秘密情報を入れ替える"] --> R2["Repave: 環境を作り直す"] --> R3["Repair: 脆弱性を速やかに直す"] --> R1`,
+"d13": `flowchart TD
+L1["最も危険な入口を特定する: 外部入力・外部連携"] --> L2["入口でドメインプリミティブへ変換する層を作る"]
+L2 --> L3["内側のコードは徐々にドメインプリミティブへ置き換える"]
+L3 --> L4["テストを先に書いて、変更の安全網を作る"]
+L4 --> L5["ログ・例外の漏えいを点検する"]`,
+"d14": `flowchart LR
+BK["書籍: ドメインプリミティブ・不変性・フェイルファスト"] --> G3["CISAゴール3: 脆弱性のクラス全体を減らす"]
+GG["Google: Safe Coding の安全な抽象"] --> G3
+G3 --> OUT["顧客が受け取る製品がデフォルトで安全になる"]`,
+"d15": `flowchart TD
+A["本ガイドで全体像を理解"] --> B["書籍の第3〜5章を読む: DDDとドメインプリミティブ"]
+B --> C["自分のコードで1つ型を置き換える"]
+C --> D["第8章: テストをパイプラインに組み込む"]
+D --> E["第9〜10章: 失敗とクラウド的設計を見直す"]
+E --> F["脅威モデリングで設計上の欠陥を見つける"]
+F --> G["IEEE CSD Top10とCISAの原則で組織へ展開"]`
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+<script>
+(function(){
+  var burger=document.getElementById('burger');
+  var backdrop=document.getElementById('backdrop');
+  var sidebar=document.getElementById('sidebar');
+  function setNav(open){
+    document.body.classList.toggle('nav-open',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    burger.setAttribute('aria-label',open?'目次を閉じる':'目次を開く');
+  }
+  burger.addEventListener('click',function(){setNav(!document.body.classList.contains('nav-open'));});
+  backdrop.addEventListener('click',function(){setNav(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){setNav(false);}});
+  window.addEventListener('resize',function(){if(window.innerWidth>1024){setNav(false);}});
+
+  var links=[].slice.call(document.querySelectorAll('.sidebar nav a'));
+  var map={};
+  links.forEach(function(a){
+    map[a.getAttribute('href').slice(1)]=a;
+    a.addEventListener('click',function(){setNav(false);});
+  });
+  function revealLink(a){
+    var top=a.offsetTop,h=sidebar.clientHeight,st=sidebar.scrollTop;
+    if(top<st+60){sidebar.scrollTop=top-60;}
+    else if(top+a.offsetHeight>st+h-60){sidebar.scrollTop=top+a.offsetHeight-h+60;}
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(l){l.classList.remove('active');});
+          var a=map[en.target.id];
+          if(a){a.classList.add('active');revealLink(a);}
+        }
+      });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('section[id]').forEach(function(s){io.observe(s);});
+  }
+
+  if(window.hljs){
+    document.querySelectorAll('pre code[class*="language-"]').forEach(function(el){hljs.highlightElement(el);});
+  }
+})();
+
+(async function(){
+  if(!window.mermaid||!window.DIAGRAMS){return;}
+  try{await document.fonts.ready;}catch(e){}
+  mermaid.initialize({
+    startOnLoad:false,
+    theme:'dark',
+    securityLevel:'loose',
+    fontFamily:'-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Noto Sans JP","Segoe UI",sans-serif',
+    flowchart:{useMaxWidth:false,htmlLabels:true,nodeSpacing:45,rankSpacing:45,curve:'basis',padding:12},
+    state:{useMaxWidth:false},
+    themeVariables:{
+      darkMode:true,
+      background:'#0d1b2e',
+      fontSize:'16px',
+      primaryColor:'#16315c',
+      primaryTextColor:'#f3f5fa',
+      primaryBorderColor:'#7c9eff',
+      secondaryColor:'#1b2f4f',
+      secondaryTextColor:'#f3f5fa',
+      secondaryBorderColor:'#3e5c8f',
+      tertiaryColor:'#13253d',
+      tertiaryTextColor:'#f3f5fa',
+      tertiaryBorderColor:'#3e5c8f',
+      lineColor:'#9db8ff',
+      textColor:'#f3f5fa',
+      mainBkg:'#16315c',
+      nodeBorder:'#7c9eff',
+      nodeTextColor:'#f3f5fa',
+      edgeLabelBackground:'#0d1b2e',
+      clusterBkg:'#0f2036',
+      clusterBorder:'#3e5c8f',
+      titleColor:'#f3f5fa',
+      noteBkgColor:'#1b2f4f',
+      noteTextColor:'#f3f5fa',
+      noteBorderColor:'#7c9eff',
+      transitionColor:'#9db8ff',
+      transitionLabelColor:'#f3f5fa',
+      stateBkg:'#16315c',
+      stateLabelColor:'#f3f5fa',
+      labelColor:'#f3f5fa',
+      altBackground:'#13253d'
+    }
+  });
+  var targets=document.querySelectorAll('[data-diagram]');
+  for(var i=0;i<targets.length;i++){
+    var el=targets[i];
+    var key=el.getAttribute('data-diagram');
+    var src=window.DIAGRAMS[key];
+    if(!src){continue;}
+    try{
+      var out=await mermaid.render('mmd-'+key,src);
+      el.innerHTML=out.svg;
+      var svg=el.querySelector('svg');
+      if(svg){
+        var vb=svg.viewBox&&svg.viewBox.baseVal;
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.maxWidth='100%';
+        svg.style.height='auto';
+        svg.style.overflow='visible';
+        if(vb&&vb.width){
+          var extra=/^(stateDiagram|sequenceDiagram)/.test(src)?110:15;
+          svg.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.width+' '+(vb.height+extra));
+          svg.style.width=vb.width+'px';
+        }
+      }
+    }catch(err){
+      console.error(key,err);
+      el.textContent='図の描画に失敗しました ('+key+')';
+      el.classList.add('diagram-error');
+    }
+  }
+})();
+</script>
+</body>
+</html>
