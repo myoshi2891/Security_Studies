@@ -533,6 +533,8 @@ def split(secret: int, k: int, n: int):
 
 def combine(shares):
     """ラグランジュ補間で x=0 の値を求める"""
+    if not shares:
+        raise ValueError("shares が空のため復元できない")
     s = 0
     for i, (xi, yi) in enumerate(shares):
         num = den = 1
