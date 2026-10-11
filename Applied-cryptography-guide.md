@@ -517,6 +517,8 @@ P = 2**127 - 1   # 十分大きな素数（教育用）
 
 def split(secret: int, k: int, n: int):
     """secret を n 個に分割し、k 個集めれば復元できるようにする"""
+    if not 1 <= k <= n < P:
+        raise ValueError("k と n は 1 <= k <= n < P を満たさなければならない")
     if not 0 <= secret < P:
         raise ValueError("secret は 0 以上 P 未満でなければならない")
     coeffs = [secret] + [secrets.randbelow(P) for _ in range(k - 1)]
