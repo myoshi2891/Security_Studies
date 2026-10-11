@@ -134,7 +134,8 @@ flowchart LR
 この前提から、TLS には次の対策が組み込まれます。
 
 - 通信内容は暗号化する（読ませない）
-- 全メッセージに認証タグを付ける（書き換えを検知する）
+- 鍵の確立後に送る通信レコードには、AEAD の認証タグを付ける（書き換えを検知する）
+- 鍵の確立前に送る ClientHello と ServerHello には個別の認証タグがない。代わりに、ハンドシェイク全体の内容を Finished メッセージで検証し、途中の改ざんを検知する
 - 証明書で相手を確かめる（偽サーバーを見破る）
 - バージョンや暗号スイートの選択をハンドシェイクで保護する（ダウングレードを防ぐ）
 
@@ -143,11 +144,11 @@ flowchart LR
 | 部品 | 役割 | 代表例 | 覚え方 |
 |---|---|---|---|
 | 共通鍵暗号（Symmetric） | 高速に大量データを暗号化 | AES-GCM、ChaCha20-Poly1305 | 同じ鍵で施錠・解錠 |
-| 公開鍵暗号（Asymmetric） | 鍵共有や署名に使う | RSA、ECDSA、Ed25519 | 公開鍵と秘密鍵のペア |
+| 公開鍵暗号（Asymmetric） | 鍵共有と署名の土台（具体的な方式は下の「鍵交換」「デジタル署名」） | RSA、楕円曲線（Curve25519、P-256 など） | 公開鍵と秘密鍵のペア |
 | ハッシュ関数（Hash） | データの指紋を作る | SHA-256、SHA-384 | 一方向、元に戻せない |
 | MAC | 共通鍵で改ざんを検知 | HMAC | 鍵付きの指紋 |
 | 鍵交換（Key Exchange） | 盗聴されても共通鍵を安全に共有 | ECDHE、X25519、ML-KEM | 秘密を直接送らず、合意する |
-| デジタル署名（Signature） | 作成者の証明と改ざん検知 | ECDSA、RSA-PSS | 秘密鍵でしか作れない印鑑 |
+| デジタル署名（Signature） | 作成者の証明と改ざん検知 | ECDSA、Ed25519、RSA-PSS | 秘密鍵でしか作れない印鑑 |
 
 **AEAD** は、暗号化と改ざん検知を一度にこなす方式です。AES-GCM と ChaCha20-Poly1305 が代表で、TLS 1.3 では AEAD のみが使えます。
 
@@ -1254,7 +1255,27 @@ if __name__ == "__main__":
 | 1 | `minimum_version` を `TLSv1_3` にして、TLS 1.2 のみのサーバーに接続するとどうなるか確認する | `ssl.SSLError` が出る |
 | 2 | 残り日数が30日未満なら警告を出す関数に改造する | 監視の第一歩 |
 | 3 | 自分のサーバーに対して、`check_hostname` の動作をわざと確かめる（別ホスト名の証明書を返す環境で） | 検証が有効だと失敗する |
-| 4 | 第11章の私設 CA の `root.crt` を `ctx.load_verify_locations("root.crt")` で読み込み、`app.lab.test` に接続する | 検証を無効化せずにテストできる |
+| 4 | 第11章の私設 CA の `root.crt` を `ctx.load_verify_locations("root.crt")` で読み込み、`app.lab.test` に接続する | 検証を無効化せずにテストできる（接続先の準備は下記） |
+
+演習4の接続先は、第11章で作った証明書を使い、手元に `openssl s_server` を立てて用意します。DNS や `/etc/hosts` は変更せず、TCP の接続先は `127.0.0.1`、SNI とホスト名検証には `app.lab.test` を使います。
+
+```bash
+# 第11章のファイル (leaf.crt / int.crt / leaf.key) があるディレクトリで実行
+# -cert_chain で中間 CA 証明書も送る (送らないと検証に失敗する)
+openssl s_server -accept 127.0.0.1:8443 -cert leaf.crt -cert_chain int.crt -key leaf.key -www
+```
+
+```python
+import socket
+import ssl
+
+ctx = ssl.create_default_context()           # 検証は有効のまま
+ctx.load_verify_locations("root.crt")        # 私設 Root を信頼する
+
+with socket.create_connection(("127.0.0.1", 8443), timeout=5) as sock:
+    with ctx.wrap_socket(sock, server_hostname="app.lab.test") as tls:  # SAN と照合
+        print(tls.version(), tls.getpeercert()["subjectAltName"])
+```
 
 ---
 
