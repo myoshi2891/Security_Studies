@@ -282,9 +282,14 @@ key = secrets.token_bytes(32)
 msg = b"transfer:100"
 tag = hmac.new(key, msg, hashlib.sha256).digest()
 
-# 受信側。== ではなく compare_digest を使う（タイミング攻撃対策）
-received_tag = tag
-assert hmac.compare_digest(tag, received_tag)
+# 受信側: 受け取ったメッセージと共有鍵から期待タグを再計算する
+def verify(key: bytes, received_msg: bytes, received_tag: bytes) -> bool:
+    expected = hmac.new(key, received_msg, hashlib.sha256).digest()
+    # == ではなく compare_digest を使う（タイミング攻撃対策）
+    return hmac.compare_digest(expected, received_tag)
+
+if not verify(key, msg, tag):
+    raise ValueError("MAC 検証失敗: メッセージを破棄する")
 ```
 
 > **ポイント**: タグの比較に `==` を使うと、一致する先頭バイト数の違いによる処理時間差から情報が漏れる場合があります。必ず定数時間比較を使います。
@@ -512,6 +517,8 @@ P = 2**127 - 1   # 十分大きな素数（教育用）
 
 def split(secret: int, k: int, n: int):
     """secret を n 個に分割し、k 個集めれば復元できるようにする"""
+    if not 0 <= secret < P:
+        raise ValueError("secret は 0 以上 P 未満でなければならない")
     coeffs = [secret] + [secrets.randbelow(P) for _ in range(k - 1)]
 
     def f(x: int) -> int:
