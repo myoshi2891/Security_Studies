@@ -243,16 +243,20 @@ sequenceDiagram
 
 ### Step 3：鍵スケジュール（概念だけ）
 
-TLS 1.3 は、ECDHE で得た共有秘密から **HKDF** という鍵導出関数を段階的に使い、用途ごとに別の鍵を作ります。
+TLS 1.3 は、PSK（事前共有鍵）と ECDHE で得た共有秘密を入力に **HKDF** という鍵導出関数を段階的に使い、用途ごとに別の鍵を作ります。
 
 ```mermaid
 flowchart TD
-    E["(EC)DHE の共有秘密"] --> HS["Handshake Secret"]
+    P["PSK（なければ 0）"] --> ES["Early Secret"]
+    ES --> HS["Handshake Secret"]
+    E["(EC)DHE の共有秘密<br/>（psk_ke では使わず 0）"] --> HS
     HS --> HK["ハンドシェイク用の鍵"]
-    HS --> MS["Master Secret"]
+    HS --> MS["Main Secret"]
     MS --> AK["アプリケーションデータ用の鍵"]
     MS --> RM["再接続用の Resumption 秘密"]
 ```
+
+Handshake Secret は、Early Secret と (EC)DHE の共有秘密を組み合わせて導出されます。PSK のみで鍵交換するモード（`psk_ke`）では (EC)DHE を行わないため、その入力は 0 になり前方秘匿性は得られません（通常は `psk_dhe_ke` を使います）。なお Main Secret は、RFC 8446 では Master Secret と呼ばれていたものです。
 
 初学者は「**用途ごとに鍵を分け、1つが漏れても他に影響しにくくしている**」と理解すれば十分です。
 
@@ -264,7 +268,8 @@ flowchart TD
 | CBC 暗号、RC4 | BEAST、Lucky 13、RC4 バイアスなどの原因 |
 | 圧縮（Compression） | CRIME 攻撃 |
 | 再ネゴシエーション | 複雑さと攻撃の温床 |
-| SHA-1、MD5 署名 | 衝突攻撃に弱い |
+| SHA-1 署名 | 衝突攻撃に弱い。CertificateVerify での使用は禁止。ただし証明書の署名については、SHA-1 署名なしでは有効なチェーンを構成できない場合に限り、後方互換のため扱われる余地が残る |
+| MD5 署名付き証明書 | 衝突攻撃で実際に偽造 CA 証明書が作られた。TLS 1.3 の署名アルゴリズムに MD5 は定義されておらず、受け入れられない |
 | 任意の DH パラメータ | Logjam 攻撃 |
 
 TLS 1.3 を使うだけで、過去の多くの攻撃が **原理的に起こらなくなります**。
@@ -1234,7 +1239,7 @@ def inspect_tls(host: str, port: int = 443) -> None:
                 ssl.cert_time_to_seconds(cert["notAfter"]), tz=timezone.utc
             )
             days_left = (not_after - datetime.now(timezone.utc)).days
-            san = [v for k, v in cert.get("subjectAltName", ()) if k == "DNS"]
+            san = [v for k, v in cert.get("subjectAltName", ()) if k in ("DNS", "IP Address")]
 
             print(f"ホスト      : {host}")
             print(f"TLS バージョン: {tls.version()}")
