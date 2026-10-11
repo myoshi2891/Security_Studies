@@ -292,7 +292,7 @@ TLS 1.2 のような長い暗号スイート名の組み合わせ（鍵交換＋
 
 | 用途 | 0-RTT の可否 |
 |---|---|
-| 参照だけの GET（冪等） | 一般に許容できる |
+| 参照だけの GET など、リプレイされても安全な処理 | 許容できる。冪等であるだけでは不十分で、同じ要求が複数回届いても副作用・課金・レート制限の消費・ログ上の誤解などが生じないことを確認できた場合に限る |
 | 決済、状態変更の POST | 使ってはいけない |
 
 ### Step 7：TLS 1.3 の「見えてしまう」情報とECH
@@ -408,7 +408,9 @@ flowchart TD
     B -- いいえ --> X["接続拒否"]
     B -- はい --> C{"各証明書の署名は正しいか"}
     C -- いいえ --> X
-    C -- はい --> D{"有効期間内か"}
+    C -- はい --> CA{"中間 CA は basicConstraints の cA=TRUE か<br/>keyUsage に keyCertSign を含むか<br/>pathLenConstraint を超えていないか<br/>未対応の critical extension がないか"}
+    CA -- いいえ --> X
+    CA -- はい --> D{"有効期間内か"}
     D -- いいえ --> X
     D -- はい --> E{"SAN に接続先ホスト名が含まれるか"}
     E -- いいえ --> X
@@ -443,7 +445,7 @@ flowchart TD
 | Basic Constraints | CA かどうか、チェーンの深さ制限 |
 | Authority Information Access | 発行元証明書の場所、OCSP の場所（OCSP は縮小傾向） |
 | CRL Distribution Points | CRL の場所 |
-| SCT リスト | Certificate Transparency のログに登録済みの証明 |
+| SCT リスト | Certificate Transparency ログが、Maximum Merge Delay（MMD）以内にその証明書をログへ記録すると約束した署名付きのタイムスタンプ。発行時点で記録済みであることの証明ではない。実際に記録されたかは、ログの inclusion proof（Merkle 木の包含証明）などで別途確認する |
 
 ### Step 5：証明書の種類（検証レベル）
 
@@ -757,7 +759,9 @@ CSP は、「**読み込んでよいリソースの出所**」を宣言するヘ
 |---|---|
 | HTTP リソースを自動で HTTPS に | `Content-Security-Policy: upgrade-insecure-requests` |
 | スクリプトの出所を制限 | `script-src 'self' https://cdn.example.com` |
-| 改ざん検知 | **SRI（Subresource Integrity）** で外部スクリプトのハッシュを固定 |
+| プラグインなどの埋め込みを禁止 | `object-src 'none'` |
+
+なお、外部スクリプトの改ざん検知には **SRI（Subresource Integrity）** を使います。SRI は CSP のディレクティブではなく、HTML の `integrity` 属性にハッシュを書く仕組みです（例: `<script src="https://cdn.example.com/lib.js" integrity="sha384-..." crossorigin="anonymous"></script>`）。CSP で出所を絞り、SRI で中身を固定する、という補完関係です。
 
 ### 8.3 Pinning（証明書のピン留め）
 
@@ -767,7 +771,7 @@ Pinning は、「このサイトの証明書は特定の鍵（または CA）に
 |---|---|
 | HPKP（HTTP ヘッダーでのピン留め） | 運用事故のリスクが高く、ブラウザでは廃止された |
 | モバイルアプリ内の Pinning | 慎重に使う。鍵や CA の更新計画がないと、アプリが接続できなくなる |
-| 現在の主な代替策 | **Certificate Transparency + CAA + 短命証明書** |
+| 誤発行への補完策 | **Certificate Transparency** は誤発行を事後に「検知」する仕組み、**CAA** は発行してよい CA を事前に「制限」する仕組み。どちらも Pinning と同等の保証（クライアント側で特定の鍵以外を拒否する）は提供しないため、Pinning の置き換えではなく、誤発行リスクを下げる補完策として使う |
 
 短命証明書（第10章）の時代には、固定した鍵が数日〜数十日で変わるため、**Pinning はさらに運用が難しくなります**。
 
