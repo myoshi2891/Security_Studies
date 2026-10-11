@@ -89,23 +89,24 @@ flowchart TD
 
 ### Step 1：TLS はどこに入るのか
 
-TLS は、アプリケーション（HTTP など）と TCP や QUIC の間に挟まる「安全な通信の層」です。
+TLS の位置は、下に TCP を使うか QUIC を使うかで異なります。
+
+- **TCP 上の TLS**: TLS レコード層がアプリケーション（HTTP/1.1、HTTP/2、SMTP など）と TCP の間に入り、アプリのデータを暗号化して TCP に渡します。
+- **QUIC（HTTP/3）**: TLS レコード層は使いません。QUIC が TLS 1.3 の **ハンドシェイクメッセージ** を運び、そこで決まった鍵を使って **QUIC 自身がパケットを保護** します。
 
 ```mermaid
-flowchart LR
-    subgraph App["アプリケーション層"]
-        H["HTTP / SMTP / IMAP など"]
+flowchart TB
+    subgraph OverTCP["TCP 上の TLS"]
+        direction TB
+        H1["HTTP/1.1, HTTP/2, SMTP など"] --> TR["TLS レコード層<br/>(暗号化・改ざん検知)"]
+        TR --> TCP["TCP"]
     end
-    subgraph Sec["セキュリティ層"]
-        T["TLS"]
+    subgraph OverQUIC["QUIC (HTTP/3)"]
+        direction TB
+        H3["HTTP/3"] --> Q["QUIC<br/>(パケット保護を QUIC 自身が実施)"]
+        TH["TLS 1.3 ハンドシェイク"] -- "ハンドシェイクメッセージを<br/>QUIC が運ぶ / 鍵を QUIC に渡す" --> Q
+        Q --> UDP["UDP"]
     end
-    subgraph Trans["トランスポート層"]
-        TCP["TCP"]
-        Q["QUIC (HTTP/3 は TLS 1.3 を内蔵)"]
-    end
-    H --> T
-    T --> TCP
-    T --> Q
 ```
 
 HTTP に TLS を重ねたものが **HTTPS** です。アプリケーションのプロトコルは変わらず、下の層で暗号化されます。
@@ -169,7 +170,11 @@ flowchart TD
 |---|---|---|
 | 静的 RSA 鍵交換 | なし | TLS 1.3 で廃止。使わない |
 | DHE / ECDHE | あり | TLS 1.2 でも推奨 |
-| TLS 1.3 の全スイート | 常にあり | 標準 |
+| TLS 1.3 のフルハンドシェイク | あり（(EC)DHE が必須） | 標準 |
+| TLS 1.3 の PSK 再開（`psk_dhe_ke`） | あり（再開時も新たに (EC)DHE を行う） | 推奨 |
+| TLS 1.3 の PSK 再開（`psk_ke`） | なし（PSK のみで新たな鍵交換をしない） | 避ける |
+
+前方秘匿性には、接続ごとの新たな非対称鍵交換（(EC)DHE）が必要です。TLS 1.3 でも、PSK だけで再開する `psk_ke` モードでは得られません。
 
 背景には「**Harvest Now, Decrypt Later**（今は記録だけして、将来の量子コンピューターで解読する）」という脅威があり、第10章のポスト量子暗号の話につながります。
 
@@ -199,7 +204,7 @@ flowchart TD
 | 特徴 | 内容 |
 |---|---|
 | 1-RTT ハンドシェイク | 通常、往復1回で暗号化通信を開始 |
-| 前方秘匿性が必須 | (EC)DHE のみ |
+| 静的 RSA 鍵交換を廃止 | 証明書を使うフルハンドシェイクは (EC)DHE のみで前方秘匿性あり。PSK 再開は `psk_dhe_ke` の場合のみ前方秘匿性あり（`psk_ke` はなし） |
 | AEAD 暗号のみ | CBC や RC4 は廃止 |
 | 証明書以降を暗号化 | サーバー証明書がネットワーク上で見えにくい |
 | ダウングレード耐性 | TLS 1.2 以下へ落とす攻撃を検出する仕掛け |
@@ -304,6 +309,7 @@ TLS 1.3 でも、ClientHello の **SNI（接続先ホスト名）は平文** で
 </details>
 
 ---
+
 ## 4. 【第3章】TLS 1.2（いまも現役の前世代）
 
 TLS 1.2 は、古いクライアントや組み込み機器との互換性のため、**まだ多くの現場で必要**です。また、TLS 1.3 が「何を改善したのか」を理解するための教材にもなります。
@@ -402,9 +408,11 @@ flowchart TD
     E -- いいえ --> X
     E -- はい --> F{"失効していないか<br/>(CRL / CRLSet など)"}
     F -- いいえ --> X
-    F -- はい --> G{"Certificate Transparency の<br/>SCT が有効か"}
+    F -- はい --> P{"クライアントまたは Root Program の<br/>ポリシーが CT を要求するか"}
+    P -- いいえ --> H["検証成功。ハンドシェイクを続行"]
+    P -- はい --> G{"Certificate Transparency の<br/>SCT がポリシーを満たすか"}
     G -- いいえ --> X
-    G -- はい --> H["検証成功。ハンドシェイクを続行"]
+    G -- はい --> H
 ```
 
 現在のホスト名検証は **Subject Alternative Name（SAN）** を使います。Common Name（CN）だけで判定する方式は廃止されています。
@@ -535,6 +543,7 @@ flowchart LR
 </details>
 
 ---
+
 ## 6. 【第5〜8章】問題と攻撃（Part II）
 
 ### 6.1 【第5章】PKI への攻撃
@@ -682,8 +691,15 @@ flowchart TD
 ```mermaid
 flowchart TD
     A["サーバーが Session Ticket 鍵で再開情報を暗号化してクライアントに預ける"] --> B["鍵を長期間変えない"]
-    B --> C["鍵が漏れると過去のセッションも復号される"]
-    C --> D["対策: 鍵を短い周期で回転し、全サーバーで安全に共有する"]
+    B --> C["Ticket 鍵が漏れた場合、何が復号され得るか"]
+    C --> T12["TLS 1.2: Ticket にマスターシークレットが入るため<br/>その Ticket を使う元の接続と再開接続の両方が復号され得る"]
+    C --> T13["TLS 1.3: 元の接続の通信鍵は (EC)DHE 由来のため導出できない"]
+    T13 --> K1["psk_ke の再開: 再開接続の通信が復号され得る"]
+    T13 --> K2["0-RTT の Early Data: psk_dhe_ke でも PSK のみから鍵を作るため復号され得る"]
+    T13 --> K3["psk_dhe_ke の再開 (1-RTT 部分): 新たな (EC)DHE があるため復号されない"]
+    T12 --> D["対策: 鍵を短い周期で回転し、全サーバーで安全に共有する"]
+    K1 --> D
+    K2 --> D
 ```
 
 ---
@@ -860,6 +876,7 @@ server {
 - [ ] 外部ツールで評価した
 
 ---
+
 ## 10. 2026年版アップデート：書籍刊行後に変わったこと
 
 書籍の最終更新は2022年1月です。ここでは、**2026年10月11日時点で Web 検索により確認できた情報** を整理します。出典の URL は第14章にまとめています。
@@ -906,7 +923,8 @@ flowchart LR
 | OCSP Must Staple | 同時にサポートを終了 |
 | 6日証明書 | 2026年に一般提供（GA）。有効期間は **160時間**（6日強）。ACME クライアントで `shortlived` プロファイルを選ぶ。**オプトイン** で、既定にする予定は当面ない |
 | IP アドレス証明書 | 一般提供。IPv4 と IPv6 に対応。**短命証明書のみ**（IP は変わりやすいため）。dns-01 は使えない |
-| 6日証明書の特徴 | OCSP や CRL の URL を含めない |
+| 6日証明書の特徴（OCSP） | OCSP の URL を含まない |
+| 6日証明書の特徴（CRL） | 現在のプロファイルでは CRL の URL を含む |
 
 実務への影響:
 
@@ -959,8 +977,8 @@ flowchart TD
 sequenceDiagram
     participant C as クライアント
     participant S as サーバー
-    C->>S: ClientHello (key_share: X25519 の公開値 + ML-KEM-768 の公開鍵)
-    S->>C: ServerHello (key_share: X25519 の公開値 + ML-KEM-768 の暗号文)
+    C->>S: ClientHello (key_share: ML-KEM-768 のカプセル化鍵 + X25519 の公開値)
+    S->>C: ServerHello (key_share: ML-KEM-768 の暗号文 + X25519 の公開値)
     Note over C,S: 2つの共有秘密を結合して1つの鍵素材にする
     Note over C,S: どちらかが安全なら、通信は安全
 ```
@@ -976,7 +994,7 @@ sequenceDiagram
 
 ### 10.5 Encrypted Client Hello（ECH）：SNI の暗号化
 
-TLS 1.3 でも、ClientHello の **SNI（接続先ホスト名）は平文** でした。**ECH** は ClientHello 全体を暗号化し、第三者から接続先を見えにくくします。
+TLS 1.3 でも、ClientHello の **SNI（接続先ホスト名）は平文** でした。**ECH** は本当の接続先を含む **ClientHelloInner（内側の ClientHello）** を暗号化し、第三者から接続先を見えにくくします。ネットワーク上に送られるのは **ClientHelloOuter（外側の ClientHello）** で、その中の公開名（public_name）などの情報は引き続き第三者から見えます。
 
 | 項目 | 内容 |
 |---|---|
@@ -1037,7 +1055,7 @@ OpenSSL は、TLS/PKI の作業で最も使われるコマンドラインツー�
 openssl version -a
 ```
 
-古いバージョン（1.1.1 以前など）は、新しい機能（TLS 1.3 の一部、ハイブリッド PQC など）に対応しません。**OpenSSL 3.x 系** を使ってください。
+TLS 1.3 は **OpenSSL 1.1.1** で導入されたため、1.1.1 でも TLS 1.3 自体は使えます（1.1.0 以前は非対応）。一方、**ハイブリッド PQC（`X25519MLKEM768` など）は OpenSSL 3.5 以降** が必要です。1.1.1 はサポート終了済みのため、**サポート中の OpenSSL 3.x 系**（PQC を使うなら 3.5 以降）を使ってください。
 
 ### Step 2：秘密鍵を作る
 
@@ -1154,8 +1172,12 @@ openssl s_client -connect example.com:443 -servername example.com -tls1_3 </dev/
 # 証明書チェーン全体を表示
 openssl s_client -connect example.com:443 -servername example.com -showcerts </dev/null
 
-# 古いプロトコルが拒否されることの確認 (接続できなければ OK)
-openssl s_client -connect example.com:443 -servername example.com -tls1_1 </dev/null
+# 古いプロトコルが拒否されることの確認
+# 注意: OpenSSL 3.x の既定セキュリティレベル (SECLEVEL 1 以上) ではクライアント側が TLS 1.1 を送らない。
+#   "no protocols available" などクライアント側のエラーで失敗した場合は、サーバーの判定は保留とする。
+#   サーバーの拒否を確かめるには、クライアント側で TLS 1.1 を許可して試す:
+openssl s_client -connect example.com:443 -servername example.com -tls1_1 -cipher 'DEFAULT:@SECLEVEL=0' </dev/null
+# ClientHello 送信後にサーバーから protocol_version アラート等が返れば「サーバーが拒否」と判断できる
 
 # 鍵交換グループを指定して確認 (ハイブリッド PQC。OpenSSL 3.5 以降など対応環境のみ)
 openssl s_client -connect example.com:443 -servername example.com -groups X25519MLKEM768 </dev/null
@@ -1181,6 +1203,7 @@ openssl s_client -connect example.com:443 -servername example.com -groups X25519
 | ホスト名エラー | `openssl x509 -ext subjectAltName` | SAN にホスト名がない |
 
 ---
+
 ## 12. ハンズオン：Python で TLS の状態を確認する
 
 標準ライブラリだけで、接続先の TLS バージョン・暗号スイート・証明書の期限を確認できます。
@@ -1198,9 +1221,10 @@ def inspect_tls(host: str, port: int = 443) -> None:
     with socket.create_connection((host, port), timeout=5) as sock:
         with ctx.wrap_socket(sock, server_hostname=host) as tls:  # SNI を送る
             cert = tls.getpeercert()
-            not_after = datetime.strptime(
-                cert["notAfter"], "%b %d %H:%M:%S %Y %Z"
-            ).replace(tzinfo=timezone.utc)
+            # 証明書の日時形式をロケール非依存で解析する (UTC の epoch 秒)
+            not_after = datetime.fromtimestamp(
+                ssl.cert_time_to_seconds(cert["notAfter"]), tz=timezone.utc
+            )
             days_left = (not_after - datetime.now(timezone.utc)).days
             san = [v for k, v in cert.get("subjectAltName", ()) if k == "DNS"]
 
