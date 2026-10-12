@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: 統合追加Red・既存ATLAS契約も15件へ同期・登録前の6件失敗）
+> **最終更新**: 2026-10-13（CCST: 統合Green・364件成功・15リンク/検索227見出し/163表hydration・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **364件** | `npm test`: 358 pass / 6 fail、55ファイル、19,433 expect（統合追加Red・既存ATLAS契約も15件へ同期・登録前の6件失敗） |
+| テストケース総数 | **364件** | `npm test`: 364 pass / 0 fail、55ファイル、19,443 expect（統合Green・364件成功・15リンク/検索227見出し/163表hydration・lint/型検査成功） |
 | テストファイル数 | **55ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -41,15 +41,15 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 9 | 3 pass / 6 fail |
-| `src/app/docs/layout.test.tsx` | 10 | 9 pass / 1 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-05-07.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-08-09.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-10-13.test.tsx` | 7 | 7 pass / 0 fail |
-| `src/app/docs/ccie-security/integration.test.tsx` | 9 | 8 pass / 1 fail |
+| `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/app/docs/ccie-security/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/app/docs/secure-by-design/foundation.test.tsx` | 12 | 12 pass / 0 fail |
@@ -62,7 +62,7 @@
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
-| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 9 pass / 2 fail |
+| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/secure-by-design/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 1 | 1 pass / 0 fail |
@@ -85,7 +85,7 @@
 
 | `src/app/docs/ccst-cybersecurity/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 6 pass / 2 fail |
+| `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
 
 ---
 
@@ -451,3 +451,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-13: CCST 統合Red・ナビ登録と静的検索の4件失敗・全量比較と163表hydration成功。360 pass / 4 fail、55ファイル、19,434 expect。ビルド未実行。
 
 - 2026-10-13: CCST 統合追加Red・既存ATLAS契約も15件へ同期・登録前の6件失敗。358 pass / 6 fail、55ファイル、19,433 expect。ビルド未実行。
+
+- 2026-10-13: CCST 統合Green・364件成功・15リンク/検索227見出し/163表hydration・lint/型検査成功。364 pass / 0 fail、55ファイル、19,443 expect。ビルド未実行。
