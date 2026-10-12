@@ -100,3 +100,13 @@ for (const mode of ['light', 'dark'] as const) test(`all three code blocks retai
     }
   } finally { await window.happyDOM.close(); }
 });
+
+
+test('applies original anchor scrolling to the actual viewport only on this route and respects reduced motion', () => {
+  const values: [string | undefined, string][] = [];
+  migratedCss().walkRules(':root:has(.ccst-guide)', rule => {
+    const media = rule.parent?.type === 'atrule' ? (rule.parent as postcss.AtRule).params : undefined;
+    rule.walkDecls('scroll-behavior', d => { values.push([media, d.value]); });
+  });
+  expect(values).toEqual([[undefined, 'smooth'], ['(prefers-reduced-motion:reduce)', 'auto']]);
+});

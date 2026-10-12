@@ -21,7 +21,7 @@ test('retains round dots, native ordered markers, nested spacing, check counters
 });
 test('keeps every source CSS rule isolated and preserves responsive and reduced motion rules', () => {
   const css = postcss.parse(readFileSync(new URL('./ccst-cybersecurity.css', import.meta.url), 'utf8'));
-  css.walkRules(rule => expect(rule.selector.split(',').every(s => s.trim().startsWith(scope) || s.trim().startsWith('.docs-main:has(.ccst-guide)'))).toBe(true));
+  css.walkRules(rule => expect(rule.selector.split(',').every(s => s.trim().startsWith(scope) || s.trim().startsWith('.docs-main:has(.ccst-guide)') || s.trim() === ':root:has(.ccst-guide)')).toBe(true));
   expect(css.toString()).toContain('(max-width:1000px)');
   expect(css.toString()).toContain('(prefers-reduced-motion:reduce)');
   expect(css.toString()).toContain('var(--docs-header-height');
