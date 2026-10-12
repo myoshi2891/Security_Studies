@@ -10,7 +10,7 @@ import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
 export const here = import.meta.dir;
-export const sourceHtml = readFileSync(resolve(here, '../../../../../Secure-by-design-guide.html'), 'utf8');
+export const sourceHtml = readFileSync(resolve(here, '../../../../../archive/html/Secure-by-design-guide.html'), 'utf8');
 // Never execute legacy scripts or load CDN assets while inspecting the source.
 export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
 export const definitions = new Map([...sourceHtml.matchAll(/"(d\d+)":\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
