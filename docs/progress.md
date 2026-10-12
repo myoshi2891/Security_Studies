@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（CCIE Security: コード背景Red・280成功2失敗・実装前）
+> **最終更新**: 2026-10-12（CCIE Security: コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **282件** | `npm test`: 280 pass / 2 fail、43ファイル、12,173 expect（コード背景Red・280成功2失敗・実装前） |
+| テストケース総数 | **282件** | `npm test`: 282 pass / 0 fail、43ファイル、12,582 expect（コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み） |
 | テストファイル数 | **43ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -64,7 +64,7 @@
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 3 pass / 2 fail |
+| `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 5 pass / 0 fail |
 
 ---
 
@@ -384,3 +384,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 表の比較テスト補正・全280件成功・実ブラウザ85表確認済み・実装は未コミット（直前HEAD `bfa7fd9`）。280 pass / 0 fail、43ファイル、12,169 expect。ビルド未実行。
 - 2026-10-12: 表のCSSカスケードGreen・全280件成功・実画面85表の白背景/上下0px確認・lint/型検査成功（直前HEAD `6a6d1d4`）。280 pass / 0 fail、43ファイル、12,169 expect。ビルド未実行。
 - 2026-10-12: コード背景Red・280成功2失敗・実装前（直前HEAD `1d2a72e`）。280 pass / 2 fail、43ファイル、12,173 expect。ビルド未実行。
+- 2026-10-12: コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み（直前HEAD `6203e86`）。282 pass / 0 fail、43ファイル、12,582 expect。ビルド未実行。
