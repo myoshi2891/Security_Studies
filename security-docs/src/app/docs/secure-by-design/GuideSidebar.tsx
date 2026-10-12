@@ -57,7 +57,12 @@ export function GuideSidebar({ items }: { items: readonly GuideChapter[] }) {
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
     const onResize = () => { if (window.innerWidth > 1024) close(); };
-    const onPointer = (event: PointerEvent) => { if (event.target instanceof Element && event.target.closest('.docs-header')) setOpen(false); };
+    const onPointer = (event: PointerEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest('.docs-header')) return;
+      // フォーカス可能な要素はブラウザー既定のフォーカス移動に任せ、それ以外は burger へ戻す
+      if (event.target.closest('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])')) { setOpen(false); return; }
+      close();
+    };
     document.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onPointer);
     window.addEventListener('resize', onResize);

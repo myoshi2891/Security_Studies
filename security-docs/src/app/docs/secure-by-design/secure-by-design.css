@@ -52,6 +52,13 @@
 }
 @media (max-width:1024px) {
   .secure-by-design-guide.secure-by-design-guide .main { width: 100%; }
+  /* Closed drawer links leave the tab order; visibility flips after the slide-out ends. */
+  .secure-by-design-guide.secure-by-design-guide .sidebar { visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; }
+  .secure-by-design-guide.secure-by-design-guide.nav-open .sidebar { visibility: visible; transition: transform .25s ease; }
+}
+@media (max-width:1024px) and (prefers-reduced-motion:reduce) {
+  .secure-by-design-guide.secure-by-design-guide .sidebar,
+  .secure-by-design-guide.secure-by-design-guide.nav-open .sidebar { transition: none; }
 }
 .docs-main:has(.secure-by-design-guide){padding:0}
 :root:has(.secure-by-design-guide){scroll-behavior:smooth}
