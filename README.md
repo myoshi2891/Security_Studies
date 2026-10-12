@@ -196,10 +196,11 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 
 
+
 <!-- ATLAS CURRENT -->
 ## MITRE ATLAS 現在の状態（2026-10-12）
 
-- ヒーロー・1〜4節Green・5〜13節は未移行。ルート `/docs/mitre-atlas`。
+- 復旧開始・本文前半4件失敗の状態へ記録訂正。ルート `/docs/mitre-atlas`。
 - プロジェクト全体: **240 pass / 4 fail、38ファイル、9,359 expect**。npm test（内部Bun）。
 - ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/mitre-atlas.json`。
 <!-- /ATLAS CURRENT -->
