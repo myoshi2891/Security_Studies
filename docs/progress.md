@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 棚卸し完了・表示基盤着手前）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **231件** | `npm test`: 231 pass / 0 fail、36ファイル、9,070 expect（元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功） |
-| テストファイル数 | **36ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
+| テストケース総数 | **231件** | `npm test`: 231 pass / 0 fail、36ファイル、9,070 expect（棚卸し完了・表示基盤着手前） |
+| テストファイル数 | **36ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -52,12 +52,12 @@
 | `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/app/docs/ccie-security/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 10 pass / 0 fail |
-| `src/app/docs/secure-by-design/foundation.test.tsx` | 12 | 12 pass / 0 fail、2026-10-12追加 |
-| `src/app/docs/secure-by-design/sections-00-04.test.tsx` | 6 | 6 pass / 0 fail、2026-10-12追加 |
-| `src/app/docs/secure-by-design/sections-05-09.test.tsx` | 5 | 5 pass / 0 fail、2026-10-12追加 |
-| `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail、2026-10-12追加 |
-| `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail、2026-10-12追加 |
-| `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail、2026-10-12追加 |
+| `src/app/docs/secure-by-design/foundation.test.tsx` | 12 | 12 pass / 0 fail |
+| `src/app/docs/secure-by-design/sections-00-04.test.tsx` | 6 | 6 pass / 0 fail |
+| `src/app/docs/secure-by-design/sections-05-09.test.tsx` | 5 | 5 pass / 0 fail |
+| `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
+| `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
+| `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 
 ---
 
@@ -317,3 +317,10 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功（直前HEAD `0ee9b6d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
 
 原本保存先: `archive/html/Secure-by-design-guide.html` / `archive/md/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。
+
+## MITRE ATLAS 移行（2026-10-12）
+
+ルート `/docs/mitre-atlas`。元HTML正本。npm経由Bun・ビルド禁止・目視はユーザー担当。既存の未コミット原稿2件は作業対象外。
+
+### 実行履歴
+- 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `ca2fff9`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
