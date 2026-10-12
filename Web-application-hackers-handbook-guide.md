@@ -595,10 +595,14 @@ flowchart TD
 
 ```python
 # 前提: db は Python 標準の sqlite3.Connection(プレースホルダーは ? 形式)
+#       db.row_factory = sqlite3.Row を設定し、行を dict に変換して JSON で返す
 # 脆弱: IDだけで取得。誰のデータかを確認していない
 @app.get("/orders/<int:order_id>")
 def get_order(order_id):
-    return db.execute("SELECT * FROM orders WHERE id = ?", (order_id,)).fetchone()
+    row = db.execute("SELECT * FROM orders WHERE id = ?", (order_id,)).fetchone()
+    if row is None:
+        abort(404)
+    return dict(row)
 
 # 安全: 所有者の条件も一緒に確認する
 @app.get("/orders/<int:order_id>")
@@ -609,7 +613,7 @@ def get_order(order_id):
     ).fetchone()
     if row is None:
         abort(404)
-    return row
+    return dict(row)
 ```
 
 #### 防御の原則
