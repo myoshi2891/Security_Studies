@@ -1,0 +1,362 @@
+/* Scoped source styling and explicit host adaptations. */
+.atlas-guide.atlas-guide h1,.atlas-guide.atlas-guide h2,.atlas-guide.atlas-guide h3,.atlas-guide.atlas-guide h4,.atlas-guide.atlas-guide p,.atlas-guide.atlas-guide strong,.atlas-guide.atlas-guide a,.atlas-guide.atlas-guide code,.atlas-guide.atlas-guide section,.atlas-guide.atlas-guide table,.atlas-guide.atlas-guide thead,.atlas-guide.atlas-guide tbody,.atlas-guide.atlas-guide tr,.atlas-guide.atlas-guide th,.atlas-guide.atlas-guide td,.atlas-guide.atlas-guide ul,.atlas-guide.atlas-guide ol,.atlas-guide.atlas-guide li,.atlas-guide.atlas-guide footer,.atlas-guide.atlas-guide pre,.atlas-guide.atlas-guide details,.atlas-guide.atlas-guide summary { all: revert; box-sizing: border-box; }
+.atlas-guide.atlas-guide{
+                --color-background-primary: #0d0d12;
+                --color-background-secondary: #16161d;
+                --color-background-tertiary: #1f1f28;
+                --color-background-info: #16202f;
+                --color-background-danger: #2a1a1a;
+                --color-background-success: #16241e;
+                --color-background-warning: #2a2416;
+
+                --color-text-primary: #eaeaef;
+                --color-text-secondary: #a8a8b5;
+                --color-text-tertiary: #8a8a96;
+                --color-text-info: #7dabf8;
+                --color-text-danger: #f28b82;
+                --color-text-success: #7bd8a6;
+                --color-text-warning: #f0c674;
+
+                --color-border-primary: #2a2a35;
+                --color-border-secondary: #34343f;
+                --color-border-tertiary: #24242e;
+
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP',
+                    sans-serif;
+                --font-serif: Georgia, 'Noto Serif JP', serif;
+                --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+
+                --c-purple-100: #ede9fe;
+                --c-purple-200: #ddd6fe;
+                --c-purple-500: #8b5cf6;
+                --c-purple-800: #5b21b6;
+                --c-teal-100: #ccfbf1;
+                --c-teal-200: #99f6e4;
+                --c-teal-500: #14b8a6;
+                --c-teal-800: #115e59;
+                --c-coral-100: #ffe1da;
+                --c-coral-200: #ffc7b8;
+                --c-coral-500: #f9633b;
+                --c-coral-800: #8f2f17;
+                --c-pink-100: #fce7f3;
+                --c-pink-200: #fbcfe8;
+                --c-pink-500: #ec4899;
+                --c-pink-800: #9d174d;
+            }.atlas-guide.atlas-guide *{
+                box-sizing: border-box;
+            }.atlas-guide.atlas-guide{
+                margin: 0;
+                font-family: var(--font-sans);
+                font-size: 16px;
+                line-height: 1.7;
+                font-weight: 400;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+            }.atlas-guide.atlas-guide .app{
+                display: flex;
+                min-height: 100vh;
+                align-items: flex-start;
+            }.atlas-guide.atlas-guide .sidebar{
+                flex: 0 0 260px;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow-y: auto;
+                padding: 28px 20px 40px;
+                background: var(--color-background-secondary);
+                border-right: 1px solid var(--color-border-primary);
+            }.atlas-guide.atlas-guide .sidebar .brand{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--color-text-secondary);
+                margin-bottom: 24px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }.atlas-guide.atlas-guide .sidebar .brand i{
+                font-size: 18px;
+                color: var(--color-text-info);
+            }.atlas-guide.atlas-guide .sidebar nav a{
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 7px 10px;
+                margin-bottom: 2px;
+                border-radius: var(--border-radius-md);
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                font-size: 13px;
+                line-height: 1.4;
+            }.atlas-guide.atlas-guide .sidebar nav a:hover{
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+            }.atlas-guide.atlas-guide .sidebar nav a i{
+                font-size: 15px;
+                width: 16px;
+                text-align: center;
+                color: var(--color-text-tertiary);
+            }.atlas-guide.atlas-guide .sidebar .nav-section-title{
+                font-size: 11px;
+                color: var(--color-text-tertiary);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin: 18px 0 6px 10px;
+            }.atlas-guide.atlas-guide .main{
+                flex: 1;
+                min-width: 0;
+                padding: 48px 64px 96px;
+            }.atlas-guide.atlas-guide .hero{
+                padding-bottom: 32px;
+                margin-bottom: 40px;
+                border-bottom: 1px solid var(--color-border-primary);
+            }.atlas-guide.atlas-guide .hero .eyebrow{
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                color: var(--color-text-info);
+                background: var(--color-background-info);
+                padding: 4px 10px;
+                border-radius: var(--border-radius-md);
+                margin-bottom: 16px;
+            }.atlas-guide.atlas-guide .hero h1{
+                font-size: 30px;
+                font-weight: 500;
+                margin: 0 0 12px;
+                line-height: 1.35;
+            }.atlas-guide.atlas-guide .hero p.lead{
+                font-size: 16px;
+                color: var(--color-text-secondary);
+                max-width: 780px;
+                margin: 0 0 4px;
+            }.atlas-guide.atlas-guide .hero .meta{
+                font-size: 13px;
+                color: var(--color-text-tertiary);
+                margin-top: 16px;
+            }.atlas-guide.atlas-guide h1{
+                font-size: 22px;
+                font-weight: 500;
+            }.atlas-guide.atlas-guide h2{
+                font-size: 18px;
+                font-weight: 500;
+                margin-top: 56px;
+                margin-bottom: 16px;
+                padding-top: 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }.atlas-guide.atlas-guide h2 i{
+                color: var(--color-text-info);
+                font-size: 20px;
+            }.atlas-guide.atlas-guide h3{
+                font-size: 16px;
+                font-weight: 500;
+                margin-top: 32px;
+                margin-bottom: 12px;
+                color: var(--color-text-primary);
+            }.atlas-guide.atlas-guide h4{
+                font-size: 14px;
+                font-weight: 500;
+                margin-top: 24px;
+                margin-bottom: 8px;
+                color: var(--color-text-secondary);
+            }.atlas-guide.atlas-guide p{
+                color: var(--color-text-secondary);
+                margin: 0 0 14px;
+            }.atlas-guide.atlas-guide strong{
+                color: var(--color-text-primary);
+                font-weight: 500;
+            }.atlas-guide.atlas-guide a{
+                color: var(--color-text-info);
+            }.atlas-guide.atlas-guide code{
+                font-family: var(--font-mono);
+                font-size: 13px;
+                background: var(--color-background-tertiary);
+                padding: 2px 6px;
+                border-radius: 4px;
+                color: var(--color-text-warning);
+            }.atlas-guide.atlas-guide section{
+                margin-bottom: 8px;
+            }.atlas-guide.atlas-guide .callout{
+                display: flex;
+                gap: 12px;
+                background: var(--color-background-info);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                padding: 16px 18px;
+                margin: 18px 0;
+                font-size: 14px;
+            }.atlas-guide.atlas-guide .callout i{
+                color: var(--color-text-info);
+                font-size: 18px;
+                margin-top: 2px;
+            }.atlas-guide.atlas-guide .callout p{
+                margin: 0;
+                color: var(--color-text-primary);
+            }.atlas-guide.atlas-guide .callout.warning{
+                background: var(--color-background-warning);
+            }.atlas-guide.atlas-guide .callout.warning i{
+                color: var(--color-text-warning);
+            }.atlas-guide.atlas-guide table{
+                width: 100%;
+                border-collapse: collapse;
+                margin: 18px 0 28px;
+                font-size: 13.5px;
+                background: var(--color-background-secondary);
+                border-radius: var(--border-radius-md);
+                overflow: hidden;
+            }.atlas-guide.atlas-guide thead th{
+                text-align: left;
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                padding: 10px 14px;
+                border-bottom: 1px solid var(--color-border-secondary);
+                white-space: nowrap;
+            }.atlas-guide.atlas-guide tbody td{
+                padding: 10px 14px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                color: var(--color-text-secondary);
+                vertical-align: top;
+            }.atlas-guide.atlas-guide tbody tr:last-child td{
+                border-bottom: none;
+            }.atlas-guide.atlas-guide tbody td code{
+                white-space: nowrap;
+            }.atlas-guide.atlas-guide .mermaid-wrap{
+                text-align: center;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-primary);
+                border-radius: var(--border-radius-lg);
+                padding: 28px 20px;
+                margin: 20px 0 28px;
+            }.atlas-guide.atlas-guide .mermaid-diagram svg{
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+                overflow: visible;
+            }.atlas-guide.atlas-guide .diagram-caption{
+                text-align: center;
+                font-size: 12px;
+                color: var(--color-text-tertiary);
+                margin-top: 10px;
+            }.atlas-guide.atlas-guide .diagram-error{
+                color: var(--color-text-danger);
+                font-size: 13px;
+            }.atlas-guide.atlas-guide .step-card{
+                display: flex;
+                gap: 16px;
+                padding: 18px 20px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-primary);
+                border-radius: var(--border-radius-lg);
+                margin-bottom: 14px;
+            }.atlas-guide.atlas-guide .step-card .num{
+                flex: 0 0 32px;
+                height: 32px;
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-tertiary);
+                color: var(--color-text-info);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 13px;
+                font-weight: 500;
+            }.atlas-guide.atlas-guide .step-card .body h4{
+                margin-top: 0;
+                color: var(--color-text-primary);
+                font-size: 15px;
+            }.atlas-guide.atlas-guide .step-card .body p{
+                margin-bottom: 0;
+            }.atlas-guide.atlas-guide .ref-list{
+                list-style: none;
+                padding: 0;
+                margin: 16px 0;
+            }.atlas-guide.atlas-guide .ref-list li{
+                padding: 10px 0;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                font-size: 13.5px;
+                color: var(--color-text-secondary);
+            }.atlas-guide.atlas-guide .ref-list li:last-child{
+                border-bottom: none;
+            }.atlas-guide.atlas-guide .ref-list a{
+                word-break: break-all;
+            }.atlas-guide.atlas-guide .tag{
+                display: inline-block;
+                font-size: 11px;
+                padding: 2px 8px;
+                border-radius: 20px;
+                background: var(--c-purple-800);
+                color: var(--c-purple-100);
+                margin-right: 6px;
+            }.atlas-guide.atlas-guide .tag.teal{
+                background: var(--c-teal-800);
+                color: var(--c-teal-100);
+            }.atlas-guide.atlas-guide .tag.coral{
+                background: var(--c-coral-800);
+                color: var(--c-coral-100);
+            }.atlas-guide.atlas-guide footer{
+                margin-top: 64px;
+                padding-top: 24px;
+                border-top: 1px solid var(--color-border-primary);
+                font-size: 12.5px;
+                color: var(--color-text-tertiary);
+            }
+
+            @media (max-width: 900px) {.atlas-guide.atlas-guide .app{
+                    flex-direction: column;
+                }.atlas-guide.atlas-guide .sidebar{
+                    position: relative;
+                    height: auto;
+                    width: 100%;
+                    flex: none;
+                }.atlas-guide.atlas-guide .main{
+                    padding: 32px 20px 64px;
+                }
+            }
+
+/* Host layout and browser-equivalent defaults; SVGs are excluded from the HTML reset. */
+.atlas-guide.atlas-guide { width: 100%; max-width: none; }
+.atlas-guide.atlas-guide .app { width: 100%; max-width: none; min-height: calc(100vh - var(--docs-header-height, 4rem)); }
+.atlas-guide.atlas-guide .main { width: calc(100% - 260px); max-width: none; }
+.atlas-guide.atlas-guide .sidebar { top: var(--docs-header-height, 4rem); height: calc(100dvh - var(--docs-header-height, 4rem)); visibility: visible; }
+.atlas-guide.atlas-guide section { scroll-margin-top: calc(var(--docs-header-height, 4rem) + 1rem); }
+.atlas-guide.atlas-guide ul { list-style-type: disc; padding-left: 40px; margin: 1em 0; }
+.atlas-guide.atlas-guide ol { list-style-type: decimal; padding-left: 40px; margin: 1em 0; }
+.atlas-guide.atlas-guide li { display: list-item; }
+.atlas-guide.atlas-guide ul.ref-list { list-style-type: none; padding: 0; margin: 16px 0; }
+.atlas-guide.atlas-guide .atlas-table-scroll { max-width: 100%; overflow-x: auto; }
+.atlas-guide.atlas-guide .step-card .body { min-width: 0; }
+.atlas-guide.atlas-guide svg.ti { flex-shrink: 0; width: 1em; height: 1em; }
+.atlas-guide.atlas-guide .sidebar .brand svg { width: 18px; height: 18px; color: var(--color-text-info); }
+.atlas-guide.atlas-guide .sidebar nav a svg { width: 16px; height: 15px; color: var(--color-text-tertiary); }
+.atlas-guide.atlas-guide h2 svg { width: 20px; height: 20px; color: var(--color-text-info); }
+.atlas-guide.atlas-guide .callout svg { width: 18px; height: 18px; margin-top: 2px; color: var(--color-text-info); }
+.atlas-guide.atlas-guide .callout.warning svg { color: var(--color-text-warning); }
+.atlas-guide.atlas-guide .sidebar nav a[aria-current="location"] { background: var(--color-background-tertiary); color: var(--color-text-primary); }
+.atlas-guide.atlas-guide .diagram-definition { font-size: 12px; text-align: left; color: var(--color-text-tertiary); }
+.atlas-guide.atlas-guide .diagram-definition pre { overflow-x: auto; font-family: var(--font-mono); white-space: pre; }
+.atlas-guide.atlas-guide .diagram-accessible-description { font-size: 12px; color: var(--color-text-tertiary); }
+.atlas-guide.atlas-guide .menu-button { display: none; }
+.atlas-guide.atlas-guide .backdrop { display: none; }
+.atlas-guide.atlas-guide a:focus-visible,.atlas-guide.atlas-guide button:focus-visible { outline: 2px solid var(--color-text-info); outline-offset: 3px; }
+.docs-main:has(.atlas-guide) { padding: 0; }
+@media (max-width: 900px) {
+  .atlas-guide.atlas-guide .app { display: block; }
+  .atlas-guide.atlas-guide .main { width: 100%; }
+  .atlas-guide.atlas-guide .sidebar { position: fixed; left: 0; bottom: 0; width: min(260px,86vw); height: auto; z-index: 50; transform: translateX(-100%); visibility: hidden; transition: transform .2s ease, visibility 0s linear .2s; }
+  .atlas-guide.atlas-guide.nav-open .sidebar { transform: translateX(0); visibility: visible; transition-delay: 0s; }
+  .atlas-guide.atlas-guide .menu-button { display: flex; align-items: center; justify-content: center; position: fixed; bottom: 1rem; right: 1rem; width: 3rem; height: 3rem; border: 1px solid var(--color-border-secondary); border-radius: 50%; background: var(--color-background-secondary); color: var(--color-text-info); z-index: 55; }
+  .atlas-guide.atlas-guide .backdrop:not([hidden]) { display: block; position: fixed; inset: var(--docs-header-height, 4rem) 0 0; border: 0; background: rgb(0 0 0 / .65); z-index: 45; }
+  .atlas-guide.atlas-guide .main { padding-bottom: 6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-guide.atlas-guide .sidebar { transition: none; }
+}
