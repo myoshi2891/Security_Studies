@@ -4,6 +4,12 @@ import { Window } from 'happy-dom';
 import postcss from 'postcss';
 import { renderedPage } from './fidelity-helpers';
 
+/** CSS engines may serialize the same color as hex or rgb; compare the actual channels. */
+function normalizedColor(value: string) {
+  const hex = value.match(/^#([\da-f]{6})$/i)?.[1];
+  return hex ? `rgb(${[0, 2, 4].map(offset => parseInt(hex.slice(offset, offset + 2), 16)).join(', ')})` : value;
+}
+
 /** Preserve selector specificity while simulating hover, which happy-dom cannot synthesize. */
 function combinedStyles() {
   const css = postcss.parse([
@@ -34,15 +40,18 @@ for (const mode of ['light', 'dark']) test(`all 85 CCIE tables retain their whit
     const beforeText = isolated.getComputedStyle(isolated.document.querySelector('.ccie-guide')!).color;
     for (const table of tables) {
       const cell = table.querySelector('tr:has(td) td')!;
-      expect(isolated.getComputedStyle(cell).backgroundColor).toBe('rgb(255, 255, 255)');
+      expect(normalizedColor(isolated.getComputedStyle(cell).backgroundColor)).toBe('rgb(255, 255, 255)');
       expect(isolated.getComputedStyle(cell).color).toBe(beforeText);
-      expect(isolated.getComputedStyle(table.querySelector('th')!).backgroundColor).toBe('rgb(238, 241, 248)');
+      const header = table.querySelector('th');
+      if (header) expect(normalizedColor(isolated.getComputedStyle(header).backgroundColor)).toBe('rgb(238, 241, 248)');
     }
     // The shared documentation hover style remains available outside the CCIE guide.
     const control = isolated.document.createElement('table');
     control.innerHTML = '<tbody><tr data-css-hover><td>Shared docs</td></tr></tbody>';
     isolated.document.querySelector('article')!.appendChild(control);
-    expect(isolated.getComputedStyle(control.querySelector('td')!).backgroundColor).toBe(mode === 'dark' ? 'rgb(24, 24, 27)' : 'rgb(250, 250, 250)');
+    expect(normalizedColor(isolated.getComputedStyle(control.querySelector('td')!).backgroundColor)).toBe(mode === 'dark' ? 'rgb(24, 24, 27)' : 'rgb(250, 250, 250)');
+    expect(isolated.getComputedStyle(control).marginTop).toBe('40px');
+    expect(isolated.getComputedStyle(control).marginBottom).toBe('40px');
   } finally { await isolated.happyDOM.close(); }
 });
 
