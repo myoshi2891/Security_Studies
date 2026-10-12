@@ -1032,7 +1032,7 @@ TLS 1.3 でも、ClientHello の **SNI（接続先ホスト名）は平文** で
 | 標準 | **RFC 9849**（著者に Eric Rescorla、Kazuho Oku、Nick Sullivan、Christopher Wood ら）。IETF datatracker 上は2026年3月付の Proposed Standard（RFC Editor の一部資料では2025年11月と表記され、情報源で日付が異なる） |
 | 仕組み | サーバーの ECH 公開鍵を DNS の **HTTPS レコード** で配布し、クライアントが **HPKE** で ClientHello を暗号化する |
 | 外側の ClientHello | CDN など「公開名（public_name）」を SNI に入れた見せかけの ClientHello を送る |
-| 失敗時 | サーバーが新しい設定（retry_configs）を返し、再試行する |
+| 失敗時 | サーバーが新しい設定（retry_configs）を返すのは任意。返された場合はその設定で再試行する。返されない場合は ECH を無効にして再接続するか、再試行しない場合はエラーとして接続を失敗させる |
 | 対応状況 | Firefox は ECH に対応（Firefox 98 以降、OS の DNS リゾルバーでも利用可）。Chromium 系も対応。Cloudflare が早期に提供 |
 
 ```mermaid
