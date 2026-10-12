@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCIE Security: アーカイブRed・原本移動前の契約5件が期待どおり失敗）
+> **最終更新**: 2026-10-13（CCIE Security: 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **291件** | `npm test`: 286 pass / 5 fail、46ファイル、12,608 expect（アーカイブRed・原本移動前の契約5件が期待どおり失敗） |
+| テストケース総数 | **291件** | `npm test`: 291 pass / 0 fail、46ファイル、12,618 expect（原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功） |
 | テストファイル数 | **46ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -56,7 +56,7 @@
 | `src/app/docs/secure-by-design/sections-00-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/secure-by-design/sections-05-09.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
-| `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
+| `src/app/docs/secure-by-design/integration.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/mitre-atlas/foundation.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
@@ -65,8 +65,8 @@
 | `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/secure-by-design/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
-| `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
-| `src/app/docs/ccie-security/archive.test.ts` | 5 | 0 pass / 5 fail（移動前のRed） |
+| `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 1 | 1 pass / 0 fail |
+| `src/app/docs/ccie-security/archive.test.ts` | 5 | 5 pass / 0 fail |
 | `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 5 pass / 0 fail |
 
 ---
@@ -280,7 +280,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル（当時。最新は下記時系列の186件）。lint・型検査成功。
 - 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
-- 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
+- 再開時はnpmを使用し、ビルドは禁止。表示修正は再現テストを先にコミットする。元HTML・Markdownはarchiveに保持する。
 - 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。170 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 検索インデックスのMDX import/export除去（`search.test.ts` +1）。171 pass / 0 fail、30テストファイル。
@@ -392,3 +392,14 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-13: CCIE Security 事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ。286 pass / 0 fail、45ファイル、12,603 expect。ビルド未実行。
 
 - 2026-10-13: CCIE Security アーカイブRed・原本移動前の契約5件が期待どおり失敗。286 pass / 5 fail、46ファイル、12,608 expect。ビルド未実行。
+
+- 2026-10-13: CCIE Security 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功。291 pass / 0 fail、46ファイル、12,618 expect。ビルド未実行。
+
+### CCIE Security 原本アーカイブ完了（2026-10-13）
+
+既存Next.js移行を再検証し、未対応だった原本保存を完了。公開ルート `/docs/ccie-security` は変更なし。
+原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
+事前仕様書補正 `547774b` → Red `d4f11e6`（286成功・5失敗）→ Red記録 `f76e3ef` → Green `7782eb1`（291成功・0失敗）。
+46テストファイル・12,618 expect、npm run lint / types:check成功。ビルド・今回の目視確認・push・公開は未実施。
+全13章・85表・61図・34コード・49リスト/196項目・7チェック・59参考文献とマーカーCSSをアーカイブ原本と継続比較。
+再開時はユーザーの目視指摘を再現する失敗テストから対応する。

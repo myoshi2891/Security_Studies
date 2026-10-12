@@ -194,7 +194,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; CCIE Security, Secure by Design and MITRE ATLAS are the page-scoped CSS exceptions to the utility-only styling convention. All other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 62 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 282 across 43 files (282 pass / 0 fail, 12,582 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
+- 67 CCIE fidelity/lifecycle/archive tests plus 10 layout tests; latest project tests: 291 across 46 files (291 pass / 0 fail, 12,618 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
 - All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.
@@ -236,7 +236,8 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 <!-- CCIE TABLE CURRENT -->
 ## CCIE Security 現在の状態（2026-10-13）
 
-- アーカイブRed・原本移動前の契約5件が期待どおり失敗。ルート `/docs/ccie-security`。
-- プロジェクト全体: **286 pass / 5 fail、46ファイル、12,608 expect**。npm test（内部Bun）。
+- 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功。ルート `/docs/ccie-security`。
+- プロジェクト全体: **291 pass / 0 fail、46ファイル、12,618 expect**。npm test（内部Bun）。
 - ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/ccie-security.json`。
+- 原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。両SHA-256一致、比較テストはarchiveを参照。Red `d4f11e6` → Green `7782eb1`。
 <!-- /CCIE TABLE CURRENT -->
