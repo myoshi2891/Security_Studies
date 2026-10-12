@@ -236,7 +236,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 <!-- CCIE TABLE CURRENT -->
 ## CCIE Security 現在の状態（2026-10-13）
 
-- 事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ。ルート `/docs/ccie-security`。
-- プロジェクト全体: **286 pass / 0 fail、45ファイル、12,603 expect**。npm test（内部Bun）。
+- アーカイブRed・原本移動前の契約5件が期待どおり失敗。ルート `/docs/ccie-security`。
+- プロジェクト全体: **286 pass / 5 fail、46ファイル、12,608 expect**。npm test（内部Bun）。
 - ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/ccie-security.json`。
 <!-- /CCIE TABLE CURRENT -->

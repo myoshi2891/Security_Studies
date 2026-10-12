@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCIE Security: 事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ）
+> **最終更新**: 2026-10-13（CCIE Security: アーカイブRed・原本移動前の契約5件が期待どおり失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **286件** | `npm test`: 286 pass / 0 fail、45ファイル、12,603 expect（事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ） |
-| テストファイル数 | **45ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **291件** | `npm test`: 286 pass / 5 fail、46ファイル、12,608 expect（アーカイブRed・原本移動前の契約5件が期待どおり失敗） |
+| テストファイル数 | **46ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -66,6 +66,7 @@
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/secure-by-design/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/app/docs/ccie-security/archive.test.ts` | 5 | 0 pass / 5 fail（移動前のRed） |
 | `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 5 pass / 0 fail |
 
 ---
@@ -389,3 +390,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み（直前HEAD `6203e86`）。282 pass / 0 fail、43ファイル、12,582 expect。ビルド未実行。
 
 - 2026-10-13: CCIE Security 事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ。286 pass / 0 fail、45ファイル、12,603 expect。ビルド未実行。
+
+- 2026-10-13: CCIE Security アーカイブRed・原本移動前の契約5件が期待どおり失敗。286 pass / 5 fail、46ファイル、12,608 expect。ビルド未実行。
