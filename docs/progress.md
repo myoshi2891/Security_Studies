@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 9〜13節・手順カード・参考文献Red・7件の期待どおりの失敗）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 全13節・手順・参考文献・フッターGreen・検索と統合は未完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **255件** | `npm test`: 248 pass / 7 fail、40ファイル、9,442 expect（9〜13節・手順カード・参考文献Red・7件の期待どおりの失敗） |
+| テストケース総数 | **255件** | `npm test`: 255 pass / 0 fail、40ファイル、9,529 expect（全13節・手順・参考文献・フッターGreen・検索と統合は未完了） |
 | テストファイル数 | **40ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -61,7 +61,7 @@
 | `src/app/docs/mitre-atlas/foundation.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
-| `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 0 pass / 7 fail |
+| `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
 
 ---
 
@@ -342,3 +342,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 5〜8節Red・4件の期待どおりの失敗（直前HEAD `5e98624`）。244 pass / 4 fail、39ファイル、9,365 expect。ビルド未実行。
 - 2026-10-12: 5〜8節Green・9〜13節は未移行（直前HEAD `78439d5`）。248 pass / 0 fail、39ファイル、9,435 expect。ビルド未実行。
 - 2026-10-12: 9〜13節・手順カード・参考文献Red・7件の期待どおりの失敗（直前HEAD `76e6ebd`）。248 pass / 7 fail、40ファイル、9,442 expect。ビルド未実行。
+- 2026-10-12: 全13節・手順・参考文献・フッターGreen・検索と統合は未完了（直前HEAD `d738d40`）。255 pass / 0 fail、40ファイル、9,529 expect。ビルド未実行。
