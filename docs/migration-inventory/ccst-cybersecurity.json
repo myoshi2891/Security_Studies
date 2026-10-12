@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "第3章Green・326件成功・lint/型検査成功",
+  "status": "第4〜5章Red・対象10節が未移行として失敗",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -125,9 +125,9 @@
   ],
   "verification": {
     "passed": 326,
-    "failed": 0,
-    "testFiles": 51,
-    "assertions": 13618,
+    "failed": 10,
+    "testFiles": 52,
+    "assertions": 13638,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
     "visualReview": "pending user review"
