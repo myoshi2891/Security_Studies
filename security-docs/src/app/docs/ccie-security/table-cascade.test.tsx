@@ -74,3 +74,25 @@ test('all 85 tables have zero inner margin at desktop and phone widths while ret
     } finally { await isolated.happyDOM.close(); }
   }
 });
+
+for (const mode of ['light', 'dark']) test(`all 34 CCIE code blocks retain readable colors in ${mode} mode`, async () => {
+  const isolated = new Window({ settings: { disableJavaScriptEvaluation: true, disableCSSFileLoading: true, device: { prefersColorScheme: mode } } });
+  try {
+    isolated.document.head.innerHTML = `<style>${combinedStyles()}</style>`;
+    isolated.document.body.innerHTML = `<article class="prose docs-article">${(await renderedPage()).querySelector('.ccie-guide')!.outerHTML}</article>`;
+    const blocks = isolated.document.querySelectorAll('.ccie-guide .code pre');
+    expect(blocks).toHaveLength(34);
+    for (const block of blocks) {
+      const style = isolated.getComputedStyle(block);
+      expect(normalizedColor(style.backgroundColor)).toBe('rgb(255, 255, 255)');
+      expect(normalizedColor(isolated.getComputedStyle(block.querySelector('code')!).color)).toBe('rgb(22, 27, 38)');
+      expect(style.overflowX).toBe('auto');
+      expect(style.marginTop).toBe('0px'); expect(style.marginBottom).toBe('0px');
+      expect(isolated.getComputedStyle(block.querySelector('code')!).whiteSpace).toBe('pre');
+    }
+    const control = isolated.document.createElement('pre');
+    control.innerHTML = '<code>Shared docs code</code>';
+    isolated.document.querySelector('article')!.appendChild(control);
+    expect(normalizedColor(isolated.getComputedStyle(control).backgroundColor)).toBe('rgb(9, 9, 11)');
+  } finally { await isolated.happyDOM.close(); }
+});
