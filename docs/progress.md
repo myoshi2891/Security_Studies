@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: 移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち）
+> **最終更新**: 2026-10-13（CCST: 図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **385件** | `npm test`: 385 pass / 0 fail、58ファイル、25,003 expect（移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち） |
+| テストケース総数 | **387件** | `npm test`: 385 pass / 2 fail、58ファイル、25,009 expect（図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗） |
 | テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 5 | 3 pass / 2 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
@@ -87,7 +87,7 @@
 
 | `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 12 | 12 pass / 0 fail |
+| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 14 | 12 pass / 2 fail |
 
 | `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 4 | 4 pass / 0 fail |
 
@@ -485,3 +485,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 既存ナビ・静的索引の14件固定契約も15件へ同期。happy-domのletter-spacing:normal欠落は最小再現で確認し、宣言と計算済み書体を併せて検証するテストへ補正。
 - Red / Green / docsを分離コミット。整理監査とlint/型検査を実施。ビルド・ブラウザー目視・push・公開は未実施。
 - 次のアクション: ユーザーが `docs/migration-inventory/ccst-cybersecurity-review.md` に沿って目視確認する。指摘の修正は失敗テストのコミットから開始する。
+
+- 2026-10-13: CCST 図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗。385 pass / 2 fail、58ファイル、25,009 expect。ビルド未実行。

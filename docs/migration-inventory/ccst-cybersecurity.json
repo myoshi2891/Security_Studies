@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち",
+  "status": "図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -125,16 +125,12 @@
   ],
   "verification": {
     "passed": 385,
-    "failed": 0,
+    "failed": 2,
     "testFiles": 58,
-    "assertions": 25003,
+    "assertions": 25009,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
-    "visualReview": "pending user review",
-    "lint": "passed",
-    "typeCheck": "passed",
-    "ccstTests": 94,
-    "ccstTestFiles": 12
+    "visualReview": "pending user review"
   },
   "implementationCommit": "1169e10",
   "archiveCommit": "779e602",
