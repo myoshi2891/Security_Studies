@@ -344,6 +344,21 @@
 .atlas-guide.atlas-guide .diagram-definition { font-size: 12px; text-align: left; color: var(--color-text-tertiary); }
 .atlas-guide.atlas-guide .diagram-definition pre { overflow-x: auto; font-family: var(--font-mono); white-space: pre; }
 .atlas-guide.atlas-guide .diagram-accessible-description { font-size: 12px; color: var(--color-text-tertiary); }
+/* Readable diagram labels stay at intrinsic size; only the graphic scrolls horizontally. */
+.atlas-guide.atlas-guide .diagram-viewport {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 8px 4px 12px;
+}
+.atlas-guide.atlas-guide .diagram-viewport:focus-visible {
+  outline: 2px solid var(--color-text-info);
+  outline-offset: 3px;
+}
+.atlas-guide.atlas-guide .mermaid-diagram svg { max-width: none; }
+.atlas-guide.atlas-guide .diagram-caption { font-size: 14px; color: #cbd5e1; line-height: 1.7; }
+.atlas-guide.atlas-guide .diagram-accessible-description { font-size: 14px; color: #cbd5e1; line-height: 1.7; margin-top: 12px; text-align: left; }
 .atlas-guide.atlas-guide .menu-button { display: none; }
 .atlas-guide.atlas-guide .backdrop { display: none; }
 .atlas-guide.atlas-guide a:focus-visible,.atlas-guide.atlas-guide button:focus-visible { outline: 2px solid var(--color-text-info); outline-offset: 3px; }
