@@ -34,6 +34,25 @@
 }
 
 /* Adapt only the host layout offsets and local SVG/highlight assets. */
+.secure-by-design-guide.secure-by-design-guide {
+  width: 100%;
+  max-width: none;
+}
+.secure-by-design-guide.secure-by-design-guide .main {
+  width: calc(100% - var(--sidebar-w));
+  max-width: none;
+  min-width: 0;
+}
+/* The shared .prose cap must not constrain any of the guide's 17 section bodies. */
+.secure-by-design-guide.secure-by-design-guide .prose {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+@media (max-width:1024px) {
+  .secure-by-design-guide.secure-by-design-guide .main { width: 100%; }
+}
 .docs-main:has(.secure-by-design-guide){padding:0}
 :root:has(.secure-by-design-guide){scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){
