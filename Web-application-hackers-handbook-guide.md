@@ -594,15 +594,16 @@ flowchart TD
 #### 脆弱なコードと安全なコード(IDOR)
 
 ```python
+# 前提: db は Python 標準の sqlite3.Connection(プレースホルダーは ? 形式)
 # 脆弱: IDだけで取得。誰のデータかを確認していない
 @app.get("/orders/<int:order_id>")
 def get_order(order_id):
-    return db.query("SELECT * FROM orders WHERE id = ?", (order_id,)).fetchone()
+    return db.execute("SELECT * FROM orders WHERE id = ?", (order_id,)).fetchone()
 
 # 安全: 所有者の条件も一緒に確認する
 @app.get("/orders/<int:order_id>")
 def get_order(order_id):
-    row = db.query(
+    row = db.execute(
         "SELECT * FROM orders WHERE id = ? AND user_id = ?",
         (order_id, current_user.id),
     ).fetchone()
@@ -654,6 +655,7 @@ flowchart LR
 #### 脆弱なコードと安全なコード
 
 ```python
+# 前提: cursor は Python 標準の sqlite3.Cursor(プレースホルダーは ? 形式)
 # 脆弱: 入力を文字列連結でSQLに埋め込んでいる
 query = "SELECT * FROM users WHERE name = '" + name + "'"
 cursor.execute(query)
@@ -815,13 +817,31 @@ sequenceDiagram
 
 ```python
 # OSコマンド: 脆弱な書き方と安全な書き方
+import ipaddress
+import re
 import subprocess
+
+# ホスト名の各ラベルは英数字で始まり英数字で終わる(先頭の "-" を許さない)
+LABEL = r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+HOSTNAME_RE = re.compile(rf"{LABEL}(?:\.{LABEL})*")
+
+def validate_host(host: str) -> str:
+    """IPアドレスまたはホスト名の形式だけを許可する(-c などのオプション注入を防ぐ)"""
+    try:
+        return str(ipaddress.ip_address(host))
+    except ValueError:
+        pass
+    if len(host) <= 253 and HOSTNAME_RE.fullmatch(host):
+        return host
+    raise ValueError("invalid host")
 
 # 脆弱: シェル経由で文字列連結(入力がコマンドとして解釈され得る)
 # subprocess.run("ping -c 1 " + host, shell=True)
 
-# 安全: シェルを介さず、引数を配列で渡す(加えて host を形式検証する)
-subprocess.run(["ping", "-c", "1", host], check=True)
+# 安全: シェルを介さず引数を配列で渡し、検証済みの host だけを宛先にする
+# "--" はオプションの終端(Linux の iputils ping や macOS の ping など、対応する実装の場合)
+safe_host = validate_host(host)
+subprocess.run(["ping", "-c", "1", "--", safe_host], check=True)
 ```
 
 #### 10-3. 第11章「Attacking Application Logic」
