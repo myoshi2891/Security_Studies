@@ -46,7 +46,8 @@ export const diagramConfig = {
 };
 
 export const renderDiagram: DiagramRenderer = async (id, source) => {
-  await document.fonts?.ready;
+  // Fonts only affect label metrics; a failed wait must not block the diagram.
+  await document.fonts?.ready.catch((error: unknown) => console.warn('Mermaid font loading failed; rendering with fallback fonts', error));
   const { default: mermaid } = await import('mermaid');
   // JSON is valid YAML. Mermaid applies this config to one render, retaining the original source separately.
   return mermaid.render(id, `---\nconfig: ${JSON.stringify(diagramConfig)}\n---\n${source}`);

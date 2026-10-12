@@ -83,6 +83,23 @@ describe('Secure by Design complete migration', () => {
     } finally { render.mockRestore(); initialize.mockRestore(); }
   });
 
+  test('the default renderer still renders when waiting for fonts fails', async () => {
+    const { default: mermaid } = await import('mermaid');
+    const { renderDiagram } = await import('./MermaidFigure');
+    const render = spyOn(mermaid, 'render').mockResolvedValue({ svg: '<svg></svg>', diagramType: 'flowchart-v2' });
+    const warn = spyOn(console, 'warn').mockImplementation(() => {});
+    const fonts = Object.getOwnPropertyDescriptor(document, 'fonts');
+    Object.defineProperty(document, 'fonts', { configurable: true, value: { ready: Promise.reject(new Error('font load failed')) } });
+    try {
+      expect(await renderDiagram('figure', 'flowchart TD\nA-->B')).toMatchObject({ svg: '<svg></svg>' });
+      expect(render).toHaveBeenCalledTimes(1);
+      expect(warn).toHaveBeenCalled();
+    } finally {
+      if (fonts) Object.defineProperty(document, 'fonts', fonts); else delete (document as { fonts?: unknown }).fonts;
+      render.mockRestore(); warn.mockRestore();
+    }
+  });
+
   test('has no legacy scripts, CDN dependencies, unsafe URLs or HTML handler attributes', async () => {
     const page = (await renderedPage()).querySelector('.secure-by-design-guide')!;
     expect(page.querySelector('script, style, iframe, form')).toBeNull();
