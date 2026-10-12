@@ -221,7 +221,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 <!-- CCST CURRENT -->
 ## CCST Cybersecurity 移行状況（2026-10-13）
 
-- 統合Green・364件成功・15リンク/検索227見出し/163表hydration・lint/型検査成功。予定ルート `/docs/ccst-cybersecurity`、Security CertificationsのCCIE直後。
-- 最新全体テスト: **364 pass / 0 fail、55ファイル、19,443 expect**。npm test（内部Bun）。
+- CSS監査Red・フォント/見出し/番号項目余白/狭幅カードの5件失敗・163表と3コードの色は成功。予定ルート `/docs/ccst-cybersecurity`、Security CertificationsのCCIE直後。
+- 最新全体テスト: **374 pass / 5 fail、57ファイル、23,060 expect**。npm test（内部Bun）。
 - ビルド禁止。目視はユーザー担当。台帳: `docs/migration-inventory/ccst-cybersecurity.json`。
 <!-- /CCST CURRENT -->
