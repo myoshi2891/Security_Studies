@@ -35,6 +35,10 @@
 
 /* Adapt only the host layout offsets and local SVG/highlight assets. */
 .docs-main:has(.secure-by-design-guide){padding:0}
+:root:has(.secure-by-design-guide){scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  :root:has(.secure-by-design-guide){scroll-behavior:auto}
+}
 .secure-by-design-guide.secure-by-design-guide .sidebar{top:var(--docs-header-height, 4rem)}
 .secure-by-design-guide.secure-by-design-guide .section{scroll-margin-top:calc(var(--docs-header-height, 4rem) + 1rem)}
 .secure-by-design-guide.secure-by-design-guide #top{scroll-margin-top:calc(var(--docs-header-height, 4rem) + 1rem)}
