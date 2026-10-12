@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 本文全幅Red・共通proseの800px制限を再現）
+> **最終更新**: 2026-10-12（Secure by Design: 本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **231件** | `npm test`: 230 pass / 1 fail、36ファイル、8,852 expect（本文全幅Red・共通proseの800px制限を再現） |
+| テストケース総数 | **231件** | `npm test`: 231 pass / 0 fail、36ファイル、9,070 expect（本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功） |
 | テストファイル数 | **36ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -52,7 +52,7 @@
 | `src/app/docs/ccie-security/integration.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/app/docs/ccie-security/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/ccie-security/GuideSidebar.test.tsx` | 10 | 10 pass / 0 fail |
-| `src/app/docs/secure-by-design/foundation.test.tsx` | 11 | 11 pass / 0 fail、2026-10-12追加 |
+| `src/app/docs/secure-by-design/foundation.test.tsx` | 12 | 12 pass / 0 fail、2026-10-12追加 |
 | `src/app/docs/secure-by-design/sections-00-04.test.tsx` | 6 | 6 pass / 0 fail、2026-10-12追加 |
 | `src/app/docs/secure-by-design/sections-05-09.test.tsx` | 5 | 5 pass / 0 fail、2026-10-12追加 |
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail、2026-10-12追加 |
@@ -114,13 +114,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `GEMINI.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `README.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `security-docs/README.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
-| `docs/progress.md` | 2026-10-12 | Secure by Design移行・13ページ・230テスト・36ファイル・8,850 expect・ビルド未実行・目視確認待ちを同期 |
+| `CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `GEMINI.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `README.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `security-docs/README.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `docs/progress.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -157,7 +157,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。44件の新規移行テスト、全230件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
+| P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
 | P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
@@ -304,10 +304,13 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ### 最終状態・再開手順
 
-- 実装HEAD: `a2c908e`（本文統合 `e7da4dc`、表示基盤 `741bcd6`）。全230件成功・0失敗、36ファイル、8,850 expect。lint・型検査成功。
+- 実装HEAD: `12c926d`（本文全幅、スクロール補正 `a2c908e`、本文統合 `e7da4dc`、表示基盤 `741bcd6`）。全231件成功・0失敗、36ファイル、9,070 expect。lint・型検査成功。
 - ヒーロー・0〜16節・フッターの自動比較完了。既存ナビは13リンク、静的検索アセットも13ページ。ロジック単位29/29、戦略セル7/40=17.5%（増減なし）。
 - 各段階でtest→実装→docsを分離してコミット済み。Red段階の失敗は上の時系列参照。最終整理では追加のリファクタリングは不要。
 - 未実施: Next.jsビルド（禁止）、ブラウザ目視（ユーザー担当）、push・公開。
 - 次のアクション: ユーザーが `docs/migration-inventory/secure-by-design-review.md` に沿って目視確認する。
 - 再開プロンプト: 「Secure by Designのユーザー目視結果を確認し、指摘がある場合はnpm・ビルド禁止を維持して失敗テスト→testコミット→修正→Greenコミット→仕様書同期を実施する。元HTML・Markdownは保存する。」
 - 2026-10-12: 本文全幅Red・共通proseの800px制限を再現（直前HEAD `572f97e`）。230 pass / 1 fail、36ファイル、8,852 expect。ビルド未実行。
+- 2026-10-12: 本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功（直前HEAD `12c926d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
+
+本文全幅補正: 元の本文には変更なし。共通 `.prose` の800px制限と左右auto余白を解除し、17節をデスクトップ・タブレット・スマートフォンで全幅にする計算済みCSSテストを追加（Red `572f97e` / Green `12c926d`）。
