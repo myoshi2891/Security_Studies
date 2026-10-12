@@ -156,7 +156,7 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 ## 開発の規約
 
 - **コンテンツの作成:** 新しいドキュメントコンテンツはすべて MDX で作成し、`security-docs/src/app/docs/<slug>/page.mdx` に配置してください。追加後は `src/config/docs.ts` にもエントリを追加してください。
-- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。CCIE移行ページは元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
+- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。CCIE Security、Secure by Design、MITRE ATLAS の移行ページは元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
 - **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。
 
@@ -167,7 +167,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ### CCIE Security migration details
 
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
-- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; CCIE Security, Secure by Design and MITRE ATLAS are the page-scoped CSS exceptions to the utility-only styling convention. All other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
 - 62 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 282 across 43 files (282 pass / 0 fail, 12,582 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
