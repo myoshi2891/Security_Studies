@@ -10,7 +10,7 @@
         />
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+            href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/atom-one-dark.min.css"
         />
         <style>
             :root {
@@ -284,7 +284,8 @@
                 border: 0;
                 padding: 0;
                 word-break: normal;
-                white-space: pre;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
                 font-size: 1rem;
             }
             pre code.hljs {
@@ -4403,7 +4404,9 @@ if __name__ == &quot;__main__&quot;:
             </main>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/nginx.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/http.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
         <script>
             window.DIAGRAMS = {
@@ -4490,28 +4493,28 @@ L --> K["サーバーの公開鍵"]
 `,
                 d9: `
 flowchart TD
-A["サーバーが証明書チェーンを提示"] --> B{"チェーンは Trust Store の Root に辿り着くか"}
+A["サーバーが証明書チェーンを提示"] --> B("チェーンは Trust Store の Root に辿り着くか")
 B -->|いいえ| X["接続拒否"]
-B -->|はい| C{"各証明書の署名は正しいか"}
+B -->|はい| C("各証明書の署名は正しいか")
 C -->|いいえ| X
-C -->|はい| CA{"中間 CA は有効な CA 証明書か: cA=TRUE, keyCertSign, pathLenConstraint, 未対応の critical extension なし"}
+C -->|はい| CA("中間 CA は有効な CA 証明書か: cA=TRUE, keyCertSign, pathLenConstraint, 未対応の critical extension なし")
 CA -->|いいえ| X
-CA -->|はい| D{"有効期間内か"}
+CA -->|はい| D("有効期間内か")
 D -->|いいえ| X
-D -->|はい| E{"SAN に接続先ホスト名が含まれるか"}
+D -->|はい| E("SAN に接続先ホスト名が含まれるか")
 E -->|いいえ| X
-E -->|はい| U{"Leaf の EKU が serverAuth を許可し Key Usage も適合するか (clientAuth のみは不可)"}
+E -->|はい| U("Leaf の EKU が serverAuth を許可し Key Usage も適合するか (clientAuth のみは不可)")
 U -->|いいえ| X
-U -->|はい| R{"クライアントのポリシーで失効確認を適用するか"}
+U -->|はい| R("クライアントのポリシーで失効確認を適用するか")
 R -->|いいえ| P
-R -->|はい| F{"失効確認の結果は"}
+R -->|はい| F("失効確認の結果は")
 F -->|失効が確認された| X
-F -->|確認できない| SF{"ポリシーは hard-fail か"}
+F -->|確認できない| SF("ポリシーは hard-fail か")
 SF -->|はい| X
 SF -->|いいえ: soft-fail| P
-F -->|失効していない| P{"CT を要求するポリシーか (クライアントまたは Root Program)"}
+F -->|失効していない| P("CT を要求するポリシーか (クライアントまたは Root Program)")
 P -->|いいえ| H["検証成功。ハンドシェイクを続行"]
-P -->|はい| G{"SCT がポリシーを満たすか"}
+P -->|はい| G("SCT がポリシーを満たすか")
 G -->|いいえ| X
 G -->|はい| H
 classDef bad fill:#4a1f2e,stroke:#ff9b8a,color:#f3f5fa
@@ -4699,20 +4702,56 @@ W3 --> W4["第4週 - HSTS / ACME 自動化 - 2026年の変更対応"]
                 document.querySelectorAll('section[id]').forEach(function (s) {
                     io.observe(s);
                 });
+                var firstSec = document.querySelector('section[id]');
+                if (firstSec && links[firstSec.id]) {
+                    links[firstSec.id].classList.add('active');
+                }
 
-                // ---- code highlight ----
+                // ---- code highlight (every block) ----
+                hljs.registerLanguage('cli', function (h) {
+                    return {
+                        name: 'cli',
+                        keywords: {
+                            keyword: 'if then else elif fi for while do done in case esac',
+                            built_in: 'cd echo export cat printf chmod',
+                        },
+                        contains: [
+                            h.HASH_COMMENT_MODE,
+                            h.QUOTE_STRING_MODE,
+                            h.APOS_STRING_MODE,
+                            { className: 'variable', begin: /\$\{?[A-Za-z_]\w*\}?/ },
+                            {
+                                className: 'title.function',
+                                begin: /^[ \t]*[A-Za-z][\w.-]*/,
+                                relevance: 0,
+                            },
+                            { className: 'attr', begin: /\B--?[A-Za-z][\w-]*/, relevance: 0 },
+                            { className: 'number', begin: /\b\d+\b/, relevance: 0 },
+                        ],
+                    };
+                });
                 document.querySelectorAll('pre code').forEach(function (el) {
-                    var cls = el.className || '';
-                    var m = cls.match(/language-(\w+)/);
-                    if (m && hljs.getLanguage(m[1])) {
-                        hljs.highlightElement(el);
+                    var m = (el.className || '').match(/language-(\w+)/);
+                    var lang = m ? m[1] : '';
+                    if (lang === 'bash' || lang === 'sh' || lang === 'shell') {
+                        lang = 'cli';
                     }
+                    var text = el.textContent,
+                        r;
+                    if (lang && hljs.getLanguage(lang)) {
+                        r = hljs.highlight(text, { language: lang, ignoreIllegals: true });
+                    } else {
+                        r = hljs.highlightAuto(text);
+                    }
+                    el.innerHTML = r.value;
+                    el.classList.add('hljs');
                 });
 
                 // ---- mermaid ----
                 function post(svg, src) {
                     if (!svg) return;
                     var vb = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+                    var isSeq = /^sequenceDiagram/.test(src.trim());
                     svg.removeAttribute('width');
                     svg.removeAttribute('height');
                     if (
@@ -4721,17 +4760,32 @@ W3 --> W4["第4週 - HSTS / ACME 自動化 - 2026年の変更対応"]
                             return !isNaN(n);
                         })
                     ) {
-                        var head = src.trim().split('\n')[0];
-                        var extra = /^(sequenceDiagram|stateDiagram)/.test(head) ? 110 : 15;
+                        var x0 = vb[0],
+                            y0 = vb[1],
+                            x1 = vb[0] + vb[2],
+                            y1 = vb[1] + vb[3];
+                        if (isSeq) {
+                            // fit the viewBox to what was actually drawn (fonts differ between machines)
+                            try {
+                                var bb = svg.getBBox(),
+                                    pad = 14;
+                                x0 = Math.min(x0, bb.x - pad);
+                                y0 = Math.min(y0, bb.y - pad);
+                                x1 = Math.max(x1, bb.x + bb.width + pad);
+                                y1 = Math.max(y1, bb.y + bb.height + pad);
+                            } catch (e) {}
+                        } else {
+                            y1 += 15;
+                            svg.style.overflow = 'visible';
+                        }
                         svg.setAttribute(
                             'viewBox',
-                            vb[0] + ' ' + vb[1] + ' ' + vb[2] + ' ' + (vb[3] + extra),
+                            x0 + ' ' + y0 + ' ' + (x1 - x0) + ' ' + (y1 - y0),
                         );
-                        svg.style.width = Math.round(vb[2]) + 'px';
+                        svg.style.width = Math.round(x1 - x0) + 'px';
                     }
                     svg.style.maxWidth = '100%';
                     svg.style.height = 'auto';
-                    svg.style.overflow = 'visible';
                 }
                 function esc(s) {
                     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -4756,7 +4810,7 @@ W3 --> W4["第4週 - HSTS / ACME 自動化 - 2026年の変更対応"]
                         },
                         sequence: {
                             useMaxWidth: false,
-                            mirrorActors: false,
+                            mirrorActors: true,
                             messageFontSize: 16,
                             noteFontSize: 16,
                             actorFontSize: 16,
