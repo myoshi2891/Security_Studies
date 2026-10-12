@@ -185,7 +185,16 @@
 .ccie-guide.ccie-guide table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 1rem
+  font-size: 1rem;
+  /* The wrapper owns vertical spacing; shared .prose table margins add empty bands. */
+  margin: 0
+}
+/* Keep the source's white surface in both color schemes, including shared prose hover states. */
+.ccie-guide.ccie-guide td {
+  background-color: var(--surface)
+}
+.ccie-guide.ccie-guide tr:hover td {
+  background-color: var(--surface)
 }
 .ccie-guide.ccie-guide th {
   background: var(--surface-2);
