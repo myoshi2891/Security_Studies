@@ -137,3 +137,6 @@
 .ccst-guide.ccst-guide h1{letter-spacing:normal}
 .ccst-guide.ccst-guide h2{border-bottom:0;padding-bottom:0}
 .ccst-guide.ccst-guide ol>li{margin-bottom:0}
+/* The document is the anchor scroller; this conditional rule ends when the route unmounts. */
+:root:has(.ccst-guide){scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){:root:has(.ccst-guide){scroll-behavior:auto}}
