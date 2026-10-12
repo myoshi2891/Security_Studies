@@ -2,7 +2,7 @@ import { expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { Window } from 'happy-dom';
 import postcss from 'postcss';
-import { renderedPage, scope, sourceCss } from './fidelity-helpers';
+import { declarations, renderedPage, scope, sourceCss } from './fidelity-helpers';
 
 const migratedCss = () => postcss.parse(readFileSync(new URL('./ccst-cybersecurity.css', import.meta.url), 'utf8'));
 function combinedStyles() {
@@ -44,7 +44,10 @@ test('uses the installed local Source Serif family rather than falling back to s
 test('resets shared heading letter spacing and bottom borders to source defaults', async () => {
   const window = await windowFor();
   try {
-    for (const h1 of window.document.querySelectorAll('.main h1')) expect(window.getComputedStyle(h1).letterSpacing).toBe('normal');
+    // happy-dom drops letter-spacing:normal (confirmed with an isolated reproduction).
+    // Check the real declaration, and independently check computed heading typography.
+    expect(declarations(migratedCss(), `${scope} h1`)).toContain('letter-spacing:normal');
+    for (const h1 of window.document.querySelectorAll('.main h1')) expect(window.getComputedStyle(h1).fontWeight).toBe('500');
     for (const h2 of window.document.querySelectorAll('.main h2')) {
       const style = window.getComputedStyle(h2);
       expect(style.borderBottomWidth).toBe('0px'); expect(style.paddingBottom).toBe('0px');
