@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 最終CSS監査Red・共通リスト余白混入の1件失敗）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **274件** | `npm test`: 273 pass / 1 fail、42ファイル、10,546 expect（最終CSS監査Red・共通リスト余白混入の1件失敗） |
+| テストケース総数 | **274件** | `npm test`: 274 pass / 0 fail、42ファイル、10,581 expect（最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功） |
 | テストファイル数 | **42ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -58,7 +58,7 @@
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 8 pass / 1 fail |
+| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
@@ -111,8 +111,9 @@ form-action 'self'
 | 検索インデックス (`src/lib/search.ts`) | ✅ 稼働中 | — |
 | 検索 UI (`SearchModal`) | ✅ 稼働中 | — |
 | DisclaimerModal | ✅ 稼働中 | — |
-| Docs ページ (13ページ、Archive含む) | ✅ 稼働中 | — |
+| Docs ページ (14ページ、Archive含む) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
+| MITRE ATLAS全13節・11表・4図・6手順カード・29参考文献移行 | ✅ 自動検証完了・目視確認待ち | 2026-10-12 |
 | Secure by Design全17節・35表・15図・8 Java例・32参考文献移行 | ✅ 自動検証完了・目視確認待ち | 2026-10-12 |
 | DocsHeaderNavへのグローバルナビ移設・CCIE元サイドバー復元・全幅本文・table hydration修正 | ✅ 完了 | 2026-10-09 |
 
@@ -120,13 +121,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `GEMINI.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `README.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `security-docs/README.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
-| `docs/progress.md` | 2026-10-12 | Secure by Design移行・13ページ・231テスト・36ファイル・9,070 expect・本文全幅・ビルド未実行・目視確認待ちを同期 |
+| `CLAUDE.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `GEMINI.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `README.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `security-docs/README.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `docs/progress.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -163,6 +164,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、39移行テストと4検索テスト追加。全274件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
 | P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
@@ -351,3 +353,14 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 原本アーカイブ完了・バイト一致・全274件成功・目視確認待ち（直前HEAD `201ae15`）。274 pass / 0 fail、42ファイル、10,569 expect。ビルド未実行。
 - 2026-10-12: 原本保存完了・全274件成功・最終CSS監査でリスト余白を追加確認中（直前HEAD `201ae15`）。274 pass / 0 fail、42ファイル、10,569 expect。ビルド未実行。
 - 2026-10-12: 最終CSS監査Red・共通リスト余白混入の1件失敗（直前HEAD `5fefecf`）。273 pass / 1 fail、42ファイル、10,546 expect。ビルド未実行。
+- 2026-10-12: 最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功（直前HEAD `f7feeb0`）。274 pass / 0 fail、42ファイル、10,581 expect。ビルド未実行。
+
+### 最終状態・目視確認の再開
+
+- 実装HEAD: `f7feeb0`（リスト項目余白）。統合実装 `0553651`、原本アーカイブ `201ae15`。全274件成功・0失敗、42ファイル、10,581 expect。lint・型検査成功。
+- HTML/MD原本は `archive/html/Mitre-atlas.html` / `archive/md/Mitre-atlas.md`。SHA-256一致、本文・情報基準日変更なし。新規6テストファイルに39件、既存searchテストに4件追加。
+- ナビ14ページ、ATLAS検索見出し34件、ロジック単位32/32。戦略セル7/40=17.5%は増減なし。
+- 元CSS実効値の追加監査は14セレクタ×11プロパティ×2画面サイズの308項目。DOM実装が省略するブラウザ既定値（リストの点・番号・40px字下げ・1em余白・0px項目余白）を明示して照合した。実ブラウザの描画はユーザー目視待ち。
+- TDD復旧: 早すぎた `9c42449` と誤った `dddf9c4` の記録は、ユーザー承認により履歴を残して訂正（`0170b4c` / `c57579d`）。`4603722` で元アイコンのti装飾用クラスを厳密に保持する比較へ訂正し、`2d54f7f` で244件成功を記録。それ以降のRed→実装→docsは分離済み。
+- 次のアクション: ユーザーが `docs/migration-inventory/mitre-atlas-review.md` に沿って目視確認する。ビルドは禁止、push・公開は未実施。
+- 再開プロンプト: 「MITRE ATLASの目視結果を確認し、指摘があればnpm・ビルド禁止を維持して失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を実施する。原本はarchiveのHTML/MDを保持し、関係しない未コミット原稿を変更しない。」

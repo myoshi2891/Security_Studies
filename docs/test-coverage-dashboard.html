@@ -49,7 +49,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            29 ロジックファイル中 29 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3。MDXテストは別集計）
+                            32 ロジックファイル中 32 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3。MDXテストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -61,7 +61,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
                         <div class="summary-value">274</div>
-                        <div class="summary-sub">42 ファイル · 273 pass / 1 fail · 10,546 expect · ATLAS 最終CSS監査Red・共通リスト余白混入の1件失敗</div>
+                        <div class="summary-sub">42 ファイル · 274 pass / 0 fail · 10,581 expect · ATLAS 最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -87,45 +87,9 @@
 <!-- CCIE migration status -->
         <section class="container" aria-label="CCIE migration test status"><p>CCIE Security: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green · 186 pass / 0 fail · 6,304 expect · bun run build 成功、ブラウザ目視確認はユーザー確認待ち。</p></section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="container" aria-label="Secure by Design migration test status"><p>Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功 · 231 pass / 0 fail、36ファイル、9,070 expect · npm test（内部Bun） · ビルド未実行 · 目視確認はユーザー担当</p></section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 最終CSS監査Red・共通リスト余白混入の1件失敗 · 273 pass / 1 fail、42ファイル、10,546 expect · ビルド未実行・目視はユーザー担当</p></section>
+<section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功 · 274 pass / 0 fail、42ファイル、10,581 expect · ビルド未実行・目視はユーザー担当</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -281,7 +245,7 @@
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 13×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 14×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -366,21 +330,22 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 56 CCIE + 45 Secure by Design tests · 7/9 logic files</span>
+                                            <span class="cell-count">10 layout + 56 CCIE + 45 Secure by Design + 39 ATLAS tests · 10/12 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 78%"></div>
+                                                <div class="cell-bar-fill" style="width: 83%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 7/9 ロジックファイル</div>
-                                            docs layout、CCIE、Secure by Designの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 10/12 ロジックファイル</div>
+                                            docs layout、CCIE、Secure by Design、MITRE ATLASの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの56件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（45移行・表示テストで検証）</li>
+                                                <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（39移行・表示テストで検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（Secure by Designは45件、その他MDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（Secure by Designは45件、MITRE ATLASは39件、その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -393,7 +358,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">22 tests · 2/2 files</span>
+                                            <span class="cell-count">26 tests · 2/2 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -402,7 +367,7 @@
                                             <div class="tt-title">✅ Good — 2/2 ファイル</div>
                                             search.ts および API ルート (Contractテスト) をカバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/lib/search.test.ts (19 tests)</li>
+                                                <li>✓ src/lib/search.test.ts (23 tests)</li>
                                                 <li>
                                                     → インデックス生成・SearchResult形式・エラーパスカバレッジ補完
                                                 </li>
@@ -425,9 +390,9 @@
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — CCIE・Secure by Designナビ契約</div>
+                                            <div class="tt-title">⚠️ Partial — CCIE・Secure by Design・ATLASナビ契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録（各integration.test.tsx）</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録（各integration.test.tsx）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -930,7 +895,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">22 tests · 2/2 files</span>
+                                            <span class="cell-count">26 tests · 2/2 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -939,7 +904,7 @@
                                             <div class="tt-title">✅ Good — 2/2 ファイル</div>
                                             search.ts および API ルート (Contractテスト) をカバー。
                                             <ul class="tt-files">
-                                                <li>✓ src/lib/search.test.ts (19 tests)</li>
+                                                <li>✓ src/lib/search.test.ts (23 tests)</li>
                                                 <li>
                                                     → インデックス生成・SearchResult 形式・href
                                                 </li>
