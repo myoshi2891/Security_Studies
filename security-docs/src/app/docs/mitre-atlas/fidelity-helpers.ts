@@ -26,7 +26,7 @@ export function canonical(node: Node): unknown {
   if (['I', 'SVG'].includes(el.tagName.toUpperCase())) return null;
   if (el.matches('.atlas-table-scroll')) return canonical(el.firstElementChild!);
   if (el.matches('.mermaid-diagram')) return ['diagram', el.getAttribute('data-diagram')];
-  const style = [...el.style].map(prop => [prop, el.style.getPropertyValue(prop)]);
+  const style = Array.from({ length: el.style.length }, (_, index) => el.style.item(index)).map(prop => [prop, el.style.getPropertyValue(prop)]);
   const rel = el.getAttribute('rel') ?? (el.getAttribute('target') === '_blank' ? 'noopener noreferrer' : null);
   return [el.tagName, ...['id', 'class', 'href', 'target'].map(a => el.getAttribute(a)), rel, style, [...el.childNodes].map(canonical).filter(v => v !== null)];
 }
