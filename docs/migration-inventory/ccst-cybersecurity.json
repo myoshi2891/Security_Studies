@@ -1,7 +1,7 @@
 {
-  "source": "Ccst-cybersecurity-guide.html",
+  "source": "archive/html/Ccst-cybersecurity-guide.html",
   "sha256": "cc8abf8ebc61e443018ce43196b93e55a3f20cfbb4791333cd34c4ab67d8ac4e",
-  "markdownSource": "Ccst-cybersecurity-guide.md",
+  "markdownSource": "archive/md/Ccst-cybersecurity-guide.md",
   "markdownSha256": "c407e02339596075ba888292cfec00028c197e482cc4ceae66296b651d832502",
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
