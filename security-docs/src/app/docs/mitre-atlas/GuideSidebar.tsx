@@ -45,7 +45,12 @@ export function GuideSidebar({ groups }: { groups: readonly TocGroup[] }) {
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
     const resize = () => { if (window.innerWidth > 900) close(); };
-    const pointer = (event: PointerEvent) => { if (event.target instanceof Element && event.target.closest('.docs-header')) setOpen(false); };
+    const pointer = (event: PointerEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest('.docs-header')) return;
+      // ドロワー内のフォーカスだけを menu ボタンへ戻し、ヘッダー側のフォーカスは維持する
+      if (panel.current?.contains(document.activeElement)) button.current?.focus();
+      setOpen(false);
+    };
     document.addEventListener('keydown', key); document.addEventListener('pointerdown', pointer); window.addEventListener('resize', resize);
     panel.current?.querySelector<HTMLAnchorElement>('nav a')?.focus();
     return () => {
