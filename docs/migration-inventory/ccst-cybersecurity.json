@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "統合Red・ナビ登録と静的検索の4件失敗・全量比較と163表hydration成功",
+  "status": "統合追加Red・既存ATLAS契約も15件へ同期・登録前の6件失敗",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -124,10 +124,10 @@
     "d49"
   ],
   "verification": {
-    "passed": 360,
-    "failed": 4,
+    "passed": 358,
+    "failed": 6,
     "testFiles": 55,
-    "assertions": 19434,
+    "assertions": 19433,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
     "visualReview": "pending user review"
