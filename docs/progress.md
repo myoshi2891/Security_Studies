@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 原本保存完了・全274件成功・最終CSS監査でリスト余白を追加確認中）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 最終CSS監査Red・共通リスト余白混入の1件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **274件** | `npm test`: 274 pass / 0 fail、42ファイル、10,569 expect（原本保存完了・全274件成功・最終CSS監査でリスト余白を追加確認中） |
+| テストケース総数 | **274件** | `npm test`: 273 pass / 1 fail、42ファイル、10,546 expect（最終CSS監査Red・共通リスト余白混入の1件失敗） |
 | テストファイル数 | **42ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -58,7 +58,7 @@
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 8 pass / 1 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
@@ -350,3 +350,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 原本アーカイブ完了・バイト一致・全274件成功・目視確認待ち（直前HEAD `aa90484`）。274 pass / 0 fail、42ファイル、10,569 expect。ビルド未実行。
 - 2026-10-12: 原本アーカイブ完了・バイト一致・全274件成功・目視確認待ち（直前HEAD `201ae15`）。274 pass / 0 fail、42ファイル、10,569 expect。ビルド未実行。
 - 2026-10-12: 原本保存完了・全274件成功・最終CSS監査でリスト余白を追加確認中（直前HEAD `201ae15`）。274 pass / 0 fail、42ファイル、10,569 expect。ビルド未実行。
+- 2026-10-12: 最終CSS監査Red・共通リスト余白混入の1件失敗（直前HEAD `5fefecf`）。273 pass / 1 fail、42ファイル、10,546 expect。ビルド未実行。
