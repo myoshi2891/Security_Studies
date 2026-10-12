@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功）
+> **最終更新**: 2026-10-12（Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **231件** | `npm test`: 231 pass / 0 fail、36ファイル、9,070 expect（本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功） |
+| テストケース総数 | **231件** | `npm test`: 231 pass / 0 fail、36ファイル、9,070 expect（元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功） |
 | テストファイル数 | **36ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -283,7 +283,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ## Secure by Design 移行（2026-10-12）
 
-元HTML・Markdown保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
+原本は `archive/html/Secure-by-design-guide.html` と `archive/md/Secure-by-design-guide.md` に内容変更なしで保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
 
 ### 実行履歴
 - 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `0be26b2`）。186 pass / 0 fail、30ファイル、6,304 expect。ビルド未実行。
@@ -304,7 +304,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ### 最終状態・再開手順
 
-- 実装HEAD: `12c926d`（本文全幅、スクロール補正 `a2c908e`、本文統合 `e7da4dc`、表示基盤 `741bcd6`）。全231件成功・0失敗、36ファイル、9,070 expect。lint・型検査成功。
+- 実装HEAD: `0ee9b6d`（原本アーカイブ、本文全幅 `12c926d`、スクロール補正 `a2c908e`、本文統合 `e7da4dc`、表示基盤 `741bcd6`）。全231件成功・0失敗、36ファイル、9,070 expect。lint・型検査成功。
 - ヒーロー・0〜16節・フッターの自動比較完了。既存ナビは13リンク、静的検索アセットも13ページ。ロジック単位29/29、戦略セル7/40=17.5%（増減なし）。
 - 各段階でtest→実装→docsを分離してコミット済み。Red段階の失敗は上の時系列参照。最終整理では追加のリファクタリングは不要。
 - 未実施: Next.jsビルド（禁止）、ブラウザ目視（ユーザー担当）、push・公開。
@@ -314,3 +314,6 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 本文全幅Green・全17節を1440px/900px/375pxで計算済みCSS検証・lintと型検査成功（直前HEAD `12c926d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
 
 本文全幅補正: 元の本文には変更なし。共通 `.prose` の800px制限と左右auto余白を解除し、17節をデスクトップ・タブレット・スマートフォンで全幅にする計算済みCSSテストを追加（Red `572f97e` / Green `12c926d`）。
+- 2026-10-12: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功（直前HEAD `0ee9b6d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
+
+原本保存先: `archive/html/Secure-by-design-guide.html` / `archive/md/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。

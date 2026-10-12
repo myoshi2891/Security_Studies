@@ -2,7 +2,7 @@
 
 最終更新日: 2026-10-12
 
-確認URL: `/docs/secure-by-design`。元資料: `Secure-by-design-guide.html`。
+確認URL: `/docs/secure-by-design`。元資料: `archive/html/Secure-by-design-guide.html`。Markdown原本: `archive/md/Secure-by-design-guide.md`。
 
 自動検証: 全231件成功（移行・表示45件）、36テストファイル、9,070 expect。lint・型検査成功。35表のReact描画・hydration、15図の実Mermaid構文、77見出しの検索登録、本文階層・リンク・コード全文・元CSS宣言を検証済み。
 
@@ -49,7 +49,7 @@
 - TablerアイコンフォントをローカルSVGへ置換。本文の意味や色分けは保持。
 - Javaをサーバー側で強調。コード本文の改行・空白は完全一致。
 - Mermaidは元定義を保持し、strict設定・Reactの状態表示・失敗時の定義表示へ移行。別ページのエンジン初期化を変更しない。
-- 元HTML・Markdownは保存し、記事情報の基準日は2026-10-08を維持する。
+- 元HTML・Markdownは上記archiveへ内容変更なしで保存し、記事情報の基準日は2026-10-08を維持する。
 
 ## コミットの要点
 
@@ -66,3 +66,5 @@
 各test／実装コミット後に、進捗・ダッシュボードを独立したdocsコミットで同期済み。
 
 本文全幅は1440px・900px・375pxで全17節の計算済みCSS（max-width、width、左右余白）と、目次を考慮した本文幅を自動検証済み。ブラウザ目視はユーザー担当。
+
+原本のアーカイブ移動は `0ee9b6d`。移動前後のSHA-256一致と全231テスト・lint・型検査成功を確認。
