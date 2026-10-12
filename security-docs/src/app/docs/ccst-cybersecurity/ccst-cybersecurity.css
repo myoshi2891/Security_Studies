@@ -130,4 +130,10 @@
 .ccst-guide.ccst-guide .diagram [role="img"] svg{max-width:none}
 .ccst-guide.ccst-guide .diagram-description{width:100%;margin-top:12px}
 .ccst-guide.ccst-guide .diagram-description summary{cursor:pointer}
-@media (max-width:1000px){.ccst-guide.ccst-guide .stats,.ccst-guide.ccst-guide .meta{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}}
+@media (max-width:1000px){.ccst-guide.ccst-guide .meta{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}}
+
+/* Match the installed variable font and restore defaults omitted from legacy CSS. */
+.ccst-guide.ccst-guide{--font-head:"Source Serif 4 Variable","Source Serif 4","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+.ccst-guide.ccst-guide h1{letter-spacing:normal}
+.ccst-guide.ccst-guide h2{border-bottom:0;padding-bottom:0}
+.ccst-guide.ccst-guide ol>li{margin-bottom:0}
