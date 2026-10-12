@@ -4,13 +4,43 @@ import { resolve } from 'node:path';
 import { createElement } from 'react';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import postcss from 'postcss';
-import { declarations, definitions, here, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { Window } from 'happy-dom';
+import { declarations, definitions, here, renderedPage, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
 
 const originalObserver = globalThis.IntersectionObserver;
 beforeEach(() => { globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver; });
 afterEach(() => { cleanup(); globalThis.IntersectionObserver = originalObserver; window.history.replaceState(null, '', '/'); });
 
 describe('Secure by Design display foundation', () => {
+  test('fills the available width without inheriting the shared 800px prose cap at desktop, tablet or phone sizes', async () => {
+    const css = readFileSync(resolve(here, '../../globals.css'), 'utf8') + '\n'
+      + readFileSync(resolve(here, '../docs-layout.css'), 'utf8') + '\n'
+      + readFileSync(resolve(here, 'secure-by-design.css'), 'utf8');
+    const markup = (await renderedPage()).querySelector('.secure-by-design-guide')!.outerHTML;
+    for (const width of [1440, 900, 375]) {
+      const isolated = new Window({ settings: { disableJavaScriptEvaluation: true, disableCSSFileLoading: true } });
+      try {
+        isolated.happyDOM.setWindowSize({ width, height: 900 });
+        isolated.document.head.innerHTML = `<style>${css}</style>`;
+        isolated.document.body.innerHTML = `<div class="docs-shell"><main class="docs-main"><article class="prose docs-article">${markup}</article></main></div>`;
+        const bodies = isolated.document.querySelectorAll('.secure-by-design-guide .section > .prose');
+        expect(bodies).toHaveLength(17);
+        for (const body of bodies) {
+          const style = isolated.getComputedStyle(body);
+          expect(style.maxWidth, `${width}px max-width`).toBe('none');
+          expect(style.width, `${width}px width`).toBe('100%');
+          expect(style.marginLeft, `${width}px left margin`).toBe('0px');
+          expect(style.marginRight, `${width}px right margin`).toBe('0px');
+        }
+        const main = isolated.document.querySelector('.secure-by-design-guide .main')!;
+        const style = isolated.getComputedStyle(main);
+        expect(style.maxWidth).toBe('none');
+        expect(style.width).toBe(width > 1024 ? 'calc(100% - 320px)' : '100%');
+        expect(style.marginLeft).toBe(width > 1024 ? '320px' : '0px');
+      } finally { await isolated.happyDOM.close(); }
+    }
+  });
+
   test('preserves every source CSS declaration and media context under an isolated scope', () => {
     const css = postcss.parse(readFileSync(resolve(here, 'secure-by-design.css'), 'utf8'));
     sourceCss.walkRules(rule => {
