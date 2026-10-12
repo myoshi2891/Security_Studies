@@ -410,7 +410,9 @@ flowchart TD
     C -- いいえ --> X
     C -- はい --> CA{"中間 CA は basicConstraints の cA=TRUE か<br/>keyUsage に keyCertSign を含むか<br/>pathLenConstraint を超えていないか<br/>未対応の critical extension がないか"}
     CA -- いいえ --> X
-    CA -- はい --> D{"有効期間内か"}
+    CA -- はい --> NC{"CA の nameConstraints が<br/>後続証明書の Subject と SAN を許可するか"}
+    NC -- いいえ --> X
+    NC -- はい --> D{"有効期間内か"}
     D -- いいえ --> X
     D -- はい --> E{"SAN に接続先ホスト名が含まれるか"}
     E -- いいえ --> X
