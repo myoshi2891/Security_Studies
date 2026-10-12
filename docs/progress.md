@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 図の可読性Red・18px/コントラスト/縮小防止の6件失敗）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **277件** | `npm test`: 271 pass / 6 fail、42ファイル、10,564 expect（図の可読性Red・18px/コントラスト/縮小防止の6件失敗） |
+| テストケース総数 | **277件** | `npm test`: 277 pass / 0 fail、42ファイル、10,627 expect（図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功） |
 | テストファイル数 | **42ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -58,11 +58,11 @@
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/mitre-atlas/foundation.test.tsx` | 12 | 7 pass / 5 fail |
+| `src/app/docs/mitre-atlas/foundation.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
-| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 10 pass / 1 fail |
+| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 
 ---
@@ -121,13 +121,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `GEMINI.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `README.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `security-docs/README.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
-| `docs/progress.md` | 2026-10-12 | MITRE ATLAS移行・14ページ・274テスト・42ファイル・10,581 expect・原本アーカイブ・目視確認待ちを同期 |
+| `CLAUDE.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `GEMINI.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `README.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `security-docs/README.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `docs/progress.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -164,7 +164,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、39移行テストと4検索テスト追加。全274件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
+| P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
 | P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
@@ -365,3 +365,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 次のアクション: ユーザーが `docs/migration-inventory/mitre-atlas-review.md` に沿って目視確認する。ビルドは禁止、push・公開は未実施。
 - 再開プロンプト: 「MITRE ATLASの目視結果を確認し、指摘があればnpm・ビルド禁止を維持して失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を実施する。原本はarchiveのHTML/MDを保持し、関係しない未コミット原稿を変更しない。」
 - 2026-10-12: 図の可読性Red・18px/コントラスト/縮小防止の6件失敗（直前HEAD `9037a98`）。271 pass / 6 fail、42ファイル、10,564 expect。ビルド未実行。
+- 2026-10-12: 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功（直前HEAD `a9a21d7`）。277 pass / 0 fail、42ファイル、10,627 expect。ビルド未実行。
+
+### 図の可読性改善（2026-10-12）
+
+- ラベル18px・日本語向けフォント・明るい文字色、ノード／サブグラフ／接続ラベルでコントラスト比7以上を検証。
+- viewBoxの自然幅を維持し、横長の図を縮小せず図だけ横スクロール。1800px幅SVGの縮小防止・ラベル／説明の保持・キーボード操作を検証。キャプション・説明文は14px。
+- 全277件成功・0失敗、42ファイル、10,627 expect。ATLASは42件、searchは23件。lint・型検査成功。ビルド未実行・目視確認はユーザー担当。
+- 元図定義・本文・原本ハッシュは不変。元テーマとの差分はユーザー依頼による文字・線のコントラスト／文字サイズ・図サイズ・キャプションの改善。

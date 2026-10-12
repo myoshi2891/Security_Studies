@@ -414,6 +414,7 @@
     "900px-and-below sidebar becomes a dismissible drawer",
     "host header offsets, explicit browser-equivalent list markers and unconstrained content width",
     "external blank-target links gain noopener noreferrer",
-    "React Mermaid status and definition fallback replace empty targets"
+    "React Mermaid status and definition fallback replace empty targets",
+    "user-requested diagram readability: 18px Japanese font and high contrast, intrinsic-width horizontal scrolling, 14px captions/descriptions"
   ]
 }

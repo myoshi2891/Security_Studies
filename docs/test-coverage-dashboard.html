@@ -61,7 +61,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
                         <div class="summary-value">277</div>
-                        <div class="summary-sub">42 ファイル · 271 pass / 6 fail · 10,564 expect · ATLAS 図の可読性Red・18px/コントラスト/縮小防止の6件失敗</div>
+                        <div class="summary-sub">42 ファイル · 277 pass / 0 fail · 10,627 expect · ATLAS 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -90,7 +90,8 @@
 <section class="container" aria-label="Secure by Design migration test status"><p>Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功 · 231 pass / 0 fail、36ファイル、9,070 expect · npm test（内部Bun） · ビルド未実行 · 目視確認はユーザー担当</p></section>
 
 
-<section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 図の可読性Red・18px/コントラスト/縮小防止の6件失敗 · 271 pass / 6 fail、42ファイル、10,564 expect · ビルド未実行・目視はユーザー担当</p></section>
+
+<section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功 · 277 pass / 0 fail、42ファイル、10,627 expect · ビルド未実行・目視はユーザー担当</p></section>
 
         <!-- FILTERS -->
         <section class="filters-section">
@@ -331,7 +332,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 56 CCIE + 45 Secure by Design + 39 ATLAS tests · 10/12 logic files</span>
+                                            <span class="cell-count">10 layout + 56 CCIE + 45 Secure by Design + 42 ATLAS tests · 10/12 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 83%"></div>
                                             </div>
@@ -343,10 +344,10 @@
                                                 <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの56件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（45移行・表示テストで検証）</li>
-                                                <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（39移行・表示テストで検証）</li>
+                                                <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（42移行・表示テストで検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（Secure by Designは45件、MITRE ATLASは39件、その他MDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（Secure by Designは45件、MITRE ATLASは42件、その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
