@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功）
+> **最終更新**: 2026-10-13（CCST: 原本アーカイブRed・移動前の保存先/ハッシュ/旧パス/台帳/比較参照5件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **379件** | `npm test`: 379 pass / 0 fail、57ファイル、24,987 expect（CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功） |
-| テストファイル数 | **57ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **384件** | `npm test`: 379 pass / 5 fail、58ファイル、24,992 expect（原本アーカイブRed・移動前の保存先/ハッシュ/旧パス/台帳/比較参照5件失敗） |
+| テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 8 | 3 pass / 5 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
@@ -90,6 +90,8 @@
 | `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 11 | 11 pass / 0 fail |
 
 | `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 4 | 4 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/archive.test.ts` | 5 | 0 pass / 5 fail |
 
 ---
 
@@ -463,3 +465,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-13: CCST CSS監査Red補正・happy-dom normalキーワード欠落を最小再現・元CSSで5件失敗。374 pass / 5 fail、57ファイル、23,060 expect。ビルド未実行。
 
 - 2026-10-13: CCST CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功。379 pass / 0 fail、57ファイル、24,987 expect。ビルド未実行。
+
+- 2026-10-13: CCST 原本アーカイブRed・移動前の保存先/ハッシュ/旧パス/台帳/比較参照5件失敗。379 pass / 5 fail、58ファイル、24,992 expect。ビルド未実行。

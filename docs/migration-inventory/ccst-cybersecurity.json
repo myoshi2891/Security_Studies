@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功",
+  "status": "原本アーカイブRed・移動前の保存先/ハッシュ/旧パス/台帳/比較参照5件失敗",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -125,9 +125,9 @@
   ],
   "verification": {
     "passed": 379,
-    "failed": 0,
-    "testFiles": 57,
-    "assertions": 24987,
+    "failed": 5,
+    "testFiles": 58,
+    "assertions": 24992,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
     "visualReview": "pending user review"
