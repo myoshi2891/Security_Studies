@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: 第4〜5章Green・336件成功・lint/型検査成功）
+> **最終更新**: 2026-10-13（CCST: 第6章・参考文献Red・対象14節と25問/25チェック/60参考文献の17件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **336件** | `npm test`: 336 pass / 0 fail、52ファイル、13,944 expect（第4〜5章Green・336件成功・lint/型検査成功） |
-| テストファイル数 | **52ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **353件** | `npm test`: 336 pass / 17 fail、53ファイル、13,975 expect（第6章・参考文献Red・対象14節と25問/25チェック/60参考文献の17件失敗） |
+| テストファイル数 | **53ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
+| `src/app/api/search/route.test.ts` | 20 | 3 pass / 17 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
@@ -80,6 +80,8 @@
 | `src/app/docs/ccst-cybersecurity/chapter-03.test.tsx` | 7 | 7 pass / 0 fail |
 
 | `src/app/docs/ccst-cybersecurity/chapters-04-05.test.tsx` | 10 | 10 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/chapter-06-references.test.tsx` | 17 | 0 pass / 17 fail |
 
 ---
 
@@ -437,3 +439,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-13: CCST 第4〜5章Red・対象10節が未移行として失敗。326 pass / 10 fail、52ファイル、13,638 expect。ビルド未実行。
 
 - 2026-10-13: CCST 第4〜5章Green・336件成功・lint/型検査成功。336 pass / 0 fail、52ファイル、13,944 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第6章・参考文献Red・対象14節と25問/25チェック/60参考文献の17件失敗。336 pass / 17 fail、53ファイル、13,975 expect。ビルド未実行。
