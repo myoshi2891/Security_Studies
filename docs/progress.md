@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 全13節・手順・参考文献・フッターGreen・検索と統合は未完了）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 統合Red・検索/ナビ/索引8件失敗・11表hydrationと4図構文は成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **255件** | `npm test`: 255 pass / 0 fail、40ファイル、9,529 expect（全13節・手順・参考文献・フッターGreen・検索と統合は未完了） |
-| テストファイル数 | **40ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **274件** | `npm test`: 266 pass / 8 fail、42ファイル、10,510 expect（統合Red・検索/ナビ/索引8件失敗・11表hydrationと4図構文は成功） |
+| テストファイル数 | **42ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -40,9 +40,9 @@
 | `src/components/docs/ThreatCard.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
-| `src/lib/search.test.ts` | 19 | 19 pass / 0 fail |
+| `src/lib/search.test.ts` | 23 | 19 pass / 4 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
-| `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 10 | 9 pass / 1 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
@@ -58,10 +58,12 @@
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/mitre-atlas/foundation.test.tsx` | 8 | 8 pass / 0 fail |
+| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
+| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 8 pass / 3 fail |
+| `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 
 ---
 
@@ -343,3 +345,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 5〜8節Green・9〜13節は未移行（直前HEAD `78439d5`）。248 pass / 0 fail、39ファイル、9,435 expect。ビルド未実行。
 - 2026-10-12: 9〜13節・手順カード・参考文献Red・7件の期待どおりの失敗（直前HEAD `76e6ebd`）。248 pass / 7 fail、40ファイル、9,442 expect。ビルド未実行。
 - 2026-10-12: 全13節・手順・参考文献・フッターGreen・検索と統合は未完了（直前HEAD `d738d40`）。255 pass / 0 fail、40ファイル、9,529 expect。ビルド未実行。
+- 2026-10-12: 統合Red・検索/ナビ/索引8件失敗・11表hydrationと4図構文は成功（直前HEAD `37f1d7a`）。266 pass / 8 fail、42ファイル、10,510 expect。ビルド未実行。
