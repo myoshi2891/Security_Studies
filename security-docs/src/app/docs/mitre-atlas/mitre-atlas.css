@@ -330,7 +330,7 @@
 .atlas-guide.atlas-guide section { scroll-margin-top: calc(var(--docs-header-height, 4rem) + 1rem); }
 .atlas-guide.atlas-guide ul { list-style-type: disc; padding-left: 40px; margin: 1em 0; }
 .atlas-guide.atlas-guide ol { list-style-type: decimal; padding-left: 40px; margin: 1em 0; }
-.atlas-guide.atlas-guide li { display: list-item; }
+.atlas-guide.atlas-guide li { display: list-item; margin: 0; }
 .atlas-guide.atlas-guide ul.ref-list { list-style-type: none; padding: 0; margin: 16px 0; }
 .atlas-guide.atlas-guide .atlas-table-scroll { max-width: 100%; overflow-x: auto; }
 .atlas-guide.atlas-guide .step-card .body { min-width: 0; }
