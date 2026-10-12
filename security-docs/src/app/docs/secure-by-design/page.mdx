@@ -2579,6 +2579,2243 @@ import './secure-by-design.css';
 </E.div>
 </E.section>
 
+<E.section className={"section"} id={"sec-10"}>
+<E.h2>
+{"10. Step 9 ── クラウド的思考がもたらすセキュリティ上の利点"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第10章 \"Benefits of cloud thinking\" に相当)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"10.1 ポイント"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第10章の趣旨は、"}
+<E.strong>
+{"クラウドネイティブ/12ファクターアプリの設計パターンが、副次的にセキュリティ上の利点をもたらす"}
+</E.strong>
+{" という点です。著者の一人 Daniel Sawano 氏の公開講演スライドでも、"}
+<E.strong>
+{"クラウドで動かしていなくても(オンプレミスでも)同じ利点が得られる"}
+</E.strong>
+{" と説明されています。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"10.2 12ファクターの要素と、セキュリティ上の利点"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"12ファクターの要素"}
+</E.th>
+<E.th>
+{"内容"}
+</E.th>
+<E.th>
+{"セキュリティ上の利点(要旨)"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"Config"}
+</E.td>
+<E.td>
+{"設定は環境に置く"}
+</E.td>
+<E.td>
+{"秘密情報や設定をコードから分離し、差し替え・ローテーションしやすい"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Backing services"}
+</E.td>
+<E.td>
+{"DB やキューなどを "}
+<E.strong>
+{"付け替え可能な資源"}
+</E.strong>
+{" として扱う"}
+</E.td>
+<E.td>
+{"結合が緩く、侵害や障害の際に切り離しやすい"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Processes"}
+</E.td>
+<E.td>
+{"アプリは1つ以上の "}
+<E.strong>
+{"ステートレスなプロセス"}
+</E.strong>
+{" として実行"}
+</E.td>
+<E.td>
+{"可用性と完全性の向上(Sawano 氏のスライドで言及)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Logs"}
+</E.td>
+<E.td>
+{"ログは "}
+<E.strong>
+{"イベントストリーム"}
+</E.strong>
+{" として扱う"}
+</E.td>
+<E.td>
+{"ログの集中管理・監視がしやすい(追跡可能性につながる)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Admin processes"}
+</E.td>
+<E.td>
+{"管理作業は使い捨てのプロセスで実行"}
+</E.td>
+<E.td>
+{"常駐する特権経路を減らせる"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"10.3 3つの R: Rotate / Repave / Repair"}
+</E.h3>
+{"\n"}
+<E.p>
+{"Matt Raible 氏の書評では、書籍の内容として "}
+<E.strong>
+{"企業セキュリティの3つのR"}
+</E.strong>
+{" が紹介されています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"R"}
+</E.th>
+<E.th>
+{"内容"}
+</E.th>
+<E.th>
+{"目安(書評の記載)"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"Rotate(ローテーション)"}
+</E.td>
+<E.td>
+{"秘密情報を頻繁に入れ替える"}
+</E.td>
+<E.td>
+{"数分〜数時間ごと"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Repave(再構築)"}
+</E.td>
+<E.td>
+{"サーバーやアプリを頻繁に作り直す"}
+</E.td>
+<E.td>
+{"数時間ごと"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Repair(修復)"}
+</E.td>
+<E.td>
+{"脆弱なソフトウェアを速やかに直す"}
+</E.td>
+<E.td>
+{"パッチ提供から数時間以内"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<MermaidFigure id="d12" source={diagrams["d12"]} />
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"「数時間」といった頻度は理想的な目標像です。自組織で実現可能な水準から段階的に近づけるのが現実的です。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-11"}>
+<E.h2>
+{"11. Step 10 ── レガシーコードとマイクロサービスへの適用"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第12章 \"Guidance in legacy code\"、第13章 \"Guidance on microservices\"、第14章 \"A final word\" に相当)"}
+</E.p>
+{"\n"}
+<E.div className={"callout warn"}>
+<TriangleAlert className={"ti ti-alert-triangle"} aria-hidden="true" />
+<E.p>
+{"この章は、私が確認できた "}
+<E.strong>
+{"目次・書評レベルの情報"}
+</E.strong>
+{" と、"}
+<E.strong>
+{"筆者の一般的な整理"}
+</E.strong>
+{" を分けて記載します。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"11.1 確認できた内容"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"章"}
+</E.th>
+<E.th>
+{"書評・目次で確認できた内容"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"第12章 レガシー"}
+</E.td>
+<E.td>
+{"ドメインプリミティブをレガシーコードに導入する "}
+<E.strong>
+{"複数の選択肢"}
+</E.strong>
+{" が示される(Raible 氏の書評)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"第13章 マイクロサービス"}
+</E.td>
+<E.td>
+{"ログが機密データを漏らし得ること、ログが "}
+<E.strong>
+{"後から二次的な攻撃に使われ得る"}
+</E.strong>
+{" ことが興味深い論点として挙げられている(同書評)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"第14章 最後に"}
+</E.td>
+<E.td>
+{"コードレビューでのセキュリティの観点、ペネトレーションテストで設計に挑戦する、セキュリティをインスピレーションの源にする、といったガイドライン(同書評)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"第11章 中間章"}
+</E.td>
+<E.td>
+{"「保険を無料で手に入れる」という趣旨のタイトルの読み物章(タイトルからの理解)"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"11.2 筆者の一般的な整理: レガシーへの現実的な進め方"}
+</E.h3>
+{"\n"}
+<MermaidFigure id="d13" source={diagrams["d13"]} />
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"ステップ"}
+</E.th>
+<E.th>
+{"内容"}
+</E.th>
+<E.th>
+{"狙い"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"外部入力・外部連携の入口を洗い出す"}
+</E.td>
+<E.td>
+{"優先順位をつける"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"入口で素の型→ドメインプリミティブへ変換"}
+</E.td>
+<E.td>
+{"以降のコードが検証済みを前提にできる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"引数の取り違えが起きやすい長い引数リストから型を導入"}
+</E.td>
+<E.td>
+{"事故が起きやすい箇所から減らす"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"既存の挙動を守るテストを追加してから置き換え"}
+</E.td>
+<E.td>
+{"回帰を防ぐ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"ログ・例外メッセージの機密漏えいを点検"}
+</E.td>
+<E.td>
+{"機密性の確保"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"11.3 筆者の一般的な整理: マイクロサービスでの視点"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"観点"}
+</E.th>
+<E.th>
+{"設計上の考え方"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"サービス間の入力"}
+</E.td>
+<E.td>
+{"他サービスからの入力も "}
+<E.strong>
+{"信頼せず"}
+</E.strong>
+{"、入口でドメインプリミティブに変換"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"公開API"}
+</E.td>
+<E.td>
+{"内部ドメインを露出させず、DTO で境界を作る(Step 5 の 6.6)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"可用性"}
+</E.td>
+<E.td>
+{"タイムアウト・サーキットブレーカーで連鎖障害を防ぐ(Step 8)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ログ"}
+</E.td>
+<E.td>
+{"機密データを出さない。ログ基盤自体も攻撃対象になり得ると考える"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"秘密情報"}
+</E.td>
+<E.td>
+{"設定を環境に置き、頻繁にローテーションする(Step 9)"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"Matt Raible 氏は、本書の Java によるドメインプリミティブ例を気に入り、自身の「マイクロサービスアーキテクチャのセキュリティパターン」の記事で最初のパターン「Secure by Design であること」の説明に使ったと述べています。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-12"}>
+<E.h2>
+{"12. Step 11 ── 政府機関の Secure by Design と、業界の流れ"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"ここからは「②組織としての Secure by Design」です。書籍の技法が、"}
+<E.strong>
+{"製品を作る組織の方針"}
+</E.strong>
+{" とどう結びつくかを見ます。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"12.1 3つの原則(CISA と国際パートナーの共同ガイダンス)"}
+</E.h3>
+{"\n"}
+<E.p>
+{"CISA と各国のサイバーセキュリティ機関が共同で公表したガイダンス『Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software』は、2023年4月に最初の版が公表され、同年10月に拡充版が出ました。3つの原則は次のとおりです。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"原則"}
+</E.th>
+<E.th>
+{"平易な説明"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"① 顧客のセキュリティ成果に責任を持つ"}
+</E.td>
+<E.td>
+{"「安全に使うのは顧客の責任」にせず、デフォルトで安全な製品にする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"② 徹底した透明性と説明責任を受け入れる"}
+</E.td>
+<E.td>
+{"脆弱性情報の開示など、情報を公開して顧客と防御側を助ける"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"③ トップから主導する"}
+</E.td>
+<E.td>
+{"経営層がセキュリティを製品設計の最優先事項として推進する"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.p>
+{"拡充版では、日本の NISC と JPCERT/CC を含む多数の国際機関が共同署名しています。また、一部の Secure by Design の実践には AI 特有の考慮が必要になる場合があるものの、"}
+<E.strong>
+{"3つの原則は AI システムにも当てはまる"}
+</E.strong>
+{" とされています。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"12.2 CISA の Secure by Design 誓約(Pledge)の7つのゴール"}
+</E.h3>
+{"\n"}
+<E.p>
+{"2024年5月に公表された自主的な誓約です。対象は主に "}
+<E.strong>
+{"企業向けソフトウェア"}
+</E.strong>
+{"(オンプレミス、クラウド、SaaS)で、署名企業は署名から1年以内に、各ゴールで測定可能な進捗を示すことに誠意をもって取り組みます。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"#"}
+</E.th>
+<E.th>
+{"ゴール"}
+</E.th>
+<E.th>
+{"要点"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"多要素認証(MFA)"}
+</E.td>
+<E.td>
+{"製品全体でMFAの利用を測定可能な形で増やす"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"デフォルトパスワード"}
+</E.td>
+<E.td>
+{"共通の初期パスワードを使わない、減らす"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"脆弱性の "}
+<E.strong>
+{"クラス全体"}
+</E.strong>
+{" を減らす"}
+</E.td>
+<E.td>
+{"個別修正ではなく、SQLi・XSS・メモリ安全性などの種類ごと減らす"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"セキュリティパッチ"}
+</E.td>
+<E.td>
+{"顧客によるパッチ適用が増えるようにする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"脆弱性開示ポリシー(VDP)"}
+</E.td>
+<E.td>
+{"善意のテストを認め、報告窓口と公開方針を整える"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"6"}
+</E.td>
+<E.td>
+{"CVE"}
+</E.td>
+<E.td>
+{"正確な CWE・CPE 情報を含め、透明性を高める"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"7"}
+</E.td>
+<E.td>
+{"侵入の証拠"}
+</E.td>
+<E.td>
+{"顧客が侵入の証拠を収集できる能力を高める"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.p>
+<E.strong>
+{"書籍との接点(ゴール3)"}
+</E.strong>
+{": CISA の誓約ページは、ゴール3の達成アプローチとして "}
+<E.strong>
+{"「特定の種類の脆弱性を作り込めない(または作り込みにくい)安全な関数やライブラリの部品を開発者に提供する」"}
+</E.strong>
+{" ことを挙げています。これは本書の "}
+<E.strong>
+{"ドメインプリミティブ"}
+</E.strong>
+{" や Google の "}
+<E.strong>
+{"Safe Coding"}
+</E.strong>
+{" と同じ発想です。"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d14" source={diagrams["d14"]} />
+{"\n"}
+<E.h3>
+{"12.3 状況メモ(2026年10月8日時点で確認できた範囲)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"項目"}
+</E.th>
+<E.th>
+{"確認できた内容"}
+</E.th>
+<E.th>
+{"注意点"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"署名企業数"}
+</E.td>
+<E.td>
+{"誓約開始時は68社。第三者の解説記事(2026年5月)は300社超と報告。CISA の署名者一覧ページには385社と表示されていた"}
+</E.td>
+<E.td>
+{"時点によって数字が異なる。最新は CISA の公式一覧で確認すること"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"誓約の性質"}
+</E.td>
+<E.td>
+{"自主的で、法的拘束力はない。報告されている内容は自己申告ベース"}
+</E.td>
+<E.td>
+{"署名=製品が安全という保証ではない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"近年の動き"}
+</E.td>
+<E.td>
+{"CISA・FBI は「Product Security Bad Practices」ガイダンスで、メモリ安全でない言語で書かれた既存製品について "}
+<E.strong>
+{"2026年1月1日まで(2025年末)にメモリ安全性ロードマップを公開する"}
+</E.strong>
+{" よう推奨していた。この期限は情報基準日の時点で "}
+<E.strong>
+{"すでに経過している"}
+</E.strong>
+</E.td>
+<E.td>
+{"期限経過後に各社がロードマップを公開したか、CISA が新たな期限を示したかは一次情報で確認できていない。"}
+<E.strong>
+{"過去の推奨事項"}
+</E.strong>
+{" として扱い、現状は CISA の公式情報で確認すること"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"体制面"}
+</E.td>
+<E.td>
+{"報道によれば、2025年4月に主要な推進者が CISA を離れ、Secure by Design の取り組みは一時的に目立たなくなったと伝えられた"}
+</E.td>
+<E.td>
+{"報道ベース。組織の動向は変わり得る"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"実務上の含意: "}
+<E.strong>
+{"政府の旗振りの強弱にかかわらず、設計で脆弱性を減らすという技術的な価値は変わりません。"}
+</E.strong>
+{" 本書の技法は、制度の動向に依存せず使えます。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"12.4 IEEE Center for Secure Design の「設計上の欠陥トップ10」"}
+</E.h3>
+{"\n"}
+<E.p>
+{"Google の Christoph Kern 氏が創設メンバーの一人として関わった IEEE Computer Society の Center for Secure Design は、2014年に報告書『Avoiding the Top 10 Software Security Design Flaws』を公表しました。"}
+<E.strong>
+{"実装上のバグ(bugs)ではなく、設計上の欠陥(flaws)に焦点を移す"}
+</E.strong>
+{" ことを目的としています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"#"}
+</E.th>
+<E.th>
+{"推奨事項(要旨)"}
+</E.th>
+<E.th>
+{"本書との関連"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"信頼は与えるか獲得するもの。決して "}
+<E.strong>
+{"仮定しない"}
+</E.strong>
+</E.td>
+<E.td>
+{"外部入力・他サービスを信頼せず、入口で検証"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"迂回・改ざんできない認証メカニズムを使う"}
+</E.td>
+<E.td>
+{"認証はセキュリティ機能(関心事の一部)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"認証してから認可する"}
+</E.td>
+<E.td>
+{"アクセス制御の設計"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"データと制御命令を厳密に分離する"}
+</E.td>
+<E.td>
+{"インジェクション対策(Billion Laughs や SQLi の根本原因)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"全てのデータを "}
+<E.strong>
+{"明示的に検証"}
+</E.strong>
+{" する方針を定める"}
+</E.td>
+<E.td>
+{"バリデーション、ドメインプリミティブ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"6"}
+</E.td>
+<E.td>
+{"暗号を正しく使う"}
+</E.td>
+<E.td>
+{"暗号は自作せず、実績あるライブラリを使う"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"7"}
+</E.td>
+<E.td>
+{"機密データを識別し、取り扱い方を決める"}
+</E.td>
+<E.td>
+{"機密性、リードワンスオブジェクト、ログ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"8"}
+</E.td>
+<E.td>
+{"常に利用者を考慮する"}
+</E.td>
+<E.td>
+{"使いやすさと安全性の両立"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"9"}
+</E.td>
+<E.td>
+{"外部コンポーネントの統合が攻撃面をどう変えるか理解する"}
+</E.td>
+<E.td>
+{"依存関係・サプライチェーン"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"10"}
+</E.td>
+<E.td>
+{"将来の変更に柔軟に対応できるようにする"}
+</E.td>
+<E.td>
+{"設計の進化可能性"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"上の10項目のうち、検索で直接確認できたのは #1・#3・#4 の見出しです。他の項目は同報告書の公開目次に基づく私の記憶による整理です。"}
+<E.strong>
+{"正確な文言は報告書の原文で確認してください。"}
+</E.strong>
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-13"}>
+<E.h2>
+{"13. Step 12 ── 実践: チェックリスト・演習・理解度確認"}
+</E.h2>
+<E.div className={"prose"}>
+<E.h3>
+{"13.1 設計レビュー用チェックリスト"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"#"}
+</E.th>
+<E.th>
+{"チェック項目"}
+</E.th>
+<E.th>
+{"該当する書籍の概念"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"業務概念を "}
+<E.code>
+{"String"}
+</E.code>
+{"/"}
+<E.code>
+{"int"}
+</E.code>
+{" のまま使っていない?"}
+</E.td>
+<E.td>
+{"ドメインプリミティブ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"生成された時点で有効なオブジェクトだけが存在する?"}
+</E.td>
+<E.td>
+{"不変条件・生成時検証"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"検証は「出所 → サイズ → 字句 → 構文 → 意味」の順?"}
+</E.td>
+<E.td>
+{"バリデーション"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"検証の前にデータを「修復」していない?"}
+</E.td>
+<E.td>
+{"不正データの扱い"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"値は不変? 内部コレクションを直接公開していない?"}
+</E.td>
+<E.td>
+{"不変性"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"6"}
+</E.td>
+<E.td>
+{"不正な状態遷移を拒否している?"}
+</E.td>
+<E.td>
+{"フェイルファスト・状態管理"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"7"}
+</E.td>
+<E.td>
+{"例外やログに機密情報・内部情報が出ていない?"}
+</E.td>
+<E.td>
+{"例外ペイロード・機密性"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"8"}
+</E.td>
+<E.td>
+{"外部呼び出しにタイムアウトとサーキットブレーカーがある?"}
+</E.td>
+<E.td>
+{"可用性・レジリエンス"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"9"}
+</E.td>
+<E.td>
+{"セキュリティ観点のテスト(通常/境界/不正/極端)が自動実行される?"}
+</E.td>
+<E.td>
+{"パイプライン"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"10"}
+</E.td>
+<E.td>
+{"秘密情報はコードに埋め込まず、環境から注入・定期的に入れ替えている?"}
+</E.td>
+<E.td>
+{"12ファクター・Rotate"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"11"}
+</E.td>
+<E.td>
+{"公開API用の DTO と内部ドメインを分離している?"}
+</E.td>
+<E.td>
+{"API の堅牢化"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"12"}
+</E.td>
+<E.td>
+{"外部標準の用語の意味を勝手に変えていない?"}
+</E.td>
+<E.td>
+{"コンテキストの境界"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"13.2 ハンズオン演習(初学者向け)"}
+</E.h3>
+{"\n"}
+<E.p>
+<E.strong>
+{"演習1: ドメインプリミティブを作る"}
+</E.strong>
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"課題: 「ユーザー名」を "}
+<E.code>
+{"String"}
+</E.code>
+{" で扱っている小さなコードを見つけ、"}
+<E.code>
+{"Username"}
+</E.code>
+{" 型に置き換える"}
+</E.li>
+{"\n"}
+<E.li>
+{"条件: 3〜20文字、英小文字・数字・アンダースコアのみ、先頭は英字"}
+</E.li>
+{"\n"}
+<E.li>
+{"ゴール: 不正値で生成すると例外になり、有効な "}
+<E.code>
+{"Username"}
+</E.code>
+{" だけが存在する"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.p>
+<E.strong>
+{"演習2: 4観点のテストを書く"}
+</E.strong>
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"課題: 演習1の "}
+<E.code>
+{"Username"}
+</E.code>
+{" に対し、通常・境界・不正入力・極端な入力のテストを書く"}
+</E.li>
+{"\n"}
+<E.li>
+{"ヒント: 2文字/3文字、20文字/21文字、空文字、非常に長い文字列、制御文字、全角文字"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.p>
+<E.strong>
+{"演習3: 例外メッセージの点検"}
+</E.strong>
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"課題: 自分のプロジェクトで "}
+<E.code>
+{"catch"}
+</E.code>
+{" している箇所を3つ選び、利用者に返る文言に内部情報が含まれていないか確認する"}
+</E.li>
+{"\n"}
+<E.li>
+{"ゴール: 外向きは一般的な文言+エラーID、内部ログに詳細"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.p>
+<E.strong>
+{"演習4: 状態遷移図を描く"}
+</E.strong>
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"課題: 身近なエンティティ(申請、予約、チケットなど)の状態遷移を Mermaid の "}
+<E.code>
+{"stateDiagram-v2"}
+</E.code>
+{" で描き、図にない遷移をコードで拒否する"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.h3>
+{"13.3 理解度確認(自己採点)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"#"}
+</E.th>
+<E.th>
+{"問い"}
+</E.th>
+<E.th>
+{"答えの要点"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"セキュリティが「機能」でなく「関心事」とはどういう意味か"}
+</E.td>
+<E.td>
+{"全ての機能・コードに横断的に関わり、ログイン機能を作れば完了、というものではない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"CIA-T の4文字は何か"}
+</E.td>
+<E.td>
+{"機密性・完全性・可用性・追跡可能性"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"ドメインプリミティブが通常の値オブジェクトと違う点は"}
+</E.td>
+<E.td>
+{"不変条件の存在と生成時の強制、素の型や null での表現の禁止"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"なぜ "}
+<E.code>
+{"String"}
+</E.code>
+{" で業務概念を表すと危険か"}
+</E.td>
+<E.td>
+{"何でも入る・取り違えやすい・検証が漏れる・意味が人によって違う"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"検証の前に入力を修復してはいけないのはなぜ"}
+</E.td>
+<E.td>
+{"修復結果が攻撃者の意図した形になり得るため"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"6"}
+</E.td>
+<E.td>
+{"可用性がセキュリティの話になる理由は"}
+</E.td>
+<E.td>
+{"使えなくすること自体が攻撃になるため(CIA の A)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"7"}
+</E.td>
+<E.td>
+{"サーキットブレーカーの3状態は"}
+</E.td>
+<E.td>
+{"Closed / Open / HalfOpen"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"8"}
+</E.td>
+<E.td>
+{"12ファクターの「ステートレスなプロセス」がもたらす利点は"}
+</E.td>
+<E.td>
+{"可用性・完全性の向上(状態を外部に出し、プロセスを使い捨てにできる)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"9"}
+</E.td>
+<E.td>
+{"CISA の Secure by Design の3原則は"}
+</E.td>
+<E.td>
+{"顧客のセキュリティ成果への責任、徹底した透明性と説明責任、トップからの主導"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"10"}
+</E.td>
+<E.td>
+{"本書の技法と CISA ゴール3の接点は"}
+</E.td>
+<E.td>
+{"安全な部品(型・ライブラリ)で、脆弱性のクラス全体を作り込めなくする"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"13.4 よくある誤解"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"誤解"}
+</E.th>
+<E.th>
+{"実際"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"「Secure by Design なら診断や監視は不要」"}
+</E.td>
+<E.td>
+{"設計は主要な防御だが万能ではない。書籍も他の手法との併用を前提にしている"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"「ドメインプリミティブはバリデーションライブラリの別名」"}
+</E.td>
+<E.td>
+{"検証を "}
+<E.strong>
+{"型の生成時に強制"}
+</E.strong>
+{" し、型の存在を有効性の証明にする設計であり、概念の厳密化がセットになる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"「CISA の誓約に署名した製品は安全」"}
+</E.td>
+<E.td>
+{"誓約は自主的・自己申告ベースで、署名は安全性の保証ではない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"「設計に時間がかかる」"}
+</E.td>
+<E.td>
+{"初期投資は必要だが、検証の重複や再発する脆弱性への対応コストを減らせる(書籍も、日々の習慣として自然に行えると述べる)"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"13.5 今後の学習ロードマップ"}
+</E.h3>
+{"\n"}
+<MermaidFigure id="d15" source={diagrams["d15"]} />
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"関連する学習として "}
+<E.strong>
+{"脅威モデリング"}
+</E.strong>
+{" があります。Secure by Design が「安全な構造を作る」ことに重きを置くのに対し、脅威モデリングは「設計の段階で、どこに脅威があるかを洗い出す」手法で、両者は補完関係にあります。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-14"}>
+<E.h2>
+{"14. 用語集"}
+</E.h2>
+<E.div className={"prose"}>
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"用語"}
+</E.th>
+<E.th>
+{"説明"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"Secure by Design"}
+</E.td>
+<E.td>
+{"設計によってセキュリティを実現する考え方"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Secure by Default"}
+</E.td>
+<E.td>
+{"初期状態(デフォルト)で安全な設定にする考え方"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"CIA-T"}
+</E.td>
+<E.td>
+{"機密性・完全性・可用性・追跡可能性"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"不変条件(invariant)"}
+</E.td>
+<E.td>
+{"常に成り立つべき条件"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ドメインプリミティブ"}
+</E.td>
+<E.td>
+{"存在すること自体が有効性を示す、不変条件付きの値オブジェクト"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"値オブジェクト"}
+</E.td>
+<E.td>
+{"値で同一性が決まる不変の概念"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"エンティティ"}
+</E.td>
+<E.td>
+{"IDで同一性が決まり、状態が変化する概念"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"フェイルファスト"}
+</E.td>
+<E.td>
+{"不正を早期に明確に失敗させる方針"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"リードワンスオブジェクト"}
+</E.td>
+<E.td>
+{"一度だけ読み取れる機密値のためのオブジェクト"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"テイント分析"}
+</E.td>
+<E.td>
+{"信頼できない値の流れを追跡する発想・手法"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"サーキットブレーカー"}
+</E.td>
+<E.td>
+{"失敗が続く呼び出し先を一時的に遮断する仕組み"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"12ファクターアプリ"}
+</E.td>
+<E.td>
+{"クラウド向けアプリの設計原則集"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"IaC"}
+</E.td>
+<E.td>
+{"インフラ構成をコードで管理すること"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Safe Coding"}
+</E.td>
+<E.td>
+{"Google が提唱する、安全性を型・ライブラリ・フレームワークに移す設計実践"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Pledge(誓約)"}
+</E.td>
+<E.td>
+{"CISA の Secure by Design 自主的誓約"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"VDP"}
+</E.td>
+<E.td>
+{"脆弱性開示ポリシー"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-15"}>
+<E.h2>
+{"15. 参考文献・根拠ソース一覧(URL)"}
+</E.h2>
+<E.div className={"prose"}>
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"確認日: 2026年10月8日時点。URL の内容は更新される可能性があります。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"15.1 書籍そのもの(一次情報)"}
+</E.h3>
+{"\n"}
+<E.div className={"ref-list"}>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"1"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"公式商品ページ"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"Manning『Secure by Design』(ISBN 9781617294358、2019年9月、400ページ。日本語・ロシア語・簡体中国語版あり)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.manning.com/books/secure-by-design"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.manning.com/books/secure-by-design"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"2"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第1章 Why design matters for security"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"3"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第4章 Code constructs promoting security"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-4"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-4"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"4"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第5章 Domain primitives"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-5"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-5"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"5"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第6章 Ensuring integrity of state"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-6"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-6"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"6"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第7章 Reducing complexity of state"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-7"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-7"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"7"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第8章 Leveraging your delivery pipeline for security"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-8"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-8"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"8"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"目次(liveBook)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第9章 Handling failures securely"}
+</E.p>
+<E.a className={"ref-url"} href={"https://livebook.manning.com/book/secure-by-design/chapter-9"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://livebook.manning.com/book/secure-by-design/chapter-9"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"9"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"著者の無料記事"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"Domain primitives: what they are and how you can use them to make more secure software"}
+</E.p>
+<E.a className={"ref-url"} href={"https://freecontent.manning.com/domain-primitives-what-they-are-and-how-you-can-use-them-to-make-more-secure-software/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://freecontent.manning.com/domain-primitives-what-they-are-and-how-you-can-use-them-to-make-more-secure-software/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"10"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"書誌・目次"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"O'Reilly Learning 上の書誌・目次"}
+</E.p>
+<E.a className={"ref-url"} href={"https://oreilly.com/library/view/secure-by-design/9781617294358"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://oreilly.com/library/view/secure-by-design/9781617294358"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+</E.div>
+{"\n"}
+<E.h3>
+{"15.2 著名な開発者・実務者の発信"}
+</E.h3>
+{"\n"}
+<E.div className={"ref-list"}>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"11"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Matt Raible(Java Champion)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"本書の章ごとの書評(2020年5月)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://raibledesigns.com/rd/entry/secure_by_design_book_review"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://raibledesigns.com/rd/entry/secure_by_design_book_review"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"12"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Matt Raible"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"「11 Patterns to Secure Microservice Architectures」(最初のパターンが Be Secure by Design)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://dzone.com/articles/11-patterns-to-secure-microservice-architectures"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://dzone.com/articles/11-patterns-to-secure-microservice-architectures"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"13"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Matt Raible"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"同テーマの講演スライド(Speaker Deck)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://speakerdeck.com/mraible/security-patterns-for-microservice-architectures-london-java-community-2020"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://speakerdeck.com/mraible/security-patterns-for-microservice-architectures-london-java-community-2020"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"14"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Daniel Sawano(著者)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"講演「Creating secure software - benefits from cloud thinking」スライド"}
+</E.p>
+<E.a className={"ref-url"} href={"https://noti.st/sawano/CRZBTX/creating-secure-software-benefits-from-cloud-thinking"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://noti.st/sawano/CRZBTX/creating-secure-software-benefits-from-cloud-thinking"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"15"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Christoph Kern(Google)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"USENIX Security での講演「Preventing Security Bugs through Software Design」"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.usenix.org/conference/usenixsecurity15/symposium-program/presentation/kern"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.usenix.org/conference/usenixsecurity15/symposium-program/presentation/kern"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"16"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Christoph Kern(Google)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"論文「Safe Coding: Rigorous Modular Reasoning about Software Safety」(Queue 23(5)、2025)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://research.google/pubs/safe-coding-rigorous-modular-reasoning-about-software-safety/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://research.google/pubs/safe-coding-rigorous-modular-reasoning-about-software-safety/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"17"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Christoph Kern"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"OpenSSF ポッドキャスト #2"}
+</E.p>
+<E.a className={"ref-url"} href={"https://openssf.org/podcast/2024/04/23/whats-in-the-soss-podcast-2-christoph-kern-and-the-challenge-of-keeping-google-secure/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://openssf.org/podcast/2024/04/23/whats-in-the-soss-podcast-2-christoph-kern-and-the-challenge-of-keeping-google-secure/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"18"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"IEEE Center for Secure Design"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"報告書「Avoiding the Top 10 Software Security Design Flaws」(2014)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.spinellis.gr/pubs/tr/2014-CSD-Flaws/html/CSD-avoid-top10-flaws.html"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.spinellis.gr/pubs/tr/2014-CSD-Flaws/html/CSD-avoid-top10-flaws.html"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"19"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"IEEE Cybersecurity"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"第1項目「Earn or Give, but Never Assume, Trust」解説"}
+</E.p>
+<E.a className={"ref-url"} href={"https://cybersecurity.ieee.org/blog/2015/11/13/avoiding-the-top-10-software-security-design-flaws-earn-or-give-but-never-assume-trust/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://cybersecurity.ieee.org/blog/2015/11/13/avoiding-the-top-10-software-security-design-flaws-earn-or-give-but-never-assume-trust/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"20"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"12factor.net"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"The Twelve-Factor App"}
+</E.p>
+<E.a className={"ref-url"} href={"https://12factor.net/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://12factor.net/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+</E.div>
+{"\n"}
+<E.h3>
+{"15.3 政府機関・公的機関(組織としての Secure by Design)"}
+</E.h3>
+{"\n"}
+<E.div className={"ref-list"}>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"21"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"Secure by Design トップページ"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.cisa.gov/securebydesign"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.cisa.gov/securebydesign"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"22"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"Secure by Design 誓約(ゴールと達成アプローチ)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.cisa.gov/securebydesign/pledge"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.cisa.gov/securebydesign/pledge"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"23"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"誓約署名者一覧"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"24"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"誓約への初期コミットメント発表(68社、7ゴール)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://cisa.gov/news-events/news/cisa-announces-secure-design-commitments-leading-technology-providers"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://cisa.gov/news-events/news/cisa-announces-secure-design-commitments-leading-technology-providers"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"25"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA ほか"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"共同ガイダンス Shifting the Balance of Cybersecurity Risk(概要)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://cisa.gov/resources-tools/resources/secure-by-design-and-default"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://cisa.gov/resources-tools/resources/secure-by-design-and-default"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"26"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA・FBI"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"Product Security Bad Practices(メモリ安全性ロードマップの公開期限を含む)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.cisa.gov/resources-tools/resources/product-security-bad-practices"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.cisa.gov/resources-tools/resources/product-security-bad-practices"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"27"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"CISA ほか"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"2023年10月の拡充版の公表アラート(共同署名機関一覧)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://cisa.gov/news-events/alerts/2023/10/16/cisa-nsa-fbi-and-international-partners-release-updated-secure-design-guidance"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://cisa.gov/news-events/alerts/2023/10/16/cisa-nsa-fbi-and-international-partners-release-updated-secure-design-guidance"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"28"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"ニュージーランド NCSC"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"共同ガイダンスの解説ページ"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.ncsc.govt.nz/protect-your-organisation/principles-and-approaches-for-secure-by-design-software/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.ncsc.govt.nz/protect-your-organisation/principles-and-approaches-for-secure-by-design-software/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+</E.div>
+{"\n"}
+<E.h3>
+{"15.4 二次情報(最新動向の補助。一次情報での確認を推奨)"}
+</E.h3>
+{"\n"}
+<E.div className={"ref-list"}>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"29"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Industrial Cyber"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"拡充版ガイダンス(AI への言及を含む)の報道"}
+</E.p>
+<E.a className={"ref-url"} href={"https://industrialcyber.co/cisa/global-security-agencies-update-secure-by-design-principles-and-guidance-for-technology-providers/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://industrialcyber.co/cisa/global-security-agencies-update-secure-by-design-principles-and-guidance-for-technology-providers/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"30"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Safeguard(解説記事)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"CISA 誓約の解説(300社超、自己申告・非検証という指摘、2026年5月)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://safeguard.sh/resources/blog/cisas-secure-by-design-pledge-explained"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://safeguard.sh/resources/blog/cisas-secure-by-design-pledge-explained"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"31"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Safeguard(解説記事)"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"誓約の2026年アップデート解説(2026年4月)"}
+</E.p>
+<E.a className={"ref-url"} href={"https://safeguard.sh/resources/blog/cisa-secure-by-design-pledge-update-2026"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://safeguard.sh/resources/blog/cisa-secure-by-design-pledge-update-2026"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+<E.div className={"ref-card"}>
+<E.span className={"ref-badge"}>
+{"32"}
+</E.span>
+<E.div className={"ref-body"}>
+<E.span className={"ref-tag"}>
+{"Cybersecurity Dive"}
+</E.span>
+<E.p className={"ref-desc"}>
+{"主要推進者の退任後に取り組みが目立たなくなったとの報道"}
+</E.p>
+<E.a className={"ref-url"} href={"https://www.cybersecuritydive.com/news/surveillance-camera-axis-signs-cisa-security-pledge/806907/"} target={"_blank"} rel={"noopener noreferrer"}>
+<ExternalLink className={"ti ti-external-link"} aria-hidden="true" />
+<E.span>
+{"https://www.cybersecuritydive.com/news/surveillance-camera-axis-signs-cisa-security-pledge/806907/"}
+</E.span>
+</E.a>
+</E.div>
+</E.div>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-16"}>
+<E.h2>
+{"16. 最後に"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"Secure by Design の核心は、"}
+<E.strong>
+{"「開発者が毎回セキュリティを思い出さなくても、普通に作れば安全になる土台を設計で用意する」"}
+</E.strong>
+{" ことです。"}
+</E.p>
+{"\n"}
+<E.ol>
+{"\n"}
+<E.li>
+{"まずは "}
+<E.strong>
+{"小さな1つの概念(例: 数量、ユーザー名)をドメインプリミティブにする"}
+</E.strong>
+</E.li>
+{"\n"}
+<E.li>
+{"その "}
+<E.strong>
+{"境界値テスト"}
+</E.strong>
+{" を書く"}
+</E.li>
+{"\n"}
+<E.li>
+{"例外メッセージの "}
+<E.strong>
+{"情報漏えい"}
+</E.strong>
+{" を点検する"}
+</E.li>
+{"\n"}
+</E.ol>
+{"\n"}
+<E.p>
+{"この3つだけでも、設計がセキュリティを支えるという感覚をつかめます。そこから、状態管理、パイプライン、可用性、クラウド的設計へと広げていってください。"}
+</E.p>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"本ガイドは学習用の整理です。実際のシステムに適用する際は、書籍本文、使用言語・フレームワークの公式ドキュメント、自組織のセキュリティ要件を必ず確認してください。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.footer className={"footer"}>
+{"\n    "}
+<E.p>
+{"Secure by Design 入門ガイド(情報の基準日: 2026年10月8日)"}
+</E.p>
+{"\n    "}
+<E.p>
+{"書籍の内容は目次・公式紹介・著者の公開記事・書評などをもとに自分の言葉で再構成したものです。詳細は書籍本文と各ソースの原文を確認してください。"}
+</E.p>
+{"\n  "}
+</E.footer>
+
 </E.div>
 
 </E.div>
