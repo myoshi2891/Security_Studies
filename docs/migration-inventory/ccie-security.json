@@ -1,5 +1,5 @@
 {
-  "source": "Ccie-security-guide.html",
+  "source": "archive/html/Ccie-security-guide.html",
   "sha256": "807782fea60dfd5e0707868448e25809a932ceea36c205d7289264f13825c26b",
   "counts": {
     "chapters": 13,
@@ -76,9 +76,11 @@
     59,
     60
   ],
-  "status": "Implemented with header navigation, original left sidebar and full-width content; 186 tests passed (6,304 expects), lint/type checks passed; 85 tables checked for hydration warnings; bun run build succeeded; user visual review pending",
+  "status": "Implemented and HTML/MD originals archived byte-for-byte; npm test: 291 pass / 0 fail across 46 files, 12618 assertions; npm lint/type checks passed; no build executed this session; user visual review pending",
   "route": "/docs/ccie-security",
   "category": "Security Certifications",
   "implementationCommit": "ba26742",
-  "updated": "2026-10-11"
+  "updated": "2026-10-13",
+  "markdownSource": "archive/md/Ccie-security-guide.md",
+  "markdownSha256": "dc0930effc4e32cd8af34b2d439b37949f9fd35a1d25e70e42f177886d6d8036"
 }
