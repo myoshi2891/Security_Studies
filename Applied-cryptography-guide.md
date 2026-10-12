@@ -380,7 +380,7 @@ Latacora（2018）は、新規設計では Curve25519 系（X25519、Ed25519）�
 
 ### 7.1 乱数は全ての出発点
 
-鍵、nonce、ソルトは全て乱数から作られます。乱数が予測できると、どんなに強いアルゴリズムでも意味を失います。書籍 Ch.16〜17 では擬似乱数生成器が詳しく扱われています [S3]。
+鍵とソルトは暗号論的乱数で生成します。nonce は方式の要件に従い、同じ鍵で再利用しないよう一意に管理します（4.3 節のとおり、カウンタ管理やライブラリ任せ、長い nonce ならランダム生成など）。乱数が予測できると、どんなに強いアルゴリズムでも意味を失います。書籍 Ch.16〜17 では擬似乱数生成器が詳しく扱われています [S3]。
 
 | やるべきこと | 具体例（Python） |
 |--------------|-------------------|
@@ -531,10 +531,12 @@ def split(secret: int, k: int, n: int):
 
     return [(x, f(x)) for x in range(1, n + 1)]
 
-def combine(shares):
-    """ラグランジュ補間で x=0 の値を求める"""
-    if not shares:
-        raise ValueError("shares が空のため復元できない")
+def combine(shares, k: int):
+    """k 個以上の share からラグランジュ補間で x=0 の値を求める"""
+    if k < 1:
+        raise ValueError("k は 1 以上でなければならない")
+    if len(shares) < k:
+        raise ValueError("shares が k 個未満のため復元できない")
     s = 0
     for i, (xi, yi) in enumerate(shares):
         num = den = 1
@@ -546,8 +548,8 @@ def combine(shares):
     return s
 
 shares = split(123456789, k=3, n=5)
-assert combine(shares[:3]) == 123456789      # 任意の3個で復元できる
-assert combine(shares[2:5]) == 123456789
+assert combine(shares[:3], k=3) == 123456789      # 任意の3個で復元できる
+assert combine(shares[2:5], k=3) == 123456789
 ```
 
 ---
