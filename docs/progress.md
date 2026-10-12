@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 承認済み復旧完了・ヒーローと1〜4節Green・lintと型検査成功）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 5〜8節Red・4件の期待どおりの失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **244件** | `npm test`: 244 pass / 0 fail、38ファイル、9,361 expect（承認済み復旧完了・ヒーローと1〜4節Green・lintと型検査成功） |
-| テストファイル数 | **38ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **248件** | `npm test`: 244 pass / 4 fail、39ファイル、9,365 expect（5〜8節Red・4件の期待どおりの失敗） |
+| テストファイル数 | **39ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -60,6 +60,7 @@
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/mitre-atlas/foundation.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
+| `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 0 pass / 4 fail |
 
 ---
 
@@ -337,3 +338,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 復旧承認（2026-10-12）: ユーザーの「対応して」により履歴を残して復旧。`9c42449` は4件失敗中に作成され、`dddf9c4` のGreen記録は誤り。失敗原因はSVGライブラリの追加クラスを原本クラス全体と比較したこと。元のti装飾クラスは保持し、追加lucideクラスのみ許容する比較へ訂正する。
 - 2026-10-12: 復旧開始・本文前半4件失敗の状態へ記録訂正（直前HEAD `0170b4c`）。240 pass / 4 fail、38ファイル、9,359 expect。ビルド未実行。
 - 2026-10-12: 承認済み復旧完了・ヒーローと1〜4節Green・lintと型検査成功（直前HEAD `4603722`）。244 pass / 0 fail、38ファイル、9,361 expect。ビルド未実行。
+- 2026-10-12: 5〜8節Red・4件の期待どおりの失敗（直前HEAD `5e98624`）。244 pass / 4 fail、39ファイル、9,365 expect。ビルド未実行。
