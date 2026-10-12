@@ -48,6 +48,10 @@ describe('MITRE ATLAS display foundation', () => {
         expect(style('.atlas-guide .ref-list').listStyleType).toBe('none');
         expect(style('.atlas-guide ul:not(.ref-list)').paddingLeft).toBe('40px');
         expect(style('.atlas-guide ol').paddingLeft).toBe('40px');
+        expect(style('.atlas-guide ul:not(.ref-list) li').marginTop).toBe('0px');
+        expect(style('.atlas-guide ul:not(.ref-list) li').marginBottom).toBe('0px');
+        expect(style('.atlas-guide .ref-list li').marginTop).toBe('0px');
+        expect(style('.atlas-guide .ref-list li').marginBottom).toBe('0px');
         expect(style('.sidebar').position).toBe(width > 900 ? 'sticky' : 'fixed');
         expect(style('.sidebar').visibility).toBe(width > 900 ? 'visible' : 'hidden');
       } finally { await isolated.happyDOM.close(); }
