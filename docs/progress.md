@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: 第3章Red・対象7節が未移行として失敗）
+> **最終更新**: 2026-10-13（CCST: 第3章Green・326件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **326件** | `npm test`: 319 pass / 7 fail、51ファイル、13,432 expect（第3章Red・対象7節が未移行として失敗） |
+| テストケース総数 | **326件** | `npm test`: 326 pass / 0 fail、51ファイル、13,618 expect（第3章Green・326件成功・lint/型検査成功） |
 | テストファイル数 | **51ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 10 | 3 pass / 7 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
@@ -77,7 +77,7 @@
 
 | `src/app/docs/ccst-cybersecurity/chapters-01-02.test.tsx` | 11 | 11 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/chapter-03.test.tsx` | 7 | 0 pass / 7 fail |
+| `src/app/docs/ccst-cybersecurity/chapter-03.test.tsx` | 7 | 7 pass / 0 fail |
 
 ---
 
@@ -429,3 +429,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-13: CCST 第1〜2章Green・319件成功・lint/型検査成功。319 pass / 0 fail、50ファイル、13,418 expect。ビルド未実行。
 
 - 2026-10-13: CCST 第3章Red・対象7節が未移行として失敗。319 pass / 7 fail、51ファイル、13,432 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第3章Green・326件成功・lint/型検査成功。326 pass / 0 fail、51ファイル、13,618 expect。ビルド未実行。
