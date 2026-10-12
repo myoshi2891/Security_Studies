@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "最終監査Red・元のアンカースクロールを実viewportへ適用する契約1件失敗",
+  "status": "移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -124,12 +124,19 @@
     "d49"
   ],
   "verification": {
-    "passed": 384,
-    "failed": 1,
+    "passed": 385,
+    "failed": 0,
     "testFiles": 58,
-    "assertions": 25001,
+    "assertions": 25003,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
-    "visualReview": "pending user review"
-  }
+    "visualReview": "pending user review",
+    "lint": "passed",
+    "typeCheck": "passed",
+    "ccstTests": 94,
+    "ccstTestFiles": 12
+  },
+  "implementationCommit": "1169e10",
+  "archiveCommit": "779e602",
+  "reviewChecklist": "docs/migration-inventory/ccst-cybersecurity-review.md"
 }

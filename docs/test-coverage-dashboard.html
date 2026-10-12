@@ -28,7 +28,7 @@
             </div>
         </header>
 
-        <section class="container" aria-label="CCST Cybersecurity migration test status"><p>CCST: 最終監査Red・元のアンカースクロールを実viewportへ適用する契約1件失敗 · 384 pass / 1 fail、58ファイル、25,001 expect · ビルド未実行・目視はユーザー担当</p></section>
+        <section class="container" aria-label="CCST Cybersecurity migration test status"><p>CCST: 移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち · 385 pass / 0 fail、58ファイル、25,003 expect · ビルド未実行・目視はユーザー担当</p></section>
         <!-- SUMMARY -->
         <section class="summary-section">
             <div class="container">
@@ -50,7 +50,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            32 ロジックファイル中 32 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3。MDXテストは別集計）
+                            36 ロジックファイル中 36 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4。MDXテストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -62,7 +62,7 @@
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
                         <div class="summary-value">385</div>
-                        <div class="summary-sub">384 pass / 1 fail、58ファイル、25,001 expect · CCST 最終監査Red・元のアンカースクロールを実viewportへ適用する契約1件失敗</div>
+                        <div class="summary-sub">385 pass / 0 fail、58ファイル、25,003 expect · CCST 移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -336,22 +336,23 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 62 CCIE + 45 Secure by Design + 42 ATLAS tests · 10/12 logic files</span>
+                                            <span class="cell-count">10 layout + 67 CCIE + 48 Secure by Design + 43 ATLAS + 94 CCST tests · 14/16 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 83%"></div>
+                                                <div class="cell-bar-fill" style="width: 88%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 10/12 ロジックファイル</div>
-                                            docs layout、CCIE、Secure by Design、MITRE ATLASの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 14/16 ロジックファイル</div>
+                                            docs layout、CCIE、CCST、Secure by Design、MITRE ATLASの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
-                                                <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの62件で検証）</li>
-                                                <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（45移行・表示テストで検証）</li>
-                                                <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（42移行・表示テストで検証）</li>
+                                                <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
+                                                <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行・表示テストで検証）</li>
+                                                <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（43移行・表示テストで検証）</li>
+                                                <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（94移行・表示・アーカイブテストで検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 62 fidelity / lifecycle tests（Secure by Designは45件、MITRE ATLASは42件、その他MDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは94件、その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -390,15 +391,15 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1 config contract · 1/1 files</span>
+                                            <span class="cell-count">4 page registration contracts · 1/1 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — CCIE・Secure by Design・ATLASナビ契約</div>
+                                            <div class="tt-title">⚠️ Partial — CCIE・CCST・Secure by Design・ATLASナビ契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録（各integration.test.tsx）</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録 + CCSTのCCIE直後登録（各integration.test.tsx）</li>
                                             </ul>
                                         </div>
                                     </div>
