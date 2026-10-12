@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 5〜9節Red・5件の期待どおりの失敗）
+> **最終更新**: 2026-10-12（Secure by Design: 5〜9節Green・10〜16節は未移行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **206件** | `npm test`: 201 pass / 5 fail、33ファイル、6,690 expect（5〜9節Red・5件の期待どおりの失敗） |
+| テストケース総数 | **206件** | `npm test`: 206 pass / 0 fail、33ファイル、6,766 expect（5〜9節Green・10〜16節は未移行） |
 | テストファイル数 | **33ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -285,3 +285,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: ヒーロー・0〜4節Red・6件の期待どおりの失敗（直前HEAD `a5598dd`）。195 pass / 6 fail、32ファイル、6,593 expect。ビルド未実行。
 - 2026-10-12: ヒーロー・0〜4節Green・5〜16節は未移行（直前HEAD `c609180`）。201 pass / 0 fail、32ファイル、6,685 expect。ビルド未実行。
 - 2026-10-12: 5〜9節Red・5件の期待どおりの失敗（直前HEAD `3363ae3`）。201 pass / 5 fail、33ファイル、6,690 expect。ビルド未実行。
+- 2026-10-12: 5〜9節Green・10〜16節は未移行（直前HEAD `3d46938`）。206 pass / 0 fail、33ファイル、6,766 expect。ビルド未実行。
