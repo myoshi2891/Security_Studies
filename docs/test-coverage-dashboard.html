@@ -49,7 +49,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            26 ロジックファイル中 26 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1。MDXテストは別集計）
+                            29 ロジックファイル中 29 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3。MDXテストは別集計）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -257,7 +257,7 @@
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 12×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 13×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -342,20 +342,21 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 56 CCIE tests · 4/6 logic files</span>
+                                            <span class="cell-count">10 layout + 56 CCIE + 44 Secure by Design tests · 7/9 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 67%"></div>
+                                                <div class="cell-bar-fill" style="width: 78%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 4/6 ロジックファイル</div>
-                                            docs layout と CCIE の描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 7/9 ロジックファイル</div>
+                                            docs layout、CCIE、Secure by Designの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの56件で検証）</li>
+                                                <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（44移行テストで検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（他のMDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 56 fidelity / lifecycle tests（Secure by Designは44件、その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -400,9 +401,9 @@
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — CCIEカテゴリー契約</div>
+                                            <div class="tt-title">⚠️ Partial — CCIE・Secure by Designナビ契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持（integration.test.tsx）</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録（各integration.test.tsx）</li>
                                             </ul>
                                         </div>
                                     </div>

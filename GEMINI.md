@@ -1,10 +1,10 @@
 # Security Studies
 
-Updated 2026-10-11
+Updated 2026-10-12
 
 ## Project Overview
 
-This is a Next.js-based documentation application focused on security studies. It uses a custom MDX implementation (via `@next/mdx`) with hand-crafted React components — Fumadocs has been fully removed. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, and PQC (Post-Quantum Cryptography).
+This is a Next.js-based documentation application focused on security studies. It uses a custom MDX implementation (via `@next/mdx`) with hand-crafted React components — Fumadocs has been fully removed. It covers important security topics, including SDLC (Software Development Life Cycle), OWASP, AI Security, AI Coding, Supply Chain Security, PQC (Post-Quantum Cryptography), and Secure by Design.
 
 ### Key Technologies
 
@@ -48,7 +48,7 @@ Commands should be executed within the `security-docs` directory.
 ## Development Conventions
 
 - **Content Authoring:** All new documentation content should be authored in MDX and placed within `security-docs/src/app/docs/<slug>/page.mdx`. Use custom UI components from `src/components/docs/` (e.g. `<HeroSection>`, `<ThreatCard>`, `<DataTable>`). Register any new slug in `src/config/docs.ts`.
-- **Styling:** The project uses Tailwind CSS v4. Utility classes by default. The CCIE migration uses isolated `ccie-security.css` to preserve the source markers and counters.
+- **Styling:** The project uses Tailwind CSS v4. Utility classes by default. The CCIE and Secure by Design migrations use isolated page CSS to preserve the source markers and counters.
 - **Type Safety:** Run `bun run types:check` before committing. `any` is prohibited; use `unknown` + type guards.
 - **Linting:** Run `bun run lint` before committing. Unused variables/args prefixed with `_` are ignored (signature-preservation convention).
 
@@ -74,14 +74,24 @@ All steps execute in the `security-docs/` working directory.
 
 ### CCIE Security migration status
 
-CCIE Security migration (2026-10-10): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 186 pass / 0 fail (30 files, 6,304 expects). `bun run build` succeeded; browser visual review pending with user.
+CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 186 pass / 0 fail (30 files, 6,304 expects). `bun run build` succeeded; browser visual review pending with user.
 
 ### CCIE Security migration details
 
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; all project tests: 186 across 30 files (186 pass / 0 fail, 6,304 expects). Baseline 22 tracked logic files plus MermaidFigure/PythonCode/GuideSidebar/DocsHeaderNav are tracked separately from MDX test files (26/26).
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 230 across 36 files (230 pass / 0 fail, 8,850 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 are tracked separately from MDX test files (29/29).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
 - All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.
+
+## Secure by Design 移行（2026-10-12）
+
+- Route: `/docs/secure-by-design` (`security-docs/src/app/docs/secure-by-design/page.mdx`)。Security Guidesに登録。全13ページをナビと検索アセットへ反映。
+- 元HTMLを正本として17節、77見出し、35表、15図、8 Javaコード例、19注意欄、32参考文献を移行。元HTML・Markdownは保存。
+- 専用CSSとintrinsic要素で共通MDX装飾から分離。点、丸付き番号、カウンター、注意欄、表、コード、参考文献、1024px/600px条件を元CSSと比較。共通ヘッダーの位置補正と対象ページ限定の文書スクロールを追加。
+- ローカルMermaidは図ごとのダーク設定を使用し、他ページのエンジン初期化を変更しない。Javaはサーバー側highlight.js、アイコンはローカルSVG。CDN・元スクリプトは使用しない。
+- 新規44テスト（6ファイル）。プロジェクト全体: **230 pass / 0 fail、36ファイル、8,850 expect**。ロジック単位29/29（従来26 + 本ガイドのGuideSidebar / JavaCode / MermaidFigureの3）。MDX・データ・CSSの移行テストは別集計。
+- `npm test`（内部Bun）、`npm run lint`、`npm run types:check` 成功。検索アセットは `npm exec --call 'bun ./scripts/build-search-index.ts'` で更新。**この移行ではビルド未実行（ユーザー指定で禁止）**。目視確認はユーザー担当・未完了。push・公開未実施。
+- 元資料・許容差分: `docs/migration-inventory/secure-by-design.json`。目視確認表: `docs/migration-inventory/secure-by-design-review.md`。
