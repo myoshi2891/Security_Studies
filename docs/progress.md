@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（CCIE Security: 表のCSSカスケードRed・ホバー背景と上下余白の3件失敗）
+> **最終更新**: 2026-10-12（CCIE Security: 表の比較テスト補正・全280件成功・実ブラウザ85表確認済み・実装は未コミット）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **280件** | `npm test`: 277 pass / 3 fail、43ファイル、10,633 expect（表のCSSカスケードRed・ホバー背景と上下余白の3件失敗） |
+| テストケース総数 | **280件** | `npm test`: 280 pass / 0 fail、43ファイル、12,169 expect（表の比較テスト補正・全280件成功・実ブラウザ85表確認済み・実装は未コミット） |
 | テストファイル数 | **43ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -64,7 +64,7 @@
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/ccie-security/table-cascade.test.tsx` | 3 | 0 pass / 3 fail |
+| `src/app/docs/ccie-security/table-cascade.test.tsx` | 3 | 3 pass / 0 fail |
 
 ---
 
@@ -381,3 +381,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ### 実行履歴
 - 2026-10-12: 表のCSSカスケードRed・ホバー背景と上下余白の3件失敗（直前HEAD `db686d8`）。277 pass / 3 fail、43ファイル、10,633 expect。ビルド未実行。
+- 2026-10-12: 表の比較テスト補正・全280件成功・実ブラウザ85表確認済み・実装は未コミット（直前HEAD `bfa7fd9`）。280 pass / 0 fail、43ファイル、12,169 expect。ビルド未実行。
