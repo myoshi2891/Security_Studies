@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 最終監査Green・230件成功・lintと型検査成功）
+> **最終更新**: 2026-10-12（Secure by Design: 本文全幅Red・共通proseの800px制限を再現）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **230件** | `npm test`: 230 pass / 0 fail、36ファイル、8,850 expect（最終監査Green・230件成功・lintと型検査成功） |
+| テストケース総数 | **231件** | `npm test`: 230 pass / 1 fail、36ファイル、8,852 expect（本文全幅Red・共通proseの800px制限を再現） |
 | テストファイル数 | **36ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -310,3 +310,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 未実施: Next.jsビルド（禁止）、ブラウザ目視（ユーザー担当）、push・公開。
 - 次のアクション: ユーザーが `docs/migration-inventory/secure-by-design-review.md` に沿って目視確認する。
 - 再開プロンプト: 「Secure by Designのユーザー目視結果を確認し、指摘がある場合はnpm・ビルド禁止を維持して失敗テスト→testコミット→修正→Greenコミット→仕様書同期を実施する。元HTML・Markdownは保存する。」
+- 2026-10-12: 本文全幅Red・共通proseの800px制限を再現（直前HEAD `572f97e`）。230 pass / 1 fail、36ファイル、8,852 expect。ビルド未実行。
