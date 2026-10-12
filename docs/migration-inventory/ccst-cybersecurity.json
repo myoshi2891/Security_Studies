@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗",
+  "status": "図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -124,15 +124,20 @@
     "d49"
   ],
   "verification": {
-    "passed": 385,
-    "failed": 2,
+    "passed": 387,
+    "failed": 0,
     "testFiles": 58,
-    "assertions": 25009,
+    "assertions": 25032,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
-    "visualReview": "pending user review"
+    "visualReview": "pending user review",
+    "lint": "passed",
+    "typeCheck": "passed",
+    "ccstTests": 96,
+    "ccstTestFiles": 12
   },
-  "implementationCommit": "1169e10",
+  "implementationCommit": "7c54fac",
   "archiveCommit": "779e602",
-  "reviewChecklist": "docs/migration-inventory/ccst-cybersecurity-review.md"
+  "reviewChecklist": "docs/migration-inventory/ccst-cybersecurity-review.md",
+  "diagramLayout": "Centered block SVG with auto side margins; intrinsic width retained; oversized SVGs scroll from the left origin"
 }

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-13（CCST: 図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗）
+> **最終更新**: 2026-10-13（CCST: 図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **387件** | `npm test`: 385 pass / 2 fail、58ファイル、25,009 expect（図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗） |
+| テストケース総数 | **387件** | `npm test`: 387 pass / 0 fail、58ファイル、25,032 expect（図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功） |
 | テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -41,7 +41,7 @@
 | `src/components/disclaimer-modal.test.tsx` | 9 | 9 pass / 0 fail |
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
-| `src/app/api/search/route.test.ts` | 5 | 3 pass / 2 fail |
+| `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
 | `src/app/docs/layout.test.tsx` | 10 | 10 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
@@ -87,7 +87,7 @@
 
 | `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 14 | 12 pass / 2 fail |
+| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 14 | 14 pass / 0 fail |
 
 | `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 4 | 4 pass / 0 fail |
 
@@ -149,13 +149,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `GEMINI.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `README.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
-| `docs/progress.md` | 2026-10-13 | CCST移行・原本アーカイブ・全385件/58ファイル/25,003 expect・目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `GEMINI.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `README.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `security-docs/README.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
+| `docs/progress.md` | 2026-10-13 | CCST移行・原本アーカイブ・全387件/58ファイル/25,032 expect・図中央寄せと目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -192,7 +192,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、94件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全385件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
+| P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、96件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全387件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
 | P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
 | P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
@@ -479,7 +479,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - ルート `/docs/ccst-cybersecurity`、Security CertificationsのCCIE直後に登録。15件のナビ・静的検索索引へ反映済み。
 - 全46節をHTML正本と比較。元の丸点・番号・階層・カウンター・175アイコン、表・コード・注意枠・質問・参考文献を保持。
-- CCST 12テストファイル・94件追加。全385 pass / 0 fail、58ファイル、25,003 expect。npm run lint / types:check成功。
+- CCST 12テストファイル・96件追加。全387 pass / 0 fail、58ファイル、25,032 expect。npm run lint / types:check成功。
 - 原本はarchive/htmlとarchive/mdの `Ccst-cybersecurity-guide` ファイル。両ハッシュ一致、元情報基準日2026-10-05を保持。
 - ロジック単位の追跡対象は36/36（既存32 + CCST GuideSidebar / GuideIcon / GuideCode / MermaidFigure）。MDX、静的データ、テストヘルパーは別集計。戦略セル7/40=17.5%は変更なし。
 - 既存ナビ・静的索引の14件固定契約も15件へ同期。happy-domのletter-spacing:normal欠落は最小再現で確認し、宣言と計算済み書体を併せて検証するテストへ補正。
@@ -487,3 +487,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 次のアクション: ユーザーが `docs/migration-inventory/ccst-cybersecurity-review.md` に沿って目視確認する。指摘の修正は失敗テストのコミットから開始する。
 
 - 2026-10-13: CCST 図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗。385 pass / 2 fail、58ファイル、25,009 expect。ビルド未実行。
+
+- 2026-10-13: CCST 図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功。387 pass / 0 fail、58ファイル、25,032 expect。ビルド未実行。
+
+図中央寄せ追加: Red `78997af` → Green `7c54fac`。小図は中央、幅広SVGは縮小せず左端から左右にスクロール。CCST96件、全387件成功、lint/型検査成功。今後の移行でも左端を切らない方針をsecurity-docs/AGENTS.mdへ追記。ビルド未実行。
