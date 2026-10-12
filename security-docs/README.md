@@ -60,7 +60,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 274 across 42 files (274 pass / 0 fail, 10,581 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 277 across 42 files (271 pass / 6 fail, 10,564 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
 - All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.
@@ -90,3 +90,11 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - `npm test`（内部Bun）、`npm run lint`、`npm run types:check` 成功。静的索引生成のみnpm経由で実行。**ビルド未実行（禁止）**、ブラウザ目視はユーザー担当・未完了。push・公開未実施。
 - 原本は `archive/html/Mitre-atlas.html` と `archive/md/Mitre-atlas.md` に内容変更なしで保存。移動前後のSHA-256一致を確認。台帳: `docs/migration-inventory/mitre-atlas.json`、目視確認表: `docs/migration-inventory/mitre-atlas-review.md`。
 - 前半の早すぎた実装コミットと誤った成功記録は、ユーザー承認により履歴を残して訂正。復旧後の全件成功を確認し、以降はRed/実装/docsを分離。詳細はprogressの復旧記録を参照。
+
+<!-- ATLAS CURRENT -->
+## MITRE ATLAS 現在の状態（2026-10-12）
+
+- 図の可読性Red・18px/コントラスト/縮小防止の6件失敗。ルート `/docs/mitre-atlas`。
+- プロジェクト全体: **271 pass / 6 fail、42ファイル、10,564 expect**。npm test（内部Bun）。
+- ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/mitre-atlas.json`。
+<!-- /ATLAS CURRENT -->

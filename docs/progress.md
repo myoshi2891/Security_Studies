@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功）
+> **最終更新**: 2026-10-12（MITRE ATLAS: 図の可読性Red・18px/コントラスト/縮小防止の6件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **274件** | `npm test`: 274 pass / 0 fail、42ファイル、10,581 expect（最終CSS監査Green・全274件成功・元CSS実効値308項目照合・lint/型検査成功） |
+| テストケース総数 | **277件** | `npm test`: 271 pass / 6 fail、42ファイル、10,564 expect（図の可読性Red・18px/コントラスト/縮小防止の6件失敗） |
 | テストファイル数 | **42ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -58,11 +58,11 @@
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-| `src/app/docs/mitre-atlas/foundation.test.tsx` | 9 | 9 pass / 0 fail |
+| `src/app/docs/mitre-atlas/foundation.test.tsx` | 12 | 7 pass / 5 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-05-08.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
-| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
+| `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 10 pass / 1 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 
 ---
@@ -364,3 +364,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - TDD復旧: 早すぎた `9c42449` と誤った `dddf9c4` の記録は、ユーザー承認により履歴を残して訂正（`0170b4c` / `c57579d`）。`4603722` で元アイコンのti装飾用クラスを厳密に保持する比較へ訂正し、`2d54f7f` で244件成功を記録。それ以降のRed→実装→docsは分離済み。
 - 次のアクション: ユーザーが `docs/migration-inventory/mitre-atlas-review.md` に沿って目視確認する。ビルドは禁止、push・公開は未実施。
 - 再開プロンプト: 「MITRE ATLASの目視結果を確認し、指摘があればnpm・ビルド禁止を維持して失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を実施する。原本はarchiveのHTML/MDを保持し、関係しない未コミット原稿を変更しない。」
+- 2026-10-12: 図の可読性Red・18px/コントラスト/縮小防止の6件失敗（直前HEAD `9037a98`）。271 pass / 6 fail、42ファイル、10,564 expect。ビルド未実行。
