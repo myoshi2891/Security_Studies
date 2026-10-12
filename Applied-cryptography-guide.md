@@ -32,7 +32,7 @@
 
 ### 1.1 3つの前提
 
-1. **書籍は古典ですが、そのまま実装の手本にはできません。** 第2版は1996年、20周年記念版は2015年の刊行です [S1][S2]。DES や RC4 など、現在は使ってはいけないアルゴリズムも丁寧に解説されています。
+1. **書籍は古典ですが、そのまま実装の手本にはできません。** 第2版は1996年、20周年記念版は2015年の刊行です [S1] [S2]。DES や RC4 など、現在は使ってはいけないアルゴリズムも丁寧に解説されています。
 2. **著者自身が「暗号だけでは安全にならない」と述べています。** Schneier は後年の著書 *Secrets and Lies* の序文で、Applied Cryptography では暗号を「万能の答え」であるかのように書いてしまった、と反省しています [S4]。この文書でも「どのアルゴリズムか」だけでなく「どう組み込むか」を重視します。
 3. **自分で暗号を発明・実装しないでください。** 実務では、実績のあるライブラリ（libsodium、OpenSSL、Python の `cryptography` など）を使うのが鉄則です [S5]。この文書のコードは「仕組みを理解するための最小例」です。
 
@@ -61,7 +61,7 @@
 | ISBN | 1119183472 / 9781119183471（Google Books 掲載のもの） |
 | 特徴 | プロトコル、アルゴリズム、C 言語のソースコード、実装上の助言を網羅 |
 
-出典: [S1][S2]
+出典: [S1] [S2]
 
 Schneier の公式ページによると、第2版は初版に比べて語数が約50%増え、章が7つ増え、参考文献が1600件以上追加された大幅な改訂でした [S2]。
 
@@ -583,7 +583,7 @@ flowchart LR
 
 ### 10.3 NIST の標準化状況（公式ページに基づく）
 
-NIST は2024年8月に最初の3つの標準を確定させました [S9][S10]。
+NIST は2024年8月に最初の3つの標準を確定させました [S9] [S10]。
 
 | 標準 | アルゴリズム | 用途 | 元の名称 |
 |------|--------------|------|----------|
@@ -637,7 +637,7 @@ X25519 単体の公開鍵は32バイトなので、通信量は大きく増え�
 | Google | 暗号移行のタイムラインを2029年とする見解を公表 | [S14] |
 | Cloudflare | 2029年までの完全なポスト量子対応を目標に掲げたロードマップを公表。同社の観測では、ポスト量子の鍵交換を使う接続が急増 | [S15] |
 | Signal | 2025年10月、ポスト量子対応の「Triple Ratchet（SPQR）」を発表 | [S16] |
-| IETF | RFC 9846（TLS 1.3 改訂）と RFC 10024（ハイブリッド）を公開 | [S12][S13] |
+| IETF | RFC 9846（TLS 1.3 改訂）と RFC 10024（ハイブリッド）を公開 | [S12] [S13] |
 
 > **注意**: 「量子コンピュータがいつ実用化するか」には確定した答えがありません。各社の年限は**計画上の目標**であり、予言ではありません。
 
@@ -929,3 +929,24 @@ ML-KEM は鍵カプセル化（鍵交換）、ML-DSA と SLH-DSA はデジタル
 - **企業の発表値**: Cloudflare や Google の年限・利用率は各社の見解・観測値であり、業界全体の確定事実ではありません。
 - **書籍の章構成**: 第2版の目次に基づいています。20周年記念版の細部は版により異なる可能性があります。
 - **コード例**: 仕組みの理解を目的とした最小例です。本番利用前に、使用するライブラリの最新ドキュメントとセキュリティレビューを必ず経てください。
+
+<!-- 本文中の出典ラベル [S番号] を参考文献 URL へリンクする参照定義 -->
+
+[S1]: https://books.google.co.jp/books/about/Applied_Cryptography.html?id=01vfjgEACAAJ&redir_esc=y
+[S2]: https://www.schneier.com/books/applied_cryptography/
+[S3]: https://www.schneier.com/books/applied_cryptography/toc.html
+[S4]: https://www.schneier.com/books/secrets_and_lies/pref.html
+[S5]: https://www.latacora.com/blog/cryptographic-right-answers/
+[S6]: https://www.latacora.com/categories/cryptography
+[S8]: https://www.manning.com/books/real-world-cryptography
+[S9]: https://csrc.nist.gov/projects/post-quantum-cryptography
+[S10]: https://csrc.nist.gov/pubs/fips/203/final
+[S11]: https://csrc.nist.gov/pubs/ir/8547/ipd
+[S12]: https://www.rfc-editor.org/rfc/rfc9846.html
+[S13]: https://www.rfc-editor.org/rfc/rfc10024
+[S14]: https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/
+[S15]: https://blog.cloudflare.com/post-quantum-roadmap/
+[S16]: https://signal.org/blog/spqr/
+[S17]: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+[S18]: https://www.ietf.org/archive/id/draft-prabel-pquip-pqc-guidance-00.html
+[S19]: https://www.sdxcentral.com/news/cloudflare-45-billion-daily-connections-see-automated-post-quantum-key-exchange/
