@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（MITRE ATLAS: 表示基盤Green・本文は未移行・lintと型検査成功）
+> **最終更新**: 2026-10-12（MITRE ATLAS: ヒーロー・1〜4節Red・5件の期待どおりの失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **239件** | `npm test`: 239 pass / 0 fail、37ファイル、9,287 expect（表示基盤Green・本文は未移行・lintと型検査成功） |
-| テストファイル数 | **37ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **244件** | `npm test`: 239 pass / 5 fail、38ファイル、9,287 expect（ヒーロー・1〜4節Red・5件の期待どおりの失敗） |
+| テストファイル数 | **38ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -59,6 +59,7 @@
 | `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/mitre-atlas/foundation.test.tsx` | 8 | 8 pass / 0 fail |
+| `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 0 pass / 5 fail |
 
 ---
 
@@ -329,3 +330,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 表示基盤Green・本文は未移行・lintと型検査成功（直前HEAD `cb740cb`）。239 pass / 0 fail、37ファイル、9,287 expect。ビルド未実行。
 - 2026-10-12: ヒーロー・1〜4節Red・5件の期待どおりの失敗（直前HEAD `cb740cb`）。239 pass / 5 fail、38ファイル、9,287 expect。ビルド未実行。
 - 2026-10-12: 表示基盤Green・本文は未移行・lintと型検査成功（直前HEAD `ee8b6ac`）。239 pass / 0 fail、37ファイル、9,287 expect。ビルド未実行。
+- 2026-10-12: ヒーロー・1〜4節Red・5件の期待どおりの失敗（直前HEAD `8e1d3e2`）。239 pass / 5 fail、38ファイル、9,287 expect。ビルド未実行。
