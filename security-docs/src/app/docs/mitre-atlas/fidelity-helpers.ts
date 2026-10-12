@@ -61,7 +61,8 @@ export function sectionContracts(first: number, last: number) {
       const texts = (section: Element) => [...section.querySelectorAll(selector)].filter(el => !el.closest('.mermaid-diagram')).map(text);
       expect(texts(migrated!), selector).toEqual(texts(original));
     }
-    const icons = (section: Element) => [...section.querySelectorAll('.ti')].map(el => el.getAttribute('class'));
+    // SVG replacements add their own library classes; original styling hooks must still match exactly.
+    const icons = (section: Element) => [...section.querySelectorAll('.ti')].map(el => [...el.classList].filter(token => token === 'ti' || token.startsWith('ti-')).join(' '));
     expect(icons(migrated!)).toEqual(icons(original));
     for (const diagram of migrated!.querySelectorAll('[data-diagram]')) expect(diagram.getAttribute('data-definition')).toBe(definitions.get(diagram.getAttribute('data-diagram')!)!);
   });
