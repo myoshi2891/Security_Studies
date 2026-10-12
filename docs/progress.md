@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（Secure by Design: 表示基盤Red・9件の期待どおりの失敗）
+> **最終更新**: 2026-10-12（Secure by Design: 表示基盤Redコミット済み・実装開始前）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **195件** | `npm test`: 186 pass / 9 fail、31ファイル、6,304 expect（表示基盤Red・9件の期待どおりの失敗） |
+| テストケース総数 | **195件** | `npm test`: 186 pass / 9 fail、31ファイル、6,304 expect（表示基盤Redコミット済み・実装開始前） |
 | テストファイル数 | **31ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -280,3 +280,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ### 実行履歴
 - 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `0be26b2`）。186 pass / 0 fail、30ファイル、6,304 expect。ビルド未実行。
 - 2026-10-12: 表示基盤Red・9件の期待どおりの失敗（直前HEAD `0be26b2`）。186 pass / 9 fail、31ファイル、6,304 expect。ビルド未実行。
+- 2026-10-12: 表示基盤Redコミット済み・実装開始前（直前HEAD `a69e3ee`）。186 pass / 9 fail、31ファイル、6,304 expect。ビルド未実行。
