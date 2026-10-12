@@ -979,6 +979,1606 @@ import './secure-by-design.css';
 </E.div>
 </E.section>
 
+<E.section className={"section"} id={"sec-5"}>
+<E.h2>
+{"5. Step 4 ── コード構成要素: 不変性・フェイルファスト・バリデーション"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第4章 \"Code constructs promoting security\" に相当)"}
+</E.p>
+{"\n"}
+<E.p>
+{"第4章は3つの柱で構成され、それぞれが解く問題が対応づけられています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"柱"}
+</E.th>
+<E.th>
+{"主に解決する問題"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"不変性(Immutability)"}
+</E.td>
+<E.td>
+{"データの完全性・可用性に関わる問題"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"フェイルファスト(Failing fast)・契約"}
+</E.td>
+<E.td>
+{"不正な入力や不正な状態に関わる問題"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"バリデーション(Validation)"}
+</E.td>
+<E.td>
+{"入力検証に関わる問題"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"5.1 不変性(Immutability)"}
+</E.h3>
+{"\n"}
+<E.p>
+<E.strong>
+{"考え方"}
+</E.strong>
+{": 一度作ったオブジェクトを後から変えられないようにする。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"観点"}
+</E.th>
+<E.th>
+{"可変オブジェクト"}
+</E.th>
+<E.th>
+{"不変オブジェクト"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"値の信頼性"}
+</E.td>
+<E.td>
+{"渡した先で書き換えられる恐れ"}
+</E.td>
+<E.td>
+{"渡しても変わらない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"並行処理"}
+</E.td>
+<E.td>
+{"同時更新で壊れる恐れ"}
+</E.td>
+<E.td>
+{"共有しても安全"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"検証のタイミング"}
+</E.td>
+<E.td>
+{"検証後に変更されると検証が無意味になる"}
+</E.td>
+<E.td>
+{"検証済みの値がそのまま保たれる"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"// 悪い例: 外部から中身を書き換えられるリスト\npublic class Order {\n    private final List<String> itemIds;\n    public Order(List<String> itemIds) { this.itemIds = itemIds; }   // 参照をそのまま保持\n    public List<String> getItemIds() { return itemIds; }              // 参照をそのまま返す\n}\n\n// 良い例: コピーして保持し、読み取り専用で返す\npublic final class SafeOrder {\n    private final List<String> itemIds;\n    public SafeOrder(List<String> itemIds) {\n        this.itemIds = List.copyOf(itemIds);   // 防御的コピー(不変リスト)\n    }\n    public List<String> itemIds() { return itemIds; }  // 不変なのでそのまま返しても安全\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"ポイント: 「検証した後に呼び出し元が中身を書き換える」という "}
+<E.strong>
+{"検査時と使用時のズレ"}
+</E.strong>
+{" を、不変性が構造的に防ぎます。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"5.2 フェイルファスト(Failing fast)と契約"}
+</E.h3>
+{"\n"}
+<E.p>
+<E.strong>
+{"考え方"}
+</E.strong>
+{": 不正な入力や状態を "}
+<E.strong>
+{"できるだけ早い段階で、はっきりと失敗させる"}
+</E.strong>
+{"。曖昧に処理を続けると、後ろの方で予期せぬ動作を引き起こします。"}
+</E.p>
+{"\n"}
+<E.p>
+{"書籍の節見出しには「契約によるフェイルファスト」「不正な状態での失敗」などがあります。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"失敗のさせ方"}
+</E.th>
+<E.th>
+{"説明"}
+</E.th>
+<E.th>
+{"例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"事前条件のチェック"}
+</E.td>
+<E.td>
+{"メソッド冒頭で引数を検査"}
+</E.td>
+<E.td>
+{"null や範囲外を即拒否"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"状態のチェック"}
+</E.td>
+<E.td>
+{"許されない状態遷移を拒否"}
+</E.td>
+<E.td>
+{"出荷済みの注文のキャンセルを拒否"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"表明(assert)ではなく例外で"}
+</E.td>
+<E.td>
+{"本番で無効化されうる assert に頼らない"}
+</E.td>
+<E.td>
+{"明示的な例外をスロー"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"public void cancel() {\n    if (status == OrderStatus.SHIPPED) {\n        throw new IllegalStateException(\"出荷済みの注文はキャンセルできません\");\n    }\n    this.status = OrderStatus.CANCELLED;\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.h3>
+{"5.3 バリデーション(検証)── 順序が大切"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍第4章には、"}
+<E.strong>
+{"複数種類の検証を適切な順序で行う"}
+</E.strong>
+{" という趣旨の節があり、節見出しには「データの字句内容(lexical content)のチェック」が含まれます。私の理解では、検証は "}
+<E.strong>
+{"安価で粗い検査から、高価で細かい検査へ"}
+</E.strong>
+{" の順に並べるのが基本です。"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d6" source={diagrams["d6"]} />
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"順"}
+</E.th>
+<E.th>
+{"検証の種類"}
+</E.th>
+<E.th>
+{"何を見るか"}
+</E.th>
+<E.th>
+{"例(ユーザー名)"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"1"}
+</E.td>
+<E.td>
+{"出所(Origin)"}
+</E.td>
+<E.td>
+{"想定した送信元・経路からのデータか"}
+</E.td>
+<E.td>
+{"想定する連携元システムや画面からの送信か"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"2"}
+</E.td>
+<E.td>
+{"サイズ(Size)"}
+</E.td>
+<E.td>
+{"長さ・容量が許容範囲か"}
+</E.td>
+<E.td>
+{"3〜32文字、リクエスト本文の上限"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"3"}
+</E.td>
+<E.td>
+{"字句内容(Lexical content)"}
+</E.td>
+<E.td>
+{"使ってよい文字だけか"}
+</E.td>
+<E.td>
+{"英小文字・数字・一部記号のみ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"4"}
+</E.td>
+<E.td>
+{"構文(Syntax)"}
+</E.td>
+<E.td>
+{"形式が正しいか"}
+</E.td>
+<E.td>
+{"先頭は英字、連続記号なし"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"5"}
+</E.td>
+<E.td>
+{"意味(Semantics)"}
+</E.td>
+<E.td>
+{"業務ルール上、意味があるか"}
+</E.td>
+<E.td>
+{"予約語でない、重複しない"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"認証・認可は入力検証とは "}
+<E.strong>
+{"別の関心事"}
+</E.strong>
+{" です。「誰からのリクエストか」「その操作が許されるか」は認証・認可で確認し、上の表には含めません。"}
+<E.strong>
+{"認証済みのユーザーからの入力であっても"}
+</E.strong>
+{"、サイズ・字句・構文・意味の検証は省略せずに行います(正規ユーザーのアカウントが乗っ取られている場合や、正規ユーザー自身が悪意を持つ場合があるため)。"}
+</E.p>
+{"\n"}
+<E.p>
+{"注意: 上記の5段階の名称・順序は、書籍の節構成(字句内容の節が存在すること)と一般的な入力検証の定石に基づく私の整理です。"}
+<E.strong>
+{"正確な分類は書籍第4章で確認してください。"}
+</E.strong>
+</E.p>
+</E.div>
+{"\n"}
+<E.p>
+<E.strong>
+{"やってはいけない例"}
+</E.strong>
+{": データを検証する "}
+<E.strong>
+{"前に"}
+</E.strong>
+{" 「修復」してしまう(例: 危険な文字を黙って削除してから検証する)。書籍第9章の節見出しにも「検証の前にデータを修復しない」とあります。修復の結果が攻撃者の意図した形になる恐れがあるためです。"}
+</E.p>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-6"}>
+<E.h2>
+{"6. Step 5 ── ドメインプリミティブ(本書の中核概念)"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第5章 \"Domain primitives\" に相当。著者らの無料公開記事も参照)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"6.1 何が問題なのか: 「素の型」の曖昧さ"}
+</E.h3>
+{"\n"}
+<E.p>
+{"多くのコードは、概念を "}
+<E.code>
+{"String"}
+</E.code>
+{" や "}
+<E.code>
+{"int"}
+</E.code>
+{" で表します。しかしこれらの型は "}
+<E.strong>
+{"何でも入る"}
+</E.strong>
+{" ため、次の問題を起こします。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"問題"}
+</E.th>
+<E.th>
+{"例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"不正値が通る"}
+</E.td>
+<E.td>
+{"数量に "}
+<E.code>
+{"-5"}
+</E.code>
+{" や "}
+<E.code>
+{"0"}
+</E.code>
+{"、メールアドレスに改行入りの文字列"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"引数の取り違え"}
+</E.td>
+<E.td>
+<E.code>
+{"transfer(from, to, amount)"}
+</E.code>
+{" で "}
+<E.code>
+{"from"}
+</E.code>
+{" と "}
+<E.code>
+{"to"}
+</E.code>
+{" を逆に渡す(どちらも "}
+<E.code>
+{"String"}
+</E.code>
+{")"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"検証の重複と漏れ"}
+</E.td>
+<E.td>
+{"あちこちで検証を書き、ある経路だけ検証が抜ける"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"意味の不一致"}
+</E.td>
+<E.td>
+{"チームごとに「有効なメールアドレス」の定義が違う"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"6.2 ドメインプリミティブの定義"}
+</E.h3>
+{"\n"}
+<E.p>
+{"著者らの記事によれば、ドメインプリミティブとは "}
+<E.strong>
+{"「存在していること自体が、有効であることの証明になっている値オブジェクト」"}
+</E.strong>
+{" です。DDD の値オブジェクトに、セキュリティの観点で次の制約を加えたものと説明されています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"条件"}
+</E.th>
+<E.th>
+{"内容"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"不変条件(invariant)が存在する"}
+</E.td>
+<E.td>
+{"「何が有効か」を明文化している"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"生成時に強制する"}
+</E.td>
+<E.td>
+{"コンストラクタ等で検証し、不正なら "}
+<E.strong>
+{"作れない"}
+</E.strong>
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"素の型・汎用型(null を含む)で概念を表さない"}
+</E.td>
+<E.td>
+{"ドメインの概念は専用の型で表す"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ドメイン内の意味を厳密に定義する"}
+</E.td>
+<E.td>
+{"外部標準と意味が違うなら用語を分ける"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<MermaidFigure id="d7" source={diagrams["d7"]} />
+{"\n"}
+<E.h3>
+{"6.3 コード例(本ガイド用のオリジナル)"}
+</E.h3>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"// 注文数量: 1〜99 の整数のみ有効、と業務担当者と合意した想定\npublic final class OrderQuantity {\n    private static final int MIN = 1;\n    private static final int MAX = 99;\n\n    private final int value;\n\n    public OrderQuantity(int value) {\n        if (value < MIN || value > MAX) {\n            throw new IllegalArgumentException(\n                \"数量は \" + MIN + \" から \" + MAX + \" の範囲で指定してください\");\n        }\n        this.value = value;\n    }\n\n    public int value() { return value; }\n\n    // ドメイン上の操作は型の中に閉じ込める(ルールの置き忘れ防止)\n    public OrderQuantity plus(OrderQuantity other) {\n        return new OrderQuantity(this.value + other.value);   // 合計も範囲チェックされる\n    }\n\n    @Override public boolean equals(Object o) {\n        return o instanceof OrderQuantity q && q.value == this.value;\n    }\n    @Override public int hashCode() { return Integer.hashCode(value); }\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.p>
+<E.strong>
+{"ポイント"}
+</E.strong>
+{":"}
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"「負の数量を送りつけて想定外の動作を引き起こす」という攻撃が、"}
+<E.strong>
+{"専用の対策コードを書かなくても"}
+</E.strong>
+{" 成立しなくなる"}
+</E.li>
+{"\n"}
+<E.li>
+{"足し算などの操作も型の中にあるため、ルールが変わっても修正箇所が1か所で済む"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.h3>
+{"6.4 API を堅牢にする(引数・戻り値にドメインプリミティブを使う)"}
+</E.h3>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"// Before: どれも String / long。取り違えても、範囲外でもコンパイルが通る\nvoid transfer(String fromAccount, String toAccount, long amount) { /* ... */ }\n\n// After: 型が意味を持つ。取り違えはコンパイルエラー、不正値は生成時に拒否\nvoid transfer(AccountNumber from, AccountNumber to, Money amount) { /* ... */ }\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"観点"}
+</E.th>
+<E.th>
+{"Before(素の型)"}
+</E.th>
+<E.th>
+{"After(ドメインプリミティブ)"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"入力検証"}
+</E.td>
+<E.td>
+{"メソッドごとに自分で書く"}
+</E.td>
+<E.td>
+{"型の生成時に1回。以降は不要"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"引数の取り違え"}
+</E.td>
+<E.td>
+{"気づけない"}
+</E.td>
+<E.td>
+{"コンパイル時に検出"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"読みやすさ"}
+</E.td>
+<E.td>
+{"型から意味が読めない"}
+</E.td>
+<E.td>
+{"型名が仕様書になる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"開発者の認知負荷"}
+</E.td>
+<E.td>
+{"毎回「検証したっけ?」と考える"}
+</E.td>
+<E.td>
+{"型があれば検証済みと信頼できる"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"6.5 コンテキストの境界が意味を決める"}
+</E.h3>
+{"\n"}
+<E.p>
+{"著者らの記事は、同じ言葉(例: メールアドレス)でも "}
+<E.strong>
+{"自分のドメインでの定義"}
+</E.strong>
+{" を優先してよい、と説明します。例えば、国際標準(RFC)上は有効でも、自サービスでは「英小文字・数字・ドットのみ許可」と定義する、といった具合です。"}
+</E.p>
+{"\n"}
+<E.p>
+{"一方、"}
+<E.strong>
+{"ISBN のように外部標準で厳密に定義された用語は、意味を変えると混乱の元"}
+</E.strong>
+{" になるため、再定義せず、別の用語(例: "}
+<E.code>
+{"BookId"}
+</E.code>
+{" が "}
+<E.code>
+{"ISBN"}
+</E.code>
+{" または "}
+<E.code>
+{"UnpublishedBookNumber"}
+</E.code>
+{" を包む)を導入するほうが安全、という考え方が示されています。"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d8" source={diagrams["d8"]} />
+{"\n"}
+<E.h3>
+{"6.6 公開APIにドメインモデルをそのまま出さない"}
+</E.h3>
+{"\n"}
+<E.p>
+{"外部(インターネット向け REST API など)に公開する API では、内部のドメインオブジェクトをそのまま露出させません。"}
+</E.p>
+{"\n"}
+<E.ol>
+{"\n"}
+<E.li>
+{"公開API用には "}
+<E.strong>
+{"別表現(DTO)"}
+</E.strong>
+{" を用意する"}
+</E.li>
+{"\n"}
+<E.li>
+{"API の入口で "}
+<E.strong>
+{"DTO → ドメインプリミティブ"}
+</E.strong>
+{" に変換する(ここで検証される)"}
+</E.li>
+{"\n"}
+<E.li>
+{"こうすると、API と内部ドメインを "}
+<E.strong>
+{"独立して進化"}
+</E.strong>
+{" させられる"}
+</E.li>
+{"\n"}
+</E.ol>
+{"\n"}
+<E.h3>
+{"6.7 ドメインプリミティブライブラリを育てる"}
+</E.h3>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"小さな概念まで含め、"}
+<E.strong>
+{"ほぼ全ての概念"}
+</E.strong>
+{" をドメインプリミティブとして整備する"}
+</E.li>
+{"\n"}
+<E.li>
+{"これは汎用ユーティリティクラスの寄せ集めではなく、"}
+<E.strong>
+{"ドメイン概念の共通語彙"}
+</E.strong>
+{" である"}
+</E.li>
+{"\n"}
+<E.li>
+{"結果として「型を使うだけで安全」な部品箱になる"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.h3>
+{"6.8 リードワンスオブジェクト(Read-once objects)"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第5章には、"}
+<E.strong>
+{"機密データの漏えい"}
+</E.strong>
+{" を防ぐための「読み取り一回限りのオブジェクト」の節があります。考え方は、パスワードやトークンのような機密値を、"}
+<E.strong>
+{"一度読んだら使えなくする"}
+</E.strong>
+{" というものです。"}
+</E.p>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"public final class SecretToken {\n    private char[] chars;\n\n    public SecretToken(char[] chars) { this.chars = chars.clone(); }\n\n    // ラッパーから配列を取り出せるのは1回だけ。2回目は失敗する(意図しない再利用の検知にもなる)\n    // 返した配列自体は使用不能にならない。読み取り後の消去・保持期間の管理は呼び出し側の責任\n    public synchronized char[] consume() {\n        if (chars == null) {\n            throw new IllegalStateException(\"この値はすでに使用済みです\");\n        }\n        char[] out = chars;\n        chars = null;\n        return out;\n    }\n\n    @Override public String toString() { return \"[REDACTED]\"; }   // うっかりログに出ても漏れない\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"補足: "}
+<E.code>
+{"consume()"}
+</E.code>
+{" が保証するのは "}
+<E.strong>
+{"このラッパーから2回以上取り出せない"}
+</E.strong>
+{" ことだけです。返された配列は通常の配列なので、呼び出し側は読み取り・保持・コピーができてしまいます。使い終わったら "}
+<E.code>
+{"Arrays.fill(out, '\\0')"}
+</E.code>
+{" で消去する、他所に保持しない、といった取り出し後の管理は呼び出し側の責任です。"}
+</E.p>
+{"\n"}
+<E.p>
+<E.code>
+{"String"}
+</E.code>
+{" は内容を消去できないため、機密値には "}
+<E.code>
+{"char[]"}
+</E.code>
+{" を使う、といった言語固有の配慮も必要です。上記は考え方を示す簡略例です。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"6.9 テイント分析の考え方"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第5章は「テイント分析(taint analysis)」の発想にも触れます。テイント分析は、"}
+<E.strong>
+{"信頼できない入力(ソース)が危険な利用先(シンク)まで届く流れを追跡する"}
+</E.strong>
+{" 手法です。"}
+</E.p>
+{"\n"}
+<E.p>
+{"ドメインプリミティブによるドメイン境界での検証は、これと "}
+<E.strong>
+{"同じものではありません"}
+</E.strong>
+{"。専用型が保証するのは "}
+<E.strong>
+{"ドメインの不変条件を満たしていること(例: 数量が 1〜99 である)だけ"}
+</E.strong>
+{" で、HTML・SQL・シェルなど "}
+<E.strong>
+{"利用先での安全性は保証しません"}
+</E.strong>
+{"。例えばドメイン上は正しい「表示名」でも、"}
+<E.code>
+{"<"}
+</E.code>
+{" や "}
+<E.code>
+{"'"}
+</E.code>
+{" を含めば HTML や SQL では危険になり得ます。そのため、ドメインプリミティブを使っていても、"}
+<E.strong>
+{"SQL はパラメータ化クエリで渡す"}
+</E.strong>
+{"、"}
+<E.strong>
+{"出力先(HTML・属性・URL・JavaScript など)に応じたエンコードを行う"}
+</E.strong>
+{" といった、利用先ごとの対策が別途必要です。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"6.10 国際的な裏付け: Google の「Safe Coding」"}
+</E.h3>
+{"\n"}
+<E.p>
+{"Google の Christoph Kern 氏は、同社で長年、XSS や SQL インジェクションなどの脆弱性を "}
+<E.strong>
+{"フレームワーク・API・プラットフォームの設計"}
+</E.strong>
+{" によって防ぐ取り組みを率いてきた人物です。2025年の論文『Safe Coding』では次の要点が述べられています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"要点"}
+</E.th>
+<E.th>
+{"内容"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"責任の移し替え"}
+</E.td>
+<E.td>
+{"安全性の責任を個々の開発者から、言語・ライブラリ・フレームワークへ移す"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"安全な抽象"}
+</E.td>
+<E.td>
+{"危険な操作を、公開APIが安全な「安全な抽象(safe abstraction)」の内側に閉じ込める"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"型不変条件"}
+</E.td>
+<E.td>
+{"安全のための前提条件を "}
+<E.strong>
+{"型の不変条件に引き上げる"}
+</E.strong>
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"成果"}
+</E.td>
+<E.td>
+{"Google で XSS や SQL インジェクションをほぼ撲滅できたと報告"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.p>
+{"これは、ドメインプリミティブの発想("}
+<E.strong>
+{"型の存在が安全性を保証する"}
+</E.strong>
+{")と非常に近い考え方です。ただし書籍のドメインプリミティブは "}
+<E.strong>
+{"業務ドメインの概念"}
+</E.strong>
+{" を主眼に置き、Safe Coding は "}
+<E.strong>
+{"危険な操作を安全な型で包む"}
+</E.strong>
+{" 側面が強い、という違いがあります。"}
+</E.p>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-7"}>
+<E.h2>
+{"7. Step 6 ── 状態の完全性と複雑さの削減"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第6章 \"Ensuring integrity of state\"、第7章 \"Reducing complexity of state\" に相当)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"7.1 なぜ状態が問題か"}
+</E.h3>
+{"\n"}
+<E.p>
+{"システムの本質は "}
+<E.strong>
+{"状態の変化"}
+</E.strong>
+{"(カートに入れる → 支払う → 発送する)です。ところが状態が壊れる(不整合になる)と、セキュリティ上の問題になります。第7章の導入には、搭乗しなかった乗客の荷物を載せたまま飛行機が離陸するような例えが出てきます。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"7.2 エンティティを正しく作る(第6章)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"論点"}
+</E.th>
+<E.th>
+{"悪い設計"}
+</E.th>
+<E.th>
+{"良い設計"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"生成時の一貫性"}
+</E.td>
+<E.td>
+{"引数なしコンストラクタで空のオブジェクトを作り、後から setter で埋める"}
+</E.td>
+<E.td>
+<E.strong>
+{"必須項目は全てコンストラクタ引数"}
+</E.strong>
+{" にし、生成した瞬間から有効にする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ORM との関係"}
+</E.td>
+<E.td>
+{"フレームワークの都合で引数なしコンストラクタを公開"}
+</E.td>
+<E.td>
+{"可視性を絞る・生成経路を限定するなど、工夫して整合性を守る"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"複雑な制約"}
+</E.td>
+<E.td>
+{"呼び出し側の注意に頼る"}
+</E.td>
+<E.td>
+{"制約を "}
+<E.strong>
+{"コードで強制"}
+</E.strong>
+{"(生成時チェック)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"コレクション"}
+</E.td>
+<E.td>
+{"内部リストをそのまま返す"}
+</E.td>
+<E.td>
+{"防御的コピーや読み取り専用ビューで守る"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"// 悪い例: 空の状態が存在できてしまう\npublic class Account {\n    private String id;\n    private Money balance;\n    public Account() {}                    // 引数なし\n    public void setId(String id) { ... }   // 後から設定\n}\n\n// 良い例: 作れた時点で有効\npublic final class SafeAccount {\n    private final AccountNumber id;\n    private Money balance;\n\n    public SafeAccount(AccountNumber id, Money initialBalance) {\n        this.id = Objects.requireNonNull(id);\n        this.balance = Objects.requireNonNull(initialBalance);\n    }\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.h3>
+{"7.3 状態の複雑さを減らす4つのパターン(第7章)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"パターン"}
+</E.th>
+<E.th>
+{"一言で言うと"}
+</E.th>
+<E.th>
+{"向いている場面"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"部分的不変エンティティ"}
+</E.td>
+<E.td>
+{"変わらない部分は不変にして、変わる部分だけ可変にする"}
+</E.td>
+<E.td>
+{"一部の属性(IDや作成日時など)が不変のとき"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"エンティティ状態オブジェクト"}
+</E.td>
+<E.td>
+{"状態遷移のルールを "}
+<E.strong>
+{"別オブジェクト"}
+</E.strong>
+{" に切り出す"}
+</E.td>
+<E.td>
+{"状態が多く、遷移が複雑なとき"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"エンティティスナップショット"}
+</E.td>
+<E.td>
+{"ある時点の状態を "}
+<E.strong>
+{"不変オブジェクト"}
+</E.strong>
+{" として渡す"}
+</E.td>
+<E.td>
+{"読み取り専用で参照させたいとき"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"エンティティのリレー"}
+</E.td>
+<E.td>
+{"変化を、フェーズごとに別のエンティティが受け継ぐ形で表す"}
+</E.td>
+<E.td>
+{"状態グラフをフェーズに分割できるとき"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.p>
+<E.strong>
+{"状態遷移を明示する例(注文)"}
+</E.strong>
+{":"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d9" source={diagrams["d9"]} />
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"この図に "}
+<E.strong>
+{"書かれていない遷移"}
+</E.strong>
+{"(例: "}
+<E.code>
+{"Shipped → Cancelled"}
+</E.code>
+{")は、コード上でも "}
+<E.strong>
+{"拒否される"}
+</E.strong>
+{" ように設計します。これがフェイルファストと状態管理の組み合わせです。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"7.4 同時更新への備え"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第7章は、2つの主体(スレッド)が同じエンティティを同時に変更する問題にも触れています。不変オブジェクトやスナップショット、排他制御の設計が "}
+<E.strong>
+{"完全性"}
+</E.strong>
+{" を守る要素になります。"}
+</E.p>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-8"}>
+<E.h2>
+{"8. Step 7 ── デリバリーパイプラインとテストでセキュリティを守る"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第8章 \"Leveraging your delivery pipeline for security\" に相当)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"8.1 基本姿勢: セキュリティテストも「ただのテスト」"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第8章は、"}
+<E.strong>
+{"セキュリティテストを特別扱いせず、通常のテストと同じ頻度で自動実行する"}
+</E.strong>
+{" ことを主張します。毎コミットでペネトレーションテストを回せという意味ではなく、"}
+<E.strong>
+{"変更のたびにセキュリティ上の懸念が自動的に検証される仕組み"}
+</E.strong>
+{" を作るという考え方です。"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d10" source={diagrams["d10"]} />
+{"\n"}
+<E.h3>
+{"8.2 セキュリティのためのユニットテスト 4観点"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍の節見出しは「通常動作」「境界動作」「不正入力」「極端な入力」のテストです。"}
+<E.strong>
+{"QA 視点で最も取り入れやすい部分"}
+</E.strong>
+{" です。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"テスト観点"}
+</E.th>
+<E.th>
+{"目的"}
+</E.th>
+<E.th>
+<E.code>
+{"OrderQuantity"}
+</E.code>
+{" での例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"通常動作"}
+</E.td>
+<E.td>
+{"仕様どおり動くこと"}
+</E.td>
+<E.td>
+{"1, 50, 99 が生成できる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"境界動作"}
+</E.td>
+<E.td>
+{"境界値の扱い"}
+</E.td>
+<E.td>
+{"0 と 100 は拒否、1 と 99 は許可"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"不正入力"}
+</E.td>
+<E.td>
+{"想定外の入力を拒否"}
+</E.td>
+<E.td>
+{"負数、極端に大きい値を拒否"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"極端な入力"}
+</E.td>
+<E.td>
+{"限界でも壊れない"}
+</E.td>
+<E.td>
+<E.code>
+{"Integer.MAX_VALUE"}
+</E.code>
+{"、許容範囲(1〜99)を超える加算"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"class OrderQuantityTest {\n\n    @Test void 通常範囲の値は生成できる() {\n        assertEquals(50, new OrderQuantity(50).value());\n    }\n\n    @Test void 境界値_下限1は許可_0は拒否() {\n        assertDoesNotThrow(() -> new OrderQuantity(1));\n        assertThrows(IllegalArgumentException.class, () -> new OrderQuantity(0));\n    }\n\n    @Test void 境界値_上限99は許可_100は拒否() {\n        assertDoesNotThrow(() -> new OrderQuantity(99));\n        assertThrows(IllegalArgumentException.class, () -> new OrderQuantity(100));\n    }\n\n    @Test void 不正入力_負数は拒否() {\n        assertThrows(IllegalArgumentException.class, () -> new OrderQuantity(-1));\n    }\n\n    @Test void 極端な入力_加算結果が範囲を超えたら拒否() {\n        assertThrows(IllegalArgumentException.class,\n            () -> new OrderQuantity(99).plus(new OrderQuantity(99)));\n    }\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"Matt Raible 氏は書評で、この章のコード例が JUnit 5 で書かれており、現在の Java のテスト実践に沿っていると評価しています。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"8.3 第8章のその他のテーマ"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"テーマ"}
+</E.th>
+<E.th>
+{"要点"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"フィーチャートグルの安全性"}
+</E.td>
+<E.td>
+{"機能の ON/OFF 切替が、意図せず未検証の機能や危険な設定を有効にしないか"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"自動セキュリティテスト"}
+</E.td>
+<E.td>
+{"セキュリティテストも自動化し、パイプラインの一部にする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"IaC(Infrastructure as Code)の活用"}
+</E.td>
+<E.td>
+{"環境構築をコード化し、再現性と検証可能性を高める"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"可用性テスト"}
+</E.td>
+<E.td>
+{"負荷や障害でも動き続けるかを事前に確認する"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"設定ミス"}
+</E.td>
+<E.td>
+{"設定の誤りが脆弱性を生む。設定も検証対象にする"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-9"}>
+<E.h2>
+{"9. Step 8 ── 失敗と可用性を設計する"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第9章 \"Handling failures securely\" に相当)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"9.1 なぜ「失敗」がセキュリティの話になるのか"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第9章の導入では、"}
+<E.strong>
+{"多くのシステムは失敗したときに内部の秘密を漏らす"}
+</E.strong>
+{" こと、そして "}
+<E.strong>
+{"失敗への対処の仕方がシステムの安全性の水準を決める"}
+</E.strong>
+{" ことが示唆されています。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"9.2 例外とそのペイロード(情報漏えいを防ぐ)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"項目"}
+</E.th>
+<E.th>
+{"悪い例"}
+</E.th>
+<E.th>
+{"良い例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"例外メッセージ"}
+</E.td>
+<E.td>
+{"SQL文、テーブル名、内部IPアドレス、個人情報を含める"}
+</E.td>
+<E.td>
+{"利用者向けは一般的な文言+問い合わせ用の識別子"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"例外の種類"}
+</E.td>
+<E.td>
+{"全て同じ例外で処理"}
+</E.td>
+<E.td>
+<E.strong>
+{"業務例外"}
+</E.strong>
+{" と "}
+<E.strong>
+{"技術例外"}
+</E.strong>
+{" を区別する"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ログ"}
+</E.td>
+<E.td>
+{"機密値を平文で出す"}
+</E.td>
+<E.td>
+{"機密値はマスクし、相関IDで追跡できるようにする"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"code-block"}>
+<E.div className={"code-head"}>
+{"java"}
+</E.div>
+<E.pre>
+<JavaCode code={"// 悪い例: 内部情報をそのまま利用者へ返す\ncatch (SQLException e) {\n    throw new RuntimeException(\"口座 \" + accountNo + \" の取得に失敗: \" + e.getMessage());\n}\n\n// 良い例: 内部には詳細ログ、外には最小限\ncatch (SQLException e) {\n    String errorId = UUID.randomUUID().toString();\n    log.error(\"口座取得失敗 errorId={}\", errorId, e);          // 詳細は内部ログのみ(機密はマスク)\n    throw new ServiceUnavailableException(\"処理に失敗しました。ID: \" + errorId);\n}\n"} />
+</E.pre>
+</E.div>
+{"\n"}
+<E.h3>
+{"9.3 「失敗は例外的ではない」"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第9章には「失敗は例外的ではない」という趣旨の節があります。"}
+<E.strong>
+{"外部システムの遅延・停止・不正なデータは日常的に起きる"}
+</E.strong>
+{" ため、それを通常のフローとして設計に組み込みます。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"9.4 可用性はセキュリティ目標(CIA の A)"}
+</E.h3>
+{"\n"}
+<E.p>
+{"Matt Raible 氏も書評で、"}
+<E.strong>
+{"データやシステムの可用性は重要なセキュリティ目標であり CIA の一部"}
+</E.strong>
+{" であることを指摘しています。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"設計要素"}
+</E.th>
+<E.th>
+{"意味"}
+</E.th>
+<E.th>
+{"効果"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"レジリエンス(回復力)"}
+</E.td>
+<E.td>
+{"障害から立ち直れる"}
+</E.td>
+<E.td>
+{"部分的な障害が全体停止にならない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"レスポンシブネス(応答性)"}
+</E.td>
+<E.td>
+{"遅くても応答を返す"}
+</E.td>
+<E.td>
+{"資源を握ったまま待たない"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"タイムアウト"}
+</E.td>
+<E.td>
+{"待つ時間に上限を設ける"}
+</E.td>
+<E.td>
+{"スレッド枯渇を防ぐ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"サーキットブレーカー"}
+</E.td>
+<E.td>
+{"失敗が続く相手への呼び出しを一時遮断"}
+</E.td>
+<E.td>
+{"連鎖障害(カスケード障害)を防ぐ"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.p>
+<E.strong>
+{"サーキットブレーカーの動き"}
+</E.strong>
+{":"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d11" source={diagrams["d11"]} />
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"状態"}
+</E.th>
+<E.th>
+{"動作"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"Closed(閉)"}
+</E.td>
+<E.td>
+{"通常どおり呼び出す。失敗を数える"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Open(開)"}
+</E.td>
+<E.td>
+{"すぐに失敗を返し、相手を呼ばない(相手と自分を守る)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"HalfOpen(半開)"}
+</E.td>
+<E.td>
+{"少数だけ試験的に呼び、回復を確認する"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"9.5 不正データの扱い"}
+</E.h3>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+<E.strong>
+{"検証前にデータを修復しない"}
+</E.strong>
+{"(第5章の「検証」と同じ原則)"}
+</E.li>
+{"\n"}
+<E.li>
+{"不正データは "}
+<E.strong>
+{"拒否して記録する"}
+</E.strong>
+{"。黙って補正しない"}
+</E.li>
+{"\n"}
+<E.li>
+{"ログに出す場合も、不正データがログの仕組み(ログインジェクション等)を悪用しないよう注意する"}
+</E.li>
+{"\n"}
+</E.ul>
+</E.div>
+</E.section>
+
 </E.div>
 
 </E.div>
