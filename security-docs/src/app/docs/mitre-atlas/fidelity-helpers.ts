@@ -18,6 +18,8 @@ export const definitions = new Map([...sourceHtml.matchAll(/(structure|lifecycle
 export const sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
 export const scope = '.atlas-guide.atlas-guide';
 export const text = (el: Element) => el.textContent?.replace(/\s+/g, ' ').trim();
+// SVG replacements may add library classes, but every original icon styling hook must remain.
+export const iconHooks = (section: Element) => [...section.querySelectorAll('.ti')].map(el => [...el.classList].filter(token => token === 'ti' || token.startsWith('ti-')).join(' '));
 
 export function canonical(node: Node): unknown {
   if (node.nodeType === Node.TEXT_NODE) return node.textContent?.replace(/\s+/g, ' ').trim() || null;
@@ -61,9 +63,7 @@ export function sectionContracts(first: number, last: number) {
       const texts = (section: Element) => [...section.querySelectorAll(selector)].filter(el => !el.closest('.mermaid-diagram')).map(text);
       expect(texts(migrated!), selector).toEqual(texts(original));
     }
-    // SVG replacements add their own library classes; original styling hooks must still match exactly.
-    const icons = (section: Element) => [...section.querySelectorAll('.ti')].map(el => [...el.classList].filter(token => token === 'ti' || token.startsWith('ti-')).join(' '));
-    expect(icons(migrated!)).toEqual(icons(original));
+    expect(iconHooks(migrated!)).toEqual(iconHooks(original));
     for (const diagram of migrated!.querySelectorAll('[data-diagram]')) expect(diagram.getAttribute('data-definition')).toBe(definitions.get(diagram.getAttribute('data-diagram')!)!);
   });
 }

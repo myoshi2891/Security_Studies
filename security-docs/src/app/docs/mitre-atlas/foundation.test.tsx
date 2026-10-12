@@ -132,4 +132,19 @@ describe('MITRE ATLAS display foundation', () => {
       result.unmount(); expect(document.body.style.overflow).toBe('scroll');
     } finally { document.body.style.overflow = ''; }
   });
+
+  test('observes section changes and disconnects scroll tracking on unmount', async () => {
+    const previous = globalThis.IntersectionObserver;
+    let notify!: IntersectionObserverCallback; let disconnected = 0;
+    class Observer { constructor(callback: IntersectionObserverCallback) { notify = callback; } observe() {} disconnect() { disconnected++; } }
+    globalThis.IntersectionObserver = Observer as unknown as typeof IntersectionObserver;
+    try {
+      const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+      const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
+      const result = render(createElement('div', { className: 'atlas-guide' }, createElement(GuideSidebar, { groups: toc }), createElement('section', { id: 'sec2' })));
+      act(() => notify([{ isIntersecting: true, target: result.container.querySelector('section'), boundingClientRect: { top: 10 } } as unknown as IntersectionObserverEntry], {} as IntersectionObserver));
+      expect(result.container.querySelector('[aria-current="location"]')).toHaveAttribute('href', '#sec2');
+      result.unmount(); expect(disconnected).toBe(1);
+    } finally { globalThis.IntersectionObserver = previous; }
+  });
 });
