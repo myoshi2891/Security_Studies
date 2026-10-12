@@ -38,7 +38,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
 - Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; this page is an exception to the utility-only styling convention. Other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 277 across 42 files (277 pass / 0 fail, 10,627 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
+- 56 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 280 across 43 files (277 pass / 3 fail, 10,633 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
 - All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.
@@ -72,3 +72,11 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 
 図の可読性改善（2026-10-12）: ラベル18px、日本語向けフォント、明るい文字色（各ラベル背景でコントラスト比7以上）、明るい接続線を使用。SVGはviewBoxの自然幅を維持し、図だけをキーボード操作可能な領域で横スクロール。キャプション・説明は14pxに改善。図定義・接続・元資料は変更なし。全277件・lint・型検査成功。ビルド未実行、目視確認はユーザー担当。
+
+<!-- CCIE TABLE CURRENT -->
+## CCIE Security 現在の状態（2026-10-12）
+
+- 表のCSSカスケードRed・ホバー背景と上下余白の3件失敗。ルート `/docs/ccie-security`。
+- プロジェクト全体: **277 pass / 3 fail、43ファイル、10,633 expect**。npm test（内部Bun）。
+- ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/ccie-security.json`。
+<!-- /CCIE TABLE CURRENT -->
