@@ -1514,6 +1514,562 @@ import './mitre-atlas.css';
 {"\n                "}
 </E.section>
 
+<E.section id={"sec9"}>
+{"\n                    "}
+<E.h2>{"\n                        "}<GuideIcon name="ti-checklist" />{"9. ステップバイステップ:\n                        組織にATLASを導入するベストプラクティス\n                    "}</E.h2>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"1"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"AI資産のインベントリ作成"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                組織内にどのAIモデル・AIエージェント・MCPサーバー・RAGデータソースが存在するかを棚卸しします。Discovery系のTechniques("}
+<E.code>
+{"AML.T0084"}
+</E.code>
+{"など)は、そもそも攻撃者があなたの組織のAI資産を「偵察」する行為そのものです。自組織がインベントリを持っていなければ、攻撃者との情報の非対称性で最初から負けている状態になります。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"2"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"ATLAS Navigatorでシステムマップに脅威モデリングを適用"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                インベントリができたら、システム構成図の各コンポーネントに関連するTacticsとTechniquesを当てはめていきます。「ここでは誰がどんな影響力を行使できるか」「どのような統制がすでに存在するか」を1つずつ確認し、リスクの所有者(オーナー)を明確にします。オーナーが曖昧なリスクは対策が進みません。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"3"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"優先度の高いTechniquesにMitigationsをマッピングする"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                すべてのTechniquesに同時に対応するのは非現実的です。自組織のAIシステムの用途(予測型AIか、生成AI/LLMか、AIエージェントか)に応じて、影響度と実現可能性が高いTechniquesから優先的にMitigationsを適用します。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"4"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"ATLASのTechniquesを使ったレッドチーム演習を実施する"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                現実的な被害を想定したシナリオでレッドチーム演習を行います。生成AIシステムであれば、プロンプト操作、検索コンテキストへの干渉、間接プロンプトインジェクションなどが代表的な演習シナリオです。ATLAS\n                                ArsenalというCALDERAプラグインを使うと、こうした演習を自動化できます。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"5"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"検知ルールとログ収集(Telemetry)を整備する"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                AI Telemetry\n                                Logging("}
+<E.code>
+{"AML.M0024"}
+</E.code>
+{")のように、推論への入力・出力を記録し、後から異常なパターンを分析できる体制を整えます。Case\n                                Studiesで使われた具体的な攻撃パターンを参考にすると検知エンジニアリングが効率化します。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n\n                    "}
+<E.div className={"step-card"}>
+{"\n                        "}
+<E.div className={"num"}>
+{"6"}
+</E.div>
+{"\n                        "}
+<E.div className={"body"}>
+{"\n                            "}
+<E.h4>{"継続的な更新への追従"}</E.h4>
+{"\n                            "}
+<E.p>
+{"\n                                ATLASは継続的に更新されるリソースです。特にAIエージェントやMCP関連のTechniquesは2025年以降に急速に拡充されています。定期的に公式サイトやGitHubの更新履歴を確認し、自組織の脅威モデルをアップデートする運用サイクルを組み込みましょう。\n                            "}
+</E.p>
+{"\n                        "}
+</E.div>
+{"\n                    "}
+</E.div>
+{"\n                "}
+</E.section>
+
+<E.section id={"sec10"}>
+{"\n                    "}
+<E.h2>{"\n                        "}<GuideIcon name="ti-stack-2" />{"10. 他のAIセキュリティフレームワークとの関係\n                    "}</E.h2>
+{"\n                    "}
+<E.p>
+{"\n                        ATLASは単独で使うものではなく、他のフレームワークと組み合わせることで真価を発揮します。それぞれの役割分担を整理します。\n                    "}
+</E.p>
+{"\n                    "}
+<E.div className="atlas-table-scroll">
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"フレームワーク"}
+</E.th>
+<E.th>
+{"位置づけ"}
+</E.th>
+<E.th>
+{"ATLASとの関係"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"OWASP LLM Top 10 / Agentic Top 10"}
+</E.td>
+<E.td>
+{"開発者向けの最重要リスク優先順位付けリスト"}
+</E.td>
+<E.td>
+{"\n                                    ATLASは攻撃者視点のTTPカタログ、OWASPは開発者視点の脆弱性チェックリスト。開発・コードレビュー段階ではOWASP、運用・脅威モデリング・検知段階ではATLASを使うのが基本\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"NIST AI RMF"}
+</E.td>
+<E.td>
+{"AIリスクをガバナンスするマネジメントフレームワーク"}
+</E.td>
+<E.td>
+{"\n                                    ATLASはNIST AI\n                                    RMFの「Map」「Measure」フェーズで参照する具体的な脅威情報源として機能する\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"MITRE D3FEND"}
+</E.td>
+<E.td>
+{"防御側の対策技術カタログ"}
+</E.td>
+<E.td>
+{"\n                                    ATLASのTechniquesに対応する具体的な防御手法(検知・回避・強化など)を提供する\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"Google SAIF"}
+</E.td>
+<E.td>
+{"Googleが提唱するAIセキュリティの実践フレームワーク"}
+</E.td>
+<E.td>
+{"\n                                    高レベルの原則を提示し、ATLASはその原則を裏付ける具体的な攻撃事例・技術詳細を提供する\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ISO/IEC 42001"}
+</E.td>
+<E.td>
+{"AIマネジメントシステムの国際規格"}
+</E.td>
+<E.td>
+{"\n                                    組織のAIガバナンス全体の要求事項を規定し、ATLASはリスクアセスメントの具体的なインプットとして活用される\n                                "}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n                    "}
+<E.div className={"callout"}>
+{"\n                        "}
+<GuideIcon name="ti-bulb" />
+{"\n                        "}
+<E.p>
+{"\n                            一言でまとめると、「"}
+<E.strong>
+{"ATLASは脅威(攻撃者側)の情報源、他のフレームワークはガバナンス・統制(防御側)の枠組み"}
+</E.strong>
+{"」という役割分担です。どちらか一方だけでは不十分で、組み合わせて初めて実務で機能します。\n                        "}
+</E.p>
+{"\n                    "}
+</E.div>
+{"\n                "}
+</E.section>
+
+<E.section id={"sec11"}>
+{"\n                    "}
+<E.h2><GuideIcon name="ti-tools" />{"11. 便利なツールとリソース"}</E.h2>
+{"\n                    "}
+<E.div className="atlas-table-scroll">
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"ツール名"}
+</E.th>
+<E.th>
+{"概要"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"ATLAS Navigator"}
+</E.td>
+<E.td>
+{"\n                                    ブラウザ上でATLASマトリクスを可視化し、脅威モデリングやカバレッジのマッピングができるWebツール。JSON/Excel/SVG形式でのエクスポートにも対応\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ATLAS Arsenal"}
+</E.td>
+<E.td>
+{"\n                                    Microsoftとの協業で開発された、AIレッドチーム演習を自動化するCALDERAプラグイン\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"AI Incident Sharing Initiative"}
+</E.td>
+<E.td>
+{"\n                                    匿名化されたインシデント報告を通じて、コミュニティで脅威インテリジェンスを共有する仕組み\n                                "}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"atlas-data(GitHub)"}
+</E.td>
+<E.td>
+{"\n                                    ATLASの全データをYAML/JSON/STIX\n                                    2.1形式で配布しているリポジトリ。自前のツールにATLASデータを組み込みたい場合はここから取得する\n                                "}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n                "}
+</E.section>
+
+<E.section id={"sec12"}>
+{"\n                    "}
+<E.h2><GuideIcon name="ti-flag-check" />{"12. まとめ"}</E.h2>
+{"\n                    "}
+<E.ul>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE\n                            ATLASは、AI/MLシステムを狙う攻撃者の戦術・技術を体系化した無償のナレッジベースであり、MITRE\n                            ATT&CKと同じ構造を採用している\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATT&CKが伝統的なIT/クラウド環境を対象とするのに対し、ATLASはモデル・学習データ・推論API・RAG・AIエージェントといったAI特有の攻撃面を扱う\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            全16のTacticsは攻撃者の典型的なライフサイクルに沿って並んでいるが、実際の攻撃では順序も並行度も自由である\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            プロンプトインジェクション、ジェイルブレイク、RAGポイズニング、AIエージェントのコンテキスト汚染など、生成AI・AIエージェント特有のTechniquesが2023年以降急速に拡充されている\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLASは単独で使うのではなく、OWASP LLM Top 10、NIST AI RMF、ISO/IEC\n                            42001などのガバナンスフレームワークと組み合わせて実務に落とし込む\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            継続的に更新される「生きた」リソースであるため、定期的に公式サイト・GitHubを確認し続けることが重要\n                        "}
+</E.li>
+{"\n                    "}
+</E.ul>
+{"\n                "}
+</E.section>
+
+<E.section id={"sec13"}>
+{"\n                    "}
+<E.h2><GuideIcon name="ti-link" />{"13. 参考URL一覧"}</E.h2>
+{"\n                    "}
+<E.ul className={"ref-list"}>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS公式サイト:\n                            "}
+<E.a href={"https://atlas.mitre.org/"} target={"_blank"} rel="noopener noreferrer">
+{"https://atlas.mitre.org/"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLASマトリクス(全体像):\n                            "}
+<E.a href={"https://atlas.mitre.org/matrices/ATLAS"} target={"_blank"} rel="noopener noreferrer">
+{"https://atlas.mitre.org/matrices/ATLAS"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLAS Case Studies一覧:\n                            "}
+<E.a href={"https://atlas.mitre.org/studies"} target={"_blank"} rel="noopener noreferrer">
+{"https://atlas.mitre.org/studies"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLAS Mitigations一覧:\n                            "}
+<E.a href={"https://atlas.mitre.org/mitigations"} target={"_blank"} rel="noopener noreferrer">
+{"https://atlas.mitre.org/mitigations"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLAS Navigator:\n                            "}
+<E.a href={"https://mitre-atlas.github.io/atlas-navigator/"} target={"_blank"} rel="noopener noreferrer">
+{"https://mitre-atlas.github.io/atlas-navigator/"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLASデータ(GitHubリポジトリ、YAML/JSON/STIX形式):\n                            "}
+<E.a href={"https://github.com/mitre-atlas/atlas-data"} target={"_blank"} rel="noopener noreferrer">
+{"https://github.com/mitre-atlas/atlas-data"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLAS公式データ(固定版YAML, v2026.07):\n                            "}
+<E.a href={"https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml"} target={"_blank"} rel="noopener noreferrer">
+{"https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE公式プレスリリース(生成AI拡張、2023年11月):\n                            "}
+<E.a href={"https://www.mitre.org/news-insights/news-release/mitre-and-microsoft-collaborate-address-generative-ai-security-risks"} target={"_blank"} rel="noopener noreferrer">
+{"mitre.org news release"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLAS概要説明(NIST発表資料 2025年9月):\n                            "}
+<E.a href={"https://csrc.nist.gov/csrc/media/Presentations/2025/mitre-atlas/TuePM2.1-MITRE%20ATLAS%20Overview%20Sept%202025.pdf"} target={"_blank"} rel="noopener noreferrer">
+{"csrc.nist.gov PDF"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS for Agentic AI(2026年最新動向):\n                            "}
+<E.a href={"https://anomity.ai/blog/mitre-atlas-agentic-ai-threats-guide/"} target={"_blank"} rel="noopener noreferrer">
+{"anomity.ai"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS: AI security framework(16 Tactics/84 Techniques根拠):\n                            "}
+<E.a href={"https://www.vectra.ai/topics/mitre-atlas"} target={"_blank"} rel="noopener noreferrer">
+{"vectra.ai"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS: AI Threat Framework & Compliance Guide:\n                            "}
+<E.a href={"https://aisigil.com/mitre-atlas/"} target={"_blank"} rel="noopener noreferrer">
+{"aisigil.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS Framework 2026 Guide:\n                            "}
+<E.a href={"https://www.practical-devsecops.com/mitre-atlas-framework-guide-securing-ai-systems/"} target={"_blank"} rel="noopener noreferrer">
+{"practical-devsecops.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            The Ultimate Guide to MITRE ATLAS 2026:\n                            "}
+<E.a href={"https://www.getastra.com/blog/security-audit/mitre-atlas/"} target={"_blank"} rel="noopener noreferrer">
+{"getastra.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            What is MITRE ATLAS?(CrowdStrike):\n                            "}
+<E.a href={"https://www.crowdstrike.com/en-us/cybersecurity-101/artificial-intelligence/mitre-atlas/"} target={"_blank"} rel="noopener noreferrer">
+{"crowdstrike.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            Understanding the MITRE ATLAS Matrix for AI Threats:\n                            "}
+<E.a href={"https://www.pointguardai.com/blog/understanding-the-mitre-atlas-matrix-for-ai-threats"} target={"_blank"} rel="noopener noreferrer">
+{"pointguardai.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITREの規制フレームワークとしての解説(Palo Alto Networks):\n                            "}
+<E.a href={"https://www.paloaltonetworks.com/cyberpedia/mitre-sensible-regulatory-framework-atlas-matrix"} target={"_blank"} rel="noopener noreferrer">
+{"paloaltonetworks.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS Matrix Overview(DETECTX):\n                            "}
+<E.a href={"https://www.detectx.com.au/atlas-matrix-overview/"} target={"_blank"} rel="noopener noreferrer">
+{"detectx.com.au"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS: How can AI be attacked?(Tarlogic):\n                            "}
+<E.a href={"https://www.tarlogic.com/blog/mitre-atlas/"} target={"_blank"} rel="noopener noreferrer">
+{"tarlogic.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS Framework: AI Attack Techniques(Repello AI):\n                            "}
+<E.a href={"https://repello.ai/blog/mitre-atlas-framework"} target={"_blank"} rel="noopener noreferrer">
+{"repello.ai"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS(DeepTeamレッドチームフレームワーク実装例):\n                            "}
+<E.a href={"https://www.trydeepteam.com/docs/frameworks-mitre-atlas"} target={"_blank"} rel="noopener noreferrer">
+{"trydeepteam.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            Security Considerations for Multi-agent Systems(arXiv):\n                            "}
+<E.a href={"https://arxiv.org/pdf/2603.09002"} target={"_blank"} rel="noopener noreferrer">
+{"arxiv.org"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            PoisonGPT Case Study詳細解説:\n                            "}
+<E.a href={"https://www.startupdefense.io/mitre-atlas-case-studies/aml-cs0019-poisongpt"} target={"_blank"} rel="noopener noreferrer">
+{"startupdefense.io"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            AI Threat Modeling & MITRE ATLAS Interview Q&A:\n                            "}
+<E.a href={"https://ai.techclick.in/blog_ai_threat_modeling_interview_qa"} target={"_blank"} rel="noopener noreferrer">
+{"ai.techclick.in"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            ATLASとOWASP LLM Top 10のMitigationsマッピング解説:\n                            "}
+<E.a href={"https://blog.ogwilliam.com/post/mapping-mitre-atlas-mitigations-owasp-top-10-llms"} target={"_blank"} rel="noopener noreferrer">
+{"blog.ogwilliam.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            AIUC-1 x MITRE ATLASクロスウォーク:\n                            "}
+<E.a href={"https://www.aiuc-1.com/crosswalks/mitre-atlas"} target={"_blank"} rel="noopener noreferrer">
+{"aiuc-1.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            MITRE ATLAS Course of Action(MISP galaxy):\n                            "}
+<E.a href={"https://misp-galaxy.org/mitre-atlas-course-of-action/"} target={"_blank"} rel="noopener noreferrer">
+{"misp-galaxy.org"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            SAFE-AIレポート(MITRE公式PDF、NIST SP 800-53マッピング):\n                            "}
+<E.a href={"https://atlas.mitre.org/pdf-files/SAFEAI_Full_Report.pdf"} target={"_blank"} rel="noopener noreferrer">
+{"atlas.mitre.org PDF"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                        "}
+<E.li>
+{"\n                            From Theory to Practice: Implementing MITRE ATLAS Defenses:\n                            "}
+<E.a href={"https://medium.com/@michael.hannecke/from-theory-to-practice-implementing-mitre-atlas-defenses-77dde19f9769"} target={"_blank"} rel="noopener noreferrer">
+{"medium.com"}
+</E.a>
+{"\n                        "}
+</E.li>
+{"\n                    "}
+</E.ul>
+{"\n                "}
+</E.section>
+
+<E.footer>
+{"\n                    本ガイドは2026年7月時点で参照可能な情報をもとに作成しています。ATLASは継続的に更新される生きたナレッジベースであるため、最新のTactics/Techniques/Mitigations/Case\n                    Studiesの一覧は必ず公式サイト(atlas.mitre.org)でご確認ください。\n                "}
+</E.footer>
+
 </E.div>
 
 </E.div>
