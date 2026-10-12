@@ -1,0 +1,984 @@
+---
+title: "Secure by Design 入門ガイド"
+description: "Manning刊『Secure by Design』をもとに、設計でセキュリティを実現する考え方を初学者向けにステップバイステップで解説するガイド(情報基準日 2026年10月8日)"
+---
+
+export const metadata = {"title": "Secure by Design 入門ガイド", "description": "Manning刊『Secure by Design』をもとに、設計でセキュリティを実現する考え方を初学者向けにステップバイステップで解説するガイド(情報基準日 2026年10月8日)"};
+
+import { E } from './GuideElements';
+import { GuideSidebar } from './GuideSidebar';
+import { toc } from './toc';
+import { MermaidFigure } from './MermaidFigure';
+import { diagrams } from './diagrams';
+import { JavaCode } from './JavaCode';
+import { ShieldCheck, Info, Lightbulb, TriangleAlert, ExternalLink } from 'lucide-react';
+import './secure-by-design.css';
+
+<E.div className="secure-by-design-guide">
+
+<GuideSidebar items={toc} />
+
+<E.div className="main">
+
+<E.header className={"hero"} id={"top"}>
+{"\n    "}
+<E.span className={"eyebrow"}>
+<ShieldCheck className={"ti ti-shield-lock"} aria-hidden="true" />
+{" Secure by Design"}
+</E.span>
+{"\n    "}
+<E.h1>
+{"Secure by Design 入門ガイド"}
+</E.h1>
+{"\n    "}
+<E.p className={"sub"}>
+{"〜「設計」でセキュリティを実現する考え方を、ステップバイステップで学ぶ〜"}
+</E.p>
+{"\n    "}
+<E.dl className={"meta"}>
+{"\n"}
+<E.div className={"meta-item"}>
+<E.dt>
+{"対象読者"}
+</E.dt>
+<E.dd>
+{"セキュリティの専門家ではないが、Java / C# / TypeScript など何らかの言語でアプリケーションを設計・実装・テストしている初学者〜中級者"}
+</E.dd>
+</E.div>
+{"\n"}
+<E.div className={"meta-item"}>
+<E.dt>
+{"情報の基準日"}
+</E.dt>
+<E.dd>
+{"2026年10月8日時点(Web検索で確認できた範囲)"}
+</E.dd>
+</E.div>
+{"\n"}
+<E.div className={"meta-item"}>
+<E.dt>
+{"主な土台"}
+</E.dt>
+<E.dd>
+{"Manning 刊『Secure by Design』(Dan Bergh Johnsson / Daniel Deogun / Daniel Sawano 著、2019年9月刊、400ページ)"}
+</E.dd>
+</E.div>
+{"\n"}
+<E.div className={"meta-item"}>
+<E.dt>
+{"補強資料"}
+</E.dt>
+<E.dd>
+{"Google の Christoph Kern 氏の Safe Coding、IEEE Center for Secure Design、CISA ほか各国政府機関の Secure by Design 指針、Matt Raible 氏の書評・解説 ほか"}
+</E.dd>
+</E.div>
+{"\n    "}
+</E.dl>
+{"\n  "}
+</E.header>
+
+<E.section className={"section"} id={"sec-0"}>
+<E.h2>
+{"0. このガイドの使い方"}
+</E.h2>
+<E.div className={"prose"}>
+<E.h3>
+{"0.1 このガイドで分かること"}
+</E.h3>
+{"\n"}
+<E.ol>
+{"\n"}
+<E.li>
+{"「Secure by Design(設計によるセキュリティ)」とは何か、なぜ「あとから足すセキュリティ」より強いのか"}
+</E.li>
+{"\n"}
+<E.li>
+{"書籍が提案する "}
+<E.strong>
+{"コードレベルの具体的な設計テクニック"}
+</E.strong>
+{"(不変性・フェイルファスト・バリデーション・ドメインプリミティブ・エンティティの設計 など)"}
+</E.li>
+{"\n"}
+<E.li>
+<E.strong>
+{"テスト・デリバリーパイプライン・障害設計・クラウド設計"}
+</E.strong>
+{" にまで広がる設計の考え方"}
+</E.li>
+{"\n"}
+<E.li>
+{"世の中でよく混同される「"}
+<E.strong>
+{"CISA などが推進する製品セキュリティ原則としての Secure by Design"}
+</E.strong>
+{"」との違いと関係"}
+</E.li>
+{"\n"}
+<E.li>
+{"明日から現場で使える "}
+<E.strong>
+{"チェックリスト・演習・理解度確認"}
+</E.strong>
+</E.li>
+{"\n"}
+</E.ol>
+{"\n"}
+<E.h3>
+{"0.2 重要な前提(著作権・正確性について)"}
+</E.h3>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"書籍の内容は "}
+<E.strong>
+{"目次・公式紹介ページ・著者の無料公開記事・公開スライド・書評"}
+</E.strong>
+{" をもとに、私(筆者)が自分の言葉で再構成しています。書籍本文の転載ではありません。"}
+<E.strong>
+{"詳細な議論やコード全体は必ず書籍で確認してください。"}
+</E.strong>
+</E.li>
+{"\n"}
+<E.li>
+{"コード例は、考え方を説明するために "}
+<E.strong>
+{"本ガイド用に新しく書いたオリジナル"}
+</E.strong>
+{" です(書籍のコードそのものではありません)。"}
+</E.li>
+{"\n"}
+<E.li>
+{"Java のコード例は "}
+<E.code>
+{"List.copyOf"}
+</E.code>
+{"(JDK 10 以降)と "}
+<E.code>
+{"instanceof"}
+</E.code>
+{" のパターンマッチング(JDK 16 以降)を使うため、"}
+<E.strong>
+{"JDK 16 以降"}
+</E.strong>
+{" を前提とします。"}
+</E.li>
+{"\n"}
+<E.li>
+{"書籍の第12章(レガシー)・第13章(マイクロサービス)は、私が参照できた範囲では詳細な目次までは確認できませんでした。該当箇所は「"}
+<E.strong>
+{"書評・目次レベルで確認できた内容"}
+</E.strong>
+{"」と「"}
+<E.strong>
+{"筆者の一般的な整理"}
+</E.strong>
+{"」を区別して記載しています。"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.h3>
+{"0.3 全体の学習ステップ"}
+</E.h3>
+{"\n"}
+<MermaidFigure id="d1" source={diagrams["d1"]} />
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-1"}>
+<E.h2>
+{"1. Step 0 ── Secure by Design とは何か(まず全体像)"}
+</E.h2>
+<E.div className={"prose"}>
+<E.h3>
+{"1.1 一言でいうと"}
+</E.h3>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+<E.strong>
+{"セキュリティを「あとから足す機能」ではなく、「良い設計の自然な結果」として手に入れる考え方。"}
+</E.strong>
+</E.p>
+</E.div>
+{"\n"}
+<E.p>
+{"書籍の公式紹介では、セキュリティは開発プロセスの自然な成果物であるべきだと述べられ、設計を主な推進力としてセキュリティを実現するアプローチが解説されています。また、著者らは「開発者は開発者であり、セキュリティは副次的な関心事になりがちだ」という現実を踏まえ、"}
+<E.strong>
+{"日々の設計習慣の中で自然に安全になる作り方"}
+</E.strong>
+{"を目指していると紹介されています。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"1.2 「Secure by Design」という言葉が指す2つの文脈"}
+</E.h3>
+{"\n"}
+<E.p>
+{"同じ言葉が、少し違う意味で使われています。混同しないことが最初の重要ポイントです。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"観点"}
+</E.th>
+<E.th>
+{"① 書籍の Secure by Design"}
+</E.th>
+<E.th>
+{"② CISA 等の Secure by Design"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"主な主体"}
+</E.td>
+<E.td>
+{"開発者・設計者(コードを書く人)"}
+</E.td>
+<E.td>
+{"ソフトウェア製造事業者(経営層を含む組織)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"主な関心"}
+</E.td>
+<E.td>
+{"コード・ドメインモデル・テスト・運用の "}
+<E.strong>
+{"設計技法"}
+</E.strong>
+</E.td>
+<E.td>
+{"製品が顧客に与える "}
+<E.strong>
+{"セキュリティ成果"}
+</E.strong>
+{" と、その説明責任"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"代表的な内容"}
+</E.td>
+<E.td>
+{"ドメインプリミティブ、不変性、フェイルファスト、レジリエンス"}
+</E.td>
+<E.td>
+{"顧客のセキュリティ成果への責任、徹底した透明性、トップの主導、7つのゴールの誓約"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"性質"}
+</E.td>
+<E.td>
+{"技術書・設計の実践知"}
+</E.td>
+<E.td>
+{"政府機関の共同ガイダンス・自主的な誓約(pledge)"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"両者の関係"}
+</E.td>
+<E.td>
+<E.strong>
+{"「どう作るか」の具体的手段"}
+</E.strong>
+</E.td>
+<E.td>
+<E.strong>
+{"「何を目指し、どう説明するか」の方針"}
+</E.strong>
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout tip"}>
+<Lightbulb className={"ti ti-bulb"} aria-hidden="true" />
+<E.p>
+{"初学者向けの整理: ①は「手を動かす人の設計ワザ」、②は「組織として何にコミットするかの宣言」。②の目標(例:脆弱性のクラス全体を減らす)を達成するための具体的手段として、①の技法が役に立ちます。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"1.3 「あとから足す」vs「設計に織り込む」"}
+</E.h3>
+{"\n"}
+<MermaidFigure id="d2" source={diagrams["d2"]} />
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"比較項目"}
+</E.th>
+<E.th>
+{"あとから足す方式"}
+</E.th>
+<E.th>
+{"設計に織り込む方式"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"開発者に求める知識"}
+</E.td>
+<E.td>
+{"全員がセキュリティ専門家になる必要がある"}
+</E.td>
+<E.td>
+{"設計部品の使い方を知っていれば良い"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"漏れの起きやすさ"}
+</E.td>
+<E.td>
+{"人が思い出さないと漏れる"}
+</E.td>
+<E.td>
+{"部品を使えば自動的に守られる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"コスト"}
+</E.td>
+<E.td>
+{"発見・修正を繰り返すため後半ほど高い"}
+</E.td>
+<E.td>
+{"初期に設計コストがかかるが、再発しにくい"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"脆弱性への姿勢"}
+</E.td>
+<E.td>
+{"個々のバグ(インスタンス)を潰す"}
+</E.td>
+<E.td>
+{"バグが生まれる "}
+<E.strong>
+{"構造そのもの"}
+</E.strong>
+{" を潰す"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-2"}>
+<E.h2>
+{"2. Step 1 ── セキュリティは「機能」ではなく「関心事」"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第1章 \"Why design matters for security\" の前半に相当)"}
+</E.p>
+{"\n"}
+<E.h3>
+{"2.1 機能(Feature)と関心事(Concern)の違い"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍第1章の節見出しには「セキュリティは機能ではなく関心事である」という趣旨のものがあります。ここでの考え方を整理するとこうなります。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"種類"}
+</E.th>
+<E.th>
+{"例"}
+</E.th>
+<E.th>
+{"特徴"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+<E.strong>
+{"セキュリティ機能"}
+</E.strong>
+</E.td>
+<E.td>
+{"ログイン画面、パスワードハッシュ、アクセス制御、暗号化ライブラリ"}
+</E.td>
+<E.td>
+{"バックログに積んで「作れば完了」にできる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+<E.strong>
+{"セキュリティ関心事"}
+</E.strong>
+</E.td>
+<E.td>
+{"入力が正しい範囲に収まっているか、状態が壊れないか、障害時に情報が漏れないか"}
+</E.td>
+<E.td>
+{"全ての機能・全てのコードに "}
+<E.strong>
+{"横断的に"}
+</E.strong>
+{" 関わる。「完了」の概念がない"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"例えるなら、"}
+<E.strong>
+{"「鍵」は機能ですが、「家の間取り・壁・窓の位置」は関心事"}
+</E.strong>
+{" です。いくら高級な鍵を付けても、壁に穴が空いていれば守れません。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"2.2 セキュリティ関心事の分類: CIA-T"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍は、セキュリティ関心事を "}
+<E.strong>
+{"CIA-T"}
+</E.strong>
+{" という4つの観点で整理します(CIA に T を加えたもの)。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"文字"}
+</E.th>
+<E.th>
+{"観点"}
+</E.th>
+<E.th>
+{"意味(平易な説明)"}
+</E.th>
+<E.th>
+{"よくある設計上の落とし穴の例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+<E.strong>
+{"C"}
+</E.strong>
+</E.td>
+<E.td>
+{"Confidentiality(機密性)"}
+</E.td>
+<E.td>
+{"見てはいけない人に見せない"}
+</E.td>
+<E.td>
+{"ログや例外メッセージに個人情報が混ざる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+<E.strong>
+{"I"}
+</E.strong>
+</E.td>
+<E.td>
+{"Integrity(完全性)"}
+</E.td>
+<E.td>
+{"データ・状態が勝手に壊れない/改ざんされない"}
+</E.td>
+<E.td>
+{"不正な値(負の数量など)がシステムに入り込む"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+<E.strong>
+{"A"}
+</E.strong>
+</E.td>
+<E.td>
+{"Availability(可用性)"}
+</E.td>
+<E.td>
+{"必要な時に使える"}
+</E.td>
+<E.td>
+{"1件の重い処理や外部障害で全体が止まる"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+<E.strong>
+{"T"}
+</E.strong>
+</E.td>
+<E.td>
+{"Traceability(追跡可能性)"}
+</E.td>
+<E.td>
+{"誰が何をしたか後から追える"}
+</E.td>
+<E.td>
+{"監査ログが残らない/改ざんできる"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"書籍では T を Traceability として扱うと私は理解していますが、定義の細部は書籍本文で確認してください。"}
+</E.p>
+</E.div>
+{"\n"}
+<E.h3>
+{"2.3 従来のセキュリティアプローチの限界"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍第1章は、従来のやり方の問題点として次の3つの節を立てています。"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d3" source={diagrams["d3"]} />
+{"\n"}
+<E.div className={"callout tip"}>
+<Lightbulb className={"ti ti-bulb"} aria-hidden="true" />
+<E.p>
+{"Matt Raible 氏(Java Champion、Okta の開発者支援担当として知られる)は書評で、"}
+<E.strong>
+{"開発者にセキュリティ関連 API 呼び出しを毎回思い出させる方式は難しく、セキュリティを設計に焼き込むほうが開発者は自然に安全になる"}
+</E.strong>
+{"、という趣旨で本書の第1章を評価しています。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-3"}>
+<E.h2>
+{"3. Step 2 ── 「設計」とは何か、設計でセキュリティを駆動する"}
+</E.h2>
+<E.div className={"prose"}>
+<E.h3>
+{"3.1 設計の定義(広く捉える)"}
+</E.h3>
+{"\n"}
+<E.p>
+{"書籍は「設計」をコード1行〜アーキテクチャ全体にまたがる活動として扱います。つまり "}
+<E.strong>
+{"クラス名・型・メソッドシグネチャの決め方も立派な設計"}
+</E.strong>
+{" です。"}
+</E.p>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"設計のレベル"}
+</E.th>
+<E.th>
+{"具体例"}
+</E.th>
+<E.th>
+{"セキュリティへの効き方"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"コード"}
+</E.td>
+<E.td>
+{"型の選び方、引数の型、例外の投げ方"}
+</E.td>
+<E.td>
+{"不正値を「そもそも表現できない」ようにする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"クラス/モジュール"}
+</E.td>
+<E.td>
+{"エンティティの作り方、公開APIの形"}
+</E.td>
+<E.td>
+{"不整合な状態を作れないようにする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"アーキテクチャ"}
+</E.td>
+<E.td>
+{"サービス分割、外部連携、設定管理"}
+</E.td>
+<E.td>
+{"障害や侵害が全体に波及しないようにする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"運用/パイプライン"}
+</E.td>
+<E.td>
+{"テスト、デプロイ、設定のコード化"}
+</E.td>
+<E.td>
+{"設定ミスや回帰を自動で検出する"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"3.2 ユーザーそのものを Secure by Design にする"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第1章には「ユーザーを secure by design にする」という趣旨の節があります。ここでの含意は次のとおりです。"}
+</E.p>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"利用者(開発者を含む)が "}
+<E.strong>
+{"間違った使い方をしにくい"}
+</E.strong>
+{" 設計にする"}
+</E.li>
+{"\n"}
+<E.li>
+{"安全な使い方を "}
+<E.strong>
+{"いちばん楽な使い方"}
+</E.strong>
+{" にする(安全な方がデフォルト)"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.p>
+{"これは後の章の「安全な部品(ドメインプリミティブ)を用意して、開発者はそれを使うだけ」という考え方につながります。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"3.3 設計アプローチの利点と「折衷主義(eclectic)」"}
+</E.h3>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"設計でセキュリティを駆動する利点: 開発者の日常作業に溶け込むため、継続しやすい"}
+</E.li>
+{"\n"}
+<E.li>
+{"ただし書籍は "}
+<E.strong>
+{"設計だけが万能ではなく、他の手法と併用する"}
+</E.strong>
+{" という姿勢(節見出し \"Staying eclectic\")も示しています。ペネトレーションテストや運用監視を捨てる話ではありません。"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<E.h3>
+{"3.4 ケーススタディ: 「Billion Laughs」攻撃(XML)"}
+</E.h3>
+{"\n"}
+<E.p>
+{"第1章の後半では、文字列と XML を扱うときの "}
+<E.strong>
+{"Billion Laughs 攻撃"}
+</E.strong>
+{" を題材に、設計の考え方を適用します。"}
+</E.p>
+{"\n"}
+<E.p>
+<E.strong>
+{"どんな攻撃か(要点)"}
+</E.strong>
+{": XML の「内部エンティティ(置換用の名前)」を入れ子に定義して、パーサーに展開させると、小さな入力から巨大なデータが生成され、メモリや CPU を使い果たす(可用性の侵害)。"}
+</E.p>
+{"\n"}
+<E.p>
+<E.strong>
+{"書籍の節構成が示す対処の流れ"}
+</E.strong>
+{":"}
+</E.p>
+{"\n"}
+<MermaidFigure id="d4" source={diagrams["d4"]} />
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"層"}
+</E.th>
+<E.th>
+{"対策の方向性"}
+</E.th>
+<E.th>
+{"狙い"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"パーサー設定"}
+</E.td>
+<E.td>
+{"外部/巨大なエンティティ展開などの危険機能を無効にする"}
+</E.td>
+<E.td>
+{"攻撃経路そのものを塞ぐ"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"設計"}
+</E.td>
+<E.td>
+{"本当に必要な XML の形だけを受け付ける"}
+</E.td>
+<E.td>
+{"「受け入れ範囲」を狭くする"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"運用制約"}
+</E.td>
+<E.td>
+{"メモリ・CPU・タイムアウトなどの上限"}
+</E.td>
+<E.td>
+{"万一入り込んでも被害を限定"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"多層防御"}
+</E.td>
+<E.td>
+{"上記を組み合わせる"}
+</E.td>
+<E.td>
+{"単一対策の抜けを補う"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.div className={"callout note"}>
+<Info className={"ti ti-info-circle"} aria-hidden="true" />
+<E.p>
+{"具体的なパーサー設定のプロパティ名は言語・ライブラリごとに異なります。使用中のライブラリの公式ドキュメントで必ず確認してください。"}
+</E.p>
+</E.div>
+</E.div>
+</E.section>
+
+<E.section className={"section"} id={"sec-4"}>
+<E.h2>
+{"4. Step 3 ── DDD(ドメイン駆動設計)の最小知識"}
+</E.h2>
+<E.div className={"prose"}>
+<E.p>
+{"(書籍 第3章 \"Core concepts of Domain-Driven Design\" に相当)"}
+</E.p>
+{"\n"}
+<E.p>
+{"書籍の第2章(中間章)ではオンライン書店を題材にした例が展開され、第3章で DDD の核心概念を押さえます。"}
+<E.strong>
+{"セキュリティの本ではありますが、DDD を知らないと次章以降の「ドメインプリミティブ」が理解しにくい"}
+</E.strong>
+{"ため、必要最小限をここで整理します。"}
+</E.p>
+{"\n"}
+<E.h3>
+{"4.1 用語集(初学者向け)"}
+</E.h3>
+{"\n"}
+<E.div className={"table-wrap"}>
+<E.table>
+<E.thead>
+<E.tr>
+<E.th>
+{"用語"}
+</E.th>
+<E.th>
+{"平易な説明"}
+</E.th>
+<E.th>
+{"例"}
+</E.th>
+</E.tr>
+</E.thead>
+<E.tbody>
+<E.tr>
+<E.td>
+{"ドメイン"}
+</E.td>
+<E.td>
+{"解きたい業務・問題領域"}
+</E.td>
+<E.td>
+{"オンライン書店、銀行、予約システム"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"ユビキタス言語"}
+</E.td>
+<E.td>
+{"開発者と業務担当者が "}
+<E.strong>
+{"同じ言葉"}
+</E.strong>
+{" で話すための共通語彙"}
+</E.td>
+<E.td>
+{"「数量」「注文」「配送先」を全員が同じ意味で使う"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"境界づけられたコンテキスト"}
+</E.td>
+<E.td>
+{"ある言葉の "}
+<E.strong>
+{"意味が成り立つ範囲"}
+</E.strong>
+</E.td>
+<E.td>
+{"「顧客」の意味は営業とサポートで違うことがある"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"値オブジェクト"}
+</E.td>
+<E.td>
+<E.strong>
+{"値そのもの"}
+</E.strong>
+{" で同一性が決まる不変の概念"}
+</E.td>
+<E.td>
+{"金額、日付、メールアドレス"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"エンティティ"}
+</E.td>
+<E.td>
+<E.strong>
+{"ID"}
+</E.strong>
+{" で同一性が決まり、時間とともに状態が変わる概念"}
+</E.td>
+<E.td>
+{"注文、ユーザーアカウント"}
+</E.td>
+</E.tr>
+<E.tr>
+<E.td>
+{"集約"}
+</E.td>
+<E.td>
+{"一貫性を保つ単位としてまとめたエンティティ群"}
+</E.td>
+<E.td>
+{"注文と注文明細"}
+</E.td>
+</E.tr>
+</E.tbody>
+</E.table>
+</E.div>
+{"\n"}
+<E.h3>
+{"4.2 なぜセキュリティに効くのか"}
+</E.h3>
+{"\n"}
+<E.ul>
+{"\n"}
+<E.li>
+{"言葉の意味が "}
+<E.strong>
+{"曖昧"}
+</E.strong>
+{" だと、コードも曖昧になり、その隙間が脆弱性になる"}
+</E.li>
+{"\n"}
+<E.li>
+{"「この概念は何であり、何でないか」を詰める作業が、そのまま "}
+<E.strong>
+{"不正値を弾くルール(不変条件)"}
+</E.strong>
+{" の発見になる"}
+</E.li>
+{"\n"}
+</E.ul>
+{"\n"}
+<MermaidFigure id="d5" source={diagrams["d5"]} />
+</E.div>
+</E.section>
+
+</E.div>
+
+</E.div>
