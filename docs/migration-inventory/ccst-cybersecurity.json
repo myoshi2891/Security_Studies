@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "CSS監査Red・フォント/見出し/番号項目余白/狭幅カードの5件失敗・163表と3コードの色は成功",
+  "status": "CSS監査Red補正・happy-dom normalキーワード欠落を最小再現・元CSSで5件失敗",
   "counts": {
     "sections": 46,
     "headings": 227,
