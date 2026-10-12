@@ -74,8 +74,11 @@ export function GuideSidebar({ items }: { items: readonly GuideChapter[] }) {
   return <>
     <aside className="sidebar" id="sbd-sidebar" aria-label="目次" ref={aside}>
       <a className="brand" href="#top" onClick={() => { if (open) close(); }}>
+        {"\n    "}
         <span className="brand-name">Secure by Design</span>
+        {"\n    "}
         <span className="brand-sub">入門ガイド / 2026年10月8日時点</span>
+        {"\n  "}
       </a>
       <nav><ul>{items.map(item => <li key={item.id}>
         <a href={`#${item.id}`} className={active === item.id ? 'active' : undefined} aria-current={active === item.id ? 'location' : undefined} onClick={() => { select(item.id); if (open) close(); }}>{item.title}</a>
