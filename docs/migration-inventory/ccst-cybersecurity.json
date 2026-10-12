@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-13",
-  "status": "CSS監査Red補正・happy-dom normalキーワード欠落を最小再現・元CSSで5件失敗",
+  "status": "CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功",
   "counts": {
     "sections": 46,
     "headings": 227,
@@ -124,10 +124,10 @@
     "d49"
   ],
   "verification": {
-    "passed": 374,
-    "failed": 5,
+    "passed": 379,
+    "failed": 0,
     "testFiles": 57,
-    "assertions": 23060,
+    "assertions": 24987,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
     "visualReview": "pending user review"
