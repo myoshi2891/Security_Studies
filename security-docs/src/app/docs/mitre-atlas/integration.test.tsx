@@ -64,13 +64,14 @@ test('publishes fourteen complete search entries including the live ATLAS title,
   expect(cached.filter((item: { href: string }) => item.href === '/docs/mitre-atlas')).toEqual((await getSearchIndex()).filter(item => item.href === '/docs/mitre-atlas'));
 });
 
-test('all four accessible source definitions pass the real Mermaid parser with the source theme', async () => {
+test('all four source definitions pass the real Mermaid parser with the readability theme and original palette', async () => {
   const { default: mermaid } = await import('mermaid');
   const { diagramConfig } = await import('./MermaidDiagram');
   expect(definitions.size).toBe(4);
   for (const [id, source] of definitions) expect(await mermaid.parse(`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\n${source}`), id).toBeTruthy();
   const theme = sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\}/)![1];
-  for (const [, key, value] of theme.matchAll(/(\w+):\s*'([^']*)'/g)) expect(diagramConfig.themeVariables).toHaveProperty(key, value);
+  const readabilityOverrides: Record<string, string> = { fontSize: '18px', primaryTextColor: '#f8fafc', secondaryTextColor: '#f8fafc', nodeTextColor: '#f8fafc', titleColor: '#f8fafc', lineColor: '#cbd5e1' };
+  for (const [, key, value] of theme.matchAll(/(\w+):\s*'([^']*)'/g)) expect(diagramConfig.themeVariables).toHaveProperty(key, readabilityOverrides[key] ?? value);
 });
 
 test('the default renderer uses per-diagram configuration without initializing the shared engine', async () => {

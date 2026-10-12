@@ -64,15 +64,15 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.innerHTML).toBe('<ul><li>項目</li></ul>');
   });
 
-  test('retains all four definitions and the original accessible titles, descriptions and Mermaid theme', async () => {
+  test('retains all four definitions, accessible descriptions and original palette with readable typography', async () => {
     const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
     const { diagramConfig } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     expect(Object.entries(diagrams)).toEqual([...definitions]);
-    expect(diagramConfig).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict', htmlLabels: false, flowchart: { curve: 'linear', htmlLabels: false, useMaxWidth: false, nodeSpacing: 45, rankSpacing: 45 }, themeVariables: { primaryColor: '#5b21b6', secondaryColor: '#115e59', edgeLabelBackground: '#1f1f28', fontSize: '16px' } });
+    expect(diagramConfig).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict', htmlLabels: false, flowchart: { curve: 'linear', htmlLabels: false, useMaxWidth: false, nodeSpacing: 45, rankSpacing: 45 }, themeVariables: { primaryColor: '#5b21b6', secondaryColor: '#115e59', edgeLabelBackground: '#1f1f28', fontSize: '18px', darkMode: true, textColor: '#f8fafc' } });
     for (const definition of Object.values(diagrams) as string[]) expect(definition).toMatch(/accTitle:.*\n\s*accDescr:/);
   });
 
-  test('renders unique accessible SVG targets with original sizing and exposes source text', async () => {
+  test('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     const ids: string[] = [];
     const source = definitions.get('structure')!;
@@ -81,10 +81,58 @@ describe('MITRE ATLAS display foundation', () => {
     await waitFor(() => expect(container.querySelectorAll('svg')).toHaveLength(2));
     expect(new Set(ids).size).toBe(2);
     expect(container.querySelector('[role="img"]')).toHaveAttribute('aria-label', '図1 ATLASのデータモデル');
-    expect(container.querySelector('svg')?.style.maxWidth).toBe('100%');
+    expect(container.querySelector('svg')?.style.maxWidth).toBe('none');
+    expect(container.querySelector('svg')?.style.width).toBe('100px');
     expect(container.querySelector('svg')?.style.height).toBe('auto');
     expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe('0 0 100 50');
     expect(container.querySelector('pre')?.textContent).toBe(source);
+  });
+
+  test('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
+    const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
+    const source = definitions.get('lifecycle')!;
+    const renderer = async () => ({ svg: '<svg viewBox="0 0 1800 420" width="100%" height="420" style="max-width:100%"><text>Reconnaissance 偵察</text></svg>' });
+    const result = render(createElement(MermaidDiagram, { id: 'lifecycle', source, renderer }));
+    await waitFor(() => expect(result.container.querySelector('svg')).not.toBeNull());
+    const svg = result.container.querySelector('svg')!;
+    expect(svg.style.width).toBe('1800px');
+    expect(svg.style.maxWidth).toBe('none');
+    expect(svg.getAttribute('width')).toBeNull();
+    expect(svg.getAttribute('height')).toBeNull();
+    expect(svg.getAttribute('viewBox')).toBe('0 0 1800 420');
+    const viewport = svg.closest('.diagram-viewport')!;
+    expect(viewport).toHaveAttribute('tabindex', '0');
+    expect(viewport).toHaveAttribute('role', 'img');
+    expect(viewport).toHaveAttribute('aria-label', '図2 攻撃者ライフサイクル');
+    const descriptionId = viewport.getAttribute('aria-describedby')!;
+    expect(result.container.querySelector(`[id="${descriptionId}"]`)).toHaveTextContent('16のTactics');
+  });
+
+  test('sets explicit high-contrast text for nodes, subgraphs and edge labels without relying on Mermaid defaults', async () => {
+    const { diagramConfig } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
+    const theme = diagramConfig.themeVariables;
+    const luminance = (hex: string) => {
+      const rgb = hex.slice(1).match(/../g)!.map((channel: string) => parseInt(channel, 16) / 255).map((n: number) => n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4);
+      return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+    };
+    for (const [foreground, background] of [['primaryTextColor', 'primaryColor'], ['secondaryTextColor', 'secondaryColor'], ['tertiaryTextColor', 'tertiaryColor'], ['nodeTextColor', 'mainBkg'], ['titleColor', 'clusterBkg'], ['textColor', 'edgeLabelBackground']]) {
+      expect(theme[foreground], foreground).toBe('#f8fafc');
+      const a = luminance(theme[foreground]), b = luminance(theme[background]);
+      expect((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05), `${foreground}/${background}`).toBeGreaterThanOrEqual(7);
+    }
+    expect(diagramConfig.fontFamily).toContain('Hiragino Sans');
+  });
+
+  test('scrolls only the graphic, leaves the caption and description in normal flow and avoids CSS shrinking', () => {
+    const css = postcss.parse(readFileSync(resolve(here, 'mitre-atlas.css'), 'utf8'));
+    expect(declarations(css, `${scope} .diagram-viewport`).get('overflow-x')).toBe('auto');
+    expect(declarations(css, `${scope} .diagram-viewport`).get('max-width')).toBe('100%');
+    expect(declarations(css, `${scope} .mermaid-diagram svg`).get('max-width')).toBe('none');
+    for (const selector of ['.diagram-caption', '.diagram-accessible-description']) {
+      expect(declarations(css, `${scope} ${selector}`).get('font-size')).toBe('14px');
+      expect(declarations(css, `${scope} ${selector}`).get('color')).toBe('#cbd5e1');
+    }
+    expect(declarations(css, `${scope} .diagram-viewport:focus-visible`).get('outline')).toBe('2px solid var(--color-text-info)');
   });
 
   test('shows failed rendering with the original error text and ignores stale results or failures', async () => {
