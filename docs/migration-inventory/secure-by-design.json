@@ -1,0 +1,458 @@
+{
+  "source": "archive/html/Secure-by-design-guide.html",
+  "sha256": "8e61b6905c9ff179cda8cfdb645268ef813c15a8474c4b7f16e0dd13acd47339",
+  "route": "/docs/secure-by-design",
+  "informationDate": "2026-10-08",
+  "counts": {
+    "section": 17,
+    "h1": 1,
+    "h2": 17,
+    "h3": 59,
+    "table": 35,
+    "ul": 11,
+    "ol": 3,
+    "li": 37,
+    "pre": 8,
+    "strong": 136
+  },
+  "components": {
+    "diagram": 15,
+    "callout": 19,
+    "ref-card": 32
+  },
+  "sections": [
+    {
+      "id": "sec-0",
+      "title": "0. このガイドの使い方",
+      "textSha256": "8aab7ec3239cff31890097205809d79f8fdd54356d103e98c7a748ecbfad7d5d",
+      "tables": 0,
+      "lists": 2,
+      "items": 9,
+      "diagrams": [
+        "d1"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-1",
+      "title": "1. Step 0 ── Secure by Design とは何か(まず全体像)",
+      "textSha256": "953e3c52250f006a8b92d5e66aaa4d3e332f8a039923e3ce282422849f7cffde",
+      "tables": 2,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d2"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-2",
+      "title": "2. Step 1 ── セキュリティは「機能」ではなく「関心事」",
+      "textSha256": "03289a4dcbb3930263899b63806bd6c1149719b2b34751600e7b9f82d75d0dcf",
+      "tables": 2,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d3"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-3",
+      "title": "3. Step 2 ── 「設計」とは何か、設計でセキュリティを駆動する",
+      "textSha256": "bbc654de20e21b37157127ea7b68b4fa47d1126cc36539d13cf75dce7fca5bbf",
+      "tables": 2,
+      "lists": 2,
+      "items": 4,
+      "diagrams": [
+        "d4"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-4",
+      "title": "4. Step 3 ── DDD(ドメイン駆動設計)の最小知識",
+      "textSha256": "402c71c6a12ff305c4e5606aa37f9cb932159767ffced93e2ace4248aaf50a6d",
+      "tables": 1,
+      "lists": 1,
+      "items": 2,
+      "diagrams": [
+        "d5"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-5",
+      "title": "5. Step 4 ── コード構成要素: 不変性・フェイルファスト・バリデーション",
+      "textSha256": "72607d4341c3f5040f0b2bc2ed77f2b252003b47a4a83dcad17bd2b035ed483e",
+      "tables": 4,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d6"
+      ],
+      "codeSha256": [
+        "6bb52e61d465f0604248485139414347a7c0226d8967ee9865d01a9ebc684d86",
+        "2cd22bddd74318d00c25caedf5b3f6767e5498774644af95fba0656087e488c1"
+      ]
+    },
+    {
+      "id": "sec-6",
+      "title": "6. Step 5 ── ドメインプリミティブ(本書の中核概念)",
+      "textSha256": "0dac955e3f1bb4c19f12180d38b46489afa12e6eb13462900f8e27884b7471ef",
+      "tables": 4,
+      "lists": 3,
+      "items": 8,
+      "diagrams": [
+        "d7",
+        "d8"
+      ],
+      "codeSha256": [
+        "bc3b16bea1e18e069260ede09abcff3f5d9a0b0771219de65d569374dbfd76a9",
+        "08156df4733bea570ceaa781e4665f98c6d5d31ae595ca6e677c8db8c5791c41",
+        "3ecd493e3f1565d81e55a24ed5417f7a38d716d49ffb5e57575f183307cfe1ae"
+      ]
+    },
+    {
+      "id": "sec-7",
+      "title": "7. Step 6 ── 状態の完全性と複雑さの削減",
+      "textSha256": "273615554c05d2e2961d71d2dafa652fe00b27a147e555a90740a6e105c9a140",
+      "tables": 2,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d9"
+      ],
+      "codeSha256": [
+        "5767dee76429d43e7d47a4ad0c4568eb5b135fcea3ab0875c54e19977c9c235e"
+      ]
+    },
+    {
+      "id": "sec-8",
+      "title": "8. Step 7 ── デリバリーパイプラインとテストでセキュリティを守る",
+      "textSha256": "cd3e30ee8e9078665510c6141905a989c6ff358f23b38727b135879fd5e1915e",
+      "tables": 2,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d10"
+      ],
+      "codeSha256": [
+        "a21d7cbf6f3b4bf3ca4f4386d060a9563970e861c54701c2dcd451ec4bfda4bd"
+      ]
+    },
+    {
+      "id": "sec-9",
+      "title": "9. Step 8 ── 失敗と可用性を設計する",
+      "textSha256": "1835f1b6918f41d9aea3aecb1f01c1b30623ac0f9d90241f336d4175a438d519",
+      "tables": 3,
+      "lists": 1,
+      "items": 3,
+      "diagrams": [
+        "d11"
+      ],
+      "codeSha256": [
+        "34240d875883ce948c5e3ecc3305238f6ddaa5b3c847a91170c45b444b6d1af3"
+      ]
+    },
+    {
+      "id": "sec-10",
+      "title": "10. Step 9 ── クラウド的思考がもたらすセキュリティ上の利点",
+      "textSha256": "cad2ee5f9f7707eec376b638f812aa89ea760c6d1a5444f3e6528b3c0bc5a020",
+      "tables": 2,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d12"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-11",
+      "title": "11. Step 10 ── レガシーコードとマイクロサービスへの適用",
+      "textSha256": "e1eae8b44f3c3a4b9fef06495b291d4db223a0a99836f2c1ad9ceaaa915a517b",
+      "tables": 3,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d13"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-12",
+      "title": "12. Step 11 ── 政府機関の Secure by Design と、業界の流れ",
+      "textSha256": "79d52d91b6f9e09e5e2637ce985130912679494b4bd9b069f0d651762fdcb52f",
+      "tables": 4,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d14"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-13",
+      "title": "13. Step 12 ── 実践: チェックリスト・演習・理解度確認",
+      "textSha256": "3dba365fa91f645e11040fb482aa847dbe44c185191eba4be567e1359e1992e5",
+      "tables": 3,
+      "lists": 4,
+      "items": 8,
+      "diagrams": [
+        "d15"
+      ],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-14",
+      "title": "14. 用語集",
+      "textSha256": "9f541e773ff3852fa6ee79a1aa6300124e1c3d575fb34bebd679afbf00a72b71",
+      "tables": 1,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-15",
+      "title": "15. 参考文献・根拠ソース一覧(URL)",
+      "textSha256": "15059b8f00c2f0d30ee7fef0b6fac3a7b9f582480fb09bf74dac8b7d6314fde8",
+      "tables": 0,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [],
+      "codeSha256": []
+    },
+    {
+      "id": "sec-16",
+      "title": "16. 最後に",
+      "textSha256": "f3f3380d44791f2b465f11ab356275f47bf20f8eb7493289f1bc319059cc06df",
+      "tables": 0,
+      "lists": 1,
+      "items": 3,
+      "diagrams": [],
+      "codeSha256": []
+    }
+  ],
+  "diagrams": {
+    "d1": "flowchart TD\nS0[\"Step 0: 全体像をつかむ\"] --> S1[\"Step 1: セキュリティは機能ではなく関心事\"]\nS1 --> S2[\"Step 2: 設計が先、ツールは後\"]\nS2 --> S3[\"Step 3: DDDの最小知識\"]\nS3 --> S4[\"Step 4: 不変性・フェイルファスト・検証\"]\nS4 --> S5[\"Step 5: ドメインプリミティブ\"]\nS5 --> S6[\"Step 6: 状態の完全性と複雑さの削減\"]\nS6 --> S7[\"Step 7: パイプラインとテスト\"]\nS7 --> S8[\"Step 8: 失敗と可用性の設計\"]\nS8 --> S9[\"Step 9: クラウド的思考\"]\nS9 --> S10[\"Step 10: レガシーとマイクロサービスへの適用\"]\nS10 --> S11[\"Step 11: 政府機関の原則と業界の流れ\"]\nS11 --> S12[\"Step 12: チェックリストと演習\"]",
+    "d2": "flowchart LR\nsubgraph A[\"あとから足す方式\"]\nA1[\"機能を実装\"] --> A2[\"脆弱性診断で発見\"] --> A3[\"個別に修正\"] --> A4[\"また別の場所で再発\"]\nend\nsubgraph B[\"設計に織り込む方式\"]\nB1[\"概念を厳密にモデル化\"] --> B2[\"安全な部品を用意\"] --> B3[\"部品を使うだけで安全\"] --> B4[\"脆弱性の入り込む余地が減る\"]\nend",
+    "d3": "flowchart TD\nT[\"従来のアプローチ\"] --> P1[\"セキュリティを明示的に考えさせる\"]\nT --> P2[\"全員にセキュリティ専門家になってもらう\"]\nT --> P3[\"知り得ないことまで全て知ろうとする\"]\nP1 --> R1[\"忙しいと忘れる。考えた人だけが守れる\"]\nP2 --> R2[\"現実には専門家を全員分は用意できない\"]\nP3 --> R3[\"未知の攻撃は事前に列挙できない\"]",
+    "d4": "flowchart TD\nA[\"XMLパーサーをそのまま使う\"] --> B[\"Billion Laughsで資源枯渇の恐れ\"]\nB --> C[\"パーサー設定を見直す: 危険な機能を無効化する\"]\nC --> D[\"設計の視点で考える: 受け入れる入力を狭く定義する\"]\nD --> E[\"運用上の制約を設ける: メモリや処理時間の上限\"]\nE --> F[\"多層防御: 一つ破られても他で止める\"]",
+    "d5": "flowchart LR\nA[\"業務の言葉を厳密に定義する\"] --> B[\"有効な値の範囲が明確になる\"]\nB --> C[\"不変条件としてコードに書ける\"]\nC --> D[\"不正値が入り込めない設計になる\"]",
+    "d6": "flowchart LR\nV1[\"1 出所の確認\"] --> V2[\"2 サイズの確認\"] --> V3[\"3 字句内容の確認\"] --> V4[\"4 構文の確認\"] --> V5[\"5 意味の確認\"]",
+    "d7": "flowchart TD\nIN[\"外部からの入力: 素の文字列や数値\"] --> CONV[\"ドメインプリミティブの生成処理\"]\nCONV -->|\"不変条件を満たす\"| OK[\"有効な値オブジェクトとして存在\"]\nCONV -->|\"満たさない\"| NG[\"生成に失敗: 例外で即拒否\"]\nOK --> USE[\"ドメイン内のどこで使っても検証済み\"]",
+    "d8": "flowchart TD\nQ[\"その言葉は外部標準で厳密に定義されているか\"] -->|\"はい\"| A[\"意味を変えない。別の新しい用語を導入する\"]\nQ -->|\"いいえ\"| B[\"自ドメイン内での定義を決めてよい\"]\nA --> C[\"元の用語は厳密な定義のまま保てる\"]\nB --> D[\"不変条件を決めてコードに書く\"]",
+    "d9": "stateDiagram-v2\n[*] --> Draft\nDraft --> Placed: 注文確定\nPlaced --> Paid: 支払い完了\nPaid --> Shipped: 出荷\nDraft --> Cancelled: キャンセル\nPlaced --> Cancelled: キャンセル\nPaid --> Cancelled: キャンセル\nShipped --> [*]\nCancelled --> [*]",
+    "d10": "flowchart LR\nC[\"コミット\"] --> U[\"ユニットテスト: セキュリティ観点を含む\"]\nU --> S[\"静的解析・依存関係チェック\"]\nS --> I[\"統合テスト・自動セキュリティテスト\"]\nI --> D[\"ステージングへデプロイ: IaCで環境を再現\"]\nD --> A[\"可用性テスト\"]\nA --> P[\"本番リリース\"]\nU -->|\"失敗\"| X[\"修正して再コミット\"]\nS -->|\"失敗\"| X\nI -->|\"失敗\"| X\nA -->|\"失敗\"| X",
+    "d11": "stateDiagram-v2\n[*] --> Closed\nClosed --> Open: 失敗が閾値を超えた\nOpen --> HalfOpen: 一定時間経過\nHalfOpen --> Closed: 試験呼び出しが成功\nHalfOpen --> Open: 試験呼び出しが失敗",
+    "d12": "flowchart LR\nR1[\"Rotate: 秘密情報を入れ替える\"] --> R2[\"Repave: 環境を作り直す\"] --> R3[\"Repair: 脆弱性を速やかに直す\"] --> R1",
+    "d13": "flowchart TD\nL1[\"最も危険な入口を特定する: 外部入力・外部連携\"] --> L2[\"入口でドメインプリミティブへ変換する層を作る\"]\nL2 --> L3[\"内側のコードは徐々にドメインプリミティブへ置き換える\"]\nL3 --> L4[\"テストを先に書いて、変更の安全網を作る\"]\nL4 --> L5[\"ログ・例外の漏えいを点検する\"]",
+    "d14": "flowchart LR\nBK[\"書籍: ドメインプリミティブ・不変性・フェイルファスト\"] --> G3[\"CISAゴール3: 脆弱性のクラス全体を減らす\"]\nGG[\"Google: Safe Coding の安全な抽象\"] --> G3\nG3 --> OUT[\"顧客が受け取る製品がデフォルトで安全になる\"]",
+    "d15": "flowchart TD\nA[\"本ガイドで全体像を理解\"] --> B[\"書籍の第3〜5章を読む: DDDとドメインプリミティブ\"]\nB --> C[\"自分のコードで1つ型を置き換える\"]\nC --> D[\"第8章: テストをパイプラインに組み込む\"]\nD --> E[\"第9〜10章: 失敗とクラウド的設計を見直す\"]\nE --> F[\"脅威モデリングで設計上の欠陥を見つける\"]\nF --> G[\"IEEE CSD Top10とCISAの原則で組織へ展開\"]"
+  },
+  "references": [
+    {
+      "number": "1",
+      "tag": "公式商品ページ",
+      "description": "Manning『Secure by Design』(ISBN 9781617294358、2019年9月、400ページ。日本語・ロシア語・簡体中国語版あり)",
+      "url": "https://www.manning.com/books/secure-by-design"
+    },
+    {
+      "number": "2",
+      "tag": "目次(liveBook)",
+      "description": "第1章 Why design matters for security",
+      "url": "https://livebook.manning.com/book/secure-by-design"
+    },
+    {
+      "number": "3",
+      "tag": "目次(liveBook)",
+      "description": "第4章 Code constructs promoting security",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-4"
+    },
+    {
+      "number": "4",
+      "tag": "目次(liveBook)",
+      "description": "第5章 Domain primitives",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-5"
+    },
+    {
+      "number": "5",
+      "tag": "目次(liveBook)",
+      "description": "第6章 Ensuring integrity of state",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-6"
+    },
+    {
+      "number": "6",
+      "tag": "目次(liveBook)",
+      "description": "第7章 Reducing complexity of state",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-7"
+    },
+    {
+      "number": "7",
+      "tag": "目次(liveBook)",
+      "description": "第8章 Leveraging your delivery pipeline for security",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-8"
+    },
+    {
+      "number": "8",
+      "tag": "目次(liveBook)",
+      "description": "第9章 Handling failures securely",
+      "url": "https://livebook.manning.com/book/secure-by-design/chapter-9"
+    },
+    {
+      "number": "9",
+      "tag": "著者の無料記事",
+      "description": "Domain primitives: what they are and how you can use them to make more secure software",
+      "url": "https://freecontent.manning.com/domain-primitives-what-they-are-and-how-you-can-use-them-to-make-more-secure-software/"
+    },
+    {
+      "number": "10",
+      "tag": "書誌・目次",
+      "description": "O'Reilly Learning 上の書誌・目次",
+      "url": "https://oreilly.com/library/view/secure-by-design/9781617294358"
+    },
+    {
+      "number": "11",
+      "tag": "Matt Raible(Java Champion)",
+      "description": "本書の章ごとの書評(2020年5月)",
+      "url": "https://raibledesigns.com/rd/entry/secure_by_design_book_review"
+    },
+    {
+      "number": "12",
+      "tag": "Matt Raible",
+      "description": "「11 Patterns to Secure Microservice Architectures」(最初のパターンが Be Secure by Design)",
+      "url": "https://dzone.com/articles/11-patterns-to-secure-microservice-architectures"
+    },
+    {
+      "number": "13",
+      "tag": "Matt Raible",
+      "description": "同テーマの講演スライド(Speaker Deck)",
+      "url": "https://speakerdeck.com/mraible/security-patterns-for-microservice-architectures-london-java-community-2020"
+    },
+    {
+      "number": "14",
+      "tag": "Daniel Sawano(著者)",
+      "description": "講演「Creating secure software - benefits from cloud thinking」スライド",
+      "url": "https://noti.st/sawano/CRZBTX/creating-secure-software-benefits-from-cloud-thinking"
+    },
+    {
+      "number": "15",
+      "tag": "Christoph Kern(Google)",
+      "description": "USENIX Security での講演「Preventing Security Bugs through Software Design」",
+      "url": "https://www.usenix.org/conference/usenixsecurity15/symposium-program/presentation/kern"
+    },
+    {
+      "number": "16",
+      "tag": "Christoph Kern(Google)",
+      "description": "論文「Safe Coding: Rigorous Modular Reasoning about Software Safety」(Queue 23(5)、2025)",
+      "url": "https://research.google/pubs/safe-coding-rigorous-modular-reasoning-about-software-safety/"
+    },
+    {
+      "number": "17",
+      "tag": "Christoph Kern",
+      "description": "OpenSSF ポッドキャスト #2",
+      "url": "https://openssf.org/podcast/2024/04/23/whats-in-the-soss-podcast-2-christoph-kern-and-the-challenge-of-keeping-google-secure/"
+    },
+    {
+      "number": "18",
+      "tag": "IEEE Center for Secure Design",
+      "description": "報告書「Avoiding the Top 10 Software Security Design Flaws」(2014)",
+      "url": "https://www.spinellis.gr/pubs/tr/2014-CSD-Flaws/html/CSD-avoid-top10-flaws.html"
+    },
+    {
+      "number": "19",
+      "tag": "IEEE Cybersecurity",
+      "description": "第1項目「Earn or Give, but Never Assume, Trust」解説",
+      "url": "https://cybersecurity.ieee.org/blog/2015/11/13/avoiding-the-top-10-software-security-design-flaws-earn-or-give-but-never-assume-trust/"
+    },
+    {
+      "number": "20",
+      "tag": "12factor.net",
+      "description": "The Twelve-Factor App",
+      "url": "https://12factor.net/"
+    },
+    {
+      "number": "21",
+      "tag": "CISA",
+      "description": "Secure by Design トップページ",
+      "url": "https://www.cisa.gov/securebydesign"
+    },
+    {
+      "number": "22",
+      "tag": "CISA",
+      "description": "Secure by Design 誓約(ゴールと達成アプローチ)",
+      "url": "https://www.cisa.gov/securebydesign/pledge"
+    },
+    {
+      "number": "23",
+      "tag": "CISA",
+      "description": "誓約署名者一覧",
+      "url": "https://www.cisa.gov/securebydesign/pledge/secure-design-pledge-signers"
+    },
+    {
+      "number": "24",
+      "tag": "CISA",
+      "description": "誓約への初期コミットメント発表(68社、7ゴール)",
+      "url": "https://cisa.gov/news-events/news/cisa-announces-secure-design-commitments-leading-technology-providers"
+    },
+    {
+      "number": "25",
+      "tag": "CISA ほか",
+      "description": "共同ガイダンス Shifting the Balance of Cybersecurity Risk(概要)",
+      "url": "https://cisa.gov/resources-tools/resources/secure-by-design-and-default"
+    },
+    {
+      "number": "26",
+      "tag": "CISA・FBI",
+      "description": "Product Security Bad Practices(メモリ安全性ロードマップの公開期限を含む)",
+      "url": "https://www.cisa.gov/resources-tools/resources/product-security-bad-practices"
+    },
+    {
+      "number": "27",
+      "tag": "CISA ほか",
+      "description": "2023年10月の拡充版の公表アラート(共同署名機関一覧)",
+      "url": "https://cisa.gov/news-events/alerts/2023/10/16/cisa-nsa-fbi-and-international-partners-release-updated-secure-design-guidance"
+    },
+    {
+      "number": "28",
+      "tag": "ニュージーランド NCSC",
+      "description": "共同ガイダンスの解説ページ",
+      "url": "https://www.ncsc.govt.nz/protect-your-organisation/principles-and-approaches-for-secure-by-design-software/"
+    },
+    {
+      "number": "29",
+      "tag": "Industrial Cyber",
+      "description": "拡充版ガイダンス(AI への言及を含む)の報道",
+      "url": "https://industrialcyber.co/cisa/global-security-agencies-update-secure-by-design-principles-and-guidance-for-technology-providers/"
+    },
+    {
+      "number": "30",
+      "tag": "Safeguard(解説記事)",
+      "description": "CISA 誓約の解説(300社超、自己申告・非検証という指摘、2026年5月)",
+      "url": "https://safeguard.sh/resources/blog/cisas-secure-by-design-pledge-explained"
+    },
+    {
+      "number": "31",
+      "tag": "Safeguard(解説記事)",
+      "description": "誓約の2026年アップデート解説(2026年4月)",
+      "url": "https://safeguard.sh/resources/blog/cisa-secure-by-design-pledge-update-2026"
+    },
+    {
+      "number": "32",
+      "tag": "Cybersecurity Dive",
+      "description": "主要推進者の退任後に取り組みが目立たなくなったとの報道",
+      "url": "https://www.cybersecuritydive.com/news/surveillance-camera-axis-signs-cisa-security-pledge/806907/"
+    }
+  ],
+  "css": "\n:root{\n  --color-background-primary:#07111e;\n  --color-background-secondary:#0d1b2e;\n  --color-background-tertiary:#13253d;\n  --color-background-info:#10264a;\n  --color-background-danger:#3a1620;\n  --color-background-success:#0f2f2a;\n  --color-background-warning:#3a2d12;\n  --color-text-primary:#f3f5fa;\n  --color-text-secondary:#c6d0e3;\n  --color-text-tertiary:#93a1bd;\n  --color-text-info:#9db8ff;\n  --color-text-danger:#ff9aa8;\n  --color-text-success:#7fe0c3;\n  --color-text-warning:#f0c674;\n  --color-border-tertiary:#1e2f4d;\n  --color-border-secondary:#2d456e;\n  --color-border-primary:#3e5c8f;\n  --accent:#7c9eff;\n  --font-sans:-apple-system,BlinkMacSystemFont,\"Hiragino Sans\",\"Hiragino Kaku Gothic ProN\",\"Yu Gothic\",\"Noto Sans JP\",\"Segoe UI\",Roboto,sans-serif;\n  --font-serif:\"Hiragino Mincho ProN\",\"Yu Mincho\",\"Noto Serif JP\",Georgia,serif;\n  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,\"Liberation Mono\",monospace;\n  --border-radius-md:8px;\n  --border-radius-lg:12px;\n  --border-radius-xl:16px;\n  --sidebar-w:320px;\n}\n*{box-sizing:border-box}\nhtml{scroll-behavior:smooth;-webkit-text-size-adjust:100%}\nbody{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);font-size:1rem;line-height:1.7;font-weight:400;overflow-wrap:anywhere}\na{color:var(--accent)}\nstrong,b{font-weight:500;color:var(--color-text-primary)}\n\n/* ---------- sidebar ---------- */\n.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);padding:1.5rem 1rem 2rem;z-index:50}\n.brand{display:block;padding:0 .75rem 1.25rem;margin-bottom:1rem;border-bottom:1px solid var(--color-border-tertiary);text-decoration:none}\n.brand-name{display:block;color:var(--color-text-primary);font-weight:500;font-size:1.25rem;line-height:1.4}\n.brand-sub{display:block;color:var(--color-text-tertiary);margin-top:.25rem}\n.sidebar nav ul{list-style:none;margin:0;padding:0}\n.sidebar nav li{padding-left:0;margin:.125rem 0}\n.sidebar nav li::before{content:none}\n.sidebar nav a{display:block;padding:.5rem .75rem;border-radius:var(--border-radius-md);border-left:2px solid transparent;color:var(--color-text-secondary);text-decoration:none;line-height:1.5}\n.sidebar nav a:hover{background:var(--color-background-tertiary);color:var(--color-text-primary)}\n.sidebar nav a.active{background:var(--color-background-info);color:var(--color-text-info);border-left-color:var(--accent)}\n\n/* ---------- layout ---------- */\n.layout{display:block}\n.main{margin-left:var(--sidebar-w);padding:2rem 3rem 4rem}\n\n/* ---------- hero ---------- */\n.hero{padding:1.5rem 0 2rem;border-bottom:1px solid var(--color-border-tertiary)}\n.eyebrow{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-info);font-weight:500}\n.hero h1{font-size:2.25rem;font-weight:500;line-height:1.3;margin:.5rem 0 .75rem;color:var(--color-text-primary)}\n.hero .sub{color:var(--color-text-secondary);font-size:1.25rem;margin:0 0 1.75rem;line-height:1.6}\n.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:0}\n.meta-item{padding:1rem 1.25rem;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg)}\n.meta-item dt{color:var(--color-text-info);font-weight:500;margin:0 0 .25rem}\n.meta-item dd{margin:0;color:var(--color-text-secondary)}\n\n/* ---------- sections ---------- */\n.section{padding:2.5rem 0 1rem;border-top:1px solid var(--color-border-tertiary);scroll-margin-top:1rem}\n.hero + .section{border-top:none}\n.section>h2{font-size:1.6rem;font-weight:500;line-height:1.4;margin:0 0 1.25rem;padding-left:1rem;border-left:4px solid var(--accent);color:var(--color-text-primary)}\n.prose h3{font-size:1.25rem;font-weight:500;line-height:1.5;margin:2.25rem 0 .75rem;color:var(--color-text-info)}\n.prose h4{font-size:1rem;font-weight:500;margin:1.5rem 0 .5rem;color:var(--color-text-primary)}\n.prose p{margin:.9rem 0;color:var(--color-text-secondary)}\n.prose p strong{color:var(--color-text-primary)}\n.prose a{color:var(--accent);text-underline-offset:3px}\n\n.prose ul{list-style:none;margin:1rem 0;padding:0}\n.prose ul>li{position:relative;display:block;padding-left:1.5rem;margin:.5rem 0;color:var(--color-text-secondary)}\n.prose ul>li::before{content:\"\";position:absolute;left:.25rem;top:.78em;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent)}\n.prose ol{list-style:none;margin:1rem 0;padding:0;counter-reset:n}\n.prose ol>li{position:relative;display:block;padding-left:2.5rem;margin:.65rem 0;counter-increment:n;color:var(--color-text-secondary)}\n.prose ol>li::before{content:counter(n);position:absolute;left:0;top:.1rem;width:1.75rem;height:1.75rem;border-radius:50%;background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--color-text-info);font-weight:500;text-align:center;line-height:1.65rem}\n\n/* ---------- inline code ---------- */\ncode{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:.05rem .4rem;color:var(--color-text-info);overflow-wrap:anywhere}\n\n/* ---------- tables ---------- */\n.table-wrap{overflow-x:auto;margin:1.25rem 0;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}\ntable{border-collapse:collapse;width:100%;min-width:560px;font-size:1rem}\nth,td{padding:.75rem 1rem;text-align:left;vertical-align:top;line-height:1.6;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-secondary);overflow-wrap:anywhere}\nth{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;white-space:nowrap}\ntd strong{color:var(--color-text-primary)}\ntbody tr:last-child td{border-bottom:none}\ntbody tr:nth-child(even) td{background:var(--color-background-secondary)}\n\n/* ---------- callouts ---------- */\n.callout{position:relative;margin:1.25rem 0;padding:1rem 1.25rem 1rem 3.5rem;border:1px solid var(--color-border-secondary);border-left:3px solid var(--accent);border-radius:var(--border-radius-lg);background:var(--color-background-info)}\n.callout>i.ti{position:absolute;left:1.1rem;top:1rem;font-size:1.5rem;line-height:1.4;color:var(--color-text-info)}\n.callout p{margin:.5rem 0;color:var(--color-text-primary)}\n.callout p:first-of-type{margin-top:0}\n.callout p:last-of-type{margin-bottom:0}\n.callout.tip{background:var(--color-background-success);border-color:var(--color-border-secondary);border-left-color:var(--color-text-success)}\n.callout.tip>i.ti{color:var(--color-text-success)}\n.callout.warn{background:var(--color-background-warning);border-left-color:var(--color-text-warning)}\n.callout.warn>i.ti{color:var(--color-text-warning)}\n.callout code{background:var(--color-background-primary)}\n\n/* ---------- code ---------- */\n.code-block{margin:1.25rem 0;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;background:#0a1626}\n.code-head{padding:.5rem 1rem;background:var(--color-background-tertiary);border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary);font-family:var(--font-mono);text-transform:lowercase}\n.code-block pre{margin:0;padding:1rem 1.25rem;overflow-x:auto;background:transparent}\n.code-block pre code,pre code.hljs{display:block;background:transparent;border:0;padding:0;border-radius:0;font-family:var(--font-mono);font-size:1rem;line-height:1.65;white-space:pre;overflow-wrap:normal;color:var(--color-text-primary)}\n\n/* ---------- diagrams ---------- */\n.diagram{margin:1.5rem 0;padding:1.5rem 1rem;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}\n.mermaid-target{display:flex;justify-content:center;min-height:3rem;color:var(--color-text-tertiary)}\n.mermaid-target svg{max-width:100%;height:auto;overflow:visible}\n.diagram-error{color:var(--color-text-danger)}\n\n/* ---------- references ---------- */\n.ref-list{display:grid;gap:.75rem;margin:1rem 0 1.5rem}\n.ref-card{display:grid;grid-template-columns:2.5rem 1fr;gap:1rem;padding:1rem 1.25rem;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}\n.ref-badge{display:flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:50%;background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--color-text-info);font-weight:500}\n.ref-tag{display:inline-block;padding:.1rem .6rem;border-radius:999px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);color:var(--color-text-info);font-weight:500}\n.ref-desc{margin:.5rem 0 .5rem;color:var(--color-text-primary)}\n.ref-url{display:inline-flex;align-items:flex-start;gap:.4rem;color:var(--accent);text-decoration:none;font-family:var(--font-mono);overflow-wrap:anywhere;word-break:break-all}\n.ref-url:hover{text-decoration:underline}\n.ref-url span{min-width:0}\n\n/* ---------- footer ---------- */\n.footer{margin-top:3rem;padding:1.5rem 0 0;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary)}\n.footer p{margin:.25rem 0}\n\n/* ---------- mobile / tablet drawer ---------- */\n.burger{display:none;position:fixed;right:1.25rem;bottom:1.25rem;width:3.5rem;height:3.5rem;padding:0;border-radius:50%;border:1px solid var(--color-border-primary);background:var(--color-background-info);color:var(--color-text-info);cursor:pointer;z-index:60;align-items:center;justify-content:center}\n.burger svg{width:1.5rem;height:1.5rem}\n.burger .ic-close{display:none}\nbody.nav-open .burger .ic-open{display:none}\nbody.nav-open .burger .ic-close{display:block}\n.backdrop{display:none}\n@media (max-width:1024px){\n  .sidebar{width:min(320px,86vw);transform:translateX(-100%);transition:transform .25s ease}\n  body.nav-open .sidebar{transform:translateX(0)}\n  .backdrop{display:block;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(3,8,15,.72);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:40}\n  body.nav-open .backdrop{opacity:1;pointer-events:auto}\n  body.nav-open{overflow:hidden}\n  .burger{display:flex}\n  .main{margin-left:0;padding:1.25rem 1.25rem 5.5rem}\n  .hero h1{font-size:1.75rem}\n  .hero .sub{font-size:1.1rem}\n}\n@media (max-width:600px){\n  .main{padding:1rem 1rem 5.5rem}\n  .section>h2{font-size:1.35rem}\n  .callout{padding-left:3.25rem}\n  .ref-card{grid-template-columns:1fr}\n}\n@media (prefers-reduced-motion:reduce){\n  html{scroll-behavior:auto}\n  .sidebar,.backdrop{transition:none}\n}\n",
+  "allowedDifferences": [
+    "local SVG icons replace Tabler icon font",
+    "server-side Java highlighting adds token spans without changing code text",
+    "React Mermaid SVG/status/fallback replaces empty legacy diagram targets",
+    "scoped styles and existing docs header offsets replace document-wide styles",
+    "guide content container is div to avoid nested main landmarks"
+  ],
+  "markdownSource": "archive/md/Secure-by-design-guide.md",
+  "markdownSha256": "f9b093d575780b4dd669d397774d1d463b5df47ed1ba241cffbf547debfd9f73"
+}

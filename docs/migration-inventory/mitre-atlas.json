@@ -1,0 +1,420 @@
+{
+  "source": "archive/html/Mitre-atlas.html",
+  "sha256": "734a60f77a6b53a3e13c6c39d4c3ded54b5d5d2e0aedf5a8ef770cb5e8ae29f0",
+  "markdownSource": "archive/md/Mitre-atlas.md",
+  "markdownSha256": "816b4d8d63ad2a2b49448409c465d41f79cc1a99ae8dca7eeddb8818f740b655",
+  "route": "/docs/mitre-atlas",
+  "informationDate": "2026-07",
+  "counts": {
+    "section": 13,
+    "h1": 1,
+    "h2": 13,
+    "h3": 3,
+    "h4": 17,
+    "table": 11,
+    "ul": 4,
+    "ol": 1,
+    "li": 50,
+    "strong": 21,
+    "code": 63
+  },
+  "components": {
+    "callout": 4,
+    "mermaid-wrap": 4,
+    "step-card": 6
+  },
+  "sections": [
+    {
+      "id": "sec1",
+      "title": "1. MITRE ATLASとは何か",
+      "tables": 0,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "395e7b12a0ed72119030b2ecb1a4db3ed10b5e6bfe9575f3285f64f0fca8541f"
+    },
+    {
+      "id": "sec2",
+      "title": "2. MITRE ATT&CKとの違い",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "193c7042c331dfae3aa79a71b33e140851be20c4f8035494bb0c8a01fe1fd476"
+    },
+    {
+      "id": "sec3",
+      "title": "3. ATLASの全体構造(データモデル)",
+      "tables": 0,
+      "items": 5,
+      "diagrams": [
+        "structure"
+      ],
+      "textSha256": "3f77743de439be6919e10da71df4dcab7c507de893720546cad4250cda9c7419"
+    },
+    {
+      "id": "sec4",
+      "title": "4. 16のTacticsを段階的に理解する",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [
+        "lifecycle"
+      ],
+      "textSha256": "c799775545db339b95c8a816ec4bbe66a386e59d24871d25d7b5a01221641052"
+    },
+    {
+      "id": "sec5",
+      "title": "5. AI/ML特有の重要Techniques徹底解説",
+      "tables": 5,
+      "items": 3,
+      "diagrams": [
+        "jailbreak"
+      ],
+      "textSha256": "24585f182d9489d81bc491d5ab8a8dad94f7ba2659a3fff13911af3d8dc7fb9e"
+    },
+    {
+      "id": "sec6",
+      "title": "6. 実際の攻撃チェーン例(複数Techniquesの連鎖)",
+      "tables": 0,
+      "items": 7,
+      "diagrams": [
+        "ragchain"
+      ],
+      "textSha256": "6df0a53a8ce1c93d6b2fbb71e76ed1c3bf3bf903cbfd3b9d665941ee244f628e"
+    },
+    {
+      "id": "sec7",
+      "title": "7. Mitigations(緩和策)の考え方と代表例",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "583cf192e967313c6ff279f31c5acd3ff6528306190a425d84e8c2363eb125f6"
+    },
+    {
+      "id": "sec8",
+      "title": "8. 実在のCase Studies(ケーススタディ)",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "6cfb4c3c797ad72d395cb6c76e677fafdb00da065529fe868dc3b00f9a5f0530"
+    },
+    {
+      "id": "sec9",
+      "title": "9. ステップバイステップ: 組織にATLASを導入するベストプラクティス",
+      "tables": 0,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "2c55c5bd2bc8a438e6f8437d6d7531c44a1a404b2db45ab0074120d6edcfd4c3"
+    },
+    {
+      "id": "sec10",
+      "title": "10. 他のAIセキュリティフレームワークとの関係",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "413cad852db8b41e6c09f2c9ddad70d573a64be3563999c715f9fd6dd4fabc5a"
+    },
+    {
+      "id": "sec11",
+      "title": "11. 便利なツールとリソース",
+      "tables": 1,
+      "items": 0,
+      "diagrams": [],
+      "textSha256": "9575adea8c6a6083b2186f548ea8e291a3cea3d35b09d628cdb25a425cb4e9ba"
+    },
+    {
+      "id": "sec12",
+      "title": "12. まとめ",
+      "tables": 0,
+      "items": 6,
+      "diagrams": [],
+      "textSha256": "5d6439fb94ef37cb8f2fc8fa22178605011fd51926ad00fb02f751e3db7ef568"
+    },
+    {
+      "id": "sec13",
+      "title": "13. 参考URL一覧",
+      "tables": 0,
+      "items": 29,
+      "diagrams": [],
+      "textSha256": "36c53a445da0a97a758799d0d00147e4d11fd2f9ace637ec005c39916f93137c"
+    }
+  ],
+  "diagrams": {
+    "structure": "flowchart TD\n    accTitle: 図1 ATLASのデータモデル\n    accDescr: Tactic配下にTechniqueがあり、Techniqueはさらに Sub-technique、Mitigation、Case Studyへ分岐する関係を示す\n    A[\"Tactic - 攻撃者が達成したい目的\"] --> B[\"Technique - 目的を達成する具体的な手法\"]\n    B --> C[\"Sub-technique - 手法をさらに細分化した実装方法\"]\n    B --> D[\"Mitigation - その手法に対する緩和策\"]\n    B --> E[\"Case Study - 実際に観測された攻撃事例\"]",
+    "lifecycle": "flowchart LR\n    accTitle: 図2 攻撃者ライフサイクル\n    accDescr: 16のTacticsを準備、侵入とモデルアクセス、居座りと回避、探索と展開、攻撃準備と制御、目的達成の6フェーズに整理した流れを示す\n    subgraph P1[\"フェーズ1 - 準備\"]\n    direction TB\n    T1[\"Reconnaissance 偵察\"]\n    T2[\"Resource Development リソース開発\"]\n    end\n    subgraph P2[\"フェーズ2 - 侵入とモデルアクセス\"]\n    direction TB\n    T3[\"Initial Access 初期アクセス\"]\n    T4[\"AI Model Access AIモデルアクセス\"]\n    T5[\"Execution 実行\"]\n    end\n    subgraph P3[\"フェーズ3 - 居座りと回避\"]\n    direction TB\n    T6[\"Persistence 永続化\"]\n    T7[\"Privilege Escalation 権限昇格\"]\n    T8[\"Defense Evasion 防御回避\"]\n    T9[\"Credential Access 認証情報アクセス\"]\n    end\n    subgraph P4[\"フェーズ4 - 探索と展開\"]\n    direction TB\n    T10[\"Discovery 発見\"]\n    T11[\"Lateral Movement 横展開\"]\n    T12[\"Collection 収集\"]\n    end\n    subgraph P5[\"フェーズ5 - 攻撃準備と制御\"]\n    direction TB\n    T13[\"AI Attack Staging AI攻撃準備\"]\n    T14[\"Command and Control C2\"]\n    end\n    subgraph P6[\"フェーズ6 - 目的達成\"]\n    direction TB\n    T15[\"Exfiltration 持ち出し\"]\n    T16[\"Impact 影響\"]\n    end\n    P1 --> P2 --> P3 --> P4 --> P5 --> P6",
+    "jailbreak": "flowchart TD\n    accTitle: 図3 LLM Jailbreak手法分類\n    accDescr: LLM Jailbreak手法を指示の上書き、ロールプレイ、フィクション化、多段階エスカレーション、出力形式の強制、難読化の6種類に分類する関係を示す\n    J[\"LLM Jailbreak 手法\"] --> J1[\"指示の上書き - 直前の指示を無視させる\"]\n    J --> J2[\"ロールプレイ - 別人格を演じさせる\"]\n    J --> J3[\"フィクション化 - 物語や仮定の話として出力させる\"]\n    J --> J4[\"多段階エスカレーション - 無害な会話から徐々に踏み込む\"]\n    J --> J5[\"出力形式の強制 - JSONやコードとして出力させる\"]\n    J --> J6[\"難読化 - Base64やROT13, 他言語で回避\"]",
+    "ragchain": "flowchart LR\n    accTitle: 図4 RAGを踏み台とした攻撃チェーン\n    accDescr: 偵察によるRAG対象の把握から、リソース開発、RAGポイズニングによる永続化、偽エントリ注入による防御回避、間接プロンプトインジェクションの実行、データ持ち出し、風評被害という影響に至る一連の攻撃連鎖を示す\n    A[\"Reconnaissance: Gather RAG-Indexed Targets\"] --> B[\"Resource Development: Retrieval Content Crafting\"]\n    B --> C[\"Persistence: RAG Poisoning\"]\n    C --> D[\"Defense Evasion: False RAG Entry Injection\"]\n    D --> E[\"Execution: LLM Prompt Injection Indirect\"]\n    E --> F[\"Exfiltration: LLM Data Leakage\"]\n    F --> G[\"Impact: Reputational Harm\"]"
+  },
+  "css": "\n            :root {\n                --color-background-primary: #0d0d12;\n                --color-background-secondary: #16161d;\n                --color-background-tertiary: #1f1f28;\n                --color-background-info: #16202f;\n                --color-background-danger: #2a1a1a;\n                --color-background-success: #16241e;\n                --color-background-warning: #2a2416;\n\n                --color-text-primary: #eaeaef;\n                --color-text-secondary: #a8a8b5;\n                --color-text-tertiary: #8a8a96;\n                --color-text-info: #7dabf8;\n                --color-text-danger: #f28b82;\n                --color-text-success: #7bd8a6;\n                --color-text-warning: #f0c674;\n\n                --color-border-primary: #2a2a35;\n                --color-border-secondary: #34343f;\n                --color-border-tertiary: #24242e;\n\n                --font-sans:\n                    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP',\n                    sans-serif;\n                --font-serif: Georgia, 'Noto Serif JP', serif;\n                --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;\n\n                --border-radius-md: 8px;\n                --border-radius-lg: 12px;\n                --border-radius-xl: 16px;\n\n                --c-purple-100: #ede9fe;\n                --c-purple-200: #ddd6fe;\n                --c-purple-500: #8b5cf6;\n                --c-purple-800: #5b21b6;\n                --c-teal-100: #ccfbf1;\n                --c-teal-200: #99f6e4;\n                --c-teal-500: #14b8a6;\n                --c-teal-800: #115e59;\n                --c-coral-100: #ffe1da;\n                --c-coral-200: #ffc7b8;\n                --c-coral-500: #f9633b;\n                --c-coral-800: #8f2f17;\n                --c-pink-100: #fce7f3;\n                --c-pink-200: #fbcfe8;\n                --c-pink-500: #ec4899;\n                --c-pink-800: #9d174d;\n            }\n\n            * {\n                box-sizing: border-box;\n            }\n\n            body {\n                margin: 0;\n                font-family: var(--font-sans);\n                font-size: 16px;\n                line-height: 1.7;\n                font-weight: 400;\n                background: var(--color-background-primary);\n                color: var(--color-text-primary);\n            }\n\n            .app {\n                display: flex;\n                min-height: 100vh;\n                align-items: flex-start;\n            }\n\n            .sidebar {\n                flex: 0 0 260px;\n                position: sticky;\n                top: 0;\n                height: 100vh;\n                overflow-y: auto;\n                padding: 28px 20px 40px;\n                background: var(--color-background-secondary);\n                border-right: 1px solid var(--color-border-primary);\n            }\n\n            .sidebar .brand {\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                font-size: 14px;\n                font-weight: 500;\n                color: var(--color-text-secondary);\n                margin-bottom: 24px;\n                padding-bottom: 16px;\n                border-bottom: 1px solid var(--color-border-tertiary);\n            }\n            .sidebar .brand i {\n                font-size: 18px;\n                color: var(--color-text-info);\n            }\n\n            .sidebar nav a {\n                display: flex;\n                align-items: center;\n                gap: 8px;\n                padding: 7px 10px;\n                margin-bottom: 2px;\n                border-radius: var(--border-radius-md);\n                color: var(--color-text-secondary);\n                text-decoration: none;\n                font-size: 13px;\n                line-height: 1.4;\n            }\n            .sidebar nav a:hover {\n                background: var(--color-background-tertiary);\n                color: var(--color-text-primary);\n            }\n            .sidebar nav a i {\n                font-size: 15px;\n                width: 16px;\n                text-align: center;\n                color: var(--color-text-tertiary);\n            }\n            .sidebar .nav-section-title {\n                font-size: 11px;\n                color: var(--color-text-tertiary);\n                text-transform: uppercase;\n                letter-spacing: 0.05em;\n                margin: 18px 0 6px 10px;\n            }\n\n            .main {\n                flex: 1;\n                min-width: 0;\n                padding: 48px 64px 96px;\n            }\n\n            .hero {\n                padding-bottom: 32px;\n                margin-bottom: 40px;\n                border-bottom: 1px solid var(--color-border-primary);\n            }\n            .hero .eyebrow {\n                display: inline-flex;\n                align-items: center;\n                gap: 6px;\n                font-size: 12px;\n                color: var(--color-text-info);\n                background: var(--color-background-info);\n                padding: 4px 10px;\n                border-radius: var(--border-radius-md);\n                margin-bottom: 16px;\n            }\n            .hero h1 {\n                font-size: 30px;\n                font-weight: 500;\n                margin: 0 0 12px;\n                line-height: 1.35;\n            }\n            .hero p.lead {\n                font-size: 16px;\n                color: var(--color-text-secondary);\n                max-width: 780px;\n                margin: 0 0 4px;\n            }\n            .hero .meta {\n                font-size: 13px;\n                color: var(--color-text-tertiary);\n                margin-top: 16px;\n            }\n\n            h1 {\n                font-size: 22px;\n                font-weight: 500;\n            }\n            h2 {\n                font-size: 18px;\n                font-weight: 500;\n                margin-top: 56px;\n                margin-bottom: 16px;\n                padding-top: 8px;\n                display: flex;\n                align-items: center;\n                gap: 10px;\n            }\n            h2 i {\n                color: var(--color-text-info);\n                font-size: 20px;\n            }\n            h3 {\n                font-size: 16px;\n                font-weight: 500;\n                margin-top: 32px;\n                margin-bottom: 12px;\n                color: var(--color-text-primary);\n            }\n            h4 {\n                font-size: 14px;\n                font-weight: 500;\n                margin-top: 24px;\n                margin-bottom: 8px;\n                color: var(--color-text-secondary);\n            }\n            p {\n                color: var(--color-text-secondary);\n                margin: 0 0 14px;\n            }\n            strong {\n                color: var(--color-text-primary);\n                font-weight: 500;\n            }\n            a {\n                color: var(--color-text-info);\n            }\n            code {\n                font-family: var(--font-mono);\n                font-size: 13px;\n                background: var(--color-background-tertiary);\n                padding: 2px 6px;\n                border-radius: 4px;\n                color: var(--color-text-warning);\n            }\n\n            section {\n                margin-bottom: 8px;\n            }\n\n            .callout {\n                display: flex;\n                gap: 12px;\n                background: var(--color-background-info);\n                border: 1px solid var(--color-border-secondary);\n                border-radius: var(--border-radius-lg);\n                padding: 16px 18px;\n                margin: 18px 0;\n                font-size: 14px;\n            }\n            .callout i {\n                color: var(--color-text-info);\n                font-size: 18px;\n                margin-top: 2px;\n            }\n            .callout p {\n                margin: 0;\n                color: var(--color-text-primary);\n            }\n\n            .callout.warning {\n                background: var(--color-background-warning);\n            }\n            .callout.warning i {\n                color: var(--color-text-warning);\n            }\n\n            table {\n                width: 100%;\n                border-collapse: collapse;\n                margin: 18px 0 28px;\n                font-size: 13.5px;\n                background: var(--color-background-secondary);\n                border-radius: var(--border-radius-md);\n                overflow: hidden;\n            }\n            thead th {\n                text-align: left;\n                background: var(--color-background-tertiary);\n                color: var(--color-text-primary);\n                font-weight: 500;\n                padding: 10px 14px;\n                border-bottom: 1px solid var(--color-border-secondary);\n                white-space: nowrap;\n            }\n            tbody td {\n                padding: 10px 14px;\n                border-bottom: 1px solid var(--color-border-tertiary);\n                color: var(--color-text-secondary);\n                vertical-align: top;\n            }\n            tbody tr:last-child td {\n                border-bottom: none;\n            }\n            tbody td code {\n                white-space: nowrap;\n            }\n\n            .mermaid-wrap {\n                text-align: center;\n                background: var(--color-background-secondary);\n                border: 1px solid var(--color-border-primary);\n                border-radius: var(--border-radius-lg);\n                padding: 28px 20px;\n                margin: 20px 0 28px;\n            }\n            .mermaid-diagram svg {\n                max-width: 100%;\n                height: auto;\n                display: block;\n                margin: 0 auto;\n                overflow: visible;\n            }\n            .diagram-caption {\n                text-align: center;\n                font-size: 12px;\n                color: var(--color-text-tertiary);\n                margin-top: 10px;\n            }\n            .diagram-error {\n                color: var(--color-text-danger);\n                font-size: 13px;\n            }\n\n            .step-card {\n                display: flex;\n                gap: 16px;\n                padding: 18px 20px;\n                background: var(--color-background-secondary);\n                border: 1px solid var(--color-border-primary);\n                border-radius: var(--border-radius-lg);\n                margin-bottom: 14px;\n            }\n            .step-card .num {\n                flex: 0 0 32px;\n                height: 32px;\n                border-radius: var(--border-radius-md);\n                background: var(--color-background-tertiary);\n                color: var(--color-text-info);\n                display: flex;\n                align-items: center;\n                justify-content: center;\n                font-size: 13px;\n                font-weight: 500;\n            }\n            .step-card .body h4 {\n                margin-top: 0;\n                color: var(--color-text-primary);\n                font-size: 15px;\n            }\n            .step-card .body p {\n                margin-bottom: 0;\n            }\n\n            .ref-list {\n                list-style: none;\n                padding: 0;\n                margin: 16px 0;\n            }\n            .ref-list li {\n                padding: 10px 0;\n                border-bottom: 1px solid var(--color-border-tertiary);\n                font-size: 13.5px;\n                color: var(--color-text-secondary);\n            }\n            .ref-list li:last-child {\n                border-bottom: none;\n            }\n            .ref-list a {\n                word-break: break-all;\n            }\n\n            .tag {\n                display: inline-block;\n                font-size: 11px;\n                padding: 2px 8px;\n                border-radius: 20px;\n                background: var(--c-purple-800);\n                color: var(--c-purple-100);\n                margin-right: 6px;\n            }\n            .tag.teal {\n                background: var(--c-teal-800);\n                color: var(--c-teal-100);\n            }\n            .tag.coral {\n                background: var(--c-coral-800);\n                color: var(--c-coral-100);\n            }\n\n            footer {\n                margin-top: 64px;\n                padding-top: 24px;\n                border-top: 1px solid var(--color-border-primary);\n                font-size: 12.5px;\n                color: var(--color-text-tertiary);\n            }\n\n            @media (max-width: 900px) {\n                .app {\n                    flex-direction: column;\n                }\n                .sidebar {\n                    position: relative;\n                    height: auto;\n                    width: 100%;\n                    flex: none;\n                }\n                .main {\n                    padding: 32px 20px 64px;\n                }\n            }\n        ",
+  "references": [
+    {
+      "text": "MITRE ATLAS公式サイト: https://atlas.mitre.org/",
+      "links": [
+        {
+          "href": "https://atlas.mitre.org/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLASマトリクス(全体像): https://atlas.mitre.org/matrices/ATLAS",
+      "links": [
+        {
+          "href": "https://atlas.mitre.org/matrices/ATLAS",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLAS Case Studies一覧: https://atlas.mitre.org/studies",
+      "links": [
+        {
+          "href": "https://atlas.mitre.org/studies",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLAS Mitigations一覧: https://atlas.mitre.org/mitigations",
+      "links": [
+        {
+          "href": "https://atlas.mitre.org/mitigations",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLAS Navigator: https://mitre-atlas.github.io/atlas-navigator/",
+      "links": [
+        {
+          "href": "https://mitre-atlas.github.io/atlas-navigator/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLASデータ(GitHubリポジトリ、YAML/JSON/STIX形式): https://github.com/mitre-atlas/atlas-data",
+      "links": [
+        {
+          "href": "https://github.com/mitre-atlas/atlas-data",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLAS公式データ(固定版YAML, v2026.07): https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml",
+      "links": [
+        {
+          "href": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/v2026.07/dist/v6/ATLAS-2026.07.yaml",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE公式プレスリリース(生成AI拡張、2023年11月): mitre.org news release",
+      "links": [
+        {
+          "href": "https://www.mitre.org/news-insights/news-release/mitre-and-microsoft-collaborate-address-generative-ai-security-risks",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLAS概要説明(NIST発表資料 2025年9月): csrc.nist.gov PDF",
+      "links": [
+        {
+          "href": "https://csrc.nist.gov/csrc/media/Presentations/2025/mitre-atlas/TuePM2.1-MITRE%20ATLAS%20Overview%20Sept%202025.pdf",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS for Agentic AI(2026年最新動向): anomity.ai",
+      "links": [
+        {
+          "href": "https://anomity.ai/blog/mitre-atlas-agentic-ai-threats-guide/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS: AI security framework(16 Tactics/84 Techniques根拠): vectra.ai",
+      "links": [
+        {
+          "href": "https://www.vectra.ai/topics/mitre-atlas",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS: AI Threat Framework & Compliance Guide: aisigil.com",
+      "links": [
+        {
+          "href": "https://aisigil.com/mitre-atlas/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS Framework 2026 Guide: practical-devsecops.com",
+      "links": [
+        {
+          "href": "https://www.practical-devsecops.com/mitre-atlas-framework-guide-securing-ai-systems/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "The Ultimate Guide to MITRE ATLAS 2026: getastra.com",
+      "links": [
+        {
+          "href": "https://www.getastra.com/blog/security-audit/mitre-atlas/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "What is MITRE ATLAS?(CrowdStrike): crowdstrike.com",
+      "links": [
+        {
+          "href": "https://www.crowdstrike.com/en-us/cybersecurity-101/artificial-intelligence/mitre-atlas/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "Understanding the MITRE ATLAS Matrix for AI Threats: pointguardai.com",
+      "links": [
+        {
+          "href": "https://www.pointguardai.com/blog/understanding-the-mitre-atlas-matrix-for-ai-threats",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITREの規制フレームワークとしての解説(Palo Alto Networks): paloaltonetworks.com",
+      "links": [
+        {
+          "href": "https://www.paloaltonetworks.com/cyberpedia/mitre-sensible-regulatory-framework-atlas-matrix",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS Matrix Overview(DETECTX): detectx.com.au",
+      "links": [
+        {
+          "href": "https://www.detectx.com.au/atlas-matrix-overview/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS: How can AI be attacked?(Tarlogic): tarlogic.com",
+      "links": [
+        {
+          "href": "https://www.tarlogic.com/blog/mitre-atlas/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS Framework: AI Attack Techniques(Repello AI): repello.ai",
+      "links": [
+        {
+          "href": "https://repello.ai/blog/mitre-atlas-framework",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS(DeepTeamレッドチームフレームワーク実装例): trydeepteam.com",
+      "links": [
+        {
+          "href": "https://www.trydeepteam.com/docs/frameworks-mitre-atlas",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "Security Considerations for Multi-agent Systems(arXiv): arxiv.org",
+      "links": [
+        {
+          "href": "https://arxiv.org/pdf/2603.09002",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "PoisonGPT Case Study詳細解説: startupdefense.io",
+      "links": [
+        {
+          "href": "https://www.startupdefense.io/mitre-atlas-case-studies/aml-cs0019-poisongpt",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "AI Threat Modeling & MITRE ATLAS Interview Q&A: ai.techclick.in",
+      "links": [
+        {
+          "href": "https://ai.techclick.in/blog_ai_threat_modeling_interview_qa",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "ATLASとOWASP LLM Top 10のMitigationsマッピング解説: blog.ogwilliam.com",
+      "links": [
+        {
+          "href": "https://blog.ogwilliam.com/post/mapping-mitre-atlas-mitigations-owasp-top-10-llms",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "AIUC-1 x MITRE ATLASクロスウォーク: aiuc-1.com",
+      "links": [
+        {
+          "href": "https://www.aiuc-1.com/crosswalks/mitre-atlas",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "MITRE ATLAS Course of Action(MISP galaxy): misp-galaxy.org",
+      "links": [
+        {
+          "href": "https://misp-galaxy.org/mitre-atlas-course-of-action/",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "SAFE-AIレポート(MITRE公式PDF、NIST SP 800-53マッピング): atlas.mitre.org PDF",
+      "links": [
+        {
+          "href": "https://atlas.mitre.org/pdf-files/SAFEAI_Full_Report.pdf",
+          "target": "_blank"
+        }
+      ]
+    },
+    {
+      "text": "From Theory to Practice: Implementing MITRE ATLAS Defenses: medium.com",
+      "links": [
+        {
+          "href": "https://medium.com/@michael.hannecke/from-theory-to-practice-implementing-mitre-atlas-defenses-77dde19f9769",
+          "target": "_blank"
+        }
+      ]
+    }
+  ],
+  "allowedDifferences": [
+    "Tabler icon font replaced by local SVGs retaining meaning and color",
+    "original main replaced by div to avoid nested main",
+    "scroll wrappers around tables",
+    "900px-and-below sidebar becomes a dismissible drawer",
+    "host header offsets, explicit browser-equivalent list markers and unconstrained content width",
+    "external blank-target links gain noopener noreferrer",
+    "React Mermaid status and definition fallback replace empty targets",
+    "user-requested diagram readability: 18px Japanese font and high contrast, intrinsic-width horizontal scrolling, 14px captions/descriptions"
+  ]
+}

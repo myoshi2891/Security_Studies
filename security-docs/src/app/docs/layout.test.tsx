@@ -55,7 +55,7 @@ describe('DocsLayout', () => {
             expect(container.querySelector('main')?.parentElement?.classList.contains('container')).toBe(false);
             expect(container.querySelector('article')).toHaveClass('docs-article');
         });
-        test('sidebarNav に定義された全エントリ (12 件) がリンクとして描画される', async () => {
+        test('sidebarNav に定義された全エントリ (14 件) がリンクとして描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
@@ -65,7 +65,7 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(12);
+            expect(allItems.length).toBe(14);
         });
 
         test('セクション見出し (6 件) が描画される', async () => {

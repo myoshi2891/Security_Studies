@@ -8,6 +8,35 @@ const DOCS_DIR = path.join(process.cwd(), 'src/app/docs');
 const HREF_PATTERN = /^\/docs\/(.+)$/;
 
 describe('getSearchIndex', () => {
+    test('indexes compound JSX headings with icons, line breaks, tags and static string children in document order', () => {
+        const mdx = [
+            '## 概要',
+            '<E.h1>{"MITRE ATLAS"}<E.br />{"AI/ML特化"}</E.h1>',
+            '<E.h2 id={"sec5"}><GuideIcon name="ti-bug" />{"重要Techniques"}</E.h2>',
+            '<E.h4><E.span className={"tag"}>{"AML.T0020"}</E.span>{"Training Data Poisoning"}</E.h4>',
+            '<h3>Plain <strong>compound</strong> heading</h3>',
+        ].join('\n');
+        expect(extractHeadings(mdx)).toEqual(['概要', 'MITRE ATLAS AI/ML特化', '重要Techniques', 'AML.T0020Training Data Poisoning', 'Plain compound heading']);
+    });
+
+    test('keeps fenced compound JSX examples out of search and never evaluates heading expressions', () => {
+        const mdx = [
+            '```mdx',
+            '<h2><Info />Example</h2>',
+            '```',
+            '<h2>{globalThis.searchSecret}</h2>',
+            '<h3><Info />{"Visible heading"}</h3>',
+        ].join('\n');
+        expect(extractHeadings(mdx)).toEqual(['Visible heading']);
+    });
+
+    test('does not duplicate simple JSX headings and does not index SVG icon title text', () => {
+        expect(extractHeadings('<E.h2>{"Once"}</E.h2>\n<h3><svg><title>Icon label</title></svg>Article heading</h3>')).toEqual(['Once', 'Article heading']);
+    });
+
+    test('isolates malformed compound JSX instead of dropping later valid headings', () => {
+        expect(extractHeadings('<h2><span>Broken</h2>\n<h3><Info />Valid</h3>')).toEqual(['Valid']);
+    });
     test('returns a non-empty SearchResult array', async () => {
         const results = await getSearchIndex();
 

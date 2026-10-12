@@ -13,6 +13,7 @@ export const docsConfig = {
         { title: "AI Coding Safety", href: "/docs/ai-coding-safety" },
         { title: "LLM & AI Security", href: "/docs/llm-ai-security" },
         { title: "Secure SDLC Guide", href: "/docs/secdev-guide" },
+        { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
       ],
     },
     {
@@ -22,6 +23,7 @@ export const docsConfig = {
         { title: "Post-Quantum Cryptography", href: "/docs/pqc" },
         { title: "OWASP Top 10 (2025/2026)", href: "/docs/owasp" },
         { title: "Threat Landscape 2026", href: "/docs/threat-landscape" },
+        { title: "MITRE ATLAS", href: "/docs/mitre-atlas" },
       ],
     },
     {
