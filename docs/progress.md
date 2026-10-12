@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-11（レビュー対応: `MermaidFigure` の古い描画で `sizeSvg`・エラーログを抑止、仕様書のテスト件数を実測 186 pass / 6,304 expect に統一、脅威モデリングガイド 9.2 の DFD にアクセストークンと境界B の同一信頼レベル前提を明記）
+> **最終更新**: 2026-10-12（Secure by Design: 表示基盤Red・9件の期待どおりの失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **186件** | `bun test`: 186 pass / 0 fail（2026-10-10 レビュー対応Green） |
-| テストファイル数 | **30ファイル** | 実行ファイル数。ロジック単位は 26/26、ページ移行テストは別集計 |
+| テストケース総数 | **195件** | `npm test`: 186 pass / 9 fail、31ファイル、6,304 expect（表示基盤Red・9件の期待どおりの失敗） |
+| テストファイル数 | **31ファイル** | 実行ファイル数。ページ移行テストはロジックファイルのカバレッジと別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -272,3 +272,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-10: レビュー対応（Red: `c2378eb` / Green: `2e17306`）。検索索引に素のテキストのJSX見出し（`<h3>3. VEX…</h3>`）と、見出しを描画するdocsコンポーネント（`HeroSection` / `SectionCard` / `ThreatCard` の `title`、`DocsSubheading` の子テキスト）を追加し、`public/search-index.json` を再生成。Mermaid SVG の `max-width: 100%` を外し、幅の広い図は自然な px 幅のまま横スクロールで読めるようにした（`search.test.ts` +2、`foundation.test.tsx` は既存テストのアサーション変更）。**184 pass / 0 fail、30テストファイル、6,301 expect**（索引テストが見出しごとに検証するため expect が増加）。lint・型検査・`bun run build` 成功。ガイド修正（v1.37 ストレージ機能のAlphaとフィーチャーゲート、シークレット管理基盤の優先、OIDCシーケンスへのPKCEとnonce照合の追加）を `2bff45d` で反映。
 - 2026-10-10: レビュー対応。検索索引のコードフェンスを開きフェンスの文字と長さで管理し、同じ文字・同じ長さ以上・info string なしのフェンスでのみ閉じるよう修正（```` ````md ```` 内の ```` ``` ```` で外側ブロックが終了しない。`search.test.ts` +1）。`Hacking-kubernetes-guide.md` の PSA `audit` モードを「監査イベントへの注釈付与」と明記し、監査ログ記録には kube-apiserver の監査機能設定が必要である旨を追記。目視確認ステータスを全仕様書で「pending」に統一。**185 pass / 0 fail、30テストファイル、6,302 expect**。lint・型検査・`bun run build` 成功（185件時点で再実行し確認）。
 - 2026-10-11: レビュー対応（Red: `a814df4` / Green: `ba26742`）。`MermaidFigure` の描画完了・失敗処理で `active` を先に確認し、定義変更やアンマウント後に完了した古い描画では `sizeSvg` と `console.error` を実行しないよう修正（`foundation.test.tsx` の既存 stale テストにアサーション追加、件数増減なし）。**186 pass / 0 fail、30テストファイル、6,304 expect**。lint・型検査成功。
+
+## Secure by Design 移行（2026-10-12）
+
+元HTML・Markdown保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
+
+### 実行履歴
+- 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `0be26b2`）。186 pass / 0 fail、30ファイル、6,304 expect。ビルド未実行。
+- 2026-10-12: 表示基盤Red・9件の期待どおりの失敗（直前HEAD `0be26b2`）。186 pass / 9 fail、31ファイル、6,304 expect。ビルド未実行。
