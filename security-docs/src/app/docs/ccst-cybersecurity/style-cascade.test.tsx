@@ -110,3 +110,40 @@ test('applies original anchor scrolling to the actual viewport only on this rout
   });
   expect(values).toEqual([[undefined, 'smooth'], ['(prefers-reduced-motion:reduce)', 'auto']]);
 });
+
+test('centers all diagram SVGs using block auto margins inside a left-origin scroll container', () => {
+  const css = migratedCss();
+  const container = declarations(css, `${scope} .diagram [role="img"]`);
+  const svg = declarations(css, `${scope} .diagram [role="img"] svg`);
+  expect(container).toContain('display:block');
+  expect(container).toContain('min-width:0');
+  expect(container).toContain('overflow-x:auto');
+  expect(svg).toContain('display:block');
+  expect(svg).toContain('margin-left:auto');
+  expect(svg).toContain('margin-right:auto');
+  expect(svg).toContain('max-width:none');
+  // Block auto margins become zero when content exceeds the containing width.
+  // Flex centering or translations can instead push the left edge outside the scroll origin.
+  expect(container).not.toContain('justify-content:center');
+  expect(svg.some(value => value.startsWith('transform:') || /^margin-(left|right):-/.test(value))).toBe(false);
+});
+test('retains narrow and oversized SVG widths with auto centering and keyboard-accessible scrolling', async () => {
+  for (const width of [375, 1440]) {
+    const window = new Window({ settings: { disableJavaScriptEvaluation: true, disableCSSFileLoading: true } });
+    try {
+      window.happyDOM.setWindowSize({ width, height: 900 });
+      window.document.body.innerHTML = `<article class="prose"><div class="ccst-guide"><figure class="diagram"><div role="img" tabindex="0" style="width: ${width - 40}px"><svg viewBox="0 0 120 80" style="width:120px;height:auto"></svg><svg viewBox="0 0 2400 80" style="width:2400px;height:auto"></svg></div></figure></div></article>`;
+      window.document.head.innerHTML = `<style>${combinedStyles()}</style>`;
+      const scroll = window.document.querySelector('[role="img"]')!;
+      expect(window.getComputedStyle(scroll).display).toBe('block');
+      expect(window.getComputedStyle(scroll).overflowX).toBe('auto');
+      expect(scroll.getAttribute('tabindex')).toBe('0');
+      const svgs = [...scroll.querySelectorAll('svg')];
+      expect(svgs.map(svg => window.getComputedStyle(svg).width)).toEqual(['120px', '2400px']);
+      for (const svg of svgs) {
+        const style = window.getComputedStyle(svg);
+        expect(style.display).toBe('block'); expect(style.marginLeft).toBe('auto'); expect(style.marginRight).toBe('auto');
+      }
+    } finally { await window.happyDOM.close(); }
+  }
+});
