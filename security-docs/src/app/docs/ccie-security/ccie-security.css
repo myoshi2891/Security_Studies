@@ -539,3 +539,8 @@
 @media (prefers-reduced-motion:reduce) {
   .ccie-guide.ccie-guide .sidebar, .ccie-guide.ccie-guide .backdrop { transition: none; }
 }
+
+/* Restore the original inherited white surface under the shared prose stylesheet. */
+.ccie-guide.ccie-guide .code > pre {
+  background: var(--surface)
+}
