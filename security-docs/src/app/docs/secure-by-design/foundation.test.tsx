@@ -28,10 +28,20 @@ describe('Secure by Design display foundation', () => {
       rule.walkDecls(d => { expected.push(`${d.prop}:${d.value}`); });
       expect(candidates.some(r => { const actual: string[] = []; r.walkDecls(d => { actual.push(`${d.prop}:${d.value}`); }); return JSON.stringify(actual) === JSON.stringify(expected); }), rule.selector).toBe(true);
     });
-    css.walkRules(rule => { expect(rule.selector.split(',').every(s => s.trim().startsWith(scope) || s.trim() === '.docs-main:has(.secure-by-design-guide)')).toBe(true); });
+    css.walkRules(rule => { expect(rule.selector.split(',').every(s => s.trim().startsWith(scope) || ['.docs-main:has(.secure-by-design-guide)', ':root:has(.secure-by-design-guide)'].includes(s.trim()))).toBe(true); });
     for (const selector of ['.prose ul>li::before', '.prose ol', '.prose ol>li', '.prose ol>li::before', '.sidebar nav li::before']) expect(declarations(css, `${scope} ${selector}`)).toEqual(declarations(sourceCss, selector));
     expect(declarations(css, `${scope} .sidebar`)).toContain('top:var(--docs-header-height, 4rem)');
     expect(declarations(css, `${scope} .section`)).toContain('scroll-margin-top:calc(var(--docs-header-height, 4rem) + 1rem)');
+  });
+
+  test('applies source smooth scrolling to the actual document only while this guide is present and honors reduced motion', () => {
+    const css = postcss.parse(readFileSync(resolve(here, 'secure-by-design.css'), 'utf8'));
+    const values: [string | undefined, string][] = [];
+    css.walkRules(':root:has(.secure-by-design-guide)', rule => {
+      const media = rule.parent?.type === 'atrule' ? (rule.parent as postcss.AtRule).params : undefined;
+      rule.walkDecls('scroll-behavior', d => { values.push([media, d.value]); });
+    });
+    expect(values).toEqual([[undefined, 'smooth'], ['(prefers-reduced-motion:reduce)', 'auto']]);
   });
 
   test('keeps intrinsic lists and tables independent of global MDX styling', async () => {
@@ -125,5 +135,25 @@ describe('Secure by Design display foundation', () => {
     act(() => notify([{ isIntersecting: true, target: container.querySelector('section'), boundingClientRect: { top: 10 } } as unknown as IntersectionObserverEntry], {} as IntersectionObserver));
     expect(container.querySelector('a[aria-current="location"]')).toHaveAttribute('href', '#sec-2');
     unmount(); expect(disconnected).toBe(1);
+  });
+
+  test('wraps mobile keyboard focus and restores prior body overflow on unmount', async () => {
+    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+    const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
+    document.body.style.overflow = 'scroll';
+    try {
+      const { container, getByRole, unmount } = render(createElement('div', { className: 'secure-by-design-guide' }, createElement(GuideSidebar, { items: toc })));
+      fireEvent.click(getByRole('button', { name: '目次を開く' }));
+      const links = [...container.querySelectorAll<HTMLAnchorElement>('aside a')];
+      expect(document.activeElement).toBe(links[0]);
+      fireEvent.keyDown(document, { key: 'Tab', shiftKey: true });
+      expect(document.activeElement).toBe(links.at(-1)!);
+      fireEvent.keyDown(document, { key: 'Tab' });
+      expect(document.activeElement).toBe(links[0]);
+      expect(document.body.style.overflow).toBe('hidden');
+      unmount();
+      expect(document.body.style.overflow).toBe('scroll');
+      expect(container.querySelector('.nav-open')).toBeNull();
+    } finally { document.body.style.overflow = ''; }
   });
 });
