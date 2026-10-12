@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { createProcessor } from "@mdx-js/mdx";
 
 const docsDirectory = path.join(process.cwd(), "src/app/docs");
 
@@ -77,6 +78,31 @@ function scanMarkdown(content: string): { headings: { index: number; text: strin
 /** Collapses the line breaks and indentation of multi-line plain-text JSX children. */
 const collapseWhitespace = (text: string) => text.replace(/\s+/g, " ");
 
+interface StaticMdxNode {
+  type: string;
+  name?: string;
+  value?: string;
+  children?: StaticMdxNode[];
+  data?: { estree?: { body?: { expression?: { type: string; value?: unknown } }[] } };
+}
+const headingParser = createProcessor();
+const COMPOUND_HEADING_PATTERN = /<(?:E\.)?(h[1-6])\b(?:"[^"]*"|'[^']*'|\{[^}]*\}|[^>"'])*>[\s\S]*?<\/(?:E\.)?\1>/g;
+
+/** Read only literal content from the parsed heading; never evaluate JSX expressions or components. */
+function staticHeadingText(node: StaticMdxNode): string {
+  if (node.type === "text") return node.value ?? "";
+  if (node.type === "mdxTextExpression" || node.type === "mdxFlowExpression") {
+    const expression = node.data?.estree?.body?.[0]?.expression;
+    return expression?.type === "Literal" && typeof expression.value === "string" ? expression.value : "";
+  }
+  if (node.type === "mdxJsxTextElement" || node.type === "mdxJsxFlowElement") {
+    if (/^(?:E\.)?br$/.test(node.name ?? "")) return " ";
+    // SVG titles and custom icon labels are decorative, not article heading text.
+    if (!/^(?:E\.)?(?:h[1-6]|span|strong|em|b|i|code|small|a)$/.test(node.name ?? "")) return "";
+  }
+  return (node.children ?? []).map(staticHeadingText).join("");
+}
+
 /**
  * Collects JSX heading text (e.g. `<E.h3 id={...}>{"..."}</E.h3>`, `<h3>...</h3>`), headings rendered
  * by docs components (`<SectionCard title="...">`, `<DocsSubheading>...</DocsSubheading>`) and Markdown
@@ -92,6 +118,17 @@ export function extractHeadings(content: string): string[] {
     ...[...content.matchAll(COMPONENT_TITLE_PATTERN)].map(match => ({ index: match.index, text: match[1] ?? "" })),
     ...[...content.matchAll(SUBHEADING_PATTERN)].map(match => ({ index: match.index, text: collapseWhitespace(match[1] ?? "") })),
   ];
+  const known = new Set(jsxHeadings.map(heading => heading.index));
+  for (const match of content.matchAll(COMPOUND_HEADING_PATTERN)) {
+    if (known.has(match.index) || fences.some(([start, end]) => match.index >= start && match.index < end)) continue;
+    try {
+      const tree = headingParser.parse(match[0]) as unknown as StaticMdxNode;
+      const text = collapseWhitespace(staticHeadingText(tree)).trim();
+      if (text) jsxHeadings.push({ index: match.index, text });
+    } catch {
+      // A malformed heading fragment must not remove later headings or legacy plain-string results.
+    }
+  }
   for (const heading of jsxHeadings) {
     // Fenced code examples may show JSX headings; they are not page headings.
     if (fences.some(([start, end]) => heading.index >= start && heading.index < end)) continue;

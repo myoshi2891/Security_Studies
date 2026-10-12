@@ -23,6 +23,7 @@ export const docsConfig = {
         { title: "Post-Quantum Cryptography", href: "/docs/pqc" },
         { title: "OWASP Top 10 (2025/2026)", href: "/docs/owasp" },
         { title: "Threat Landscape 2026", href: "/docs/threat-landscape" },
+        { title: "MITRE ATLAS", href: "/docs/mitre-atlas" },
       ],
     },
     {
