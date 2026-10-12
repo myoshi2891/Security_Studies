@@ -868,7 +868,16 @@ server {
     listen 80;
     listen [::]:80;
     server_name www.example.com;
-    return 301 https://$host$request_uri;
+    # リダイレクト先はリクエストの Host ヘッダー（$host）ではなく許可済みホスト名に固定する
+    return 301 https://www.example.com$request_uri;
+}
+
+# 許可していない Host のリクエストは既定サーバーで拒否する
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;   # 応答を返さずに接続を閉じる（nginx 独自のコード）
 }
 ```
 
