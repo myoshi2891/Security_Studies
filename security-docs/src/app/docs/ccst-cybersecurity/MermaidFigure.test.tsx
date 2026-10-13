@@ -78,3 +78,9 @@ test('ignores stale asynchronous results and retries a failed engine import', as
   const engine = createEngineLoader(async () => { calls++; if (calls === 1) throw new Error('retry'); return 'engine'; });
   await expect(engine()).rejects.toThrow('retry'); expect(await engine()).toBe('engine'); expect(await engine()).toBe('engine'); expect(calls).toBe(2);
 });
+test('describes pie charts as a plain-text title followed by each labelled slice', async () => {
+  const { describeDiagram } = await load();
+  expect(describeDiagram('pie showData\n  title 攻撃<br/>経路の<b>割合</b>\n  "フィッシング" : 45\n  "マルウェア<br>感染":  30 \n  不正な行')).toEqual(['円グラフ: 攻撃 経路の割合', 'フィッシング: 45', 'マルウェア 感染: 30']);
+  expect(describeDiagram('pie\n"A" : 1')).toEqual(['円グラフ: ', 'A: 1']);
+  expect(describeDiagram('pie')).toEqual(['円グラフ: ']);
+});

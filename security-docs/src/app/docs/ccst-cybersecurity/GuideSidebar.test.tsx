@@ -1,6 +1,6 @@
 import { afterEach, expect, test } from 'bun:test';
 import { createElement } from 'react';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { GuideSidebar } from './GuideSidebar';
 import { toc } from './toc';
 afterEach(() => { cleanup(); window.location.hash = ''; });
@@ -30,4 +30,28 @@ test('shared header pointer input closes the drawer while retaining header focus
   const search = getByRole('button', { name: '検索' }); search.focus(); fireEvent.pointerDown(search);
   expect(button).toHaveAttribute('aria-expanded', 'false'); expect(document.activeElement === search).toBe(true);
   expect(container.querySelector('.ccst-guide')).not.toHaveClass('nav-open');
+});
+test('wraps Tab and Shift+Tab focus inside the open drawer and closes on Escape', () => {
+  const { getByRole, container } = fixture(); const button = getByRole('button', { name: '目次を開く' }); fireEvent.click(button);
+  const links = [...container.querySelectorAll<HTMLAnchorElement>('nav a')]; const first = links[0], last = links.at(-1)!;
+  expect(document.activeElement === first).toBe(true);
+  fireEvent.keyDown(document, { key: 'Tab', shiftKey: true }); expect(document.activeElement === last).toBe(true);
+  fireEvent.keyDown(document, { key: 'Tab' }); expect(document.activeElement === first).toBe(true);
+  links[1].focus(); fireEvent.keyDown(document, { key: 'Tab' }); fireEvent.keyDown(document, { key: 'Enter' }); expect(document.activeElement === links[1]).toBe(true);
+  fireEvent.keyDown(document, { key: 'Escape' }); expect(button).toHaveAttribute('aria-expanded', 'false'); expect(document.activeElement === button).toBe(true);
+});
+test('scroll tracking selects the topmost intersecting known section and disconnects on unmount', async () => {
+  const original = globalThis.IntersectionObserver; const observed: Element[] = []; let disconnected = false;
+  let notify: (entries: { isIntersecting: boolean; boundingClientRect: { top: number }; target: Element }[]) => void = () => {};
+  globalThis.IntersectionObserver = class { constructor(callback: typeof notify) { notify = callback; } observe(target: Element) { observed.push(target); } disconnect() { disconnected = true; } } as unknown as typeof IntersectionObserver;
+  try {
+    const { container, unmount } = render(createElement('div', { className: 'ccst-guide' }, createElement(GuideSidebar, { groups: toc }), createElement('section', { id: 's0' }), createElement('section', { id: 's3-6' }), createElement('section', { id: 'unknown' })));
+    const [s0, s36] = ['s0', 's3-6'].map(id => container.querySelector(`[id="${id}"]`)!);
+    expect(observed).toEqual([s0, s36]);
+    act(() => notify([{ isIntersecting: true, boundingClientRect: { top: 300 }, target: s0 }, { isIntersecting: true, boundingClientRect: { top: 120 }, target: s36 }, { isIntersecting: false, boundingClientRect: { top: 0 }, target: s0 }]));
+    await waitFor(() => expect(container.querySelector('a[href="#s3-6"]')).toHaveAttribute('aria-current', 'location'));
+    act(() => notify([{ isIntersecting: false, boundingClientRect: { top: 0 }, target: s0 }]));
+    expect(container.querySelector('a[href="#s3-6"]')).toHaveAttribute('aria-current', 'location');
+    unmount(); expect(disconnected).toBe(true);
+  } finally { globalThis.IntersectionObserver = original; }
 });
