@@ -17,9 +17,15 @@ export function GuideSidebar({ groups }: { groups: readonly TocGroup[] }) {
     let mounted = true;
     const hash = () => { if (mounted) select(window.location.hash.slice(1)); };
     queueMicrotask(hash); window.addEventListener('hashchange', hash);
+    // 通知は交差状態が変わった節だけを含むため、交差中の節を通知間で保持して全体から最上部を選ぶ
+    const intersecting = new Map<Element, number>();
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
-      const top = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-      if (top) select(top.target.id);
+      for (const entry of entries) {
+        if (entry.isIntersecting) intersecting.set(entry.target, entry.boundingClientRect.top);
+        else intersecting.delete(entry.target);
+      }
+      const top = [...intersecting].sort(([, a], [, b]) => a - b)[0];
+      if (top) select(top[0].id);
     }, { rootMargin: '-20% 0px -70% 0px' });
     const guide = panel.current?.closest('.ccst-guide');
     for (const group of groups) for (const item of [...(group.id ? [{ id: group.id }] : []), ...group.items]) {

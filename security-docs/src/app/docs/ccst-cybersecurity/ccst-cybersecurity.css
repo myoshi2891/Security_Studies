@@ -140,3 +140,5 @@
 /* The document is the anchor scroller; this conditional rule ends when the route unmounts. */
 :root:has(.ccst-guide){scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){:root:has(.ccst-guide){scroll-behavior:auto}}
+/* Normal-size gold text uses the darker gold ink for 4.5:1 contrast; decorative gold is unchanged. */
+.ccst-guide.ccst-guide .nav-group,.ccst-guide.ccst-guide .nav-group a,.ccst-guide.ccst-guide .eyebrow,.ccst-guide.ccst-guide .hljs-number,.ccst-guide.ccst-guide .hljs-literal{color:var(--gold-ink)}
