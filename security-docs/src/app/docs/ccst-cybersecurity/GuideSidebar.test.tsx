@@ -72,3 +72,19 @@ test('keeps intersecting sections across separate observer notifications when ch
     await waitFor(() => expect(container.querySelector('a[href="#s3-6"]')).toHaveAttribute('aria-current', 'location'));
   } finally { globalThis.IntersectionObserver = original; }
 });
+test('compares the current positions of all intersecting sections at each notification', async () => {
+  const original = globalThis.IntersectionObserver;
+  let notify: (entries: { isIntersecting: boolean; boundingClientRect: { top: number }; target: Element }[]) => void = () => {};
+  globalThis.IntersectionObserver = class { constructor(callback: typeof notify) { notify = callback; } observe() {} disconnect() {} } as unknown as typeof IntersectionObserver;
+  try {
+    const { container } = render(createElement('div', { className: 'ccst-guide' }, createElement(GuideSidebar, { groups: toc }), createElement('section', { id: 's0' }), createElement('section', { id: 's3-6' })));
+    const [s0, s36] = ['s0', 's3-6'].map(id => container.querySelector(`[id="${id}"]`)!);
+    act(() => notify([{ isIntersecting: true, boundingClientRect: { top: 50 }, target: s0 }]));
+    await waitFor(() => expect(container.querySelector('a[href="#s0"]')).toHaveAttribute('aria-current', 'location'));
+    // スクロール後の現在位置では s3-6 が上側。s0 の古い通知位置 (50) ではなく現在位置 (400) で比較する
+    const position = (top: number) => () => ({ top } as DOMRect);
+    s0.getBoundingClientRect = position(400); s36.getBoundingClientRect = position(100);
+    act(() => notify([{ isIntersecting: true, boundingClientRect: { top: 100 }, target: s36 }]));
+    await waitFor(() => expect(container.querySelector('a[href="#s3-6"]')).toHaveAttribute('aria-current', 'location'));
+  } finally { globalThis.IntersectionObserver = original; }
+});
