@@ -5,7 +5,7 @@
   "markdownSha256": "c407e02339596075ba888292cfec00028c197e482cc4ceae66296b651d832502",
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
-  "updated": "2026-10-13",
+  "updated": "2026-10-14",
   "status": "図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功",
   "counts": {
     "sections": 46,
@@ -124,16 +124,16 @@
     "d49"
   ],
   "verification": {
-    "passed": 387,
+    "passed": 395,
     "failed": 0,
     "testFiles": 58,
-    "assertions": 25032,
+    "assertions": 25099,
     "runner": "npm test -- --timeout 30000",
     "buildExecuted": false,
     "visualReview": "pending user review",
     "lint": "passed",
     "typeCheck": "passed",
-    "ccstTests": 96,
+    "ccstTests": 104,
     "ccstTestFiles": 12
   },
   "implementationCommit": "7c54fac",
