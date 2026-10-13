@@ -86,7 +86,30 @@ export function describeDiagram(source: string): string[] {
   if (header.startsWith('sequenceDiagram')) {
     const names = new Map<string, string>();
     const steps: string[] = [];
+    // 分岐ブロック（alt/else/opt/loop/par/and）の条件。ネストに対応するためスタックで保持する
+    const blocks: { kind: string; label: string }[] = [];
+    const context = () => blocks.length > 0 ? `[${blocks.map(({ kind, label }) => `${kind}${label ? ` ${label}` : ''}`).join(' / ')}] ` : '';
     for (const line of lines.slice(1)) {
+      const open = line.match(/^(alt|opt|loop|par|critical|break|rect)\b\s*(.*)$/i);
+      if (open) {
+        const kind = open[1].toLowerCase();
+        const label = plain(open[2]);
+        blocks.push({ kind, label });
+        if (kind !== 'rect') steps.push(`${kind}${label ? `: ${label}` : ''}`);
+        continue;
+      }
+      const branch = line.match(/^(else|and|option)\b\s*(.*)$/i);
+      if (branch && blocks.length > 0) {
+        const kind = branch[1].toLowerCase();
+        const label = plain(branch[2]);
+        blocks[blocks.length - 1] = { kind, label };
+        steps.push(`${kind}${label ? `: ${label}` : ''}`);
+        continue;
+      }
+      if (/^end$/i.test(line)) {
+        blocks.pop();
+        continue;
+      }
       const participant = line.match(/^(?:participant|actor)\s+(\S+)(?:\s+as\s+(.+))?$/);
       if (participant) {
         names.set(participant[1], plain(participant[2] ?? participant[1]));
@@ -95,11 +118,11 @@ export function describeDiagram(source: string): string[] {
       const message = line.match(/^([^\s-]+)\s*--?(?:>>|>|x|\))[+-]?\s*([^\s:]+)\s*:\s*(.*)$/);
       if (message) {
         const name = (key: string) => names.get(key) ?? key;
-        steps.push(`${name(message[1])} → ${name(message[2])}: ${plain(message[3])}`);
+        steps.push(`${context()}${name(message[1])} → ${name(message[2])}: ${plain(message[3])}`);
         continue;
       }
       const note = line.match(/^Note\s+[^:]+:\s*(.*)$/i);
-      if (note) steps.push(`注記: ${plain(note[1])}`);
+      if (note) steps.push(`${context()}注記: ${plain(note[1])}`);
     }
     return [`シーケンス図: ${[...names.values()].join('、')}`, ...steps];
   }
