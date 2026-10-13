@@ -408,7 +408,7 @@ flowchart TD
 
 > 【補足】この表は演習用の想定値です。実際の値は、自社の環境と攻撃者像に合わせて評価してください。
 
-Shostack の著書 *Threat Modeling*（第2版の題名は *Designing for Security in an AI World*）の第4章でも、攻撃木は脅威を見つけるための「ビルディングブロック」として位置づけられています。特に、他人が作った木を使う、新しく作る、といった使い方が紹介されています [S14]。
+Shostack の著書 *Threat Modeling*（初版）の第4章「Attack Trees」でも、攻撃木は脅威を見つけるための「ビルディングブロック」として位置づけられています。特に、他人が作った木を使う、新しく作る、といった使い方が紹介されています [S14]。なお、第2版 *Designing for Security in an AI World* の第4章は「Trust and Boundaries」で、攻撃木の章ではありません。
 
 ### 4-5. 第22章 Product Testing and Verification
 
