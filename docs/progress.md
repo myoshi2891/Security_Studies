@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-14（CCST: 目次スクロール追跡で交差中の全節を通知ごとの現在位置で比較・全394件成功・lint/型検査成功）
+> **最終更新**: 2026-10-14（CCST: Codecov patch対応・MermaidFigureの実エンジン初期化を検証・全395件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **394件** | `npm test`: 394 pass / 0 fail、58ファイル、25,095 expect（目次スクロール追跡の現在位置比較Green・全394件成功・lint/型検査成功） |
+| テストケース総数 | **395件** | `npm test`: 395 pass / 0 fail、58ファイル、25,099 expect（MermaidFigure実エンジン初期化テスト追加・全395件成功・lint/型検査成功） |
 | テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -493,3 +493,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 図中央寄せ追加: Red `78997af` → Green `7c54fac`。小図は中央、幅広SVGは縮小せず左端から左右にスクロール。CCST96件、全387件成功、lint/型検査成功。今後の移行でも左端を切らない方針をsecurity-docs/AGENTS.mdへ追記。ビルド未実行。
 
 - 2026-10-14: CCST 目次スクロール追跡（レビュー対応）。交差中の節の古い通知位置をMapに保持していたため、Setで交差中の節だけを保持し、通知ごとに全節の現在位置を取得して最上部を選ぶよう修正。Red `b43485b` → Green `00bdb04`。394 pass / 0 fail、58ファイル、25,095 expect。lint/型検査成功。ビルド未実行。
+
+- 2026-10-14: CCST Codecov patch対応（PR #46: 94.87% < 目標99.37%）。MermaidFigure.tsx の getEngine / renderDiagram（25-41, 45-46行）が未到達だったため、mermaid をモックして初期化1回・strict設定・テーマ・描画委譲を検証するテストを追加（`2fdb908`）。MermaidFigure.tsx 行100%、全体行99.57%。395 pass / 0 fail、58ファイル、25,099 expect。lint/型検査成功。ビルド未実行。
