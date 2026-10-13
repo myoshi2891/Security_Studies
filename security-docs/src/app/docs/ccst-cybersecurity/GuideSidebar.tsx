@@ -17,15 +17,16 @@ export function GuideSidebar({ groups }: { groups: readonly TocGroup[] }) {
     let mounted = true;
     const hash = () => { if (mounted) select(window.location.hash.slice(1)); };
     queueMicrotask(hash); window.addEventListener('hashchange', hash);
-    // 通知は交差状態が変わった節だけを含むため、交差中の節を通知間で保持して全体から最上部を選ぶ
-    const intersecting = new Map<Element, number>();
+    // 通知は交差状態が変わった節だけを含むため、交差中の節を通知間で保持し、
+    // 位置は通知ごとに全節の現在値を取得して同時点の値で最上部を選ぶ
+    const intersecting = new Set<Element>();
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       for (const entry of entries) {
-        if (entry.isIntersecting) intersecting.set(entry.target, entry.boundingClientRect.top);
+        if (entry.isIntersecting) intersecting.add(entry.target);
         else intersecting.delete(entry.target);
       }
-      const top = [...intersecting].sort(([, a], [, b]) => a - b)[0];
-      if (top) select(top[0].id);
+      const top = [...intersecting].map(target => ({ target, top: target.getBoundingClientRect().top })).sort((a, b) => a.top - b.top)[0];
+      if (top) select(top.target.id);
     }, { rootMargin: '-20% 0px -70% 0px' });
     const guide = panel.current?.closest('.ccst-guide');
     for (const group of groups) for (const item of [...(group.id ? [{ id: group.id }] : []), ...group.items]) {
