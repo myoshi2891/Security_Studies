@@ -604,16 +604,16 @@ def get_order(order_id):
         abort(404)
     return dict(row)
 
-# 安全: 所有者の条件も一緒に確認する
+# 安全: 所有者の条件も一緒に確認し、公開する列だけを取得する
 @app.get("/orders/<int:order_id>")
 def get_order(order_id):
     row = db.execute(
-        "SELECT * FROM orders WHERE id = ? AND user_id = ?",
+        "SELECT id, status, total, created_at FROM orders WHERE id = ? AND user_id = ?",
         (order_id, current_user.id),
     ).fetchone()
     if row is None:
         abort(404)
-    return dict(row)
+    return dict(row)  # SELECT した公開列だけが応答に含まれる
 ```
 
 #### 防御の原則
