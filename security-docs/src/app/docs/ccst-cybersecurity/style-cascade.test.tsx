@@ -147,3 +147,25 @@ test('retains narrow and oversized SVG widths with auto centering and keyboard-a
     } finally { await window.happyDOM.close(); }
   }
 });
+test('renders normal-size gold text in a dark gold that meets 4.5:1 on white while keeping gold decorations', async () => {
+  const window = await windowFor();
+  try {
+    const code = window.document.querySelector('.main pre code')!;
+    code.insertAdjacentHTML('beforeend', '<span class="hljs-number">443</span><span class="hljs-literal">true</span>');
+    const luminance = (rgb: string) => {
+      const [r, g, b] = (rgb.match(/\d+/g) ?? []).map(Number).map(v => v / 255).map(v => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    for (const selector of ['.nav-group', '.nav-group a', '.eyebrow', '.hljs-number', '.hljs-literal']) {
+      const elements = [...window.document.querySelectorAll(selector)];
+      expect(elements.length, selector).toBeGreaterThan(0);
+      for (const element of elements) {
+        const ratio = 1.05 / (luminance(color(window.getComputedStyle(element).color)) + 0.05);
+        expect(ratio, selector).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+    // 装飾用途（箇条書きの点・見出しアイコン）は元の金色を維持する
+    expect(declarations(migratedCss(), `${scope} ul>li::before`)).toContain('background:var(--color-gold)');
+    expect(declarations(migratedCss(), `${scope} h3 .ti`)).toContain('color:var(--color-gold)');
+  } finally { await window.happyDOM.close(); }
+});

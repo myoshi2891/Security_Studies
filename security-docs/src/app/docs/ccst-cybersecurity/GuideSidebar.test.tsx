@@ -55,3 +55,20 @@ test('scroll tracking selects the topmost intersecting known section and disconn
     unmount(); expect(disconnected).toBe(true);
   } finally { globalThis.IntersectionObserver = original; }
 });
+test('keeps intersecting sections across separate observer notifications when choosing the topmost', async () => {
+  const original = globalThis.IntersectionObserver;
+  let notify: (entries: { isIntersecting: boolean; boundingClientRect: { top: number }; target: Element }[]) => void = () => {};
+  globalThis.IntersectionObserver = class { constructor(callback: typeof notify) { notify = callback; } observe() {} disconnect() {} } as unknown as typeof IntersectionObserver;
+  try {
+    const { container } = render(createElement('div', { className: 'ccst-guide' }, createElement(GuideSidebar, { groups: toc }), createElement('section', { id: 's0' }), createElement('section', { id: 's3-6' })));
+    const [s0, s36] = ['s0', 's3-6'].map(id => container.querySelector(`[id="${id}"]`)!);
+    act(() => notify([{ isIntersecting: true, boundingClientRect: { top: 100 }, target: s0 }]));
+    await waitFor(() => expect(container.querySelector('a[href="#s0"]')).toHaveAttribute('aria-current', 'location'));
+    // 別の通知で下側の節が交差しても、交差中の上側の節を選び続ける
+    act(() => notify([{ isIntersecting: true, boundingClientRect: { top: 400 }, target: s36 }]));
+    expect(container.querySelector('a[href="#s0"]')).toHaveAttribute('aria-current', 'location');
+    // 上側の節が交差を外れたら、残る交差中の節へ移る
+    act(() => notify([{ isIntersecting: false, boundingClientRect: { top: -50 }, target: s0 }]));
+    await waitFor(() => expect(container.querySelector('a[href="#s3-6"]')).toHaveAttribute('aria-current', 'location'));
+  } finally { globalThis.IntersectionObserver = original; }
+});

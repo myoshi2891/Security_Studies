@@ -84,3 +84,11 @@ test('describes pie charts as a plain-text title followed by each labelled slice
   expect(describeDiagram('pie\n"A" : 1')).toEqual(['円グラフ: ', 'A: 1']);
   expect(describeDiagram('pie')).toEqual(['円グラフ: ']);
 });
+test('describes undirected dotted edges closed by .- with their labels (d44)', async () => {
+  const { describeDiagram } = await load();
+  const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
+  const lines: string[] = describeDiagram(diagrams.d44);
+  expect(lines).toContain('攻撃者 Adversary — 被害者 Victim 組織・人・資産: 標的として狙う');
+  expect(lines).toContain('能力 Capability マルウェア・攻撃手法 — インフラ Infrastructure C2 サーバー・ドメイン・IP: インフラ経由で配送');
+  expect(describeDiagram('flowchart LR\nA -. "x" .- B\nC -. "y" .-> D')).toEqual(['フローチャート', 'A — B: x', 'C → D: y']);
+});
