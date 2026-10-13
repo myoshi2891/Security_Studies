@@ -1,4 +1,4 @@
-import { afterEach, expect, test } from 'bun:test';
+import { afterEach, expect, mock, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { cleanup, render, waitFor } from '@testing-library/react';
@@ -91,4 +91,19 @@ test('describes undirected dotted edges closed by .- with their labels (d44)', a
   expect(lines).toContain('攻撃者 Adversary — 被害者 Victim 組織・人・資産: 標的として狙う');
   expect(lines).toContain('能力 Capability マルウェア・攻撃手法 — インフラ Infrastructure C2 サーバー・ドメイン・IP: インフラ経由で配送');
   expect(describeDiagram('flowchart LR\nA -. "x" .- B\nC -. "y" .-> D')).toEqual(['フローチャート', 'A — B: x', 'C → D: y']);
+});
+test('initializes the bundled Mermaid engine once with the strict original theme and renders through it', async () => {
+  // mock.module はプロセス全体に残るため、実モジュールを退避して finally で復元する（実パーサーのテストが共有する）
+  const realMermaid = { ...(await import('mermaid')) };
+  const initialize = mock((_config: Record<string, unknown>) => {});
+  const renders: [string, string][] = [];
+  mock.module('mermaid', () => ({ default: { initialize, render: async (id: string, code: string) => { renders.push([id, code]); return { svg: `<svg data-id="${id}"></svg>` }; } } }));
+  try {
+    const { renderDiagram } = await load();
+    expect(await renderDiagram('first', 'flowchart LR\nA-->B')).toEqual({ svg: '<svg data-id="first"></svg>' });
+    await renderDiagram('second', 'pie\n"A" : 1');
+    expect(initialize).toHaveBeenCalledTimes(1);
+    expect(initialize.mock.calls[0]?.[0]).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict', flowchart: { htmlLabels: true }, themeVariables: { fontSize: '16px', primaryColor: '#EEF1F8' } });
+    expect(renders).toEqual([['first', 'flowchart LR\nA-->B'], ['second', 'pie\n"A" : 1']]);
+  } finally { mock.module('mermaid', () => realMermaid); }
 });
