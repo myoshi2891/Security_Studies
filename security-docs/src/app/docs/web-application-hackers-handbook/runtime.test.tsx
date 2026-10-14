@@ -40,3 +40,14 @@ test('all source icon names have decorative local SVG equivalents and code retai
  for(const icon of sourceDocument.querySelectorAll('i.ti')){const name=[...icon.classList].find(c=>c.startsWith('ti-'));const {container}=render(createElement(GuideIcon,{name}));expect(container.querySelector(`i.ti.${name} svg`)).toHaveAttribute('aria-hidden','true');}
  for(const source of sourceDocument.querySelectorAll('pre code')){const {container}=render(createElement(GuideCode,{code:source.textContent,language:source.className.replace('language-','')}));expect(container.textContent).toBe(source.textContent);expect(container.querySelector('[class^="hljs-"]')).not.toBeNull();}
 });
+test('lazy diagrams wait for intersection, disconnect observers and support retries after engine loading fails',async()=>{
+ const {MermaidFigure,createEngineLoader}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;
+ globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(){}disconnect(){disconnected++;}} as unknown as typeof IntersectionObserver;
+ try{
+  let calls=0;const renderer=async()=>{calls++;return {svg:'<svg viewBox="0 0 200 80"></svg>'};};
+  const view=render(createElement(MermaidFigure,{id:'d1',source:'flowchart LR\nA-->B',renderer}));expect(calls).toBe(0);
+  act(()=>notify!([{isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());expect(calls).toBe(1);view.unmount();expect(disconnected).toBeGreaterThan(0);
+  let loads=0;const load=createEngineLoader(async()=>{loads++;if(loads===1)throw new Error('retry');return 'engine';});await expect(load()).rejects.toThrow('retry');expect(await load()).toBe('engine');expect(await load()).toBe('engine');expect(loads).toBe(2);
+ }finally{globalThis.IntersectionObserver=saved;}
+});

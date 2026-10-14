@@ -49,3 +49,10 @@ test('all 892 body cells preserve original hover backgrounds in both themes',asy
  cells.forEach((el,i)=>expect(actual.getComputedStyle(el).backgroundColor).toBe(original.getComputedStyle(refs[i]).backgroundColor));
  });
 });
+test('narrow and oversized SVGs keep intrinsic widths and block auto margins at phone and desktop widths',async()=>{
+ for(const width of [375,1440]){const w=new Window();try{w.happyDOM.setWindowSize({width,height:900});w.document.head.innerHTML=`<style>${styles}</style>`;
+ w.document.body.innerHTML=`<div class="wahh-guide"><div class="diagram"><div class="mermaid-target" style="width:${width-40}px"><div class="diagram-viewport" role="img" tabindex="0"><svg style="width:120px;height:auto" viewBox="0 0 120 80"></svg><svg style="width:2400px;height:auto" viewBox="0 0 2400 80"></svg></div></div></div></div>`;
+ const scroll=w.document.querySelector('.mermaid-target')!;expect(w.getComputedStyle(scroll).display).toBe('block');expect(w.getComputedStyle(scroll).overflowX).toBe('auto');expect(scroll.querySelector('[role="img"]')!.getAttribute('tabindex')).toBe('0');
+ const svgs=[...scroll.querySelectorAll('svg')];expect(svgs.map(svg=>w.getComputedStyle(svg).width)).toEqual(['120px','2400px']);for(const svg of svgs){const style=w.getComputedStyle(svg);expect(style.display).toBe('block');expect(style.marginLeft).toBe('auto');expect(style.marginRight).toBe('auto');expect(style.maxWidth).toBe('none');}
+ }finally{await w.happyDOM.close();}}
+});
