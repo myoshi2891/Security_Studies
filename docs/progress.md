@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-12（CCIE Security: コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み）
+> **最終更新**: 2026-10-14（CCST: Codecov patch対応・MermaidFigureの実エンジン初期化を検証・全395件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,13 +12,13 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **282件** | `npm test`: 282 pass / 0 fail、43ファイル、12,582 expect（コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み） |
-| テストファイル数 | **43ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **395件** | `npm test`: 395 pass / 0 fail、58ファイル、25,099 expect（MermaidFigure実エンジン初期化テスト追加・全395件成功・lint/型検査成功） |
+| テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-12 実測）
+#### ファイル別テスト数（2026-10-13 実測）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
@@ -56,7 +56,7 @@
 | `src/app/docs/secure-by-design/sections-00-04.test.tsx` | 6 | 6 pass / 0 fail |
 | `src/app/docs/secure-by-design/sections-05-09.test.tsx` | 5 | 5 pass / 0 fail |
 | `src/app/docs/secure-by-design/sections-10-16.test.tsx` | 8 | 8 pass / 0 fail |
-| `src/app/docs/secure-by-design/integration.test.tsx` | 11 | 11 pass / 0 fail |
+| `src/app/docs/secure-by-design/integration.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/secure-by-design/hydration.test.tsx` | 3 | 3 pass / 0 fail |
 | `src/app/docs/mitre-atlas/foundation.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/app/docs/mitre-atlas/sections-01-04.test.tsx` | 5 | 5 pass / 0 fail |
@@ -64,7 +64,34 @@
 | `src/app/docs/mitre-atlas/sections-09-13.test.tsx` | 7 | 7 pass / 0 fail |
 | `src/app/docs/mitre-atlas/integration.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/app/docs/mitre-atlas/hydration.test.tsx` | 3 | 3 pass / 0 fail |
+| `src/app/docs/secure-by-design/sidebar-a11y.test.tsx` | 2 | 2 pass / 0 fail |
+| `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 1 | 1 pass / 0 fail |
+| `src/app/docs/ccie-security/archive.test.ts` | 5 | 5 pass / 0 fail |
 | `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 5 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/foundation.test.tsx` | 7 | 7 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/sections-00-03.test.tsx` | 4 | 4 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/MermaidFigure.test.tsx` | 6 | 6 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/chapters-01-02.test.tsx` | 11 | 11 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/chapter-03.test.tsx` | 7 | 7 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/chapters-04-05.test.tsx` | 10 | 10 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/chapter-06-references.test.tsx` | 17 | 17 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/hydration.test.tsx` | 3 | 3 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 14 | 14 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 4 | 4 pass / 0 fail |
+
+| `src/app/docs/ccst-cybersecurity/archive.test.ts` | 5 | 5 pass / 0 fail |
 
 ---
 
@@ -122,13 +149,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `GEMINI.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `README.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `security-docs/README.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
-| `docs/progress.md` | 2026-10-12 | ATLAS図解の18px・高コントラスト・縮小防止・277テスト・42ファイル・10,627 expectを同期 |
+| `CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `GEMINI.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `security-docs/README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `docs/progress.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -165,6 +192,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、104件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全395件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
 | P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
 | P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
@@ -277,7 +305,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - 実装HEAD: `96cc635`。テスト170 pass / 0 fail、30ファイル（当時。最新は下記時系列の186件）。lint・型検査成功。
 - 全13章の自動検証完了。次はユーザーによる目視確認。`docs/migration-inventory/ccie-security-review.md` の章別表と共通チェックを使用する。
-- 再開時もnpm・ビルドを実行せず、表示修正が必要なら再現テストを先にコミットする。元HTML・Markdownは保持する。
+- 再開時はnpmを使用し、ビルドは禁止。表示修正は再現テストを先にコミットする。元HTML・Markdownはarchiveに保持する。
 - 2026-10-09: レイアウト再構成Red・hydration再現を含む15件の失敗。152 pass / 15 fail、30テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正Green。170 pass / 0 fail、30テストファイル。npm・Next.jsビルド未実行。
 - 2026-10-09: 検索インデックスのMDX import/export除去（`search.test.ts` +1）。171 pass / 0 fail、30テストファイル。
@@ -385,3 +413,85 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-12: 表のCSSカスケードGreen・全280件成功・実画面85表の白背景/上下0px確認・lint/型検査成功（直前HEAD `6a6d1d4`）。280 pass / 0 fail、43ファイル、12,169 expect。ビルド未実行。
 - 2026-10-12: コード背景Red・280成功2失敗・実装前（直前HEAD `1d2a72e`）。280 pass / 2 fail、43ファイル、12,173 expect。ビルド未実行。
 - 2026-10-12: コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み（直前HEAD `6203e86`）。282 pass / 0 fail、43ファイル、12,582 expect。ビルド未実行。
+
+- 2026-10-13: CCIE Security 事前監査・既存移行の全テスト成功、原本アーカイブは次ステップ。286 pass / 0 fail、45ファイル、12,603 expect。ビルド未実行。
+
+- 2026-10-13: CCIE Security アーカイブRed・原本移動前の契約5件が期待どおり失敗。286 pass / 5 fail、46ファイル、12,608 expect。ビルド未実行。
+
+- 2026-10-13: CCIE Security 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功。291 pass / 0 fail、46ファイル、12,618 expect。ビルド未実行。
+
+### CCIE Security 原本アーカイブ完了（2026-10-13）
+
+既存Next.js移行を再検証し、未対応だった原本保存を完了。公開ルート `/docs/ccie-security` は変更なし。
+原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
+事前仕様書補正 `547774b` → Red `d4f11e6`（286成功・5失敗）→ Red記録 `f76e3ef` → Green `7782eb1`（291成功・0失敗）。
+46テストファイル・12,618 expect、npm run lint / types:check成功。ビルド・今回の目視確認・push・公開は未実施。
+全13章・85表・61図・34コード・49リスト/196項目・7チェック・59参考文献とマーカーCSSをアーカイブ原本と継続比較。
+再開時はユーザーの目視指摘を再現する失敗テストから対応する。
+
+- 2026-10-13: CCST 事前棚卸し完了・本文未移行。291 pass / 0 fail、46ファイル、12,618 expect。ビルド未実行。
+
+- 2026-10-13: CCST 表示基盤Red・未実装による7件の失敗を確認。291 pass / 7 fail、47ファイル、12,618 expect。ビルド未実行。
+
+- 2026-10-13: CCST 表示基盤Green・298件成功・lint/型検査成功・本文は次ステップ。298 pass / 0 fail、47ファイル、12,834 expect。ビルド未実行。
+
+- 2026-10-13: CCST 導入・図Red・追加10件のみ期待どおり失敗（実行上限30秒）。298 pass / 10 fail、49ファイル、12,842 expect。ビルド未実行。
+
+- 2026-10-13: CCST 導入Green・308件成功・50図パーサー検証・lint/型検査成功。308 pass / 0 fail、49ファイル、13,076 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第1〜2章Red・対象11節が未移行として失敗。308 pass / 11 fail、50ファイル、13,096 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第1〜2章Green・319件成功・lint/型検査成功。319 pass / 0 fail、50ファイル、13,418 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第3章Red・対象7節が未移行として失敗。319 pass / 7 fail、51ファイル、13,432 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第3章Green・326件成功・lint/型検査成功。326 pass / 0 fail、51ファイル、13,618 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第4〜5章Red・対象10節が未移行として失敗。326 pass / 10 fail、52ファイル、13,638 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第4〜5章Green・336件成功・lint/型検査成功。336 pass / 0 fail、52ファイル、13,944 expect。ビルド未実行。
+
+- 2026-10-13: CCST 第6章・参考文献Red・対象14節と25問/25チェック/60参考文献の17件失敗。336 pass / 17 fail、53ファイル、13,975 expect。ビルド未実行。
+
+- 2026-10-13: CCST 全46節Green・353件成功・lint/型検査成功・統合監査は次ステップ。353 pass / 0 fail、53ファイル、14,301 expect。ビルド未実行。
+
+- 2026-10-13: CCST 統合Red・ナビ登録と静的検索の4件失敗・全量比較と163表hydration成功。360 pass / 4 fail、55ファイル、19,434 expect。ビルド未実行。
+
+- 2026-10-13: CCST 統合追加Red・既存ATLAS契約も15件へ同期・登録前の6件失敗。358 pass / 6 fail、55ファイル、19,433 expect。ビルド未実行。
+
+- 2026-10-13: CCST 統合Green・364件成功・15リンク/検索227見出し/163表hydration・lint/型検査成功。364 pass / 0 fail、55ファイル、19,443 expect。ビルド未実行。
+
+- 2026-10-13: CCST CSS監査Red・フォント/見出し/番号項目余白/狭幅カードの5件失敗・163表と3コードの色は成功。374 pass / 5 fail、57ファイル、23,060 expect。ビルド未実行。
+
+- 2026-10-13: CCST CSS監査Red補正・happy-dom normalキーワード欠落を最小再現・元CSSで5件失敗。374 pass / 5 fail、57ファイル、23,060 expect。ビルド未実行。
+
+- 2026-10-13: CCST CSS監査Green・379件成功・全163表/3コード/丸点/番号・3画面幅と両テーマ・lint/型検査成功。379 pass / 0 fail、57ファイル、24,987 expect。ビルド未実行。
+
+- 2026-10-13: CCST 原本アーカイブRed・移動前の保存先/ハッシュ/旧パス/台帳/比較参照5件失敗。379 pass / 5 fail、58ファイル、24,992 expect。ビルド未実行。
+
+- 2026-10-13: CCST 原本アーカイブGreen・両SHA-256一致・384件成功・lint/型検査成功。384 pass / 0 fail、58ファイル、25,000 expect。ビルド未実行。
+
+- 2026-10-13: CCST 最終監査Red・元のアンカースクロールを実viewportへ適用する契約1件失敗。384 pass / 1 fail、58ファイル、25,001 expect。ビルド未実行。
+
+- 2026-10-13: CCST 移行完了・全385件/58ファイル/25,003expect・lint/型検査成功・原本アーカイブ済み・目視待ち。385 pass / 0 fail、58ファイル、25,003 expect。ビルド未実行。
+
+## CCST Cybersecurity 最終状態（2026-10-13）
+
+- ルート `/docs/ccst-cybersecurity`、Security CertificationsのCCIE直後に登録。15件のナビ・静的検索索引へ反映済み。
+- 全46節をHTML正本と比較。元の丸点・番号・階層・カウンター・175アイコン、表・コード・注意枠・質問・参考文献を保持。
+- CCST 12テストファイル・104件追加。全395 pass / 0 fail、58ファイル、25,099 expect。npm run lint / types:check成功。
+- 原本はarchive/htmlとarchive/mdの `Ccst-cybersecurity-guide` ファイル。両ハッシュ一致、元情報基準日2026-10-05を保持。
+- ロジック単位の追跡対象は36/36（既存32 + CCST GuideSidebar / GuideIcon / GuideCode / MermaidFigure）。MDX、静的データ、テストヘルパーは別集計。戦略セル7/40=17.5%は変更なし。
+- 既存ナビ・静的索引の14件固定契約も15件へ同期。happy-domのletter-spacing:normal欠落は最小再現で確認し、宣言と計算済み書体を併せて検証するテストへ補正。
+- Red / Green / docsを分離コミット。整理監査とlint/型検査を実施。ビルド・ブラウザー目視・push・公開は未実施。
+- 次のアクション: ユーザーが `docs/migration-inventory/ccst-cybersecurity-review.md` に沿って目視確認する。指摘の修正は失敗テストのコミットから開始する。
+
+- 2026-10-13: CCST 図中央寄せRed・小図/2400pxの幅広SVGと左端スクロール契約2件失敗。385 pass / 2 fail、58ファイル、25,009 expect。ビルド未実行。
+
+- 2026-10-13: CCST 図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功。387 pass / 0 fail、58ファイル、25,032 expect。ビルド未実行。
+
+図中央寄せ追加: Red `78997af` → Green `7c54fac`。小図は中央、幅広SVGは縮小せず左端から左右にスクロール。CCST96件、全387件成功、lint/型検査成功。今後の移行でも左端を切らない方針をsecurity-docs/AGENTS.mdへ追記。ビルド未実行。
+
+- 2026-10-14: CCST 目次スクロール追跡（レビュー対応）。交差中の節の古い通知位置をMapに保持していたため、Setで交差中の節だけを保持し、通知ごとに全節の現在位置を取得して最上部を選ぶよう修正。Red `b43485b` → Green `00bdb04`。394 pass / 0 fail、58ファイル、25,095 expect。lint/型検査成功。ビルド未実行。
+
+- 2026-10-14: CCST Codecov patch対応（PR #46: 94.87% < 目標99.37%）。MermaidFigure.tsx の getEngine / renderDiagram（25-41, 45-46行）が未到達だったため、mermaid をモックして初期化1回・strict設定・テーマ・描画委譲を検証するテストを追加（`2fdb908`）。MermaidFigure.tsx 行100%、全体行99.57%。395 pass / 0 fail、58ファイル、25,099 expect。lint/型検査成功。ビルド未実行。

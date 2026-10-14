@@ -1,6 +1,6 @@
 # Includes / Directives
 
-Updated 2026-10-12
+Updated 2026-10-14
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
@@ -36,9 +36,9 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ### CCIE Security migration details
 
 - Route: `/docs/ccie-security` (`security-docs/src/app/docs/ccie-security/page.mdx`). Global header navigation: **Security Certifications**, immediately before Resources; AppSec remains in Resources.
-- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; CCIE Security, Secure by Design and MITRE ATLAS are the page-scoped CSS exceptions to the utility-only styling convention. All other MDX pages keep the shared design system.
+- Full original content retained with page-scoped faithful CSS and intrinsic JSX elements; CCIE Security, CCST Cybersecurity, Secure by Design and MITRE ATLAS are the page-scoped CSS exceptions to the utility-only styling convention. All other MDX pages keep the shared design system.
 - Mermaid 11.12.0 and Source Serif 4 Variable 5.3.0 are local dependencies. Python examples use server-side highlight.js. No legacy CDN scripts are loaded.
-- 62 CCIE fidelity/lifecycle tests plus 10 layout tests; latest project tests: 282 across 43 files (282 pass / 0 fail, 12,582 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
+- 67 CCIE fidelity/lifecycle/archive tests plus 10 layout tests; CCIE archival session tests: 291 across 46 files (291 pass / 0 fail, 12,618 expects). Baseline 22 tracked logic files plus CCIE部品3 / DocsHeaderNav1 / Secure by Design部品3 / MITRE ATLAS部品3 are tracked separately from MDX test files (32/32).
 - Shared navigation is in `DocsHeaderNav` in the header. CCIE uses its original 288px sidebar at the viewport left below the header and fills the remaining width. Mobile TOC preserves chapter expansion, scroll tracking, Escape/backdrop dismissal and focus wrapping.
 - All 85 tables are checked before HTML parsing for invalid whitespace text nodes; table rendering emits no hydration/nesting warnings. Table cell and code whitespace remain intact.
 - Review checklist: `docs/migration-inventory/ccie-security-review.md`. `bun run build` succeeded (2026-10-10); browser visual review pending with user.
@@ -78,9 +78,25 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 
 <!-- CCIE TABLE CURRENT -->
-## CCIE Security 現在の状態（2026-10-12）
+## CCIE Security 現在の状態（2026-10-13）
 
-- コード背景Green・全282件成功・lint/型検査成功・実ブラウザー34コード/85表検証済み。ルート `/docs/ccie-security`。
-- プロジェクト全体: **282 pass / 0 fail、43ファイル、12,582 expect**。npm test（内部Bun）。
+- 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功。ルート `/docs/ccie-security`。
+- CCIEアーカイブ完了時点: **291 pass / 0 fail、46ファイル、12,618 expect**。npm test（内部Bun）。
 - ビルド未実行（禁止）。目視確認はユーザー担当。移行台帳: `docs/migration-inventory/ccie-security.json`。
+- 原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。両SHA-256一致、比較テストはarchiveを参照。Red `d4f11e6` → Green `7782eb1`。
 <!-- /CCIE TABLE CURRENT -->
+
+
+<!-- CCST CURRENT -->
+## CCST Cybersecurity 移行状況（2026-10-13）
+
+- 移行完了・全395件/58ファイル/25,099expect・lint/型検査成功・原本アーカイブ済み・目視待ち。ルート `/docs/ccst-cybersecurity`、Security CertificationsのCCIE直後。
+- 最新全体テスト: **395 pass / 0 fail、58ファイル、25,099 expect**。npm test（内部Bun）。
+- ビルド禁止。目視はユーザー担当。台帳: `docs/migration-inventory/ccst-cybersecurity.json`。
+- 配置: `security-docs/src/app/docs/ccst-cybersecurity/page.mdx`。全46節・227見出し・163表・50図・73リスト/344項目・25問/100選択肢・25チェック・60参考文献を保持。
+- CCST専用テストは12ファイル・104件。全395件成功。丸点・標準番号・カウンター、表とコードの両テーマ、375/768/1440pxのCSSを検証。CSSはCCST内と条件付きルートセレクターに限定。
+- HTML正本: `archive/html/Ccst-cybersecurity-guide.html`。MD保存: `archive/md/Ccst-cybersecurity-guide.md`。両SHA-256一致、情報基準日2026-10-05を保持。
+- 目視確認表: `docs/migration-inventory/ccst-cybersecurity-review.md`。今回のビルド・ブラウザー目視・公開は未実施。pushはPRブランチ（dev、PR #46）へ実施済み、目視確認後の追加pushは未実施。
+- 原本移動Green `779e602`、スタイルGreen `b4fae3a`、スクロールGreen `1169e10`。今後の修正もnpm経由でRed→テストコミット→Green→実装コミット→仕様書同期を維持。
+- 図中央寄せ（2026-10-13）: SVGをdisplay:block・左右auto余白で中央配置。収まらない図はauto余白が0になり、左端から左右スクロール可能。図定義・自然幅を保持。375/1440pxと120/2400px幅の回帰テスト追加。Red `78997af` → Green `7c54fac`。ビルド未実行、目視はユーザー担当。
+<!-- /CCST CURRENT -->

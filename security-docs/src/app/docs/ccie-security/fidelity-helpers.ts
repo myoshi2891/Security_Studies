@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
-export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../Ccie-security-guide.html'), 'utf8');
+export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../archive/html/Ccie-security-guide.html'), 'utf8');
 // Parse only inert source markup: never load the legacy CDN styles or scripts in tests.
 export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
 export const definitions = new Map([...sourceHtml.slice(sourceHtml.indexOf('window.DIAGRAMS')).matchAll(/(\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));

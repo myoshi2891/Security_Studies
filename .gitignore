@@ -3,6 +3,9 @@ gen_security_html.sh
 install-fumadocs.expect
 md/
 html/
+# 移行テストが参照する原本アーカイブは追跡対象（CI で忠実性テストを実行するため）
+!archive/md/
+!archive/html/
 .DS_Store
 node_modules/
 .netlify/

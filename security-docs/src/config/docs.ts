@@ -30,6 +30,7 @@ export const docsConfig = {
       title: "Security Certifications",
       items: [
         { title: "CCIE Security", href: "/docs/ccie-security" },
+        { title: "CCST Cybersecurity", href: "/docs/ccst-cybersecurity" },
       ],
     },
     {
