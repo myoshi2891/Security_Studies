@@ -4,7 +4,7 @@
 
 ページ: `/docs/web-application-hackers-handbook`。目視確認はユーザー担当・未完了です。
 
-自動検証は全538件/84ファイル成功（専用74件/14ファイル）。lint・型検査成功。Next.jsビルドは未実行です。
+自動検証は全538件/85ファイル成功（専用74件/14ファイル）。lint・型検査成功。Next.jsビルドは未実行です。
 
 原本HTML: `archive/html/Web-application-hackers-handbook-guide.html`（SHA-256 `7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16`）。
 原本Markdown: `archive/md/Web-application-hackers-handbook-guide.md`（SHA-256 `9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6`）。
@@ -37,27 +37,19 @@
 | `sec-3` 3. 倫理と法律(必読) | 1 | 0 | 0 | 0 | 未確認 |
 | `sec-4` 4. 学習ロードマップ | 1 | 1 | 0 | 0 | 未確認 |
 | `sec-5` 5. ステップ別詳細解説 | 32 | 13 | 7 | 30 | 未確認 |
-| `step-1` Step 1: 第1章「Web Application (In)security」—
-                                なぜWebアプリは危険になるのか | 1 | 0 | 0 | 2 | 未確認 |
+| `step-1` Step 1: 第1章「Web Application (In)security」— なぜWebアプリは危険になるのか | 1 | 0 | 0 | 2 | 未確認 |
 | `step-2` Step 2: 第3章「Web Application Technologies」— HTTPと基礎技術 | 2 | 1 | 0 | 3 | 未確認 |
 | `step-3` Step 3: 第2章「Core Defense Mechanisms」— 防御の4本柱 | 3 | 1 | 0 | 3 | 未確認 |
 | `step-4` Step 4: 第4章「Mapping the Application」— アプリの全体像を調べる | 1 | 1 | 0 | 2 | 未確認 |
 | `step-5` Step 5: 第6章「Attacking Authentication」— 認証への攻撃 | 2 | 1 | 1 | 2 | 未確認 |
-| `step-6` Step 6: 第7章「Attacking Session Management」—
-                                セッション管理への攻撃 | 2 | 1 | 1 | 2 | 未確認 |
+| `step-6` Step 6: 第7章「Attacking Session Management」— セッション管理への攻撃 | 2 | 1 | 1 | 2 | 未確認 |
 | `step-7` Step 7: 第8章「Attacking Access Controls」— アクセス制御への攻撃 | 3 | 1 | 1 | 2 | 未確認 |
-| `step-8` Step 8: 第9章「Attacking Data Stores」—
-                                SQLインジェクションとデータストア | 2 | 1 | 1 | 3 | 未確認 |
-| `step-9` Step 9: 第12章・第13章「Attacking Users」— XSS、CSRF
-                                など、ユーザーへの攻撃 | 3 | 2 | 2 | 3 | 未確認 |
-| `step-10` Step 10: 第5章・第10章・第11章 —
-                                クライアント制御、バックエンド連携、ロジックの欠陥 | 3 | 1 | 1 | 3 | 未確認 |
-| `step-11` Step 11: 第14章・第15章・第16章 —
-                                自動化、情報漏えい、ネイティブアプリ | 3 | 0 | 0 | 2 | 未確認 |
-| `step-12` Step 12: 第17章・第18章・第19章 —
-                                アーキテクチャ、サーバー、ソースコード | 3 | 1 | 0 | 3 | 未確認 |
-| `step-12-column` Step 12 コラム: 本書の後に生まれた重要な攻撃「HTTP
-                                desync(リクエストスマグリング)」 | 1 | 1 | 0 | 0 | 未確認 |
+| `step-8` Step 8: 第9章「Attacking Data Stores」— SQLインジェクションとデータストア | 2 | 1 | 1 | 3 | 未確認 |
+| `step-9` Step 9: 第12章・第13章「Attacking Users」— XSS、CSRF など、ユーザーへの攻撃 | 3 | 2 | 2 | 3 | 未確認 |
+| `step-10` Step 10: 第5章・第10章・第11章 — クライアント制御、バックエンド連携、ロジックの欠陥 | 3 | 1 | 1 | 3 | 未確認 |
+| `step-11` Step 11: 第14章・第15章・第16章 — 自動化、情報漏えい、ネイティブアプリ | 3 | 0 | 0 | 2 | 未確認 |
+| `step-12` Step 12: 第17章・第18章・第19章 — アーキテクチャ、サーバー、ソースコード | 3 | 1 | 0 | 3 | 未確認 |
+| `step-12-column` Step 12 コラム: 本書の後に生まれた重要な攻撃「HTTP desync(リクエストスマグリング)」 | 1 | 1 | 0 | 0 | 未確認 |
 | `step-13` Step 13: 第20章・第21章 — ツールと方法論、そして最新動向 | 3 | 1 | 0 | 0 | 未確認 |
 | `sec-6` 6. 本書の手法と現代の標準の対応表 | 4 | 1 | 0 | 0 | 未確認 |
 | `sec-7` 7. 8週間の学習プラン | 1 | 0 | 0 | 0 | 未確認 |
