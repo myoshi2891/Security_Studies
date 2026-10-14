@@ -28,7 +28,7 @@ test('restores ordered numbers, scoped prose width, original spacing and applica
     const w=new Window();w.happyDOM.setWindowSize({width,height:900});
     try{
       w.document.head.innerHTML=`<style>${css}</style>`;
-      w.document.body.innerHTML='<div class="docs-shell"><main class="docs-main"><article class="prose docs-article"><div class="wahh-guide"><aside class="sidebar"></aside><div class="layout"><section class="section"><div class="prose"><ul><li>点</li></ul><ol><li>番号</li></ol><div class="table-wrap"><table><tbody><tr><td>セル</td></tr></tbody></table></div></div></section></div></div></article></main></div>';
+      w.document.body.innerHTML='<div class="docs-shell"><main class="docs-main"><article class="prose docs-article"><div class="wahh-guide"><aside class="sidebar"></aside><div class="main"><section class="section"><div class="prose"><ul><li>点</li></ul><ol><li>番号</li></ol><div class="table-wrap"><table><tbody><tr><td>セル</td></tr></tbody></table></div></div></section></div></div></article></main></div>';
       const style=(s:string)=>w.getComputedStyle(w.document.querySelector(s)!);
       expect(style('.wahh-guide').width).toBe('100%');
       expect(style('.wahh-guide .prose').maxWidth).toBe('none');
@@ -84,7 +84,7 @@ test('mobile menu SVG dimensions preserve the original 26px icon size',async()=>
  const w=new Window();w.happyDOM.setWindowSize({width:375,height:900});
  try{
   w.document.head.innerHTML=`<style>${readFileSync(new URL('./web-application-hackers-handbook.css',import.meta.url),'utf8')}</style>`;
-  w.document.body.innerHTML='<div class="wahh-guide"><button class="nav-toggle"><svg width="24" height="24"></svg></button></div>';
+  w.document.body.innerHTML='<div class="wahh-guide"><button class="menu-btn"><svg width="24" height="24"></svg></button></div>';
   const style=w.getComputedStyle(w.document.querySelector('svg')!);expect(style.width).toBe('26px');expect(style.height).toBe('26px');
  }finally{await w.happyDOM.close();}
 });

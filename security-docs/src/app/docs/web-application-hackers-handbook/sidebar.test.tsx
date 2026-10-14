@@ -21,6 +21,6 @@ test('scroll tracking retains visible entries between callbacks, prioritizes the
  expect(targets.map(el=>el.id)).toEqual(['sec-5','step-1','sec-6']);
  const notify=(id:string,on:boolean)=>act(()=>cb!([{target:targets.find(e=>e.id===id),isIntersecting:on} as IntersectionObserverEntry],{} as IntersectionObserver));
  notify('step-1',true);notify('sec-6',true);expect(view.container.querySelector('[href="#step-1"]')).toHaveAttribute('aria-current','location');notify('step-1',false);expect(view.container.querySelector('[href="#sec-6"]')).toHaveAttribute('aria-current','location');expect(view.container.querySelector('[href="#sec-5"]')).not.toHaveClass('active');
- act(()=>{window.history.replaceState(null,'','/#step-1');window.dispatchEvent(new Event('hashchange'));});expect(view.container.querySelector('[href="#step-1"]')).toHaveAttribute('aria-current','location');view.unmount();expect(disconnected).toBe(1);
+ act(()=>{(window as unknown as import('happy-dom').Window).happyDOM.setURL('http://localhost/#step-1');window.dispatchEvent(new Event('hashchange'));});expect(view.container.querySelector('[href="#step-1"]')).toHaveAttribute('aria-current','location');view.unmount();expect(disconnected).toBe(1);
  }finally{globalThis.IntersectionObserver=saved;}
 });
