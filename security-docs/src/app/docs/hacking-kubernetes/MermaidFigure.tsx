@@ -56,14 +56,14 @@ export const renderDiagram: DiagramRenderer = async (id, source) => {
   return (await getEngine()).render(id, `---\nconfig: ${JSON.stringify(config)}\n---\n${source}`);
 };
 
-function sizeSvg(svgMarkup: string, source: string) {
+function sizeSvg(svgMarkup: string) {
   const holder = document.createElement('div');
   holder.innerHTML = svgMarkup;
   const svg = holder.querySelector('svg');
   if (!svg) throw new Error('Mermaid returned no SVG');
   const box = (svg.getAttribute('viewBox') ?? '').trim().split(/\s+/).map(Number);
   if (box.length === 4 && box.every(Number.isFinite)) {
-    box[3] += /^(sequenceDiagram|stateDiagram)/.test(source.trim()) ? 110 : 15;
+    box[3] += 15;
     svg.setAttribute('viewBox', box.join(' '));
     svg.style.width = `${box[2]}px`;
   }
@@ -79,64 +79,9 @@ function sizeSvg(svgMarkup: string, source: string) {
 /** ラベル中の <br/> 等の HTML を読み上げ用のプレーンテキストに変換する */
 const plain = (text: string) => text.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
-/** 図の定義からテキスト説明（1行目が図の種類と概要、以降が内容）を生成する */
+/** 元ガイドの全12フロー図から、ノードと接続のテキスト説明を生成する */
 export function describeDiagram(source: string): string[] {
   const lines = source.trim().split('\n').map(line => line.trim()).filter(Boolean);
-  const header = lines[0] ?? '';
-
-  if (header.startsWith('pie')) {
-    const title = lines.find(line => line.startsWith('title '))?.slice('title '.length) ?? '';
-    const slices = lines.flatMap(line => {
-      const slice = line.match(/^"([^"]*)"\s*:\s*(.+)$/);
-      return slice ? [`${plain(slice[1])}: ${slice[2].trim()}`] : [];
-    });
-    return [`円グラフ: ${plain(title)}`, ...slices];
-  }
-
-  if (header.startsWith('sequenceDiagram')) {
-    const names = new Map<string, string>();
-    const steps: string[] = [];
-    // 分岐ブロック（alt/else/opt/loop/par/and）の条件。ネストに対応するためスタックで保持する
-    const blocks: { kind: string; label: string }[] = [];
-    const context = () => blocks.length > 0 ? `[${blocks.map(({ kind, label }) => `${kind}${label ? ` ${label}` : ''}`).join(' / ')}] ` : '';
-    for (const line of lines.slice(1)) {
-      const open = line.match(/^(alt|opt|loop|par|critical|break|rect)\b\s*(.*)$/i);
-      if (open) {
-        const kind = open[1].toLowerCase();
-        const label = plain(open[2]);
-        blocks.push({ kind, label });
-        if (kind !== 'rect') steps.push(`${kind}${label ? `: ${label}` : ''}`);
-        continue;
-      }
-      const branch = line.match(/^(else|and|option)\b\s*(.*)$/i);
-      if (branch && blocks.length > 0) {
-        const kind = branch[1].toLowerCase();
-        const label = plain(branch[2]);
-        blocks[blocks.length - 1] = { kind, label };
-        steps.push(`${kind}${label ? `: ${label}` : ''}`);
-        continue;
-      }
-      if (/^end$/i.test(line)) {
-        blocks.pop();
-        continue;
-      }
-      const participant = line.match(/^(?:participant|actor)\s+(\S+)(?:\s+as\s+(.+))?$/);
-      if (participant) {
-        names.set(participant[1], plain(participant[2] ?? participant[1]));
-        continue;
-      }
-      const message = line.match(/^([^\s-]+)\s*--?(?:>>|>|x|\))[+-]?\s*([^\s:]+)\s*:\s*(.*)$/);
-      if (message) {
-        const name = (key: string) => names.get(key) ?? key;
-        steps.push(`${context()}${name(message[1])} → ${name(message[2])}: ${plain(message[3])}`);
-        continue;
-      }
-      const note = line.match(/^Note\s+[^:]+:\s*(.*)$/i);
-      if (note) steps.push(`${context()}注記: ${plain(note[1])}`);
-    }
-    return [`シーケンス図: ${[...names.values()].join('、')}`, ...steps];
-  }
-
   const edges = describeFlowchart(lines.slice(1));
   // 接続もノードも読み取れない定義は、定義本文をそのまま説明として使う
   return ['フローチャート', ...(edges.length > 0 ? edges : lines.slice(1))];
@@ -183,7 +128,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
 
-  // 表示域に近づくまで描画を遅らせ、50図の一斉描画で初期表示が重くなるのを防ぐ
+  // 表示域に近づくまで描画を遅らせ、12図の一斉描画で初期表示が重くなるのを防ぐ
   useEffect(() => {
     const figure = figureRef.current;
     if (!figure || nearView) return;
@@ -202,7 +147,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
     // 古い描画の結果・失敗ログは破棄する（定義変更やアンマウント後に完了した場合）
     renderer(svgId, source).then(({ svg }) => {
       if (!active) return;
-      setResult({ source, svg: sizeSvg(svg, source) });
+      setResult({ source, svg: sizeSvg(svg) });
     }).catch((error: unknown) => {
       if (!active) return;
       console.error(`Mermaid figure ${id} failed to render`, error);
