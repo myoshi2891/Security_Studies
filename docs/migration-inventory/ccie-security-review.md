@@ -1,6 +1,6 @@
 # CCIE Security 移行・目視確認表
 
-最終更新日: 2026-10-13
+最終更新日: 2026-10-14
 
 確認URL: `/docs/ccie-security`。新カテゴリー: **Security Certifications**（Resourcesの直前）。
 元資料の作成基準日は2026-10-04のまま保持しています。HTMLとMarkdown原稿は内容を変更せず、それぞれ `archive/html/Ccie-security-guide.html` と `archive/md/Ccie-security-guide.md` に移動しました。
@@ -74,7 +74,7 @@ Mermaidとフォントはローカル依存で配信し、元HTMLのCDNスクリ
 
 既存移行を再検証し、原本2件を内容変更なしでarchiveへ移動。旧ルートパスは撤去。
 Red `d4f11e6`: 保存先・ハッシュ・旧パス撤去・台帳・比較テスト参照の5件が期待どおり失敗。
-Green `7782eb1`: 全291件成功、npm run lint / types:check成功。比較テストはarchiveのHTMLを正本として参照。
+Green `7782eb1`: 全291件成功、npm run lint / types:check成功。2026-10-14に `security-docs/` で `bun run lint` / `bun run types:check` を再実行し成功。比較テストはarchiveのHTMLを正本として参照。
 HTML SHA-256: `807782fea60dfd5e0707868448e25809a932ceea36c205d7289264f13825c26b`。
 MD SHA-256: `dc0930effc4e32cd8af34b2d439b37949f9fd35a1d25e70e42f177886d6d8036`。
 今回はビルド・ブラウザー目視・公開を実施していません。上記コミットはPRブランチ（dev）へpush済みで、未実施なのは目視確認後の追加pushのみです。目視欄はユーザー確認待ちのまま保持。
