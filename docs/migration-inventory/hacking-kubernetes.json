@@ -1,0 +1,1718 @@
+{
+  "source": "Hacking-kubernetes-guide.html",
+  "sha256": "29d514f6228d43b9cde506f066c8109a9e1fc004efce7dbc5dfc0bc9410a8e6c",
+  "markdownSource": "Hacking-kubernetes-guide.md",
+  "markdownSha256": "25c0808439fb346fdf3d08d594df1c93e2881e98998ee8aaa72cd7efe9f4284f",
+  "route": "/docs/hacking-kubernetes",
+  "sections": [
+    {
+      "id": "s0",
+      "title": "0. このガイドについて",
+      "counts": {
+        "table": 5,
+        "pre": 0,
+        "ul": 1,
+        "ol": 0,
+        "li": 3,
+        "a": 22,
+        "strong": 16,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-1",
+      "title": "0.1 目的と対象読者",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-2",
+      "title": "0.2 重要な注意(倫理・法的事項)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 1,
+        "ol": 0,
+        "li": 3,
+        "a": 0,
+        "strong": 4,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-3",
+      "title": "0.3 書籍情報",
+      "counts": {
+        "table": 2,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 10,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-4",
+      "title": "0.4 「2021年の本」と「2026年10月の現実」の差分",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 11,
+        "strong": 8,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-5",
+      "title": "0.5 書籍の章構成と、このガイドの対応表",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s0-6",
+      "title": "0.6 学習の進め方(全体フロー)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s1",
+      "title": "1. 基礎編: Kubernetes の全体像と「攻撃面」",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 2,
+        ".mermaid": 2,
+        "input": 0
+      }
+    },
+    {
+      "id": "s1-1",
+      "title": "1.1 構成要素マップ",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s1-2",
+      "title": "1.2 コンポーネント別・攻撃面の早見表",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s1-3",
+      "title": "1.3 攻撃の典型的な流れ(Kill Chain の簡易版)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 1,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s2",
+      "title": "2. Step 0: 安全な学習ラボを作る",
+      "counts": {
+        "table": 2,
+        "pre": 2,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 6,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s2-1",
+      "title": "2.1 ラボの原則",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s2-2",
+      "title": "2.2 kind でローカルクラスタを作る(例)",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s2-3",
+      "title": "2.3 脆弱性学習用環境: Kubernetes Goat",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 4,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s2-4",
+      "title": "2.4 ラボ準備チェックリスト",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3",
+      "title": "3. Step 1: 脅威モデリング(書籍 第1章)",
+      "counts": {
+        "table": 3,
+        "pre": 0,
+        "ul": 0,
+        "ol": 1,
+        "li": 4,
+        "a": 4,
+        "strong": 11,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3-1",
+      "title": "3.1 なぜ最初に脅威モデリングなのか",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 1,
+        "li": 4,
+        "a": 1,
+        "strong": 6,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3-2",
+      "title": "3.2 脅威アクター(Threat Actors)の整理",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3-3",
+      "title": "3.3 Attack Tree(攻撃ツリー)の作り方",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3-4",
+      "title": "3.4 初めての脅威モデル: ワークシート",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s3-5",
+      "title": "3.5 「すべてを防げるわけではない」という現実",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4",
+      "title": "4. Step 2: Pod レベルのリソース(書籍 第2章)",
+      "counts": {
+        "table": 6,
+        "pre": 5,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 13,
+        "strong": 15,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-1",
+      "title": "4.1 なぜ Pod が最前線なのか",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-2",
+      "title": "4.2 危険な設定の早見表",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-3",
+      "title": "4.3 Pod Security Standards(PSS)と Pod Security Admission(PSA)",
+      "counts": {
+        "table": 2,
+        "pre": 3,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 10,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-4",
+      "title": "4.4 堅牢化した Pod の見本(Hardened securityContext)",
+      "counts": {
+        "table": 1,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-5",
+      "title": "4.5 User Namespaces が GA になった(2026年4月、v1.36)",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 5,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-6",
+      "title": "4.6 いまのクラスタを点検するコマンド集(読み取り専用)",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s4-7",
+      "title": "4.7 Step 2 の理解度チェック",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5",
+      "title": "5. Step 3: コンテナランタイムの分離(書籍 第3章)",
+      "counts": {
+        "table": 2,
+        "pre": 1,
+        "ul": 0,
+        "ol": 1,
+        "li": 4,
+        "a": 12,
+        "strong": 13,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5-1",
+      "title": "5.1 コンテナは「隔離されたプロセス」にすぎない",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5-2",
+      "title": "5.2 隔離方式の比較",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5-3",
+      "title": "5.3 RuntimeClass でサンドボックスを選ぶ",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5-4",
+      "title": "5.4 2026年のケーススタディ: 「コンテナ脱出」が現実に続いた",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 1,
+        "li": 4,
+        "a": 11,
+        "strong": 9,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s5-5",
+      "title": "5.5 防御策のまとめ(多層防御)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6",
+      "title": "6. Step 4: アプリケーションとサプライチェーン(書籍 第4章)",
+      "counts": {
+        "table": 4,
+        "pre": 3,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 9,
+        "strong": 20,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-1",
+      "title": "6.1 サプライチェーンとは何か",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-2",
+      "title": "6.2 各段階の脅威と対策",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-3",
+      "title": "6.3 2026年に起きた現実の事例",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 10,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-4",
+      "title": "6.4 具体策1: digest で固定する",
+      "counts": {
+        "table": 0,
+        "pre": 2,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-5",
+      "title": "6.5 具体策2: イメージ署名と検証(sigstore / cosign)",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-6",
+      "title": "6.6 具体策3: SBOM と脆弱性スキャン",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-7",
+      "title": "6.7 Admission で「未検証イメージを実行させない」",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s6-8",
+      "title": "6.8 Step 4 の実践ミニ課題",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7",
+      "title": "7. Step 5: ネットワーキング(書籍 第5章)",
+      "counts": {
+        "table": 4,
+        "pre": 4,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 12,
+        "strong": 17,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-1",
+      "title": "7.1 Kubernetes ネットワークの「デフォルト」",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-2",
+      "title": "7.2 通信の流れと制御ポイント",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-3",
+      "title": "7.3 NetworkPolicy: 「全部拒否」から始める",
+      "counts": {
+        "table": 0,
+        "pre": 3,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 6,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-4",
+      "title": "7.4 サービスメッシュ(mTLS)と eBPF",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-5",
+      "title": "7.5 2026年の重大トピック: Ingress NGINX の退役",
+      "counts": {
+        "table": 1,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 8,
+        "strong": 5,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-6",
+      "title": "7.6 NSA/CISA の推奨(ネットワーク・監査)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s7-7",
+      "title": "7.7 Step 5 の実践ミニ課題",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8",
+      "title": "8. Step 6: ストレージ(書籍 第6章)",
+      "counts": {
+        "table": 5,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 11,
+        "strong": 17,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-1",
+      "title": "8.1 ストレージで守るもの",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-2",
+      "title": "8.2 Secret は「暗号化」されているわけではない",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-3",
+      "title": "8.3 ホストマウントの危険性",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-4",
+      "title": "8.4 v1.37 のストレージ堅牢化機能",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 6,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-5",
+      "title": "8.5 Pod 向けの短命な証明書(Pod Certificates)",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 7,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s8-6",
+      "title": "8.6 点検コマンド(読み取り専用)",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9",
+      "title": "9. Step 7: ハードマルチテナンシー(書籍 第7章)",
+      "counts": {
+        "table": 3,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 9,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9-1",
+      "title": "9.1 「同居」はどこまで安全か",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 5,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9-2",
+      "title": "9.2 分離レイヤーの比較",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9-3",
+      "title": "9.3 分離レベルの選び方",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9-4",
+      "title": "9.4 コントロールプレーンの共有に注意",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s9-5",
+      "title": "9.5 実践の目安",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10",
+      "title": "10. Step 8: ポリシー(書籍 第8章)",
+      "counts": {
+        "table": 5,
+        "pre": 5,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 27,
+        "strong": 23,
+        ".mermaid": 2,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-1",
+      "title": "10.1 ポリシーの種類",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-2",
+      "title": "10.2 RBAC の基本",
+      "counts": {
+        "table": 1,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-3",
+      "title": "10.3 RBAC の「危ない権限」早見表",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 10,
+        "strong": 1,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-4",
+      "title": "10.4 2026年の重要ケース: nodes/proxy GET の問題",
+      "counts": {
+        "table": 1,
+        "pre": 2,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 10,
+        "strong": 10,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-5",
+      "title": "10.5 汎用ポリシーエンジン: 3つの選択肢",
+      "counts": {
+        "table": 1,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 7,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-6",
+      "title": "10.6 監査(Auditing)と「破れ窓(Breakglass)」",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s10-7",
+      "title": "10.7 点検コマンド(読み取り専用)",
+      "counts": {
+        "table": 0,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11",
+      "title": "11. Step 9: 侵入検知(書籍 第9章)",
+      "counts": {
+        "table": 2,
+        "pre": 3,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 6,
+        "strong": 18,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11-1",
+      "title": "11.1 「破られる前提」で考える",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 5,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11-2",
+      "title": "11.2 検知の層",
+      "counts": {
+        "table": 1,
+        "pre": 1,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 2,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11-3",
+      "title": "11.3 検知の限界を知る(検知回避と死角)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11-4",
+      "title": "11.4 インシデント対応の流れ",
+      "counts": {
+        "table": 0,
+        "pre": 2,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 7,
+        ".mermaid": 1,
+        "input": 0
+      }
+    },
+    {
+      "id": "s11-5",
+      "title": "11.5 ハニーポットの考え方",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 2,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12",
+      "title": "12. Step 10: 組織(書籍 第10章)",
+      "counts": {
+        "table": 4,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 9,
+        "strong": 12,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12-1",
+      "title": "12.1 最も弱いのは「人と組織」",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 5,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12-2",
+      "title": "12.2 責任共有モデル(Shared Responsibility)",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 6,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12-3",
+      "title": "12.3 アカウントの衛生管理チェック",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 3,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12-4",
+      "title": "12.4 脅威モデルの爆発と優先順位づけ",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 4,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s12-5",
+      "title": "12.5 SLO の圧力・ソーシャルエンジニアリング・規制",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s13",
+      "title": "13. 2026年の重要トピック総まとめ",
+      "counts": {
+        "table": 3,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 27,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s13-1",
+      "title": "13.1 時系列まとめ",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 17,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s13-2",
+      "title": "13.2 バージョン関連の補足",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 6,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s13-3",
+      "title": "13.3 今日からできる「3つの最優先アクション」",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 4,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s14",
+      "title": "14. 6週間ハンズオン学習計画",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 1,
+        "strong": 3,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s15",
+      "title": "15. 総合セキュリティチェックリスト",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 11,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 24
+      }
+    },
+    {
+      "id": "s16",
+      "title": "16. 用語集",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17",
+      "title": "17. 参考文献(ソース一覧)",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 1,
+        "ol": 0,
+        "li": 4,
+        "a": 40,
+        "strong": 7,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-1",
+      "title": "17.1 書籍・著者・実務家",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 8,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-2",
+      "title": "17.2 Kubernetes プロジェクト(公式)",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 9,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-3",
+      "title": "17.3 脆弱性・インシデント情報",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 10,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-4",
+      "title": "17.4 エコシステム・ガイダンス・解説",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 12,
+        "strong": 1,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-5",
+      "title": "17.5 情報の鮮度を保つための確認先",
+      "counts": {
+        "table": 1,
+        "pre": 0,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "a": 0,
+        "strong": 0,
+        ".mermaid": 0,
+        "input": 0
+      }
+    },
+    {
+      "id": "s17-6",
+      "title": "17.6 このガイドの限界と注意",
+      "counts": {
+        "table": 0,
+        "pre": 0,
+        "ul": 1,
+        "ol": 0,
+        "li": 4,
+        "a": 1,
+        "strong": 4,
+        ".mermaid": 0,
+        "input": 0
+      }
+    }
+  ],
+  "ids": [
+    "sidebar",
+    "backdrop",
+    "navToggle",
+    "top",
+    "s0",
+    "s0-1",
+    "s0-2",
+    "s0-3",
+    "s0-4",
+    "s0-5",
+    "s0-6",
+    "s1",
+    "s1-1",
+    "s1-2",
+    "s1-3",
+    "s2",
+    "s2-1",
+    "s2-2",
+    "s2-3",
+    "s2-4",
+    "s3",
+    "s3-1",
+    "s3-2",
+    "s3-3",
+    "s3-4",
+    "s3-5",
+    "s4",
+    "s4-1",
+    "s4-2",
+    "s4-3",
+    "s4-4",
+    "s4-5",
+    "s4-6",
+    "s4-7",
+    "s5",
+    "s5-1",
+    "s5-2",
+    "s5-3",
+    "s5-4",
+    "s5-5",
+    "s6",
+    "s6-1",
+    "s6-2",
+    "s6-3",
+    "s6-4",
+    "s6-5",
+    "s6-6",
+    "s6-7",
+    "s6-8",
+    "s7",
+    "s7-1",
+    "s7-2",
+    "s7-3",
+    "s7-4",
+    "s7-5",
+    "s7-6",
+    "s7-7",
+    "s8",
+    "s8-1",
+    "s8-2",
+    "s8-3",
+    "s8-4",
+    "s8-5",
+    "s8-6",
+    "s9",
+    "s9-1",
+    "s9-2",
+    "s9-3",
+    "s9-4",
+    "s9-5",
+    "s10",
+    "s10-1",
+    "s10-2",
+    "s10-3",
+    "s10-4",
+    "s10-5",
+    "s10-6",
+    "s10-7",
+    "s11",
+    "s11-1",
+    "s11-2",
+    "s11-3",
+    "s11-4",
+    "s11-5",
+    "s12",
+    "s12-1",
+    "s12-2",
+    "s12-3",
+    "s12-4",
+    "s12-5",
+    "s13",
+    "s13-1",
+    "s13-2",
+    "s13-3",
+    "s14",
+    "s15",
+    "chkDone",
+    "s16",
+    "s17",
+    "s17-1",
+    "ref-S1",
+    "ref-S19",
+    "ref-S20",
+    "ref-S21",
+    "ref-S22",
+    "ref-S23",
+    "ref-S24",
+    "s17-2",
+    "ref-S2",
+    "ref-S3",
+    "ref-S4",
+    "ref-S5",
+    "ref-S6",
+    "ref-S7",
+    "ref-S8",
+    "ref-S9",
+    "ref-S30",
+    "s17-3",
+    "ref-S10",
+    "ref-S11",
+    "ref-S12",
+    "ref-S13",
+    "ref-S14",
+    "ref-S15",
+    "ref-S16",
+    "ref-S33",
+    "ref-S34",
+    "s17-4",
+    "ref-S17",
+    "ref-S18",
+    "ref-S25",
+    "ref-S36",
+    "ref-S26",
+    "ref-S27",
+    "ref-S28",
+    "ref-S29",
+    "ref-S31",
+    "ref-S32",
+    "s17-5",
+    "s17-6"
+  ],
+  "counts": {
+    "section": 100,
+    "h1": 1,
+    "h2": 18,
+    "h3": 82,
+    "h4": 2,
+    "table": 52,
+    "pre": 24,
+    "ul": 2,
+    "ol": 2,
+    "li": 15,
+    "a": 209,
+    "strong": 190,
+    ".mermaid": 12,
+    "input": 24,
+    ".ref-card": 35
+  },
+  "diagrams": [
+    {
+      "id": "d1",
+      "source": "\nflowchart TD\n    A[\"基礎編<br/>Kubernetes の構成要素を理解\"] --> B[\"Step 0<br/>安全なラボを作る\"]\n    B --> C[\"Step 1<br/>脅威モデリング\"]\n    C --> D[\"Step 2〜3<br/>Pod とランタイムの堅牢化\"]\n    D --> E[\"Step 4<br/>サプライチェーン対策\"]\n    E --> F[\"Step 5〜6<br/>ネットワークとストレージ\"]\n    F --> G[\"Step 7〜8<br/>マルチテナントとポリシー\"]\n    G --> H[\"Step 9<br/>侵入検知と対応\"]\n    H --> I[\"Step 10<br/>組織・運用の仕組み化\"]\n    I --> J[\"総合チェックリストで定期点検\"]\n"
+    },
+    {
+      "id": "d2",
+      "source": "\nflowchart TB\n    subgraph USER[\"利用者・自動化\"]\n        U1[\"kubectl / CI-CD / Operator\"]\n    end\n    subgraph CP[\"コントロールプレーン\"]\n        API[\"kube-apiserver<br/>全ての入口\"]\n        ETCD[\"etcd<br/>クラスタの状態と Secret を保存\"]\n        SCH[\"kube-scheduler\"]\n        CM[\"kube-controller-manager\"]\n    end\n    subgraph NODE[\"ワーカーノード\"]\n        KL[\"kubelet<br/>ノードの代理人 (10250番ポート)\"]\n        RT[\"コンテナランタイム<br/>containerd / CRI-O + runc\"]\n        POD[\"Pod<br/>(コンテナ群)\"]\n        CNI[\"CNI / kube-proxy<br/>ネットワーク\"]\n    end\n    U1 --> API\n    API --> ETCD\n    SCH --> API\n    CM --> API\n    API --> KL\n    KL --> RT\n    RT --> POD\n    CNI --- POD\n"
+    },
+    {
+      "id": "d3",
+      "source": "\nflowchart TD\n    S1[\"1. 初期侵入<br/>アプリの脆弱性 / 漏れた認証情報 / 汚染イメージ\"] --> S2[\"2. Pod 内で実行<br/>コード実行 (RCE)\"]\n    S2 --> S3[\"3. 探索<br/>ServiceAccount トークン・環境変数・ネットワークを調べる\"]\n    S3 --> S4{\"4. 権限昇格の入口は?\"}\n    S4 -->|\"過剰な RBAC\"| S5[\"API 経由で権限拡大\"]\n    S4 -->|\"特権 Pod / ホストマウント\"| S6[\"ノードへ脱出\"]\n    S4 -->|\"カーネル/ランタイムの脆弱性\"| S6\n    S5 --> S7[\"5. 横展開と永続化\"]\n    S6 --> S7\n    S7 --> S8[\"6. 目的の達成<br/>データ窃取 / 暗号資産マイニング / 破壊\"]\n"
+    },
+    {
+      "id": "d4",
+      "source": "\nflowchart LR\n    GOAL[\"目標: Secret を盗む\"] --> A[\"Pod 内から読み取る\"]\n    GOAL --> B[\"API 経由で取得する\"]\n    GOAL --> C[\"etcd に直接アクセスする\"]\n    GOAL --> D[\"ノード上のファイルから読む\"]\n\n    A --> A1[\"環境変数に Secret が入っている\"]\n    A --> A2[\"マウントされた Secret ファイルを読む\"]\n    B --> B1[\"ServiceAccount に secrets の get/list 権限がある\"]\n    B --> B2[\"過剰な RBAC に昇格する\"]\n    C --> C1[\"etcd のポートがネットワークに露出\"]\n    C --> C2[\"etcd バックアップが無防備\"]\n    D --> D1[\"コンテナ脱出でノードへ\"]\n    D --> D2[\"hostPath マウントでホストを読む\"]\n"
+    },
+    {
+      "id": "d5",
+      "source": "\nflowchart TD\n    Q1{\"信頼できないコードを<br/>動かすか?\"}\n    Q1 -->|\"はい (マルチテナント・SaaS 等)\"| P1[\"サンドボックス(RuntimeClass)を使う<br/>+ 別ノードプール\"]\n    Q1 -->|\"いいえ\"| P2[\"通常のコンテナ + 堅牢化\"]\n    P1 --> BASE[\"全ワークロード共通の土台\"]\n    P2 --> BASE\n    BASE --> B1[\"非 root + RuntimeDefault seccomp\"]\n    BASE --> B2[\"allowPrivilegeEscalation: false / capabilities drop ALL\"]\n    BASE --> B3[\"User Namespaces (hostUsers: false)\"]\n    BASE --> B4[\"ノード OS・ランタイムを迅速にパッチ\"]\n    BASE --> B5[\"create pods 権限の厳格化\"]\n"
+    },
+    {
+      "id": "d6",
+      "source": "\nflowchart TB\n    SRC[\"ソースコード<br/>と依存関係\"] --> BUILD[\"ビルド<br/>(CI/CD)\"]\n    BUILD --> REG[\"コンテナレジストリ\"]\n    REG --> ADM[\"Admission<br/>(ポリシー検証)\"]\n    ADM --> RUN[\"クラスタで実行\"]\n    SRC -.->|\"汚染された依存関係\"| BUILD\n    BUILD -.->|\"盗まれた CI 認証情報・改ざんされた Action\"| REG\n    REG -.->|\"タグの上書き・偽イメージ\"| RUN\n"
+    },
+    {
+      "id": "d7",
+      "source": "\nflowchart TD\n    EXT[\"クラスタ外<br/>(インターネット・社内)\"] --> GW[\"Gateway / Ingress\"]\n    GW --> SVC[\"Service\"]\n    SVC --> P1[\"Pod A (frontend)\"]\n    P1 -->|\"Pod 間通信\"| P2[\"Pod B (backend)\"]\n    P2 --> DB[\"Pod C (database)\"]\n    P1 -.->|\"侵害後の横展開\"| DB\n    P2 -.->|\"ノードの API を狙う\"| NODEAPI[\"kubelet / ノードのサービス\"]\n    P2 -.->|\"外部への持ち出し(egress)\"| OUT[\"外部サーバー\"]\n\n    NP[\"制御: NetworkPolicy<br/>(許可した通信だけ通す)\"] -.-> P1\n    NP -.-> P2\n    NP -.-> DB\n    MESH[\"制御: mTLS(サービスメッシュ)<br/>(暗号化 + 相互認証)\"] -.-> P1\n    MESH -.-> P2\n"
+    },
+    {
+      "id": "d8",
+      "source": "\nflowchart TD\n    A[\"Pod が侵害される\"] --> B{\"hostPath を<br/>マウントしている?\"}\n    B -->|\"いいえ\"| C[\"影響は Pod 内に<br/>とどまりやすい\"]\n    B -->|\"はい (広いパス)\"| D[\"ホストのファイルを<br/>読み書きできる\"]\n    D --> E[\"他の Pod の Secret・<br/>ノードの認証情報を取得\"]\n    D --> F[\"ホスト上のファイルを改ざん\"]\n    E --> G[\"ノード全体・クラスタへ拡大\"]\n    F --> G\n"
+    },
+    {
+      "id": "d9",
+      "source": "\nflowchart TD\n    Q1{\"テナントは互いに<br/>信頼できるか?\"}\n    Q1 -->|\"はい (同一組織・同じ責任範囲)\"| S1[\"ソフトマルチテナンシー<br/>Namespace + RBAC + NetworkPolicy + Quota\"]\n    Q1 -->|\"いいえ / 不明\"| Q2{\"テナントが任意のコードを<br/>実行できるか?\"}\n    Q2 -->|\"いいえ (データだけ分ける)\"| S2[\"Namespace + 厳格なポリシー<br/>+ 暗号化 + 監査\"]\n    Q2 -->|\"はい\"| Q3{\"規制・契約で<br/>強い分離が必須か?\"}\n    Q3 -->|\"はい\"| S3[\"テナントごとに別クラスタ<br/>(または別アカウント)\"]\n    Q3 -->|\"いいえ\"| S4[\"サンドボックス + 専用ノードプール<br/>+ 厳格なポリシー + 監視\"]\n"
+    },
+    {
+      "id": "d10",
+      "source": "\nflowchart TB\n    REQ[\"API リクエスト\"] --> AUTHN[\"1. 認証<br/>(誰か)\"]\n    AUTHN --> AUTHZ[\"2. 認可 (RBAC)<br/>(してよいか)\"]\n    AUTHZ --> ADM[\"3. Admission<br/>(中身を検証・変更)\"]\n    ADM --> PERSIST[\"4. etcd に保存\"]\n    ADM -.-> POLICY[\"PSA / ValidatingAdmissionPolicy<br/>Kyverno / OPA Gatekeeper\"]\n    AUTHZ -.-> AUDIT[\"監査ログ\"]\n"
+    },
+    {
+      "id": "d11",
+      "source": "\nflowchart LR\n    START[\"侵害された ServiceAccount\"] --> Q1{\"持っている<br/>危険な権限は?\"}\n    Q1 -->|\"create pods\"| A1[\"より強い ServiceAccount を<br/>マウントした Pod を作る\"]\n    Q1 -->|\"impersonate\"| A2[\"管理者になりすます\"]\n    Q1 -->|\"bind / escalate\"| A3[\"自分に強いロールを紐付ける\"]\n    Q1 -->|\"secrets get/list\"| A4[\"他の認証情報を取得して横展開\"]\n    Q1 -->|\"nodes/proxy\"| A5[\"kubelet API 経由で<br/>Pod 内コマンド実行の恐れ\"]\n    A1 --> END[\"クラスタ全体へ権限拡大\"]\n    A2 --> END\n    A3 --> END\n    A4 --> END\n    A5 --> END\n"
+    },
+    {
+      "id": "d12",
+      "source": "\nflowchart TD\n    D[\"検知<br/>(Falco / 監査ログ / アラート)\"] --> T{\"本物の侵害か?<br/>(トリアージ)\"}\n    T -->|\"誤検知\"| FP[\"ルールを調整して終了\"]\n    T -->|\"侵害の疑い\"| C[\"封じ込め\"]\n    C --> C1[\"NetworkPolicy で対象 Pod を隔離\"]\n    C --> C2[\"ノードを cordon(新規配置を停止)\"]\n    C --> C3[\"漏れた可能性のある認証情報を失効・ローテーション\"]\n    C1 --> E[\"証拠保全<br/>(ログ・メモリ・ディスクの記録)\"]\n    C2 --> E\n    C3 --> E\n    E --> R[\"根絶と復旧<br/>(イメージ・ノードを再作成)\"]\n    R --> L[\"教訓の反映<br/>(ポリシー・検知ルール・脅威モデルの更新)\"]\n"
+    }
+  ]
+}
