@@ -24,7 +24,7 @@ const renderLayout = async (): Promise<ReturnType<typeof render>> => {
         await Promise.resolve();
         await Promise.resolve();
     });
-    const menu = screen.queryByRole('button', { name: 'ドキュメントメニュー' });
+    const menu = screen.queryByRole('button', { name: 'ガイド一覧' });
     if (menu) fireEvent.click(menu);
     return result!;
 };
@@ -156,7 +156,7 @@ describe('DocsLayout', () => {
         test('ヘッダーのメニューを開閉でき、Escapeで閉じてボタンにフォーカスを戻す', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
-            const button = screen.getByRole('button', { name: 'ドキュメントメニュー' });
+            const button = screen.getByRole('button', { name: 'ガイド一覧' });
             expect(button).toHaveAttribute('aria-expanded', 'true');
             fireEvent.keyDown(document, { key: 'Escape' });
             expect(button).toHaveAttribute('aria-expanded', 'false');

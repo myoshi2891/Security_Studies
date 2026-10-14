@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import {DocsHeaderNav} from './DocsHeaderNav';
 import {docsConfig} from '@/config/docs';
 afterEach(cleanup);
-const open=()=>{const button=screen.getByRole('button',{name:'ドキュメントメニュー'});fireEvent.click(button);return button;};
+const open=()=>{const button=screen.getByRole('button',{name:'ガイド一覧'});fireEvent.click(button);return button;};
 test('opens a clearly labelled guide menu, focuses its filter and shows all seventeen registered links',()=>{
  render(<DocsHeaderNav/>);const button=open();expect(button).toHaveTextContent('ガイド一覧');const input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});expect(document.activeElement).toBe(input);expect(screen.getByRole('status')).toHaveTextContent('17件');
  expect(screen.getAllByRole('link')).toHaveLength(17);expect(screen.getByRole('link',{name:"Web Application Hacker's Handbook"})).toHaveAttribute('href','/docs/web-application-hackers-handbook');
@@ -32,5 +32,11 @@ test('menu filtering controls remain outside the category scroll area and viewpo
  const css=readFileSync(new URL('./DocsHeaderNav.css',import.meta.url),'utf8');
  for(const width of [375,1440]){const w=new Window();try{w.happyDOM.setWindowSize({width,height:900});w.document.head.innerHTML=`<style>${css}</style>`;w.document.body.innerHTML='<div class="docs-header-nav"><button class="docs-nav-toggle"><span class="docs-nav-label-full">ガイド一覧</span><span class="docs-nav-label-short">ガイド</span></button><nav class="docs-global-navigation"><div class="docs-nav-toolbar"></div><div class="docs-nav-groups"></div></nav></div>';
  const style=(s:string)=>w.getComputedStyle(w.document.querySelector(s)!);expect(style('.docs-global-navigation').maxHeight).toContain('100dvh');expect(style('.docs-global-navigation').display).toBe('flex');expect(style('.docs-nav-groups').overflowY).toBe('auto');expect(style('.docs-nav-groups').minHeight).toBe('0px');expect(style('.docs-nav-label-short').display).toBe(width<=640?'inline':'none');expect(style('.docs-nav-label-full').display).toBe(width<=640?'none':'inline');
+ }finally{await w.happyDOM.close();}}
+});
+test('phone header keeps search compact so the labelled guide button remains reachable at 320px and 375px',async()=>{
+ const css=['../../app/globals.css','../../app/docs/docs-layout.css','./DocsHeaderNav.css'].map(file=>readFileSync(new URL(file,import.meta.url),'utf8')).join('\n');
+ for(const width of [320,375]){const w=new Window();try{w.happyDOM.setWindowSize({width,height:900});w.document.head.innerHTML=`<style>${css}</style>`;w.document.body.innerHTML='<header class="docs-header"><div class="docs-header-inner"><div><a>Security Studies 2026</a></div><div class="docs-header-nav"><button class="docs-nav-toggle">ガイド</button></div><button id="global-search"><svg></svg><span>Search...</span></button></div></header>';
+ const button=w.document.querySelector('#global-search')!,label=button.querySelector('span')!;expect(w.getComputedStyle(button).width).toBe('40px');expect(w.getComputedStyle(button).minWidth).toBe('40px');expect(w.getComputedStyle(label).position).toBe('absolute');expect(w.getComputedStyle(label).width).toBe('1px');expect(label.textContent).toBe('Search...');
  }finally{await w.happyDOM.close();}}
 });
