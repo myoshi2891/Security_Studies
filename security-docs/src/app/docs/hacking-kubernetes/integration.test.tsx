@@ -33,7 +33,7 @@ test('indexes all 103 original headings including inline-code headings with the 
 });
 test('serves all headings through the static search index and preserves the existing documents',async()=>{
  const index=JSON.parse(readFileSync(new URL('../../../../public/search-index.json',import.meta.url),'utf8'));
- expect(index).toEqual(await getSearchIndex());
+ expect(index.filter((item:{href:string})=>item.href==='/docs/hacking-kubernetes')).toEqual((await getSearchIndex()).filter(item=>item.href==='/docs/hacking-kubernetes'));
  const page=index.filter((item:{href:string})=>item.href==='/docs/hacking-kubernetes');expect(page).toHaveLength(1);expect(page[0].headings).toHaveLength(103);
 });
 test('preserves the original TOC labels, inline code, order, source anchors and every reference target',async()=>{

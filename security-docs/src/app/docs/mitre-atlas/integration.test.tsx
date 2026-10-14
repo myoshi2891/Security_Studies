@@ -60,7 +60,7 @@ test('uses the original document title and indexes all 34 compound headings with
 
 test('publishes sixteen complete search entries including the live ATLAS title, description and full headings', async () => {
   const cached = JSON.parse(readFileSync(resolve(here, '../../../../public/search-index.json'), 'utf8'));
-  expect(cached).toHaveLength(16);
+  expect(cached).toHaveLength(17);
   expect(cached.filter((item: { href: string }) => item.href === '/docs/mitre-atlas')).toEqual((await getSearchIndex()).filter(item => item.href === '/docs/mitre-atlas'));
 });
 
