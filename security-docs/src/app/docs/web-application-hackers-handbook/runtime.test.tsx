@@ -1,6 +1,6 @@
 import { afterEach, expect, spyOn, test } from 'bun:test';
 import { createElement } from 'react';
-import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, cleanup, render, waitFor } from '@testing-library/react';
 afterEach(()=>{cleanup();window.history.replaceState(null,'','/');});
 test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions and ignores stale results',async()=>{
  const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
