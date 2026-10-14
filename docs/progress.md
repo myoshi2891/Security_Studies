@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-14（CCST: Codecov patch対応・MermaidFigureの実エンジン初期化を検証・全395件成功・lint/型検査成功）
+> **最終更新**: 2026-10-14（Hacking Kubernetes: 表示基盤Green・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **395件** | `npm test`: 395 pass / 0 fail、58ファイル、25,099 expect（MermaidFigure実エンジン初期化テスト追加・全395件成功・lint/型検査成功） |
-| テストファイル数 | **58ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **405件** | `npm test`: 405 pass / 0 fail、60ファイル、25,485 expect（表示基盤Green・lint/型検査成功） |
+| テストファイル数 | **60ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -22,6 +22,8 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 5 | 2026-10-14 追加・表示基盤Green・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 5 | 2026-10-14 追加・表示基盤Green・lint/型検査成功 |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
@@ -499,3 +501,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## Hacking Kubernetes 移行記録
 
 - 2026-10-14: 事前監査。既存395 pass / 0 fail、58ファイル、25,099 expect。HTML・Markdown原本は保持。npm経由で検証、Next.jsビルド禁止、目視確認はユーザー担当。
+- 2026-10-14: Hacking Kubernetes: 表示基盤Green・lint/型検査成功。405 pass / 0 fail、60ファイル、25,485 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。

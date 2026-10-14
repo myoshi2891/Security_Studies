@@ -231,3 +231,15 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - 原本移動Green `779e602`、スタイルGreen `b4fae3a`、スクロールGreen `1169e10`。今後の修正もnpm経由でRed→テストコミット→Green→実装コミット→仕様書同期を維持。
 - 図中央寄せ（2026-10-13）: SVGをdisplay:block・左右auto余白で中央配置。収まらない図はauto余白が0になり、左端から左右スクロール可能。図定義・自然幅を保持。375/1440pxと120/2400px幅の回帰テスト追加。Red `78997af` → Green `7c54fac`。ビルド未実行、目視はユーザー担当。
 <!-- /CCST CURRENT -->
+
+
+<!-- hacking-kubernetes-status -->
+
+## Hacking Kubernetes 移行（2026-10-14）
+
+- ページ: `/docs/hacking-kubernetes`（`security-docs/src/app/docs/hacking-kubernetes/page.mdx`）。表示基盤Green・lint/型検査成功。
+- 現在の全体テスト実測: 405 pass / 0 fail、60ファイル、25,485 expect。`npm test`（内部Bun）で検証。
+- 原本: `Hacking-kubernetes-guide.html` / `Hacking-kubernetes-guide.md` を保持。18章・82小節・52表・24コード・12図・24チェック項目。
+- 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
+
+<!-- /hacking-kubernetes-status -->
