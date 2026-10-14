@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: 原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功）
+> **最終更新**: 2026-10-15（WAHH: コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **528件** | `npm test`: 523 pass / 5 fail、84ファイル、58,977 expect（原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功） |
+| テストケース総数 | **529件** | `npm test`: 528 pass / 1 fail、84ファイル、58,997 expect（コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み） |
 | テストファイル数 | **84ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル84件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -23,21 +23,21 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
+| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
 | `src/app/page.test.tsx` | 2 | 2026-10-15 追加・ホームWAHHリンクのRed確認 |
-| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 6 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功 |
+| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -576,3 +576,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-15: WAHH: 統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功。507 pass / 14 fail、83ファイル、45,274 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 統合Green・ホーム/グローバルナビ17件・全521件成功・lint/型検査成功。521 pass / 0 fail、83ファイル、58,939 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功。523 pass / 5 fail、84ファイル、58,977 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み。528 pass / 1 fail、84ファイル、58,997 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
