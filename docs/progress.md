@@ -495,3 +495,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-14: CCST 目次スクロール追跡（レビュー対応）。交差中の節の古い通知位置をMapに保持していたため、Setで交差中の節だけを保持し、通知ごとに全節の現在位置を取得して最上部を選ぶよう修正。Red `b43485b` → Green `00bdb04`。394 pass / 0 fail、58ファイル、25,095 expect。lint/型検査成功。ビルド未実行。
 
 - 2026-10-14: CCST Codecov patch対応（PR #46: 94.87% < 目標99.37%）。MermaidFigure.tsx の getEngine / renderDiagram（25-41, 45-46行）が未到達だったため、mermaid をモックして初期化1回・strict設定・テーマ・描画委譲を検証するテストを追加（`2fdb908`）。MermaidFigure.tsx 行100%、全体行99.57%。395 pass / 0 fail、58ファイル、25,099 expect。lint/型検査成功。ビルド未実行。
+
+## Hacking Kubernetes 移行記録
+
+- 2026-10-14: 事前監査。既存395 pass / 0 fail、58ファイル、25,099 expect。HTML・Markdown原本は保持。npm経由で検証、Next.jsビルド禁止、目視確認はユーザー担当。
