@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: 表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行）
+> **最終更新**: 2026-10-15（WAHH: 第0〜4節Red・5件の期待どおりの失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **465件** | `npm test`: 465 pass / 0 fail、72ファイル、31,061 expect（表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行） |
-| テストファイル数 | **72ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **45/45 (100%)** | 既存41 + WAHH部品4。テストファイル72件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **470件** | `npm test`: 465 pass / 5 fail、73ファイル、31,071 expect（第0〜4節Red・5件の期待どおりの失敗） |
+| テストファイル数 | **73ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **45/45 (100%)** | 既存41 + WAHH部品4。テストファイル73件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -23,9 +23,10 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・第0〜4節Red・5件の期待どおりの失敗 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・第0〜4節Red・5件の期待どおりの失敗 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・第0〜4節Red・5件の期待どおりの失敗 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・第0〜4節Red・5件の期待どおりの失敗 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -549,3 +550,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-15: WAHH: 表示基盤Red・11新規テストと検索17件契約が期待どおり失敗。451 pass / 12 fail、71ファイル、30,590 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 表示基盤・目次Red・失敗テスト13件を実装前にコミット済み。451 pass / 14 fail、72ファイル、30,590 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 表示基盤Green・全465件成功・lint/型検査成功・本文節は未移行。465 pass / 0 fail、72ファイル、31,061 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: 第0〜4節Red・5件の期待どおりの失敗。465 pass / 5 fail、73ファイル、31,071 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
