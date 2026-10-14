@@ -20,7 +20,7 @@ test('hash navigation selects the subsection and its parent; observers and liste
  try{
  const {container,unmount}=render(createElement('div',{className:'kubernetes-guide'},createElement(GuideSidebar,{},createElement('nav',{},createElement('ul',{},createElement('li',{className:'top'},createElement('a',{href:'#s0'},'章'),createElement('ul',{className:'sub'},createElement('li',{},createElement('a',{href:'#s0-1'},'小節'))))))),createElement('section',{id:'s0'}),createElement('section',{id:'s0-1'})));
  expect(targets.map(el=>el.id)).toEqual(['s0','s0-1']);
- act(()=>{window.happyDOM.setURL('http://localhost/docs/hacking-kubernetes#s0-1');window.dispatchEvent(new Event('hashchange'));});
+ act(()=>{(window as unknown as import('happy-dom').Window).happyDOM.setURL('http://localhost/docs/hacking-kubernetes#s0-1');window.dispatchEvent(new Event('hashchange'));});
  expect(container.querySelector('[href="#s0-1"]')).toHaveAttribute('aria-current','location');
  act(()=>callback!([{target:targets[0],isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));expect(container.querySelector('[href="#s0"]')).toHaveAttribute('aria-current','location');unmount();expect(disconnect).toBe(1);
  }finally{globalThis.IntersectionObserver=original;}
