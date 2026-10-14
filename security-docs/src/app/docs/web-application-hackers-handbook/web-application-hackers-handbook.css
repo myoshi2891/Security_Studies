@@ -731,3 +731,6 @@ hue-6-2: #e6c07b
 /* Keep completed numbers and explanatory code comments readable. */
 .wahh-guide.wahh-guide .prose ul.checklist label:has(input:checked) .num{opacity:1}
 .wahh-guide.wahh-guide .codeblock .hljs-comment,.wahh-guide.wahh-guide .codeblock .hljs-quote{color:var(--color-text-tertiary)}
+/* Code framing belongs to the original .codeblock wrapper, not shared prose. */
+.wahh-guide.wahh-guide .codeblock pre{background:transparent;color:inherit;border:0;border-radius:0}
+.wahh-guide.wahh-guide .codeblock pre code{border:0;border-radius:0}
