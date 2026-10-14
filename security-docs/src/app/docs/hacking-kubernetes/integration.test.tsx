@@ -44,11 +44,21 @@ test('preserves the original TOC labels, inline code, order, source anchors and 
  const migrated=[...page.querySelectorAll('a[href^="#"]')].map(el=>el.getAttribute('href'));expect(migrated).toEqual(original);
  for(const href of migrated)expect(page.getElementById(href!.slice(1)),href!).not.toBeNull();
 });
-test('retains each original diagram role and accessible label along with its full source definition',async()=>{
+test('retains each original diagram role and accessible label on the rendered SVG wrapper, outside the text description',async()=>{
  const page=await renderedPage();const figures=[...page.querySelectorAll('.mermaid')];expect(figures).toHaveLength(12);
- for(const figure of figures){const original=sourceDocument.querySelector(`[data-diagram="${figure.getAttribute('data-diagram')}"]`)!;
-  expect(figure.getAttribute('role')).toBe(original.getAttribute('role'));expect(figure.getAttribute('aria-label')).toBe(original.getAttribute('aria-label'));
- }
+ const {render,waitFor,cleanup}=await import('@testing-library/react');const {createElement}=await import('react');
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const saved=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;
+ try{for(const figure of figures){const id=figure.getAttribute('data-diagram')!;const original=sourceDocument.querySelector(`[data-diagram="${id}"]`)!;
+  expect(figure.getAttribute('role')).toBeNull();
+  const view=render(createElement(MermaidFigure,{id,source:figure.getAttribute('data-definition')!,renderer:async()=>({svg:'<svg viewBox="0 0 10 10"></svg>'})}));
+  await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());
+  const image=view.container.querySelector('[role="img"]')!;
+  expect(image.getAttribute('role')).toBe(original.getAttribute('role'));expect(image.getAttribute('aria-label')).toBe(original.getAttribute('aria-label'));
+  expect(image.querySelector('svg')).not.toBeNull();expect(image.querySelector('details, ul')).toBeNull();
+  expect(view.container.querySelector('.mermaid')!.getAttribute('role')).toBeNull();
+  cleanup();
+ }}finally{globalThis.IntersectionObserver=saved;}
 });
 test('locally highlights all bash and yaml code without changing a single command, indentation or newline',async()=>{
  const page=await renderedPage();const codes=page.querySelectorAll('.layout pre code');const originals=main.querySelectorAll('pre code');expect(codes).toHaveLength(24);

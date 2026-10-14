@@ -20,7 +20,7 @@ export function canonical(node: Node): unknown {
   if (node.nodeType !== Node.ELEMENT_NODE) return null;
   const el = node as Element;
   if (el.tagName === 'SVG' || el.tagName.toLowerCase() === 'svg' || el.tagName === 'NOSCRIPT') return null;
-  if (el.matches('.mermaid')) return ['diagram', el.getAttribute('data-diagram'), el.getAttribute('role'), el.getAttribute('aria-label')];
+  if (el.matches('.mermaid')) return ['diagram', el.getAttribute('data-diagram')]; // role・ラベルは描画後のSVGラッパーで検証する
   if (el.matches('pre code')) return ['code', el.getAttribute('class'), el.textContent];
   return [el.tagName, ...['id', 'class', 'href', 'target', 'rel', 'type', 'start', 'value'].map(attr => el.getAttribute(attr)), [...el.childNodes].map(canonical).filter(value => value !== null)];
 }
