@@ -34,7 +34,7 @@ test('registers MITRE ATLAS exactly once under Advanced Topics and retains all e
   const entry = { title: 'MITRE ATLAS', href: '/docs/mitre-atlas' };
   expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual(entry);
   expect(docsConfig.sidebarNav.flatMap(group => group.items).filter(item => item.href === entry.href)).toEqual([entry]);
-  expect(docsConfig.sidebarNav.flatMap(group => group.items)).toHaveLength(15);
+  expect(docsConfig.sidebarNav.flatMap(group => group.items)).toHaveLength(16);
   expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual({ title: 'OWASP Top 10 (2025/2026)', href: '/docs/owasp' });
 });
 
@@ -58,9 +58,9 @@ test('uses the original document title and indexes all 34 compound headings with
   expect(entries[0].content).not.toContain('import ');
 });
 
-test('publishes fifteen complete search entries including the live ATLAS title, description and full headings', async () => {
+test('publishes sixteen complete search entries including the live ATLAS title, description and full headings', async () => {
   const cached = JSON.parse(readFileSync(resolve(here, '../../../../public/search-index.json'), 'utf8'));
-  expect(cached).toHaveLength(15);
+  expect(cached).toHaveLength(16);
   expect(cached.filter((item: { href: string }) => item.href === '/docs/mitre-atlas')).toEqual((await getSearchIndex()).filter(item => item.href === '/docs/mitre-atlas'));
 });
 

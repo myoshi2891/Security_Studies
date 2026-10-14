@@ -76,16 +76,21 @@ test('lazy diagrams wait for intersection, disconnect observers and support retr
   let loads=0;const load=createEngineLoader(async()=>{loads++;if(loads===1)throw new Error('retry');return 'engine';});await expect(load()).rejects.toThrow('retry');expect(await load()).toBe('engine');expect(await load()).toBe('engine');expect(loads).toBe(2);
  }finally{globalThis.IntersectionObserver=saved;}
 });
-test('the bundled renderer serializes initialize/render with the original per-diagram overrides',async()=>{
- const {default:mermaid}=await import('mermaid');const config:unknown[]=[];const events:string[]=[];
- const init=spyOn(mermaid,'initialize').mockImplementation(c=>{config.push(c);events.push('initialize');});
- const draw=spyOn(mermaid,'render').mockImplementation(async(id:string)=>{events.push(id);return {svg:'<svg></svg>',diagramType:'flowchart-v2',bindFunctions:()=>{}};});
+test('the bundled renderer uses per-diagram settings without mutating the shared Mermaid engine',async()=>{
+ const {default:mermaid}=await import('mermaid');const calls:[string,string][]=[];
+ const init=spyOn(mermaid,'initialize');
+ const draw=spyOn(mermaid,'render').mockImplementation(async(id:string,source:string)=>{calls.push([id,source]);return {svg:'<svg></svg>',diagramType:'flowchart-v2'};});
  try{
   const {renderDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
-  await Promise.all([renderDiagram('kubernetes-mermaid-d2-one','flowchart LR\nA-->B'),renderDiagram('kubernetes-mermaid-d5-two','flowchart LR\nA-->B')]);
-  expect(events).toEqual(['initialize','kubernetes-mermaid-d2-one','initialize','kubernetes-mermaid-d5-two']);
-  expect(config[0]).toMatchObject({theme:'dark',securityLevel:'strict',flowchart:{wrappingWidth:150,nodeSpacing:45,rankSpacing:50,curve:'basis'}});
-  expect(config[1]).toMatchObject({flowchart:{wrappingWidth:100,nodeSpacing:25,rankSpacing:50,curve:'basis'}});
+  const source='flowchart LR\nA-->B';
+  await Promise.all([renderDiagram('kubernetes-mermaid-d2-one',source),renderDiagram('kubernetes-mermaid-d5-two',source)]);
+  expect(init).not.toHaveBeenCalled();expect(calls).toHaveLength(2);
+  for(const [index,[id,definition]] of calls.entries()){
+   expect(id).toBe(index===0?'kubernetes-mermaid-d2-one':'kubernetes-mermaid-d5-two');
+   const config=JSON.parse(definition.match(/^---\nconfig: (.+)\n---\n/)![1]);
+   expect(config).toMatchObject({theme:'dark',securityLevel:'strict',flowchart:{wrappingWidth:index===0?150:100,nodeSpacing:index===0?45:25,rankSpacing:50,curve:'basis'}});
+   expect(definition.endsWith(source)).toBe(true);
+  }
  }finally{init.mockRestore();draw.mockRestore();}
 });
 test('local icons retain their source classes and decorative SVG semantics',async()=>{
