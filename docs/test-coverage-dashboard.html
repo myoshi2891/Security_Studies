@@ -29,7 +29,7 @@
         </header>
         <section class="container" aria-label="CCST Cybersecurity historical migration test status"><p>CCST（過去の検証記録・2026-10-14）: 図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功 · 395 pass / 0 fail、58ファイル、25,099 expect · ビルド未実行・目視はユーザー担当</p></section>
 <section class="container" aria-label="Hacking Kubernetes migration test status"><p>履歴（Kubernetes移行完了時）: Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
-<section class="container" aria-label="WAHH migration test status"><p>WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。530 pass / 7 fail、85ファイル、59,361 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
+<section class="container" aria-label="WAHH migration test status"><p>WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証。519 pass / 19 fail、85ファイル、59,287 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
         <!-- SUMMARY -->
         <section class="summary-section">
             <div class="container">
@@ -62,8 +62,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">537</div>
-                        <div class="summary-sub">WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。530 pass / 7 fail、85ファイル、59,361 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</div>
+                        <div class="summary-value">538</div>
+                        <div class="summary-sub">WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証。519 pass / 19 fail、85ファイル、59,287 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -341,6 +341,7 @@
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行・表示テストで検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（43移行・表示テストで検証）</li>
                                                 <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（104移行・表示・アーカイブテストで検証）</li>
+                                                
                                                 
                                                 <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（74テスト）</li>
                                                 <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（56移行・表示・操作・コントラスト・アーカイブテストで検証）</li>
@@ -1168,7 +1169,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-15</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 85 files · 537 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 85 files · 538 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗）
+> **最終更新**: 2026-10-15（WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **537件** | `npm test`: 530 pass / 7 fail、85ファイル、59,361 expect（共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗） |
+| テストケース総数 | **538件** | `npm test`: 519 pass / 19 fail、85ファイル、59,287 expect（共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証） |
 | テストファイル数 | **85ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル85件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -24,21 +24,21 @@
 | ファイル | テスト数 | 備考 |
 |---|---|---|
 | `src/components/docs/DocsHeaderNav.test.tsx` | 7 | 2026-10-15 追加・拡張性を備える共通ナビRed |
-| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
 | `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホームWAHHリンク/全17件表示Green |
-| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -590,3 +590,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - ナビ表示指摘は調査中。localhost:3000の配信HTMLではdocsメニュー内の17リンクとWAHHを確認し、ホームは一覧カード内のWAHHを確認。ホーム上部Main navigationは2リンクのみ。ユーザーに画面URL/対象ナビを確認中。
 - 2026-10-15: WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。530 pass / 7 fail、85ファイル、59,361 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証。519 pass / 19 fail、85ファイル、59,287 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
