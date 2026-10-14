@@ -56,3 +56,12 @@ test('narrow and oversized SVGs keep intrinsic widths and block auto margins at 
  const svgs=[...scroll.querySelectorAll('svg')];expect(svgs.map(svg=>w.getComputedStyle(svg).width)).toEqual(['120px','2400px']);for(const svg of svgs){const style=w.getComputedStyle(svg);expect(style.display).toBe('block');expect(style.marginLeft).toBe('auto');expect(style.marginRight).toBe('auto');expect(style.maxWidth).toBe('none');}
  }finally{await w.happyDOM.close();}}
 });
+test('all seven code blocks retain source backgrounds, spacing, borders and corner radii in both app themes',async()=>{
+ for(const scheme of ['light','dark'])await compare(900,scheme,(actual,original)=>{
+ const pres=actual.document.querySelectorAll('.main .codeblock pre'),refs=original.document.querySelectorAll('main .codeblock pre');expect(pres).toHaveLength(7);
+ const normalize=(value:string)=>['','none','normal','0','0px'].includes(value)?'default':['transparent','rgba(0, 0, 0, 0)'].includes(value)?'transparent':value;
+ pres.forEach((pre,i)=>{for(const [aEl,bEl] of [[pre,refs[i]],[pre.querySelector('code')!,refs[i].querySelector('code')!]]){const a=actual.getComputedStyle(aEl),b=original.getComputedStyle(bEl);for(const key of ['paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginBottom','borderTopWidth','borderBottomWidth','borderRadius','backgroundColor','fontSize','lineHeight','whiteSpace'] as const){
+ const value=(s:typeof a)=>key==='backgroundColor'&&!s[key]?'transparent':normalize(s[key]);expect(value(a),`${scheme}/${i}/${aEl.tagName}/${key}`).toBe(value(b));
+ }}});
+ });
+});
