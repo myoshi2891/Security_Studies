@@ -4,12 +4,12 @@
 
 確認URL: `/docs/hacking-kubernetes`。Security Guidesに登録。
 原本の情報基準日2026年10月9日と本文は保持。今回の移行は技術情報の再検証を意味しません。
-HTML・Markdown原本はルートに残し、SHA-256で不変を検証しています。
+HTML・Markdown原本は `archive/html/Hacking-kubernetes-guide.html` / `archive/md/Hacking-kubernetes-guide.md` に移動済み。SHA-256でバイト一致と、旧ルートパスの除去を検証しています。
 
 ## 自動検証
 
-- npm test: **447 pass / 0 fail、68ファイル、30,576 expect**。専用10ファイル・51件 + 既存layoutテスト1件追加。
-- npm run lint / npm run types:check: 成功。実装HEAD: `396ea93`。
+- npm test: **452 pass / 0 fail、69ファイル、30,591 expect**。専用11ファイル・56件 + 既存layoutテスト1件追加。
+- npm run lint / npm run types:check: 成功。表示実装HEAD: `396ea93`、原本アーカイブHEAD: `25a5ea1`。
 
 - 全18章・82小節・103見出し・52表の全セル・24コードの改行と空白・12図定義・24チェック項目・35出典カードを原本と比較。
 - 本文のul/olは各2個、15項目。目次も含めるとul 18個・ol 2個・115項目。全140 IDの順序・一意性、目次と引用リンクの到達先を検証。
