@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証）
+> **最終更新**: 2026-10-15（WAHH: 移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **538件** | `npm test`: 519 pass / 19 fail、85ファイル、59,287 expect（共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証） |
+| テストケース総数 | **538件** | `npm test`: 538 pass / 0 fail、85ファイル、59,406 expect（移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功） |
 | テストファイル数 | **85ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル85件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -23,22 +23,22 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/components/docs/DocsHeaderNav.test.tsx` | 7 | 2026-10-15 追加・拡張性を備える共通ナビRed |
-| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホームWAHHリンク/全17件表示Green |
-| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証 |
+| `src/components/docs/DocsHeaderNav.test.tsx` | 8 | 2026-10-15 更新・ホーム/docs共通ガイド一覧・絞り込み・97ページ拡張・狭幅表示Green |
+| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホーム一覧・統計・共通ヘッダー/登録件数追従Green |
+| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -177,13 +177,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `GEMINI.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `security-docs/README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
-| `docs/progress.md` (本ファイル) | 2026-10-15 | WAHH完了、全529件・全84ファイルの実測件数と目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `GEMINI.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `security-docs/README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全538件/専用74件を同期 |
+| `docs/progress.md` (本ファイル) | 2026-10-15 | WAHH完了、全538件・全85ファイルの実測件数と目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -220,7 +220,9 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
-| P-14 | **WAHH全13主要節・14ステップ節移行** — `/docs/web-application-hackers-handbook`、専用74件 + ホーム2件 + layout1件追加。53表・16図・7コード・30チェック項目・28参考文献・丸点/番号を保持。全529件とlint/型検査成功、原本HTML/MDアーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
+| P-15 | **共通ガイド一覧メニュー** — ホーム/docsで共通化、絞り込み・カテゴリ別表示・画面内スクロール・狭幅対応。97ページ拡張と8件の操作/表示テスト、ホーム3件、設定由来の件数検証。全538件成功、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
+| P-14 | **WAHH全13主要節・14ステップ節移行** — `/docs/web-application-hackers-handbook`、専用74件 + ホーム3件 + layout1件追加。53表・16図・7コード・30チェック項目・28参考文献・丸点/番号を保持。全529件とlint/型検査成功、原本HTML/MDアーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
+| P-14 | **WAHH全13主要節・14ステップ節移行** — `/docs/web-application-hackers-handbook`、専用74件 + ホーム3件 + layout1件追加。53表・16図・7コード・30チェック項目・28参考文献・丸点/番号を保持。全538件とlint/型検査成功、原本HTML/MDアーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
 | P-13 | **Hacking Kubernetes全18章・82小節移行** — `/docs/hacking-kubernetes`、専用56件 + 既存レイアウト1件追加。52表・24コード・12図・24チェック項目・35出典カードを保持。補足/注意本文のコントラスト9.04〜9.76:1へ改善。全452件・lint・型検査成功、原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
 | P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、104件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全395件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
 | P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
@@ -588,6 +590,27 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
 - 残り: ユーザーが `docs/migration-inventory/web-application-hackers-handbook-review.md` に沿って目視確認。指摘があれば失敗テスト→testコミット→修正→成功確認→実装コミット→文書同期を継続。npm使用・Next.jsビルド禁止・push/公開未実施。
 
-- ナビ表示指摘は調査中。localhost:3000の配信HTMLではdocsメニュー内の17リンクとWAHHを確認し、ホームは一覧カード内のWAHHを確認。ホーム上部Main navigationは2リンクのみ。ユーザーに画面URL/対象ナビを確認中。
+- ナビ表示問題を修正済み。ホーム上部とdocsヘッダーに共通のガイド一覧を表示。配信HTMLで両画面の入口・絞り込み・17リンク・WAHHを確認。
 - 2026-10-15: WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。530 pass / 7 fail、85ファイル、59,361 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 共通ナビ表示名・狭幅ヘッダーRed・メニューの読み上げ名と320px検索幅を検証。519 pass / 19 fail、85ファイル、59,287 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: 移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功。538 pass / 0 fail、85ファイル、59,406 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+
+### WAHH 移行完了・目視待ち（2026-10-15）
+
+- 全文の原本比較、53表とページ全体のhydration、127見出しの検索、55ID/リンク、注意文字のコントラスト検証完了。ホームとグローバルナビに登録済み。
+- 実装HEAD: `81c6dc1`。アーカイブHEAD: `56faff0`（HTML/MDとも100% rename）。専用74件/14ファイル、全体538 pass / 0 fail、85ファイル、59,406 expect。
+- 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
+- 残り: ユーザーが `docs/migration-inventory/web-application-hackers-handbook-review.md` に沿って目視確認。指摘があれば失敗テスト→testコミット→修正→成功確認→実装コミット→文書同期を継続。npm使用・Next.jsビルド禁止・push/公開未実施。
+
+<!-- shared-guide-navigation-status -->
+
+## 共通ガイドナビゲーション（2026-10-15）
+
+- 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリ・URLで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
+- 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
+- 検証: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
+- npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
+
+<!-- /shared-guide-navigation-status -->

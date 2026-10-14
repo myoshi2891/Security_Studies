@@ -4,7 +4,7 @@
 
 ページ: `/docs/web-application-hackers-handbook`。目視確認はユーザー担当・未完了です。
 
-自動検証は全529件/84ファイル成功（専用74件/14ファイル）。lint・型検査成功。Next.jsビルドは未実行です。
+自動検証は全538件/84ファイル成功（専用74件/14ファイル）。lint・型検査成功。Next.jsビルドは未実行です。
 
 原本HTML: `archive/html/Web-application-hackers-handbook-guide.html`（SHA-256 `7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16`）。
 原本Markdown: `archive/md/Web-application-hackers-handbook-guide.md`（SHA-256 `9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6`）。
@@ -13,7 +13,9 @@
 ## 導線と表示
 
 - [ ] ホームのSecurity Guidesカードから開ける。収録ガイド数は17。
-- [ ] グローバルナビのSecurity Guidesから開ける。WAHHページでは現在位置が表示される。
+- [ ] 共通ガイド一覧の絞り込み・クリア・空結果、Escape/外側クリック/リンク選択で閉じる操作を確認する。
+- [ ] 320px・375pxでは「ガイド」の入口と検索ボタンが横にはみ出さず、メニュー内だけでスクロールできる。
+- [ ] ホーム上部とdocsヘッダーの「ガイド一覧」から、Security GuidesのWAHHを開ける。WAHHページでは現在位置が表示される。
 - [ ] 検索で「HTTP desync」「セッション管理」「ソースコード」など後半を含む見出しがヒットする。
 - [ ] 1440px・900px・375px、明るい/暗いアプリテーマで本文・注意・参考文献・コードコメントが読める。
 - [ ] 丸点が表示され、チェックリストの番号が各リストで再開する。30項目を独立してチェックでき、チェック後も番号が読める。
