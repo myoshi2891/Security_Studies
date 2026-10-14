@@ -67,7 +67,9 @@ Security_Studies/
 │   │   ├── app/
 │   │   │   ├── docs/       # ドキュメントページ (各 page.mdx)
 │   │   │   │   ├── approach/, architecture/, owasp/, ...
-│   │   │   │   └── secure-by-design/, mitre-atlas/  # 元HTMLを忠実に移行したガイド・専用部品・CSS・テスト
+│   │   │   │   ├── ccie-security/, ccst-cybersecurity/
+│   │   │   │   ├── secure-by-design/, mitre-atlas/, hacking-kubernetes/
+│   │   │   │   └── web-application-hackers-handbook/  # 元HTMLに対応する部品・CSS・原本比較テスト
 │   │   │   ├── api/search/ # 検索インデックス API エンドポイント
 │   │   │   └── layout.tsx  # ルートレイアウト
 │   │   ├── components/
@@ -252,6 +254,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - 配置: `security-docs/src/app/docs/ccst-cybersecurity/page.mdx`。全46節・227見出し・163表・50図・73リスト/344項目・25問/100選択肢・25チェック・60参考文献を保持。
 - CCST専用テストは12ファイル・104件。全395件成功。丸点・標準番号・カウンター、表とコードの両テーマ、375/768/1440pxのCSSを検証。CSSはCCST内と条件付きルートセレクターに限定。
 - HTML正本: `archive/html/Ccst-cybersecurity-guide.html`。MD保存: `archive/md/Ccst-cybersecurity-guide.md`。両SHA-256一致、情報基準日2026-10-05を保持。
+- ナビ表示指摘の調査中: localhost:3000の配信HTMLではドキュメントメニュー内に17リンクとWAHHを確認。ホームは一覧カード内にWAHHを確認（上部Main navigationはLibrary/Documentationのみ）。ユーザーが指摘する画面を確認中。
 - 目視確認表: `docs/migration-inventory/ccst-cybersecurity-review.md`。今回のビルド・ブラウザー目視・公開は未実施。pushはPRブランチ（dev、PR #46）へ実施済み、目視確認後の追加pushは未実施。
 - 原本移動Green `779e602`、スタイルGreen `b4fae3a`、スクロールGreen `1169e10`。今後の修正もnpm経由でRed→テストコミット→Green→実装コミット→仕様書同期を維持。
 - 図中央寄せ（2026-10-13）: SVGをdisplay:block・左右auto余白で中央配置。収まらない図はauto余白が0になり、左端から左右スクロール可能。図定義・自然幅を保持。375/1440pxと120/2400px幅の回帰テスト追加。Red `78997af` → Green `7c54fac`。ビルド未実行、目視はユーザー担当。
@@ -263,7 +266,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## Hacking Kubernetes 移行（2026-10-15）
 
 - ページ: `/docs/hacking-kubernetes`（`security-docs/src/app/docs/hacking-kubernetes/page.mdx`）。原本アーカイブGreen・全452件成功・lint/型検査成功。
-- 現在の全体テスト実測: 452 pass / 0 fail、69ファイル、30,591 expect。`npm test`（内部Bun）で検証。
+- 当該移行完了時の全体テスト実測: 452 pass / 0 fail、69ファイル、30,591 expect。`npm test`（内部Bun）で検証。
 - 原本: `archive/html/Hacking-kubernetes-guide.html` / `archive/md/Hacking-kubernetes-guide.md` に移動済み（SHA-256一致）。18章・82小節・52表・24コード・12図・24チェック項目。
 - 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
 
@@ -276,8 +279,8 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 ## WAHH 移行（2026-10-15）
 
-- ページ: `/docs/web-application-hackers-handbook`（`security-docs/src/app/docs/web-application-hackers-handbook/page.mdx`）。コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み。
-- 現在の全体テスト実測: 528 pass / 1 fail、84ファイル、58,997 expect。`npm test`（内部Bun）で検証。
+- ページ: `/docs/web-application-hackers-handbook`（`security-docs/src/app/docs/web-application-hackers-handbook/page.mdx`）。共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。
+- 現在の全体テスト実測: 530 pass / 7 fail、85ファイル、59,361 expect。`npm test`（内部Bun）で検証。
 - 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md` へバイト不変で移動済み。13主要節・14ステップ節・53表・7コード・16図・30チェック項目。
 - 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
 

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み）
+> **最終更新**: 2026-10-15（WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **529件** | `npm test`: 528 pass / 1 fail、84ファイル、58,997 expect（コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み） |
-| テストファイル数 | **84ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル84件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **537件** | `npm test`: 530 pass / 7 fail、85ファイル、59,361 expect（共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗） |
+| テストファイル数 | **85ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル85件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -23,21 +23,22 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/page.test.tsx` | 2 | 2026-10-15 追加・ホームWAHHリンクのRed確認 |
-| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み |
+| `src/components/docs/DocsHeaderNav.test.tsx` | 7 | 2026-10-15 追加・拡張性を備える共通ナビRed |
+| `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホームWAHHリンク/全17件表示Green |
+| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 7 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 5 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -69,7 +70,7 @@
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
-| `src/app/docs/layout.test.tsx` | 12 | 11 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 12 | 12 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
@@ -100,7 +101,7 @@
 
 | `src/app/docs/ccst-cybersecurity/sections-00-03.test.tsx` | 4 | 4 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/MermaidFigure.test.tsx` | 9 | 6 pass / 0 fail |
+| `src/app/docs/ccst-cybersecurity/MermaidFigure.test.tsx` | 9 | 9 pass / 0 fail |
 
 | `src/app/docs/ccst-cybersecurity/chapters-01-02.test.tsx` | 11 | 11 pass / 0 fail |
 
@@ -114,9 +115,9 @@
 
 | `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 15 | 14 pass / 0 fail |
+| `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 15 | 15 pass / 0 fail |
 
-| `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 8 | 4 pass / 0 fail |
+| `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 8 | 8 pass / 0 fail |
 
 | `src/app/docs/ccst-cybersecurity/archive.test.ts` | 5 | 5 pass / 0 fail |
 
@@ -176,13 +177,13 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `GEMINI.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-15 | Kubernetes原本アーカイブ・全452件/69ファイル/30,591 expect・専用56件を同期 |
-| `docs/progress.md` (本ファイル) | 2026-10-15 | Kubernetes移行と原本アーカイブ、全452件成功・ファイル別実測件数・目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `GEMINI.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `security-docs/README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・全529件/専用74件を同期 |
+| `docs/progress.md` (本ファイル) | 2026-10-15 | WAHH完了、全529件・全84ファイルの実測件数と目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -219,11 +220,12 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-14 | **WAHH全13主要節・14ステップ節移行** — `/docs/web-application-hackers-handbook`、専用74件 + ホーム2件 + layout1件追加。53表・16図・7コード・30チェック項目・28参考文献・丸点/番号を保持。全529件とlint/型検査成功、原本HTML/MDアーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
 | P-13 | **Hacking Kubernetes全18章・82小節移行** — `/docs/hacking-kubernetes`、専用56件 + 既存レイアウト1件追加。52表・24コード・12図・24チェック項目・35出典カードを保持。補足/注意本文のコントラスト9.04〜9.76:1へ改善。全452件・lint・型検査成功、原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
 | P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、104件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全395件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
 | P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
-| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。最新実測は186件）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
+| P-09 | **CCIE Security全13章移行** — `/docs/ccie-security`、Security Certifications新設。50件の移行・描画・目次・hydrationテストと10件のナビ検証、全170件成功（当時。現在の実測は冒頭のテスト表を参照）。ビルド未実施・ユーザー目視確認待ち。 | 2026-10-09 |
 
 ---
 
@@ -577,3 +579,14 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-15: WAHH: 統合Green・ホーム/グローバルナビ17件・全521件成功・lint/型検査成功。521 pass / 0 fail、83ファイル、58,939 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 原本アーカイブRed・5件の期待どおりの失敗・図の狭幅/広幅と遅延描画検証成功。523 pass / 5 fail、84ファイル、58,977 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: コード表示監査Red・共通CSSの背景/枠線/角丸混入を1件で再現・原本アーカイブ済み。528 pass / 1 fail、84ファイル、58,997 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: コード表示Green・全529件成功・lint/型検査成功・原本アーカイブ済み・ナビ表示指摘を調査中。529 pass / 0 fail、84ファイル、59,355 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+
+### WAHH 移行完了・目視待ち（2026-10-15）
+
+- 全文の原本比較、53表とページ全体のhydration、127見出しの検索、55ID/リンク、注意文字のコントラスト検証完了。ホームとグローバルナビに登録済み。
+- 実装HEAD: `436e67f`。アーカイブHEAD: `56faff0`（HTML/MDとも100% rename）。専用74件/14ファイル、全体529 pass / 0 fail、84ファイル、59,355 expect。
+- 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
+- 残り: ユーザーが `docs/migration-inventory/web-application-hackers-handbook-review.md` に沿って目視確認。指摘があれば失敗テスト→testコミット→修正→成功確認→実装コミット→文書同期を継続。npm使用・Next.jsビルド禁止・push/公開未実施。
+
+- ナビ表示指摘は調査中。localhost:3000の配信HTMLではdocsメニュー内の17リンクとWAHHを確認し、ホームは一覧カード内のWAHHを確認。ホーム上部Main navigationは2リンクのみ。ユーザーに画面URL/対象ナビを確認中。
+- 2026-10-15: WAHH: 共通ナビ拡張Red・ホーム上部メニュー欠落と絞り込み/97ページ対応の7件失敗。530 pass / 7 fail、85ファイル、59,361 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
