@@ -67,9 +67,15 @@ test('smooth anchor scrolling belongs to the document only while this route exis
   try{
    w.document.head.innerHTML=`<style>${css}</style>`;w.document.body.innerHTML='<div class="kubernetes-guide"></div>';
    expect(w.getComputedStyle(w.document.documentElement).scrollBehavior).toBe(motion==='reduce'?'auto':'smooth');
-   w.document.body.innerHTML='';expect(w.document.documentElement.matches('html:has(.kubernetes-guide)')).toBe(false);
-   // Relational-selector computed-style invalidation is unreliable in Happy DOM.
-   // The direct selector check above verifies that the scoped root rule stops matching.
+   w.document.body.innerHTML='';expect(w.document.querySelector('.kubernetes-guide')).toBeNull();
+   // Happy DOM caches :has() after descendant removal. A route-free document
+   // verifies both the fresh selector result and the resulting computed style.
+   const empty=new Window({settings:{device:{prefersReducedMotion:motion}}});
+   try{
+    empty.document.head.innerHTML=`<style>${css}</style>`;
+    expect(empty.document.documentElement.matches('html:has(.kubernetes-guide)')).toBe(false);
+    expect(empty.getComputedStyle(empty.document.documentElement).scrollBehavior).not.toBe('smooth');
+   }finally{await empty.happyDOM.close();}
 
   }finally{await w.happyDOM.close();}
  }
