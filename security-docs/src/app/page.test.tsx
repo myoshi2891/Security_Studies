@@ -12,3 +12,6 @@ test('home library preserves every registered route in order and reports sevente
  const doc=page();const links=doc.querySelectorAll('#library a');expect(links).toHaveLength(17);expect([...links].map(a=>a.getAttribute('href'))).toEqual(docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href));
  expect(doc.querySelector('.hero-metrics strong')!.textContent).toBe('17');
 });
+test('home header exposes the same complete global guide navigation as documentation pages',()=>{
+ const doc=page();const nav=doc.querySelector('header nav[aria-label="グローバルナビゲーション"]');expect(nav).not.toBeNull();expect(nav!.querySelectorAll('a')).toHaveLength(17);expect(nav!.querySelector('a[href="/docs/web-application-hackers-handbook"]')).not.toBeNull();expect(doc.querySelector('header [aria-label="ドキュメントメニュー"]')).not.toBeNull();
+});
