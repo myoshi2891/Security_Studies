@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-14（Hacking Kubernetes: 最終表示監査Red・文書スクロールとアイコン寸法の2件失敗）
+> **最終更新**: 2026-10-15（Hacking Kubernetes: 最終Green・全447件成功・lint/型検査成功・目視確認待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,26 +12,27 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **447件** | `npm test`: 445 pass / 2 fail、68ファイル、30,565 expect（最終表示監査Red・文書スクロールとアイコン寸法の2件失敗） |
+| テストケース総数 | **447件** | `npm test`: 447 pass / 0 fail、68ファイル、30,576 expect（最終Green・全447件成功・lint/型検査成功・目視確認待ち） |
 | テストファイル数 | **68ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **41/41 (100%)** | 既存36 + Kubernetes部品5。テストファイル68件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-13 実測）
+#### ファイル別テスト数（2026-10-15 実測）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
-| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-14 追加・最終表示監査Red・文書スクロールとアイコン寸法の2件失敗 |
+| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
@@ -164,8 +165,8 @@ form-action 'self'
 | `README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
 | `security-docs/CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
 | `security-docs/README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
-| `docs/progress.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-15 | Kubernetes移行・全447件/68ファイル/30,576 expect・ロジック41/41・注意本文のコントラスト・目視待ちを同期 |
+| `docs/progress.md` (本ファイル) | 2026-10-15 | Kubernetesの段階別Red/Green/Refactor、全447件成功と目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -202,6 +203,7 @@ form-action 'self'
 | P-06 | **Integration テスト（docs layout + MDX）**<br>サイドバーコンポーネント `DocsSidebar` の切り出しを行い、アクティブなドキュメントページに `aria-current="page"` を動的に付与し、アクティブ用のCSSクラススタイルを適用。`layout.test.tsx` で全サイドバー要素の描画、セクション見出し、アクティブ状態、モバイル折りたたみのクラス適用を検証するテストを追加しました。<br>**タグ**: `Integration Test` \| **コスト**: 小 \| **効果**: ナビゲーションの動作保証 | 2026-05-23 |
 | P-07 | **`bun audit` CI 組み込み**<br>`.github/workflows/ci.yml` に `audit` job を追加し、`bun audit --audit-level=high` を `quality` job と並列に実行。高・重大レベルの脆弱性のみ CI 失敗扱いとし、moderate / low はレポートのみで通過させる方針を YAML コメントで明文化（修正手順・`--ignore` 運用・npm フォールバック含む）。<br>**タグ**: `Security` / `CI` \| **コスト**: 小 \| **効果**: 依存脆弱性の即時検知 | 2026-05-23 |
 | P-08 | **最新セキュリティアプローチ統合（/docs/approach）**<br>準備中の approach ページに、2026年サプライチェーンセキュリティとSCS評価制度のドキュメント内容をもれなく統合し、検索インデックスのチェックテストを追加しました。<br>**タグ**: `Documentation` / `Unit Test` \| **コスト**: 中 \| **効果**: サプライチェーンセキュリティ解説の完成 | 2026-05-27 |
+| P-13 | **Hacking Kubernetes全18章・82小節移行** — `/docs/hacking-kubernetes`、専用51件 + 既存レイアウト1件追加。52表・24コード・12図・24チェック項目・35出典カードを保持。補足/注意本文のコントラスト9.04〜9.76:1へ改善。全447件・lint・型検査成功、原本保持、ビルド未実行・ユーザー目視待ち。 | 2026-10-15 |
 | P-12 | **CCST Cybersecurity全46節移行** — `/docs/ccst-cybersecurity`、104件の移行/表示テスト追加。163表・50図・73リスト/344項目・25問・60参考文献保持。全395件とlint/型検査成功、原本アーカイブ済み、ビルド未実行・目視待ち。 | 2026-10-13 |
 | P-11 | **MITRE ATLAS全13節移行** — `/docs/mitre-atlas`、42移行・表示テストと4検索テスト追加。全277件・lint・型検査成功。原本アーカイブ済み、ビルド未実行・ユーザー目視待ち。 | 2026-10-12 |
 | P-10 | **Secure by Design全17節移行** — `/docs/secure-by-design`。45件の移行・表示テスト、全231件成功。lint・型検査成功、ビルド未実行・目視確認待ち。 | 2026-10-12 |
@@ -525,3 +527,14 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-14: Hacking Kubernetes: 統合/コントラストGreen・全445件成功・lint/型検査成功。445 pass / 0 fail、68ファイル、30,563 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-14: Hacking Kubernetes: Refactor完了・全445件成功・lint/型検査成功。445 pass / 0 fail、68ファイル、30,563 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-14: Hacking Kubernetes: 最終表示監査Red・文書スクロールとアイコン寸法の2件失敗。445 pass / 2 fail、68ファイル、30,565 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: Hacking Kubernetes: 最終Green・全447件成功・lint/型検査成功・目視確認待ち。447 pass / 0 fail、68ファイル、30,576 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+
+### Hacking Kubernetes 最終引き継ぎ（2026-10-15）
+
+- 実装HEAD: `396ea93`（最終表示調整）。統合・注意文字色: `da7cf00`、Refactor: `3c4f432`。各章は失敗テストのコミットから順に実装し、テスト・実装・仕様書を別コミット。
+- 専用10テストファイル・51件、既存layoutテスト1件追加。全447 pass / 0 fail、68ファイル、30,576 expect。npm run lint / npm run types:check成功。
+- 元HTMLの全18章・82小節・103見出し・52表・24コード・12図・24チェック項目・35出典・全140 IDを保持。目次100項目、本文リスト15項目、引用・外部リンク・全コードの改行/空白を照合。
+- 共通blockquoteの灰色と斜体が補足/注意の可読性を落としていたため、ページ専用CSSで明示的に修正。本文9.04〜9.76:1、補助ラベル等4.5:1以上。light/dark・desktop/phoneで検証。
+- テスト用DOMが:has()を子要素削除後もキャッシュするため、要素の削除と独立文書のセレクタ・計算済みスタイルでスクロールのページ限定適用を検証。ブラウザーでの見え方は未確認。
+- HTML/Markdown原本はルートに保持し、ハッシュ不変を検証。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
+- 次のアクション: ユーザーが `docs/migration-inventory/hacking-kubernetes-review.md` に沿って目視確認。Next.jsビルドは禁止、push・公開は未実施。
