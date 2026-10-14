@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DocsHeaderNav } from "@/components/docs/DocsHeaderNav";
 import {
   Archive,
   ArrowRight,
@@ -40,12 +41,15 @@ export default function HomePage() {
             <span className="brand-year">/ 2026</span>
           </Link>
 
-          <nav className="landing-nav-links" aria-label="Main navigation">
-            <a href="#library">Library</a>
-            <Link href="/docs/approach" className="nav-cta">
-              Documentation <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </nav>
+          <div className="landing-nav-actions">
+            <nav className="landing-nav-links" aria-label="Main navigation">
+              <a href="#library">Library</a>
+              <Link href="/docs/approach" className="nav-cta">
+                Documentation <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            </nav>
+            <DocsHeaderNav />
+          </div>
         </div>
       </header>
 

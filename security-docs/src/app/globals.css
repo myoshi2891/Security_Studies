@@ -816,3 +816,14 @@ body {
         animation-iteration-count: 1 !important;
     }
 }
+
+/* Home uses the same expandable guide menu as documentation pages. */
+.landing-header { --docs-header-height: 76px; }
+.landing-nav-actions { display: flex; align-items: center; gap: 1.25rem; }
+.landing-nav-actions .docs-header-nav { margin-left: 0; }
+@media (max-width: 900px) { .landing-nav-actions .nav-cta { display: none; } }
+@media (max-width: 640px) {
+  .landing-header { --docs-header-height: 66px; }
+  .landing-nav-actions { gap: .5rem; }
+  .landing-nav-actions .landing-nav-links { display: none; }
+}
