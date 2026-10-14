@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-14（Hacking Kubernetes: 統合/コントラストGreen・全445件成功・lint/型検査成功）
+> **最終更新**: 2026-10-14（Hacking Kubernetes: Refactor完了・全445件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **445件** | `npm test`: 445 pass / 0 fail、68ファイル、30,563 expect（統合/コントラストGreen・全445件成功・lint/型検査成功） |
+| テストケース総数 | **445件** | `npm test`: 445 pass / 0 fail、68ファイル、30,563 expect（Refactor完了・全445件成功・lint/型検査成功） |
 | テストファイル数 | **68ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -22,16 +22,16 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 5 | 2026-10-14 追加・統合/コントラストGreen・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
+| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 5 | 2026-10-14 追加・Refactor完了・全445件成功・lint/型検査成功 |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
@@ -523,3 +523,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-14: Hacking Kubernetes: 統合Red・図属性/ナビ/静的検索/フォーカス等15件の失敗。426 pass / 15 fail、67ファイル、29,247 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-14: Hacking Kubernetes: 統合/コントラストRed・10件の期待どおりの失敗（注意本文3.13:1）。435 pass / 10 fail、68ファイル、29,476 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-14: Hacking Kubernetes: 統合/コントラストGreen・全445件成功・lint/型検査成功。445 pass / 0 fail、68ファイル、30,563 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-14: Hacking Kubernetes: Refactor完了・全445件成功・lint/型検査成功。445 pass / 0 fail、68ファイル、30,563 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
