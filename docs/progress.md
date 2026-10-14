@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: Step 9〜11 Red・3件の期待どおりの失敗）
+> **最終更新**: 2026-10-15（WAHH: Step 9〜11 Green・全481件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **481件** | `npm test`: 478 pass / 3 fail、76ファイル、31,433 expect（Step 9〜11 Red・3件の期待どおりの失敗） |
+| テストケース総数 | **481件** | `npm test`: 481 pass / 0 fail、76ファイル、31,511 expect（Step 9〜11 Green・全481件成功・lint/型検査成功） |
 | テストファイル数 | **76ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **45/45 (100%)** | 既存41 + WAHH部品4。テストファイル76件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -23,13 +23,13 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・Step 9〜11 Red・3件の期待どおりの失敗 |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・Step 9〜11 Green・全481件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -560,3 +560,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-15: WAHH: Step 5〜8 Red・4件の期待どおりの失敗。474 pass / 4 fail、75ファイル、31,307 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: Step 5〜8 Green・全478件成功・lint/型検査成功。478 pass / 0 fail、75ファイル、31,427 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: Step 9〜11 Red・3件の期待どおりの失敗。478 pass / 3 fail、76ファイル、31,433 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: Step 9〜11 Green・全481件成功・lint/型検査成功。481 pass / 0 fail、76ファイル、31,511 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
