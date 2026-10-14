@@ -17,7 +17,7 @@ test('preserves every original CSS rule and media condition in an isolated scope
     css.walkRules(expected,r=>{if((r.parent?.type==='atrule'?r.parent.params:undefined)===media){const ds:string[]=[];r.walkDecls(d=>{ds.push(`${d.prop}:${d.value}`);});matches.push(ds);}});
     expect(matches.some(ds=>JSON.stringify(ds)===JSON.stringify(original)),rule.selector).toBe(true);
   });
-  css.walkRules(rule=>{expect(rule.selector.split(',').every(s=>s.trim().startsWith(scope)||s.trim().startsWith('.docs-main:has(.kubernetes-guide)'))).toBe(true);});
+  css.walkRules(rule=>{expect(rule.selector.split(',').every(s=>s.trim().startsWith(scope)||s.trim().startsWith('.docs-main:has(.kubernetes-guide)')||s.trim()==='html:has(.kubernetes-guide)')).toBe(true);});
 });
 test('preserves hero metadata, heading and inline emphasis',async()=>{
   const page=await renderedPage(); expect(canonical(page.querySelector('.hero')!)).toEqual(canonical(sourceDocument.querySelector('.hero')!));
@@ -57,4 +57,25 @@ test('preserves dots, colored ordered markers and numbered checkbox styling incl
 test('native lists and tables bypass the shared MDX wrappers',async()=>{
  const {E}=await import(new URL('./GuideElements.tsx',import.meta.url).href);
  expect(render(createElement(E.ul,{},createElement(E.li,{},'点'))).container.innerHTML).toBe('<ul><li>点</li></ul>');
+});
+
+
+test('smooth anchor scrolling belongs to the document only while this route exists and respects reduced motion',async()=>{
+ const css=readFileSync(new URL('./hacking-kubernetes.css',import.meta.url),'utf8');
+ for(const motion of ['no-preference','reduce']){
+  const w=new Window({settings:{device:{prefersReducedMotion:motion}}});
+  try{
+   w.document.head.innerHTML=`<style>${css}</style>`;w.document.body.innerHTML='<div class="kubernetes-guide"></div>';
+   expect(w.getComputedStyle(w.document.documentElement).scrollBehavior).toBe(motion==='reduce'?'auto':'smooth');
+   w.document.body.innerHTML='';expect(w.getComputedStyle(w.document.documentElement).scrollBehavior).not.toBe('smooth');
+  }finally{await w.happyDOM.close();}
+ }
+});
+test('mobile menu SVG dimensions preserve the original 1.75rem icon size',async()=>{
+ const w=new Window();w.happyDOM.setWindowSize({width:375,height:900});
+ try{
+  w.document.head.innerHTML=`<style>${readFileSync(new URL('./hacking-kubernetes.css',import.meta.url),'utf8')}</style>`;
+  w.document.body.innerHTML='<div class="kubernetes-guide"><button class="nav-toggle"><svg width="24" height="24"></svg></button></div>';
+  const style=w.getComputedStyle(w.document.querySelector('svg')!);expect(style.width).toBe('28px');expect(style.height).toBe('28px');
+ }finally{await w.happyDOM.close();}
 });
