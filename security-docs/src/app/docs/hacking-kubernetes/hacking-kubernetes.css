@@ -258,3 +258,8 @@
 
 /* Restore the source note foreground: the shared blockquote gray is only 3.13:1 here. */
 .kubernetes-guide.kubernetes-guide .bq{color:var(--color-text-secondary);font-style:normal}
+
+/* Native anchor navigation scrolls the document; revert when this route unmounts. */
+html:has(.kubernetes-guide){scroll-behavior:smooth}
+.kubernetes-guide.kubernetes-guide .nav-toggle svg{width:1.75rem;height:1.75rem}
+@media (prefers-reduced-motion:reduce){html:has(.kubernetes-guide){scroll-behavior:auto}}
