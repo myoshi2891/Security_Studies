@@ -25,8 +25,17 @@ function background(w:Window,element:HappyElement):string{
 // Resolve direct declarations before inherited ones. Happy DOM can incorrectly let a
 // high-specificity ancestor color override a declaration on the actual blockquote.
 const css=postcss.parse(styles);
+// Memoize per element/property: ancestors are shared by hundreds of checked elements.
+const resolvedCache=new WeakMap<HappyElement,Map<string,string>>();
 function resolvedProperty(w:Window,element:HappyElement,property:string):string {
+ const cached=resolvedCache.get(element)?.get(property);if(cached!==undefined)return cached;
+ const value=resolveUncached(w,element,property);
+ const entry=resolvedCache.get(element)??new Map<string,string>();entry.set(property,value);resolvedCache.set(element,entry);
+ return value;
+}
+function resolveUncached(w:Window,element:HappyElement,property:string):string {
  for(let el:HappyElement|null=element;el;el=el.parentElement){
+  if(el!==element)return resolvedProperty(w,el,property);
   const matches:{weight:number;value:string}[]=[];
   css.walkRules(rule=>{
    let parent=rule.parent;while(parent&&parent.type!=='root'){if(parent.type==='atrule'&&parent.name==='media'&&!w.matchMedia(parent.params).matches)return;parent=parent.parent;}
