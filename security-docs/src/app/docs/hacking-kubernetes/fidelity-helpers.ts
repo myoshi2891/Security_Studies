@@ -26,7 +26,7 @@ export function canonical(node: Node): unknown {
 }
 let evaluated: ReturnType<typeof evaluate> | undefined;
 export function evaluatedPage() {
-  evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import ['"](?:\.\/ccst-cybersecurity\.css|@fontsource-variable\/source-serif-4)['"];?\s*$/gm, ''), {
+  evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import ['"](?:\.\/hacking-kubernetes\.css|@fontsource-variable\/source-serif-4)['"];?\s*$/gm, ''), {
     ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url), remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
   });
   return evaluated;
