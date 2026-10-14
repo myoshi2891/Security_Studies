@@ -15,6 +15,7 @@ export const docsConfig = {
         { title: "Secure SDLC Guide", href: "/docs/secdev-guide" },
         { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
         { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
+        { title: "Web Application Hacker's Handbook", href: "/docs/web-application-hackers-handbook" },
       ],
     },
     {

@@ -640,7 +640,7 @@
 .wahh-guide.wahh-guide .prose ol{list-style-type:decimal}
 .wahh-guide.wahh-guide h1,.wahh-guide.wahh-guide h2,.wahh-guide.wahh-guide h3,.wahh-guide.wahh-guide h4{letter-spacing:normal}
 .wahh-guide.wahh-guide table{margin:0;border:0}
-.wahh-guide.wahh-guide th,.wahh-guide.wahh-guide td{border-left:0;border-right:0;border-top:0}
+.wahh-guide.wahh-guide th,.wahh-guide.wahh-guide td{border-left:0;border-right:0}
 .wahh-guide.wahh-guide .hero .meta p{color:var(--color-text-secondary)}
 .wahh-guide.wahh-guide i.ti{display:inline-flex;align-items:center;vertical-align:middle;font-style:normal}
 .wahh-guide.wahh-guide i.ti svg{width:1em;height:1em}
@@ -720,3 +720,14 @@ hue-6-2: #e6c07b
 }
 .wahh-guide.wahh-guide .prose ul{list-style-type:none}
 @media (prefers-reduced-motion: reduce){html:has(.wahh-guide){scroll-behavior:auto}}
+
+/* Restore source defaults that shared prose and landing styles otherwise add. */
+.wahh-guide.wahh-guide .section-head h2{padding-bottom:0;border-bottom:0}
+.wahh-guide.wahh-guide .table-wrap td{border-bottom:0}
+.wahh-guide.wahh-guide .brand{font-weight:400;letter-spacing:normal}
+.wahh-guide.wahh-guide .brand-mark{box-shadow:none}
+/* Document scroll padding already includes the application header. */
+.wahh-guide.wahh-guide .section,.wahh-guide.wahh-guide .step,.wahh-guide.wahh-guide [id^="h3-"]{scroll-margin-top:0px}
+/* Keep completed numbers and explanatory code comments readable. */
+.wahh-guide.wahh-guide .prose ul.checklist label:has(input:checked) .num{opacity:1}
+.wahh-guide.wahh-guide .codeblock .hljs-comment,.wahh-guide.wahh-guide .codeblock .hljs-quote{color:var(--color-text-tertiary)}
