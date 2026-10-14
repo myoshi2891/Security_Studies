@@ -24,3 +24,9 @@ test('scroll tracking retains visible entries between callbacks, prioritizes the
  act(()=>{(window as unknown as import('happy-dom').Window).happyDOM.setURL('http://localhost/#step-1');window.dispatchEvent(new Event('hashchange'));});expect(view.container.querySelector('[href="#step-1"]')).toHaveAttribute('aria-current','location');view.unmount();expect(disconnected).toBe(1);
  }finally{globalThis.IntersectionObserver=saved;}
 });
+test('selecting a TOC link while the panel is closed keeps focus on the link and leaves the panel closed',async()=>{
+ const {GuideSidebar}=await import(new URL('./GuideSidebar.tsx',import.meta.url).href);
+ const view=render(h('div',{className:'wahh-guide'},h(GuideSidebar,{},nav())));const btn=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;const link=view.container.querySelector<HTMLAnchorElement>('[href="#sec-6"]')!;
+ link.focus();fireEvent.click(link);
+ expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement===link).toBe(true);expect(link).toHaveAttribute('aria-current','location');
+});
