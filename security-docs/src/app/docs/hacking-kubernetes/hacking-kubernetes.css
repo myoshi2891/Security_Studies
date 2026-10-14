@@ -255,3 +255,6 @@
   
 }
 .kubernetes-guide.kubernetes-guide .prose ul{list-style-type:none}
+
+/* Restore the source note foreground: the shared blockquote gray is only 3.13:1 here. */
+.kubernetes-guide.kubernetes-guide .bq{color:var(--color-text-secondary);font-style:normal}

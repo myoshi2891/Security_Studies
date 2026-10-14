@@ -21,7 +21,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   }, []);
   useEffect(() => {
     const guide = panel.current?.closest('.kubernetes-guide');
-    const hash = () => select(window.location.hash.slice(1));
+    const hash = () => select(window.location.hash.slice(1) || 's0');
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
@@ -40,7 +40,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow; document.body.style.overflow = 'hidden';
-    const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])]; links[0]?.focus();
+    const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])].filter(link => !link.closest('.sub') || link.closest('.top')?.classList.contains('open')); links[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
@@ -49,7 +49,11 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
     const resize = () => { if (window.innerWidth > 1024) close(); };
-    const header = (event: PointerEvent) => { if (event.target instanceof Element && event.target.closest('.docs-header')) close(); };
+    const header = (event: PointerEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest('.docs-header')) return;
+      if (panel.current?.contains(document.activeElement)) toggle.current?.focus();
+      setOpen(false);
+    };
     document.addEventListener('keydown', key); window.addEventListener('resize', resize); document.addEventListener('pointerdown', header);
     return () => { document.body.style.overflow = previous; document.removeEventListener('keydown', key); window.removeEventListener('resize', resize); document.removeEventListener('pointerdown', header); };
   }, [open, close]);

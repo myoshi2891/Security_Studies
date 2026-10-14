@@ -48,18 +48,12 @@ export const diagramConfig = {
   },
 } satisfies import('mermaid').MermaidConfig;
 
-// Mermaid configuration is global: serialize initialize/render so each figure keeps its own overrides.
-let rendering: Promise<unknown> = Promise.resolve();
-export const renderDiagram: DiagramRenderer = (id, source) => {
-  const job = rendering.then(async () => {
-    await document.fonts?.ready;
-    const engine = await getEngine();
-    const originalId = id.match(/mermaid-(d\d+)-/)?.[1] ?? '';
-    engine.initialize({ ...diagramConfig, flowchart: { ...diagramConfig.flowchart, ...diagramOverrides[originalId] } });
-    return engine.render(id, source);
-  });
-  rendering = job.catch(() => undefined);
-  return job;
+/** Per-render configuration keeps this guide's theme out of other routes' shared engine. */
+export const renderDiagram: DiagramRenderer = async (id, source) => {
+  await document.fonts?.ready;
+  const originalId = id.match(/mermaid-(d\d+)-/)?.[1] ?? '';
+  const config = { ...diagramConfig, flowchart: { ...diagramConfig.flowchart, ...diagramOverrides[originalId] } };
+  return (await getEngine()).render(id, `---\nconfig: ${JSON.stringify(config)}\n---\n${source}`);
 };
 
 function sizeSvg(svgMarkup: string, source: string) {
@@ -219,10 +213,10 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
 
   const current = result?.source === source ? result : undefined;
   return (
-    <div ref={figureRef} className="mermaid" data-diagram={id} data-definition={source}>
+    <div ref={figureRef} className="mermaid" data-diagram={id} data-definition={source} role="img" aria-label={`フローチャート ${id}`} tabIndex={0} aria-describedby={current?.svg ? descriptionId : undefined}>
       {current?.svg ? (
         <>
-          <div tabIndex={0} role="img" aria-label={`図 ${Number(id.slice(1))}`} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
+          <div dangerouslySetInnerHTML={{ __html: current.svg }} />
           <details className="diagram-description">
             <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
             <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>

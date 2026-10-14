@@ -14,6 +14,7 @@ export const docsConfig = {
         { title: "LLM & AI Security", href: "/docs/llm-ai-security" },
         { title: "Secure SDLC Guide", href: "/docs/secdev-guide" },
         { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
+        { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
       ],
     },
     {
