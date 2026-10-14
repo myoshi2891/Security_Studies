@@ -158,10 +158,11 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
 
   const current = result?.source === source ? result : undefined;
   return (
-    <div ref={figureRef} className="mermaid" data-diagram={id} data-definition={source} role="img" aria-label={`フローチャート ${id}`} tabIndex={0} aria-describedby={current?.svg ? descriptionId : undefined}>
+    <div ref={figureRef} className="mermaid" data-diagram={id} data-definition={source}>
       {current?.svg ? (
         <>
-          <div dangerouslySetInnerHTML={{ __html: current.svg }} />
+          {/* role="img" は子孫を読み上げ対象外にするため、SVG のラッパーだけに付け、説明は兄弟要素に置く */}
+          <div role="img" aria-label={`フローチャート ${id}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
           <details className="diagram-description">
             <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
             <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
