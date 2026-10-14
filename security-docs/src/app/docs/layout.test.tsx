@@ -55,7 +55,7 @@ describe('DocsLayout', () => {
             expect(container.querySelector('main')?.parentElement?.classList.contains('container')).toBe(false);
             expect(container.querySelector('article')).toHaveClass('docs-article');
         });
-        test('sidebarNav に定義された全エントリ (16 件) がリンクとして描画される', async () => {
+        test('sidebarNav に定義された全エントリ (17 件) がリンクとして描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
@@ -65,7 +65,13 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(16);
+            expect(allItems.length).toBe(17);
+        });
+
+        test('WAHH ページの追加リンクを現在位置として表示する', async () => {
+            currentPath = '/docs/web-application-hackers-handbook';
+            await renderLayout();
+            expect(screen.getByRole('link', { name: "Web Application Hacker's Handbook" })).toHaveAttribute('aria-current', 'page');
         });
 
         test('Hacking Kubernetes ページでは追加ナビ項目が現在位置として表示される', async () => {
