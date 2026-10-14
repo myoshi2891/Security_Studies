@@ -1,0 +1,257 @@
+
+.kubernetes-guide.kubernetes-guide{
+--color-background-primary:#07111e;
+--color-background-secondary:#0d1b30;
+--color-background-tertiary:#12233f;
+--color-background-info:#142b52;
+--color-background-danger:#34202a;
+--color-background-success:#0f2e2a;
+--color-background-warning:#352c14;
+--color-text-primary:#f3f5fa;
+--color-text-secondary:#c6d0e3;
+--color-text-tertiary:#93a1bd;
+--color-text-info:#9db8ff;
+--color-text-danger:#ff9f8f;
+--color-text-success:#6fe0c4;
+--color-text-warning:#f2c66d;
+--color-border-tertiary:#1e2f4d;
+--color-border-secondary:#2d456e;
+--color-border-primary:#3e5c8f;
+--accent:#7c9eff;
+--font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP","Meiryo",system-ui,-apple-system,"Segoe UI",sans-serif;
+--font-mono:ui-monospace,"SF Mono","Cascadia Code","Menlo","Consolas","Noto Sans Mono CJK JP","Liberation Mono",monospace;
+--border-radius-md:8px;
+--border-radius-lg:12px;
+--border-radius-xl:16px;
+--sidebar-w:288px;
+}
+.kubernetes-guide.kubernetes-guide *,.kubernetes-guide.kubernetes-guide *::before,.kubernetes-guide.kubernetes-guide *::after{box-sizing:border-box}
+.kubernetes-guide.kubernetes-guide{font-size:16px;scroll-behavior:smooth}
+.kubernetes-guide.kubernetes-guide{margin:0;background:var(--color-background-primary);color:var(--color-text-secondary);font-family:var(--font-sans);font-size:1rem;font-weight:400;line-height:1.7;-webkit-text-size-adjust:100%}
+.kubernetes-guide.kubernetes-guide a{color:var(--accent);text-decoration:none}
+.kubernetes-guide.kubernetes-guide a:hover{text-decoration:underline}
+.kubernetes-guide.kubernetes-guide strong{font-weight:500;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);padding:24px 14px 40px;z-index:70;scrollbar-width:thin;scrollbar-color:var(--color-border-primary) transparent}
+.kubernetes-guide.kubernetes-guide .brand{display:flex;align-items:center;gap:12px;padding:6px 10px 20px;color:var(--color-text-primary);border-bottom:1px solid var(--color-border-tertiary);margin-bottom:16px}
+.kubernetes-guide.kubernetes-guide .brand:hover{text-decoration:none}
+.kubernetes-guide.kubernetes-guide .brand .ti{font-size:2rem;color:var(--accent)}
+.kubernetes-guide.kubernetes-guide .brand-text{display:flex;flex-direction:column;line-height:1.35}
+.kubernetes-guide.kubernetes-guide .brand-title{font-size:1rem;font-weight:500;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .brand-sub{font-size:1rem;color:var(--color-text-tertiary)}
+.kubernetes-guide.kubernetes-guide .sidebar nav ul{list-style:none;margin:0;padding:0}
+.kubernetes-guide.kubernetes-guide .sidebar nav li{padding-left:0;margin:0}
+.kubernetes-guide.kubernetes-guide .sidebar nav li::before{content:none}
+.kubernetes-guide.kubernetes-guide .sidebar nav a{display:block;padding:6px 10px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:1rem;line-height:1.45}
+.kubernetes-guide.kubernetes-guide .sidebar nav a:hover{background:var(--color-background-tertiary);color:var(--color-text-primary);text-decoration:none}
+.kubernetes-guide.kubernetes-guide .sidebar nav a.active{background:var(--color-background-info);color:var(--accent);font-weight:500}
+.kubernetes-guide.kubernetes-guide .sidebar nav .sub{display:none;margin:2px 0 8px 14px;border-left:1px solid var(--color-border-tertiary)}
+.kubernetes-guide.kubernetes-guide .sidebar nav li.open>.sub{display:block}
+.kubernetes-guide.kubernetes-guide .sidebar nav .sub a{padding-left:12px;color:var(--color-text-tertiary)}
+.kubernetes-guide.kubernetes-guide .sidebar nav .sub a.active{color:var(--accent)}
+.kubernetes-guide.kubernetes-guide .layout{display:block;margin-left:var(--sidebar-w)}
+.kubernetes-guide.kubernetes-guide .hero{padding:64px 56px 40px;border-bottom:1px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.kubernetes-guide.kubernetes-guide .eyebrow{font-size:1rem;color:var(--accent);font-weight:500;margin-bottom:12px}
+.kubernetes-guide.kubernetes-guide .hero h1{margin:0 0 28px;font-size:2.25rem;line-height:1.35;font-weight:500;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:0}
+.kubernetes-guide.kubernetes-guide .meta-item{background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px 18px}
+.kubernetes-guide.kubernetes-guide .meta-item dt{font-size:1rem;color:var(--color-text-tertiary);margin:0 0 4px}
+.kubernetes-guide.kubernetes-guide .meta-item dd{margin:0;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .section{padding:48px 56px 24px;border-bottom:1px solid var(--color-border-tertiary)}
+.kubernetes-guide.kubernetes-guide .section>h2{margin:0 0 24px;padding-bottom:12px;font-size:1.75rem;line-height:1.4;font-weight:500;color:var(--color-text-primary);border-bottom:2px solid var(--color-border-secondary)}
+.kubernetes-guide.kubernetes-guide .subsection{margin:36px 0 12px}
+.kubernetes-guide.kubernetes-guide .subsection>h3{margin:0 0 14px;font-size:1.35rem;line-height:1.45;font-weight:500;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .section,.kubernetes-guide.kubernetes-guide .subsection{scroll-margin-top:16px}
+.kubernetes-guide.kubernetes-guide .prose h4{margin:28px 0 10px;font-size:1.125rem;font-weight:500;color:var(--color-text-primary)}
+.kubernetes-guide.kubernetes-guide .prose p{margin:12px 0}
+.kubernetes-guide.kubernetes-guide .prose ul{list-style:none;padding-left:0;margin:12px 0}
+.kubernetes-guide.kubernetes-guide .prose ul>li{position:relative;padding-left:1.4rem;margin:6px 0}
+.kubernetes-guide.kubernetes-guide .prose ul>li::before{content:"";position:absolute;left:.3rem;top:.78em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.kubernetes-guide.kubernetes-guide .prose ol{padding-left:1.6rem;margin:12px 0}
+.kubernetes-guide.kubernetes-guide .prose ol>li{margin:6px 0;padding-left:.3rem}
+.kubernetes-guide.kubernetes-guide .prose ol>li::marker{color:var(--accent);font-weight:500}
+.kubernetes-guide.kubernetes-guide code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:1px 6px;color:#cfe0ff;overflow-wrap:anywhere}
+.kubernetes-guide.kubernetes-guide pre{margin:16px 0;padding:16px 18px;background:#050d18;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto;font-family:var(--font-mono);font-size:1rem;line-height:1.6}
+.kubernetes-guide.kubernetes-guide pre code,.kubernetes-guide.kubernetes-guide pre code.hljs{display:block;padding:0;border:0;background:transparent;color:#e6edf7;font-size:1rem;overflow-wrap:normal;white-space:pre}
+.kubernetes-guide.kubernetes-guide .table-wrap{margin:16px 0;overflow-x:auto;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-secondary)}
+.kubernetes-guide.kubernetes-guide table{border-collapse:collapse;width:100%;font-size:1rem}
+.kubernetes-guide.kubernetes-guide th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;text-align:left;white-space:nowrap}
+.kubernetes-guide.kubernetes-guide th,.kubernetes-guide.kubernetes-guide td{padding:10px 14px;border-bottom:1px solid var(--color-border-tertiary);vertical-align:top;line-height:1.6}
+.kubernetes-guide.kubernetes-guide td{min-width:7rem}
+.kubernetes-guide.kubernetes-guide tr:last-child td{border-bottom:0}
+.kubernetes-guide.kubernetes-guide td code{white-space:normal}
+.kubernetes-guide.kubernetes-guide .bq{margin:16px 0;padding:14px 20px;border-left:4px solid var(--accent);border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0;background:var(--color-background-info)}
+.kubernetes-guide.kubernetes-guide .bq.warn{border-left-color:var(--color-text-danger);background:var(--color-background-danger)}
+.kubernetes-guide.kubernetes-guide .bq p{margin:6px 0}
+.kubernetes-guide.kubernetes-guide .cite{font-size:1rem;color:var(--color-text-info);white-space:nowrap}
+.kubernetes-guide.kubernetes-guide .diagram{margin:20px 0;padding:24px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.kubernetes-guide.kubernetes-guide .mermaid{display:flex;justify-content:center;min-height:2rem;color:var(--color-text-primary);font-size:1rem}
+.kubernetes-guide.kubernetes-guide .mermaid svg{overflow:visible}
+.kubernetes-guide.kubernetes-guide .ref-list{margin:16px 0}
+.kubernetes-guide.kubernetes-guide .ref-card{display:flex;gap:16px;align-items:flex-start;padding:14px 18px;margin:10px 0;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);scroll-margin-top:24px}
+.kubernetes-guide.kubernetes-guide .ref-card:target{border-color:var(--accent);background:var(--color-background-info)}
+.kubernetes-guide.kubernetes-guide .ref-badge{flex:none;min-width:3.5rem;text-align:center;padding:2px 10px;border-radius:999px;background:var(--color-background-info);color:var(--accent);border:1px solid var(--color-border-primary);font-weight:500}
+.kubernetes-guide.kubernetes-guide .ref-main{flex:1;min-width:0}
+.kubernetes-guide.kubernetes-guide .ref-title{color:var(--color-text-primary);margin-bottom:4px}
+.kubernetes-guide.kubernetes-guide .ref-urls a{display:flex;gap:8px;align-items:baseline;overflow-wrap:anywhere;word-break:break-all;margin:2px 0}
+.kubernetes-guide.kubernetes-guide .ref-urls .ti{flex:none}
+.kubernetes-guide.kubernetes-guide .chip{display:inline-block;padding:1px 10px;border-radius:999px;border:1px solid var(--color-border-primary);background:var(--color-background-tertiary);color:var(--color-text-secondary);font-size:1rem;line-height:1.6;font-weight:500;white-space:nowrap}
+.kubernetes-guide.kubernetes-guide .chip.kind.primary{background:var(--color-background-success);border-color:#2c7a6b;color:var(--color-text-success)}
+.kubernetes-guide.kubernetes-guide .chip.kind.secondary{background:var(--color-background-warning);border-color:#7d6528;color:var(--color-text-warning)}
+.kubernetes-guide.kubernetes-guide .chip.kind.mixed{background:var(--color-background-info);color:var(--color-text-info)}
+.kubernetes-guide.kubernetes-guide .chip.step{background:var(--color-background-info);color:var(--color-text-info)}
+.kubernetes-guide.kubernetes-guide .check-progress{margin:16px 0 8px;color:var(--color-text-primary);font-weight:500}
+.kubernetes-guide.kubernetes-guide .checklist{counter-reset:chk;margin:8px 0 16px}
+.kubernetes-guide.kubernetes-guide .check-card{counter-increment:chk;margin:10px 0;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.kubernetes-guide.kubernetes-guide .check-card label{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;cursor:pointer}
+.kubernetes-guide.kubernetes-guide .check-card input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.kubernetes-guide.kubernetes-guide .check-card .box{flex:none;position:relative;width:26px;height:26px;margin-top:2px;border:2px solid var(--color-border-primary);border-radius:7px;background:var(--color-background-primary)}
+.kubernetes-guide.kubernetes-guide .check-card .box::after{content:"";position:absolute;left:7px;top:2px;width:7px;height:13px;border:solid var(--color-background-primary);border-width:0 3px 3px 0;transform:rotate(45deg);opacity:0}
+.kubernetes-guide.kubernetes-guide .check-card input:checked+.box{background:var(--color-text-success);border-color:var(--color-text-success)}
+.kubernetes-guide.kubernetes-guide .check-card input:checked+.box::after{opacity:1}
+.kubernetes-guide.kubernetes-guide .check-card input:focus-visible+.box{outline:2px solid var(--accent);outline-offset:2px}
+.kubernetes-guide.kubernetes-guide .check-num{flex:none;min-width:2.25rem;height:2.25rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-background-info);color:var(--accent);font-weight:500}
+.kubernetes-guide.kubernetes-guide .check-num::before{content:counter(chk,decimal-leading-zero)}
+.kubernetes-guide.kubernetes-guide .check-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.kubernetes-guide.kubernetes-guide .check-top{display:flex;flex-wrap:wrap;gap:8px}
+.kubernetes-guide.kubernetes-guide .check-item{color:var(--color-text-primary);font-weight:500}
+.kubernetes-guide.kubernetes-guide .check-how{color:var(--color-text-secondary)}
+.kubernetes-guide.kubernetes-guide .check-how .lbl{display:inline-block;margin-right:10px;color:var(--color-text-tertiary)}
+.kubernetes-guide.kubernetes-guide .check-card:has(input:checked){border-color:#2c7a6b;background:var(--color-background-success)}
+.kubernetes-guide.kubernetes-guide .check-card:has(input:checked) .check-item{text-decoration:line-through;color:var(--color-text-tertiary)}
+.kubernetes-guide.kubernetes-guide .footer{padding:32px 56px 96px;color:var(--color-text-tertiary)}
+.kubernetes-guide.kubernetes-guide .nav-toggle{display:none;position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;border:1px solid var(--color-border-primary);background:var(--color-background-info);color:var(--accent);align-items:center;justify-content:center;font-size:1.75rem;cursor:pointer;z-index:90}
+.kubernetes-guide.kubernetes-guide .backdrop{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(3,8,16,.72);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.kubernetes-guide.kubernetes-guide .backdrop.show{opacity:1;pointer-events:auto}
+@media (max-width:1024px){
+.kubernetes-guide.kubernetes-guide .sidebar{width:min(86vw,320px);transform:translateX(-100%);transition:transform .25s ease}
+.kubernetes-guide.kubernetes-guide .sidebar.open{transform:translateX(0)}
+.kubernetes-guide.kubernetes-guide .layout{margin-left:0}
+.kubernetes-guide.kubernetes-guide .nav-toggle{display:flex}
+.kubernetes-guide.kubernetes-guide .hero{padding:40px 20px 28px}
+.kubernetes-guide.kubernetes-guide .hero h1{font-size:1.75rem}
+.kubernetes-guide.kubernetes-guide .section{padding:32px 20px 16px}
+.kubernetes-guide.kubernetes-guide .section>h2{font-size:1.5rem}
+.kubernetes-guide.kubernetes-guide .subsection>h3{font-size:1.25rem}
+.kubernetes-guide.kubernetes-guide .footer{padding:24px 20px 96px}
+.kubernetes-guide.kubernetes-guide .ref-card{flex-wrap:wrap}
+.kubernetes-guide.kubernetes-guide .check-card label{padding:12px 14px;gap:10px}
+}
+@media (max-width:560px){
+.kubernetes-guide.kubernetes-guide .check-num{display:none}
+}
+
+
+/* Application integration: scoped overrides keep the shared header and source layout. */
+.docs-main:has(.kubernetes-guide){padding:0}
+.kubernetes-guide.kubernetes-guide{display:block;width:100%;min-width:0;overflow-x:clip}
+.kubernetes-guide.kubernetes-guide .prose{max-width:none;margin:0;color:var(--color-text-secondary)}
+.kubernetes-guide.kubernetes-guide .layout{min-width:0}
+.kubernetes-guide.kubernetes-guide .sidebar{top:var(--docs-header-height,4rem);z-index:50;visibility:visible}
+.kubernetes-guide.kubernetes-guide .backdrop{top:var(--docs-header-height,4rem);z-index:40}
+.kubernetes-guide.kubernetes-guide .nav-toggle{z-index:55}
+.kubernetes-guide.kubernetes-guide .section,.kubernetes-guide.kubernetes-guide .subsection,.kubernetes-guide.kubernetes-guide [id^="ref-"],.kubernetes-guide.kubernetes-guide #top{scroll-margin-top:calc(var(--docs-header-height,4rem) + 16px)}
+.kubernetes-guide.kubernetes-guide .prose ol{list-style-type:decimal}
+.kubernetes-guide.kubernetes-guide li{margin:0}
+.kubernetes-guide.kubernetes-guide h1{letter-spacing:normal}
+.kubernetes-guide.kubernetes-guide table{margin:0;border:0}
+.kubernetes-guide.kubernetes-guide th,.kubernetes-guide.kubernetes-guide td{border-left:0;border-right:0;border-top:0}
+.kubernetes-guide.kubernetes-guide tr:hover td{background:transparent}
+.kubernetes-guide.kubernetes-guide pre code{font-size:1rem}
+.kubernetes-guide.kubernetes-guide i.ti{display:inline-flex;align-items:center;vertical-align:middle;font-style:normal}
+.kubernetes-guide.kubernetes-guide i.ti svg{width:1em;height:1em}
+.kubernetes-guide.kubernetes-guide .mermaid{display:block;overflow-x:auto;max-width:100%;justify-content:normal}
+.kubernetes-guide.kubernetes-guide .mermaid svg{display:block;margin-left:auto;margin-right:auto;max-width:none}
+.kubernetes-guide.kubernetes-guide .diagram-description{margin-top:12px}
+.kubernetes-guide.kubernetes-guide .diagram-description summary{cursor:pointer}
+.kubernetes-guide.kubernetes-guide .diagram-description pre{white-space:pre;overflow-x:auto}
+@media (max-width:1024px){.kubernetes-guide.kubernetes-guide .sidebar{visibility:hidden}.kubernetes-guide.kubernetes-guide .sidebar.open{visibility:visible}}
+@media (prefers-reduced-motion:reduce){.kubernetes-guide.kubernetes-guide .sidebar,.kubernetes-guide.kubernetes-guide .backdrop{transition:none}}
+
+.kubernetes-guide.kubernetes-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.kubernetes-guide.kubernetes-guide code.hljs {
+  padding: 3px 5px
+}
+/*!
+  Theme: GitHub Dark
+  Description: Dark theme as seen on github.com
+  Author: github.com
+  Maintainer: @Hirse
+  Updated: 2021-05-15
+
+  Outdated base version: https://github.com/primer/github-syntax-dark
+  Current colors taken from GitHub's CSS
+*/
+.kubernetes-guide.kubernetes-guide .hljs {
+  color: #c9d1d9;
+  background: #0d1117
+}
+.kubernetes-guide.kubernetes-guide .hljs-doctag,.kubernetes-guide.kubernetes-guide .hljs-keyword,.kubernetes-guide.kubernetes-guide .hljs-meta .hljs-keyword,.kubernetes-guide.kubernetes-guide .hljs-template-tag,.kubernetes-guide.kubernetes-guide .hljs-template-variable,.kubernetes-guide.kubernetes-guide .hljs-type,.kubernetes-guide.kubernetes-guide .hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #ff7b72
+}
+.kubernetes-guide.kubernetes-guide .hljs-title,.kubernetes-guide.kubernetes-guide .hljs-title.class_,.kubernetes-guide.kubernetes-guide .hljs-title.class_.inherited__,.kubernetes-guide.kubernetes-guide .hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #d2a8ff
+}
+.kubernetes-guide.kubernetes-guide .hljs-attr,.kubernetes-guide.kubernetes-guide .hljs-attribute,.kubernetes-guide.kubernetes-guide .hljs-literal,.kubernetes-guide.kubernetes-guide .hljs-meta,.kubernetes-guide.kubernetes-guide .hljs-number,.kubernetes-guide.kubernetes-guide .hljs-operator,.kubernetes-guide.kubernetes-guide .hljs-variable,.kubernetes-guide.kubernetes-guide .hljs-selector-attr,.kubernetes-guide.kubernetes-guide .hljs-selector-class,.kubernetes-guide.kubernetes-guide .hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #79c0ff
+}
+.kubernetes-guide.kubernetes-guide .hljs-regexp,.kubernetes-guide.kubernetes-guide .hljs-string,.kubernetes-guide.kubernetes-guide .hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #a5d6ff
+}
+.kubernetes-guide.kubernetes-guide .hljs-built_in,.kubernetes-guide.kubernetes-guide .hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #ffa657
+}
+.kubernetes-guide.kubernetes-guide .hljs-comment,.kubernetes-guide.kubernetes-guide .hljs-code,.kubernetes-guide.kubernetes-guide .hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #8b949e
+}
+.kubernetes-guide.kubernetes-guide .hljs-name,.kubernetes-guide.kubernetes-guide .hljs-quote,.kubernetes-guide.kubernetes-guide .hljs-selector-tag,.kubernetes-guide.kubernetes-guide .hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #7ee787
+}
+.kubernetes-guide.kubernetes-guide .hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #c9d1d9
+}
+.kubernetes-guide.kubernetes-guide .hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #1f6feb;
+  font-weight: bold
+}
+.kubernetes-guide.kubernetes-guide .hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #f2cc60
+}
+.kubernetes-guide.kubernetes-guide .hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #c9d1d9;
+  font-style: italic
+}
+.kubernetes-guide.kubernetes-guide .hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #c9d1d9;
+  font-weight: bold
+}
+.kubernetes-guide.kubernetes-guide .hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #aff5b4;
+  background-color: #033a16
+}
+.kubernetes-guide.kubernetes-guide .hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #ffdcd7;
+  background-color: #67060c
+}
+.kubernetes-guide.kubernetes-guide .hljs-char.escape_,.kubernetes-guide.kubernetes-guide .hljs-link,.kubernetes-guide.kubernetes-guide .hljs-params,.kubernetes-guide.kubernetes-guide .hljs-property,.kubernetes-guide.kubernetes-guide .hljs-punctuation,.kubernetes-guide.kubernetes-guide .hljs-tag {
+  /* purposely ignored */
+  
+}
+.kubernetes-guide.kubernetes-guide .prose ul{list-style-type:none}
