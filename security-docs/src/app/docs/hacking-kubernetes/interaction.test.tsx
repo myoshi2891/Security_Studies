@@ -20,7 +20,7 @@ test('hash navigation selects the subsection and its parent; observers and liste
  try{
  const {container,unmount}=render(createElement('div',{className:'kubernetes-guide'},createElement(GuideSidebar,{},createElement('nav',{},createElement('ul',{},createElement('li',{className:'top'},createElement('a',{href:'#s0'},'章'),createElement('ul',{className:'sub'},createElement('li',{},createElement('a',{href:'#s0-1'},'小節'))))))),createElement('section',{id:'s0'}),createElement('section',{id:'s0-1'})));
  expect(targets.map(el=>el.id)).toEqual(['s0','s0-1']);
- act(()=>{window.history.replaceState(null,'','/#s0-1');window.dispatchEvent(new Event('hashchange'));});
+ act(()=>{window.happyDOM.setURL('http://localhost/docs/hacking-kubernetes#s0-1');window.dispatchEvent(new Event('hashchange'));});
  expect(container.querySelector('[href="#s0-1"]')).toHaveAttribute('aria-current','location');
  act(()=>callback!([{target:targets[0],isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));expect(container.querySelector('[href="#s0"]')).toHaveAttribute('aria-current','location');unmount();expect(disconnect).toBe(1);
  }finally{globalThis.IntersectionObserver=original;}
@@ -47,9 +47,9 @@ test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions
  await act(async()=>finish!({svg:'<svg viewBox="0 0 10 10"></svg>'}));expect(pending.container.querySelector('svg')).toBeNull();
  }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
 });
-test('all thirteen diagram definitions parse in the real Mermaid engine and retain per-diagram settings and dark theme',async()=>{
+test('all twelve diagram definitions parse in the real Mermaid engine and retain per-diagram settings and dark theme',async()=>{
  const {diagrams,diagramOverrides}=await import(new URL('./diagrams.ts',import.meta.url).href);
- const {definitions,sourceHtml}=await import('./fidelity-helpers');expect(Object.entries(diagrams)).toEqual([...definitions]);expect(definitions.size).toBe(13);
+ const {definitions,sourceHtml}=await import('./fidelity-helpers');expect(Object.entries(diagrams)).toEqual([...definitions]);expect(definitions.size).toBe(12);
  const {default:mermaid}=await import('mermaid');mermaid.initialize({startOnLoad:false,securityLevel:'strict'});for(const [id,source] of definitions)expect(await mermaid.parse(source),id).toBeTruthy();
  expect(diagramOverrides).toEqual(JSON.parse(sourceHtml.match(/window.DIAGRAM_CFG = (.*);/)![1]));
  const component=(await import('node:fs')).readFileSync(new URL('./MermaidFigure.tsx',import.meta.url),'utf8');
