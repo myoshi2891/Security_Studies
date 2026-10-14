@@ -7,6 +7,8 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   const panel = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
+  const openRef = useRef(open);
+  useEffect(() => { openRef.current = open; }, [open]);
   const close = useCallback(() => { setOpen(false); toggle.current?.focus(); }, []);
   const select = useCallback((id: string) => {
     const nav = panel.current;
@@ -25,7 +27,9 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
-      if (link) { select(link.hash.slice(1)); close(); }
+      if (!link) return;
+      select(link.hash.slice(1));
+      if (openRef.current) close();
     };
     const nav = panel.current; nav?.addEventListener('click', click);
     const visible = new Set<Element>();
