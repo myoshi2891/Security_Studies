@@ -30,7 +30,7 @@
 
         <section class="container" aria-label="CCST Cybersecurity historical migration test status"><p>CCST（過去の検証記録・2026-10-14）: 図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功 · 395 pass / 0 fail、58ファイル、25,099 expect · ビルド未実行・目視はユーザー担当</p></section>
 <section class="container" aria-label="Hacking Kubernetes migration test status"><p>Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
-<section class="container" aria-label="WAHH migration test status"><p>WAHH: Step 9〜11 Green・全481件成功・lint/型検査成功。481 pass / 0 fail、76ファイル、31,511 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
+<section class="container" aria-label="WAHH migration test status"><p>WAHH: Step 12・補足コラム・13と第5節全体Red・4件失敗。481 pass / 4 fail、77ファイル、31,520 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
         <!-- SUMMARY -->
         <section class="summary-section">
             <div class="container">
@@ -63,8 +63,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">481</div>
-                        <div class="summary-sub">WAHH: Step 9〜11 Green・全481件成功・lint/型検査成功。481 pass / 0 fail、76ファイル、31,511 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</div>
+                        <div class="summary-value">485</div>
+                        <div class="summary-sub">WAHH: Step 12・補足コラム・13と第5節全体Red・4件失敗。481 pass / 4 fail、77ファイル、31,520 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -338,7 +338,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">11 layout + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 56 Kubernetes tests + 29 WAHH tests · 23/25 logic files</span>
+                                            <span class="cell-count">11 layout + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 56 Kubernetes tests + 33 WAHH tests · 23/25 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 90%"></div>
                                             </div>
@@ -359,7 +359,8 @@
                                                 
                                                 
                                                 
-                                                <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（29テスト）</li>
+                                                
+                                                <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（33テスト）</li>
                                                 <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（56移行・表示・操作・コントラスト・アーカイブテストで検証）</li>
                                                 <li>✗ src/app/page.tsx</li>
                                                 <li>✗ src/app/layout.tsx</li>
@@ -1198,7 +1199,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-15</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 76 files · 481 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 77 files · 485 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
