@@ -142,8 +142,8 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 ## WAHH 移行（2026-10-15）
 
-- ページ: `/docs/web-application-hackers-handbook`（`security-docs/src/app/docs/web-application-hackers-handbook/page.mdx`）。統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功。
-- 現在の全体テスト実測: 507 pass / 14 fail、83ファイル、45,274 expect。`npm test`（内部Bun）で検証。
+- ページ: `/docs/web-application-hackers-handbook`（`security-docs/src/app/docs/web-application-hackers-handbook/page.mdx`）。統合Green・ホーム/グローバルナビ17件・全521件成功・lint/型検査成功。
+- 現在の全体テスト実測: 521 pass / 0 fail、83ファイル、58,939 expect。`npm test`（内部Bun）で検証。
 - 原本: `Web-application-hackers-handbook-guide.html` / `Web-application-hackers-handbook-guide.md` を保持。13主要節・14ステップ節・53表・7コード・16図・30チェック項目。
 - 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
 
