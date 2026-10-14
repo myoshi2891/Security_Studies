@@ -33,11 +33,12 @@ test('all 53 tables retain source header/cell spacing, backgrounds and hover beh
  });
 });
 test('the source brand remains free of landing-page shadow and letter spacing',async()=>{
- await compare(1440,'light',(actual,original)=>{for(const selector of ['.brand','.brand-mark']){const a=actual.getComputedStyle(actual.document.querySelector(selector)!),b=original.getComputedStyle(original.document.querySelector(selector)!);for(const key of ['boxShadow','letterSpacing','fontWeight'] as const)expect(a[key]||'none').toBe(b[key]||'none');}});
+ await compare(1440,'light',(actual,original)=>{for(const selector of ['.brand','.brand-mark']){const a=actual.getComputedStyle(actual.document.querySelector(selector)!),b=original.getComputedStyle(original.document.querySelector(selector)!);for(const key of ['boxShadow','letterSpacing','fontWeight'] as const)expect(['','normal','0px'].includes(a[key])?'none':a[key]).toBe(['','normal','0px'].includes(b[key])?'none':b[key]);}});
 });
 test('anchor offsets account for the fixed header once and retain original 24px gap',async()=>{
  const w=new Window();try{w.document.head.innerHTML=`<style>${styles}</style>`;w.document.body.innerHTML='<div class="wahh-guide"><section class="section" id="sec-0"><h3 id="h3-1">見出し</h3></section></div>';
- expect(w.getComputedStyle(w.document.documentElement).scrollPaddingTop).toBe('88px');for(const el of w.document.querySelectorAll('[id]'))expect(w.getComputedStyle(el).scrollMarginTop||'0px').toBe('0px');
+ // Happy DOM retains this calc() expression instead of resolving rem to px.
+ expect(['88px','calc(4rem + 24px)']).toContain(w.getComputedStyle(w.document.documentElement).scrollPaddingTop);for(const el of w.document.querySelectorAll('[id]'))expect(w.getComputedStyle(el).scrollMarginTop||'0px').toBe('0px');
  }finally{await w.happyDOM.close();}
 });
 
