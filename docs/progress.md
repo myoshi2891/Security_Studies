@@ -54,7 +54,7 @@
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
-| `src/app/docs/layout.test.tsx` | 11 | 10 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 11 | 11 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
@@ -167,7 +167,7 @@ form-action 'self'
 | `security-docs/CLAUDE.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
 | `security-docs/README.md` | 2026-10-14 | CCST移行・原本アーカイブ・全395件/58ファイル/25,099 expect・図中央寄せと目視待ちを同期 |
 | `docs/test-coverage-dashboard.html` | 2026-10-15 | Kubernetes原本アーカイブ・全452件/69ファイル/30,591 expect・専用56件を同期 |
-| `docs/progress.md` (本ファイル) | 2026-10-15 | Kubernetesの段階別Red/Green/Refactor、全447件成功と目視待ちを同期 |
+| `docs/progress.md` (本ファイル) | 2026-10-15 | Kubernetes移行と原本アーカイブ、全452件成功・ファイル別実測件数・目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
