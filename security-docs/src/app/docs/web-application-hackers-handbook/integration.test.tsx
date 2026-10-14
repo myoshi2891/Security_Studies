@@ -11,7 +11,7 @@ const bodyElements=(el:Element,selector:string)=>[...el.querySelectorAll(selecto
 
 test('keeps both original files byte-for-byte unchanged and every source chapter, reference and footer in order',async()=>{
  expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
- expect(createHash('sha256').update(readFileSync(new URL('../../../../../Web-application-hackers-handbook-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
+ expect(createHash('sha256').update(readFileSync(new URL('../../../../../archive/md/Web-application-hackers-handbook-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
  const page=(await renderedPage()).querySelector('.main')!;
  const children=(el:Element)=>[...el.childNodes].map(canonical).filter(value=>value!==null);
  expect(children(page)).toEqual(children(main));

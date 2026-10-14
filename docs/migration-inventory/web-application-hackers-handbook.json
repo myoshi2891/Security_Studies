@@ -1,7 +1,7 @@
 {
-  "source": "Web-application-hackers-handbook-guide.html",
+  "source": "archive/html/Web-application-hackers-handbook-guide.html",
   "sha256": "7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16",
-  "markdownSource": "Web-application-hackers-handbook-guide.md",
+  "markdownSource": "archive/md/Web-application-hackers-handbook-guide.md",
   "markdownSha256": "9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6",
   "route": "/docs/web-application-hackers-handbook",
   "sections": [
