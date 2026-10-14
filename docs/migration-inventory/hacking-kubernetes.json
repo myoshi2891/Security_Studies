@@ -1,7 +1,7 @@
 {
-  "source": "Hacking-kubernetes-guide.html",
+  "source": "archive/html/Hacking-kubernetes-guide.html",
   "sha256": "29d514f6228d43b9cde506f066c8109a9e1fc004efce7dbc5dfc0bc9410a8e6c",
-  "markdownSource": "Hacking-kubernetes-guide.md",
+  "markdownSource": "archive/md/Hacking-kubernetes-guide.md",
   "markdownSha256": "25c0808439fb346fdf3d08d594df1c93e2881e98998ee8aaa72cd7efe9f4284f",
   "route": "/docs/hacking-kubernetes",
   "sections": [

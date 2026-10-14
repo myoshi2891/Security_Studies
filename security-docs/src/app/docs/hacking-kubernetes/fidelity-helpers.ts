@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../Hacking-kubernetes-guide.html'), 'utf8');
+export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../archive/html/Hacking-kubernetes-guide.html'), 'utf8');
 export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
 export const definitions = new Map([...sourceHtml.matchAll(/window\.DIAGRAMS\["(d\d+)"\]\s*=\s*`([\s\S]*?)`;/g)].map(m => [m[1], m[2]]));
 export const sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
