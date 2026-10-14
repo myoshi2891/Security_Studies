@@ -5,24 +5,25 @@ import {readFileSync} from 'node:fs';
 import {DocsHeaderNav} from './DocsHeaderNav';
 import {docsConfig} from '@/config/docs';
 afterEach(cleanup);
+const registeredCount=docsConfig.sidebarNav.flatMap(section=>section.items).length;
 const open=()=>{const button=screen.getByRole('button',{name:'ガイド一覧'});fireEvent.click(button);return button;};
-test('opens a clearly labelled guide menu, focuses its filter and shows all seventeen registered links',()=>{
- render(<DocsHeaderNav/>);const button=open();expect(button).toHaveTextContent('ガイド一覧');const input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});expect(document.activeElement).toBe(input);expect(screen.getByRole('status')).toHaveTextContent('17件');
- expect(screen.getAllByRole('link')).toHaveLength(17);expect(screen.getByRole('link',{name:"Web Application Hacker's Handbook"})).toHaveAttribute('href','/docs/web-application-hackers-handbook');
+test('opens a clearly labelled guide menu, focuses its filter and shows all registered links',()=>{
+ render(<DocsHeaderNav/>);const button=open();expect(button).toHaveTextContent('ガイド一覧');const input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});expect(document.activeElement).toBe(input);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount}件`);
+ expect(screen.getAllByRole('link')).toHaveLength(registeredCount);expect(screen.getByRole('link',{name:"Web Application Hacker's Handbook"})).toHaveAttribute('href','/docs/web-application-hackers-handbook');
 });
 test('filters names without case or full-width differences and clears the query when reopening',()=>{
  render(<DocsHeaderNav/>);const button=open(),input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});fireEvent.change(input,{target:{value:'ＨＡＣＫＥＲ'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('status')).toHaveTextContent('1件');
- fireEvent.keyDown(document,{key:'Escape'});expect(button).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(button);fireEvent.click(button);expect(screen.getByRole('searchbox')).toHaveValue('');expect(screen.getAllByRole('link')).toHaveLength(17);
+ fireEvent.keyDown(document,{key:'Escape'});expect(button).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(button);fireEvent.click(button);expect(screen.getByRole('searchbox')).toHaveValue('');expect(screen.getAllByRole('link')).toHaveLength(registeredCount);
 });
 test('filters categories and hides empty categories without changing registered routes',()=>{
- render(<DocsHeaderNav/>);open();fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Security Guides'}});expect(screen.getAllByRole('link')).toHaveLength(6);expect(screen.queryByText('Advanced Topics')).toBeNull();expect(screen.getByText('Security Guides')).toBeVisible();
+ render(<DocsHeaderNav/>);open();fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Security Guides'}});expect(screen.getAllByRole('link')).toHaveLength(docsConfig.sidebarNav.find(section=>section.title==='Security Guides')!.items.length);expect(screen.queryByText('Advanced Topics')).toBeNull();expect(screen.getByText('Security Guides')).toBeVisible();
 });
 test('shows a useful empty state and restores the entire menu after clearing',()=>{
- render(<DocsHeaderNav/>);open();const input=screen.getByRole('searchbox');fireEvent.change(input,{target:{value:'no-such-guide'}});expect(screen.queryAllByRole('link')).toHaveLength(0);expect(screen.getByText('該当するガイドがありません')).toBeVisible();fireEvent.click(screen.getByRole('button',{name:'絞り込みを解除'}));expect(screen.getAllByRole('link')).toHaveLength(17);expect(document.activeElement).toBe(input);
+ render(<DocsHeaderNav/>);open();const input=screen.getByRole('searchbox');fireEvent.change(input,{target:{value:'no-such-guide'}});expect(screen.queryAllByRole('link')).toHaveLength(0);expect(screen.getByText('該当するガイドがありません')).toBeVisible();fireEvent.click(screen.getByRole('button',{name:'絞り込みを解除'}));expect(screen.getAllByRole('link')).toHaveLength(registeredCount);expect(document.activeElement).toBe(input);
 });
 test('new categories and eighty future pages are reflected from configuration without component edits',()=>{
  docsConfig.sidebarNav.push({title:'Future Guides',items:Array.from({length:80},(_,i)=>({title:`Future Guide ${i}`,href:`/docs/future-${i}`}))});
- try{render(<DocsHeaderNav/>);open();expect(screen.getAllByRole('link')).toHaveLength(97);expect(screen.getByRole('status')).toHaveTextContent('97件');fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Future Guide 79'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('link',{name:'Future Guide 79'})).toHaveAttribute('href','/docs/future-79');}
+ try{render(<DocsHeaderNav/>);open();expect(screen.getAllByRole('link')).toHaveLength(registeredCount+80);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount+80}件`);fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Future Guide 79'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('link',{name:'Future Guide 79'})).toHaveAttribute('href','/docs/future-79');}
  finally{docsConfig.sidebarNav.pop();}
 });
 test('selection and outside clicks close the shared menu and unmount removes its handlers',()=>{

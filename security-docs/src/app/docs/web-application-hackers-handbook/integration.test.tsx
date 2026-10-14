@@ -33,7 +33,7 @@ test('indexes all 127 original headings including inline-code headings with the 
 });
 test('serves all headings through the static search index and preserves the existing documents',async()=>{
  const index=JSON.parse(readFileSync(new URL('../../../../public/search-index.json',import.meta.url),'utf8'));
- expect(index).toEqual(await getSearchIndex());expect(index).toHaveLength(17);
+ expect(index).toEqual(await getSearchIndex());expect(index).toHaveLength(docsConfig.sidebarNav.flatMap(group=>group.items).length);
  const page=index.filter((item:{href:string})=>item.href==='/docs/web-application-hackers-handbook');expect(page).toHaveLength(1);expect(page[0].headings).toHaveLength(127);
 });
 test('preserves the original TOC labels, inline code, order, source anchors and every reference target',async()=>{
@@ -75,4 +75,5 @@ test('detects lost round dots and checklist counters',()=>{
  const broken=css.clone();broken.walkRules(`${scope} .prose ol`,r=>{r.walkDecls('list-style-type',d=>{d.remove();});});expect(declarations(css,`${scope} .prose ol`)).toContain('list-style-type:decimal');expect(declarations(broken,`${scope} .prose ol`)).not.toContain('list-style-type:decimal');
 });
 
-test('retains all sixteen prior navigation entries in their original order',()=>{expect(docsConfig.sidebarNav.flatMap(group=>group.items).filter(item=>item.href!=="/docs/web-application-hackers-handbook").map(item=>item.href)).toEqual(["/docs/approach", "/docs/architecture", "/docs/ai-coding-safety", "/docs/llm-ai-security", "/docs/secdev-guide", "/docs/secure-by-design", "/docs/hacking-kubernetes", "/docs/supply-chain", "/docs/pqc", "/docs/owasp", "/docs/threat-landscape", "/docs/mitre-atlas", "/docs/ccie-security", "/docs/ccst-cybersecurity", "/docs/certifications", "/docs/archive/approach"]);expect(docsConfig.sidebarNav.flatMap(group=>group.items)).toHaveLength(17);});
+const priorRoutes=["/docs/approach","/docs/architecture","/docs/ai-coding-safety","/docs/llm-ai-security","/docs/secdev-guide","/docs/secure-by-design","/docs/hacking-kubernetes","/docs/supply-chain","/docs/pqc","/docs/owasp","/docs/threat-landscape","/docs/mitre-atlas","/docs/ccie-security","/docs/ccst-cybersecurity","/docs/certifications","/docs/archive/approach"];
+test('retains prior navigation order while allowing future pages',()=>{expect(docsConfig.sidebarNav.flatMap(group=>group.items).filter(item=>priorRoutes.includes(item.href)).map(item=>item.href)).toEqual(["/docs/approach", "/docs/architecture", "/docs/ai-coding-safety", "/docs/llm-ai-security", "/docs/secdev-guide", "/docs/secure-by-design", "/docs/hacking-kubernetes", "/docs/supply-chain", "/docs/pqc", "/docs/owasp", "/docs/threat-landscape", "/docs/mitre-atlas", "/docs/ccie-security", "/docs/ccst-cybersecurity", "/docs/certifications", "/docs/archive/approach"]);expect(new Set(docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href)).size).toBe(docsConfig.sidebarNav.flatMap(group=>group.items).length);});

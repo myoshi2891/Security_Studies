@@ -55,7 +55,7 @@ describe('DocsLayout', () => {
             expect(container.querySelector('main')?.parentElement?.classList.contains('container')).toBe(false);
             expect(container.querySelector('article')).toHaveClass('docs-article');
         });
-        test('sidebarNav に定義された全エントリ (17 件) がリンクとして描画される', async () => {
+        test('sidebarNav に定義された全登録エントリ がリンクとして描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
@@ -65,7 +65,7 @@ describe('DocsLayout', () => {
                 expect(link).toHaveAttribute('href', item.href);
             }
             // docsConfig 変更時に追従漏れを検知するための件数アサーション
-            expect(allItems.length).toBe(17);
+            expect(screen.getAllByRole('link').filter(link=>link.getAttribute('href')?.startsWith('/docs/'))).toHaveLength(allItems.length);
         });
 
         test('WAHH ページの追加リンクを現在位置として表示する', async () => {
@@ -82,14 +82,14 @@ describe('DocsLayout', () => {
             expect(link).toHaveAttribute('aria-current', 'page');
         });
 
-        test('セクション見出し (6 件) が描画される', async () => {
+        test('全カテゴリのセクション見出し が描画される', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
 
             for (const section of docsConfig.sidebarNav) {
                 expect(screen.getByText(section.title)).toBeInTheDocument();
             }
-            expect(docsConfig.sidebarNav.length).toBe(6);
+            expect(screen.getByRole('navigation').querySelectorAll('.docs-nav-category')).toHaveLength(docsConfig.sidebarNav.length);
         });
 
         test('グローバルナビが名前付き nav 要素として描画される', async () => {
