@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（Hacking Kubernetes: 最終Green・全447件成功・lint/型検査成功・目視確認待ち）
+> **最終更新**: 2026-10-15（Hacking Kubernetes: 原本アーカイブRed・5件の期待どおりの失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **447件** | `npm test`: 447 pass / 0 fail、68ファイル、30,576 expect（最終Green・全447件成功・lint/型検査成功・目視確認待ち） |
-| テストファイル数 | **68ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **452件** | `npm test`: 447 pass / 5 fail、69ファイル、30,581 expect（原本アーカイブRed・5件の期待どおりの失敗） |
+| テストファイル数 | **69ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **41/41 (100%)** | 既存36 + Kubernetes部品5。テストファイル68件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -23,16 +23,17 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
-| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-15 更新・最終Green・全447件成功・lint/型検査成功・目視確認待ち |
+| `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/integration.test.tsx` | 10 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/sections-16-17.test.tsx` | 2 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/sections-12-15.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 9 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
+| `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-15 更新・原本アーカイブRed・5件の期待どおりの失敗 |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/SectionCard.test.tsx` | 3 | 3 pass / 0 fail |
@@ -538,3 +539,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - テスト用DOMが:has()を子要素削除後もキャッシュするため、要素の削除と独立文書のセレクタ・計算済みスタイルでスクロールのページ限定適用を検証。ブラウザーでの見え方は未確認。
 - HTML/Markdown原本はルートに保持し、ハッシュ不変を検証。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
 - 次のアクション: ユーザーが `docs/migration-inventory/hacking-kubernetes-review.md` に沿って目視確認。Next.jsビルドは禁止、push・公開は未実施。
+- 2026-10-15: Hacking Kubernetes: 原本アーカイブRed・5件の期待どおりの失敗。447 pass / 5 fail、69ファイル、30,581 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。

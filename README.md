@@ -237,12 +237,9 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 
 ## Hacking Kubernetes 移行（2026-10-15）
 
-- ページ: `/docs/hacking-kubernetes`（`security-docs/src/app/docs/hacking-kubernetes/page.mdx`）。最終Green・全447件成功・lint/型検査成功・目視確認待ち。
-- 現在の全体テスト実測: 447 pass / 0 fail、68ファイル、30,576 expect。`npm test`（内部Bun）で検証。
+- ページ: `/docs/hacking-kubernetes`（`security-docs/src/app/docs/hacking-kubernetes/page.mdx`）。原本アーカイブRed・5件の期待どおりの失敗。
+- 現在の全体テスト実測: 447 pass / 5 fail、69ファイル、30,581 expect。`npm test`（内部Bun）で検証。
 - 原本: `Hacking-kubernetes-guide.html` / `Hacking-kubernetes-guide.md` を保持。18章・82小節・52表・24コード・12図・24チェック項目。
 - 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
-
-- 専用10テストファイル・51件 + 既存layoutテスト1件追加。補足/注意本文を9.04〜9.76:1へ改善（共通blockquoteの灰色・斜体をページ内で解除）。
-- 目視確認表: `docs/migration-inventory/hacking-kubernetes-review.md`。実装HEAD: `396ea93`。
 
 <!-- /hacking-kubernetes-status -->
