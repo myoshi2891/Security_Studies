@@ -22,7 +22,8 @@ export function canonical(node: Node): unknown {
   if (el.tagName === 'SVG' || el.tagName.toLowerCase() === 'svg' || el.tagName === 'NOSCRIPT') return null;
   if (el.matches('.mermaid-target')) return ['diagram', el.getAttribute('data-diagram'), ];
   if (el.matches('pre code')) return ['code', el.getAttribute('class'), el.textContent];
-  return [el.tagName, ...['id', 'class', 'href', 'target', 'rel', 'type', 'start', 'value', 'data-target', 'data-parent', 'colspan', 'rowspan', 'for'].map(attr => el.getAttribute(attr)), [...el.childNodes].map(canonical).filter(value => value !== null)];
+  const inlineStyle = el.getAttribute('style')?.split(';').map(part => part.trim().replace(/\s+/g,'')).filter(Boolean).sort() ?? [];
+  return [el.tagName, inlineStyle, ...['id', 'class', 'href', 'target', 'rel', 'type', 'start', 'value', 'data-target', 'data-parent', 'colspan', 'rowspan', 'for'].map(attr => el.getAttribute(attr)), [...el.childNodes].map(canonical).filter(value => value !== null)];
 }
 let evaluated: ReturnType<typeof evaluate> | undefined;
 export function evaluatedPage() {
