@@ -245,3 +245,15 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - 専用11テストファイル・56件 + 既存layoutテスト1件追加。原本アーカイブHEAD: `25a5ea1`。目視確認表: `docs/migration-inventory/hacking-kubernetes-review.md`。
 
 <!-- /hacking-kubernetes-status -->
+
+
+<!-- web-application-hackers-handbook-status -->
+
+## WAHH 移行（2026-10-15）
+
+- ページ: `/docs/web-application-hackers-handbook`（`security-docs/src/app/docs/web-application-hackers-handbook/page.mdx`）。表示基盤Red・11新規テストと検索17件契約が期待どおり失敗。
+- 現在の全体テスト実測: 451 pass / 12 fail、71ファイル、30,590 expect。`npm test`（内部Bun）で検証。
+- 原本: `Web-application-hackers-handbook-guide.html` / `Web-application-hackers-handbook-guide.md` を保持。13主要節・14ステップ節・53表・7コード・16図・30チェック項目。
+- 検証: npm経由のテスト・lint・型検査。Next.jsビルドは禁止。目視確認はユーザー担当・未完了。push・公開未実施。
+
+<!-- /web-application-hackers-handbook-status -->
