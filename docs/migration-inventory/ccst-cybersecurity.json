@@ -6,7 +6,7 @@
   "route": "/docs/ccst-cybersecurity",
   "category": "Security Certifications",
   "updated": "2026-10-14",
-  "status": "図中央寄せGreen・全387件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功",
+  "status": "図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功",
   "counts": {
     "sections": 46,
     "headings": 227,
