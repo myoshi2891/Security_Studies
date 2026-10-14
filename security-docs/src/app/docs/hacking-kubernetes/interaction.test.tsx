@@ -55,3 +55,40 @@ test('all twelve diagram definitions parse in the real Mermaid engine and retain
  const component=(await import('node:fs')).readFileSync(new URL('./MermaidFigure.tsx',import.meta.url),'utf8');
  for(const [,key,value] of sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1].matchAll(/(\w+):\s*'([^']*)'/g))expect(component).toContain(`${key}: '${value}'`);
 });
+
+test('mobile focus wrapping excludes collapsed submenu links and preserves focus in the shared header',async()=>{
+ const {GuideSidebar}=await import(new URL('./GuideSidebar.tsx',import.meta.url).href);
+ const group=(id:string)=>createElement('li',{className:'top'},createElement('a',{href:`#${id}`},id),createElement('ul',{className:'sub'},createElement('li',{},createElement('a',{href:`#${id}-1`},`${id}-1`))));
+ const {container}=render(createElement('div',{},createElement('header',{className:'docs-header'},createElement('button',{id:'search-button'},'検索')),createElement('div',{className:'kubernetes-guide'},createElement(GuideSidebar,{},createElement('nav',{},createElement('ul',{},group('s0'),group('s1')))))));
+ const toggle=container.querySelector<HTMLButtonElement>('#navToggle')!;fireEvent.click(toggle);
+ const first=container.querySelector<HTMLAnchorElement>('[href="#s0"]')!;first.focus();fireEvent.keyDown(document,{key:'Tab',shiftKey:true});
+ expect(document.activeElement===container.querySelector('[href="#s1"]')).toBe(true);
+ const search=container.querySelector<HTMLButtonElement>('#search-button')!;search.focus();fireEvent.pointerDown(search);expect(toggle).toHaveAttribute('aria-expanded','false');expect(document.activeElement===search).toBe(true);
+});
+test('lazy diagrams wait for intersection, disconnect observers and support retries after engine loading fails',async()=>{
+ const {MermaidFigure,createEngineLoader}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;
+ globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(){}disconnect(){disconnected++;}} as unknown as typeof IntersectionObserver;
+ try{
+  let calls=0;const renderer=async()=>{calls++;return {svg:'<svg viewBox="0 0 200 80"></svg>'};};
+  const view=render(createElement(MermaidFigure,{id:'d1',source:'flowchart LR\nA-->B',renderer}));expect(calls).toBe(0);
+  act(()=>notify!([{isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());expect(calls).toBe(1);view.unmount();expect(disconnected).toBeGreaterThan(0);
+  let loads=0;const load=createEngineLoader(async()=>{loads++;if(loads===1)throw new Error('retry');return 'engine';});await expect(load()).rejects.toThrow('retry');expect(await load()).toBe('engine');expect(await load()).toBe('engine');expect(loads).toBe(2);
+ }finally{globalThis.IntersectionObserver=saved;}
+});
+test('the bundled renderer serializes initialize/render with the original per-diagram overrides',async()=>{
+ const {default:mermaid}=await import('mermaid');const config:unknown[]=[];const events:string[]=[];
+ const init=spyOn(mermaid,'initialize').mockImplementation(c=>{config.push(c);events.push('initialize');});
+ const draw=spyOn(mermaid,'render').mockImplementation(async(id:string)=>{events.push(id);return {svg:'<svg></svg>',diagramType:'flowchart-v2',bindFunctions:()=>{}};});
+ try{
+  const {renderDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+  await Promise.all([renderDiagram('kubernetes-mermaid-d2-one','flowchart LR\nA-->B'),renderDiagram('kubernetes-mermaid-d5-two','flowchart LR\nA-->B')]);
+  expect(events).toEqual(['initialize','kubernetes-mermaid-d2-one','initialize','kubernetes-mermaid-d5-two']);
+  expect(config[0]).toMatchObject({theme:'dark',securityLevel:'strict',flowchart:{wrappingWidth:150,nodeSpacing:45,rankSpacing:50,curve:'basis'}});
+  expect(config[1]).toMatchObject({flowchart:{wrappingWidth:100,nodeSpacing:25,rankSpacing:50,curve:'basis'}});
+ }finally{init.mockRestore();draw.mockRestore();}
+});
+test('local icons retain their source classes and decorative SVG semantics',async()=>{
+ const {GuideIcon}=await import(new URL('./GuideIcon.tsx',import.meta.url).href);
+ for(const name of ['ti-shield-lock','ti-external-link'] as const){const {container}=render(createElement(GuideIcon,{name}));expect(container.querySelector(`i.ti.${name}`)).toHaveAttribute('aria-hidden','true');expect(container.querySelector('svg')).toHaveAttribute('aria-hidden','true');}
+});
