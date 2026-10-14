@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（WAHH: 全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功）
+> **最終更新**: 2026-10-15（WAHH: 統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **493件** | `npm test`: 493 pass / 0 fail、78ファイル、31,748 expect（全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功） |
-| テストファイル数 | **78ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **45/45 (100%)** | 既存41 + WAHH部品4。テストファイル78件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **521件** | `npm test`: 507 pass / 14 fail、83ファイル、45,274 expect（統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功） |
+| テストファイル数 | **83ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **45/45 (100%)** | 既存41 + WAHH部品4。テストファイル83件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -23,15 +23,20 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功 |
+| `src/app/page.test.tsx` | 2 | 2026-10-15 追加・ホームWAHHリンクのRed確認 |
+| `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/hydration.test.tsx` | 4 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/cascade.test.tsx` | 5 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/integration.test.tsx` | 11 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/sections-06-appendix.test.tsx` | 8 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-12-13.test.tsx` | 4 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-09-11.test.tsx` | 3 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 2 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 4 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
+| `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/hydration.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -63,7 +68,7 @@
 | `src/components/search-modal.test.tsx` | 18 | 18 pass / 0 fail |
 | `src/lib/search.test.ts` | 23 | 23 pass / 0 fail |
 | `src/app/api/search/route.test.ts` | 3 | 3 pass / 0 fail |
-| `src/app/docs/layout.test.tsx` | 11 | 11 pass / 0 fail |
+| `src/app/docs/layout.test.tsx` | 12 | 11 pass / 0 fail |
 | `src/proxy.test.ts` | 6 | 6 pass / 0 fail |
 | `src/app/docs/ccie-security/foundation.test.tsx` | 16 | 16 pass / 0 fail |
 | `src/app/docs/ccie-security/chapters-01-04.test.tsx` | 6 | 6 pass / 0 fail |
@@ -567,3 +572,4 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-15: WAHH: 第5節・全14ステップ節Green・全485件成功・lint/型検査成功。485 pass / 0 fail、77ファイル、31,607 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 第6〜11節・付録・フッターRed・8件失敗。485 pass / 8 fail、78ファイル、31,621 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: WAHH: 全文Green・13主要節と14ステップ節・全493件成功・lint/型検査成功。493 pass / 0 fail、78ファイル、31,748 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
+- 2026-10-15: WAHH: 統合・表示監査Red・ホームとグローバルナビを含む14件失敗・53表hydration成功。507 pass / 14 fail、83ファイル、45,274 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
