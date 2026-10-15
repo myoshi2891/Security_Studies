@@ -65,6 +65,16 @@ test('mobile focus wrapping excludes collapsed submenu links and preserves focus
  expect(document.activeElement===container.querySelector('[href="#s1"]')).toBe(true);
  const search=container.querySelector<HTMLButtonElement>('#search-button')!;search.focus();fireEvent.pointerDown(search);expect(toggle).toHaveAttribute('aria-expanded','false');expect(document.activeElement===search).toBe(true);
 });
+test('mobile focus wrapping follows the submenu opened by a chapter hash change while the drawer is open',async()=>{
+ const {GuideSidebar}=await import(new URL('./GuideSidebar.tsx',import.meta.url).href);
+ const group=(id:string)=>createElement('li',{className:'top'},createElement('a',{href:`#${id}`},id),createElement('ul',{className:'sub'},createElement('li',{},createElement('a',{href:`#${id}-1`},`${id}-1`))));
+ const {container}=render(createElement('div',{className:'kubernetes-guide'},createElement(GuideSidebar,{},createElement('nav',{},createElement('ul',{},group('s0'),group('s1'))))));
+ fireEvent.click(container.querySelector<HTMLButtonElement>('#navToggle')!);
+ act(()=>{(window as unknown as import('happy-dom').Window).happyDOM.setURL('http://localhost/docs/hacking-kubernetes#s1-1');window.dispatchEvent(new Event('hashchange'));});
+ const first=container.querySelector<HTMLAnchorElement>('[href="#s0"]')!;const last=container.querySelector<HTMLAnchorElement>('[href="#s1-1"]')!;
+ first.focus();fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement===last).toBe(true);
+ last.focus();fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement===first).toBe(true);
+});
 test('lazy diagrams wait for intersection, disconnect observers and support retries after engine loading fails',async()=>{
  const {MermaidFigure,createEngineLoader}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;
