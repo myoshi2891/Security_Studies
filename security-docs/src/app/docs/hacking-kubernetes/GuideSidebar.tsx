@@ -40,11 +40,13 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow; document.body.style.overflow = 'hidden';
-    const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])].filter(link => !link.closest('.sub') || link.closest('.top')?.classList.contains('open')); links[0]?.focus();
+    // 章のハッシュ変更で開く小目次が変わるため、表示中のリンクは毎回取得する
+    const visibleLinks = () => [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])].filter(link => !link.closest('.sub') || link.closest('.top')?.classList.contains('open'));
+    visibleLinks()[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
-      const first = links[0], last = links.at(-1);
+      const links = visibleLinks(), first = links[0], last = links.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
