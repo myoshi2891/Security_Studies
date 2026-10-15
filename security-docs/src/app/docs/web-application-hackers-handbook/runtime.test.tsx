@@ -32,6 +32,8 @@ test('all sixteen immutable definitions parse locally and renderer configuration
  const draw=spyOn(mermaid,'render').mockImplementation(async()=>({svg:'<svg></svg>',diagramType:'flowchart-v2'}));const init=spyOn(mermaid,'initialize');
  try{await renderDiagram('wahh-d1','flowchart LR\nA-->B');expect(init).not.toHaveBeenCalled();expect(draw).toHaveBeenCalledWith('wahh-d1',`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart LR\nA-->B`);
  expect(diagramConfig.sequence).toEqual({useMaxWidth:false,actorMargin:50,messageMargin:36});expect(diagramConfig.securityLevel).toBe('strict');
+ // themeVariables の配色を全面的に反映できるのは base テーマのみ
+ expect(diagramConfig.theme).toBe('base');
  for(const [,key,value] of sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1].matchAll(/(\w+):\s*'([^']*)'/g))expect((diagramConfig.themeVariables as Record<string,unknown>)[key]).toBe(value);
  }finally{draw.mockRestore();init.mockRestore();}
 });
