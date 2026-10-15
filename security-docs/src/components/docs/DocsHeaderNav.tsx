@@ -46,7 +46,7 @@ export function DocsHeaderNav() {
 
   return (
     <div className="docs-header-nav" ref={root}>
-      <button ref={button} type="button" className="docs-nav-toggle" aria-label="ガイド" aria-expanded={open} aria-controls={panelId} onClick={() => { setQuery(''); setOpen(value => !value); }}>
+      <button ref={button} type="button" className="docs-nav-toggle" aria-expanded={open} aria-controls={panelId} onClick={() => { setQuery(''); setOpen(value => !value); }}>
         <Menu aria-hidden="true" size={18} />
         <span className="docs-nav-label-full">ガイド一覧</span>
         <span className="docs-nav-label-short">ガイド</span>
