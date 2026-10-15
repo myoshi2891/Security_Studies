@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-15（PR #47 Codecov未カバー行のテスト追加・K8s図の再試行・全543件成功・lint/型検査成功）
+> **最終更新**: 2026-10-15（WAHH Mermaidをbaseテーマへ修正・全543件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **543件** | `npm test`: 543 pass / 0 fail、85ファイル、59,466 expect（PR #47 Codecov未カバー行のテスト追加・K8s図の再試行・lint/型検査成功） |
+| テストケース総数 | **543件** | `npm test`: 543 pass / 0 fail、85ファイル、59,467 expect（WAHH Mermaidのbaseテーマ検証を追加・lint/型検査成功） |
 | テストファイル数 | **85ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル85件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -37,7 +37,7 @@
 | `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 4 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 7 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 7 | 2026-10-15 更新・Mermaid baseテーマの検証を追加・全543件成功 |
 | `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -212,6 +212,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
 | PR47-COV | **PR #47 Codecov指摘対応**<br>WAHH GuideSidebarのヘッダーpointerdown・MermaidFigureのラベル付きノード説明をテストで網羅（行100%）。K8s MermaidFigureに描画失敗時の再試行ボタンを追加（Red `9ab673e` → Green `857c5fb`）。Ghost in the Wires/ISO 27001ガイドの書誌・6.2記述を修正（`9b41869`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
 | P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
 | P-02 | **Search API Contract テスト**<br>`GET /api/search` を提供する `route.ts` ハンドラを実装し、戻り値の型（`SearchResult[]`）やキャッシュヘッダー（`Cache-Control: s-maxage=3600`）を HTTP レベルで検証するテスト `route.test.ts` を追加しました。<br>**タグ**: `API Contract` \| **コスト**: 小 \| **効果**: API 契約の回帰防止 | 2026-05-21 |
