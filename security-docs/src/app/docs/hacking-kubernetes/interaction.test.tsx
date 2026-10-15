@@ -97,3 +97,16 @@ test('local icons retain their source classes and decorative SVG semantics',asyn
  const {GuideIcon}=await import(new URL('./GuideIcon.tsx',import.meta.url).href);
  for(const name of ['ti-shield-lock','ti-external-link'] as const){const {container}=render(createElement(GuideIcon,{name}));expect(container.querySelector(`i.ti.${name}`)).toHaveAttribute('aria-hidden','true');expect(container.querySelector('svg')).toHaveAttribute('aria-hidden','true');}
 });
+test('a failed diagram offers a retry button that re-runs rendering and shows the diagram on success',async()=>{
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const original=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;
+ const messages=spyOn(console,'error').mockImplementation(()=>{});
+ try{
+ let calls=0;const renderer=async()=>{calls++;if(calls===1)throw new Error('engine load failed');return {svg:'<svg viewBox="0 0 10 10"></svg>'};};
+ const view=render(createElement(MermaidFigure,{id:'d3',source:'flowchart LR\nA-->B',renderer}));
+ await waitFor(()=>expect(view.container.querySelector('[role="alert"]')).not.toBeNull());expect(view.container.querySelector('pre')).toHaveTextContent('A-->B');
+ const retry=[...view.container.querySelectorAll('button')].find(b=>b.textContent?.includes('再試行'));expect(retry).toBeDefined();
+ await act(async()=>{retry!.click();});
+ await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());expect(calls).toBe(2);expect(view.container.querySelector('[role="alert"]')).toBeNull();
+ }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
+});
