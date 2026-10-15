@@ -1,4 +1,4 @@
-import {afterEach,expect,test} from 'bun:test';
+import {afterEach,beforeEach,expect,test} from 'bun:test';
 import {cleanup,fireEvent,render,screen} from '@testing-library/react';
 import {Window} from 'happy-dom';
 import {readFileSync} from 'node:fs';
@@ -6,7 +6,15 @@ import {DocsHeaderNav} from './DocsHeaderNav';
 import {docsConfig} from '@/config/docs';
 afterEach(cleanup);
 const registeredCount=docsConfig.sidebarNav.flatMap(section=>section.items).length;
-const open=()=>{const button=screen.getByRole('button',{name:'ガイド'});fireEvent.click(button);return button;};
+const navCss=readFileSync(new URL('./DocsHeaderNav.css',import.meta.url),'utf8');
+/** 実CSSと画面幅を適用し、表示中の可視ラベルだけがアクセシブルネームになる状態を再現する */
+const viewport=(width:number)=>{(window as unknown as Window).happyDOM.setWindowSize({width,height:900});document.head.innerHTML=`<style>${navCss}</style>`;};
+beforeEach(()=>viewport(1440));
+afterEach(()=>{document.head.innerHTML='';});
+const open=()=>{const button=screen.getByRole('button',{name:'ガイド一覧'});fireEvent.click(button);return button;};
+test('toggle uses each visible label as its accessible name instead of a fixed aria-label',()=>{
+ for(const [width,label] of [[1440,'ガイド一覧'],[375,'ガイド']] as const){viewport(width);const view=render(<DocsHeaderNav/>);const button=screen.getByRole('button',{name:label});expect(button).not.toHaveAttribute('aria-label');view.unmount();}
+});
 test('opens a clearly labelled guide menu, focuses its filter and shows all registered links',()=>{
  render(<DocsHeaderNav/>);const button=open();expect(button).toHaveTextContent('ガイド一覧');const input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});expect(document.activeElement).toBe(input);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount}件`);
  expect(screen.getAllByRole('link')).toHaveLength(registeredCount);expect(screen.getByRole('link',{name:"Web Application Hacker's Handbook"})).toHaveAttribute('href','/docs/web-application-hackers-handbook');

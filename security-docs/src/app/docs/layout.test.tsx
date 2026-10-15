@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, mock, test } from 'bun:test';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { readFileSync } from 'node:fs';
+import type { Window as HappyWindow } from 'happy-dom';
 
 // usePathname / useRouter を切替可能にする。
 // mock.module は import より前に評価されるため、layout 内で render される
@@ -14,6 +16,9 @@ mock.module('next/navigation', () => ({
 import DocsLayout from './layout';
 import { docsConfig } from '@/config/docs';
 
+// デスクトップ幅で共通ナビの実CSSを適用し、可視ラベル「ガイド一覧」をアクセシブルネームとして使う
+const navCss = readFileSync(new URL('../../components/docs/DocsHeaderNav.css', import.meta.url), 'utf8');
+
 const allItems = docsConfig.sidebarNav.flatMap((section) => section.items);
 
 // SearchModal の mount-time fetch を解決させてから assertion する。
@@ -24,13 +29,15 @@ const renderLayout = async (): Promise<ReturnType<typeof render>> => {
         await Promise.resolve();
         await Promise.resolve();
     });
-    const menu = screen.queryByRole('button', { name: 'ガイド' });
+    const menu = screen.queryByRole('button', { name: 'ガイド一覧' });
     if (menu) fireEvent.click(menu);
     return result!;
 };
 
 describe('DocsLayout', () => {
     beforeEach(() => {
+        (window as unknown as HappyWindow).happyDOM.setWindowSize({ width: 1440, height: 900 });
+        document.head.innerHTML = `<style>${navCss}</style>`;
         // SearchModal が mount 時に /search-index.json を fetch する。
         // 失敗ログを抑えるために空配列を返すスタブを与える。
         globalThis.fetch = mock(
@@ -44,6 +51,7 @@ describe('DocsLayout', () => {
 
     afterEach(() => {
         cleanup();
+        document.head.innerHTML = '';
     });
 
     describe('header navigation', () => {
@@ -156,7 +164,7 @@ describe('DocsLayout', () => {
         test('ヘッダーのメニューを開閉でき、Escapeで閉じてボタンにフォーカスを戻す', async () => {
             currentPath = '/docs/archive/approach';
             await renderLayout();
-            const button = screen.getByRole('button', { name: 'ガイド' });
+            const button = screen.getByRole('button', { name: 'ガイド一覧' });
             expect(button).toHaveAttribute('aria-expanded', 'true');
             fireEvent.keyDown(document, { key: 'Escape' });
             expect(button).toHaveAttribute('aria-expanded', 'false');
