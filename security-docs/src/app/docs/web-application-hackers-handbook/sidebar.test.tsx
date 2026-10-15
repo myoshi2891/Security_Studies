@@ -30,3 +30,11 @@ test('selecting a TOC link while the panel is closed keeps focus on the link and
  link.focus();fireEvent.click(link);
  expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement===link).toBe(true);expect(link).toHaveAttribute('aria-current','location');
 });
+test('pressing inside the shared header closes the open panel and returns focus from the panel to the toggle',async()=>{
+ const {GuideSidebar}=await import(new URL('./GuideSidebar.tsx',import.meta.url).href);
+ const view=render(h('div',{},h('header',{className:'docs-header'},h('button',{type:'button'},'検索')),h('div',{className:'wahh-guide'},h(GuideSidebar,{},nav()),h('p',{id:'body'},'本文'))));
+ const btn=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;const links=view.container.querySelectorAll<HTMLAnchorElement>('nav a');
+ fireEvent.click(btn);fireEvent.pointerDown(view.container.querySelector('#body')!);expect(btn).toHaveAttribute('aria-expanded','true');
+ expect(document.activeElement).toBe(links[0]);fireEvent.pointerDown(view.container.querySelector('.docs-header button')!);
+ expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(btn);expect(document.body.style.overflow).toBe('');
+});

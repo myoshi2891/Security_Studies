@@ -64,3 +64,8 @@ test('a failed diagram offers a retry button that re-runs rendering and shows th
  await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());expect(calls).toBe(2);expect(view.container.querySelector('[role="alert"]')).toBeNull();
  }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
 });
+test('diagram text descriptions resolve quoted node labels across edges, chains and isolated nodes',async()=>{
+ const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ expect(describeDiagram('flowchart TD\nA["開始<br/>入力"] --> B{"判定"}\nB -- "はい" --> C("完了")\nB -->|"いいえ"| A\nC <--> E\nD["孤立"]')).toEqual(['フローチャート','開始 入力 → 判定','判定 → 完了: はい','判定 → 開始 入力: いいえ','完了 ↔ E','孤立']);
+ expect(describeDiagram('sequenceDiagram\nA->>B: 要求<br/>送信')).toEqual(['シーケンス図','A->>B: 要求 送信']);
+});
