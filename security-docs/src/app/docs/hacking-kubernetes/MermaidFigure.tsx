@@ -124,6 +124,8 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   const svgId = `kubernetes-mermaid-${id}-${unique}`;
   const descriptionId = `${svgId}-description`;
   const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
+  // 再試行ボタンで増やし、描画 effect を再実行させる（エンジン読み込みは失敗キャッシュ破棄済みの createEngineLoader 経由）
+  const [attempt, setAttempt] = useState(0);
   const figureRef = useRef<HTMLDivElement>(null);
   // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
@@ -154,7 +156,12 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
       setResult({ source, failed: true });
     });
     return () => { active = false; };
-  }, [id, nearView, renderer, source, svgId]);
+  }, [attempt, id, nearView, renderer, source, svgId]);
+
+  const retry = () => {
+    setResult(undefined);
+    setAttempt(value => value + 1);
+  };
 
   const current = result?.source === source ? result : undefined;
   return (
@@ -171,6 +178,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
       ) : current?.failed ? (
         <div className="diagram-error">
           <p role="alert">図 {Number(id.slice(1))} を描画できませんでした。</p>
+          <button type="button" className="diagram-retry" onClick={retry}>図 {Number(id.slice(1))} の描画を再試行</button>
           <details><summary>図の定義</summary><pre>{source}</pre></details>
         </div>
       ) : <p role="status">図 {Number(id.slice(1))} を描画中…</p>}
