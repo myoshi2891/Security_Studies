@@ -26,7 +26,7 @@ export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> 
 const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => mermaid));
 export const diagramConfig = {
                         startOnLoad: false,
-                        theme: 'dark',
+                        theme: 'base',
                         securityLevel: 'strict',
                         fontFamily: '"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic","Meiryo",sans-serif',
                         flowchart: {
