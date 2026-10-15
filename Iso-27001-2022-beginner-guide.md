@@ -725,7 +725,7 @@ flowchart LR
 
 ### 12-3. クラウド(AWS)と責任共有
 
-AWSはISO/IEC 27001:2022、27017、27018などの認証を持ち、その認証はEY CertifyPointによる確認です [S20]。ただし、**クラウド事業者が認証されていても、自社が認証されたことにはなりません**。AWSの認証が対象とするのは、AWSが指定するサービスとデータセンターに関するセキュリティ管理プロセスです。顧客は自社の適用範囲で別途ISMSを構築・運用します。AWSの認証は、自社の認証取得を**やりやすくする材料**にはなり得るとAWS自身が説明しています [S20]。
+AWSはISO/IEC 27001:2022の認証を持ち、その認証はEY CertifyPointによる確認です [S20]。クラウド関連では、**ISO/IEC 27017:2015**と**ISO/IEC 27018:2019**の認証も持っています(いずれもAWSが公表している認証対象の版で、各規格の最新版への認証を意味するものではありません) [S45]、[S46]。ただし、**クラウド事業者が認証されていても、自社が認証されたことにはなりません**。AWSの認証が対象とするのは、AWSが指定するサービスとデータセンターに関するセキュリティ管理プロセスです。顧客は自社の適用範囲で別途ISMSを構築・運用します。AWSの認証は、自社の認証取得を**やりやすくする材料**にはなり得るとAWS自身が説明しています [S20]。
 
 ```mermaid
 flowchart TD
@@ -896,6 +896,8 @@ S1〜S41は**2026年10月14日**、S42〜S44は**2026年10月15日**に参照し
 | S42 | 一次 | ISMS-AC:ISMS適合性評価制度の概要(認証基準はJIS Q 27001) | https://isms.jp/isms/about.html |
 | S43 | 一次 | ISMS-AC:PIMS適合性評価制度の概要(認証基準はISO/IEC 27701:2025) | https://isms.jp/pims/about.html |
 | S44 | 準一次 | Global ACI:規制当局向け説明文書 V1.0(NATA掲載。2026年1月1日の運用開始、IAF MLAの統合と移行措置) | https://nata.com.au/files/2026/04/Communication-to-Regulators-about-Global-Accreditation-Cooperation-Incorporated-V1.0.pdf |
+| S45 | 準一次 | AWS:ISO/IEC 27017:2015 FAQ(認証対象の版) | https://aws.amazon.com/compliance/iso-27017-faqs/ |
+| S46 | 準一次 | AWS:ISO/IEC 27018:2019 Compliance(認証対象の版) | https://aws.amazon.com/compliance/iso-27018-faqs/ |
 
 ### 16-1. 情報の確かさについての注意
 
