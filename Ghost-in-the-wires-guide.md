@@ -589,7 +589,7 @@ KnowBe4 の Chief Hacking Officer です（2011年から）【S18】【S20】。
 | S24 | Monoskop | 共著者(William L. Simon)、序文(Wozniak)、NYT書評への参照 | https://monoskop.org/log/?p=3096 |
 | S34 | Hachette Book Group(出版社)| 『The Art of Invisibility』の書誌(Kevin Mitnick、With Robert Vamosi。Hachette Audio、2017年2月14日。2026年10月15日取得)| https://www.hachettebookgroup.com/titles/kevin-mitnick/the-art-of-invisibility/9781478985846/ |
 
-### 15-2. 事件・裁判に関する一次・準一次資料
+### 15-2. 事件・裁判に関する公的資料・当事者資料・報道
 
 | No. | 種別 | 内容 | URL |
 |---|---|---|---|
