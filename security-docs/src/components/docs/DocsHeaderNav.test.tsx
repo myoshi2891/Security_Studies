@@ -6,7 +6,7 @@ import {DocsHeaderNav} from './DocsHeaderNav';
 import {docsConfig} from '@/config/docs';
 afterEach(cleanup);
 const registeredCount=docsConfig.sidebarNav.flatMap(section=>section.items).length;
-const open=()=>{const button=screen.getByRole('button',{name:'ガイド一覧'});fireEvent.click(button);return button;};
+const open=()=>{const button=screen.getByRole('button',{name:'ガイド'});fireEvent.click(button);return button;};
 test('opens a clearly labelled guide menu, focuses its filter and shows all registered links',()=>{
  render(<DocsHeaderNav/>);const button=open();expect(button).toHaveTextContent('ガイド一覧');const input=screen.getByRole('searchbox',{name:'ガイドを絞り込む'});expect(document.activeElement).toBe(input);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount}件`);
  expect(screen.getAllByRole('link')).toHaveLength(registeredCount);expect(screen.getByRole('link',{name:"Web Application Hacker's Handbook"})).toHaveAttribute('href','/docs/web-application-hackers-handbook');
@@ -23,7 +23,7 @@ test('shows a useful empty state and restores the entire menu after clearing',()
 });
 test('new categories and eighty future pages are reflected from configuration without component edits',()=>{
  docsConfig.sidebarNav.push({title:'Future Guides',items:Array.from({length:80},(_,i)=>({title:`Future Guide ${i}`,href:`/docs/future-${i}`}))});
- try{render(<DocsHeaderNav/>);open();expect(screen.getAllByRole('link')).toHaveLength(registeredCount+80);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount+80}件`);fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Future Guide 79'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('link',{name:'Future Guide 79'})).toHaveAttribute('href','/docs/future-79');}
+ try{render(<DocsHeaderNav/>);open();expect(screen.getAllByRole('link')).toHaveLength(registeredCount+80);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount+80}件`);fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Future Guide 79'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('link',{name:'Future Guide 79'})).toHaveAttribute('href','/docs/future-79');fireEvent.change(screen.getByRole('searchbox'),{target:{value:'/docs/future-79'}});expect(screen.queryAllByRole('link')).toHaveLength(0);expect(screen.getByRole('status')).toHaveTextContent('0件');}
  finally{docsConfig.sidebarNav.pop();}
 });
 test('selection and outside clicks close the shared menu and unmount removes its handlers',()=>{

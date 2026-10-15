@@ -22,7 +22,7 @@ export function DocsHeaderNav() {
   const term = normalize(query.trim());
   const sections = docsConfig.sidebarNav.map(section => ({
     ...section,
-    items: section.items.filter(item => normalize(`${section.title} ${item.title} ${item.href}`).includes(term)),
+    items: section.items.filter(item => normalize(`${section.title} ${item.title}`).includes(term)),
   })).filter(section => section.items.length > 0);
   const total = docsConfig.sidebarNav.reduce((sum, section) => sum + section.items.length, 0);
   const matches = sections.reduce((sum, section) => sum + section.items.length, 0);
@@ -46,7 +46,7 @@ export function DocsHeaderNav() {
 
   return (
     <div className="docs-header-nav" ref={root}>
-      <button ref={button} type="button" className="docs-nav-toggle" aria-label="ガイド一覧" aria-expanded={open} aria-controls={panelId} onClick={() => { setQuery(''); setOpen(value => !value); }}>
+      <button ref={button} type="button" className="docs-nav-toggle" aria-label="ガイド" aria-expanded={open} aria-controls={panelId} onClick={() => { setQuery(''); setOpen(value => !value); }}>
         <Menu aria-hidden="true" size={18} />
         <span className="docs-nav-label-full">ガイド一覧</span>
         <span className="docs-nav-label-short">ガイド</span>
