@@ -163,7 +163,7 @@ flowchart LR
 
 | 部 | 原題 | 目次から読み取れる内容 | 代表的な章題 |
 |---|---|---|---|
-| 第1部 | The Making of a Hacker | 少年期から最初の逮捕まで | Rough Start、Original Sin、Escape Artist、Lex Luthor |
+| 第1部 | The Making of a Hacker | 少年期から、第2部「Eric」が始まる直前まで | Rough Start、Original Sin、Escape Artist、Lex Luthor |
 | 第2部 | Eric | 盗聴・通信分析・摘発・失踪へ向かう緊迫した流れ | The Wiretapper、Traffic Analysis、Reverse Sting、Vanishing Act |
 | 第3部 | On the Run | 偽名での逃亡生活 | Harry Houdini、Private Investigator、Trophy Hunter |
 | 第4部 | An End and a Beginning | 逮捕、裁判、出所後 | Hacking the Samurai、An FBI Valentine、Aftermath |
