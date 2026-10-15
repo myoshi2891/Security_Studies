@@ -515,7 +515,7 @@ flowchart TD
 |---|---|---|
 | The Art of Deception | Kevin Mitnick, William L. Simon | ソーシャルエンジニアリングの解説書（Bejtlich の過去の書評対象）【S26】 |
 | The Art of Intrusion | Kevin Mitnick, William L. Simon | 実際の侵入事例の紹介（同上）【S26】 |
-| The Art of Invisibility | Kevin Mitnick | 一般向けのプライバシー防衛策（著者紹介に記載）【S1】 |
+| The Art of Invisibility | Kevin Mitnick, Robert Vamosi | 一般向けのプライバシー防衛策（著者紹介に記載）【S1】【S34】 |
 | Takedown | Tsutomu Shimomura, John Markoff | 追跡側から見た逮捕劇 【S7】 |
 | The Fugitive Game | Jonathan Littman | ミトニックに同情的な視点 【S7】【S14】 |
 | The Cuckoo's Egg | Clifford Stoll | Takedown が「現代版」と位置づけられた先行作 【S7】 |
@@ -587,6 +587,7 @@ KnowBe4 の Chief Hacking Officer です（2011年から）【S18】【S20】。
 | S3 | Mitnick Security 公式 | 公式紹介文と書評の抜粋 | https://mitnicksecurity.com/ghost-in-the-wires |
 | S31 | WorldCat | Back Bay Books 版の書誌 | https://search.worldcat.org/title/773175688 |
 | S24 | Monoskop | 共著者(William L. Simon)、序文(Wozniak)、NYT書評への参照 | https://monoskop.org/log/?p=3096 |
+| S34 | Hachette Book Group(出版社)| 『The Art of Invisibility』の書誌(Kevin Mitnick、With Robert Vamosi。Hachette Audio、2017年2月14日。2026年10月15日取得)| https://www.hachettebookgroup.com/titles/kevin-mitnick/the-art-of-invisibility/9781478985846/ |
 
 ### 15-2. 事件・裁判に関する一次・準一次資料
 
