@@ -170,7 +170,7 @@ flowchart TD
     A["ISO/IEC 27000:2018<br/>第5版"] --> B["ISO/IEC 27000:2026<br/>第6版"]
     B --> C["位置づけの変更<br/>用語集から概要文書へ"]
     B --> D["タイトルの変更<br/>サイバーセキュリティと<br/>プライバシー保護を明記"]
-    B --> E["用語管理の変更<br/>附属書で共通用語を管理"]
+    B --> E["用語の扱いの変更<br/>第3節の用語と定義に限定"]
     B --> F["情報セキュリティの定義の拡張<br/>真正性・責任追跡性・否認防止"]
     B --> G["リスク管理の整合<br/>ISO 31000との整合強化"]
 ```
@@ -181,7 +181,7 @@ flowchart TD
 |---|---|---|
 | タイトル | Information technology — Security techniques — ISMS — Overview and vocabulary | Information security, cybersecurity and privacy protection — ISMS — Overview |
 | 主目的 | 概要と用語集 | **概要・概念・関係性の説明** |
-| 用語の扱い | 規格本文に用語を集約 | 共通用語は**附属書**で管理、各規格が必要に応じて用語を定義・更新可能（DQS解説） |
+| 用語の扱い | 規格本文に用語を集約 | 用語と定義は**第3節（Terms and definitions）**に掲載。従来の大規模な用語集は廃止され、この規格で使う用語に限定（ISO27001security.comの構成解説。正式な目次はISO公式で確認） |
 | 情報セキュリティの定義 | CIA中心 | CIAに加え**真正性・責任追跡性・否認防止**を強調（DQS解説） |
 | リスク管理 | ― | **ISO 31000との整合**を強化（DQS解説） |
 | 文書の性格 | ― | ISO/IEC Directives Part 1に基づく**水平文書（horizontal document）** |
@@ -191,7 +191,7 @@ flowchart TD
 | 変更 | 実務への意味 |
 |---|---|
 | タイトルから「Information technology」「Security techniques」が外れた | ISMSをIT部門の技術論ではなく、**組織全体のガバナンス**として扱う流れ（DQSの解釈） |
-| 用語管理を附属書へ | AIやクラウドなど**新しい技術領域の用語更新に追随しやすく**なる |
+| 大規模な用語集の廃止 | 各用語の正式な定義は、ISO Online Browsing Platform（OBP）などで確認する（ISO27001security.com） |
 | ISO 31000との整合 | 品質・環境・労働安全など他のマネジメントシステムと**共通のリスク言語**で扱いやすくなる |
 
 > **補足**: 上記の「意味合い」は認証機関による解釈を含みます。規格本文の記述と区別して読んでください。
@@ -333,7 +333,8 @@ flowchart TD
 
 | 内容 | URL |
 |---|---|
-| DQS：27000:2026の主要変更点（タイトル、用語管理、定義拡張、ISO 31000整合、EN採択日） | https://www.dqsglobal.com/en/explore/blog/iso-iec-27000-2026-released |
+| DQS：27000:2026の主要変更点（タイトル、定義拡張、ISO 31000整合、EN採択日） | https://www.dqsglobal.com/en/explore/blog/iso-iec-27000-2026-released |
+| ISO27001security.com：27000:2026の構成（第3節 用語と定義、第4節 概念と原則、第5節 関連規格）と用語集の廃止 | https://www.iso27001security.com/html/27000 |
 | ANSI Blog：27000:2026の概要と水平文書としての位置づけ | https://blog.ansi.org/ansi/iso-iec-27000-2026-isms-overview/ |
 | Certifico：27000:2026の変更点（構造変更）と発行日 | https://certifico.com/normazione/documenti-riservati-normazione/organismi-normazione/documenti-iso/iso-iec-27000-2026 |
 | DQS：ISO 27001の現行版と移行期限 | https://www.dqsglobal.com/en/explore/dqs-knowledge-center/iso-27001-explained |
