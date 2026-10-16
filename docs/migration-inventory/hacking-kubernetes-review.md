@@ -8,8 +8,8 @@ HTML・Markdown原本は `archive/html/Hacking-kubernetes-guide.html` / `archive
 
 ## 自動検証
 
-- npm test: **452 pass / 0 fail、69ファイル、30,591 expect**。専用11ファイル・56件 + 既存layoutテスト1件追加。
-- npm run lint / npm run types:check: 成功。表示実装HEAD: `396ea93`、原本アーカイブHEAD: `25a5ea1`。
+- npm test（2026-10-16実測）: **553 pass / 0 fail、87ファイル、59,506 expect**。専用12ファイル・59件（GuideCodeの未登録言語フォールバック3件を追加）+ 既存layoutテスト1件。移行完了時の記録は452 pass / 0 fail、69ファイル、30,591 expect。
+- npm run lint / npm run types:check: 成功。表示実装HEAD: `396ea93`、GuideCode修正HEAD: `e53a157`。原本アーカイブHEAD: `25a5ea1`（`78e1716`で追跡解除されCIが失敗したため、`7ba1516`で再追跡。SHA-256一致を確認）。
 
 - 全18章・82小節・103見出し・52表の全セル・24コードの改行と空白・12図定義・24チェック項目・35出典カードを原本と比較。
 - 本文のul/olは各2個、15項目。目次も含めるとul 18個・ol 2個・115項目。全140 IDの順序・一意性、目次と引用リンクの到達先を検証。
