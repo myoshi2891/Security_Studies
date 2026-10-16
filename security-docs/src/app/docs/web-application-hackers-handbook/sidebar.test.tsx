@@ -38,3 +38,13 @@ test('pressing inside the shared header closes the open panel and returns focus 
  expect(document.activeElement).toBe(links[0]);fireEvent.pointerDown(view.container.querySelector('.docs-header button')!);
  expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(btn);expect(document.body.style.overflow).toBe('');
 });
+test('selecting a link from the open panel moves focus to the target heading, while Escape and background still return focus to the toggle',async()=>{
+ const {GuideSidebar}=await import(new URL('./GuideSidebar.tsx',import.meta.url).href);
+ const view=render(h('div',{className:'wahh-guide'},h(GuideSidebar,{},nav()),h('section',{id:'sec-5'},h('h2',{},'親見出し'),h('section',{id:'step-1',className:'step'},h('h3',{},'手順見出し'))),h('section',{id:'sec-6'},h('h2',{},'次見出し'))));
+ const btn=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;const step=view.container.querySelector<HTMLHeadingElement>('#step-1 h3')!;
+ fireEvent.click(btn);fireEvent.click(view.container.querySelector('[href="#step-1"]')!);
+ expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement===step).toBe(true);expect(step).toHaveAttribute('tabindex','-1');expect(document.body.style.overflow).toBe('');
+ fireEvent.click(btn);fireEvent.click(view.container.querySelector('[href="#sec-5"]')!);expect(document.activeElement===view.container.querySelector('#sec-5 > h2')).toBe(true);
+ fireEvent.click(btn);fireEvent.keyDown(document,{key:'Escape'});expect(document.activeElement).toBe(btn);
+ fireEvent.click(btn);fireEvent.click(view.container.querySelector('#backdrop')!);expect(document.activeElement).toBe(btn);
+});
