@@ -198,13 +198,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   return (
     <div ref={figureRef} className="mermaid-target" data-diagram={id} data-definition={source}>
       {current?.svg ? (
-        <>
-          <div className="diagram-viewport" role="img" aria-label={`図 ${Number(id.slice(1))}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
-          <details className="diagram-description">
-            <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
-            <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
-          </details>
-        </>
+        <div className="diagram-viewport" role="img" aria-label={`図 ${Number(id.slice(1))}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
       ) : current?.failed ? (
         <div className="diagram-error">
           <p role="alert">図 {Number(id.slice(1))} を描画できませんでした。</p>
@@ -212,6 +206,11 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
           <details><summary>図の定義</summary><pre>{source}</pre></details>
         </div>
       ) : <p role="status">図 {Number(id.slice(1))} を描画中…</p>}
+      {/* 描画結果が確定したら成否に関わらず図の内容をテキストで読めるようにする（描画中は原本どおり出さない） */}
+      {current && <details className="diagram-description">
+        <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
+        <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
+      </details>}
       <noscript>図の表示にはJavaScriptが必要です。</noscript>
     </div>
   );
