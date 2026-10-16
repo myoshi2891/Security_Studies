@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-16（WAHHモバイル目次のリンク選択後に移動先見出しへフォーカス・全546件成功・lint/型検査成功）
+> **最終更新**: 2026-10-16（WAHHモバイル目次のリンク選択後に移動先見出しへフォーカス・WAHH図の描画失敗時テキスト説明・MITRE ATLAS検索href照合・全547件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **546件** | `npm test`: 546 pass / 0 fail、85ファイル、59,483 expect（WAHHモバイル目次の見出しフォーカス検証を追加・lint/型検査成功） |
+| テストケース総数 | **547件** | `npm test`: 547 pass / 0 fail、85ファイル、59,490 expect（2026-10-16実測。WAHHモバイル目次の見出しフォーカス・WAHH図の描画失敗時テキスト説明・MITRE ATLAS検索href照合を含む・lint/型検査成功） |
 | テストファイル数 | **85ファイル** | 実行ファイル数。ページ移行テストはロジック単位と別集計 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル85件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -23,7 +23,7 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/components/docs/DocsHeaderNav.test.tsx` | 8 | 2026-10-15 更新・ホーム/docs共通ガイド一覧・絞り込み・97ページ拡張・狭幅表示Green |
+| `src/components/docs/DocsHeaderNav.test.tsx` | 9 | 2026-10-16 実測・ホーム/docs共通ガイド一覧・絞り込み・97ページ拡張・狭幅表示・可視ラベル由来のアクセシブルネームGreen |
 | `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホーム一覧・統計・共通ヘッダー/登録件数追従Green |
 | `src/app/docs/web-application-hackers-handbook/contrast.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
