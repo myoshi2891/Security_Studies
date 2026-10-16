@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-16（CI失敗の原因だった原本アーカイブ12件の追跡解除を修正・GuideCodeの未登録言語を平文描画・全553件成功・lint/型検査成功）
+> **最終更新**: 2026-10-17（ISO/IEC 27000:2026ガイドページ追加・レビュー指摘対応・全558件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **553件** | `npm test`: 553 pass / 0 fail、87ファイル、59,506 expect（2026-10-16実測。原本アーカイブ再追跡 `7ba1516` でCI復旧、GuideCode未登録言語フォールバック6件を追加・lint/型検査成功） |
-| テストファイル数 | **87ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル87件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **558件** | `npm test`: 558 pass / 0 fail、88ファイル、59,599 expect（2026-10-17実測。ISO/IEC 27000:2026ガイドページ5件を追加 Red `7795079` → Green `c8ae34d`・lint/型検査成功） |
+| テストファイル数 | **88ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル88件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -212,6 +212,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
 | PR47-COV | **PR #47 Codecov指摘対応**<br>WAHH GuideSidebarのヘッダーpointerdown・MermaidFigureのラベル付きノード説明をテストで網羅（行100%）。K8s MermaidFigureに描画失敗時の再試行ボタンを追加（Red `9ab673e` → Green `857c5fb`）。Ghost in the Wires/ISO 27001ガイドの書誌・6.2記述を修正（`9b41869`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
 | P-01 | **カバレッジレポート追加（bun test --coverage, bunfig.toml, ci.yml and Codecov integration）**<br>CIが整備されたため、`bun test --coverage` で lcov レポートを生成し、Codecov へアップロードしてPRごとのカバレッジ差分を可視化する構成を導入。<br>**タグ**: `bun --coverage` \| **コスト**: 小 \| **効果**: 行カバレッジの数値化 | 2026-05-20 |
