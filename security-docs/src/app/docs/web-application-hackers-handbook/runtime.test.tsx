@@ -66,6 +66,18 @@ test('a failed diagram offers a retry button that re-runs rendering and shows th
  await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());expect(calls).toBe(2);expect(view.container.querySelector('[role="alert"]')).toBeNull();
  }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
 });
+test('a failed diagram still shows its text description alongside the error and definition',async()=>{
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const original=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;
+ const messages=spyOn(console,'error').mockImplementation(()=>{});
+ try{
+ const view=render(createElement(MermaidFigure,{id:'d4',source:'flowchart LR\nA["入力"] --> B["出力"]',renderer:async()=>{throw new Error('broken');}}));
+ await waitFor(()=>expect(view.container.querySelector('[role="alert"]')).not.toBeNull());
+ expect(view.container.querySelector('svg')).toBeNull();expect(view.container.querySelector('pre')).toHaveTextContent('A["入力"]');
+ const description=view.container.querySelector('.diagram-description');expect(description).not.toBeNull();
+ expect([...description!.querySelectorAll('li')].map(li=>li.textContent)).toEqual(['フローチャート','入力 → 出力']);
+ }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
+});
 test('diagram text descriptions resolve quoted node labels across edges, chains and isolated nodes',async()=>{
  const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  expect(describeDiagram('flowchart TD\nA["開始<br/>入力"] --> B{"判定"}\nB -- "はい" --> C("完了")\nB -->|"いいえ"| A\nC <--> E\nD["孤立"]')).toEqual(['フローチャート','開始 入力 → 判定','判定 → 完了: はい','判定 → 開始 入力: いいえ','完了 ↔ E','孤立']);
