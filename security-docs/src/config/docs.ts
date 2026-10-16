@@ -16,6 +16,7 @@ export const docsConfig = {
         { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
         { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
         { title: "Web Application Hacker's Handbook", href: "/docs/web-application-hackers-handbook" },
+        { title: "ISO/IEC 27000:2026 入門ガイド", href: "/docs/iso-iec-27000-2026-guide" },
       ],
     },
     {
