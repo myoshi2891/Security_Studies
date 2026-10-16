@@ -1,4 +1,4 @@
-# Ghost in the Wires 初学者向け完全ガイド
+# Ghost in the Wires 初学者向け入門ガイド
 
 > ケビン・ミトニック著『Ghost in the Wires: My Adventures as the World's Most Wanted Hacker』を、ステップバイステップで読み解く入門ガイド
 
@@ -307,7 +307,13 @@ Nunley 氏は、被害を受けた側として正義を求め、のちに弁護�
 
 ### 6-5. 現代でも通用する実例
 
-書評は、2012年8月に起きた、ジャーナリスト Mat Honan 氏のアカウント乗っ取り事例を挙げています。カスタマーサポート担当者を説得され、AmazonとAppleのアカウントが乗っ取られ、そこからデジタル生活全体が崩れたというものです 【S21】。ミトニックの時代の手法は、形を変えて今も有効です。
+書評は、2012年8月に起きた、ジャーナリスト Mat Honan 氏のアカウント乗っ取り事例を挙げています 【S21】。Honan 氏本人の報告によれば、攻撃は次の順序で進みました 【S40】【S41】。
+
+1. **Amazon**:攻撃者が Amazon のカスタマーサポートに電話し、Honan 氏のアカウントに自分で用意したカード番号を追加させた。続く別の電話で、そのカード番号を本人確認に使ってアカウントのメールアドレスを変更させ、アカウントに入り込んで、登録済みカード番号の下4桁を入手した。
+2. **Apple**:攻撃者が Apple のサポートに電話し、請求先住所と、Amazon で入手したカード番号の下4桁を示して、Apple ID(iCloud)のアカウント復旧を通過し、一時パスワードを発行させた。
+3. **その後**:iCloud を足がかりに、ほかのアカウントの乗っ取りや端末の遠隔消去へと被害が広がった。
+
+Amazon が画面上に表示しても問題ないとしていた情報(カード番号の下4桁)を、Apple は本人確認の根拠にしていた、という**企業間の確認基準のずれ**が突かれた事例です 【S40】【S41】。ミトニックの時代の手法は、形を変えて今も有効です。
 
 ---
 
@@ -630,6 +636,8 @@ KnowBe4 の Chief Hacking Officer です（2011年から）【S18】【S20】。
 | S22 | mjtsai.com | 訃報の抜粋(バスの逸話など)| https://mjtsai.com/blog/2023/07/24/kevin-mitnick-rip |
 | S25 | FrenchWeb | DEC事件の友人、携帯電話追跡の概要 | https://www.frenchweb.fr/kevin-mitnick-le-pirate-le-plus-recherche-du-monde-est-decede/444341 |
 | S27 | Mitnick Security 公式ブログ | 追悼記事、Global Ghost Team の紹介 | https://www.mitnicksecurity.com/blog/remembering-the-worlds-greatest-hacker-kevin-mitnick |
+| S40 | WIRED(当事者報告)| Mat Honan「How Apple and Amazon Security Flaws Led to My Epic Hacking」(2012年8月6日)。本文は直接取得できず、内容は S41 などの報道で照合(Step 16)| https://www.wired.com/2012/08/apple-amazon-mat-honan-hacking/ |
+| S41 | Engadget | S40 の内容を要約した報道(Amazon への2回の電話、カード番号下4桁による Apple の復旧)| https://www.engadget.com/2012-08-06-mat-honan-details-the-amazon-and-apple-security-flaws-that-let-h.html |
 
 ### 15-4. 書評・専門家の見解
 
@@ -654,6 +662,7 @@ KnowBe4 の Chief Hacking Officer です（2011年から）【S18】【S20】。
 | 本文の通読 | 書籍の全文は読んでいません。構成は図書館目録の目次(S2)と、出版社紹介・書評・報道で確認できる範囲です |
 | 章ごとの詳細 | 各章の筋書きの詳細は、原書で確認してください |
 | Bejtlich の書評 | 元のブログページは直接取得できず、CSO Online と書評集約サイト経由で確認しました |
+| Honan 氏の報告 | WIRED の当事者報告(S40)は本文を直接取得できず、Engadget(S41)などの報道で内容を照合しました |
 | 邦訳の有無 | 検索では確認できませんでした。出版社や書店の最新情報を直接ご確認ください |
 | 損害額・刑期 | 資料により数値や表現が異なります(Step 5、Step 8 に併記)|
 | 二次資料 | 一部は報道や書評、個人サイトに基づきます。重要な判断には一次資料を確認してください |
