@@ -583,7 +583,7 @@ KnowBe4 の Chief Hacking Officer です（2011年から）【S18】【S20】。
 
 | No. | 種別 | 内容 | URL |
 |---|---|---|---|
-| S1 | Google ブックス | 書誌情報、出版社紹介文、著者紹介(依頼で指定された資料)| https://books.google.co.jp/books/about/Ghost_in_the_Wires.html?id=p-nRxITKc34C&redir_esc=y |
+| S1 | Google ブックス | 書誌情報、出版社紹介文、著者紹介 | https://books.google.co.jp/books/about/Ghost_in_the_Wires.html?id=p-nRxITKc34C&redir_esc=y |
 | S2 | 米国大学図書館目録(UNT)| 4部構成と章題の目次 | https://discover.library.unt.edu/catalog/b7745289 |
 | S3 | Mitnick Security 公式 | 公式紹介文と書評の抜粋 | https://mitnicksecurity.com/ghost-in-the-wires |
 | S31 | WorldCat | Back Bay Books 版の書誌 | https://search.worldcat.org/title/773175688 |
