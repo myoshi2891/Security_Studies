@@ -28,8 +28,15 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
       if (!link) return;
-      select(link.hash.slice(1));
-      if (openRef.current) close();
+      const id = link.hash.slice(1);
+      select(id);
+      if (!openRef.current) return;
+      // リンク選択で閉じた場合は移動先の見出しへ。見出しがなければ従来どおりメニューボタンへ戻す
+      const heading = document.getElementById(id)?.querySelector<HTMLElement>('h2, h3');
+      if (!heading) { close(); return; }
+      setOpen(false);
+      if (!heading.hasAttribute('tabindex')) heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
     };
     const nav = panel.current; nav?.addEventListener('click', click);
     const visible = new Set<Element>();
