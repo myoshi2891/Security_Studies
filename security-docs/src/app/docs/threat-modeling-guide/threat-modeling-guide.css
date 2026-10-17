@@ -1,3 +1,68 @@
+.threat-guide.threat-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.threat-guide.threat-guide code.hljs {
+  padding: 3px 5px
+}
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.threat-guide.threat-guide .hljs {
+  color: #abb2bf;
+  background: #282c34
+}
+.threat-guide.threat-guide .hljs-comment,.threat-guide.threat-guide .hljs-quote {
+  color: #5c6370;
+  font-style: italic
+}
+.threat-guide.threat-guide .hljs-doctag,.threat-guide.threat-guide .hljs-keyword,.threat-guide.threat-guide .hljs-formula {
+  color: #c678dd
+}
+.threat-guide.threat-guide .hljs-section,.threat-guide.threat-guide .hljs-name,.threat-guide.threat-guide .hljs-selector-tag,.threat-guide.threat-guide .hljs-deletion,.threat-guide.threat-guide .hljs-subst {
+  color: #e06c75
+}
+.threat-guide.threat-guide .hljs-literal {
+  color: #56b6c2
+}
+.threat-guide.threat-guide .hljs-string,.threat-guide.threat-guide .hljs-regexp,.threat-guide.threat-guide .hljs-addition,.threat-guide.threat-guide .hljs-attribute,.threat-guide.threat-guide .hljs-meta .hljs-string {
+  color: #98c379
+}
+.threat-guide.threat-guide .hljs-attr,.threat-guide.threat-guide .hljs-variable,.threat-guide.threat-guide .hljs-template-variable,.threat-guide.threat-guide .hljs-type,.threat-guide.threat-guide .hljs-selector-class,.threat-guide.threat-guide .hljs-selector-attr,.threat-guide.threat-guide .hljs-selector-pseudo,.threat-guide.threat-guide .hljs-number {
+  color: #d19a66
+}
+.threat-guide.threat-guide .hljs-symbol,.threat-guide.threat-guide .hljs-bullet,.threat-guide.threat-guide .hljs-link,.threat-guide.threat-guide .hljs-meta,.threat-guide.threat-guide .hljs-selector-id,.threat-guide.threat-guide .hljs-title {
+  color: #61aeee
+}
+.threat-guide.threat-guide .hljs-built_in,.threat-guide.threat-guide .hljs-title.class_,.threat-guide.threat-guide .hljs-class .hljs-title {
+  color: #e6c07b
+}
+.threat-guide.threat-guide .hljs-emphasis {
+  font-style: italic
+}
+.threat-guide.threat-guide .hljs-strong {
+  font-weight: bold
+}
+.threat-guide.threat-guide .hljs-link {
+  text-decoration: underline
+}
 
 .threat-guide.threat-guide{
   --color-background-primary:#07111e;
@@ -189,3 +254,10 @@ html:has(.threat-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
  .threat-guide.threat-guide .sidebar.open { visibility: visible; transform: translateX(0); }
  .threat-guide.threat-guide .backdrop.show { top: 64px; opacity: 1; pointer-events: auto; }
 }
+
+/* Restore source defaults overridden by shared prose and landing styles. */
+.threat-guide.threat-guide h1, .threat-guide.threat-guide h2, .threat-guide.threat-guide h3, .threat-guide.threat-guide h4 { letter-spacing: normal; }
+.threat-guide.threat-guide table { margin: 0; }
+.threat-guide.threat-guide pre { font-family: var(--font-sans); color: var(--color-text-primary); }
+.threat-guide.threat-guide .brand { font-size: 1rem; font-weight: 400; color: var(--color-text-primary); letter-spacing: normal; }
+.threat-guide.threat-guide tr:hover td { background: transparent; }
