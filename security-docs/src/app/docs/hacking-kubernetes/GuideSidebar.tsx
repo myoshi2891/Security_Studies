@@ -1,0 +1,67 @@
+'use client';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Menu, X } from 'lucide-react';
+
+/** Keep the original grouped TOC markup, with keyboard-accessible mobile controls. */
+export function GuideSidebar({ children }: { children: ReactNode }) {
+  const panel = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const close = useCallback(() => { setOpen(false); toggle.current?.focus(); }, []);
+  const select = useCallback((id: string) => {
+    const nav = panel.current;
+    const links = [...(nav?.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]') ?? [])];
+    const selected = links.find(a => a.hash === `#${id}`);
+    if (!selected) return;
+    for (const a of links) { a.classList.remove('active'); a.removeAttribute('aria-current'); }
+    for (const group of nav?.querySelectorAll('li.top') ?? []) group.classList.remove('open');
+    selected.classList.add('active'); selected.setAttribute('aria-current', 'location');
+    const group = selected.closest('li.top'); group?.classList.add('open'); group?.querySelector(':scope > a')?.classList.add('active');
+    if (nav && (selected.offsetTop < nav.scrollTop || selected.offsetTop + selected.offsetHeight > nav.scrollTop + nav.clientHeight)) nav.scrollTop = Math.max(0, selected.offsetTop - nav.clientHeight / 2);
+  }, []);
+  useEffect(() => {
+    const guide = panel.current?.closest('.kubernetes-guide');
+    const hash = () => select(window.location.hash.slice(1) || 's0');
+    hash(); window.addEventListener('hashchange', hash);
+    const click = (event: MouseEvent) => {
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
+      if (link) { select(link.hash.slice(1)); close(); }
+    };
+    const nav = panel.current; nav?.addEventListener('click', click);
+    const visible = new Set<Element>();
+    const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
+      for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
+      const current = [...(guide?.querySelectorAll('section[id]') ?? [])].filter(el => visible.has(el)).at(-1);
+      if (current) select(current.id);
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);
+    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); };
+  }, [close, select]);
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    // 章のハッシュ変更で開く小目次が変わるため、表示中のリンクは毎回取得する
+    const visibleLinks = () => [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])].filter(link => !link.closest('.sub') || link.closest('.top')?.classList.contains('open'));
+    visibleLinks()[0]?.focus();
+    const key = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') close();
+      if (event.key !== 'Tab') return;
+      const links = visibleLinks(), first = links[0], last = links.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    const resize = () => { if (window.innerWidth > 1024) close(); };
+    const header = (event: PointerEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest('.docs-header')) return;
+      if (panel.current?.contains(document.activeElement)) toggle.current?.focus();
+      setOpen(false);
+    };
+    document.addEventListener('keydown', key); window.addEventListener('resize', resize); document.addEventListener('pointerdown', header);
+    return () => { document.body.style.overflow = previous; document.removeEventListener('keydown', key); window.removeEventListener('resize', resize); document.removeEventListener('pointerdown', header); };
+  }, [open, close]);
+  return <>
+    <aside className={`sidebar${open ? ' open' : ''}`} id="sidebar" aria-label="目次" ref={panel}>{children}</aside>
+    <button type="button" className={`backdrop${open ? ' show' : ''}`} id="backdrop" aria-label="目次を閉じる背景" tabIndex={-1} hidden={!open} onClick={close} />
+    <button className="nav-toggle" id="navToggle" type="button" aria-label={open ? '目次を閉じる' : '目次を開く'} aria-expanded={open} aria-controls="sidebar" ref={toggle} onClick={() => setOpen(value => !value)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
+  </>;
+}

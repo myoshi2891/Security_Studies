@@ -34,7 +34,7 @@ test('registers MITRE ATLAS exactly once under Advanced Topics and retains all e
   const entry = { title: 'MITRE ATLAS', href: '/docs/mitre-atlas' };
   expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual(entry);
   expect(docsConfig.sidebarNav.flatMap(group => group.items).filter(item => item.href === entry.href)).toEqual([entry]);
-  expect(docsConfig.sidebarNav.flatMap(group => group.items)).toHaveLength(15);
+  expect(new Set(docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href)).size).toBe(docsConfig.sidebarNav.flatMap(group=>group.items).length);
   expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual({ title: 'OWASP Top 10 (2025/2026)', href: '/docs/owasp' });
 });
 
@@ -58,9 +58,12 @@ test('uses the original document title and indexes all 34 compound headings with
   expect(entries[0].content).not.toContain('import ');
 });
 
-test('publishes fifteen complete search entries including the live ATLAS title, description and full headings', async () => {
+test('publishes all registered complete search entries including the live ATLAS title, description and full headings', async () => {
   const cached = JSON.parse(readFileSync(resolve(here, '../../../../public/search-index.json'), 'utf8'));
-  expect(cached).toHaveLength(15);
+  expect(cached).toHaveLength(docsConfig.sidebarNav.flatMap(group=>group.items).length);
+  // 件数一致だけでは取り違え（欠落と重複の相殺）を検出できないため href 集合も比較する
+  const sorted = (hrefs: string[]) => [...new Set(hrefs)].sort();
+  expect(sorted(cached.map((item: { href: string }) => item.href))).toEqual(sorted(docsConfig.sidebarNav.flatMap(group => group.items).map(item => item.href)));
   expect(cached.filter((item: { href: string }) => item.href === '/docs/mitre-atlas')).toEqual((await getSearchIndex()).filter(item => item.href === '/docs/mitre-atlas'));
 });
 

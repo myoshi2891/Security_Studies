@@ -15,7 +15,7 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-10-13</span>
+                            <span><span class="live-dot"></span>Scanned 2026-10-17</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
@@ -27,8 +27,9 @@
                 </div>
             </div>
         </header>
-
-        <section class="container" aria-label="CCST Cybersecurity migration test status"><p>CCST: 図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功 · 395 pass / 0 fail、58ファイル、25,099 expect · ビルド未実行・目視はユーザー担当</p></section>
+        <section class="container" aria-label="CCST Cybersecurity historical migration test status"><p>CCST（過去の検証記録・2026-10-14）: 図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功 · 395 pass / 0 fail、58ファイル、25,099 expect · ビルド未実行・目視はユーザー担当</p></section>
+<section class="container" aria-label="Hacking Kubernetes migration test status"><p>履歴（Kubernetes移行完了時）: Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
+<section class="container" aria-label="WAHH migration test status"><p>履歴（WAHH移行完了時）: WAHH: 移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功。538 pass / 0 fail、85ファイル、59,406 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
         <!-- SUMMARY -->
         <section class="summary-section">
             <div class="container">
@@ -50,7 +51,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            36 ロジックファイル中 36 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4。MDXテストは別集計）
+                            46 ロジックファイル中 46 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -61,8 +62,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">395</div>
-                        <div class="summary-sub">395 pass / 0 fail、58ファイル、25,099 expect · CCST 図中央寄せGreen・全395件成功・小図は中央/幅広図は左端から左右スクロール・lint/型検査成功</div>
+                        <div class="summary-value">564</div>
+                        <div class="summary-sub">最新（2026-10-17実測）: 前回記録（547件）以降、ISO/IEC 27000:2026（5件）・ISO/IEC 27001:2022（6件）ガイドページのページ登録・検索契約ほかを追加・全564件成功。564 pass / 0 fail、89ファイル、59,760 expect。DocsHeaderNav.test.tsx 9件。npm経由・ビルド未実行（禁止）。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -84,19 +85,9 @@
                 </div>
             </div>
         </section>
-
 <section class="container" aria-label="Secure by Design migration test status"><p>Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功 · 231 pass / 0 fail、36ファイル、9,070 expect · npm test（内部Bun） · ビルド未実行 · 目視確認はユーザー担当</p></section>
-
-
-
 <section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功 · 277 pass / 0 fail、42ファイル、10,627 expect · ビルド未実行・目視はユーザー担当</p></section>
-
-
-
-
-
 <section class="container" aria-label="CCIE Security migration test status"><p>CCIE Security: 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功 · 291 pass / 0 fail、46ファイル、12,618 expect · ビルド未実行・目視はユーザー担当</p></section>
-
         <!-- FILTERS -->
         <section class="filters-section">
             <div class="container">
@@ -230,7 +221,6 @@
                 </div>
             </div>
         </section>
-
         <!-- MATRIX -->
         <section class="matrix-section">
             <div class="container">
@@ -336,23 +326,26 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">10 layout + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST tests · 14/16 logic files</span>
+                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 56 Kubernetes tests + 74 WAHH tests · 24/25 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 88%"></div>
+                                                <div class="cell-bar-fill" style="width: 96%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 14/16 ロジックファイル</div>
-                                            docs layout、CCIE、CCST、Secure by Design、MITRE ATLASの描画・コード・本文をテスト済み。root layout / page.tsx は未カバー。
+                                            <div class="tt-title">⚠️ Partial — 24/25 ロジックファイル</div>
+                                            docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHHの描画・コード・本文をテスト済み。root layout は未カバー（HomePageは3件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
-                                                <li>✓ src/app/docs/layout.test.tsx (10 tests)</li>
+                                                <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
+                                                <li>✓ src/app/page.test.tsx (3 tests): ホーム一覧/統計/共通メニューと登録件数</li>
+<li>✓ DocsHeaderNav.test.tsx (9 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・99ページ拡張・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行・表示テストで検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（43移行・表示テストで検証）</li>
                                                 <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（104移行・表示・アーカイブテストで検証）</li>
-                                                <li>✗ src/app/page.tsx</li>
+                                                <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（74テスト）</li>
+                                                <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（56移行・表示・操作・コントラスト・アーカイブテストで検証）</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、その他MDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、Kubernetesは56件、その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -391,21 +384,20 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">4 page registration contracts · 1/1 files</span>
+                                            <span class="cell-count">6 page registration contracts · 1/1 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — CCIE・CCST・Secure by Design・ATLASナビ契約</div>
+                                            <div class="tt-title">⚠️ Partial — CCIE・CCST・Secure by Design・ATLAS・Kubernetes・WAHHナビ契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録 + CCSTのCCIE直後登録（各integration.test.tsx）</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録 + CCSTのCCIE直後登録 + KubernetesとWAHHのSecurity Guides登録（各integration.test.tsx）。WAHHはホームの表示もpage.test.tsxで検証。DocsHeaderNav.test.tsxで80ページ追加時（計99ページ）の共通メニューを検証</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- Integration -->
                             <tr data-cat="integration">
                                 <td>
@@ -487,7 +479,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- E2E -->
                             <tr data-cat="e2e">
                                 <td>
@@ -571,7 +562,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- Visual -->
                             <tr data-cat="visual">
                                 <td>
@@ -658,7 +648,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- A11y -->
                             <tr data-cat="a11y">
                                 <td>
@@ -751,7 +740,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- Performance -->
                             <tr data-cat="perf">
                                 <td>
@@ -838,7 +826,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- API/Contract -->
                             <tr data-cat="api">
                                 <td>
@@ -938,7 +925,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                             <!-- Security -->
                             <tr data-cat="security">
                                 <td>
@@ -1035,7 +1021,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div class="legend">
                     <div class="legend-item">
                         <div class="legend-dot ok"></div>
@@ -1052,15 +1037,12 @@
                 </div>
             </div>
         </section>
-
         <!-- NEXT ACTIONS -->
         <section class="actions-section">
             <div class="container">
                 <div class="section-title">Next Actions · 優先度別テスト導入計画</div>
-
                 <!-- HIGH -->
                 <!-- 現在、即対応が必要な高優先度タスクはありません。すべて完了済みです。 -->
-
                 <!-- MEDIUM -->
                 <div class="priority-group">
                     <div class="priority-header">
@@ -1111,7 +1093,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- LOW -->
                 <div class="priority-group">
                     <div class="priority-header">
@@ -1180,28 +1161,24 @@
                 </div>
             </div>
         </section>
-
         <!-- FOOTER -->
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-14</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-17</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 58 files · 395 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 89 files · 564 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
             </div>
         </footer>
-
         <script>
             const state = { cat: 'all', dom: 'all' };
-
             function applyFilter(type, val, btn) {
                 if (!btn) return;
                 try {
                     state[type] = val;
-
                     document
                         .querySelectorAll(`[data-ftype="${type}"]`)
                         .forEach((b) => {
@@ -1210,12 +1187,10 @@
                         });
                     btn.classList.add('active');
                     btn.setAttribute('aria-pressed', 'true');
-
                     document.querySelectorAll('tbody tr[data-cat]').forEach((tr) => {
                         const show = state.cat === 'all' || tr.dataset.cat === state.cat;
                         tr.classList.toggle('row-hidden', !show);
                     });
-
                     ['d1', 'd2', 'd3', 'd4', 'd5'].forEach((d) => {
                         const show = state.dom === 'all' || state.dom === d;
                         document.querySelectorAll(`[data-dom="${d}"]`).forEach((el) => {
@@ -1226,7 +1201,6 @@
                     console.error('[applyFilter]', err);
                 }
             }
-
             // keyboard: Enter/Space on filter buttons
             const filterBtns = document.querySelectorAll('.filter-btn');
             if (filterBtns.length > 0) {
