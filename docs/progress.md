@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 表示基盤Red・2件失敗・実装前）
+> **最終更新**: 2026-10-18（Applied Cryptography: 表示基盤Green・専用2件成功・本文と図は未完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **566件** | `npm test`: 564 pass / 2 fail、90ファイル（2026-10-18。表示基盤Red・2件失敗・実装前。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
+| テストケース総数 | **566件** | `npm test`: 566 pass / 0 fail、90ファイル（2026-10-18。表示基盤Green・専用2件成功・本文と図は未完了。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
 | テストファイル数 | **90ファイル** | ページ移行テストを含む実行ファイル数 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -606,3 +606,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 <!-- /shared-guide-navigation-status -->
 
 - 2026-10-18: Applied Cryptography: 表示基盤Red・2件失敗・実装前。564 pass / 2 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `af86f10`。
+
+- 2026-10-18: Applied Cryptography: 表示基盤Green・専用2件成功・本文と図は未完了。566 pass / 0 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `bf56515`。
