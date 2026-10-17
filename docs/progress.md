@@ -19,7 +19,7 @@
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-15〜2026-10-16 実測。各行の実測・更新日は備考を参照）
+#### ファイル別テスト数（2026-10-17 実測: 89ファイル・合計564件。`bun test --reporter=junit` のファイル別件数と照合。備考の日付は各行の追加・更新日）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
@@ -36,8 +36,8 @@
 | `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 4 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 7 | 2026-10-15 更新・Mermaid baseテーマの検証を追加・全543件成功 |
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 5 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |（2026-10-17実測で+1）
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 8 | 2026-10-15 更新・Mermaid baseテーマの検証を追加・全543件成功 |（2026-10-17実測で+1）
 | `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -48,7 +48,7 @@
 | `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 10 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 11 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |（2026-10-17実測で+1）
 | `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
@@ -96,30 +96,22 @@
 | `src/app/docs/mitre-atlas/sidebar-a11y.test.tsx` | 1 | 1 pass / 0 fail |
 | `src/app/docs/ccie-security/archive.test.ts` | 5 | 5 pass / 0 fail |
 | `src/app/docs/ccie-security/table-cascade.test.tsx` | 5 | 5 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/foundation.test.tsx` | 7 | 7 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/sections-00-03.test.tsx` | 4 | 4 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/MermaidFigure.test.tsx` | 9 | 9 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/chapters-01-02.test.tsx` | 11 | 11 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/chapter-03.test.tsx` | 7 | 7 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/chapters-04-05.test.tsx` | 10 | 10 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/chapter-06-references.test.tsx` | 17 | 17 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/hydration.test.tsx` | 3 | 3 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/integration.test.tsx` | 8 | 8 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/style-cascade.test.tsx` | 15 | 15 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/GuideSidebar.test.tsx` | 8 | 8 pass / 0 fail |
-
 | `src/app/docs/ccst-cybersecurity/archive.test.ts` | 5 | 5 pass / 0 fail |
+| `src/app/docs/hacking-kubernetes/GuideCode.test.tsx` | 3 | 2026-10-17 実測で追記・GuideCodeフォールバック |
+| `src/app/docs/web-application-hackers-handbook/GuideCode.test.tsx` | 3 | 2026-10-17 実測で追記・GuideCodeフォールバック |
+| `src/app/docs/iso-iec-27000-2026-guide/page.test.ts` | 5 | 2026-10-17 追加・ISO/IEC 27000:2026ページ登録・検索契約（Red `7795079` → Green `c8ae34d`） |
+| `src/app/docs/iso-iec-27001-2022-guide/page.test.ts` | 6 | 2026-10-17 追加・ISO/IEC 27001:2022ページ登録・検索契約（Red `bc8b7b2` → Green `3061d16`） |
 
 ---
 
