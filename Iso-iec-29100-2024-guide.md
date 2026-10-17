@@ -847,10 +847,9 @@ def pseudonymize(value: str) -> str:
 
     同じ入力は同じ別名になるため、リンク可能性は残る（= 仮名データは PII のまま）。
     """
-    # 大文字小文字は区別したまま扱う（小文字化すると別の識別子が同じ HMAC になる）。
-    # 識別子の仕様で大小文字を区別しないと明示されている場合に限り、専用の正規化を適用する。
-    normalized = value.strip()
-    return hmac.new(PSEUDONYM_KEY, normalized.encode("utf-8"), hashlib.sha256).hexdigest()
+    # 入力値はそのまま扱う（小文字化や前後空白の除去をすると別の識別子が同じ HMAC になる）。
+    # 識別子の仕様で大小文字や空白を区別しないと明示されている場合に限り、専用の正規化を適用する。
+    return hmac.new(PSEUDONYM_KEY, value.encode("utf-8"), hashlib.sha256).hexdigest()
 ```
 
 この方式で注意すること:
