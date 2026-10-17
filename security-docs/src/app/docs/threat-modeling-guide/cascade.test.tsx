@@ -7,10 +7,11 @@ const css=()=>['../../../../node_modules/tailwindcss/preflight.css','../../globa
 const properties=['fontSize','fontWeight','fontFamily','lineHeight','letterSpacing','marginTop','marginBottom','paddingTop','paddingRight','paddingBottom','paddingLeft','borderBottomWidth','color','backgroundColor'] as const;
 async function compareSource(width:number,scheme:'light'|'dark',selectors:string[]){
  const a=new Window({settings:{device:{prefersColorScheme:scheme}}}),b=new Window();
- const norm=(v:string)=>['','normal','none','0','0px'].includes(v)?'default':v==='transparent'?'rgba(0, 0, 0, 0)':v;
+ // Happy DOM sometimes returns inherited rem units instead of resolved px; both roots use 16px.
+ const norm=(v:string)=>['','normal','none','0','0px'].includes(v)?'default':v==='transparent'?'rgba(0, 0, 0, 0)':/^-?[\d.]+rem$/.test(v)?`${parseFloat(v)*16}px`:v;
  try{for(const w of [a,b])w.happyDOM.setWindowSize({width,height:900});
   a.document.head.innerHTML=`<style>${css()}</style>`;a.document.body.innerHTML=`<div class="docs-shell"><main class="docs-main"><article class="prose docs-article">${(await renderedPage()).body.innerHTML}</article></main></div>`;
-  b.document.head.innerHTML=`<style>${sourceCss}</style>`;b.document.body.innerHTML=sourceDocument.body.innerHTML;
+  b.document.head.innerHTML=`<style>html{font-size:16px}${sourceCss}</style>`;b.document.body.innerHTML=sourceDocument.body.innerHTML;
   for(const selector of selectors){
    const actual=[...a.document.querySelectorAll('.threat-guide '+selector)].filter(el=>!el.closest('.mermaid'));
    const original=[...b.document.querySelectorAll(selector)].filter(el=>!el.closest('.mermaid'));
