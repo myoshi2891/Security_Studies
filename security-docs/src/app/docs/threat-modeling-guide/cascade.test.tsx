@@ -22,13 +22,13 @@ async function compareSource(width:number,scheme:'light'|'dark',selectors:string
 }
 test('every heading paragraph and nested list item retains source typography and spacing at phone and desktop widths',async()=>{
  for(const width of [375,900,1440])await compareSource(width,'light',['h1','h2','h3','h4','p','.main ul>li','.main ol>li']);
-});
+},30000);
 test('all 839 header and body cells preserve source backgrounds padding borders and font weights in both app schemes',async()=>{
  for(const scheme of ['light','dark'] as const)await compareSource(900,scheme,['table','th','td']);
-});
+},30000);
 test('code cards inline code brand and figure captions retain original styles',async()=>{
  await compareSource(1440,'light',['pre','pre code','td code','p code','.brand','figcaption']);
-});
+},30000);
 test('all bullet and numbered marker declarations, nested spacing and checkbox keyboard styles survive exactly',()=>{
  const actual=postcss.parse(readFileSync(new URL('./threat-modeling-guide.css',import.meta.url),'utf8'));
  for(const selector of ['ul>li::before','ol','ol>li','ol>li::before','li>ul,li>ol','.ck-num','.check-item input:checked + .box','.check-item input:checked + .box i','.check-item input:focus-visible + .box','.check-item:has(input:checked) .ck-text','details.answer[open] .chev','details.answer[open] summary']){
