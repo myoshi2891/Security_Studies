@@ -40,5 +40,15 @@ test('shared header interaction closes the drawer and resize restores desktop sc
  const view=render(h('div',{},h('header',{className:'docs-header'},h('button',{},'検索')),harness()));const btn=view.container.querySelector('#menuBtn')!;
  fireEvent.click(btn);fireEvent.pointerDown(view.container.querySelector('.docs-header button')!);expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(btn);
  const {innerWidth:width,innerHeight:height}=window;const viewport=(window as unknown as Window).happyDOM;
- try{viewport.setWindowSize({width:1440,height:900});fireEvent.click(btn);fireEvent(window,new Event('resize'));expect(btn).toHaveAttribute('aria-expanded','false');expect(document.body.style.overflow).toBe('');}finally{viewport.setWindowSize({width,height});}
+ const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
+ try{
+  viewport.setWindowSize({width:1440,height:900});
+  // Earlier suites may assign an own innerWidth property, shadowing Happy DOM's viewport getter.
+  Object.defineProperty(window,'innerWidth',{configurable:true,writable:true,value:1440});
+  expect(window.innerWidth).toBe(1440);fireEvent.click(btn);fireEvent(window,new Event('resize'));
+  expect(btn).toHaveAttribute('aria-expanded','false');expect(document.body.style.overflow).toBe('');
+ }finally{
+  viewport.setWindowSize({width,height});
+  if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
+ }
 });
