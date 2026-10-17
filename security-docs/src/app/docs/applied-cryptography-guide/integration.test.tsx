@@ -37,7 +37,7 @@ test('the original sixteen TOC entries resolve uniquely and every source ID surv
 test('all fourteen rendered diagram hooks carry their exact source definition',async()=>{
  const figures=(await renderedPage()).querySelectorAll('.diagram');expect(figures).toHaveLength(14);
  expect([...sourceDocument.querySelectorAll('.diagram')].map(el=>el.id)).toEqual([...figures].map(el=>el.id));
- for(const figure of figures)expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!));
+ for(const figure of figures)expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!)!);
 });
 test('Next metadata and dynamic search preserve every original heading including numbered compound headings',async()=>{
  const metadata=(await evaluatedPage()).metadata as {title:string;description:string};expect(metadata.title).toBe(sourceDocument.querySelector('h1')!.textContent);expect(metadata.description).toContain('AEAD');
