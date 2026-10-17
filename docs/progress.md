@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-17（ISO/IEC 27000:2026ガイドページ追加・レビュー指摘対応・全558件成功・lint/型検査成功）
+> **最終更新**: 2026-10-17（ISO/IEC 27001:2022初学者向けガイドページ追加・ダッシュボード集計を実測値へ同期・全564件成功・lint/型検査成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **558件** | `npm test`: 558 pass / 0 fail、88ファイル、59,599 expect（2026-10-17実測。ISO/IEC 27000:2026ガイドページ5件を追加 Red `7795079` → Green `c8ae34d`・lint/型検査成功） |
-| テストファイル数 | **88ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル88件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **564件** | `npm test`: 564 pass / 0 fail、89ファイル、59,760 expect（2026-10-17実測。ISO/IEC 27001:2022ガイドページ6件を追加 Red `bc8b7b2` → Green `3061d16`・lint/型検査成功） |
+| テストファイル数 | **89ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
+| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
@@ -212,6 +212,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
 | PR47-COV | **PR #47 Codecov指摘対応**<br>WAHH GuideSidebarのヘッダーpointerdown・MermaidFigureのラベル付きノード説明をテストで網羅（行100%）。K8s MermaidFigureに描画失敗時の再試行ボタンを追加（Red `9ab673e` → Green `857c5fb`）。Ghost in the Wires/ISO 27001ガイドの書誌・6.2記述を修正（`9b41869`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
