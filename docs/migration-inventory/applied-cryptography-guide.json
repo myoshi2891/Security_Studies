@@ -1,5 +1,5 @@
 {
-  "source": "Applied-cryptography-guide.html",
+  "source": "archive/html/Applied-cryptography-guide.html",
   "htmlSha256": "34681c8dc351e2940e337af70e7a4016078f3d0fb2410f557b8087ca351add47",
   "markdownSha256": "78eba4a5300e25287f79b8afc7b43b6a8169d736fba717255474e4f5a75579ad",
   "route": "/docs/applied-cryptography-guide",
@@ -772,5 +772,6 @@
     "12": "flowchart TD\nA[\"1 暗号の棚卸し<br/>どこで何を使っているか\"] --> B[\"2 長期秘匿が必要なデータを特定\"]\nB --> C[\"3 鍵交換から優先してハイブリッド化\"]\nC --> D[\"4 署名と証明書の移行計画\"]\nD --> E[\"5 暗号アルゴリズムを差し替えやすい設計に<br/>暗号アジリティ\"]",
     "13": "flowchart TD\nStart[\"何をしたい?\"] --> A{\"通信を<br/>保護したい\"}\nStart --> B{\"データを<br/>保存時に暗号化\"}\nStart --> C{\"パスワードを<br/>保存したい\"}\nStart --> D{\"改ざんを<br/>検知したい\"}\nA -->|はい| A1[\"TLS 1.3 を使う<br/>PQ ハイブリッド対応を確認\"]\nB -->|はい| B1[\"AEAD + KMS で鍵管理\"]\nC -->|はい| C1[\"Argon2id\"]\nD -->|共有鍵あり| D1[\"HMAC\"]\nD -->|共有鍵なし| D2[\"デジタル署名 Ed25519<br/>PQ なら ML-DSA を検討\"]",
     "14": "flowchart TD\nS1[\"Level 1<br/>用語と全体像<br/>この文書の1〜3章\"] --> S2[\"Level 2<br/>部品を理解<br/>AEAD ハッシュ 署名 4〜7章\"]\nS2 --> S3[\"Level 3<br/>ライブラリで実装<br/>Python cryptography libsodium\"]\nS3 --> S4[\"Level 4<br/>プロトコルを読む<br/>TLS 1.3 Signal\"]\nS4 --> S5[\"Level 5<br/>ポスト量子と移行<br/>NIST IETF\"]\nS5 --> S6[\"Level 6<br/>書籍 Applied Cryptography を<br/>歴史と設計思想として読む\"]"
-  }
+  },
+  "markdownSource": "archive/md/Applied-cryptography-guide.md"
 }

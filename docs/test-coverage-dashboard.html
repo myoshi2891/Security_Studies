@@ -31,7 +31,7 @@
 <section class="container" aria-label="Hacking Kubernetes migration test status"><p>履歴（Kubernetes移行完了時）: Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
 <section class="container" aria-label="WAHH migration test status"><p>履歴（WAHH移行完了時）: WAHH: 移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功。538 pass / 0 fail、85ファイル、59,406 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
         <!-- SUMMARY -->
-        <!-- applied-migration-status --><section class="container" aria-label="Applied Cryptography migration status"><p>Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。同期前HEAD d6cb2b1。</p></section><!-- /applied-migration-status -->
+        <!-- applied-migration-status --><section class="container" aria-label="Applied Cryptography migration status"><p>原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。npm使用・ビルド禁止・未実行・目視確認待ち。</p></section><!-- /applied-migration-status -->
 <section class="summary-section">
             <div class="container">
                 <div class="summary-grid">
@@ -63,8 +63,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">619</div>
-                        <div class="summary-sub">100 ファイル · 619 pass / 0 fail · Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち</div>
+                        <div class="summary-value">624</div>
+                        <div class="summary-sub">619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗） · 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -327,7 +327,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 55 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 tests · 28/29 logic files</span>
+                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 60 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 tests · 28/29 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 96.6%"></div>
                                             </div>
@@ -345,7 +345,7 @@
                                                 <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（104移行時点テストで検証）</li>
                                                 <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（83テスト）</li>
                                                 <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（61テストで検証）</li>
-                                                <li>✓ Applied Cryptography: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（55件/11ファイル、全16節・28表・14図・10コード・65見出しを照合）</li>
+                                                <li>✓ Applied Cryptography: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（60件/12ファイル、全16節・28表・14図・10コード・65見出しを照合）</li>
                                                 <li>✗ src/app/layout.tsx</li>
                                                 <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、Kubernetesは61件、WAHHは83件、Applied Cryptographyは55件、ISO 27000は5件、ISO 27001は6件。その他MDXは個別移行テスト対象外）</li>
                                             </ul>
@@ -1169,7 +1169,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-18</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 100 files · 619 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 101 files · 624 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>

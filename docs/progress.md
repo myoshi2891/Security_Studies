@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち）
+> **最終更新**: 2026-10-18（Applied Cryptography: 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録））
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **619件** | `npm test`: 619 pass / 0 fail、100ファイル、77,735 expect（2026-10-18最終全体実測）。専用55件/11ファイル。lint・型検査成功。ビルド禁止・未実行 |
-| テストファイル数 | **100ファイル** | ページ移行テストを含む実行ファイル数 |
+| テストケース総数 | **624件** | `npm test`: 619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。ビルド禁止・未実行 |
+| テストファイル数 | **101ファイル** | ページ移行・アーカイブテストを含む実行ファイル数 |
 | File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18 実測: 100ファイル・合計619件。最終 `npm test` ログのファイル別成功件数と照合）
+#### ファイル別テスト数（2026-10-18: 101ファイル・合計624件。アーカイブ5件はRed・失敗）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のRed |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -671,3 +672,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - `npm test`・`npm run lint`・`npm run types:check` 成功。検索索引20ページ・65見出しを検証。Next.jsビルド禁止・未実行。push・公開未実施。
 - 残る確認はユーザーの目視: `docs/migration-inventory/applied-cryptography-guide-review.md`。自動検証済みと目視未確認を区別する。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
 - 手順違反からの復旧はユーザー承認済み。`dbace04`で誤記訂正、`473fc14`で不足アイコンを修正。履歴は保持。
+
+- 2026-10-18: Applied Cryptography: 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。同期前HEAD `5691ce9`。npm使用・ビルド禁止・未実行。
