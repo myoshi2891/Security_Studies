@@ -327,6 +327,7 @@ flowchart TD
 |---|---|
 | ISO/IEC 27000:2026 規格ページ（エディション、ライフサイクル、FAQ） | https://www.iso.org/standard/27000 |
 | ISO/IEC 27001:2022/Amd 1:2024（気候変動対応） | https://www.iso.org/standard/88435.html |
+| ISO/IEC DIS 27003（ISO/IEC 27001:2022向けの改訂版。2026年10月13日確認時点でDIS登録済み・未発行） | https://www.iso.org/standard/85919.html |
 
 ### A-2. 認証機関・標準化団体による解説（二次情報）
 
@@ -339,7 +340,7 @@ flowchart TD
 | DQS：ISO 27001の現行版と移行期限 | https://www.dqsglobal.com/en/explore/dqs-knowledge-center/iso-27001-explained |
 | EVS：EN ISO/IEC 27001:2023+A1:2024（27002、27005との関連） | https://www.evs.ee/en/evs-en-iso-iec-27001-2023-a1-2024-consolidated |
 | Presencis：27000ファミリー一覧（27001、27002、27003、27004、27005） | https://presencis.com/regulations/iso-27001/documents/ |
-| ISO27001security.com：27003改訂（27003:2017は27001:2013向け、2025年12月時点でCD段階） | https://www.iso27001security.com/post/iso-iec-27003-revision |
+| ISO27001security.com：27003改訂（27003:2017は27001:2013向け。同サイトの2025年12月時点の記載ではCD段階で、2026年10月13日確認時点のISO公式情報ではDIS登録済み） | https://www.iso27001security.com/post/iso-iec-27003-revision |
 | SCC（カナダ規格評議会）：ISO/IEC DIS 27004の登録 | https://scc-ccn.ca/standardsdb/standards/8193369 |
 
 ### A-3. ISO/IEC 27701:2025 関連
