@@ -313,7 +313,7 @@ Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功�
 <!-- threat-migration-status -->
 ## Threat Modeling移行（2026-10-18）
 
-Threat Modeling: 原本アーカイブGreen・専用61件成功・両SHA-256一致。685 pass / 0 fail、114ファイル。専用61成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `1afadef`。
+Threat Modeling: 最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功）。684 pass / 1 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `09993be`。
 
 移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
 <!-- /threat-migration-status -->
