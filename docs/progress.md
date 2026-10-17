@@ -36,8 +36,8 @@
 | `src/app/docs/web-application-hackers-handbook/steps-05-08.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/steps-01-04.test.tsx` | 4 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/web-application-hackers-handbook/sections-00-04.test.tsx` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
-| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 5 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |（2026-10-17実測で+1）
-| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 8 | 2026-10-15 更新・Mermaid baseテーマの検証を追加・全543件成功 |（2026-10-17実測で+1）
+| `src/app/docs/web-application-hackers-handbook/sidebar.test.tsx` | 5 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功（2026-10-17実測で+1） |
+| `src/app/docs/web-application-hackers-handbook/runtime.test.tsx` | 8 | 2026-10-15 更新・Mermaid baseテーマの検証を追加・全543件成功（2026-10-17実測で+1） |
 | `src/app/docs/web-application-hackers-handbook/foundation.test.tsx` | 7 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/archive.test.ts` | 5 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/contrast.test.tsx` | 3 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
@@ -48,7 +48,7 @@
 | `src/app/docs/hacking-kubernetes/sections-08-11.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/sections-04-07.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/app/docs/hacking-kubernetes/sections-00-03.test.tsx` | 4 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
-| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 11 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功 |（2026-10-17実測で+1）
+| `src/app/docs/hacking-kubernetes/interaction.test.tsx` | 11 | 2026-10-15 更新・Codecov未カバー行/再試行テスト追加・全543件成功（2026-10-17実測で+1） |
 | `src/app/docs/hacking-kubernetes/foundation.test.tsx` | 7 | 2026-10-15 更新・原本アーカイブGreen・全452件成功・lint/型検査成功 |
 | `src/components/docs/Callout.test.tsx` | 4 | 4 pass / 0 fail |
 | `src/components/docs/DocsSubheading.test.tsx` | 4 | 4 pass / 0 fail |
