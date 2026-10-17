@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-17（ISO/IEC 27001:2022初学者向けガイドページ追加・ダッシュボード集計を実測値へ同期・全564件成功・lint/型検査成功）
+> **最終更新**: 2026-10-18（Applied Cryptography: 表示基盤Red・2件失敗・実装前）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **564件** | `npm test`: 564 pass / 0 fail、89ファイル、59,760 expect（2026-10-17実測。ISO/IEC 27001:2022ガイドページ6件を追加 Red `bc8b7b2` → Green `3061d16`・lint/型検査成功） |
-| テストファイル数 | **89ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
+| テストケース総数 | **566件** | `npm test`: 564 pass / 2 fail、90ファイル（2026-10-18。表示基盤Red・2件失敗・実装前。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
+| テストファイル数 | **90ファイル** | ページ移行テストを含む実行ファイル数 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -604,3 +604,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+- 2026-10-18: Applied Cryptography: 表示基盤Red・2件失敗・実装前。564 pass / 2 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `af86f10`。

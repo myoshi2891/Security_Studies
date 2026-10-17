@@ -1,6 +1,6 @@
 # Security Studies 2026
 
-最終更新日: 2026-10-15
+最終更新日: 2026-10-18
 
 Next.js-based documentation application focused on security studies, leveraging MDX for high-fidelity content authoring.
 
@@ -165,3 +165,11 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+<!-- applied-migration-status -->
+## Applied Cryptography移行（2026-10-18）
+
+Applied Cryptography: 表示基盤Red・2件失敗・実装前。564 pass / 2 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `af86f10`。
+
+移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本HTML/Markdownはルートに保持。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。現段階の未完了項目は上記状態と進捗履歴を参照。
+<!-- /applied-migration-status -->
