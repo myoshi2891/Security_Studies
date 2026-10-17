@@ -275,7 +275,7 @@ NIST SP 800-140 は 24759:2017 の構成に沿って、**総則（6.1）＋11の
 |---|---|
 | どの個別要件が具体的に何件追加・変更・削除されたか | 逐条の差分は有償の原文が必要なため未確認 |
 | 2025年版の条番号が2017年版と一致するか | 未確認 |
-| CMVP が2025年版を FIPS 140-3 の基準としていつ採用するか | NIST の SP 800-140 シリーズ対応表（2025年11月13日更新版）は、**確認できた時点では2012年版／2017年版との対応で記載**されていた。採用時期の公式発表は確認できていない |
+| CMVP が2025年版を FIPS 140-3 の基準としていつ採用するか | NIST の SP 800-140 シリーズ対応表（2026年8月21日更新版）は、**確認できた時点では2012年版／2017年版との対応で記載**されていた。採用時期の公式発表は確認できていない |
 | JCMVP が2025年版でいつ受付を再開するか | IPAは「再開時に改めて知らせる」としており、日付は確認できていない |
 
 > **ここが実務の落とし穴**
@@ -555,7 +555,7 @@ flowchart TD
 | ISO | ISO/IEC 24759:2017（置き換え前の版） | https://www.iso.org/standard/72515.html |
 | IPA | JCMVP に関連するISO/IEC規格（2025年版の改訂内容・申請受付停止・JIS） | https://www.ipa.go.jp/security/jcmvp/kikaku.html |
 | NIST | FIPS 140-3 関連規格・SP 800-140 シリーズの概要 | https://csrc.nist.gov/projects/cryptographic-module-validation-program/fips-140-3-standards |
-| NIST | SP 800-140 シリーズの補足情報・ISO/IEC との対応表（2025年11月13日更新） | https://csrc.nist.gov/Projects/cryptographic-module-validation-program/sp-800-140-series-supplemental-information |
+| NIST | SP 800-140 シリーズの補足情報・ISO/IEC との対応表（2026年8月21日更新） | https://csrc.nist.gov/Projects/cryptographic-module-validation-program/sp-800-140-series-supplemental-information |
 | NIST | FIPS 140-3 移行（Transition）情報 | https://csrc.nist.gov/Projects/FIPS-140-3-Transition-Effort |
 | NIST | NIST SP 800-140（DTR、全文公開） | https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140.pdf |
 | NIST | SP 800-140x サブシリーズ公開のお知らせ | https://csrc.nist.gov/News/2020/nist-publishes-sp-800-140x-subseries-for-the-cmvp |
