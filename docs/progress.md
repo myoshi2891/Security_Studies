@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 専用55件成功・CSS比較の型検査エラー修正・型検査成功・全体検証中）
+> **最終更新**: 2026-10-18（Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,28 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **619件** | `npm test`: 619 pass / 0 fail、100ファイル（2026-10-18。専用55件成功・CSS比較の型検査エラー修正・型検査成功・全体検証中。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
+| テストケース総数 | **619件** | `npm test`: 619 pass / 0 fail、100ファイル、77,735 expect（2026-10-18最終全体実測）。専用55件/11ファイル。lint・型検査成功。ビルド禁止・未実行 |
 | テストファイル数 | **100ファイル** | ページ移行テストを含む実行ファイル数 |
-| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-17 実測: 89ファイル・合計564件。`bun test --reporter=junit` のファイル別件数と照合。備考の日付は各行の追加・更新日）
+#### ファイル別テスト数（2026-10-18 実測: 100ファイル・合計619件。最終 `npm test` ログのファイル別成功件数と照合）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/runtime.test.tsx` | 8 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-1-4.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-13-16.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-5-8.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-9-12.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/style-isolation.test.tsx` | 7 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/components/docs/DocsHeaderNav.test.tsx` | 9 | 2026-10-16 実測・ホーム/docs共通ガイド一覧・絞り込み・97ページ拡張・狭幅表示・可視ラベル由来のアクセシブルネームGreen |
 | `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホーム一覧・統計・共通ヘッダー/登録件数追従Green |
@@ -204,6 +215,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用55件、全619件成功、lint/型検査成功。原本をルートに保持。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
@@ -597,7 +609,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在20ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
@@ -650,3 +662,12 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Applied Cryptography: 原本図定義の節別照合を追加・専用55件成功・最終全体検証へ。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `836e173`。
 
 - 2026-10-18: Applied Cryptography: 専用55件成功・CSS比較の型検査エラー修正・型検査成功・全体検証中。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `0015790`。
+
+- 2026-10-18: Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。同期前HEAD `d6cb2b1`。
+
+## Applied Cryptography 最終確認・再開情報（2026-10-18）
+
+- 実装HEAD: `bdbc21f`。検証テストHEAD: `0015790`。最終検証: 619 pass / 0 fail、100ファイル、77,735 expect。専用55件/11ファイル。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。検索索引20ページ・65見出しを検証。Next.jsビルド禁止・未実行。push・公開未実施。
+- 残る確認はユーザーの目視: `docs/migration-inventory/applied-cryptography-guide-review.md`。自動検証済みと目視未確認を区別する。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
+- 手順違反からの復旧はユーザー承認済み。`dbace04`で誤記訂正、`473fc14`で不足アイコンを修正。履歴は保持。

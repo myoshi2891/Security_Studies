@@ -158,7 +158,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在20ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
@@ -169,7 +169,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 <!-- applied-migration-status -->
 ## Applied Cryptography移行（2026-10-18）
 
-Applied Cryptography: 専用55件成功・CSS比較の型検査エラー修正・型検査成功・全体検証中。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `0015790`。
+Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。同期前HEAD `d6cb2b1`。
 
-移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本HTML/Markdownはルートに保持。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。現段階の未完了項目は上記状態と進捗履歴を参照。
+移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本HTML/Markdownはルートに保持。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。原本の65見出しを検索可能。専用55件/11ファイル、最終全体619 pass / 0 fail・100ファイル・77,735 expect。`npm run lint`・`npm run types:check` 成功。目視確認表: `docs/migration-inventory/applied-cryptography-guide-review.md`（ユーザー確認待ち）。Next.jsビルド・push・公開は未実施。Mermaidの色設定を反映するためbaseテーマを使用し、各図の設定を描画ごとに渡す。狭い図は中央、幅広図は縮めず左右スクロール。
 <!-- /applied-migration-status -->
