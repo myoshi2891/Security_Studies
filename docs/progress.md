@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Threat Modeling: 最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功））
+> **最終更新**: 2026-10-18（Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,30 +12,30 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **685件** | 684 pass / 1 fail、114ファイル。全体実測。ビルド禁止・未実行 |
+| テストケース総数 | **685件** | `npm test`: 685 pass / 0 fail、114ファイル、118,043 expect（2026-10-18最終全体実測）。Threat Modeling専用61件/13ファイル。lint/型検査成功。ビルド禁止・未実行 |
 | テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
+| File Unit Coverage | **54/54 (100%)** | 既存50 + Threat Modeling部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 114ファイル・計685件、Threat Modeling: 最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功））
+#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計685件。最終npm testログと全行照合）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/threat-modeling-guide/archive.test.ts` | 5 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
-| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功） |
+| `src/app/docs/threat-modeling-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -229,6 +229,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
 | APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
@@ -623,7 +624,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在20ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
@@ -741,3 +742,12 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Threat Modeling: 原本アーカイブGreen・専用61件成功・両SHA-256一致。685 pass / 0 fail、114ファイル。専用61成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `1afadef`。
 
 - 2026-10-18: Threat Modeling: 最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功）。684 pass / 1 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `09993be`。
+
+- 2026-10-18: Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `701a8e1`。
+
+## Threat Modeling 最終確認・再開情報（2026-10-18）
+
+- 最終コード/テストHEAD: `09993be`。全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。
+- 原本HTML/MDは `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。静的検索21ページ・原本89見出しを検証。ビルド禁止・未実行。push・公開未実施。
+- 残る確認はユーザーの目視: `docs/migration-inventory/threat-modeling-guide-review.md`。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
