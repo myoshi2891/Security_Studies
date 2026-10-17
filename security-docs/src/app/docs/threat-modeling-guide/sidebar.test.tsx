@@ -7,7 +7,7 @@ import {sourceDocument} from './fidelity-helpers';
 afterEach(()=>{cleanup();(window as unknown as Window).happyDOM.setURL('http://localhost/');});
 const nav=()=>h('nav',{dangerouslySetInnerHTML:{__html:sourceDocument.querySelector('.sidebar nav')!.innerHTML}});
 const sections=()=>Array.from({length:18},(_,i)=>h('section',{id:`ch${i+1}`,key:i},h('h2',{},`章${i+1}`)));
-const harness=()=>h('div',{className:'threat-guide'},h(GuideSidebar,{},nav()),...sections());
+const harness=()=>h('div',{className:'threat-guide'},h(GuideSidebar,{children:nav()}),...sections());
 
 test('the original eighteen links are focus trapped and Escape/background restore focus and scrolling',()=>{
  const view=render(harness());const btn=view.container.querySelector('#menuBtn')!;const links=view.container.querySelectorAll<HTMLAnchorElement>('nav a');expect(links).toHaveLength(18);
