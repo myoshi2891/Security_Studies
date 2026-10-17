@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Threat Modeling: 目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット）
+> **最終更新**: 2026-10-18（Threat Modeling: 統合Green・専用56件成功・ナビと89見出しの検索登録）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -19,22 +19,22 @@
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 113ファイル・計680件、Threat Modeling: 目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット）
+#### ファイル別テスト数（2026-10-18: 113ファイル・計680件、Threat Modeling: 統合Green・専用56件成功・ナビと89見出しの検索登録）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
-| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット |
+| `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・統合Green・専用56件成功・ナビと89見出しの検索登録 |
 | `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -730,3 +730,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Threat Modeling: ナビ・検索統合Red・専用53成功3失敗・17チェック/5解答/目次操作成功。677 pass / 3 fail、113ファイル。専用53成功/3失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `dda342b`。
 
 - 2026-10-18: Threat Modeling: 目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット。680 pass / 0 fail、113ファイル。専用56成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `609fea7`。
+
+- 2026-10-18: Threat Modeling: 統合Green・専用56件成功・ナビと89見出しの検索登録。680 pass / 0 fail、113ファイル。専用56成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `9fcbc72`。
