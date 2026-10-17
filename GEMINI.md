@@ -197,7 +197,7 @@ Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功�
 <!-- threat-migration-status -->
 ## Threat Modeling移行（2026-10-18）
 
-Threat Modeling: CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `2cad1a5`。
+Threat Modeling: 装飾・Mermaid・hydration Green・専用40件成功。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `51e15d2`。
 
 移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本はルートに保持（最終段階でアーカイブ予定）。Shostack版は対象外。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
 <!-- /threat-migration-status -->

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Threat Modeling: CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット）
+> **最終更新**: 2026-10-18（Threat Modeling: 装飾・Mermaid・hydration Green・専用40件成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -19,19 +19,19 @@
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 110ファイル・計664件、Threat Modeling: CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット）
+#### ファイル別テスト数（2026-10-18: 110ファイル・計664件、Threat Modeling: 装飾・Mermaid・hydration Green・専用40件成功）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
-| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット |
+| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・装飾・Mermaid・hydration Green・専用40件成功 |
 | `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -721,3 +721,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Threat Modeling: 装飾・図・hydration Red・13件失敗。651 pass / 13 fail、110ファイル。専用27成功/13失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `317d6e7`。
 
 - 2026-10-18: Threat Modeling: CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `2cad1a5`。
+
+- 2026-10-18: Threat Modeling: 装飾・Mermaid・hydration Green・専用40件成功。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `51e15d2`。
