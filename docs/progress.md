@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Threat Modeling: 第5〜8章Red・4件失敗）
+> **最終更新**: 2026-10-18（Threat Modeling: 第5〜8章Green・第1〜8章の原本構造一致）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,20 +12,20 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **634件** | 630 pass / 4 fail、104ファイル。専用実測＋開始時624件。ビルド禁止・未実行 |
+| テストケース総数 | **634件** | 634 pass / 0 fail、104ファイル。専用実測＋開始時624件。ビルド禁止・未実行 |
 | テストファイル数 | **104ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 104ファイル・計634件、Threat Modeling: 第5〜8章Red・4件失敗）
+#### ファイル別テスト数（2026-10-18: 104ファイル・計634件、Threat Modeling: 第5〜8章Green・第1〜8章の原本構造一致）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・第5〜8章Red・4件失敗 |
-| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・第5〜8章Red・4件失敗 |
-| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・第5〜8章Red・4件失敗 |
+| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・第5〜8章Green・第1〜8章の原本構造一致 |
+| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・第5〜8章Green・第1〜8章の原本構造一致 |
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・第5〜8章Green・第1〜8章の原本構造一致 |
 | `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -697,3 +697,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Threat Modeling: 第1〜4章Green・第1〜4章の原本構造一致。630 pass / 0 fail、103ファイル。専用6成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `d55ba7c`。
 
 - 2026-10-18: Threat Modeling: 第5〜8章Red・4件失敗。630 pass / 4 fail、104ファイル。専用6成功/4失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `6e529e6`。
+
+- 2026-10-18: Threat Modeling: 第5〜8章Green・第1〜8章の原本構造一致。634 pass / 0 fail、104ファイル。専用10成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `b76be8b`。
