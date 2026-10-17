@@ -1,0 +1,1160 @@
+{
+  "source": "Threat-modeling-guide.html",
+  "markdownSource": "Threat-modeling-guide.md",
+  "htmlSha256": "f68d807a87617cfc32db27ff1adfcab63536141f3c45efbac9bbd100c652823c",
+  "markdownSha256": "8be9ece4e84da057547b6c1f6ab9e800575a41f8b262ee7345d144175d695148",
+  "route": "/docs/threat-modeling-guide",
+  "counts": {
+    "section": 18,
+    "h1": 1,
+    "h2": 18,
+    "h3": 69,
+    "h4": 1,
+    "table": 42,
+    "th": 126,
+    "td": 713,
+    "ul": 12,
+    "ol": 8,
+    "li": 92,
+    "pre code": 2,
+    "a": 59,
+    "input[type=\"checkbox\"]": 17,
+    "details.answer": 5,
+    ".ref-card": 41,
+    ".diagram": 9,
+    ".check-item": 17
+  },
+  "ids": [
+    "sidebar",
+    "backdrop",
+    "menuBtn",
+    "ch1",
+    "s1-1",
+    "s1-2",
+    "s1-3",
+    "ch2",
+    "s2-1",
+    "s2-2",
+    "s2-3",
+    "ch3",
+    "s3-1",
+    "s3-2",
+    "s3-3",
+    "ch4",
+    "s4-1",
+    "s4-2",
+    "s4-3",
+    "s4-4",
+    "ch5",
+    "s5-1",
+    "s5-2",
+    "s5-3",
+    "s5-4",
+    "s5-5",
+    "s5-6",
+    "s5-7",
+    "ch6",
+    "s6-1",
+    "s6-2",
+    "s6-3",
+    "s6-4",
+    "s6-5",
+    "s6-6",
+    "ch7",
+    "s7-1",
+    "s7-2",
+    "s7-3",
+    "s7-4",
+    "ch8",
+    "s8-1",
+    "s8-2",
+    "s8-3",
+    "s8-4",
+    "ch9",
+    "s9-1",
+    "s9-2",
+    "s9-3",
+    "ch10",
+    "s10-1",
+    "s10-2",
+    "s10-3",
+    "s10-4",
+    "s10-5",
+    "ch11",
+    "s11-1",
+    "s11-2",
+    "s11-3",
+    "s11-4",
+    "ch12",
+    "s12-1",
+    "s12-2",
+    "s12-3",
+    "ch13",
+    "s13-1",
+    "ch14",
+    "s14-1",
+    "s14-2",
+    "s14-3",
+    "s14-4",
+    "ch15",
+    "s15-1",
+    "s15-2",
+    "s15-3",
+    "ch16",
+    "s16-1",
+    "s16-2",
+    "s16-3",
+    "s16-4",
+    "s16-5",
+    "ch17",
+    "ch18",
+    "s18-1",
+    "s18-2",
+    "s18-3",
+    "s18-4",
+    "s18-5",
+    "s18-6",
+    "s18-7"
+  ],
+  "headings": [
+    {
+      "id": "",
+      "text": "Threat Modeling 入門ガイド（初学者向け・ステップバイステップ）"
+    },
+    {
+      "id": "",
+      "text": "1このガイドについて"
+    },
+    {
+      "id": "s1-1",
+      "text": "1.1 ベース書籍の位置づけ"
+    },
+    {
+      "id": "s1-2",
+      "text": "1.2 著作権と情報源についての方針"
+    },
+    {
+      "id": "s1-3",
+      "text": "1.3 読み進め方"
+    },
+    {
+      "id": "",
+      "text": "2Threat Modeling とは何か"
+    },
+    {
+      "id": "s2-1",
+      "text": "2.1 一言でいうと"
+    },
+    {
+      "id": "s2-2",
+      "text": "2.2 なぜ必要なのか"
+    },
+    {
+      "id": "s2-3",
+      "text": "2.3 Threat Modeling は「何ではない」か（よくある誤解）"
+    },
+    {
+      "id": "",
+      "text": "3基本用語を整理する"
+    },
+    {
+      "id": "s3-1",
+      "text": "3.1 用語集"
+    },
+    {
+      "id": "s3-2",
+      "text": "3.2 セキュリティの基本特性（Core Properties）"
+    },
+    {
+      "id": "s3-3",
+      "text": "3.3 セキュリティ・プライバシー・安全性"
+    },
+    {
+      "id": "",
+      "text": "4全体像: 4つの質問（Four Question Framework）"
+    },
+    {
+      "id": "s4-1",
+      "text": "4.1 4つの質問"
+    },
+    {
+      "id": "s4-2",
+      "text": "4.2 フロー"
+    },
+    {
+      "id": "s4-3",
+      "text": "4.3 各質問の「活動」と「成果物」"
+    },
+    {
+      "id": "s4-4",
+      "text": "4.4 スケールを変えて使える"
+    },
+    {
+      "id": "",
+      "text": "5Step 1: 何を作っているか（システムのモデリング）"
+    },
+    {
+      "id": "s5-1",
+      "text": "5.1 まずスコープを決める"
+    },
+    {
+      "id": "s5-2",
+      "text": "5.2 題材: TaskBoard の概要"
+    },
+    {
+      "id": "s5-3",
+      "text": "5.3 DFD（Data Flow Diagram）の5つの部品"
+    },
+    {
+      "id": "s5-4",
+      "text": "5.4 TaskBoard の DFD"
+    },
+    {
+      "id": "s5-5",
+      "text": "5.5 資産・前提・対象外を書き出す"
+    },
+    {
+      "id": "s5-6",
+      "text": "5.6 DFD 以外のモデルも使い分ける"
+    },
+    {
+      "id": "s5-7",
+      "text": "5.7 良いシステムモデルの条件（チェックリスト）"
+    },
+    {
+      "id": "",
+      "text": "6Step 2: 何がうまくいかない可能性があるか（脅威の洗い出し）"
+    },
+    {
+      "id": "s6-1",
+      "text": "6.1 STRIDE（まず覚える1つの方法）"
+    },
+    {
+      "id": "s6-2",
+      "text": "6.2 STRIDE per Element（要素ごとに当てはめる）"
+    },
+    {
+      "id": "s6-3",
+      "text": "6.3 その他の「問いかけの道具」"
+    },
+    {
+      "id": "s6-4",
+      "text": "6.4 洗い出しの手順（ステップバイステップ）"
+    },
+    {
+      "id": "s6-5",
+      "text": "6.5 TaskBoard の脅威リスト（例）"
+    },
+    {
+      "id": "s6-6",
+      "text": "6.6 「見つけられないもの」にも期待しすぎない"
+    },
+    {
+      "id": "",
+      "text": "7Step 3: どう対処するか（リスク評価と対策）"
+    },
+    {
+      "id": "s7-1",
+      "text": "7.1 リスクの見積もり"
+    },
+    {
+      "id": "s7-2",
+      "text": "7.2 4つの対応方針"
+    },
+    {
+      "id": "s7-3",
+      "text": "7.3 脅威から対策へ（STRIDE 別の代表的な対策）"
+    },
+    {
+      "id": "s7-4",
+      "text": "7.4 対策を「実行できる形」に落とす"
+    },
+    {
+      "id": "",
+      "text": "8Step 4: 十分にできたか（検証とレビュー）"
+    },
+    {
+      "id": "s8-1",
+      "text": "8.1 レビューの観点（OWASP のチェック項目に基づく）"
+    },
+    {
+      "id": "s8-2",
+      "text": "8.2 QA・テストとの接続（QA エンジニア向け）"
+    },
+    {
+      "id": "s8-3",
+      "text": "8.3 振り返り（Retrospective）"
+    },
+    {
+      "id": "s8-4",
+      "text": "8.4 見直しのタイミング（トリガー）"
+    },
+    {
+      "id": "",
+      "text": "9方法論の地図（STRIDE / PASTA / LINDDUN ほか）"
+    },
+    {
+      "id": "s9-1",
+      "text": "9.1 主な方法論の比較"
+    },
+    {
+      "id": "s9-2",
+      "text": "9.2 STRIDE と LINDDUN の関係（セキュリティ × プライバシー）"
+    },
+    {
+      "id": "s9-3",
+      "text": "9.3 手法の選び方"
+    },
+    {
+      "id": "",
+      "text": "10自動化と Threat Modeling as Code"
+    },
+    {
+      "id": "s10-1",
+      "text": "10.1 自動化の目的と限界"
+    },
+    {
+      "id": "s10-2",
+      "text": "10.2 主なツール"
+    },
+    {
+      "id": "s10-3",
+      "text": "10.3 pytm で「コードとして」モデルを書く（最小例）"
+    },
+    {
+      "id": "s10-4",
+      "text": "10.4 「Threat Modeling as Code」の運用の考え方"
+    },
+    {
+      "id": "s10-5",
+      "text": "10.5 LLM を使った支援（慎重に）"
+    },
+    {
+      "id": "",
+      "text": "11継続的 Threat Modeling（Agile / DevOps との統合）"
+    },
+    {
+      "id": "s11-1",
+      "text": "11.1 なぜ「継続的」なのか"
+    },
+    {
+      "id": "s11-2",
+      "text": "11.2 Autodesk の Continuous Threat Modeling（CTM）"
+    },
+    {
+      "id": "s11-3",
+      "text": "11.3 ベースライン（Baselining）"
+    },
+    {
+      "id": "s11-4",
+      "text": "11.4 Threat Modeling Capabilities（組織としての成熟）"
+    },
+    {
+      "id": "",
+      "text": "122026年の動向: クラウドと AI / エージェント"
+    },
+    {
+      "id": "s12-1",
+      "text": "12.1 クラウドネイティブでの Threat Modeling"
+    },
+    {
+      "id": "s12-2",
+      "text": "12.2 AI / LLM / エージェントを含むシステム"
+    },
+    {
+      "id": "",
+      "text": "主な参照枠組み（2026年10月時点で確認できたもの）"
+    },
+    {
+      "id": "s12-3",
+      "text": "12.3 例: AI アシスタント付き TaskBoard の DFD"
+    },
+    {
+      "id": "",
+      "text": "13Threat Modeling Champion になる（組織導入 FAQ）"
+    },
+    {
+      "id": "s13-1",
+      "text": "13.1 最初の90日の進め方（提案）"
+    },
+    {
+      "id": "",
+      "text": "14ハンズオン: 最初の60分セッション"
+    },
+    {
+      "id": "s14-1",
+      "text": "14.1 準備（セッションの前日まで）"
+    },
+    {
+      "id": "s14-2",
+      "text": "14.2 当日の進行"
+    },
+    {
+      "id": "s14-3",
+      "text": "14.3 ファシリテーションのコツ"
+    },
+    {
+      "id": "s14-4",
+      "text": "14.4 記録テンプレート（コピーして使えます）"
+    },
+    {
+      "id": "",
+      "text": "15アンチパターンとチェックリスト"
+    },
+    {
+      "id": "s15-1",
+      "text": "15.1 Manifesto が示す考え方（一部）"
+    },
+    {
+      "id": "s15-2",
+      "text": "15.2 よくある落とし穴（本ガイドのまとめ）"
+    },
+    {
+      "id": "s15-3",
+      "text": "15.3 最終チェックリスト"
+    },
+    {
+      "id": "",
+      "text": "16演習問題と解答例"
+    },
+    {
+      "id": "s16-1",
+      "text": "演習 1信頼境界を見つける"
+    },
+    {
+      "id": "s16-2",
+      "text": "演習 2STRIDE で分類する"
+    },
+    {
+      "id": "s16-3",
+      "text": "演習 3対応方針を選ぶ"
+    },
+    {
+      "id": "s16-4",
+      "text": "演習 4攻撃ツリーを描く"
+    },
+    {
+      "id": "s16-5",
+      "text": "演習 5AI エージェントの脅威を考える"
+    },
+    {
+      "id": "",
+      "text": "17学習ロードマップ"
+    },
+    {
+      "id": "",
+      "text": "18参考文献（根拠となるソース URL）"
+    },
+    {
+      "id": "s18-1",
+      "text": "18.1 書籍・著者"
+    },
+    {
+      "id": "s18-2",
+      "text": "18.2 Threat Modeling Manifesto / Four Question Frame（Shostack ほか）"
+    },
+    {
+      "id": "s18-3",
+      "text": "18.3 OWASP・標準・公式ドキュメント"
+    },
+    {
+      "id": "s18-4",
+      "text": "18.4 プライバシー（LINDDUN）"
+    },
+    {
+      "id": "s18-5",
+      "text": "18.5 ツール"
+    },
+    {
+      "id": "s18-6",
+      "text": "18.6 AI / エージェント"
+    },
+    {
+      "id": "s18-7",
+      "text": "18.7 調査の限界と、読者への注意"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "1このガイドについて",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 0,
+        "table": 2,
+        "th": 5,
+        "td": 32,
+        "ul": 2,
+        "ol": 0,
+        "li": 6,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch2",
+      "title": "2Threat Modeling とは何か",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 0,
+        "table": 2,
+        "th": 4,
+        "td": 22,
+        "ul": 0,
+        "ol": 1,
+        "li": 3,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch3",
+      "title": "3基本用語を整理する",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 0,
+        "table": 2,
+        "th": 7,
+        "td": 54,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch4",
+      "title": "4全体像: 4つの質問（Four Question Framework）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 4,
+        "h4": 0,
+        "table": 2,
+        "th": 7,
+        "td": 28,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch5",
+      "title": "5Step 1: 何を作っているか（システムのモデリング）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 7,
+        "h4": 0,
+        "table": 5,
+        "th": 11,
+        "td": 49,
+        "ul": 1,
+        "ol": 0,
+        "li": 5,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 8,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 2,
+        ".check-item": 8
+      }
+    },
+    {
+      "id": "ch6",
+      "title": "6Step 2: 何がうまくいかない可能性があるか（脅威の洗い出し）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 6,
+        "h4": 0,
+        "table": 4,
+        "th": 19,
+        "td": 117,
+        "ul": 1,
+        "ol": 1,
+        "li": 8,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch7",
+      "title": "7Step 3: どう対処するか（リスク評価と対策）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 4,
+        "h4": 0,
+        "table": 5,
+        "th": 20,
+        "td": 87,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch8",
+      "title": "8Step 4: 十分にできたか（検証とレビュー）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 4,
+        "h4": 0,
+        "table": 3,
+        "th": 6,
+        "td": 30,
+        "ul": 1,
+        "ol": 0,
+        "li": 3,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch9",
+      "title": "9方法論の地図（STRIDE / PASTA / LINDDUN ほか）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 0,
+        "table": 2,
+        "th": 7,
+        "td": 57,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch10",
+      "title": "10自動化と Threat Modeling as Code",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 5,
+        "h4": 0,
+        "table": 2,
+        "th": 6,
+        "td": 32,
+        "ul": 2,
+        "ol": 1,
+        "li": 11,
+        "pre code": 1,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch11",
+      "title": "11継続的 Threat Modeling（Agile / DevOps との統合）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 4,
+        "h4": 0,
+        "table": 1,
+        "th": 2,
+        "td": 14,
+        "ul": 0,
+        "ol": 1,
+        "li": 4,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch12",
+      "title": "122026年の動向: クラウドと AI / エージェント",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 1,
+        "table": 5,
+        "th": 12,
+        "td": 69,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch13",
+      "title": "13Threat Modeling Champion になる（組織導入 FAQ）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 1,
+        "h4": 0,
+        "table": 2,
+        "th": 5,
+        "td": 26,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch14",
+      "title": "14ハンズオン: 最初の60分セッション",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 4,
+        "h4": 0,
+        "table": 2,
+        "th": 6,
+        "td": 30,
+        "ul": 0,
+        "ol": 1,
+        "li": 5,
+        "pre code": 1,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch15",
+      "title": "15アンチパターンとチェックリスト",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 3,
+        "h4": 0,
+        "table": 2,
+        "th": 6,
+        "td": 54,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 9,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 9
+      }
+    },
+    {
+      "id": "ch16",
+      "title": "16演習問題と解答例",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 5,
+        "h4": 0,
+        "table": 0,
+        "th": 0,
+        "td": 0,
+        "ul": 3,
+        "ol": 3,
+        "li": 25,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 5,
+        ".ref-card": 0,
+        ".diagram": 1,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch17",
+      "title": "17学習ロードマップ",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 0,
+        "h4": 0,
+        "table": 1,
+        "th": 3,
+        "td": 12,
+        "ul": 0,
+        "ol": 0,
+        "li": 0,
+        "pre code": 0,
+        "a": 0,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 0,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    },
+    {
+      "id": "ch18",
+      "title": "18参考文献（根拠となるソース URL）",
+      "counts": {
+        "section": 0,
+        "h1": 0,
+        "h2": 1,
+        "h3": 7,
+        "h4": 0,
+        "table": 0,
+        "th": 0,
+        "td": 0,
+        "ul": 1,
+        "ol": 0,
+        "li": 4,
+        "pre code": 0,
+        "a": 41,
+        "input[type=\"checkbox\"]": 0,
+        "details.answer": 0,
+        ".ref-card": 41,
+        ".diagram": 0,
+        ".check-item": 0
+      }
+    }
+  ],
+  "links": [
+    {
+      "href": "#ch1",
+      "text": "1このガイドについて"
+    },
+    {
+      "href": "#ch2",
+      "text": "2Threat Modeling とは何か"
+    },
+    {
+      "href": "#ch3",
+      "text": "3基本用語を整理する"
+    },
+    {
+      "href": "#ch4",
+      "text": "4全体像: 4つの質問（Four Question Framework）"
+    },
+    {
+      "href": "#ch5",
+      "text": "5Step 1: 何を作っているか（システムのモデリング）"
+    },
+    {
+      "href": "#ch6",
+      "text": "6Step 2: 何がうまくいかない可能性があるか（脅威の洗い出し）"
+    },
+    {
+      "href": "#ch7",
+      "text": "7Step 3: どう対処するか（リスク評価と対策）"
+    },
+    {
+      "href": "#ch8",
+      "text": "8Step 4: 十分にできたか（検証とレビュー）"
+    },
+    {
+      "href": "#ch9",
+      "text": "9方法論の地図（STRIDE / PASTA / LINDDUN ほか）"
+    },
+    {
+      "href": "#ch10",
+      "text": "10自動化と Threat Modeling as Code"
+    },
+    {
+      "href": "#ch11",
+      "text": "11継続的 Threat Modeling（Agile / DevOps との統合）"
+    },
+    {
+      "href": "#ch12",
+      "text": "122026年の動向: クラウドと AI / エージェント"
+    },
+    {
+      "href": "#ch13",
+      "text": "13Threat Modeling Champion になる（組織導入 FAQ）"
+    },
+    {
+      "href": "#ch14",
+      "text": "14ハンズオン: 最初の60分セッション"
+    },
+    {
+      "href": "#ch15",
+      "text": "15アンチパターンとチェックリスト"
+    },
+    {
+      "href": "#ch16",
+      "text": "16演習問題と解答例"
+    },
+    {
+      "href": "#ch17",
+      "text": "17学習ロードマップ"
+    },
+    {
+      "href": "#ch18",
+      "text": "18参考文献（根拠となるソース URL）"
+    },
+    {
+      "href": "https://www.oreilly.com/library/view/threat-modeling/9781492056546/",
+      "text": "https://www.oreilly.com/library/view/threat-modeling/9781492056546/"
+    },
+    {
+      "href": "https://www.oreilly.com/library/view/-/9781118810057/",
+      "text": "https://www.oreilly.com/library/view/-/9781118810057/"
+    },
+    {
+      "href": "https://github.com/izar/continuous-threat-modeling",
+      "text": "https://github.com/izar/continuous-threat-modeling"
+    },
+    {
+      "href": "https://tldrsec.com/p/appsec-threat-model-every-story-practical-continuous-threat-modeling-work-for-your-team",
+      "text": "https://tldrsec.com/p/appsec-threat-model-every-story-practical-continuous-threat-modeling-work-for-your-team"
+    },
+    {
+      "href": "https://conferences.oreilly.com/software-architecture/sa-ny-2019/public/schedule/detail/71585.html",
+      "text": "https://conferences.oreilly.com/software-architecture/sa-ny-2019/public/schedule/detail/71585.html"
+    },
+    {
+      "href": "https://www.threatmodelingmanifesto.org/",
+      "text": "https://www.threatmodelingmanifesto.org/"
+    },
+    {
+      "href": "https://www.threatmodelingmanifesto.org/capabilities/",
+      "text": "https://www.threatmodelingmanifesto.org/capabilities/"
+    },
+    {
+      "href": "https://github.com/adamshostack/4QuestionFrame",
+      "text": "https://github.com/adamshostack/4QuestionFrame"
+    },
+    {
+      "href": "https://shostack.org/blog/threat-modeling-capabilities/",
+      "text": "https://shostack.org/blog/threat-modeling-capabilities/"
+    },
+    {
+      "href": "https://shostack.org/resources/threat-modeling",
+      "text": "https://shostack.org/resources/threat-modeling"
+    },
+    {
+      "href": "https://threatmodel.buzzsprout.com/2152378/episodes/12826352-the-four-question-framework-with-adam-shostack",
+      "text": "https://threatmodel.buzzsprout.com/2152378/episodes/12826352-the-four-question-framework-with-adam-shostack"
+    },
+    {
+      "href": "https://tromzo.com/podcasts/adam-shostack-threat-modeling",
+      "text": "https://tromzo.com/podcasts/adam-shostack-threat-modeling"
+    },
+    {
+      "href": "https://www.leanappsec.com/resources/the-four-question-framework-for-threat-modeling",
+      "text": "https://www.leanappsec.com/resources/the-four-question-framework-for-threat-modeling"
+    },
+    {
+      "href": "https://devici.com/resources/blog/elevating-your-threat-modeling-game-how-to-use-the-threat-modeling-manifesto",
+      "text": "https://devici.com/resources/blog/elevating-your-threat-modeling-game-how-to-use-the-threat-modeling-manifesto"
+    },
+    {
+      "href": "https://simoneonsecurity.com/2020/11/26/threat-modeling-manifesto/",
+      "text": "https://simoneonsecurity.com/2020/11/26/threat-modeling-manifesto/"
+    },
+    {
+      "href": "https://www.securitycompass.com/blog/threat-modeling-capabilities/",
+      "text": "https://www.securitycompass.com/blog/threat-modeling-capabilities/"
+    },
+    {
+      "href": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html",
+      "text": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+    },
+    {
+      "href": "https://devguide.owasp.org/en/04-design/01-threat-modeling/07-practical-threat-modeling/",
+      "text": "https://devguide.owasp.org/en/04-design/01-threat-modeling/07-practical-threat-modeling/"
+    },
+    {
+      "href": "https://owasp.org/www-community/Threat_Modeling",
+      "text": "https://owasp.org/www-community/Threat_Modeling"
+    },
+    {
+      "href": "https://www.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/",
+      "text": "https://www.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/"
+    },
+    {
+      "href": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf",
+      "text": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf"
+    },
+    {
+      "href": "https://learn.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool",
+      "text": "https://learn.microsoft.com/en-us/azure/security/azure-security-threat-modeling-tool"
+    },
+    {
+      "href": "https://learn.microsoft.com/en-us/power-platform/well-architected/security/threat-model",
+      "text": "https://learn.microsoft.com/en-us/power-platform/well-architected/security/threat-model"
+    },
+    {
+      "href": "https://en.wikipedia.org/wiki/Threat_model",
+      "text": "https://en.wikipedia.org/wiki/Threat_model"
+    },
+    {
+      "href": "https://linddun.org/",
+      "text": "https://linddun.org/"
+    },
+    {
+      "href": "https://linddun.org/threats/",
+      "text": "https://linddun.org/threats/"
+    },
+    {
+      "href": "https://downloads.linddun.org/tutorials/pro/v0/tutorial.pdf",
+      "text": "https://downloads.linddun.org/tutorials/pro/v0/tutorial.pdf"
+    },
+    {
+      "href": "https://www.open.edu/openlearncreate/mod/page/view.php?id=201450",
+      "text": "https://www.open.edu/openlearncreate/mod/page/view.php?id=201450"
+    },
+    {
+      "href": "https://arxiv.org/html/2603.06051",
+      "text": "https://arxiv.org/html/2603.06051"
+    },
+    {
+      "href": "https://owasp.github.io/www-project-threat-dragon/",
+      "text": "https://owasp.github.io/www-project-threat-dragon/"
+    },
+    {
+      "href": "https://github.com/OWASP/threat-dragon/wiki/Threat-Model-File-(TMF)-format",
+      "text": "https://github.com/OWASP/threat-dragon/wiki/Threat-Model-File-(TMF)-format"
+    },
+    {
+      "href": "https://github.com/OWASP/pytm",
+      "text": "https://github.com/OWASP/pytm"
+    },
+    {
+      "href": "https://deepstrike.io/blog/threat-modeling",
+      "text": "https://deepstrike.io/blog/threat-modeling"
+    },
+    {
+      "href": "https://www.ndss-symposium.org/wp-content/uploads/aiscc2024-16-paper.pdf",
+      "text": "https://www.ndss-symposium.org/wp-content/uploads/aiscc2024-16-paper.pdf"
+    },
+    {
+      "href": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+      "text": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+    },
+    {
+      "href": "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/",
+      "text": "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/"
+    },
+    {
+      "href": "https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro",
+      "text": "https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro"
+    },
+    {
+      "href": "https://atlas.mitre.org/",
+      "text": "https://atlas.mitre.org/"
+    },
+    {
+      "href": "https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/",
+      "text": "https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/"
+    },
+    {
+      "href": "https://www.augmentcode.com/guides/ai-agentic-threat-modeling",
+      "text": "https://www.augmentcode.com/guides/ai-agentic-threat-modeling"
+    },
+    {
+      "href": "https://nhimg.org/ai-agent-threat-modelling-guide",
+      "text": "https://nhimg.org/ai-agent-threat-modelling-guide"
+    }
+  ],
+  "diagrams": {
+    "d1": "flowchart TD\nQ1[\"Q1 何に取り組んでいる? What are we working on? スコープを決め、システムを図にする\"]\nQ2[\"Q2 何がうまくいかない? What can go wrong? STRIDE 等で脅威を洗い出す\"]\nQ3[\"Q3 どう対処する? What are we going to do about it? 優先順位をつけ、対応を決める\"]\nQ4{\"Q4 十分にできた? Did we do a good enough job?\"}\nOUT[\"記録を残し、実装・テストへ反映\"]\nCHG[\"システムが変わる / 新しい情報が出る\"]\n\nQ1 --> Q2 --> Q3 --> Q4\nQ4 -->|\"No: 不足あり\"| Q1\nQ4 -->|\"Yes: 十分\"| OUT\nOUT --> CHG\nCHG --> Q1\nclassDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass Q4 dec\nclassDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE\nclass OUT okay",
+    "d2": "%%{init: {\"flowchart\": {\"rankSpacing\": 90}}}%%\nflowchart TB\nsubgraph TB1[\"信頼境界 A: インターネット(信頼しない)\"]\nU[\"外部実体: メンバー (ブラウザ)\"]\nAD[\"外部実体: 管理者\"]\nend\n\nsubgraph TB3[\"信頼境界 C: 外部サービス\"]\nIDP[\"外部実体: ID プロバイダー(OIDC)\"]\nMAIL[\"外部実体: メール配信サービス\"]\nend\n\nsubgraph TB2[\"信頼境界 B: 自社クラウド(VPC)\"]\nAPI([\"プロセス: Web / API サーバー\"])\nWK([\"プロセス: 通知ワーカー\"])\nDB[(\"データストア: PostgreSQL タスク・ユーザー・テナント\")]\nOBJ[(\"データストア: 添付ファイル保存\")]\nLOG[(\"データストア: 監査ログ\")]\nend\n\nU -->|\"D1 HTTPS: タスク操作\"| API\nAD -->|\"D2 HTTPS: テナント管理\"| API\nU -->|\"D3 ログイン要求\"| IDP\nIDP -->|\"D4 認可コード / トークン\"| API\nAPI -->|\"D5 SQL\"| DB\nAPI -->|\"D6 ファイル書き込み / 読み出し\"| OBJ\nAPI -->|\"D7 操作の記録\"| LOG\nAPI -->|\"D8 通知ジョブ\"| WK\nWK -->|\"D9 メール送信 API\"| MAIL\nclassDef ext fill:#712B13,stroke:#F5C4B3,color:#FAECE7\nclass U,AD,IDP,MAIL ext\nclassDef proc fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass API,WK proc\nclassDef store fill:#085041,stroke:#9FE1CB,color:#E1F5EE\nclass DB,OBJ,LOG store",
+    "d3": "sequenceDiagram\nautonumber\nactor M as メンバー\nparticipant B as ブラウザ\nparticipant A as API サーバー\nparticipant I as IdP\n\nM->>B: ログインをクリック\nB->>I: 認可リクエスト(scope=openid、state・nonce 付き)\nI-->>B: 認可コード\nB->>A: 認可コードを送信\nA->>I: コードをトークンに交換\nI-->>A: ID トークン＋アクセストークン\nNote over A: ID トークンの署名・iss・aud・exp・nonce を検証し、sub でユーザーを識別\nA-->>B: セッション Cookie を発行\nNote over B,I: 信頼境界をまたぐのは 2〜7 の通信(ブラウザ・IdP・API 間)",
+    "d4": "flowchart LR\nG[\"目的: 他テナントのタスクを閲覧する\"]\nA1[\"A. 認可チェックの不備を突く\"]\nA2[\"B. 他テナントの正規ユーザーになりすます\"]\nA3[\"C. 保存データに直接アクセスする\"]\n\nA1a[\"タスク ID を連番で試す (IDOR)\"]\nA1b[\"テナント ID をリクエストで書き換える\"]\nA2a[\"セッショントークンを盗む\"]\nA2b[\"パスワードを使い回しで試す\"]\nA3a[\"添付ファイルの URL が推測可能\"]\nA3b[\"バックアップが公開設定になっている\"]\n\nG --> A1\nG --> A2\nG --> A3\nA1 --> A1a\nA1 --> A1b\nA2 --> A2a\nA2 --> A2b\nA3 --> A3a\nA3 --> A3b\nclassDef goal fill:#712B13,stroke:#F5C4B3,color:#FAECE7\nclass G goal",
+    "d5": "flowchart TD\nS[\"脅威を1つ選ぶ\"] --> Q1{\"その機能/部品は 本当に必要か?\"}\nQ1 -->|\"不要\"| E[\"Eliminate: 取り除く\"]\nQ1 -->|\"必要\"| Q2{\"技術的に 軽減できるか?\"}\nQ2 -->|\"できる\"| M[\"Mitigate: 対策を設計・実装する\"]\nQ2 -->|\"できない / 割に合わない\"| Q3{\"契約・保険などで 責任を移せるか?\"}\nQ3 -->|\"移せる\"| T[\"Transfer: 責任者と残存リスクを記録\"]\nQ3 -->|\"移せない\"| A[\"Accept: 理由・承認者・見直し時期を記録\"]\nM --> R[\"残存リスクを確認\"]\nT --> R\nA --> R\nE --> R\nclassDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass Q1,Q2,Q3 dec",
+    "d6": "flowchart LR\nS[\"Threat Modeling を始める\"] --> Q1{\"対象は何か?\"}\nQ1 -->|\"技術設計・新機能\"| ST[\"STRIDE(DFD + STRIDE per Element)\"]\nQ1 -->|\"個人データの扱い\"| LI[\"STRIDE + LINDDUN GO\"]\nQ1 -->|\"重要資産への攻撃経路\"| AT[\"攻撃ツリーを併用\"]\nQ1 -->|\"ビジネスロジックの悪用\"| AB[\"悪用ケースを併用\"]\nQ1 -->|\"事業リスクや経営層への説明\"| PA[\"PASTA を検討\"]\nQ1 -->|\"AI / エージェントを含む\"| AI[\"STRIDE + AI 向けの枠組み (12章)\"]\nST --> N{\"チームは慣れている?\"}\nN -->|\"初めて\"| CARD[\"カードゲーム(EoP / Cornucopia)で導入\"]\nN -->|\"慣れている\"| TOOL[\"ツール / コード化(10章)\"]\nclassDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass Q1,N dec",
+    "d7": "flowchart TD\nST[\"新しいストーリー / 変更\"] --> Q{\"セキュリティに 関連するか? (認証・認可・データ・外部連携など)\"}\nQ -->|\"いいえ\"| DONE[\"通常どおり開発\"]\nQ -->|\"はい\"| CK[\"チェックリストで関連項目を確認\"]\nCK --> FIX{\"その場で 対処できるか?\"}\nFIX -->|\"できる\"| MIT[\"対処し『軽減済みの発見』として記録\"]\nFIX -->|\"難しい\"| CAND[\"『脅威モデル候補の発見』として キュレーターにレビュー依頼\"]\nCAND --> REV[\"小さなセッションで検討\"]\nMIT --> DONE\nREV --> DONE\nclassDef dec fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass Q,FIX dec\nclassDef okay fill:#085041,stroke:#9FE1CB,color:#E1F5EE\nclass DONE okay",
+    "d8": "%%{init: {\"flowchart\": {\"rankSpacing\": 90}}}%%\nflowchart TB\nsubgraph TBX[\"信頼境界 X: 信頼できないコンテンツ\"]\nEM[\"外部実体: 外部からのメール\"]\nWEB[\"外部実体: 参照される Web ページ\"]\nend\n\nsubgraph TBY[\"信頼境界 Y: 自社システム\"]\nAG([\"プロセス: AI エージェント (LLM + オーケストレーション)\"])\nMEM[(\"データストア: エージェントのメモリ / 検索インデックス\")]\nTL1([\"プロセス: タスク作成ツール\"])\nTL2([\"プロセス: メール送信ツール\"])\nAPI([\"プロセス: TaskBoard API\"])\nend\n\nEM -->|\"E1 本文(信頼できない入力)\"| AG\nWEB -->|\"E2 取得したコンテンツ\"| AG\nAG -->|\"E3 読み書き\"| MEM\nAG -->|\"E4 ツール呼び出し\"| TL1\nAG -->|\"E5 ツール呼び出し\"| TL2\nTL1 -->|\"E6 タスク作成\"| API\nTL2 -->|\"E7 外部へ送信\"| EM\nclassDef ext fill:#712B13,stroke:#F5C4B3,color:#FAECE7\nclass EM,WEB ext\nclassDef proc fill:#3C3489,stroke:#CECBF6,color:#EEEDFE\nclass AG,TL1,TL2,API proc\nclassDef store fill:#085041,stroke:#9FE1CB,color:#E1F5EE\nclass MEM store",
+    "d9": "flowchart LR\nG[\"目的: 管理者アカウントを乗っ取る\"]\nA[\"A. 認証情報を入手する\"]\nB[\"B. 認証を回避する\"]\nC[\"C. 運用プロセスを悪用する\"]\nA1[\"フィッシングメール\"]\nA2[\"他サービスから漏れたパスワードの使い回し\"]\nB1[\"セッショントークンの窃取\"]\nB2[\"MFA の回避(疲労攻撃など)\"]\nC1[\"サポート窓口になりすましてリセットを依頼\"]\nC2[\"退職者アカウントが無効化されていない\"]\n\nG --> A\nG --> B\nG --> C\nA --> A1\nA --> A2\nB --> B1\nB --> B2\nC --> C1\nC --> C2\nclassDef goal fill:#712B13,stroke:#F5C4B3,color:#FAECE7\nclass G goal"
+  }
+}

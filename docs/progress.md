@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち）
+> **最終更新**: 2026-10-18（Threat Modeling: 表示基盤Red・2件失敗・実装前）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **624件** | `npm test`: 624 pass / 0 fail、101ファイル、77,750 expect（2026-10-18最終全体実測）。原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。ビルド禁止・未実行 |
-| テストファイル数 | **101ファイル** | ページ移行・アーカイブテストを含む実行ファイル数 |
+| テストケース総数 | **626件** | 624 pass / 2 fail、102ファイル。専用実測＋開始時624件。ビルド禁止・未実行 |
+| テストファイル数 | **102ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 101ファイル・合計624件。アーカイブ5件はGreen・成功）
+#### ファイル別テスト数（2026-10-18: 102ファイル・計626件、Threat Modeling: 表示基盤Red・2件失敗・実装前）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・表示基盤Red・2件失敗・実装前 |
 | `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -684,3 +685,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 原本のSHA-256とバイト一致を維持。ルート原本なし。原本比較テストはアーカイブを直接参照。
 - 最終全体: 624 pass / 0 fail、101ファイル、77,750 expect。専用60件/12ファイル。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。ビルド禁止・未実行。目視はユーザー担当・未完了。
+
+- 2026-10-18: Threat Modeling: 表示基盤Red・2件失敗・実装前。624 pass / 2 fail、102ファイル。専用0成功/2失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `4efba0b`。

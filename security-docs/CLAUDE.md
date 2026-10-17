@@ -151,3 +151,11 @@ Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功�
 
 移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本: `archive/html/Applied-cryptography-guide.html`・`archive/md/Applied-cryptography-guide.md`。バイト一致・ルート原本除去・全比較参照の移行を検証済み。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。原本の65見出しを検索可能。専用60件/12ファイル。最新の全体結果はdocs/progress.mdを参照。`npm run lint`・`npm run types:check` 成功。目視確認表: `docs/migration-inventory/applied-cryptography-guide-review.md`（ユーザー確認待ち）。Next.jsビルド・push・公開は未実施。Mermaidの色設定を反映するためbaseテーマを使用し、各図の設定を描画ごとに渡す。狭い図は中央、幅広図は縮めず左右スクロール。
 <!-- /applied-migration-status -->
+
+<!-- threat-migration-status -->
+## Threat Modeling移行（2026-10-18）
+
+Threat Modeling: 表示基盤Red・2件失敗・実装前。624 pass / 2 fail、102ファイル。専用0成功/2失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `4efba0b`。
+
+移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本はルートに保持（最終段階でアーカイブ予定）。Shostack版は対象外。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
+<!-- /threat-migration-status -->
