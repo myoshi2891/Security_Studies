@@ -17,6 +17,7 @@ export const docsConfig = {
         { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
         { title: "Web Application Hacker's Handbook", href: "/docs/web-application-hackers-handbook" },
         { title: "ISO/IEC 27000:2026 入門ガイド", href: "/docs/iso-iec-27000-2026-guide" },
+        { title: "ISO/IEC 27001:2022 初学者向けガイド", href: "/docs/iso-iec-27001-2022-guide" },
       ],
     },
     {
