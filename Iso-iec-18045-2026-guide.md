@@ -269,8 +269,8 @@ flowchart TD
 
 | 判定 | 意味 | 開発者への影響 |
 |---|---|---|
-| **pass** | 要求を満たしていると評価者が判断 | 次へ進める |
-| **fail** | 要求を満たしていないと評価者が判断 | 修正が必要 |
+| **pass** | 要求を満たし、かつ証拠に一貫性があると評価者が判断 | 次へ進める |
+| **fail** | 要求を満たしていない、または証拠に不整合や明白な矛盾があると評価者が判断 | 修正が必要 |
 | **inconclusive** | まだ判断できない(証拠が不足、確認待ちなど) | 追加の証拠や説明が必要 |
 
 CEM では、下位の判定が積み上がって上位の判定になる構造をとります。基本的な考え方は「**すべての下位判定が pass のときだけ上位も pass**」です【一般知識】。
@@ -378,9 +378,9 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    PP["PP 評価 APE"] --> ST
+    PP["PP 評価 APE"] -.->|"ST が PP 適合を主張する場合のみ"| ST
     PM["PP-Module 評価 ACE"] --> PC["PP-Configuration 整合性評価 ACE_CCO"]
-    PC --> ST
+    PC -.->|"ST が PP-Configuration 適合を主張する場合のみ"| ST
     ST["ST 評価 ASE<br/>主張の明確さと整合性を確認"] --> TOE
     TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"他製品の上に載る構成か?"}
     COMP -->|"はい"| ACO["コンポジション評価 ACO"]
