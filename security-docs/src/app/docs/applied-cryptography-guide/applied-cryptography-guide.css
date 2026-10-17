@@ -772,3 +772,5 @@ html:has(.applied-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
 .applied-guide.applied-guide pre { border: 0; border-radius: 0; }
 .applied-guide.applied-guide ul.bullets li { margin: 0; }
 .applied-guide.applied-guide tr:hover td { background: transparent; }
+.applied-guide.applied-guide .brand { font-size: 16px; font-weight: 400; color: var(--color-text-primary); }
+.applied-guide.applied-guide pre { font-family: var(--font-sans); }
