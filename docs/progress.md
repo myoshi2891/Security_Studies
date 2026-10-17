@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 第13〜16節Green・第1〜16節の原本構造一致）
+> **最終更新**: 2026-10-18（Applied Cryptography: 装飾・Mermaid・hydration Red・12件失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **582件** | `npm test`: 582 pass / 0 fail、94ファイル（2026-10-18。第13〜16節Green・第1〜16節の原本構造一致。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
-| テストファイル数 | **94ファイル** | ページ移行テストを含む実行ファイル数 |
+| テストケース総数 | **598件** | `npm test`: 586 pass / 12 fail、97ファイル（2026-10-18。装飾・Mermaid・hydration Red・12件失敗。段階検証は移行専用テスト＋開始時564件を集計、最終時は全体再実行） |
+| テストファイル数 | **97ファイル** | ページ移行テストを含む実行ファイル数 |
 | File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
@@ -624,3 +624,5 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 2026-10-18: Applied Cryptography: 第13〜16節Red・4件失敗。578 pass / 4 fail、94ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `9b30e3a`。
 
 - 2026-10-18: Applied Cryptography: 第13〜16節Green・第1〜16節の原本構造一致。582 pass / 0 fail、94ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `e1ac1cd`。
+
+- 2026-10-18: Applied Cryptography: 装飾・Mermaid・hydration Red・12件失敗。586 pass / 12 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `be3a040`。
