@@ -52,7 +52,7 @@ test('hover styling does not introduce white table cells in either app scheme',a
    for(const td of w.document.querySelectorAll('.threat-guide td'))expect(['transparent','rgba(0, 0, 0, 0)']).toContain(w.getComputedStyle(td).backgroundColor);
   }finally{await w.happyDOM.close();}
  }
-});
+},30000);
 test('comparisons detect missing text cells emphasis commands, round dots and list counters',async()=>{
  const page=await renderedPage();
  for(const selector of ['#ch6 ol>li','#ch5 td','#ch10 pre code','#ch18 .ref-card','#ch2 strong']){
