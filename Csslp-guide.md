@@ -64,7 +64,7 @@ ISC2 の公式ページでは、CSSLP は SDLC 全体にわたる **認証（Aut
 
 | 項目 | 内容 |
 |---|---|
-| CPE（継続教育） | 3年サイクルで **90 CPE**（年30が目安） |
+| CPE（継続教育） | 3年サイクルで合計 **90 CPE**。うち**最低60 CPE は Group A**（認定ドメインに直結する活動）、残り**30 CPE は Group A または Group B**（ドメイン外の専門能力開発）で取得する。年30（Group A 20＋A/B 10）は推奨ペースで義務ではない |
 | 年間維持費（AMF） | あり（金額は改定されるため ISC2 で確認） |
 | 再受験 | 不要（CPE と AMF を満たせば更新） |
 
@@ -783,17 +783,20 @@ page = f"<p>{html.escape(user_input)}</p>"
 
 ```python
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
 def handle_request():
     try:
         process()
-    except Exception:
-        # 詳細（スタックトレース等）はログへ。ただし機密値は含めない
-        logger.exception("request processing failed")
-        # 利用者には汎用メッセージのみ返す（fail secure）
-        return {"error": "処理に失敗しました"}, 500
+    except Exception as exc:
+        # 例外メッセージやスタックトレースには機密値が混入しうるため出力しない。
+        # 調査用に相関できるエラーIDと、例外の型名（サニタイズ済み情報）だけを記録する
+        error_id = uuid.uuid4().hex
+        logger.error("request processing failed error_id=%s type=%s", error_id, type(exc).__name__)
+        # 利用者には汎用メッセージと問い合わせ用のエラーIDのみ返す（fail secure）
+        return {"error": "処理に失敗しました", "error_id": error_id}, 500
 ```
 
 ### 7.2 【5.2】コードのセキュリティリスクを分析する
