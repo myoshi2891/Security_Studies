@@ -11,7 +11,8 @@ test('round bullet pseudo-elements and circled step counters retain every declar
   expect(declarations(actual,`${scope} ${selector}`)).toEqual(declarations(sourceCss,selector));
   expect(declarations(sourceCss,selector).length).toBeGreaterThan(0);
  }
- expect(declarations(actual,`${scope} .hljs-keyword`).length).toBeGreaterThan(0);
+ const keywords: string[]=[];actual.walkRules(r=>{if(r.selector.split(',').map(s=>s.trim()).includes(`${scope} .hljs-keyword`)) r.walkDecls(d=>{keywords.push(`${d.prop}:${d.value}`);});});
+ expect(keywords).toContain('color:#c678dd');
 });
 test('native list spacing, counter resets and table backgrounds survive shared CSS at all widths and themes',async()=>{
  const page=await renderedPage();
