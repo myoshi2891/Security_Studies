@@ -765,3 +765,10 @@ html:has(.applied-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
 .applied-guide.applied-guide table { margin: 0; }
 .applied-guide.applied-guide pre { margin: 0; }
 .applied-guide.applied-guide .code-card code { border: 0; border-radius: 0; }
+
+/* Restore source defaults where the application prose introduces new decoration. */
+.applied-guide.applied-guide h1 { letter-spacing: normal; }
+.applied-guide.applied-guide h2 { padding-bottom: 0; border-bottom: 0; }
+.applied-guide.applied-guide pre { border: 0; border-radius: 0; }
+.applied-guide.applied-guide ul.bullets li { margin: 0; }
+.applied-guide.applied-guide tr:hover td { background: transparent; }
