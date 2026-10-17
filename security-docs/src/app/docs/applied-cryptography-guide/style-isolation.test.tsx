@@ -34,7 +34,7 @@ test('the immutable source still requires no body assets and has fourteen diagra
  expect(sourceDocument.querySelectorAll('img,iframe')).toHaveLength(0);expect(sourceDocument.querySelectorAll('.diagram')).toHaveLength(14);expect(sourceHtml).toContain('ol.steps li::before');
 });
 
-async function compareSource(width:number,scheme:'light'|'dark',selectors:string[],properties:(keyof CSSStyleDeclaration)[]){
+async function compareSource(width:number,scheme:'light'|'dark',selectors:string[],properties:('fontSize'|'fontWeight'|'fontFamily'|'lineHeight'|'letterSpacing'|'marginTop'|'marginBottom'|'paddingTop'|'paddingRight'|'paddingBottom'|'paddingLeft'|'borderBottomWidth'|'backgroundColor'|'color')[]){
  const original=new Window(),actual=new Window({settings:{device:{prefersColorScheme:scheme}}});
  const normalize=(value:unknown)=>['','normal','none','0','0px'].includes(String(value))?'default':value==='transparent'?'rgba(0, 0, 0, 0)':String(value);
  try{
