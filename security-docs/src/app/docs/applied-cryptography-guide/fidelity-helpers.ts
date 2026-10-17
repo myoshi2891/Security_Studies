@@ -53,6 +53,6 @@ export function sectionContracts(ids: string[]) {
       expect(content(migrated!), selector).toEqual(content(original));
     }
     expect([...migrated!.querySelectorAll('pre')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre')].map(el => el.textContent));
-    for (const figure of migrated!.querySelectorAll('.mermaid-target')) expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!) ?? null);
+    for (const figure of migrated!.querySelectorAll('.diagram')) expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!) ?? null);
   });
 }

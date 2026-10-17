@@ -37,7 +37,7 @@ test('all fourteen immutable definitions parse locally and renderer configuratio
  for(const [,key,value] of sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1].matchAll(/(\w+):\s*'([^']*)'/g))expect((diagramConfig.themeVariables as Record<string,unknown>)[key]).toBe(value);
  }finally{draw.mockRestore();init.mockRestore();}
 });
-test('all source icon names have decorative local SVG equivalents and code retains exact Python/JavaScript text',async()=>{
+test('all source icon names have decorative local SVG equivalents and code retains exact Python/Bash text',async()=>{
  const {GuideIcon,guideIcons}=await import(new URL('./GuideIcon.tsx',import.meta.url).href);for(const name of ['ti-lock','ti-shield-lock','ti-alert-triangle','ti-quote','ti-bulb','ti-info-circle','ti-chevron-right']) expect(guideIcons[name],name).toBeDefined();const {GuideCode}=await import(new URL('./GuideCode.tsx',import.meta.url).href);const {sourceDocument}=await import('./fidelity-helpers');
  for(const icon of sourceDocument.querySelectorAll('i.ti')){const name=[...icon.classList].find(c=>c.startsWith('ti-'));const {container}=render(createElement(GuideIcon,{name}));expect(container.querySelector(`i.ti.${name} svg`)).toHaveAttribute('aria-hidden','true');}
  for(const source of sourceDocument.querySelectorAll('pre code')){const {container}=render(createElement(GuideCode,{code:source.textContent,language:source.className.replace('language-','')}));expect(container.textContent).toBe(source.textContent);expect(container.querySelector('code')).toHaveClass(source.className);if(source.className==='language-python')expect(container.querySelector('[class^="hljs-"]')).not.toBeNull();}
