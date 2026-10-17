@@ -32,7 +32,7 @@
 <section class="container" aria-label="WAHH migration test status"><p>履歴（WAHH移行完了時）: WAHH: 移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・全538件成功・lint/型検査成功。538 pass / 0 fail、85ファイル、59,406 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。</p></section>
         <!-- SUMMARY -->
         <!-- applied-migration-status --><section class="container" aria-label="Applied Cryptography migration status"><p>原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル。npm使用・ビルド禁止・未実行・目視確認待ち。</p></section><!-- /applied-migration-status -->
-<!-- threat-migration-status --><section class="container" aria-label="Threat Modeling migration status"><p>Threat Modeling: 第13〜15章Green・第1〜15章の原本構造一致。641 pass / 0 fail、106ファイル。専用17成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD 2a4ad3c。</p></section><!-- /threat-migration-status -->
+<!-- threat-migration-status --><section class="container" aria-label="Threat Modeling migration status"><p>Threat Modeling: 第16〜18章Red・3件失敗。641 pass / 3 fail、107ファイル。専用17成功/3失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD b394669。</p></section><!-- /threat-migration-status -->
 <section class="summary-section">
             <div class="container">
                 <div class="summary-grid">
@@ -64,8 +64,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">641</div>
-                        <div class="summary-sub">641 pass / 0 fail、106ファイル · 第13〜15章Green・第1〜15章の原本構造一致</div>
+                        <div class="summary-value">644</div>
+                        <div class="summary-sub">641 pass / 3 fail、107ファイル · 第16〜18章Red・3件失敗</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -1170,7 +1170,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-18</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 106 files · 641 test cases · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 107 files · 644 test cases · CI:
                         GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
