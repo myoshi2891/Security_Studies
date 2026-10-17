@@ -875,6 +875,17 @@ class RedactPII(logging.Filter):
         message = record.getMessage()
         record.msg = EMAIL.sub("[REDACTED_EMAIL]", message)
         record.args = ()
+        if record.exc_info:
+            try:
+                exc_text = logging.Formatter().formatException(record.exc_info)
+            except Exception:
+                # 安全にマスクできない場合は、例外情報そのものを出力しない
+                exc_text = "[REDACTED_EXCEPTION]"
+            # Formatter は exc_text が設定済みならそれを使うため、マスク済みの文字列を渡し、元の例外情報は外す
+            record.exc_text = EMAIL.sub("[REDACTED_EMAIL]", exc_text)
+            record.exc_info = None
+        elif record.exc_text:
+            record.exc_text = EMAIL.sub("[REDACTED_EMAIL]", record.exc_text)
         return True
 ```
 
