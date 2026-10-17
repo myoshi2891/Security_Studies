@@ -278,7 +278,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 <!-- applied-migration-status -->
 ## Applied Cryptography移行（2026-10-18）
 
-Applied Cryptography: CSS既定値のテスト正規化・専用52件成功・統合実装は未コミット。616 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `9b99f6d`。
+Applied Cryptography: 統合Green・ナビ/検索/共通CSS隔離・専用52件成功。616 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `c500ddc`。
 
 移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本HTML/Markdownはルートに保持。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。現段階の未完了項目は上記状態と進捗履歴を参照。
 <!-- /applied-migration-status -->
