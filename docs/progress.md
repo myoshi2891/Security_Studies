@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Applied Cryptography: 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録））
+> **最終更新**: 2026-10-18（Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,18 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **624件** | `npm test`: 619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。ビルド禁止・未実行 |
+| テストケース総数 | **624件** | `npm test`: 624 pass / 0 fail、101ファイル、77,750 expect（2026-10-18最終全体実測）。原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。ビルド禁止・未実行 |
 | テストファイル数 | **101ファイル** | ページ移行・アーカイブテストを含む実行ファイル数 |
 | File Unit Coverage | **50/50 (100%)** | 既存46 + Applied Cryptography部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト100ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18: 101ファイル・合計624件。アーカイブ5件はRed・失敗）
+#### ファイル別テスト数（2026-10-18: 101ファイル・合計624件。アーカイブ5件はGreen・成功）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のRed |
+| `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
 | `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -216,7 +216,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
-| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用55件、全619件成功、lint/型検査成功。原本をルートに保持。ユーザー目視待ち | 2026-10-18 |
+| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
@@ -674,3 +674,13 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 手順違反からの復旧はユーザー承認済み。`dbace04`で誤記訂正、`473fc14`で不足アイコンを修正。履歴は保持。
 
 - 2026-10-18: Applied Cryptography: 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。同期前HEAD `5691ce9`。npm使用・ビルド禁止・未実行。
+
+- 2026-10-18: Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル。同期前HEAD `7627df6`。npm使用・ビルド禁止・未実行。
+
+## Applied Cryptography 原本アーカイブ（2026-10-18）
+
+- HTML: `archive/html/Applied-cryptography-guide.html`
+- MD: `archive/md/Applied-cryptography-guide.md`
+- 原本のSHA-256とバイト一致を維持。ルート原本なし。原本比較テストはアーカイブを直接参照。
+- 最終全体: 624 pass / 0 fail、101ファイル、77,750 expect。専用60件/12ファイル。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。ビルド禁止・未実行。目視はユーザー担当・未完了。
