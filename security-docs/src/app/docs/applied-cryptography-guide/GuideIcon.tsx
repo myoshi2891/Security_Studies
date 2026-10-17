@@ -1,3 +1,4 @@
-import { LockKeyhole, BookOpen, CalendarDays, TriangleAlert, Info, Lightbulb, CircleCheck, ShieldCheck, Link, Code, type LucideIcon } from 'lucide-react';
-const icons: Record<string, LucideIcon> = { 'ti-lock': LockKeyhole, 'ti-book': BookOpen, 'ti-calendar': CalendarDays, 'ti-alert-triangle': TriangleAlert, 'ti-info-circle': Info, 'ti-bulb': Lightbulb, 'ti-check': CircleCheck, 'ti-shield-check': ShieldCheck, 'ti-link': Link, 'ti-code': Code };
-export function GuideIcon({name}:{name:string}) { const Icon=icons[name] ?? Info;return <i className={`ti ${name}`} aria-hidden="true"><Icon aria-hidden="true" /></i>; }
+import { LockKeyhole, ShieldCheck, TriangleAlert, Quote, Lightbulb, Info, ChevronRight } from 'lucide-react';
+/** Local SVGs replace the original Tabler font without a network dependency. */
+export const guideIcons = {'ti-lock':LockKeyhole,'ti-shield-lock':ShieldCheck,'ti-alert-triangle':TriangleAlert,'ti-quote':Quote,'ti-bulb':Lightbulb,'ti-info-circle':Info,'ti-chevron-right':ChevronRight} as const;
+export function GuideIcon({name}:{name:keyof typeof guideIcons}){const Icon=guideIcons[name];return <i className={`ti ${name}`} aria-hidden="true"><Icon aria-hidden="true" /></i>;}

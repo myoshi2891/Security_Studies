@@ -1,3 +1,68 @@
+.applied-guide.applied-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.applied-guide.applied-guide code.hljs {
+  padding: 3px 5px
+}
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.applied-guide.applied-guide .hljs {
+  color: #abb2bf;
+  background: #282c34
+}
+.applied-guide.applied-guide .hljs-comment,.applied-guide.applied-guide .hljs-quote {
+  color: #5c6370;
+  font-style: italic
+}
+.applied-guide.applied-guide .hljs-doctag,.applied-guide.applied-guide .hljs-keyword,.applied-guide.applied-guide .hljs-formula {
+  color: #c678dd
+}
+.applied-guide.applied-guide .hljs-section,.applied-guide.applied-guide .hljs-name,.applied-guide.applied-guide .hljs-selector-tag,.applied-guide.applied-guide .hljs-deletion,.applied-guide.applied-guide .hljs-subst {
+  color: #e06c75
+}
+.applied-guide.applied-guide .hljs-literal {
+  color: #56b6c2
+}
+.applied-guide.applied-guide .hljs-string,.applied-guide.applied-guide .hljs-regexp,.applied-guide.applied-guide .hljs-addition,.applied-guide.applied-guide .hljs-attribute,.applied-guide.applied-guide .hljs-meta .hljs-string {
+  color: #98c379
+}
+.applied-guide.applied-guide .hljs-attr,.applied-guide.applied-guide .hljs-variable,.applied-guide.applied-guide .hljs-template-variable,.applied-guide.applied-guide .hljs-type,.applied-guide.applied-guide .hljs-selector-class,.applied-guide.applied-guide .hljs-selector-attr,.applied-guide.applied-guide .hljs-selector-pseudo,.applied-guide.applied-guide .hljs-number {
+  color: #d19a66
+}
+.applied-guide.applied-guide .hljs-symbol,.applied-guide.applied-guide .hljs-bullet,.applied-guide.applied-guide .hljs-link,.applied-guide.applied-guide .hljs-meta,.applied-guide.applied-guide .hljs-selector-id,.applied-guide.applied-guide .hljs-title {
+  color: #61aeee
+}
+.applied-guide.applied-guide .hljs-built_in,.applied-guide.applied-guide .hljs-title.class_,.applied-guide.applied-guide .hljs-class .hljs-title {
+  color: #e6c07b
+}
+.applied-guide.applied-guide .hljs-emphasis {
+  font-style: italic
+}
+.applied-guide.applied-guide .hljs-strong {
+  font-weight: bold
+}
+.applied-guide.applied-guide .hljs-link {
+  text-decoration: underline
+}
 
             .applied-guide.applied-guide {
                 --bg-primary: #07111e;
@@ -696,3 +761,7 @@ html:has(.applied-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
  .applied-guide.applied-guide .sidebar.open { transform: translateX(0); visibility: visible; z-index: 70; }
  .applied-guide.applied-guide .backdrop.show { display: block; top: 64px; }
 }
+
+.applied-guide.applied-guide table { margin: 0; }
+.applied-guide.applied-guide pre { margin: 0; }
+.applied-guide.applied-guide .code-card code { border: 0; border-radius: 0; }
