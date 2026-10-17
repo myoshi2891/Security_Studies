@@ -1,0 +1,3 @@
+import { LockKeyhole, BookOpen, CalendarDays, TriangleAlert, Info, Lightbulb, CircleCheck, ShieldCheck, Link, Code, type LucideIcon } from 'lucide-react';
+const icons: Record<string, LucideIcon> = { 'ti-lock': LockKeyhole, 'ti-book': BookOpen, 'ti-calendar': CalendarDays, 'ti-alert-triangle': TriangleAlert, 'ti-info-circle': Info, 'ti-bulb': Lightbulb, 'ti-check': CircleCheck, 'ti-shield-check': ShieldCheck, 'ti-link': Link, 'ti-code': Code };
+export function GuideIcon({name}:{name:string}) { const Icon=icons[name] ?? Info;return <i className={`ti ${name}`} aria-hidden="true"><Icon aria-hidden="true" /></i>; }
