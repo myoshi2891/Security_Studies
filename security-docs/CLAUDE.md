@@ -29,6 +29,10 @@ The following directive is used to include agent-specific rules and context. Thi
   - **Directives**: `script-src 'self' 'unsafe-inline'` (prod) / `'self' 'unsafe-inline' 'unsafe-eval'` (dev for React dev runtime / Turbopack); `style-src 'self' 'unsafe-inline'`; `connect-src 'self' ws://localhost:* ws://127.0.0.1:*` (dev HMR) / `'self'` (prod).
   - **Hardening preserved**: `default-src 'self'`, `frame-ancestors 'none'`, `base-uri 'self'`, `form-action 'self'`, `img-src 'self' data:`, `font-src 'self'`.
 
+### CI exclusion of archive-dependent tests (2026-10-18)
+
+`../archive/` is intentionally untracked, so tests that read original HTML/MD sources run locally only. CI's Test step excludes them with `--path-ignore-patterns` (currently 8 migrated guide directories + ISO 27000/27001 `page.test.ts`). **When a future migration adds tests that read `archive/` originals, append the directory to the patterns in `.github/workflows/ci.yml`.** Details: root `CLAUDE.md` → 「原本比較テストの CI 除外」.
+
 ### CCIE Security migration status
 
 CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ・左端の元サイドバー・全幅本文・table hydration修正・レビュー対応Green. Bun tests: 186 pass / 0 fail (30 files, 6,304 expects). `bun run build` succeeded; browser visual review pending with user.

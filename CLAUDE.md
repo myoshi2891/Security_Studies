@@ -183,9 +183,19 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test`
+4. `bun test --coverage --path-ignore-patterns=...`（原本比較テストを除外、下記参照）
+5. Codecov へカバレッジ送信（`continue-on-error`、品質ゲートではない）
 
 作業ディレクトリは `security-docs/` 固定。
+
+#### 原本比較テストの CI 除外（2026-10-18、コミット `1ce9728`）
+
+`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。原本 HTML/MD を読み込むテスト（各ガイドの `fidelity-helpers.ts` はモジュール読み込み時に `readFileSync` するため、同ディレクトリの全テストが巻き込まれる）は **ローカル専用** とし、CI の Test ステップで `--path-ignore-patterns` により除外している。ローカルの `bun test` / `npm test` は従来通り全件実行する。
+
+- 除外中: `src/app/docs/{ccie-security,ccst-cybersecurity,secure-by-design,mitre-atlas,hacking-kubernetes,web-application-hackers-handbook,applied-cryptography-guide,threat-modeling-guide}/**` と `src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts`
+- 除外後の CI 実測: 147 pass / 0 fail、24ファイル（`archive/` なしのクリーン worktree で再現）
+
+> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテスト（`archive.test.ts`・`fidelity-helpers.ts`・原本パスや台帳 `source` / `markdownSource` を参照するテスト）を追加・変更した場合は、`.github/workflows/ci.yml` の Test ステップの除外パターンに該当ディレクトリ（またはファイル）を **同じコミット系列で追記** すること。追記漏れは CI で ENOENT による大量失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
 
 ### CCIE Security migration status
 

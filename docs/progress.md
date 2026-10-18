@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち）
+> **最終更新**: 2026-10-18（原本比較テストをCIのみ除外・今後の移行時の追記ルールを明記。Threat Modeling: 原本アーカイブ済み・全685件成功・目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -16,7 +16,7 @@
 | テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **54/54 (100%)** | 既存50 + Threat Modeling部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
+| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存する原本比較テストはCIのみ `--path-ignore-patterns` で除外（CI実測 147 pass / 0 fail、24ファイル。2026-10-18、`1ce9728`） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
 #### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計685件。最終npm testログと全行照合）
@@ -215,6 +215,7 @@ form-action 'self'
 | 項目 | 状態 | 詳細 |
 |---|---|---|
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
+| 原本比較テストの CI 除外 | ✅ **適用中** | `archive/` は意図的に未追跡のため、移行済み8ガイド（ccie-security / ccst-cybersecurity / secure-by-design / mitre-atlas / hacking-kubernetes / web-application-hackers-handbook / applied-cryptography-guide / threat-modeling-guide）のテストディレクトリと ISO 27000/27001 `page.test.ts` をCIのみ除外。ローカルは全件実行。**今後の移行で原本を読むテストを追加したら `ci.yml` の除外パターンへ追記必須**（詳細: ルート `CLAUDE.md`「原本比較テストの CI 除外」） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
 | カバレッジ CI 連携 | ⚠️ **送信停止中** | `bun test --coverage` による lcov.info 生成は稼働中、Codecov へのアップロードは停止中。2026-10-05 時点で Codecov 側に接続不可（TLS ハンドシェイク拒否）。`codecov-action` v7.1.1 + `continue-on-error` で CI は通過させている（CLI の署名・ハッシュ検証を維持するため `use_pypi` は不使用）。CODECOV_TOKEN 未登録 → 次のアクション #11 |
@@ -229,6 +230,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
 | THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
 | APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
@@ -751,3 +753,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 原本HTML/MDは `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。静的検索21ページ・原本89見出しを検証。ビルド禁止・未実行。push・公開未実施。
 - 残る確認はユーザーの目視: `docs/migration-inventory/threat-modeling-guide-review.md`。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
+
+## 原本比較テストの CI 除外（2026-10-18）
+
+- 背景: `2930942` で移行済みガイドの原本を `archive/` へ整理し追跡対象外にした結果、CI のチェックアウトに原本がなく、原本比較テストが ENOENT で失敗（CI: 230 pass / 92 fail / 71 errors）。各ガイドの `fidelity-helpers.ts` はモジュール読み込み時に原本を読むため、同ディレクトリの全テストが巻き込まれる。
+- 対応: `.github/workflows/ci.yml` の Test ステップに `--path-ignore-patterns` を追加（`1ce9728`）。対象は8ガイドのディレクトリと ISO 27000/27001 の `page.test.ts`。`bunfig.toml` は変更しないため、ローカルの `bun test` / `npm test` は原本比較を含む全件を実行する。
+- 検証: `archive/` なしのクリーン worktree で CI と同じコマンドを実行し 147 pass / 0 fail（24ファイル）。
+- **今後の移行作業での必須手順**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更したら、同じコミット系列で `ci.yml` の除外パターンへ該当ディレクトリを追記する。完了前にクリーン worktree で CI コマンドを実行して 0 fail を確認する。
+- 既知の制約: 除外ディレクトリ内の原本非依存テスト（表示・操作系）もCIでは実行されない。CIでも実行したい場合は、helper の遅延読み込み＋`describe.skipIf(!existsSync(原本))` への改修が必要（未着手）。Codecov のカバレッジ値は低下するが品質ゲートではない。
