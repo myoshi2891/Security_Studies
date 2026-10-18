@@ -48,7 +48,7 @@ describe("ISO/IEC 27000:2026 ガイドページ", () => {
 
   test("原本の参照URLをすべて保持する", () => {
     // Arrange
-    const source = fs.readFileSync(path.join(process.cwd(), "..", "Iso-iec-27000-2026-guide.md"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "..", "archive", "standards", "Iso-iec-27000-2026-guide.md"), "utf8");
     const urls = source.match(/https:\/\/[^\s|]+/g) ?? [];
     const content = readPage();
 
