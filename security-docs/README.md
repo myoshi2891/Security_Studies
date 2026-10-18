@@ -51,9 +51,9 @@ Create a production build:
 bun run build
 ```
 
-### 原本比較テストの CI 除外（2026-10-18）
+### 原本比較テストの CI 扱い（2026-10-18）
 
-`../archive/` の原本は意図的に Git 管理外のため、原本を読み込むテストはローカル専用です。CI の Test ステップでは `--path-ignore-patterns` で除外しています（現在: 移行済み8ガイドのディレクトリ + ISO 27000/27001 の `page.test.ts`）。**今後の移行で原本を読むテストを追加した場合は、`.github/workflows/ci.yml` の除外パターンへ該当ディレクトリを追記してください。** 詳細はルートの `CLAUDE.md`「原本比較テストの CI 除外」を参照。
+`../archive/` の原本は意図的に Git 管理外のため、移行ガイドの `fidelity-helpers.ts` は原本を遅延読み込みし、原本依存テストだけを `sourceTest` で原本がない場合にスキップします（原本非依存のテストは CI でも実行）。パス除外は ISO 27000/27001 の `page.test.ts` のみです。**今後の移行で原本を読むテストを追加した場合は、除外パターンを追加せず遅延読み込みと `sourceTest` を使ってください。** 詳細はルートの `CLAUDE.md`「原本比較テストの CI 扱い」を参照。
 
 ### CCIE Security migration status
 

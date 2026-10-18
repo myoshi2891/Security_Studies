@@ -183,19 +183,19 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test --coverage --path-ignore-patterns=...`（原本比較テストを除外、下記参照）
+4. `bun test --coverage --path-ignore-patterns=...`（ISO 27000/27001 の `page.test.ts` のみ除外。移行ガイドの原本依存テストは `sourceTest` で自動スキップ、下記参照）
 5. Codecov へカバレッジ送信（`continue-on-error`、品質ゲートではない）
 
 作業ディレクトリは `security-docs/` 固定。
 
-#### 原本比較テストの CI 除外（2026-10-18、コミット `1ce9728`）
+#### 原本比較テストの CI 扱い（2026-10-18、`1ce9728` を改修）
 
-`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。原本 HTML/MD を読み込むテスト（各ガイドの `fidelity-helpers.ts` はモジュール読み込み時に `readFileSync` するため、同ディレクトリの全テストが巻き込まれる）は **ローカル専用** とし、CI の Test ステップで `--path-ignore-patterns` により除外している。ローカルの `bun test` / `npm test` は従来通り全件実行する。
+`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済み8ガイドの `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本を参照するテスト・節/章契約・`archive.test.ts` のバイト一致テストだけが `sourceTest` を使い、原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` は従来通り全件実行する。
 
-- 除外中: `src/app/docs/{ccie-security,ccst-cybersecurity,secure-by-design,mitre-atlas,hacking-kubernetes,web-application-hackers-handbook,applied-cryptography-guide,threat-modeling-guide}/**` と `src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts`
-- 除外後の CI 実測: 147 pass / 0 fail、24ファイル（`archive/` なしのクリーン worktree で再現）
+- パス除外は `src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts` のみ（ガイドディレクトリ単位の除外は廃止）
+- CI 条件の実測: 364 pass / 312 skip / 0 fail、112ファイル（`archive/` なしのクリーン worktree で再現。ディレクトリ除外時は 147 pass）。ローカル: 687 pass / 0 fail
 
-> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテスト（`archive.test.ts`・`fidelity-helpers.ts`・原本パスや台帳 `source` / `markdownSource` を参照するテスト）を追加・変更した場合は、`.github/workflows/ci.yml` の Test ステップの除外パターンに該当ディレクトリ（またはファイル）を **同じコミット系列で追記** すること。追記漏れは CI で ENOENT による大量失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
+> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更した場合は、原本の読み込みを `fidelity-helpers.ts` の遅延ロード（モジュールレベルで `readFileSync` しない）に揃え、原本を参照するテストは `test` ではなく `sourceTest` で登録すること。モジュールレベルで原本由来の値を即時評価しない（関数化する）。ディレクトリ単位の除外パターンは追加しない。漏れは CI で ENOENT や `undefined` 参照の失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
 
 ### CCIE Security migration status
 

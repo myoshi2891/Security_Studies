@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本比較テストはCIのみ除外）
+> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本依存テストはCIで条件付きスキップ・原本非依存テストはCIでも実行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -16,7 +16,7 @@
 | テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存する原本比較テストはCIのみ `--path-ignore-patterns` で除外（CI実測 147 pass / 0 fail、24ファイル。2026-10-18、`1ce9728`） |
+| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存するテストは `sourceTest` で原本がないCIのみスキップ（CI条件実測 364 pass / 312 skip / 0 fail、112ファイル。2026-10-18）。パス除外は ISO 27000/27001 の `page.test.ts` のみ |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
 #### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計687件。レビュー対応後のbun testログと照合）
@@ -761,7 +761,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 対応: `.github/workflows/ci.yml` の Test ステップに `--path-ignore-patterns` を追加（`1ce9728`）。対象は8ガイドのディレクトリと ISO 27000/27001 の `page.test.ts`。`bunfig.toml` は変更しないため、ローカルの `bun test` / `npm test` は原本比較を含む全件を実行する。
 - 検証: `archive/` なしのクリーン worktree で CI と同じコマンドを実行し 147 pass / 0 fail（24ファイル）。
 - **今後の移行作業での必須手順**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更したら、同じコミット系列で `ci.yml` の除外パターンへ該当ディレクトリを追記する。完了前にクリーン worktree で CI コマンドを実行して 0 fail を確認する。
-- 既知の制約: 除外ディレクトリ内の原本非依存テスト（表示・操作系）もCIでは実行されない。CIでも実行したい場合は、helper の遅延読み込み＋`describe.skipIf(!existsSync(原本))` への改修が必要（未着手）。Codecov のカバレッジ値は低下するが品質ゲートではない。
+- 改修（2026-10-18、レビュー対応）: ディレクトリ単位の除外を廃止。8ガイドの `fidelity-helpers.ts` を遅延読み込みにし、`hasSource` / `sourceTest`（`test.skipIf`）を追加。原本を参照するテストのみ `sourceTest` に切り替え、モジュールレベルの即時評価（CCIE sidebar/foundation、Hacking Kubernetes・WAHH integration）を関数化。`archive.test.ts` はバイト一致のみスキップ対象。検証: ローカル 687 pass / 0 fail、`archive/` なしのクリーン worktree で 364 pass / 312 skip / 0 fail（112ファイル）。lint・型検査成功。ビルド未実行。
 
 ## レビュー対応（2026-10-18）
 

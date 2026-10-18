@@ -150,10 +150,10 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test --coverage --path-ignore-patterns=...`（原本比較テストを除外）
+4. `bun test --coverage --path-ignore-patterns=...`（ISO 27000/27001 の `page.test.ts` のみ除外）
 5. Codecov へカバレッジをアップロード（`CODECOV_TOKEN` シークレット要）
 
-`archive/` の原本は意図的に Git 管理外のため、原本を読み込む移行ガイドのテストはローカル専用とし、CI では除外しています（ローカルの `bun test` は全件実行）。新しいガイドを移行して原本比較テストを追加した場合は、`ci.yml` の除外パターンへの追記が必要です。詳細は `CLAUDE.md` の「原本比較テストの CI 除外」を参照してください。
+`archive/` の原本は意図的に Git 管理外です。移行ガイドの原本依存テストは `fidelity-helpers.ts` の `sourceTest` で原本がない CI のみスキップされ、原本非依存のテストは CI でも実行されます（ローカルの `bun test` は全件実行）。新しいガイドで原本比較テストを追加する場合は、原本の遅延読み込みと `sourceTest` を使ってください。詳細は `CLAUDE.md` の「原本比較テストの CI 扱い」を参照してください。
 
 ## 開発の規約
 

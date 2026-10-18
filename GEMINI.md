@@ -59,19 +59,19 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on push and PRs to `main` / `de
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test --coverage --path-ignore-patterns=...` (excludes original-source comparison tests; see below)
+4. `bun test --coverage --path-ignore-patterns=...` (only ISO 27000/27001 `page.test.ts` are excluded; archive-dependent guide tests self-skip via `sourceTest`, see below)
 5. Codecov upload (`continue-on-error`; not a quality gate)
 
 All steps execute in the `security-docs/` working directory.
 
-### CI exclusion of original-source comparison tests (2026-10-18, commit `1ce9728`)
+### CI handling of original-source comparison tests (2026-10-18, reworks `1ce9728`)
 
-`archive/` is git-ignored on purpose, so the original HTML/MD files do not exist in the CI checkout. Tests that read the originals are **local-only** and are excluded in the CI Test step via `--path-ignore-patterns` (each guide's `fidelity-helpers.ts` reads the original at module load, so every test in that directory is affected). Local `bun test` / `npm test` still runs everything.
+`archive/` is git-ignored on purpose, so the original HTML/MD files do not exist in the CI checkout. Each migrated guide's `fidelity-helpers.ts` loads the original **lazily, on the first source-dependent test**, and exports `hasSource` and `sourceTest` (`test.skipIf` when the original is missing). Only tests that touch the original (section/chapter contracts, byte checks in `archive.test.ts`, source comparisons) use `sourceTest`; source-independent display, interaction and integration tests run in CI. Local `bun test` / `npm test` still runs everything.
 
-- Excluded: `src/app/docs/{ccie-security,ccst-cybersecurity,secure-by-design,mitre-atlas,hacking-kubernetes,web-application-hackers-handbook,applied-cryptography-guide,threat-modeling-guide}/**` and `src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts`
-- CI result after exclusion: 147 pass / 0 fail, 24 files (reproduced in a clean worktree without `archive/`)
+- Path exclusion: only `src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts` (directory-level exclusion removed)
+- CI-equivalent result: 364 pass / 312 skip / 0 fail, 112 files (clean worktree without `archive/`; 147 pass under directory exclusion). Local: 687 pass / 0 fail
 
-> **⚠️ Required for future migrations**: when originals are moved to `archive/` and tests that read them are added or changed (`archive.test.ts`, `fidelity-helpers.ts`, tests referencing original paths or inventory `source` / `markdownSource`), append the directory (or file) to the exclusion patterns in the Test step of `.github/workflows/ci.yml` in the same series of commits. A missing entry shows up as mass ENOENT failures in CI. Verify by running the CI command in a clean `git worktree` (no `archive/`) and confirming 0 fail.
+> **⚠️ Required for future migrations**: when originals are moved to `archive/` and tests that read them are added or changed (`archive.test.ts`, `fidelity-helpers.ts`, tests referencing original paths or inventory `source` / `markdownSource`), keep source loading lazy in `fidelity-helpers.ts` (no module-level `readFileSync`), register source-dependent tests with `sourceTest` instead of `test`, and never evaluate source-derived values at module level. Do not add directory exclusion patterns. Mistakes show up as ENOENT or `undefined` failures in CI. Verify by running the CI command in a clean `git worktree` (no `archive/`) and confirming 0 fail.
 
 ## Testing
 
