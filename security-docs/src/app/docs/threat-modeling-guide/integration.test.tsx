@@ -36,7 +36,7 @@ sourceTest('the original eighteen TOC entries resolve uniquely and every source 
 });
 sourceTest('all nine rendered diagram hooks carry their exact source definition',async()=>{
  const figures=(await renderedPage()).querySelectorAll('.mermaid[data-diagram]');expect(figures).toHaveLength(9);
- expect([...sourceDocument.querySelectorAll('.mermaid[data-diagram]')].map(el=>el.id)).toEqual([...figures].map(el=>el.id));
+ expect([...sourceDocument.querySelectorAll('.mermaid[data-diagram]')].map(el=>el.getAttribute('data-diagram'))).toEqual([...figures].map(el=>el.getAttribute('data-diagram')));
  for(const figure of figures)expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!)!);
 });
 sourceTest('Next metadata and dynamic search preserve every original heading including numbered compound headings',async()=>{
