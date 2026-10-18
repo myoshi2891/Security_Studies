@@ -382,9 +382,11 @@ flowchart TD
     PM["PP-Module 評価 ACE"] --> PC["PP-Configuration 整合性評価 ACE_CCO"]
     PC -.->|"ST が PP-Configuration 適合を主張する場合のみ"| ST
     ST["ST 評価 ASE<br/>主張の明確さと整合性を確認"] --> TOE
-    TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"他製品の上に載る構成か?"}
-    COMP -->|"はい"| ACO["コンポジション評価 ACO"]
-    COMP -->|"いいえ"| END(["評価完了"])
+    TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"どの評価方法か?"}
+    COMP -->|"複合製品の複合評価<br/>下位製品の評価結果を利用"| CPE["複合評価<br/>ASE_COMP ADV_COMP ALC_COMP ATE_COMP AVA_COMP"]
+    COMP -->|"評価済みコンポーネントを組み合わせた TOE"| ACO["コンポジション評価 ACO"]
+    COMP -->|"どちらでもない"| END(["評価完了"])
+    CPE --> END
     ACO --> END
 ```
 
