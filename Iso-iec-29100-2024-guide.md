@@ -993,7 +993,8 @@ flowchart TB
 | **ISO/IEC 27001 / 27002** | ISMS の要求事項と、情報セキュリティ統制 | 29100 は、既存のセキュリティ標準に**プライバシーの視点を足す**ことを意図する。Annex A に概念対応表がある | [S3] |
 | **ISO/IEC 27701:2025** | プライバシー情報マネジメントシステム（PIMS）の要求事項と指針。**2025年10月に改訂**され、ISO/IEC 27001 を前提としない**独立した認証可能な規格**になった | 29100 は 27701 の**引用規格**で、27701 の Annex C が 29100 の原則との対応を示す。PII controller 向け・processor 向けの統制ごとに対応づけられ、processor には当てはまらない原則もある | [S13][S15][S16][S17] |
 | **ISO/IEC 29134:2023** | PIA のプロセスと、報告書の構成と内容のガイドライン（第2版、2023年5月） | 29100 が示すリスクマネジメントの成果物としての PIA を、具体的に進めるための規格 | [S24] |
-| **ISO/IEC 29151** | PII 保護の実施規範 | 29100 の参考文献に掲載。27701 が対応づけている | [S3][S14] |
+| **ISO/IEC 29151:2017** | PII 保護の実施規範（code of practice、第1版） | 29100 の参考文献に掲載。27701 が対応づけている | [S3][S14] |
+| **ISO/IEC 29151:2026** | 2017年版の後継（第2版、2026年7月発行）。表題は "Controls, requirements, and guidance for personally identifiable information protection" に変わり、実施規範から「管理策・要求事項・指針」へ位置付けが変わった | 上記の 29100・27701 との関係の記述は2017年版に基づく。2026年版との対応は未確認 | [S27] |
 | **ISO/IEC 27018** | パブリッククラウドで PII processor として動作する場合の PII 保護の実施規範 | 29100 の参考文献に掲載。27701 が対応づけている | [S3][S14] |
 | **ISO/IEC 29184** | オンラインのプライバシー通知と同意（2020年版。日本では JIS X 9252:2023） | 原則1・7 の具体化に関わる | [S7] |
 | **ISO 31700-1:2023** | 消費者向け商品・サービスの privacy by design の高水準要求事項（2023年発行、約30の要求事項） | プライバシーを設計段階で組み込む点で関連。Ann Cavoukian が2009年に示した7原則を具体化したものと説明される | [S25][S26] |
@@ -1188,6 +1189,7 @@ flowchart TD
 | S24 | AFNOR: ISO/IEC 29134:2023 | https://www.boutique.afnor.org/en-gb/standard/iso-iec-291342023/information-technology-security-techniques-guidelines-for-privacy-impact-as/xs143470/345510 | PIA の規格（2023年5月、第2版）。VDE: https://vde-verlag.de/iec-normen/251846/iso-iec-29134-2023.html |
 | S25 | Genorma: ISO 31700-1:2023 | https://genorma.com/en/standards/iso-31700-1-2023 | ISO 31700-1 のスコープと発行日 |
 | S26 | Hogan Lovells（Privacy World）: ISO 31700 — the latest tool to operationalize GDPR privacy by design compliance | https://www.privacyworld.blog/2023/02/iso-31700-the-latest-tool-to-operationalize-gdpr-privacy-by-design-compliance/ | 約30の要求事項、GDPR の privacy by design との関係。補足: https://www.activemind.legal/guides/iso-31700/ |
+| S27 | ISO: ISO/IEC 29151:2026 | https://www.iso.org/standard/88151.html | 第2版（2026年7月）、表題、2017年版の後継 |
 
 ### G. 本調査の限界（確認できなかった点）
 

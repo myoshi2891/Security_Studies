@@ -1,7 +1,7 @@
 # ISO/IEC 18045:2026 初学者向けステップバイステップ解説ガイド
 
 > **対象規格**: ISO/IEC 18045:2026 — Information security, cybersecurity and privacy protection — Evaluation criteria for IT security — Requirements and methodology for IT security evaluation
-> **通称**: CEM(Common Evaluation Methodology / Common Methodology for Information Technology Security Evaluation)
+> **通称**: CEM(正式名称: Common Methodology for Information Technology Security Evaluation。「Common Evaluation Methodology」は非公式の展開形で、正式名称ではない)
 > **情報時点**: 2026年10月14日までのウェブ公開情報
 > **作成日**: 2026年10月15日
 > **読者想定**: ソフトウェアエンジニア、セキュリティエンジニア、QAエンジニア、Common Criteria を初めて学ぶ方
@@ -160,7 +160,7 @@ flowchart TD
 |---|---|---|
 | ISO/IEC 15408-1 | 一般概念、用語、TOE(評価対象)の概念、評価の全体モデル | 取扱説明書の「はじめに」 |
 | ISO/IEC 15408-2 | セキュリティ機能要件(SFR)のカタログ | 「製品がこんな機能を持つべき」の部品表 |
-| ISO/IEC 15408-3 | セキュリティ保証要件(SAR)のカタログと、PP・ST の評価基準 | 「この証拠でここまで確認する」の部品表 |
+| ISO/IEC 15408-3 | セキュリティ保証要件(SAR)のカタログと、PP・PP-Module・PP-Configuration・ST の評価基準 | 「この証拠でここまで確認する」の部品表 |
 | ISO/IEC 15408-4 | 評価方法(EM)と評価アクティビティ(EA)を定めるための枠組み | 技術分野ごとの評価手順を作るための型枠 |
 | ISO/IEC 15408-5 | EAL などの定義済みパッケージ | 要件のセットメニュー |
 | **ISO/IEC 18045** | **評価者が何をどう確認し、どう判定するか** | **採点マニュアル** |
@@ -803,7 +803,7 @@ flowchart TD
 | 用語 | 正式名 | 意味 |
 |---|---|---|
 | CC | Common Criteria | IT セキュリティ評価の国際基準(ISO/IEC 15408) |
-| CEM | Common Evaluation Methodology | CC に基づく評価方法(ISO/IEC 18045) |
+| CEM | Common Methodology for Information Technology Security Evaluation | CC に基づく評価方法(ISO/IEC 18045)。「Common Evaluation Methodology」は非公式の展開形 |
 | CCRA | Common Criteria Recognition Arrangement | CC 認証の国際相互承認の枠組み |
 | TOE | Target of Evaluation | 評価対象 |
 | TSF | TOE Security Functionality | TOE のセキュリティ機能 |
