@@ -1,7 +1,7 @@
 # ISO/IEC 18045:2026 初学者向けステップバイステップ解説ガイド
 
 > **対象規格**: ISO/IEC 18045:2026 — Information security, cybersecurity and privacy protection — Evaluation criteria for IT security — Requirements and methodology for IT security evaluation
-> **通称**: CEM(正式名称: Common Methodology for Information Technology Security Evaluation。「Common Evaluation Methodology」は非公式の展開形で、正式名称ではない)
+> **通称**: CEM(正式名称: Common Methodology for Information Technology Security Evaluation。「Common Evaluation Methodology」は旧版・制度文書で使われてきた歴史的な名称)
 > **情報時点**: 2026年10月14日までのウェブ公開情報
 > **作成日**: 2026年10月15日
 > **読者想定**: ソフトウェアエンジニア、セキュリティエンジニア、QAエンジニア、Common Criteria を初めて学ぶ方
@@ -555,7 +555,7 @@ flowchart TD
 | 読み方のコツ | 具体的な意味 |
 |---|---|
 | 太字の斜体の動詞を探す | 評価者が**必ず**行う動作 |
-| 1つの work unit は1つの判断 | 「確認する」「検討する」「決定する」といった動作の単位 |
+| work unit は評価作業の最小単位 | 「確認する」「検討する」「決定する」といった動作で示される。対象は評価者アクション要素のほか、保証コンポーネントやクラスの場合もある |
 | 証拠と結びつける | どの証拠(ST、設計文書、ソースコード、テスト)を見るのか |
 
 ---
@@ -802,7 +802,7 @@ flowchart TD
 | 用語 | 正式名 | 意味 |
 |---|---|---|
 | CC | Common Criteria | IT セキュリティ評価の国際基準(ISO/IEC 15408) |
-| CEM | Common Methodology for Information Technology Security Evaluation | CC に基づく評価方法(ISO/IEC 18045)。「Common Evaluation Methodology」は非公式の展開形 |
+| CEM | Common Methodology for Information Technology Security Evaluation | CC に基づく評価方法(ISO/IEC 18045)。「Common Evaluation Methodology」は旧版・制度文書で使われてきた歴史的な名称 |
 | CCRA | Common Criteria Recognition Arrangement | CC 認証の国際相互承認の枠組み |
 | TOE | Target of Evaluation | 評価対象 |
 | TSF | TOE Security Functionality | TOE のセキュリティ機能 |
@@ -816,7 +816,7 @@ flowchart TD
 | ITSEF | IT Security Evaluation Facility | 評価機関 |
 | OR | Observation Report | 所見報告書 |
 | ETR | Evaluation Technical Report | 評価技術報告書 |
-| work unit | (CEM の用語) | 評価者アクションを分解した具体的作業単位 |
+| work unit | (CEM の用語) | 評価作業の最小単位。対象は評価者アクション要素、保証コンポーネント、またはクラス |
 | verdict | (CEM の用語) | pass、fail、inconclusive の判定 |
 | EM / EA | Evaluation Method / Evaluation Activity | Part 4 で定める評価方法と評価アクティビティ |
 | EUCC | European Common Criteria-based cybersecurity certification scheme | EU の CC ベース認証スキーム |
