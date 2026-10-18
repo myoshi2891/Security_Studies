@@ -37,10 +37,10 @@ jobs:
         run: bun run types:check
 
       - name: Test
-        # 原本(archive/)は意図的に未追跡のため、原本比較に依存するテストはローカル専用としてCIでは除外する
+        # 原本(archive/)は意図的に未追跡。移行ガイドの原本依存テストは fidelity-helpers の sourceTest で
+        # 原本がない場合のみスキップされるため、ディレクトリ単位では除外せず原本非依存のテストをCIで実行する
         run: >-
           bun test --coverage
-          --path-ignore-patterns='src/app/docs/{ccie-security,ccst-cybersecurity,secure-by-design,mitre-atlas,hacking-kubernetes,web-application-hackers-handbook,applied-cryptography-guide,threat-modeling-guide}/**'
           --path-ignore-patterns='src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts'
 
       - name: Upload coverage to Codecov
