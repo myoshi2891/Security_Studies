@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（原本比較テストをCIのみ除外・今後の移行時の追記ルールを明記。Threat Modeling: 原本アーカイブ済み・全685件成功・目視待ち）
+> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本比較テストはCIのみ除外）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,14 +12,14 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **685件** | `npm test`: 685 pass / 0 fail、114ファイル、118,043 expect（2026-10-18最終全体実測）。Threat Modeling専用61件/13ファイル。lint/型検査成功。ビルド禁止・未実行 |
+| テストケース総数 | **687件** | `bun test`: 687 pass / 0 fail、114ファイル、118,047 expect（2026-10-18レビュー対応後の全体実測）。Threat Modeling専用62件/13ファイル、Applied Cryptography専用61件/12ファイル。lint/型検査成功。ビルド禁止・未実行 |
 | テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **54/54 (100%)** | 既存50 + Threat Modeling部品4。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
+| File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存する原本比較テストはCIのみ `--path-ignore-patterns` で除外（CI実測 147 pass / 0 fail、24ファイル。2026-10-18、`1ce9728`） |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計685件。最終npm testログと全行照合）
+#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計687件。レビュー対応後のbun testログと照合）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
@@ -27,7 +27,7 @@
 | `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
-| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 10 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen。レビュー対応でスタジアム形/円柱形ノードのラベル抽出1件追加 |
 | `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
@@ -41,7 +41,7 @@
 | `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
-| `src/app/docs/applied-cryptography-guide/runtime.test.tsx` | 8 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green。レビュー対応で図9の引用符なし点線ラベル1件追加 |
 | `src/app/docs/applied-cryptography-guide/sections-1-4.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/sections-13-16.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/app/docs/applied-cryptography-guide/sections-5-8.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
@@ -232,7 +232,7 @@ form-action 'self'
 |---|---|---|
 | CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
 | THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
-| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
+| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功（移行完了時点の件数。現在の実測値は冒頭のテスト表を参照）、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
@@ -628,6 +628,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
 - 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
+- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の101ページ（21+80）はテスト値であり、実際のページ数（現在21ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
@@ -761,3 +762,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 検証: `archive/` なしのクリーン worktree で CI と同じコマンドを実行し 147 pass / 0 fail（24ファイル）。
 - **今後の移行作業での必須手順**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更したら、同じコミット系列で `ci.yml` の除外パターンへ該当ディレクトリを追記する。完了前にクリーン worktree で CI コマンドを実行して 0 fail を確認する。
 - 既知の制約: 除外ディレクトリ内の原本非依存テスト（表示・操作系）もCIでは実行されない。CIでも実行したい場合は、helper の遅延読み込み＋`describe.skipIf(!existsSync(原本))` への改修が必要（未着手）。Codecov のカバレッジ値は低下するが品質ゲートではない。
+
+## レビュー対応（2026-10-18）
+
+- 図のテキスト説明: Applied Cryptography の `EDGE_PATTERN` が引用符なし点線ラベル（図9「影響を受ける」）を読み取るよう修正。Threat Modeling の `NODE_PATTERN` がスタジアム形 `([..])`・円柱形 `[(..)]` のラベルを抽出するよう修正。Red `1917a9a` → Green `e6be2b3`。
+- ガイド本文（`c51e3d7`）: ISO 27017 の全デプロイメントモデル表記、ISO/IEC 18045 ロードマップの AVA 位置、ISO/IEC 29100 の Third party 定義、ISSAP の目次アンカー・問題形式・NIST IR 8547 強度区分・Kerberos 相互認証。
+- 仕様書: File Unit Coverage 内訳（46 + 4 + 4）、Applied Cryptography 記録の当時件数注記、ナビ拡張テスト値（登録ページ＋仮80件）の注記、ダッシュボードの移行状況セクションを履歴領域へ移動。
+- 全体: 687 pass / 0 fail、114ファイル、118,047 expect。lint/型検査成功。ビルド禁止・未実行。
+- 見送り: `archive/` の再追跡（ユーザー判断で意図的に未追跡、CI除外で対応済み）、Applied Cryptography CSS の `body.drawer-open` 3ルール削除（`foundation.test.tsx` が原本CSSの全ルール保持を契約として検証するため）、MermaidFigure/GuideSidebar の共通モジュール化（大規模リファクタリングのため要確認）。

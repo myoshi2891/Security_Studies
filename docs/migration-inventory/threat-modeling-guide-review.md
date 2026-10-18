@@ -5,7 +5,7 @@
 移行先: /docs/threat-modeling-guide。
 原本: archive/html/Threat-modeling-guide.html・archive/md/Threat-modeling-guide.md。
 目視はユーザー担当・未完了。Next.jsビルドは実行していません。
-専用61件/13ファイル、全体685件/114ファイル・118,043アサーション成功。lint/型検査成功。
+専用61件/13ファイル成功。全体の最新集計は `docs/progress.md` のテスト表を参照。lint/型検査成功。
 自動検証では全18章・42表・839表セル・9図・コード2件・チェック17件・解答5件・参考文献41件を原本と照合しています。
 
 ## 全体・操作
