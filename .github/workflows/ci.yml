@@ -37,7 +37,11 @@ jobs:
         run: bun run types:check
 
       - name: Test
-        run: bun test --coverage
+        # 原本(archive/)は意図的に未追跡のため、原本比較に依存するテストはローカル専用としてCIでは除外する
+        run: >-
+          bun test --coverage
+          --path-ignore-patterns='src/app/docs/{ccie-security,ccst-cybersecurity,secure-by-design,mitre-atlas,hacking-kubernetes,web-application-hackers-handbook,applied-cryptography-guide,threat-modeling-guide}/**'
+          --path-ignore-patterns='src/app/docs/iso-iec-{27000-2026,27001-2022}-guide/page.test.ts'
 
       - name: Upload coverage to Codecov
         # カバレッジ送信は品質ゲートではないため、Codecov 側の障害（TLS 拒否等）で CI を落とさない
