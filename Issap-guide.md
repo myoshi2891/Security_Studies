@@ -80,10 +80,10 @@ flowchart TB
 
 | 項目 | 情報 | 確度 |
 |---|---|---|
-| 問題数・問題形式 | 125問（多肢選択および高度な問題形式） | 第三者情報 [S8]。ISC2 公式で要確認 |
-| 合格点 | 1000点満点中700点（スケールドスコア） | 第三者情報 [S8]。ISC2 公式で要確認 |
+| 問題数・問題形式 | 125問（多肢選択および高度な問題形式） | **高**（ISC2 公式の試験アウトライン）[S2] |
+| 合格点 | 1000点満点中700点（スケールドスコア） | **高**（ISC2 公式の試験アウトライン）[S2] |
 | 形式 | リニア（適応型ではない） | 第三者情報 [S8] |
-| 会場 | Pearson VUE テストセンター | 第三者情報 [S8] |
+| 会場 | Pearson VUE テストセンター | **高**（ISC2 公式の試験アウトライン）[S2] |
 
 > 受験前に必ず ISC2 の試験ポリシー・再受験規定を確認してください [S6][S7]。
 
@@ -998,7 +998,7 @@ flowchart TD
 |---|---|---|
 | **SAML** | Web SSO / フェデレーション用の **アサーション**交換 | IdP と SP。XML ベース。企業向け SSO に多い |
 | **RADIUS** | ネットワークアクセスの AAA | UDP ベース。VPN・無線（802.1X）の認証で使用 |
-| **Kerberos** | チケットによる相互認証と SSO | KDC（AS・TGS）。**時刻同期が必須**。パスワードをネットワークに流さない |
+| **Kerberos** | チケットベースの認証と SSO（相互認証は要求時のみ） | KDC（AS・TGS）。**時刻同期が必須**。パスワードをネットワークに流さない |
 | **OAuth 2.0** | **認可**の委譲フレームワーク | 認証プロトコルではない。アクセストークンを発行 [S20] |
 | OpenID Connect | OAuth 2.0 上の**認証**レイヤ | ID トークンでログイン |
 | LDAP | ディレクトリへの問い合わせ・認証（バインド） | **LDAPS または StartTLS で保護** |
@@ -1289,6 +1289,7 @@ flowchart TD
 | S6 | 試験登録・ポリシー | https://www.isc2.org/register-for-exam |
 | S7 | 再受験ポリシー | https://www.isc2.org/exams/after-your-exam#retakePolicy |
 | S21 | AI 試験ガイダンス記事（見出しのみ確認） | https://www.isc2.org/insights/2026/09/updated-isc2-ai-guidance-published |
+| S22 | Associate of ISC2（資格ごとの称号保持期間） | https://www.isc2.org/certifications/associate |
 
 ### 12.2 標準・フレームワーク（一次情報）
 
@@ -1321,7 +1322,6 @@ flowchart TD
 | S18 | STRIDE の概説（MSDN） | https://msdn.microsoft.com/en-us/library/ee823878 |
 | S19 | IEC 62443 ゾーン／コンデュイットの解説 | https://www.trendmicro.com/en_us/research/20/g/guidelines-related-to-security-in-smart-factories-part-2-system-design-and-security-level-of-iec62443.html |
 | S19 | NIST SP 800-82 と OT セキュリティ概説 | https://www.securityscientist.net/blog/12-questions-and-answers-about-nist-sp-800-82/ |
-| S22 | Associate of ISC2（資格ごとの称号保持期間） | https://www.isc2.org/certifications/associate |
 
 ---
 
@@ -1332,7 +1332,8 @@ flowchart TD
 | 4ドメイン構成・配分（21/22/32/25%） | **高** | ISC2 公式記事で確認 [S3] |
 | サブドメインの項目 | **高** | ISC2 のアウトライン概要ページで確認 [S2]。最終確認は PDF [S4] |
 | 認定の経験要件・Associate of ISC2 | **高** | [S1][S3][S22] |
-| 問題数 125／合格点 700／リニア形式 | **中** | 第三者情報。ISC2 の最新規定で要確認 [S8] |
+| 問題数 125／合格点 700／会場 | **高** | ISC2 公式の試験アウトラインで確認 [S2] |
+| リニア形式 | **中** | 第三者情報。ISC2 公式で要確認 [S8] |
 | AI の織り込み内容（第9章） | **中** | 取得ページの見出し対応がずれていたため、内容に基づいて整理 [S2] |
 | NIST IR 8547 の期限 | **中** | 提案段階を含む。最新状況は NIST で確認 [S13] |
 | OT（ゾーン／コンデュイット等） | **中** | 二次情報中心。NIST SP 800-82 Rev.3 と IEC 62443 本体で確認を推奨 [S19] |
@@ -1343,3 +1344,27 @@ flowchart TD
 - 本ガイドは学習補助であり、ISC2 の公式教材ではありません。
 - 試験内容・要件・料金は変更されることがあります。**受験前に ISC2 公式サイトで最新情報を確認**してください。
 - ISSAP、CISSP は ISC2 の登録商標です。
+
+<!-- 出典マーカー [S番号] の参照定義（12章の出典一覧の先頭URLに対応） -->
+
+[S1]: https://www.isc2.org/certifications/issap
+[S2]: https://www.isc2.org/certifications/issap/issap-certification-exam-outline
+[S3]: https://www.isc2.org/Insights/2025/07/new-exam-outlines-for-isc2-advanced-certifications
+[S4]: https://edge.sitecorecloud.io/internationf173-xmc4e73-prodbc0f-9660/media/Project/ISC2/Main/Media/certifications/Certs/ISSAP/ISSAP-Exam-Outline-2025.pdf
+[S5]: https://www.isc2.org/certifications/references
+[S6]: https://www.isc2.org/register-for-exam
+[S7]: https://www.isc2.org/exams/after-your-exam#retakePolicy
+[S8]: https://www.examcert.app/blog/cissp-issap-readiness-checklist/
+[S10]: https://csrc.nist.gov/news/2020/zero-trust-architecture-nist-publishes-sp-800-207
+[S11]: https://csrc.nist.gov/pubs/sp/800/63/4/final
+[S12]: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf
+[S13]: https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf
+[S14]: https://www.nist.gov/node/1731521
+[S15]: https://pubs.opengroup.org/architecture/togaf9-doc/m/pt2.html
+[S16]: https://sabsa.org/
+[S17]: https://www.first.org/cvss/
+[S18]: https://learn.microsoft.com/ja-jp/archive/blogs/larryosterman/threat-modeling-again-stride
+[S19]: https://www.trendmicro.com/en_us/research/20/g/guidelines-related-to-security-in-smart-factories-part-2-system-design-and-security-level-of-iec62443.html
+[S20]: https://datatracker.ietf.org/doc/html/rfc6749
+[S21]: https://www.isc2.org/insights/2026/09/updated-isc2-ai-guidance-published
+[S22]: https://www.isc2.org/certifications/associate
