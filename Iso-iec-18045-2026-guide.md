@@ -362,24 +362,23 @@ flowchart LR
 
 ---
 
-## STEP 7. 評価の対象は4種類 — PP、PP-Module、PP-Configuration、ST
+## STEP 7. 評価の対象は4種類 — PP、PP-Configuration、ST、TOE
 
 ### 7.1 キーワード整理
 
 | 用語 | 正式名 | 一言でいうと | 18045 の該当章 |
 |---|---|---|---|
-| **TOE** | Target of Evaluation | 評価対象の製品・システム(の範囲) | 全体 |
 | **PP** | Protection Profile | 製品カテゴリごとの、再利用できるセキュリティ要件の雛形 | 第9章(APE) |
-| **PP-Module** | Protection Profile Module | PP に追加する機能単位の要件の部品 | 第10章(ACE) |
-| **PP-Configuration** | Protection Profile Configuration | PP と PP-Module を組み合わせた構成 | 第10章(ACE) |
+| **PP-Configuration** | Protection Profile Configuration | PP と PP-Module(PP に追加する機能単位の要件の部品)を組み合わせた構成。PP-Module はこの評価の一部として評価される | 第10章(ACE) |
 | **ST** | Security Target | 特定の製品について、そのセキュリティの主張を記したもの | 第11章(ASE) |
+| **TOE** | Target of Evaluation | 評価対象の製品・システム(の範囲) | 全体 |
 
 ### 7.2 評価の順序
 
 ```mermaid
 flowchart TD
     PP["PP 評価 APE"] -.->|"ST が PP 適合を主張する場合のみ"| ST
-    PM["PP-Module 評価 ACE"] --> PC["PP-Configuration 整合性評価 ACE_CCO"]
+    PC["PP-Configuration 評価 ACE<br/>PP-Module 評価 ACE_MCO を含む<br/>整合性評価 ACE_CCO"]
     PC -.->|"ST が PP-Configuration 適合を主張する場合のみ"| ST
     ST["ST 評価 ASE<br/>主張の明確さと整合性を確認"] --> TOE
     TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"どの評価方法か?"}
@@ -892,7 +891,7 @@ flowchart TD
 
 | 区分 | 内容 | URL |
 |---|---|---|
-| EU 法令 | 実施規則(EU) 2024/482(EUCC) | https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-01-08/eng/pdf |
+| EU 法令 | 実施規則(EU) 2024/482(EUCC) | https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-12-29/eng/pdf |
 | EU 法令 | EUCC の要約 | https://eur-lex.europa.eu/EN/legal-content/summary/european-common-criteria-based-cybersecurity-certification-scheme-eucc.html |
 | ENISA | EUCC のページ | https://certification.enisa.europa.eu/browse-topic/EUCC_en |
 | Thales | EUCC の解説 | https://www.thalesgroup.com/en/news-centre/insights/public-security/national-security/introducing-eucc-new-certificate-boost |
