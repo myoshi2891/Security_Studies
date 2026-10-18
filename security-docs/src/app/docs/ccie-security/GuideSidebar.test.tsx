@@ -9,6 +9,9 @@ afterEach(() => {
   cleanup();
   window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
 });
+// 原本に依存しない操作テスト用の目次。テストが参照する章・小節IDだけを持ち、最終章 s13 は小節なし
+const fixtureChildren: Record<number, string[]> = { 1: ['s1-1'], 2: ['s2-1'], 8: ['s8-16'] };
+const fixtureItems = () => Array.from({ length: 13 }, (_, i) => ({ id: `s${i + 1}`, title: `章${i + 1}`, children: (fixtureChildren[i + 1] ?? []).map(id => ({ id, title: `節${id}` })) }));
 const items = () => [...sourceDocument.querySelectorAll('aside nav > ul > li')].map(li => {
   const link = li.querySelector('a')!;
   return { id: link.getAttribute('href')!.slice(1), title: link.textContent!, children: [...li.querySelectorAll('ul.sub a')].map(a => ({ id: a.getAttribute('href')!.slice(1), title: a.textContent! })) };
@@ -30,9 +33,9 @@ describe('CCIE original sidebar and full-width layout', () => {
     expect([...container.querySelectorAll('aside nav a')].map(a => [a.textContent, a.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(a => [a.textContent, a.getAttribute('href')]));
   });
 
-  sourceTest('chapter selection opens its subsections and marks the current chapter', async () => {
+  test('chapter selection opens its subsections and marks the current chapter', async () => {
     const { GuideSidebar } = await load();
-    const { container } = render(createElement(GuideSidebar, { items: items() }));
+    const { container } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     const link = container.querySelector<HTMLAnchorElement>('a[href="#s2"]')!;
     fireEvent.click(link);
     expect(link.closest('li')).toHaveClass('open');
@@ -40,7 +43,7 @@ describe('CCIE original sidebar and full-width layout', () => {
     expect(container.querySelector('a[href="#s1"]')!.closest('li')).not.toHaveClass('open');
   });
 
-  sourceTest('scroll observation selects the subsection and disconnects on unmount', async () => {
+  test('scroll observation selects the subsection and disconnects on unmount', async () => {
     const previous = globalThis.IntersectionObserver;
     let callback!: IntersectionObserverCallback;
     const disconnect = mock(() => {});
@@ -52,7 +55,7 @@ describe('CCIE original sidebar and full-width layout', () => {
     globalThis.IntersectionObserver = Observer as unknown as typeof IntersectionObserver;
     try {
       const { GuideSidebar } = await load();
-      const { container, unmount } = render(createElement('div', {}, createElement('section', { id: 's2' }, createElement('h3', { id: 's2-1' }, '節')), createElement(GuideSidebar, { items: items() })));
+      const { container, unmount } = render(createElement('div', {}, createElement('section', { id: 's2' }, createElement('h3', { id: 's2-1' }, '節')), createElement(GuideSidebar, { items: fixtureItems() })));
       await waitFor(() => expect(callback).toBeDefined());
       const target = document.getElementById('s2-1')!;
       const rect = target.getBoundingClientRect();
@@ -64,9 +67,9 @@ describe('CCIE original sidebar and full-width layout', () => {
     } finally { globalThis.IntersectionObserver = previous; }
   });
 
-  sourceTest('mobile menu opens, Escape closes it and focus returns to its button', async () => {
+  test('mobile menu opens, Escape closes it and focus returns to its button', async () => {
     const { GuideSidebar } = await load();
-    const { getByRole, container } = render(createElement(GuideSidebar, { items: items() }));
+    const { getByRole, container } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     const button = getByRole('button', { name: '目次を開く' });
     fireEvent.click(button);
     expect(button).toHaveAttribute('aria-expanded', 'true');
@@ -76,9 +79,9 @@ describe('CCIE original sidebar and full-width layout', () => {
     expect(button).toHaveFocus();
   });
 
-  sourceTest('backdrop and link selection close the mobile drawer', async () => {
+  test('backdrop and link selection close the mobile drawer', async () => {
     const { GuideSidebar } = await load();
-    const { getByRole, container } = render(createElement(GuideSidebar, { items: items() }));
+    const { getByRole, container } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     const button = getByRole('button', { name: '目次を開く' });
     fireEvent.click(button);
     fireEvent.click(getByRole('button', { name: '目次を閉じる背景' }));
@@ -88,9 +91,9 @@ describe('CCIE original sidebar and full-width layout', () => {
     expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
-  sourceTest('desktop resizing closes a previously opened mobile drawer', async () => {
+  test('desktop resizing closes a previously opened mobile drawer', async () => {
     const { GuideSidebar } = await load();
-    const { getByRole } = render(createElement(GuideSidebar, { items: items() }));
+    const { getByRole } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     const button = getByRole('button', { name: '目次を開く' });
     fireEvent.click(button);
     const previous = Object.getOwnPropertyDescriptor(window, 'innerWidth');
@@ -104,17 +107,17 @@ describe('CCIE original sidebar and full-width layout', () => {
     }
   });
 
-  sourceTest('direct subsection URLs select and expand their original chapter', async () => {
+  test('direct subsection URLs select and expand their original chapter', async () => {
     window.history.replaceState(null, '', '#s8-16');
     const { GuideSidebar } = await load();
-    const { container } = render(createElement(GuideSidebar, { items: items() }));
+    const { container } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     await waitFor(() => expect(container.querySelector('a[href="#s8-16"]')).toHaveAttribute('aria-current', 'location'));
     expect(container.querySelector('a[href="#s8"]')!.closest('li')).toHaveClass('open');
   });
 
-  sourceTest('Tab wraps focus within an opened mobile drawer', async () => {
+  test('Tab wraps focus within an opened mobile drawer', async () => {
     const { GuideSidebar } = await load();
-    const { getByRole, container } = render(createElement(GuideSidebar, { items: items() }));
+    const { getByRole, container } = render(createElement(GuideSidebar, { items: fixtureItems() }));
     fireEvent.click(getByRole('button', { name: '目次を開く' }));
     const first = container.querySelector<HTMLAnchorElement>('a[href="#s1"]')!;
     const last = container.querySelector<HTMLAnchorElement>('a[href="#s13"]')!;

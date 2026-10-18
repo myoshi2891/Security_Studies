@@ -78,7 +78,7 @@ describe('CCIE faithful display foundation', () => {
     expect(decls('.diagram [role="img"]').get('overflow-x')).toBe('auto');
   });
 
-  sourceTest('defers Mermaid rendering until the figure nears the viewport and disconnects on unmount', async () => {
+  test('defers Mermaid rendering until the figure nears the viewport and disconnects on unmount', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     let notify: IntersectionObserverCallback | undefined;
     let options: IntersectionObserverInit | undefined;
@@ -114,7 +114,7 @@ describe('CCIE faithful display foundation', () => {
     expect(container.innerHTML).toBe('<ul><li>項目</li></ul>');
   });
 
-  sourceTest('renders Mermaid SVG with a unique accessible figure', async () => {
+  test('renders Mermaid SVG with a unique accessible figure', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     const calls: string[] = [];
     const renderer = async (id: string) => { calls.push(id); return { svg: '<svg viewBox="0 0 100 50"><text>接続</text></svg>' }; };
@@ -129,7 +129,7 @@ describe('CCIE faithful display foundation', () => {
     expect(calls).toHaveLength(1);
   });
 
-  sourceTest('links a content-specific text description to a successfully rendered diagram', async () => {
+  test('links a content-specific text description to a successfully rendered diagram', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     const renderer = async () => ({ svg: '<svg viewBox="0 0 10 10"></svg>' });
     const { container, getByText } = render(createElement(MermaidFigure, { id: 5, source: 'flowchart LR\nA["開始<br/>入口"] --> B["終了"]', renderer }));
@@ -211,7 +211,7 @@ describe('CCIE faithful display foundation', () => {
     }
   });
 
-  sourceTest('does not reuse render identifiers across figures', async () => {
+  test('does not reuse render identifiers across figures', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     const ids: string[] = [];
     const renderer = async (id: string) => { ids.push(id); return { svg: '<svg viewBox="0 0 10 10"></svg>' }; };
@@ -220,7 +220,7 @@ describe('CCIE faithful display foundation', () => {
     expect(new Set(ids).size).toBe(2);
   });
 
-  sourceTest('reports failure with the original definition instead of an empty diagram', async () => {
+  test('reports failure with the original definition instead of an empty diagram', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     const renderer = async () => { throw new Error('parse failure'); };
     const { findByRole, getByText } = render(createElement(MermaidFigure, { id: 2, source: 'invalid definition', renderer }));
@@ -229,7 +229,7 @@ describe('CCIE faithful display foundation', () => {
     expect(getByText('invalid definition')).toBeInTheDocument();
   });
 
-  sourceTest('ignores stale async results after a definition changes', async () => {
+  test('ignores stale async results after a definition changes', async () => {
     const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
     let finishFirst!: (value: { svg: string }) => void;
     const renderer = async (_id: string, code: string) => code === 'old'
