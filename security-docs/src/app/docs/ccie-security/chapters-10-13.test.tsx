@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'bun:test';
-import { canonical, chapterContracts, renderedPage, sourceDocument } from './fidelity-helpers';
+import { canonical, chapterContracts, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
 
 describe('CCIE chapters 10–13', () => {
   chapterContracts(10, 13);
-  test('preserves all 59 reference numbers, titles, URLs and status labels, always visible', async () => {
+  sourceTest('preserves all 59 reference numbers, titles, URLs and status labels, always visible', async () => {
     const page = await renderedPage();
     const refs = [...page.querySelectorAll('.ref')];
     expect(refs).toHaveLength(59);
@@ -22,7 +22,7 @@ describe('CCIE chapters 10–13', () => {
       expect(input.checked).toBe(false);
     }
   });
-  test('retains the original footer without dropping its limits and attribution', async () => {
+  sourceTest('retains the original footer without dropping its limits and attribution', async () => {
     expect(canonical((await renderedPage()).querySelector('.footer')!)).toEqual(canonical(sourceDocument.querySelector('main .footer')!));
   });
 });

@@ -2,10 +2,10 @@ import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {Window} from 'happy-dom';
 import postcss from 'postcss';
-import {declarations,scope,sourceCss,renderedPage,sourceDocument} from './fidelity-helpers';
+import {declarations,scope,sourceCss,renderedPage,sourceDocument, sourceTest } from './fidelity-helpers';
 const pageCss=()=>readFileSync(new URL('./applied-cryptography-guide.css',import.meta.url),'utf8');
 const css=()=>['../../../../node_modules/tailwindcss/preflight.css','../../globals.css','../docs-layout.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n')+'\n'+pageCss();
-test('round bullet pseudo-elements and circled step counters retain every declaration',()=>{
+sourceTest('round bullet pseudo-elements and circled step counters retain every declaration',()=>{
  const actual=postcss.parse(pageCss());
  for(const selector of ['ul.bullets li::before','ol.steps','ol.steps li','ol.steps li::before']) {
   expect(declarations(actual,`${scope} ${selector}`)).toEqual(declarations(sourceCss,selector));
@@ -50,7 +50,7 @@ test('narrow and oversized diagrams preserve intrinsic width and reachable left 
   }finally{await w.happyDOM.close();}
  }
 });
-test('the comparison detects deleted text, list markers, a table cell and code corruption',async()=>{
+sourceTest('the comparison detects deleted text, list markers, a table cell and code corruption',async()=>{
  const {canonical}=await import('./fidelity-helpers');const page=await renderedPage();
  for(const selector of ['#sec-1 ol.steps li','#sec-4 td','#sec-4 pre code','#sec-16 .ref']){
   const source=sourceDocument.querySelector(selector)!;const actual=page.querySelector(selector)!.cloneNode(true) as Element;actual.textContent='欠落';expect(canonical(actual)).not.toEqual(canonical(source));

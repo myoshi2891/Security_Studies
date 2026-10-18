@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
@@ -12,10 +12,24 @@ import { expect, test } from 'bun:test';
 export const here = import.meta.dir;
 export const repo = resolve(here, '../../../../..');
 export const inventory = JSON.parse(readFileSync(resolve(repo, 'docs/migration-inventory/mitre-atlas.json'), 'utf8'));
-export const sourceHtml = readFileSync(resolve(repo, inventory.source), 'utf8');
-export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
-export const definitions = new Map([...sourceHtml.matchAll(/(structure|lifecycle|jailbreak|ragchain):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
-export const sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+const sourcePath = resolve(repo, inventory.source);
+// 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
+export const hasSource = existsSync(sourcePath);
+export let sourceHtml = '';
+export let sourceDocument: Document;
+export let definitions: Map<string, string>;
+export let sourceCss: postcss.Root;
+function loadSource() {
+  if (sourceHtml) return;
+  sourceHtml = readFileSync(sourcePath, 'utf8');
+  sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+  definitions = new Map([...sourceHtml.matchAll(/(structure|lifecycle|jailbreak|ragchain):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
+  sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+}
+/** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
+  test.skipIf(!hasSource)(name, () => { loadSource(); return fn(); }, timeout);
+}
 export const scope = '.atlas-guide.atlas-guide';
 export const text = (el: Element) => el.textContent?.replace(/\s+/g, ' ').trim();
 // SVG replacements may add library classes, but every original icon styling hook must remain.
@@ -54,7 +68,7 @@ export function renderedPage() {
   return rendered;
 }
 export function sectionContracts(first: number, last: number) {
-  for (let number = first; number <= last; number++) test(`section ${number}: complete structure, text, cells, lists, IDs, links, styles and diagram placement`, async () => {
+  for (let number = first; number <= last; number++) sourceTest(`section ${number}: complete structure, text, cells, lists, IDs, links, styles and diagram placement`, async () => {
     const original = sourceDocument.getElementById(`sec${number}`)!;
     const migrated = (await renderedPage()).getElementById(`sec${number}`);
     expect(migrated).not.toBeNull();

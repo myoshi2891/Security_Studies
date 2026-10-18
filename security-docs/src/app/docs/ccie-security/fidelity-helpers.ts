@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { evaluate } from '@mdx-js/mdx';
@@ -10,10 +10,13 @@ import remarkGfm from 'remark-gfm';
 import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
-export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../archive/html/Ccie-security-guide.html'), 'utf8');
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/html/Ccie-security-guide.html');
+// 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
+export const hasSource = existsSync(sourcePath);
+export let sourceHtml = '';
 // Parse only inert source markup: never load the legacy CDN styles or scripts in tests.
-export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
-export const definitions = new Map([...sourceHtml.slice(sourceHtml.indexOf('window.DIAGRAMS')).matchAll(/(\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
+export let sourceDocument: Document;
+export let definitions: Map<string, string>;
 
 export function canonical(node: Node): unknown {
   if (node.nodeType === Node.TEXT_NODE) return node.textContent?.replace(/\s+/g, ' ').trim() || null;
@@ -28,7 +31,18 @@ export function canonical(node: Node): unknown {
     el.getAttribute('type'), [...el.childNodes].map(canonical).filter(v => v !== null)];
 }
 
-export const sourceStylesheet = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '');
+export let sourceStylesheet: postcss.Root;
+function loadSource() {
+  if (sourceHtml) return;
+  sourceHtml = readFileSync(sourcePath, 'utf8');
+  sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+  definitions = new Map([...sourceHtml.slice(sourceHtml.indexOf('window.DIAGRAMS')).matchAll(/(\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
+  sourceStylesheet = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? '');
+}
+/** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
+  test.skipIf(!hasSource)(name, () => { loadSource(); return fn(); }, timeout);
+}
 
 function declarations(root: Root, selector: string): string[] {
   const found: string[] = [];
@@ -68,7 +82,7 @@ export async function renderedPage() {
 
 export function chapterContracts(first: number, last: number) {
   for (let chapter = first; chapter <= last; chapter++) {
-    test(`chapter ${chapter}: complete semantic tree, text, hierarchy, links and styling hooks`, async () => {
+    sourceTest(`chapter ${chapter}: complete semantic tree, text, hierarchy, links and styling hooks`, async () => {
       const original = sourceDocument.getElementById(`s${chapter}`)!;
       const migrated = (await renderedPage()).getElementById(`s${chapter}`);
       expect(migrated).not.toBeNull();

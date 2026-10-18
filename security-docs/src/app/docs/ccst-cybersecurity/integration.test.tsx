@@ -4,9 +4,9 @@ import { createHash } from 'node:crypto';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, declarations, evaluatedPage, renderedPage, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { canonical, declarations, evaluatedPage, renderedPage, scope, sourceCss, sourceDocument, sourceHtml, sourceTest } from './fidelity-helpers';
 
-test('preserves the immutable original and complete main content in source order', async () => {
+sourceTest('preserves the immutable original and complete main content in source order', async () => {
   expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe('cc8abf8ebc61e443018ce43196b93e55a3f20cfbb4791333cd34c4ab67d8ac4e');
   const page = (await renderedPage()).querySelector('.main')!;
   const original = sourceDocument.querySelector('main')!;
@@ -23,7 +23,7 @@ test('registers CCST once immediately after CCIE in Security Certifications', ()
   ]);
   expect(docsConfig.sidebarNav.flatMap(group => group.items).filter(item => item.href === '/docs/ccst-cybersecurity')).toHaveLength(1);
 });
-test('publishes original title metadata and indexes all 227 headings including icon and inline-code headings', async () => {
+sourceTest('publishes original title metadata and indexes all 227 headings including icon and inline-code headings', async () => {
   const metadata = (await evaluatedPage()).metadata as { title: string; description: string };
   const title = sourceDocument.querySelector('.hero h1')!.textContent!;
   expect(metadata.title).toBe(title); expect(metadata.description).toContain('100-160');
@@ -36,7 +36,7 @@ test('publishes CCST with all headings in the static search index served to the 
   const results = index.filter((item: { href: string }) => item.href === '/docs/ccst-cybersecurity');
   expect(results).toHaveLength(1); expect(results[0].headings).toHaveLength(227);
 });
-test('resolves every original TOC link to a unique target, preserving all IDs', async () => {
+sourceTest('resolves every original TOC link to a unique target, preserving all IDs', async () => {
   const page = await renderedPage();
   const ids = [...page.querySelectorAll('[id]')].map(el => el.id);
   expect(new Set(ids).size).toBe(ids.length);
@@ -54,7 +54,7 @@ test('has no legacy scripts, remote fonts, CDN imports, unsafe URLs or inline ha
   expect(mdx).toContain("import '@fontsource-variable/source-serif-4'");
   expect(mdx).not.toMatch(/cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com/);
 });
-test('detects lost table cells, nested list items, questions, reference badges and emphasis', async () => {
+sourceTest('detects lost table cells, nested list items, questions, reference badges and emphasis', async () => {
   for (const selector of ['.sec td', '.sec li', '.qa .opt', '.ref .chip', '.sec strong']) {
     const page = await renderedPage(); const item = page.querySelector(selector)!;
     const section = item.closest('section')!; const original = sourceDocument.getElementById(section.id)!;
@@ -62,7 +62,7 @@ test('detects lost table cells, nested list items, questions, reference badges a
     item.remove(); expect(canonical(section)).not.toEqual(canonical(original));
   }
 });
-test('detects missing round dots, ordered marker colors, ordered numbers and checklist counters', () => {
+sourceTest('detects missing round dots, ordered marker colors, ordered numbers and checklist counters', () => {
   const css = postcss.parse(readFileSync(new URL('./ccst-cybersecurity.css', import.meta.url), 'utf8'));
   for (const selector of ['ul>li::before', 'ol>li::marker', '.checklist', '.check', '.n::before']) {
     const original = declarations(sourceCss, selector);

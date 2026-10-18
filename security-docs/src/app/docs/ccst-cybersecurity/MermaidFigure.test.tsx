@@ -2,12 +2,12 @@ import { afterEach, expect, mock, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { cleanup, render, waitFor } from '@testing-library/react';
-import { definitions, sourceHtml } from './fidelity-helpers';
+import { definitions, sourceHtml, sourceTest } from './fidelity-helpers';
 const observer = globalThis.IntersectionObserver;
 afterEach(() => { cleanup(); globalThis.IntersectionObserver = observer; });
 const load = () => import(new URL('./MermaidFigure.tsx', import.meta.url).href);
 
-test('all 50 immutable diagram definitions pass the real bundled Mermaid parser', async () => {
+sourceTest('all 50 immutable diagram definitions pass the real bundled Mermaid parser', async () => {
   const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
   expect(Object.entries(diagrams)).toEqual([...definitions]);
   expect(Object.keys(diagrams)).toHaveLength(50);
@@ -15,7 +15,7 @@ test('all 50 immutable diagram definitions pass the real bundled Mermaid parser'
   mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
   for (const [id, code] of definitions) expect(await mermaid.parse(code), id).toBeTruthy();
 });
-test('preserves every literal original Mermaid theme setting using strict local rendering', () => {
+sourceTest('preserves every literal original Mermaid theme setting using strict local rendering', () => {
   const code = readFileSync(new URL('./MermaidFigure.tsx', import.meta.url), 'utf8');
   const theme = sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1];
   for (const [, key, value] of theme.matchAll(/(\w+):\s*'([^']*)'/g)) expect(code).toContain(`${key}: '${value}'`);
@@ -40,7 +40,7 @@ test('does not render before entering the viewport and disconnects its observer'
   await waitFor(() => expect(container.querySelector('svg')).not.toBeNull());
   expect(calls).toBe(1); unmount(); expect(disconnected).toBeGreaterThan(0);
 });
-test('gives diagrams unique accessible IDs, intrinsic SVG width and non-empty content descriptions', async () => {
+sourceTest('gives diagrams unique accessible IDs, intrinsic SVG width and non-empty content descriptions', async () => {
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   const { MermaidFigure, describeDiagram } = await load();
   const ids: string[] = [];

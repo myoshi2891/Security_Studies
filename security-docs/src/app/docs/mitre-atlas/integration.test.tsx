@@ -5,9 +5,9 @@ import { createHash } from 'node:crypto';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, declarations, definitions, evaluatedPage, here, iconHooks, inventory, renderedPage, repo, scope, sourceCss, sourceDocument, sourceHtml, text } from './fidelity-helpers';
+import { canonical, declarations, definitions, evaluatedPage, here, iconHooks, inventory, renderedPage, repo, scope, sourceCss, sourceDocument, sourceHtml, text, sourceTest } from './fidelity-helpers';
 
-test('locks original HTML/Markdown hashes and the complete article inventory', async () => {
+sourceTest('locks original HTML/Markdown hashes and the complete article inventory', async () => {
   expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
   expect(createHash('sha256').update(readFileSync(resolve(repo, inventory.markdownSource))).digest('hex')).toBe(inventory.markdownSha256);
   const page = (await renderedPage()).querySelector('.main')!;
@@ -20,7 +20,7 @@ test('locks original HTML/Markdown hashes and the complete article inventory', a
   expect([...page.querySelectorAll('section')].map(el => el.id)).toEqual(inventory.sections.map((s: { id: string }) => s.id));
 });
 
-test('preserves all source TOC links and resolves every fragment to one unique destination', async () => {
+sourceTest('preserves all source TOC links and resolves every fragment to one unique destination', async () => {
   const page = await renderedPage();
   const links = [...page.querySelectorAll('aside nav a')];
   expect(links.map(el => [text(el), el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [text(el), el.getAttribute('href')]));
@@ -45,7 +45,7 @@ function expectedHeadings() {
     return text(clone);
   });
 }
-test('uses the original document title and indexes all 34 compound headings without losing icon or tag headings', async () => {
+sourceTest('uses the original document title and indexes all 34 compound headings without losing icon or tag headings', async () => {
   const metadata = (await evaluatedPage()).metadata as { title: string; description: string };
   expect(metadata.title).toBe(sourceHtml.match(/<title>([^<]+)<\/title>/)![1]);
   expect(metadata.description).toBe(text(sourceDocument.querySelector('.lead')!));
@@ -67,7 +67,7 @@ test('publishes all registered complete search entries including the live ATLAS 
   expect(cached.filter((item: { href: string }) => item.href === '/docs/mitre-atlas')).toEqual((await getSearchIndex()).filter(item => item.href === '/docs/mitre-atlas'));
 });
 
-test('all four source definitions pass the real Mermaid parser with the readability theme and original palette', async () => {
+sourceTest('all four source definitions pass the real Mermaid parser with the readability theme and original palette', async () => {
   const { default: mermaid } = await import('mermaid');
   const { diagramConfig } = await import('./MermaidDiagram');
   expect(definitions.size).toBe(4);
@@ -100,7 +100,7 @@ test('rejects legacy scripts, CDN imports, unsafe schemes and handler attributes
   expect(readFileSync(resolve(here, 'page.mdx'), 'utf8')).not.toMatch(/cdn\.jsdelivr\.net|<script|DIAGRAMS\s*=/);
 });
 
-test('comparison detects missing list items, changed cells, lost tags, missing step numbers and removed URLs', async () => {
+sourceTest('comparison detects missing list items, changed cells, lost tags, missing step numbers and removed URLs', async () => {
   for (const selector of ['li', 'td', '.tag', '.num', 'a']) {
     const section = (await renderedPage()).querySelector(`.main section ${selector}`)!.closest('section')!;
     const original = sourceDocument.getElementById(section.id)!;
@@ -111,7 +111,7 @@ test('comparison detects missing list items, changed cells, lost tags, missing s
   }
 });
 
-test('list and numbered-card contracts detect missing marker restoration and lost number styling', () => {
+sourceTest('list and numbered-card contracts detect missing marker restoration and lost number styling', () => {
   const css = postcss.parse(readFileSync(resolve(here, 'mitre-atlas.css'), 'utf8'));
   for (const [selector, property, value] of [['ul', 'list-style-type', 'disc'], ['ol', 'list-style-type', 'decimal'], ['ul.ref-list', 'list-style-type', 'none']]) {
     expect(declarations(css, `${scope} ${selector}`).get(property)).toBe(value);
@@ -121,7 +121,7 @@ test('list and numbered-card contracts detect missing marker restoration and los
   expect(declarations(css, `${scope} .step-card .num`)).toEqual(declarations(sourceCss, '.step-card .num'));
 });
 
-test('icon comparison allows library classes but detects removal or substitution of original hooks', async () => {
+sourceTest('icon comparison allows library classes but detects removal or substitution of original hooks', async () => {
   const section = (await renderedPage()).getElementById('sec5')!;
   const clone = section.cloneNode(true) as Element;
   const original = sourceDocument.getElementById('sec5')!;

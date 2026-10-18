@@ -3,10 +3,10 @@ import { readFileSync } from 'node:fs';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, compareCssRule, definitions, evaluatedPage, renderedPage, sourceDocument } from './fidelity-helpers';
+import { canonical, compareCssRule, definitions, evaluatedPage, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
 
 describe('CCIE complete migration', () => {
-  test('matches the full body inventory, including all inline emphasis and CLI token spans', async () => {
+  sourceTest('matches the full body inventory, including all inline emphasis and CLI token spans', async () => {
     const page = (await renderedPage()).querySelector('.ccie-guide')!;
     const original = sourceDocument.querySelector('main')!;
     const counts = new Map([
@@ -21,7 +21,7 @@ describe('CCIE complete migration', () => {
     expect([...page.querySelectorAll('.code code.cli span')].map(canonical)).toEqual([...original.querySelectorAll('.code code.cli span')].map(canonical));
   });
 
-  test('retains the complete original in-page TOC and resolves every fragment to one unique ID', async () => {
+  sourceTest('retains the complete original in-page TOC and resolves every fragment to one unique ID', async () => {
     const page = await renderedPage();
     const links = [...page.querySelectorAll('.guide-toc a')];
     expect(links.map(el => [el.textContent, el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [el.textContent, el.getAttribute('href')]));
@@ -37,13 +37,13 @@ describe('CCIE complete migration', () => {
     expect(docsConfig.sidebarNav.find(section => section.title === 'Resources')?.items).toContainEqual({ title: 'AppSec Certifications', href: '/docs/certifications' });
   });
 
-  test('publishes the original document title and a meaningful description as Next metadata', async () => {
+  sourceTest('publishes the original document title and a meaningful description as Next metadata', async () => {
     const metadata = (await evaluatedPage()).metadata as { title?: string; description?: string } | undefined;
     expect(metadata?.title).toBe(sourceDocument.querySelector('h1')!.textContent!);
     expect(metadata?.description).toContain('CCIE Security');
   });
 
-  test('is discoverable through the existing search index with its original title', async () => {
+  sourceTest('is discoverable through the existing search index with its original title', async () => {
     const results = (await getSearchIndex()).filter(item => item.href === '/docs/ccie-security');
     expect(results).toHaveLength(1);
     expect(results[0].title).toBe(sourceDocument.querySelector('h1')!.textContent!);
@@ -51,7 +51,7 @@ describe('CCIE complete migration', () => {
     expect(results[0].content).toContain('CCIE Security');
   });
 
-  test('all 61 original definitions pass the real bundled Mermaid parser', async () => {
+  sourceTest('all 61 original definitions pass the real bundled Mermaid parser', async () => {
     const { default: mermaid } = await import('mermaid');
     mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
     expect(definitions.size).toBe(61);
@@ -74,7 +74,7 @@ describe('CCIE complete migration', () => {
     expect(mdx).not.toContain('cdnjs.cloudflare.com');
   });
 
-  test('the fidelity comparator detects a deleted item, a changed cell and missing emphasis', async () => {
+  sourceTest('the fidelity comparator detects a deleted item, a changed cell and missing emphasis', async () => {
     for (const selector of ['.section li', '.section td', '.section strong']) {
       const page = await renderedPage();
       const item = page.querySelector(selector)!;
@@ -86,7 +86,7 @@ describe('CCIE complete migration', () => {
     }
   });
 
-  test('the stylesheet comparison detects missing dots and missing ordered numbers', () => {
+  sourceTest('the stylesheet comparison detects missing dots and missing ordered numbers', () => {
     const migrated = postcss.parse(readFileSync(new URL('./ccie-security.css', import.meta.url), 'utf8'));
     for (const selector of ['.section ul>li::before', '.section ol>li::before']) {
       expect(compareCssRule(migrated, selector).matches, `intact ${selector}`).toBe(true);

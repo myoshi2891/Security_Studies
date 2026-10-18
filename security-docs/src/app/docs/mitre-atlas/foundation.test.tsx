@@ -5,11 +5,11 @@ import { createElement } from 'react';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { Window } from 'happy-dom';
 import postcss from 'postcss';
-import { declarations, definitions, here, scope, sourceCss, sourceDocument } from './fidelity-helpers';
+import { declarations, definitions, here, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
 
 afterEach(() => { cleanup(); window.history.replaceState(null, '', '/'); });
 describe('MITRE ATLAS display foundation', () => {
-  test('retains every source CSS declaration and media condition in an isolated scope', () => {
+  sourceTest('retains every source CSS declaration and media condition in an isolated scope', () => {
     const css = postcss.parse(readFileSync(resolve(here, 'mitre-atlas.css'), 'utf8'));
     sourceCss.walkRules(rule => {
       const media = rule.parent?.type === 'atrule' ? (rule.parent as postcss.AtRule).params : undefined;
@@ -64,7 +64,7 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.innerHTML).toBe('<ul><li>項目</li></ul>');
   });
 
-  test('retains all four definitions, accessible descriptions and original palette with readable typography', async () => {
+  sourceTest('retains all four definitions, accessible descriptions and original palette with readable typography', async () => {
     const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
     const { diagramConfig } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     expect(Object.entries(diagrams)).toEqual([...definitions]);
@@ -72,7 +72,7 @@ describe('MITRE ATLAS display foundation', () => {
     for (const definition of Object.values(diagrams) as string[]) expect(definition).toMatch(/accTitle:.*\n\s*accDescr:/);
   });
 
-  test('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
+  sourceTest('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     const ids: string[] = [];
     const source = definitions.get('structure')!;
@@ -88,7 +88,7 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.querySelector('pre')?.textContent).toBe(source);
   });
 
-  test('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
+  sourceTest('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     const source = definitions.get('lifecycle')!;
     const renderer = async () => ({ svg: '<svg viewBox="0 0 1800 420" width="100%" height="420" style="max-width:100%"><text>Reconnaissance 偵察</text></svg>' });
@@ -153,7 +153,7 @@ describe('MITRE ATLAS display foundation', () => {
     } finally { error.mockRestore(); }
   });
 
-  test('preserves the thirteen grouped links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
+  sourceTest('preserves the thirteen grouped links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
     const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
     const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     window.history.replaceState(null, '', '#sec8');

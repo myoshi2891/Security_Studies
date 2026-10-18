@@ -1,7 +1,7 @@
 import {expect,test} from 'bun:test';
 import {Window} from 'happy-dom';
 import {readFileSync} from 'node:fs';
-import {renderedPage,sourceHtml,sourceDocument} from './fidelity-helpers';
+import {renderedPage,sourceHtml,sourceDocument, sourceTest } from './fidelity-helpers';
 const css=['../../../../node_modules/tailwindcss/preflight.css','../../globals.css','../docs-layout.css','./applied-cryptography-guide.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n').replace(/letter-spacing:\s*normal/g,'letter-spacing:0px');
 
 test('shared prose never adds heading letter spacing, bottom borders or bottom padding',async()=>{
@@ -30,7 +30,7 @@ test('shared hover styling never turns original dark table cells white in either
   }finally{await w.happyDOM.close();}
  }
 });
-test('the immutable source still requires no body assets and has fourteen diagram containers',()=>{
+sourceTest('the immutable source still requires no body assets and has fourteen diagram containers',()=>{
  expect(sourceDocument.querySelectorAll('img,iframe')).toHaveLength(0);expect(sourceDocument.querySelectorAll('.diagram')).toHaveLength(14);expect(sourceHtml).toContain('ol.steps li::before');
 });
 
@@ -49,12 +49,12 @@ async function compareSource(width:number,scheme:'light'|'dark',selectors:string
   }
  }finally{await actual.happyDOM.close();await original.happyDOM.close();}
 }
-test('all original headings paragraphs and list items retain typography and spacing at phone and desktop widths',async()=>{
+sourceTest('all original headings paragraphs and list items retain typography and spacing at phone and desktop widths',async()=>{
  for(const width of [375,1440])await compareSource(width,'light',['h1','h2','h3','p','ul.bullets li','ol.steps li'],['fontSize','fontWeight','fontFamily','lineHeight','letterSpacing','marginTop','marginBottom','paddingTop','paddingBottom','paddingLeft','borderBottomWidth','color']);
 });
-test('all 475 source table cells retain padding borders weight and backgrounds in both app color schemes',async()=>{
+sourceTest('all 475 source table cells retain padding borders weight and backgrounds in both app color schemes',async()=>{
  for(const scheme of ['light','dark'] as const)await compareSource(900,scheme,['th','td'],['fontSize','fontWeight','paddingTop','paddingRight','paddingBottom','paddingLeft','borderBottomWidth','backgroundColor','color']);
 });
-test('source brand and code cards retain their inherited typography rather than landing and preflight fonts',async()=>{
+sourceTest('source brand and code cards retain their inherited typography rather than landing and preflight fonts',async()=>{
  await compareSource(1440,'light',['.brand','pre','pre code'],['fontSize','fontWeight','fontFamily','lineHeight','color']);
 });

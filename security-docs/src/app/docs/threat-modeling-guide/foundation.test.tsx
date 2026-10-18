@@ -1,13 +1,13 @@
-import { expect, test } from 'bun:test';
+import { expect } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import postcss from 'postcss';
-import { canonical, renderedPage, scope, sourceCss, sourceDocument } from './fidelity-helpers';
+import { canonical, renderedPage, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
 
-test('hero and footer preserve complete source content and structure', async () => {
+sourceTest('hero and footer preserve complete source content and structure', async () => {
  const page = await renderedPage();
  for (const selector of ['.hero', '.footer']) expect(canonical(page.querySelector(selector)!)).toEqual(canonical(sourceDocument.querySelector(selector)!));
 });
-test('every original CSS declaration and media condition is preserved under the page scope', () => {
+sourceTest('every original CSS declaration and media condition is preserved under the page scope', () => {
  const css = postcss.parse(readFileSync(new URL('./threat-modeling-guide.css',import.meta.url),'utf8'));
  sourceCss.walkRules(rule => {
   const expected = rule.selector.split(',').map(s => ['html','body',':root'].includes(s.trim()) ? scope : `${scope} ${s.trim()}`).join(',');

@@ -2,6 +2,7 @@ import { describe, expect, test } from 'bun:test';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { sourceTest } from './fidelity-helpers';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
@@ -11,7 +12,7 @@ const originals = [
 
 describe('Threat Modeling immutable source archive', () => {
   for (const original of originals) {
-    test(`preserves every source byte in ${original.path}`, () => {
+    sourceTest(`preserves every source byte in ${original.path}`, () => {
       const path = resolve(root, original.path);
       expect(existsSync(path)).toBe(true);
       expect(createHash('sha256').update(readFileSync(path)).digest('hex')).toBe(original.sha256);

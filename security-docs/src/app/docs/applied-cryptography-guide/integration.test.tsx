@@ -7,25 +7,25 @@ import {docsConfig} from '@/config/docs';
 import HomePage from '@/app/page';
 import {DocsHeaderNav} from '@/components/docs/DocsHeaderNav';
 import {getSearchIndex} from '@/lib/search';
-import {canonical,evaluatedPage,renderedPage,sourceDocument,sourceHtml,definitions} from './fidelity-helpers';
+import {canonical,evaluatedPage,renderedPage,sourceDocument,sourceHtml,definitions, sourceTest } from './fidelity-helpers';
 afterEach(cleanup);
 const route='/docs/applied-cryptography-guide';
 const inventory=JSON.parse(readFileSync(new URL('../../../../../docs/migration-inventory/applied-cryptography-guide.json',import.meta.url),'utf8'));
 
-test('both original files retain their immutable hashes and all main children retain their order',async()=>{
+sourceTest('both original files retain their immutable hashes and all main children retain their order',async()=>{
  expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.htmlSha256);
  expect(createHash('sha256').update(readFileSync(new URL('../../../../../archive/md/Applied-cryptography-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
  const children=(el:Element)=>[...el.childNodes].map(canonical).filter(v=>v!==null);
  expect(children((await renderedPage()).querySelector('.main')!)).toEqual(children(sourceDocument.querySelector('main')!));
 });
-test('every original table cell, list item, answer, link and code appears in order with its styling hooks',async()=>{
+sourceTest('every original table cell, list item, answer, link and code appears in order with its styling hooks',async()=>{
  const main=sourceDocument.querySelector('main')!,page=(await renderedPage()).querySelector('.main')!;
  for(const selector of ['h1','h2','h3','table','th','td','ul','ol','li','pre code','a','.qa','.ref','details','summary','strong','em']){
   const values=(el:Element)=>[...el.querySelectorAll(selector)].filter(n=>!n.closest('.diagram')).map(canonical);
   expect(values(page),selector).toEqual(values(main));
  }
 });
-test('the original sixteen TOC entries resolve uniquely and every source ID survives',async()=>{
+sourceTest('the original sixteen TOC entries resolve uniquely and every source ID survives',async()=>{
  const page=await renderedPage();
  expect(canonical(page.querySelector('.sidebar nav')!)).toEqual(canonical(sourceDocument.querySelector('.sidebar nav')!));
  const originalIds=[...sourceDocument.querySelectorAll('[id]')].map(el=>el.id);
@@ -34,12 +34,12 @@ test('the original sixteen TOC entries resolve uniquely and every source ID surv
  expect(page.querySelectorAll('.sidebar nav a')).toHaveLength(16);
  for(const link of page.querySelectorAll('a[href^="#"]'))expect(page.getElementById(link.getAttribute('href')!.slice(1))).not.toBeNull();
 });
-test('all fourteen rendered diagram hooks carry their exact source definition',async()=>{
+sourceTest('all fourteen rendered diagram hooks carry their exact source definition',async()=>{
  const figures=(await renderedPage()).querySelectorAll('.diagram');expect(figures).toHaveLength(14);
  expect([...sourceDocument.querySelectorAll('.diagram')].map(el=>el.id)).toEqual([...figures].map(el=>el.id));
  for(const figure of figures)expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!)!);
 });
-test('Next metadata and dynamic search preserve every original heading including numbered compound headings',async()=>{
+sourceTest('Next metadata and dynamic search preserve every original heading including numbered compound headings',async()=>{
  const metadata=(await evaluatedPage()).metadata as {title:string;description:string};expect(metadata.title).toBe(sourceDocument.querySelector('h1')!.textContent);expect(metadata.description).toContain('AEAD');
  const headings=[...sourceDocument.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(el=>el.textContent!.replace(/\s+/g,' ').trim());
  const index=(await getSearchIndex()).filter(item=>item.href===route);expect(index).toHaveLength(1);expect(index[0].title).toBe(metadata.title);expect(index[0].headings).toEqual(headings);expect(headings).toHaveLength(65);
