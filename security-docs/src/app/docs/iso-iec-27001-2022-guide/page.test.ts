@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { docsConfig } from "@/config/docs";
 import { getSearchIndex } from "@/lib/search";
+import { SOURCE_PATH, sourceTest } from "./fidelity-helpers";
 
 const SLUG = "iso-iec-27001-2022-guide";
 const HREF = `/docs/${SLUG}`;
@@ -10,7 +11,6 @@ const TITLE = "ISO/IEC 27001:2022 初学者向けガイド";
 const ISO_27000_HREF = "/docs/iso-iec-27000-2026-guide";
 const ISO_27000_TITLE = "ISO/IEC 27000:2026 入門ガイド";
 const PAGE_PATH = path.join(process.cwd(), "src/app/docs", SLUG, "page.mdx");
-const SOURCE_PATH = path.join(process.cwd(), "..", "archive", "standards", "Iso-27001-2022-beginner-guide.md");
 const STATIC_INDEX_PATH = path.join(process.cwd(), "public/search-index.json");
 
 const readPage = (): string => fs.readFileSync(PAGE_PATH, "utf8");
@@ -59,7 +59,7 @@ describe("ISO/IEC 27001:2022 初学者向けガイドページ", () => {
     expect(missing).toEqual([]);
   });
 
-  test("原本の出典URLをすべて保持する", () => {
+  sourceTest("原本の出典URLをすべて保持する", () => {
     // Arrange
     const source = fs.readFileSync(SOURCE_PATH, "utf8");
     const urls = source.match(/https:\/\/[^\s|]+/g) ?? [];
