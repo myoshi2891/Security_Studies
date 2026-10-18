@@ -369,7 +369,7 @@ flowchart LR
 | 用語 | 正式名 | 一言でいうと | 18045 の該当章 |
 |---|---|---|---|
 | **PP** | Protection Profile | 製品カテゴリごとの、再利用できるセキュリティ要件の雛形 | 第9章(APE) |
-| **PP-Configuration** | Protection Profile Configuration | PP と PP-Module(PP に追加する機能単位の要件の部品)を組み合わせた構成。PP-Module はこの評価の一部として評価される | 第10章(ACE) |
+| **PP-Configuration** | Protection Profile Configuration | 1つの PP に、追加の PP、PP-Module(PP に追加する機能単位の要件の部品)、またはその両方を組み合わせた構成。PP-Module はこの評価の一部として評価される | 第10章(ACE) |
 | **ST** | Security Target | 特定の製品について、そのセキュリティの主張を記したもの | 第11章(ASE) |
 | **TOE** | Target of Evaluation | 評価対象の製品・システム(の範囲) | 全体 |
 
