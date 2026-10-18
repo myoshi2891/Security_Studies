@@ -125,9 +125,9 @@ export function describeDiagram(source: string): string[] {
 const NODE_PATTERN = /(\w+)\s*(?:\[\[?|\(\(?|\{\{?)"([^"]*)"(?:\]\]?|\)\)?|\}\}?)/g;
 /**
  * ノード定義を ID に置換した行から接続を読み取る（連鎖 `A --> B --> C` は先読みで終点を消費しない）。
- * 1: 始点 / 2: `<`（双方向） / 3: 中間ラベル（`-- "x" -->`） / 4: 終端（`>` は有向、`-` は無向、`.-` で閉じたラベル直後は空の無向） / 5: パイプラベル / 6: 終点
+ * 1: 始点 / 2: `<`（双方向） / 3: 中間ラベル（`-- "x" -->`） / 4: 引用符なし点線ラベル（`-. x .->`） / 5: 終端（`>` は有向、`-` は無向、`.-` で閉じたラベル直後は空の無向） / 6: パイプラベル / 7: 終点
  */
-const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==))?(-?>|-|(?<=\.-))\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
+const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==)|(?<=-\.)\s*([^"\s.>-][^".]*?)\s*\.-)?(-?>|-|(?<=\.-))\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
 
 /** フローチャートの接続を「始点 → 終点: ラベル」形式で列挙し、接続のないノードはラベルのみ残す */
 function describeFlowchart(body: string[]): string[] {
@@ -138,9 +138,9 @@ function describeFlowchart(body: string[]): string[] {
       if (!labels.has(id)) labels.set(id, plain(label));
       return id;
     });
-    for (const [, from, back, midLabel, head, pipeLabel, to] of stripped.matchAll(EDGE_PATTERN)) {
+    for (const [, from, back, midLabel, dottedLabel, head, pipeLabel, to] of stripped.matchAll(EDGE_PATTERN)) {
       const arrow = head.endsWith('>') ? (back ? '↔' : '→') : '—';
-      edges.push({ from, to, arrow, label: plain(midLabel ?? pipeLabel ?? '') });
+      edges.push({ from, to, arrow, label: plain(midLabel ?? dottedLabel ?? pipeLabel ?? '') });
     }
   }
   // ノードのラベルは接続より後の行で定義されることがあるため、全行を読んでから解決する
