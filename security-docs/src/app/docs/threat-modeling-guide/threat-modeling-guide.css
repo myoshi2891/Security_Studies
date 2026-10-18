@@ -252,6 +252,7 @@ html:has(.threat-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
 @media (max-width: 1024px) {
  .threat-guide.threat-guide .sidebar { visibility: hidden; }
  .threat-guide.threat-guide .sidebar.open { visibility: visible; transform: translateX(0); }
+ .threat-guide.threat-guide .backdrop[hidden] { display: none; }
  .threat-guide.threat-guide .backdrop.show { top: 64px; opacity: 1; pointer-events: auto; }
 }
 
