@@ -83,6 +83,11 @@ test('diagram text descriptions resolve quoted node labels across edges, chains 
  expect(describeDiagram('flowchart TD\nA["開始<br/>入力"] --> B{"判定"}\nB -- "はい" --> C("完了")\nB -->|"いいえ"| A\nC <--> E\nD["孤立"]')).toEqual(['フローチャート','開始 入力 → 判定','判定 → 完了: はい','判定 → 開始 入力: いいえ','完了 ↔ E','孤立']);
  expect(describeDiagram('sequenceDiagram\nA->>B: 要求<br/>送信')).toEqual(['シーケンス図','A->>B: 要求 送信']);
 });
+test('diagram text descriptions read labels from stadium and cylinder nodes instead of node IDs',async()=>{
+ const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ expect(describeDiagram('flowchart LR\nAPI(["APIサーバー"]) --> DB[("顧客DB")]')).toEqual(['フローチャート','APIサーバー → 顧客DB']);
+ expect(describeDiagram('flowchart LR\nDB[("顧客DB")]\nAPI(["APIサーバー"]) -->|"読み取り"| DB')).toEqual(['フローチャート','APIサーバー → 顧客DB: 読み取り']);
+});
 
 test('live SVG sizing extends the viewBox only to the measured drawing bounds',async()=>{
  const {fitDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
