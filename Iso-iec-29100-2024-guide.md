@@ -231,7 +231,7 @@ flowchart TB
 | **PII principal** | その PII が誰についての情報かという、**本人**（自然人） | 一般に data subject と同義として扱われる |
 | **PII controller** | PII を**何のために（目的）どうやって（手段）**処理するかを決める主体 | 個人的な目的で使う自然人は含まない |
 | **PII processor** | controller の**指示に従って**PII を処理する主体 | 委託先など。責任の所在は controller に残る |
-| **Third party** | 本人・controller・processor 以外の主体 | 受け取った後に自分で目的を決めれば controller になり得る |
+| **Third party** | 本人・controller・processor 以外の主体（controller または processor の直接の権限下で PII を処理する自然人は含まない） | 受け取った後に自分で目的を決めれば controller になり得る |
 | **Privacy stakeholder** | PII の処理に関する判断や活動の影響を与える・受ける・受けると感じる、あらゆる主体 | 個人、法人、公的機関など |
 | **Processing of PII** | PII に対するあらゆる操作 | 収集、保管、変更、検索、開示、匿名化、仮名化、削除、廃棄などを含む |
 
@@ -282,7 +282,7 @@ flowchart TB
 | **PII principal** | 自分の PII を提供し、同意や privacy preference を示す本人 | 購入者 |
 | **PII controller** | 処理の目的と手段を決め、プライバシー原則の遵守を確保する | ECサイトの運営会社 |
 | **PII processor** | controller の指示に従い、決められた要件と統制のもとで処理する | 配送管理の委託先、クラウド基盤、決済代行（契約内容による） |
-| **Third party** | controller や processor から PII を受け取るが、controller のために処理するわけではない | 広告配信パートナー、提携先企業 |
+| **Third party** | controller や processor から PII を受け取るが、controller のために処理するわけではない（controller または processor の直接の権限下で処理する自然人は第三者に含まれない） | 広告配信パートナー、提携先企業 |
 
 ポイント:
 
