@@ -66,7 +66,7 @@ All steps execute in the `security-docs/` working directory.
 
 ### CI handling of original-source comparison tests (2026-10-18, reworks `1ce9728`)
 
-`archive/` is git-ignored on purpose, so the original HTML/MD files do not exist in the CI checkout. Each migrated guide's `fidelity-helpers.ts` loads the original **lazily, on the first source-dependent test**, and exports `hasSource` and `sourceTest` (`test.skipIf` when the original is missing). Only tests that touch the original (section/chapter contracts, byte checks in `archive.test.ts`, source comparisons) use `sourceTest`; source-independent display, interaction and integration tests run in CI. Local `bun test` / `npm test` still runs everything.
+`archive/` is git-ignored on purpose, so the original HTML/MD files do not exist in the CI checkout. Each migrated guide's `fidelity-helpers.ts` loads the original **lazily, on the first source-dependent test**, and exports `hasSource` and `sourceTest` (`test.skipIf` when the original is missing). Only tests that touch the original (section/chapter contracts, byte checks in `archive.test.ts`, source comparisons) use `sourceTest`; source-independent display, interaction and integration tests run in CI. Local `bun test` / `npm test` runs source-dependent tests only when the original `archive/` files are present; without them, those tests are skipped as well (source-independent tests always run).
 
 - Path exclusion: none (ISO 27000/27001 `page.test.ts` also run, using `sourceTest` via `fidelity-helpers`)
 - CI-equivalent result: 391 pass / 296 skip / 0 fail, 114 files, 687 tests (clean worktree without `archive/`). Local: 687 pass / 0 fail

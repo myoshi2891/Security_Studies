@@ -190,7 +190,7 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 
 #### 原本比較テストの CI 扱い（2026-10-18、`1ce9728` を改修）
 
-`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済みガイドの各 `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本を参照するテスト・節/章契約・`archive.test.ts` のバイト一致テストだけが `sourceTest` を使い、原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` は従来通り全件実行する。
+`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済みガイドの各 `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本を参照するテスト・節/章契約・`archive.test.ts` のバイト一致テストだけが `sourceTest` を使い、原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` も、原本依存テストを実行するのは `archive/` に原本がある場合のみで、原本がなければ同様にスキップされる（原本非依存のテストは常に実行される）。
 
 - パス除外は廃止（ISO 27000/27001 の `page.test.ts` も `fidelity-helpers` 経由で `sourceTest` を使用）
 - CI 条件の実測（2026-10-18、パス除外なし）: 391 pass / 296 skip / 0 fail、114ファイル・687件（`archive/` なしのクリーン worktree で再現）。ローカル: 687 pass / 0 fail
