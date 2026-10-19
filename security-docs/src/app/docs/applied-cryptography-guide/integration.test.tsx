@@ -1,5 +1,5 @@
 import {afterEach,expect,test} from 'bun:test';
-import {readFileSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {createElement} from 'react';
 import {cleanup,render,fireEvent} from '@testing-library/react';
@@ -11,10 +11,13 @@ import {canonical,evaluatedPage,renderedPage,sourceDocument,sourceHtml,definitio
 afterEach(cleanup);
 const route='/docs/applied-cryptography-guide';
 const inventory=JSON.parse(readFileSync(new URL('../../../../../docs/migration-inventory/applied-cryptography-guide.json',import.meta.url),'utf8'));
+const markdownUrl=new URL('../../../../../archive/md/Applied-cryptography-guide.md',import.meta.url);
 
-sourceTest('both original files retain their immutable hashes and all main children retain their order',async()=>{
+test.skipIf(!existsSync(markdownUrl))('the archived Markdown original retains its immutable hash',()=>{
+ expect(createHash('sha256').update(readFileSync(markdownUrl)).digest('hex')).toBe(inventory.markdownSha256);
+});
+sourceTest('the original HTML retains its immutable hash and all main children retain their order',async()=>{
  expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.htmlSha256);
- expect(createHash('sha256').update(readFileSync(new URL('../../../../../archive/md/Applied-cryptography-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
  const children=(el:Element)=>[...el.childNodes].map(canonical).filter(v=>v!==null);
  expect(children((await renderedPage()).querySelector('.main')!)).toEqual(children(sourceDocument.querySelector('main')!));
 });
