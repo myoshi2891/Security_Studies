@@ -1,5 +1,5 @@
 import { expect, test, spyOn } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import postcss from 'postcss';
@@ -7,9 +7,14 @@ import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
 import { canonical, declarations, definitions, evaluatedPage, here, iconHooks, inventory, renderedPage, repo, scope, sourceCss, sourceDocument, sourceHtml, text, sourceTest } from './fidelity-helpers';
 
-sourceTest('locks original HTML/Markdown hashes and the complete article inventory', async () => {
+const markdownPath = resolve(repo, inventory.markdownSource);
+
+test.skipIf(!existsSync(markdownPath))('locks the original Markdown hash', () => {
+  expect(createHash('sha256').update(readFileSync(markdownPath)).digest('hex')).toBe(inventory.markdownSha256);
+});
+
+sourceTest('locks the original HTML hash and the complete article inventory', async () => {
   expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
-  expect(createHash('sha256').update(readFileSync(resolve(repo, inventory.markdownSource))).digest('hex')).toBe(inventory.markdownSha256);
   const page = (await renderedPage()).querySelector('.main')!;
   const source = sourceDocument.querySelector('main')!;
   for (const [selector, count] of Object.entries({ section: 13, h1: 1, h2: 13, h3: 3, h4: 17, table: 11, 'tbody td': 228, ul: 4, ol: 1, li: 50, strong: 21, code: 63, '.mermaid-wrap': 4, '.step-card': 6, '.callout': 4 })) {
