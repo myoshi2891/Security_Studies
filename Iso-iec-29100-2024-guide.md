@@ -1141,7 +1141,7 @@ flowchart TD
 |---|---|---|---|
 | S1 | ISO 公式: ISO/IEC 29100:2024 | https://www.iso.org/standard/85938.html | 版、発行日、ページ数、SC 27、ICS、置換関係、スコープ、価格表示（CHF 0）、ライフサイクル |
 | S2 | ISO 公式: ISO/IEC 29100:2011（Withdrawn） | https://www.iso.org/standard/45123.html | 旧版の位置付け |
-| S3 | インド規格協会（BIS）: IS/ISO/IEC 29100:2024（ISO/IEC 29100:2024 と同一内容の国家規格） | https://services.bis.gov.in/tmp/1734079775.pdf | 国家序文の「主な変更点」、規格の構成・条番号、用語、原則 |
+| S3 | iTeh Standards: ISO/IEC 29100:2024(en) 公開サンプル（規格本文の冒頭11ページ） | https://cdn.standards.iteh.ai/samples/85938/f9acf616d3884bc2b696431fc11ea95e/ISO-IEC-29100-2024.pdf | 序文の「主な変更点」、目次（条番号・Annex A の題名）、Clause 1〜3（24用語）、5.1〜5.2。5.3 以降・Clause 6（原則）・Annex A の本文はサンプルに含まれないため、規格全文で確認する（旧掲載の BIS 版 PDF は 2026-10-19 時点で 403） |
 | S4 | セルビア標準化機関 ISS: ISO/IEC 29100:2024 | https://iss.rs/en/project/show/iso:proj:85938 | 発行日、ステージ、旧版との関係 |
 | S5 | スウェーデン標準化機関 SIS: ISO/IEC 29100:2024 | https://www.sis.se/produkter/informationsteknik-kontorsutrustning/itsakerhet/isoiec-291002024/ | 発行日、ページ数、置換関係 |
 | S6 | BSI（英国規格協会）台湾: ISO/IEC 29100:2024 基礎コース | https://www.bsigroup.com/zh-TW/ISO_29100/Information_Security_Privacy-framework/Privacy-framework-ESS | 2024年版が小幅修訂で、Amd 1:2018 を統合したとの説明 |
