@@ -64,10 +64,14 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.innerHTML).toBe('<ul><li>項目</li></ul>');
   });
 
-  sourceTest('retains all four definitions, accessible descriptions and original palette with readable typography', async () => {
+  sourceTest('retains all four source diagram definitions', async () => {
+    const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
+    expect(Object.entries(diagrams)).toEqual([...definitions]);
+  });
+
+  test('keeps accessible descriptions and the original palette with readable typography', async () => {
     const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
     const { diagramConfig } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
-    expect(Object.entries(diagrams)).toEqual([...definitions]);
     expect(diagramConfig).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict', htmlLabels: false, flowchart: { curve: 'linear', htmlLabels: false, useMaxWidth: false, nodeSpacing: 45, rankSpacing: 45 }, themeVariables: { primaryColor: '#5b21b6', secondaryColor: '#115e59', edgeLabelBackground: '#1f1f28', fontSize: '18px', darkMode: true, textColor: '#f8fafc' } });
     for (const definition of Object.values(diagrams) as string[]) expect(definition).toMatch(/accTitle:.*\n\s*accDescr:/);
   });
