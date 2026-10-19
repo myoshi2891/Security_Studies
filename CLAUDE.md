@@ -190,13 +190,13 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 
 #### 原本比較テストの CI 扱い（2026-10-18、`1ce9728` を改修）
 
-`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済みガイドの各 `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本を参照するテスト・節/章契約・`archive.test.ts` のバイト一致テストだけが `sourceTest` を使い、原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` も、原本依存テストを実行するのは `archive/` に原本がある場合のみで、原本がなければ同様にスキップされる（原本非依存のテストは常に実行される）。
+`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済みガイドの各 `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本 HTML に依存するテスト（節/章契約・原本比較）だけが `sourceTest` を使う。`archive.test.ts` のバイト一致テストと Markdown 原本のハッシュ検証は、ファイルごとに `test.skipIf(!existsSync(path))` で判定するため、Markdown 原本の欠落は HTML 原本の有無と独立してスキップされる。原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` も、原本依存テストを実行するのは `archive/` に原本がある場合のみで、原本がなければ同様にスキップされる（原本非依存のテストは常に実行される）。
 
 - パス除外は廃止（ISO 27000/27001 の `page.test.ts` も `fidelity-helpers` 経由で `sourceTest` を使用）
 - CI 条件の実測（2026-10-18、パス除外なし）: 391 pass / 296 skip / 0 fail、114ファイル・687件（`archive/` なしのクリーン worktree で再現）。ローカル: 687 pass / 0 fail
 - 注意: 負荷が高い初回実行では、CSS・コントラスト系の重いテスト（例: `hacking-kubernetes/contrast.test.tsx`）が Bun 既定の 5秒タイムアウトを僅かに超えて fail することがある（再実行で解消）
 
-> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更した場合は、原本の読み込みを `fidelity-helpers.ts` の遅延ロード（モジュールレベルで `readFileSync` しない）に揃え、原本を参照するテストは `test` ではなく `sourceTest` で登録すること。モジュールレベルで原本由来の値を即時評価しない（関数化する）。ディレクトリ単位の除外パターンは追加しない。漏れは CI で ENOENT や `undefined` 参照の失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
+> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更した場合は、原本の読み込みを `fidelity-helpers.ts` の遅延ロード（モジュールレベルで `readFileSync` しない）に揃え、原本 HTML を参照するテストは `test` ではなく `sourceTest` で登録し、`archive.test.ts` のバイト一致や Markdown 原本のハッシュ検証はファイルごとに `test.skipIf(!existsSync(path))` で登録すること。モジュールレベルで原本由来の値を即時評価しない（関数化する）。ディレクトリ単位の除外パターンは追加しない。漏れは CI で ENOENT や `undefined` 参照の失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
 
 ### CCIE Security migration status
 
