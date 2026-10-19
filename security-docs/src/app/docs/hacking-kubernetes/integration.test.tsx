@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
@@ -9,9 +9,13 @@ const inventory=JSON.parse(readFileSync(new URL('../../../../../docs/migration-i
 const main=() => sourceDocument.querySelector('main')!;
 const bodyElements=(el:Element,selector:string)=>[...el.querySelectorAll(selector)].filter(node=>node.matches('.mermaid')||!node.closest('.mermaid'));
 
-sourceTest('keeps both original files byte-for-byte unchanged and every source chapter, reference and footer in order',async()=>{
+// MD 原本は HTML 原本と独立に存在判定する
+const markdownSource=new URL('../../../../../archive/md/Hacking-kubernetes-guide.md',import.meta.url);
+test.skipIf(!existsSync(markdownSource))('keeps the archived Markdown original byte-for-byte unchanged',()=>{
+ expect(createHash('sha256').update(readFileSync(markdownSource)).digest('hex')).toBe(inventory.markdownSha256);
+});
+sourceTest('keeps the original HTML byte-for-byte unchanged and every source chapter, reference and footer in order',async()=>{
  expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
- expect(createHash('sha256').update(readFileSync(new URL('../../../../../archive/md/Hacking-kubernetes-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
  const page=(await renderedPage()).querySelector('.layout')!;
  const children=(el:Element)=>[...el.childNodes].map(canonical).filter(value=>value!==null);
  expect(children(page)).toEqual(children(main()));
