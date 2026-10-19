@@ -56,11 +56,15 @@ describe('Secure by Design complete migration', () => {
     expect(entries).toEqual([live]);
   });
 
-  sourceTest('preserves all 32 reference numbers, descriptions, categories and safe external link attributes', async () => {
+  sourceTest('preserves all 32 reference numbers, descriptions and categories', async () => {
     const page = await renderedPage();
     const refs = [...page.querySelectorAll('.ref-card')];
     expect(refs.map(canonical)).toEqual([...sourceDocument.querySelectorAll('.ref-card')].map(canonical));
     expect(refs.map(el => Number(el.querySelector('.ref-badge')?.textContent))).toEqual(Array.from({ length: 32 }, (_, i) => i + 1));
+  });
+
+  test('opens every external link with safe rel attributes', async () => {
+    const page = await renderedPage();
     for (const link of page.querySelectorAll('a[target="_blank"]')) expect(link.getAttribute('rel')).toBe('noopener noreferrer');
   });
 
