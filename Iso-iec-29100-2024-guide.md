@@ -839,6 +839,7 @@ import hashlib
 import os
 
 # 本番では環境変数ではなく KMS / Secret Manager から取得するのが望ましい
+# 実行前に環境変数 PSEUDONYM_KEY を設定すること（未設定の場合は KeyError で停止する）
 PSEUDONYM_KEY = os.environ["PSEUDONYM_KEY"].encode("utf-8")
 
 
