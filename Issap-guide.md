@@ -1245,7 +1245,7 @@ flowchart TD
 **A.** SABSA [S16]。
 
 **Q4.** STRIDE の「R」が侵害する性質は？
-**A.** 否認防止（Repudiation）。
+**A.** 否認防止（Non-repudiation）。
 
 **Q5.** CVSS v4.0 の4つの指標グループは？また最終スコアを変えないのは？
 **A.** Base・Threat・Environmental・Supplemental。Supplemental は最終スコアを変えない [S17]。
