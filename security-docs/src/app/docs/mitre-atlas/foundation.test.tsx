@@ -153,12 +153,18 @@ describe('MITRE ATLAS display foundation', () => {
     } finally { error.mockRestore(); }
   });
 
-  sourceTest('preserves the thirteen grouped links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
+  sourceTest('preserves the thirteen grouped links from the source sidebar', async () => {
+    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+    const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
+    const { container } = render(createElement('div', { className: 'atlas-guide' }, createElement(GuideSidebar, { groups: toc })));
+    expect([...container.querySelectorAll('nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')]));
+  });
+
+  test('groups the sidebar links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
     const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
     const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     window.history.replaceState(null, '', '#sec8');
     const { container, getByRole } = render(createElement('div', { className: 'atlas-guide' }, createElement(GuideSidebar, { groups: toc })));
-    expect([...container.querySelectorAll('nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')]));
     expect([...container.querySelectorAll('.nav-section-title')].map(el => el.textContent)).toEqual(['基礎', '戦術と技術', '防御と事例', '実践']);
     await waitFor(() => expect(container.querySelector('[aria-current="location"]')).toHaveAttribute('href', '#sec8'));
     const button = getByRole('button', { name: '目次を開く' });
