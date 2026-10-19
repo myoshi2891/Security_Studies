@@ -40,7 +40,7 @@
 
 ### 1.2 前提知識
 
-ISSAP は CISSP の上位に位置づけられる資格です。認定取得に必要な経験要件の経路は2つあり（受験資格ではなく、合格後に認定を受けるための要件です）、**CISSP を保有・維持している場合**は ISSAP の4ドメインのいずれか1つ以上で累計2年以上のフルタイム経験、**CISSP を要件としない経路**では4ドメインのうち2つ以上で累計7年以上のフルタイム経験が必要です [S1][S3]。必要な経験がなくても試験に合格すれば **Associate of ISC2** を申請でき、経験を積む間この称号を**最大8年間**保持できます [S22]。**7年経路に限り**、学位（コンピューターサイエンス・IT等の学士／修士）または ISC2 の承認資格リストにある資格で、**最大1年**の経験が免除されます（学位と資格を合算して2年分を免除することはできません。CISSP 保有者の2年経路には適用されません）。**パートタイム勤務やインターン経験**も経験年数に算入できます（パートタイムはフルタイム換算で計上し、無給インターンは組織の公式レターヘッドによる証明が必要）[S1][S2]。本ガイドは CISSP の8ドメイン（セキュリティとリスク管理、資産保護、セキュリティ設計・エンジニアリング、通信とネットワーク、IAM、評価とテスト、運用、ソフトウェア開発セキュリティ）を一通り理解している前提で、**「設計者として判断する力」**を深掘りする試験です。
+ISSAP は CISSP の上位に位置づけられる資格です。認定取得に必要な経験要件の経路は2つあり（受験資格ではなく、合格後に認定を受けるための要件です）、**CISSP を保有・維持している場合**は ISSAP の4ドメインのいずれか1つ以上で累計2年以上のフルタイム経験、**CISSP を要件としない経路**では4ドメインのうち2つ以上で累計7年以上のフルタイム経験が必要です [S1] [S3]。必要な経験がなくても試験に合格すれば **Associate of ISC2** を申請でき、経験を積む間この称号を**最大8年間**保持できます [S22]。**7年経路に限り**、学位（コンピューターサイエンス・IT等の学士／修士）または ISC2 の承認資格リストにある資格で、**最大1年**の経験が免除されます（学位と資格を合算して2年分を免除することはできません。CISSP 保有者の2年経路には適用されません）。**パートタイム勤務やインターン経験**も経験年数に算入できます（パートタイムはフルタイム換算で計上し、無給インターンは組織の公式レターヘッドによる証明が必要）[S1] [S2]。本ガイドは CISSP の8ドメイン（セキュリティとリスク管理、資産保護、セキュリティ設計・エンジニアリング、通信とネットワーク、IAM、評価とテスト、運用、ソフトウェア開発セキュリティ）を一通り理解している前提で、**「設計者として判断する力」**を深掘りする試験です。
 
 ### 1.3 アーキテクトの立ち位置
 
@@ -68,8 +68,8 @@ flowchart TB
 | 位置づけ | 上位（Advanced）3資格の1つ（ISSAP / ISSEP / ISSMP） | [S3] |
 | 想定職種 | チーフセキュリティアーキテクト、アナリスト等 | [S1] |
 | 証明する能力 | セキュリティソリューションの開発・設計・分析、および上級管理職へのリスクベースの助言 | [S1] |
-| 認定の経験要件（A: CISSP 経路） | CISSP の保有・維持 + 4ドメインのいずれか1つ以上で累計2年以上のフルタイム経験 | [S1][S3] |
-| 認定の経験要件（B: CISSP 不要の経路） | CISSP を要件とせず、4ドメインのうち2つ以上で累計7年以上のフルタイム経験 | [S1][S3] |
+| 認定の経験要件（A: CISSP 経路） | CISSP の保有・維持 + 4ドメインのいずれか1つ以上で累計2年以上のフルタイム経験 | [S1] [S3] |
+| 認定の経験要件（B: CISSP 不要の経路） | CISSP を要件とせず、4ドメインのうち2つ以上で累計7年以上のフルタイム経験 | [S1] [S3] |
 | 経験の免除 | 7年経路のみ、学位（CS・IT等の学士／修士）または ISC2 承認資格で最大1年（学位と資格の併用で2年免除は不可。CISSP 保有者の2年経路は対象外） | [S2] |
 | パートタイム・インターン | 経験年数に算入可（パートタイムはフルタイム換算、無給インターンは公式レターヘッドの証明が必要） | [S2] |
 | 認定規格 | ANAB 認定（ISO/IEC 17024）、米国 DoDM 8140 承認 | [S1] |
@@ -85,7 +85,7 @@ flowchart TB
 | 形式 | リニア（適応型ではない） | 第三者情報 [S8] |
 | 会場 | Pearson VUE テストセンター | **高**（ISC2 公式の試験アウトライン）[S2] |
 
-> 受験前に必ず ISC2 の試験ポリシー・再受験規定を確認してください [S6][S7]。
+> 受験前に必ず ISC2 の試験ポリシー・再受験規定を確認してください [S6] [S7]。
 
 ### 2.3 2025年の改訂ポイント
 
@@ -120,7 +120,7 @@ flowchart LR
 | 3 | Infrastructure and System Security Architecture | **32%** | 3.1 要件の特定 / 3.2 インフラ・システムの設計 / 3.3 暗号ソリューションの設計 |
 | 4 | Identity and Access Management (IAM) Architecture | **25%** | 4.1 ライフサイクル / 4.2 認証 / 4.3 認可 / 4.4 アカウンティング |
 
-出典: [S2][S3]（配分は [S3] の ISC2 公式記事）
+出典: [S2] [S3]（配分は [S3] の ISC2 公式記事）
 
 ```mermaid
 pie showData title ISSAP ドメイン配分（2025年8月1日発効）
@@ -1257,7 +1257,7 @@ flowchart TD
 **A.** 参加するシステム間の**時刻同期**。
 
 **Q8.** IT と OT で、OT が最優先するのは？
-**A.** 可用性と安全性。
+**A.** 安全性と可用性。
 
 **Q9.** 鍵ライフサイクルで「漏えいが判明した鍵」が向かう状態は？
 **A.** Compromised → Destroyed（失効・破棄）[S12]。
@@ -1301,6 +1301,7 @@ flowchart TD
 | S11 | 同 Web 版・実装リソース | https://pages.nist.gov/800-63-4/ |
 | S12 | NIST SP 800-57 Part 1 Rev.5 鍵管理 | https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf |
 | S12 | 同 NIST 解説ページ | https://www.nist.gov/publications/recommendation-key-management-part-1-general-1 |
+| S13 | PQC 標準（FIPS 203/204/205）と IR 8547 の NIST 発表資料 | https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf |
 | S14 | NIST AI RMF 1.0 公開発表 | https://www.nist.gov/node/1731521 |
 | S15 | TOGAF 9.2 ADM（The Open Group） | https://pubs.opengroup.org/architecture/togaf9-doc/m/pt2.html |
 | S15 | TOGAF Pocket Guide: ADM | https://pubs.opengroup.org/pocket-guides/togaf-pocket-guide/main/chap06.html |
@@ -1314,8 +1315,7 @@ flowchart TD
 |---|---|---|
 | S8 | 試験形式（問題数・合格点）の第三者解説 | https://www.examcert.app/blog/cissp-issap-readiness-checklist/ |
 | S8 | 同 | https://www.ucertify.com/blog/everything-you-want-to-know-about-issap-exam/ |
-| S13 | PQC 標準（FIPS 203/204/205）と IR 8547 の NIST 発表資料 | https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf |
-| S13 | IR 8547 の解説（第三者） | https://www.encryptionconsulting.com/nist-ir-8547-2030-2035-action-plan/ |
+| S23 | IR 8547 の解説（第三者） | https://www.encryptionconsulting.com/nist-ir-8547-2030-2035-action-plan/ |
 | S16 | SABSA の層構造の概説 | https://en.wikipedia.org/wiki/Sherwood_Applied_Business_Security_Architecture |
 | S16 | SABSA 概説ホワイトペーパー紹介 | https://cioindex.com/reference/sabsa-executive-white-paper/ |
 | S18 | STRIDE の概説（Microsoft 関連記事） | https://learn.microsoft.com/ja-jp/archive/blogs/larryosterman/threat-modeling-again-stride |
@@ -1331,14 +1331,14 @@ flowchart TD
 |---|---|---|
 | 4ドメイン構成・配分（21/22/32/25%） | **高** | ISC2 公式記事で確認 [S3] |
 | サブドメインの項目 | **高** | ISC2 のアウトライン概要ページで確認 [S2]。最終確認は PDF [S4] |
-| 認定の経験要件・Associate of ISC2 | **高** | [S1][S3][S22] |
+| 認定の経験要件・Associate of ISC2 | **高** | [S1] [S3] [S22] |
 | 問題数 125／合格点 700／会場 | **高** | ISC2 公式の試験アウトラインで確認 [S2] |
 | リニア形式 | **中** | 第三者情報。ISC2 公式で要確認 [S8] |
 | AI の織り込み内容（第9章） | **中** | 取得ページの見出し対応がずれていたため、内容に基づいて整理 [S2] |
 | NIST IR 8547 の期限 | **中** | 提案段階を含む。最新状況は NIST で確認 [S13] |
 | OT（ゾーン／コンデュイット等） | **中** | 二次情報中心。NIST SP 800-82 Rev.3 と IEC 62443 本体で確認を推奨 [S19] |
 | 製品名・個別設定値 | — | 本ガイドは概念中心で、特定製品の設定値は扱いません |
-| 試験料金・再受験費用 | — | 変動するため記載していません。[S6][S7] で確認 |
+| 試験料金・再受験費用 | — | 変動するため記載していません。[S6] [S7] で確認 |
 
 ### 免責
 - 本ガイドは学習補助であり、ISC2 の公式教材ではありません。
