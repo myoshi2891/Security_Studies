@@ -356,7 +356,7 @@ flowchart TD
 
 ##### TOGAF（The Open Group Architecture Framework）
 
-**まず押さえる**: 企業全体のアーキテクチャ（EA）を開発・管理するための方法論です。中核は **ADM（Architecture Development Method）**。
+**まず押さえる**: 企業全体のアーキテクチャ（EA）を開発・管理するための方法論です。中核は **ADM（Architecture Development Method）**。以下のフェーズ構成は **TOGAF 9.2** の ADM に基づきます [S15]。
 
 ADM のフェーズ: Preliminary、A（Architecture Vision）、B（Business）、C（Information Systems: データ＋アプリケーション）、D（Technology）、E（Opportunities & Solutions）、F（Migration Planning）、G（Implementation Governance）、H（Architecture Change Management）、そして全体を貫く **Requirements Management** [S15]。
 
