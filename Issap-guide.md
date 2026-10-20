@@ -1322,7 +1322,6 @@ flowchart TD
 | ID | 内容 | URL |
 |---|---|---|
 | S8 | 試験形式（問題数・合格点）の第三者解説 | https://www.examcert.app/blog/cissp-issap-readiness-checklist/ |
-| S8 | 同 | https://www.ucertify.com/blog/everything-you-want-to-know-about-issap-exam/ |
 | S23 | IR 8547 の解説（第三者） | https://www.encryptionconsulting.com/nist-ir-8547-2030-2035-action-plan/ |
 | S16a | SABSA の層構造の概説 | https://en.wikipedia.org/wiki/Sherwood_Applied_Business_Security_Architecture |
 | S16b | SABSA 概説ホワイトペーパー紹介 | https://cioindex.com/reference/sabsa-executive-white-paper/ |
