@@ -139,10 +139,14 @@ describe('Secure by Design display foundation', () => {
     } finally { error.mockRestore(); }
   });
 
-  sourceTest('preserves original TOC and hash selection; mobile closes on link, Escape, backdrop and desktop resize', async () => {
-    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+  sourceTest('preserves original TOC', async () => {
     const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     expect(toc.map((item: { id: string; title: string }) => [`#${item.id}`, item.title])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(a => [a.getAttribute('href'), a.textContent]));
+  });
+
+  test('preserves hash selection; mobile closes on link, Escape, backdrop and desktop resize', async () => {
+    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+    const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     window.history.replaceState(null, '', '#sec-12');
     const { container, getByRole } = render(createElement('div', { className: 'secure-by-design-guide' }, createElement(GuideSidebar, { items: toc })));
     await waitFor(() => expect(container.querySelector('a[aria-current="location"]')).toHaveAttribute('href', '#sec-12'));
