@@ -383,7 +383,7 @@ flowchart TD
     ST["ST 評価 ASE<br/>主張の明確さと整合性を確認"] --> TOE
     TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"どの評価方法か?"}
     COMP -->|"複合製品の複合評価<br/>下位製品の評価結果を利用"| CPE["複合評価<br/>ASE_COMP ADV_COMP ALC_COMP ATE_COMP AVA_COMP"]
-    COMP -->|"評価済みコンポーネントを組み合わせた TOE"| ACO["コンポジション評価 ACO"]
+    COMP -->|"階層型コンポジションモデルの複合 TOE<br/>評価済みコンポーネントを組み合わせる<br/>保証レベルは Enhanced-Basic が上限"| ACO["コンポジション評価 ACO"]
     COMP -->|"どちらでもない"| END(["評価完了"])
     CPE --> END
     ACO --> END
