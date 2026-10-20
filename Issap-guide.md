@@ -387,7 +387,7 @@ flowchart TD
 
 ##### SABSA（Sherwood Applied Business Security Architecture）
 
-**まず押さえる**: **事業要求とリスクから出発**して、上位の抽象から下位の実装へ層を下りていく、セキュリティ専用のフレームワークです [S16]。
+**まず押さえる**: **事業要求とリスクから出発**して、上位の抽象から下位の実装へ層を下りていく、セキュリティ専用のフレームワークです [S16] [S16a]。
 
 | 層 | 視点 | 内容 |
 |---|---|---|
@@ -398,7 +398,7 @@ flowchart TD
 | コンポーネント（Component） | 職人の視点 | 具体的製品・技術の選定 |
 | オペレーショナル（Operational） | 運用管理者の視点 | 運用継続の保証、運用リスク管理、サービス管理 |
 
-SABSA マトリクスの縦軸（各層）に対し、横軸は **What（資産）・Why（動機）・How（プロセス）・Who（人）・Where（場所）・When（時間）** の6つの問い [S16]。
+SABSA マトリクスの縦軸（各層）に対し、横軸は **What（資産）・Why（動機）・How（プロセス）・Who（人）・Where（場所）・When（時間）** の6つの問い [S16] [S16b]。
 
 **TOGAF と SABSA の使い分け**
 
@@ -971,9 +971,17 @@ flowchart LR
 | 知識（Something you know） | パスワード、PIN |
 | 所持（Something you have） | ハードウェアトークン、スマートカード、パスキー |
 | 生体（Something you are） | 指紋、顔 |
-| 場所・行動 | 位置、操作パターン（補助的） |
 
 **重要**: **多要素＝異なる種類の要素を組み合わせる**こと。パスワードと秘密の質問は**同じ「知識」要素**で、多要素ではありません。
+
+**リスクシグナル（認証要素ではない）**
+
+| シグナル | 例 |
+|---|---|
+| 場所 | 位置情報、IP アドレス、地域 |
+| 行動 | 操作パターン、アクセス時間帯 |
+
+位置情報や行動分析は **MFA の認証要素ではありません**。下図のリスクベース認証で、追加要素を求めるか・拒否するかを判断する**リスク評価の入力**として使います [S11]。
 
 ```mermaid
 flowchart TD
@@ -1316,8 +1324,8 @@ flowchart TD
 | S8 | 試験形式（問題数・合格点）の第三者解説 | https://www.examcert.app/blog/cissp-issap-readiness-checklist/ |
 | S8 | 同 | https://www.ucertify.com/blog/everything-you-want-to-know-about-issap-exam/ |
 | S23 | IR 8547 の解説（第三者） | https://www.encryptionconsulting.com/nist-ir-8547-2030-2035-action-plan/ |
-| S16 | SABSA の層構造の概説 | https://en.wikipedia.org/wiki/Sherwood_Applied_Business_Security_Architecture |
-| S16 | SABSA 概説ホワイトペーパー紹介 | https://cioindex.com/reference/sabsa-executive-white-paper/ |
+| S16a | SABSA の層構造の概説 | https://en.wikipedia.org/wiki/Sherwood_Applied_Business_Security_Architecture |
+| S16b | SABSA 概説ホワイトペーパー紹介 | https://cioindex.com/reference/sabsa-executive-white-paper/ |
 | S18 | STRIDE の概説（Microsoft 関連記事） | https://learn.microsoft.com/ja-jp/archive/blogs/larryosterman/threat-modeling-again-stride |
 | S18 | STRIDE の概説（MSDN） | https://msdn.microsoft.com/en-us/library/ee823878 |
 | S19 | IEC 62443 ゾーン／コンデュイットの解説 | https://www.trendmicro.com/en_us/research/20/g/guidelines-related-to-security-in-smart-factories-part-2-system-design-and-security-level-of-iec62443.html |
@@ -1362,6 +1370,8 @@ flowchart TD
 [S14]: https://www.nist.gov/node/1731521
 [S15]: https://pubs.opengroup.org/architecture/togaf9-doc/m/pt2.html
 [S16]: https://sabsa.org/
+[S16a]: https://en.wikipedia.org/wiki/Sherwood_Applied_Business_Security_Architecture
+[S16b]: https://cioindex.com/reference/sabsa-executive-white-paper/
 [S17]: https://www.first.org/cvss/
 [S18]: https://learn.microsoft.com/ja-jp/archive/blogs/larryosterman/threat-modeling-again-stride
 [S19]: https://www.trendmicro.com/en_us/research/20/g/guidelines-related-to-security-in-smart-factories-part-2-system-design-and-security-level-of-iec62443.html
