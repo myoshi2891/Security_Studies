@@ -1177,7 +1177,7 @@ flowchart TD
 - **学習データ・モデルの完全性**を、サプライチェーン対策として保護する。
 - AI の判断を**追跡できるログ**と、人間による**確認・停止（オーバーライド）**の仕組みを設計に入れる。
 
-> 補足: ISC2 は 2026年9月1日付で「AI 試験ガイダンス」に関する記事を公開しています（見出しのみ確認、本文は未確認）[S21]。受験前に確認してください。
+> 補足: ISC2 は 2026年9月1日付で、更新版「AI 試験ガイダンス」（Exam Guidance for Artificial Intelligence）の公開記事を出しています。記事によると、このガイダンスは ISC2 の全9認定試験について AI 関連の内容を対応づけています（記事本文とリンク先のガイダンス文書を 2026年10月20日に確認）[S21]。ISSAP 固有の出題範囲への影響は、受験前にガイダンス文書で確認してください。
 
 ---
 
@@ -1288,7 +1288,7 @@ flowchart TD
 | S5 | 補助参考文献一覧 | https://www.isc2.org/certifications/references |
 | S6 | 試験登録・ポリシー | https://www.isc2.org/register-for-exam |
 | S7 | 再受験ポリシー | https://www.isc2.org/exams/after-your-exam#retakePolicy |
-| S21 | AI 試験ガイダンス記事（見出しのみ確認） | https://www.isc2.org/insights/2026/09/updated-isc2-ai-guidance-published |
+| S21 | AI 試験ガイダンス更新の記事（本文・リンク先ガイダンス文書を 2026-10-20 に確認） | https://www.isc2.org/insights/2026/09/updated-isc2-ai-guidance-published |
 | S22 | Associate of ISC2（資格ごとの称号保持期間） | https://www.isc2.org/certifications/associate |
 
 ### 12.2 標準・フレームワーク（一次情報）
