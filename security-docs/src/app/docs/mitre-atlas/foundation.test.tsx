@@ -76,10 +76,11 @@ describe('MITRE ATLAS display foundation', () => {
     for (const definition of Object.values(diagrams) as string[]) expect(definition).toMatch(/accTitle:.*\n\s*accDescr:/);
   });
 
-  sourceTest('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
+  test('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     const ids: string[] = [];
-    const source = definitions.get('structure')!;
+    // 原本(archive/)に依存しないローカルの図定義
+    const source = 'flowchart TD\n    accTitle: 図1 ATLASのデータモデル\n    accDescr: Tactic配下にTechniqueがある関係を示す\n    A["Tactic"] --> B["Technique"]';
     const renderer = async (id: string) => { ids.push(id); return { svg: '<svg viewBox="0 0 100 50" aria-label="図1"></svg>' }; };
     const { container } = render(createElement('div', {}, createElement(MermaidDiagram, { id: 'structure', source, renderer }), createElement(MermaidDiagram, { id: 'structure', source, renderer })));
     await waitFor(() => expect(container.querySelectorAll('svg')).toHaveLength(2));
@@ -92,9 +93,9 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.querySelector('pre')?.textContent).toBe(source);
   });
 
-  sourceTest('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
+  test('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
-    const source = definitions.get('lifecycle')!;
+    const source = 'flowchart LR\n    accTitle: 図2 攻撃者ライフサイクル\n    accDescr: 16のTacticsを6フェーズに整理した流れを示す\n    T1["Reconnaissance 偵察"] --> T2["Resource Development リソース開発"]';
     const renderer = async () => ({ svg: '<svg viewBox="0 0 1800 420" width="100%" height="420" style="max-width:100%"><text>Reconnaissance 偵察</text></svg>' });
     const result = render(createElement(MermaidDiagram, { id: 'lifecycle', source, renderer }));
     await waitFor(() => expect(result.container.querySelector('svg')).not.toBeNull());
