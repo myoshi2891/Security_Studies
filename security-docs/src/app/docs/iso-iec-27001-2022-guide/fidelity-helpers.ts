@@ -1,8 +1,9 @@
 import { existsSync } from "node:fs";
-import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { test } from "bun:test";
 
-export const SOURCE_PATH = path.join(process.cwd(), "..", "archive", "standards", "Iso-27001-2022-beginner-guide.md");
+// 起動ディレクトリに依存しないよう、本モジュールの位置からリポジトリ直下の archive/ を解決する
+export const SOURCE_PATH = fileURLToPath(new URL("../../../../../archive/standards/Iso-27001-2022-beginner-guide.md", import.meta.url));
 // 原本(archive/)は意図的に未追跡でCIには存在しない。原本の読み込みは各テスト本体で行う
 export const hasSource = existsSync(SOURCE_PATH);
 
