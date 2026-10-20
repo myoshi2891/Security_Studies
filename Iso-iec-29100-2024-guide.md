@@ -84,14 +84,14 @@ flowchart LR
 | 規格番号 | ISO/IEC 29100:2024 | [S1] |
 | 正式名称 | Information technology — Security techniques — Privacy framework | [S1] |
 | 版 | Edition 2（第2版） | [S1] |
-| 発行 | 2024年2月（ステージ 60.60 は 2024-02-16） | [S1][S4] |
-| ページ数 | 22ページ | [S1][S5] |
+| 発行 | 2024年2月（ステージ 60.60 は 2024-02-16） | [S1] [S4] |
+| ページ数 | 22ページ | [S1] [S5] |
 | 担当委員会 | ISO/IEC JTC 1/SC 27（Information security, cybersecurity and privacy protection） | [S1] |
 | ICS | 35.030（IT Security） | [S1] |
-| 置き換えた規格 | ISO/IEC 29100:2011 および Amd 1:2018（いずれも Withdrawn） | [S1][S5] |
+| 置き換えた規格 | ISO/IEC 29100:2011 および Amd 1:2018（いずれも Withdrawn） | [S1] [S5] |
 | 言語 | English | [S1] |
 | 価格表示 | CHF 0（2026-10-14 時点の ISO 規格ページの表示） | [S1] |
-| 日本語版（JIS） | JIS X 9250:2017（2011年版に基づく）。2024年版に対応する JIS 案が JSA に掲載 | [S8][S9] |
+| 日本語版（JIS） | JIS X 9250:2017（2011年版に基づく）。2024年版に対応する JIS 案が JSA に掲載 | [S8] [S9] |
 
 ### 1.3 この規格が「ある」ことの意味
 
@@ -106,7 +106,7 @@ flowchart LR
 | よくある期待 | 実際 |
 |---|---|
 | 法律である | **法律ではありません**。国際規格（任意の枠組み）です。各国の法令（GDPR、日本の個人情報保護法など）は別に存在します |
-| 認証を取れる規格である | **認証用の要求事項規格ではありません**。高水準のフレームワークで、用語と原則を示す文書です。認証の対象になるのは、たとえば ISO/IEC 27701 のようなマネジメントシステム規格です [S13][S14] |
+| 認証を取れる規格である | **認証用の要求事項規格ではありません**。高水準のフレームワークで、用語と原則を示す文書です。認証の対象になるのは、たとえば ISO/IEC 27701 のようなマネジメントシステム規格です [S13] [S14] |
 | 具体的な技術対策を指定する | 指定しません。「どんな暗号方式を使うか」などは決めず、考え方と観点を示します |
 | セキュリティ規格と同じ | 同じではありません。ISO/IEC 27001 などのセキュリティ規格に**プライバシーの視点を足す**ためのものです [S3] |
 
@@ -134,7 +134,7 @@ flowchart LR
     E --> F["2011年版と Amd 1 は<br/>Withdrawn"]
 ```
 
-出典: [S1][S4][S5]
+出典: [S1] [S4] [S5]
 
 ---
 
@@ -148,7 +148,7 @@ flowchart LR
 
 | # | 変更点 | 内容 | 出典 |
 |---|---|---|---|
-| 1 | 版の統合 | 2011年版と Amd 1:2018 を一本化した | [S1][S6] |
+| 1 | 版の統合 | 2011年版と Amd 1:2018 を一本化した | [S1] [S6] |
 | 2 | 引用規格の条を追加 | Clause 2（Normative references）が追加された（記載は「引用規格なし」） | [S3] |
 | 3 | 用語の置き換え | Clause 3 で "secondary use" が "secondary purpose" に置き換えられた | [S3] |
 | 4 | 相互参照の更新 | 文書全体の相互参照が更新された | [S3] |
@@ -992,15 +992,15 @@ flowchart TB
 | 規格・枠組み | 何をするものか | 29100 との関係 | 出典 |
 |---|---|---|---|
 | **ISO/IEC 27001 / 27002** | ISMS の要求事項と、情報セキュリティ統制 | 29100 は、既存のセキュリティ標準に**プライバシーの視点を足す**ことを意図する。Annex A に概念対応表がある | [S3] |
-| **ISO/IEC 27701:2025** | プライバシー情報マネジメントシステム（PIMS）の要求事項と指針。**2025年10月に改訂**され、ISO/IEC 27001 を前提としない**独立した認証可能な規格**になった | 29100 は 27701 の**引用規格**で、27701 の Annex C が 29100 の原則との対応を示す。PII controller 向け・processor 向けの統制ごとに対応づけられ、processor には当てはまらない原則もある | [S13][S15][S16][S17] |
+| **ISO/IEC 27701:2025** | プライバシー情報マネジメントシステム（PIMS）の要求事項と指針。**2025年10月に改訂**され、ISO/IEC 27001 を前提としない**独立した認証可能な規格**になった | 29100 は 27701 の**引用規格**で、27701 の Annex C が 29100 の原則との対応を示す。PII controller 向け・processor 向けの統制ごとに対応づけられ、processor には当てはまらない原則もある | [S13] [S15] [S16] [S17] |
 | **ISO/IEC 29134:2023** | PIA のプロセスと、報告書の構成と内容のガイドライン（第2版、2023年5月） | 29100 が示すリスクマネジメントの成果物としての PIA を、具体的に進めるための規格 | [S24] |
-| **ISO/IEC 29151:2017** | PII 保護の実施規範（code of practice、第1版） | 29100 の参考文献に掲載。27701 が対応づけている | [S3][S14] |
+| **ISO/IEC 29151:2017** | PII 保護の実施規範（code of practice、第1版） | 29100 の参考文献に掲載。27701 が対応づけている | [S3] [S14] |
 | **ISO/IEC 29151:2026** | 2017年版の後継（第2版、2026年7月発行）。表題は "Controls, requirements, and guidance for personally identifiable information protection" に変わり、実施規範から「管理策・要求事項・指針」へ位置付けが変わった | 上記の 29100・27701 との関係の記述は2017年版に基づく。2026年版との対応は未確認 | [S27] |
-| **ISO/IEC 27018:2025** | パブリッククラウドで PII processor として動作する場合の PII 保護の指針（guidelines、第3版、2025年8月発行）。旧版（2019年版）は実施規範（code of practice）と位置付けていた | 29100 の参考文献に掲載。27701 が対応づけている（この関係の記述は旧版に基づく。2025年版との対応は未確認） | [S3][S14][S28] |
+| **ISO/IEC 27018:2025** | パブリッククラウドで PII processor として動作する場合の PII 保護の指針（guidelines、第3版、2025年8月発行）。旧版（2019年版）は実施規範（code of practice）と位置付けていた | 29100 の参考文献に掲載。27701 が対応づけている（この関係の記述は旧版に基づく。2025年版との対応は未確認） | [S3] [S14] [S28] |
 | **ISO/IEC 29184** | オンラインのプライバシー通知と同意（2020年版。日本では JIS X 9252:2023） | 原則1・7 の具体化に関わる | [S7] |
-| **ISO 31700-1:2023** | 消費者向け商品・サービスの privacy by design の高水準要求事項（2023年発行、約30の要求事項） | プライバシーを設計段階で組み込む点で関連。Ann Cavoukian が2009年に示した7原則を具体化したものと説明される | [S25][S26] |
-| **NIST Privacy Framework** | 米国 NIST の、プライバシーリスク管理のための任意の枠組み。1.1 の初回公開草案は2025年4月14日。CSF 2.0 との整合を重視 | 目的は近いが、構成が異なる（Core の機能など）。**最終版の公表有無は、本調査では確認できなかった**。NIST は2026年中の公表を予告している | [S18][S19][S20] |
-| **LINDDUN** | KU Leuven（DistriNet）が開発した、プライバシー脅威モデリング手法。7つの脅威カテゴリ（Linkability、Identifiability、Non-repudiation、Detectability、Disclosure of information、Unawareness、Non-compliance）を、データフロー図に当てはめて分析する | 設計段階で、29100 の原則に関わるプライバシー上の問題を洗い出すのに使える。**GenAI 向けの拡張**（2026年3月の arXiv 論文）もある | [S21][S22][S23] |
+| **ISO 31700-1:2023** | 消費者向け商品・サービスの privacy by design の高水準要求事項（2023年発行、約30の要求事項） | プライバシーを設計段階で組み込む点で関連。Ann Cavoukian が2009年に示した7原則を具体化したものと説明される | [S25] [S26] |
+| **NIST Privacy Framework** | 米国 NIST の、プライバシーリスク管理のための任意の枠組み。1.1 の初回公開草案は2025年4月14日。CSF 2.0 との整合を重視 | 目的は近いが、構成が異なる（Core の機能など）。**最終版の公表有無は、本調査では確認できなかった**。NIST は2026年中の公表を予告している | [S18] [S19] [S20] |
+| **LINDDUN** | KU Leuven（DistriNet）が開発した、プライバシー脅威モデリング手法。7つの脅威カテゴリ（Linkability、Identifiability、Non-repudiation、Detectability、Disclosure of information、Unawareness、Non-compliance）を、データフロー図に当てはめて分析する | 設計段階で、29100 の原則に関わるプライバシー上の問題を洗い出すのに使える。**GenAI 向けの拡張**（2026年3月の arXiv 論文）もある | [S21] [S22] [S23] |
 | **ENISA 系の報告書** | "Privacy and Data Protection by Design — from policy to engineering"（プライバシー・バイ・デザインを政策から技術へ） | 29100 の11原則を、設計の出発点として取り上げている | [S10] |
 
 ### 10.3 29100 と ISO/IEC 27000 ファミリーの概念対応（Annex A）
@@ -1088,8 +1088,8 @@ flowchart TD
 
 | # | 誤解 | 実際 | 根拠 |
 |---|---|---|---|
-| 1 | 29100 に準拠すれば法令に準拠したことになる | 29100 は**法令ではなく**、法域に中立な枠組み。各国の法令への対応は別に必要 | [S3][S13] |
-| 2 | 29100 の認証を取れる | 認証用の要求事項規格ではない。認証の対象は、27701 のような**マネジメントシステム規格** | [S13][S16] |
+| 1 | 29100 に準拠すれば法令に準拠したことになる | 29100 は**法令ではなく**、法域に中立な枠組み。各国の法令への対応は別に必要 | [S3] [S13] |
+| 2 | 29100 の認証を取れる | 認証用の要求事項規格ではない。認証の対象は、27701 のような**マネジメントシステム規格** | [S13] [S16] |
 | 3 | 同意を取れば何をしてもよい | 目的の適法性、最小化、利用制限など、**他の原則も同時に満たす**必要がある。同意が十分な根拠にならない場合もある | [S3] |
 | 4 | ハッシュ化すれば匿名化になる | リンク可能性が残る限り**仮名化**であり、PII のまま | [S3] |
 | 5 | セキュリティ対策をすればプライバシーも守れる | セキュリティは原則10の1つに過ぎない。目的外利用や過剰収集は、セキュリティだけでは防げない | [S3] |
@@ -1118,7 +1118,7 @@ flowchart TD
 
 ### 解答
 
-1. ISO/IEC 29100:2011 と、ISO/IEC 29100:2011/Amd 1:2018 [S1][S5]。
+1. ISO/IEC 29100:2011 と、ISO/IEC 29100:2011/Amd 1:2018 [S1] [S5]。
 2. PII principal、PII controller、PII processor、third party [S3]。
 3. controller は PII 処理の**目的と手段を決める**主体。processor は controller の**指示に従って**処理する主体で、責任は controller に残る [S3]。
 4. 独自の **PII controller**（受領後に目的を決めれば controller になり得る）[S3]。
@@ -1234,6 +1234,34 @@ flowchart TD
 | Pseudonymization | 仮名化 | リンク可能性が残る |
 | Sensitive PII | 機微な PII | |
 | Third party | 第三者 | |
+
+<!-- 本文で参照する [Sn] の定義（URL は上の出典表と同一。本文で未参照の S2・S11・S12 は表のみ） -->
+
+[S1]: <https://www.iso.org/standard/85938.html>
+[S3]: <https://cdn.standards.iteh.ai/samples/85938/f9acf616d3884bc2b696431fc11ea95e/ISO-IEC-29100-2024.pdf>
+[S4]: <https://iss.rs/en/project/show/iso:proj:85938>
+[S5]: <https://www.sis.se/produkter/informationsteknik-kontorsutrustning/itsakerhet/isoiec-291002024/>
+[S6]: <https://www.bsigroup.com/zh-TW/ISO_29100/Information_Security_Privacy-framework/Privacy-framework-ESS>
+[S7]: <https://www.sakimura.org/en/2025/03/7832/>
+[S8]: <https://webdesk.jsa.or.jp/pdf/jisnintei/jisgenan_voice/JIS_X9250_情報技術－セキュリティ技術－プライバシーフレームワーク（プライバシー保護の枠組み及び原則）_加工後_.pdf>
+[S9]: <https://www.itmedia.co.jp/business/articles/2108/26/news010.html>
+[S10]: <https://arxiv.org/pdf/1501.03726>
+[S13]: <https://www.isms.online/iso-27701/annex-c-2025-iso-29100-mapping/>
+[S14]: <https://pecb.com/en/whitepaper/the-future-of-privacy-with-isoiec-27701>
+[S15]: <https://en.wikipedia.org/wiki/ISO/IEC_27701>
+[S16]: <https://www.kiwa.com/en/nl/areas-of-expertise/cyber-security/news/isoiec-277012025-published-updated-privacy-standard-offers-organizations-more-guidance/>
+[S17]: <https://www.managementsolutions.com/sites/default/files/publicaciones/eng/iso-iec-27701-information-security-cybersecurity-privacy.pdf>
+[S18]: <https://www.nist.gov/news-events/news/2025/04/nist-updates-privacy-framework-tying-it-recent-cybersecurity-guidelines>
+[S19]: <https://www.nist.gov/node/1905096>
+[S20]: <https://csrc.nist.gov/pubs/cswp/40/nist-privacy-framework-11/ipd>
+[S21]: <https://lirias.kuleuven.be/handle/123456789/505941>
+[S22]: <https://lirias.kuleuven.be/1656890>
+[S23]: <https://arxiv.org/html/2603.06051v1>
+[S24]: <https://www.boutique.afnor.org/en-gb/standard/iso-iec-291342023/information-technology-security-techniques-guidelines-for-privacy-impact-as/xs143470/345510>
+[S25]: <https://genorma.com/en/standards/iso-31700-1-2023>
+[S26]: <https://www.privacyworld.blog/2023/02/iso-31700-the-latest-tool-to-operationalize-gdpr-privacy-by-design-compliance/>
+[S27]: <https://www.iso.org/standard/88151.html>
+[S28]: <https://www.iso.org/standard/88150.html>
 
 ---
 
