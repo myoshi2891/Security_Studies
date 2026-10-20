@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-10-18
+Updated 2026-10-20
 
 ## Project Overview
 
