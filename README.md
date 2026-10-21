@@ -1,6 +1,6 @@
 # Security Studies
 
-最終更新日: 2026-10-15
+最終更新日: 2026-10-18
 
 [![CI](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml/badge.svg)](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/myoshi2891/Security_Studies/graph/badge.svg)](https://codecov.io/gh/myoshi2891/Security_Studies)
@@ -150,13 +150,15 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test --coverage`
+4. `bun test --coverage`（パス除外なし。ISO 27000/27001 の `page.test.ts` も実行対象）
 5. Codecov へカバレッジをアップロード（`CODECOV_TOKEN` シークレット要）
+
+`archive/` の原本は意図的に Git 管理外です。原本 HTML に依存する移行テストは `fidelity-helpers.ts` の `sourceTest` を使い、CI・ローカル（`bun test` / `npm test`）を問わず原本がなければスキップされます。Markdown 原本のハッシュ検証と `archive.test.ts` のバイト一致テストは、ファイルごとの存在条件（`test.skipIf(!existsSync(path))`）で独立してスキップされます。原本非依存の表示・操作・統合テストは常に実行されます。新しいガイドで原本比較テストを追加する場合は、原本の遅延読み込みと `sourceTest` を使ってください。詳細は `CLAUDE.md` の「原本比較テストの CI 扱い」を参照してください。
 
 ## 開発の規約
 
 - **コンテンツの作成:** 新しいドキュメントコンテンツはすべて MDX で作成し、`security-docs/src/app/docs/<slug>/page.mdx` に配置してください。追加後は `src/config/docs.ts` にもエントリを追加してください。
-- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。CCIE Security、Secure by Design、MITRE ATLAS の移行ページは元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
+- **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。移行ページ（2026-10-18時点で CCIE Security、CCST Cybersecurity、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modeling。下記「CCIE Security migration details」の4ガイドは当時の記録で、以降の移行分を追加）は元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
 - **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。
 
@@ -267,10 +269,26 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+<!-- applied-migration-status -->
+## Applied Cryptography移行（2026-10-18）
+
+Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル。npm経由・Next.jsビルド未実行（禁止）・目視はユーザー担当／未完了。同期前HEAD `7627df6`。
+
+移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本: `archive/html/Applied-cryptography-guide.html`・`archive/md/Applied-cryptography-guide.md`。バイト一致・ルート原本除去・全比較参照の移行を検証済み。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。原本の65見出しを検索可能。専用60件/12ファイル。最新の全体結果はdocs/progress.mdを参照。`npm run lint`・`npm run types:check` 成功。目視確認表: `docs/migration-inventory/applied-cryptography-guide-review.md`（ユーザー確認待ち）。Next.jsビルド・push・公開は未実施。Mermaidの色設定を反映するためbaseテーマを使用し、各図の設定を描画ごとに渡す。狭い図は中央、幅広図は縮めず左右スクロール。
+<!-- /applied-migration-status -->
+
+<!-- threat-migration-status -->
+## Threat Modeling移行（2026-10-18）
+
+Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `701a8e1`。
+
+移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。最終全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。検索索引21ページ・原本89見出しを検証。目視確認表: `docs/migration-inventory/threat-modeling-guide-review.md`（ユーザー確認待ち）。push/公開未実施。Mermaidはbaseテーマ・strictモードで全定義/配色/間隔を保持し、実際の描画境界で高さを調整。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
+<!-- /threat-migration-status -->

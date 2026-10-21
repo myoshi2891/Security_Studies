@@ -5,11 +5,11 @@ import { createElement } from 'react';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import { Window } from 'happy-dom';
 import postcss from 'postcss';
-import { declarations, definitions, here, scope, sourceCss, sourceDocument } from './fidelity-helpers';
+import { declarations, definitions, here, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
 
 afterEach(() => { cleanup(); window.history.replaceState(null, '', '/'); });
 describe('MITRE ATLAS display foundation', () => {
-  test('retains every source CSS declaration and media condition in an isolated scope', () => {
+  sourceTest('retains every source CSS declaration and media condition in an isolated scope', () => {
     const css = postcss.parse(readFileSync(resolve(here, 'mitre-atlas.css'), 'utf8'));
     sourceCss.walkRules(rule => {
       const media = rule.parent?.type === 'atrule' ? (rule.parent as postcss.AtRule).params : undefined;
@@ -64,10 +64,14 @@ describe('MITRE ATLAS display foundation', () => {
     expect(container.innerHTML).toBe('<ul><li>項目</li></ul>');
   });
 
-  test('retains all four definitions, accessible descriptions and original palette with readable typography', async () => {
+  sourceTest('retains all four source diagram definitions', async () => {
+    const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
+    expect(Object.entries(diagrams)).toEqual([...definitions]);
+  });
+
+  test('keeps accessible descriptions and the original palette with readable typography', async () => {
     const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
     const { diagramConfig } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
-    expect(Object.entries(diagrams)).toEqual([...definitions]);
     expect(diagramConfig).toMatchObject({ startOnLoad: false, theme: 'base', securityLevel: 'strict', htmlLabels: false, flowchart: { curve: 'linear', htmlLabels: false, useMaxWidth: false, nodeSpacing: 45, rankSpacing: 45 }, themeVariables: { primaryColor: '#5b21b6', secondaryColor: '#115e59', edgeLabelBackground: '#1f1f28', fontSize: '18px', darkMode: true, textColor: '#f8fafc' } });
     for (const definition of Object.values(diagrams) as string[]) expect(definition).toMatch(/accTitle:.*\n\s*accDescr:/);
   });
@@ -75,7 +79,8 @@ describe('MITRE ATLAS display foundation', () => {
   test('renders unique accessible SVG targets at their intrinsic size and exposes source text', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
     const ids: string[] = [];
-    const source = definitions.get('structure')!;
+    // 原本(archive/)に依存しないローカルの図定義
+    const source = 'flowchart TD\n    accTitle: 図1 ATLASのデータモデル\n    accDescr: Tactic配下にTechniqueがある関係を示す\n    A["Tactic"] --> B["Technique"]';
     const renderer = async (id: string) => { ids.push(id); return { svg: '<svg viewBox="0 0 100 50" aria-label="図1"></svg>' }; };
     const { container } = render(createElement('div', {}, createElement(MermaidDiagram, { id: 'structure', source, renderer }), createElement(MermaidDiagram, { id: 'structure', source, renderer })));
     await waitFor(() => expect(container.querySelectorAll('svg')).toHaveLength(2));
@@ -90,7 +95,7 @@ describe('MITRE ATLAS display foundation', () => {
 
   test('keeps a wide diagram at its natural width inside a keyboard-accessible scroll region and retains its title and description', async () => {
     const { MermaidDiagram } = await import(new URL('./MermaidDiagram.tsx', import.meta.url).href);
-    const source = definitions.get('lifecycle')!;
+    const source = 'flowchart LR\n    accTitle: 図2 攻撃者ライフサイクル\n    accDescr: 16のTacticsを6フェーズに整理した流れを示す\n    T1["Reconnaissance 偵察"] --> T2["Resource Development リソース開発"]';
     const renderer = async () => ({ svg: '<svg viewBox="0 0 1800 420" width="100%" height="420" style="max-width:100%"><text>Reconnaissance 偵察</text></svg>' });
     const result = render(createElement(MermaidDiagram, { id: 'lifecycle', source, renderer }));
     await waitFor(() => expect(result.container.querySelector('svg')).not.toBeNull());
@@ -153,12 +158,18 @@ describe('MITRE ATLAS display foundation', () => {
     } finally { error.mockRestore(); }
   });
 
-  test('preserves the thirteen grouped links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
+  sourceTest('preserves the thirteen grouped links from the source sidebar', async () => {
+    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+    const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
+    const { container } = render(createElement('div', { className: 'atlas-guide' }, createElement(GuideSidebar, { groups: toc })));
+    expect([...container.querySelectorAll('nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')]));
+  });
+
+  test('groups the sidebar links and closes the mobile drawer on Escape, backdrop, link and desktop resize', async () => {
     const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
     const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     window.history.replaceState(null, '', '#sec8');
     const { container, getByRole } = render(createElement('div', { className: 'atlas-guide' }, createElement(GuideSidebar, { groups: toc })));
-    expect([...container.querySelectorAll('nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(el => [el.textContent?.trim(), el.getAttribute('href')]));
     expect([...container.querySelectorAll('.nav-section-title')].map(el => el.textContent)).toEqual(['基礎', '戦術と技術', '防御と事例', '実践']);
     await waitFor(() => expect(container.querySelector('[aria-current="location"]')).toHaveAttribute('href', '#sec8'));
     const button = getByRole('button', { name: '目次を開く' });

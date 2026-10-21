@@ -1,9 +1,9 @@
-import { describe, expect, test } from 'bun:test';
-import { assertSourceHash, canonical, chapterContracts, renderedPage, sourceDocument } from './fidelity-helpers';
+import { describe, expect } from 'bun:test';
+import { assertSourceHash, canonical, chapterContracts, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
 
 describe('CCIE chapters 1–4', () => {
-  test('source inventory is immutable', assertSourceHash);
-  test('preserves title, audience, original date and starting URL', async () => {
+  sourceTest('source inventory is immutable', assertSourceHash);
+  sourceTest('preserves title, audience, original date and starting URL', async () => {
     const page = await renderedPage();
     expect(canonical(page.querySelector('.hero')!)).toEqual(canonical(sourceDocument.querySelector('main .hero')!));
   });

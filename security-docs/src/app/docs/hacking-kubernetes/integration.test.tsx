@@ -1,22 +1,26 @@
 import { expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, declarations, evaluatedPage, renderedPage, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { canonical, declarations, evaluatedPage, renderedPage, scope, sourceCss, sourceDocument, sourceHtml, sourceTest } from './fidelity-helpers';
 const inventory=JSON.parse(readFileSync(new URL('../../../../../docs/migration-inventory/hacking-kubernetes.json',import.meta.url),'utf8'));
-const main=sourceDocument.querySelector('main')!;
+const main=() => sourceDocument.querySelector('main')!;
 const bodyElements=(el:Element,selector:string)=>[...el.querySelectorAll(selector)].filter(node=>node.matches('.mermaid')||!node.closest('.mermaid'));
 
-test('keeps both original files byte-for-byte unchanged and every source chapter, reference and footer in order',async()=>{
+// MD 原本は HTML 原本と独立に存在判定する
+const markdownSource=new URL('../../../../../archive/md/Hacking-kubernetes-guide.md',import.meta.url);
+test.skipIf(!existsSync(markdownSource))('keeps the archived Markdown original byte-for-byte unchanged',()=>{
+ expect(createHash('sha256').update(readFileSync(markdownSource)).digest('hex')).toBe(inventory.markdownSha256);
+});
+sourceTest('keeps the original HTML byte-for-byte unchanged and every source chapter, reference and footer in order',async()=>{
  expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
- expect(createHash('sha256').update(readFileSync(new URL('../../../../../archive/md/Hacking-kubernetes-guide.md',import.meta.url))).digest('hex')).toBe(inventory.markdownSha256);
  const page=(await renderedPage()).querySelector('.layout')!;
  const children=(el:Element)=>[...el.childNodes].map(canonical).filter(value=>value!==null);
- expect(children(page)).toEqual(children(main));
+ expect(children(page)).toEqual(children(main()));
  for(const [selector,count] of Object.entries(inventory.counts)){
-  expect(bodyElements(main,selector).length,`source ${selector}`).toBe(count as number);
+  expect(bodyElements(main(),selector).length,`source ${selector}`).toBe(count as number);
   expect(bodyElements(page,selector).length,selector).toBe(count as number);
  }
 });
@@ -24,19 +28,19 @@ test('registers the page exactly once in Security Guides without changing existi
  expect(docsConfig.sidebarNav.find(group=>group.title==='Security Guides')!.items).toContainEqual({title:'Hacking Kubernetes',href:'/docs/hacking-kubernetes'});
  expect(docsConfig.sidebarNav.flatMap(group=>group.items).filter(item=>item.href==='/docs/hacking-kubernetes')).toHaveLength(1);
 });
-test('indexes all 103 original headings including inline-code headings with the original title and metadata',async()=>{
+sourceTest('indexes all 103 original headings including inline-code headings with the original title and metadata',async()=>{
  const metadata=(await evaluatedPage()).metadata as {title:string;description:string};
- expect(metadata.title).toBe(main.querySelector('h1')!.textContent!);expect(metadata.description).toContain('Kubernetes');
+ expect(metadata.title).toBe(main().querySelector('h1')!.textContent!);expect(metadata.description).toContain('Kubernetes');
  const result=(await getSearchIndex()).filter(item=>item.href==='/docs/hacking-kubernetes');
  expect(result).toHaveLength(1);expect(result[0].title).toBe(metadata.title);
- const headings=[...main.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(el=>el.textContent!.replace(/\s+/g,' ').trim());expect(headings).toHaveLength(103);expect(result[0].headings).toEqual(headings);
+ const headings=[...main().querySelectorAll('h1,h2,h3,h4,h5,h6')].map(el=>el.textContent!.replace(/\s+/g,' ').trim());expect(headings).toHaveLength(103);expect(result[0].headings).toEqual(headings);
 });
 test('serves all headings through the static search index and preserves the existing documents',async()=>{
  const index=JSON.parse(readFileSync(new URL('../../../../public/search-index.json',import.meta.url),'utf8'));
  expect(index.filter((item:{href:string})=>item.href==='/docs/hacking-kubernetes')).toEqual((await getSearchIndex()).filter(item=>item.href==='/docs/hacking-kubernetes'));
  const page=index.filter((item:{href:string})=>item.href==='/docs/hacking-kubernetes');expect(page).toHaveLength(1);expect(page[0].headings).toHaveLength(103);
 });
-test('preserves the original TOC labels, inline code, order, source anchors and every reference target',async()=>{
+sourceTest('preserves the original TOC labels, inline code, order, source anchors and every reference target',async()=>{
  const page=await renderedPage();const ids=[...page.querySelectorAll('[id]')].map(el=>el.id);expect(new Set(ids).size).toBe(ids.length);
  expect(ids).toEqual(inventory.ids);
  expect(canonical(page.querySelector('.sidebar nav')!)).toEqual(canonical(sourceDocument.querySelector('.sidebar nav')!));
@@ -44,7 +48,7 @@ test('preserves the original TOC labels, inline code, order, source anchors and 
  const migrated=[...page.querySelectorAll('a[href^="#"]')].map(el=>el.getAttribute('href'));expect(migrated).toEqual(original);
  for(const href of migrated)expect(page.getElementById(href!.slice(1)),href!).not.toBeNull();
 });
-test('retains each original diagram role and accessible label on the rendered SVG wrapper, outside the text description',async()=>{
+sourceTest('retains each original diagram role and accessible label on the rendered SVG wrapper, outside the text description',async()=>{
  const page=await renderedPage();const figures=[...page.querySelectorAll('.mermaid')];expect(figures).toHaveLength(12);
  const {render,waitFor,cleanup}=await import('@testing-library/react');const {createElement}=await import('react');
  const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
@@ -60,8 +64,8 @@ test('retains each original diagram role and accessible label on the rendered SV
   cleanup();
  }}finally{globalThis.IntersectionObserver=saved;}
 });
-test('locally highlights all bash and yaml code without changing a single command, indentation or newline',async()=>{
- const page=await renderedPage();const codes=page.querySelectorAll('.layout pre code');const originals=main.querySelectorAll('pre code');expect(codes).toHaveLength(24);
+sourceTest('locally highlights all bash and yaml code without changing a single command, indentation or newline',async()=>{
+ const page=await renderedPage();const codes=page.querySelectorAll('.layout pre code');const originals=main().querySelectorAll('pre code');expect(codes).toHaveLength(24);
  codes.forEach((el,index)=>{expect(el.textContent).toBe(originals[index].textContent);expect(el.getAttribute('class')).toBe(originals[index].getAttribute('class'));if(el.className.startsWith('language-'))expect(el.querySelector('[class^="hljs-"]')).not.toBeNull();});
 });
 test('contains no remote executable dependencies, unsafe URLs, raw legacy scripts or inline handlers',async()=>{
@@ -69,13 +73,13 @@ test('contains no remote executable dependencies, unsafe URLs, raw legacy script
  for(const el of page.querySelectorAll('*'))for(const attr of [...el.attributes]){expect(attr.name.startsWith('on')).toBe(false);if(['href','src'].includes(attr.name))expect(attr.value).not.toMatch(/^\s*(javascript:|data:text\/html)/i);}
  expect(readFileSync(new URL('./page.mdx',import.meta.url),'utf8')).not.toMatch(/cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com/);
 });
-test('detects missing cells, list items, references, emphasis and commands',async()=>{
+sourceTest('detects missing cells, list items, references, emphasis and commands',async()=>{
  for(const selector of ['td','.prose li','.ref-card .chip','strong','pre code']){
   const page=await renderedPage();const item=page.querySelector(`.layout ${selector}`)!;const section=item.closest('section')!;const original=sourceDocument.getElementById(section.id)!;
   expect(canonical(section)).toEqual(canonical(original));item.remove();expect(canonical(section)).not.toEqual(canonical(original));
  }
 });
-test('detects lost round dots, ordered marker colors, numbering and checkbox counters',()=>{
+sourceTest('detects lost round dots, ordered marker colors, numbering and checkbox counters',()=>{
  const css=postcss.parse(readFileSync(new URL('./hacking-kubernetes.css',import.meta.url),'utf8'));
  for(const selector of ['.prose ul>li::before','.prose ol>li::marker','.check-num::before']){
   expect(declarations(sourceCss,selector).length).toBeGreaterThan(0);

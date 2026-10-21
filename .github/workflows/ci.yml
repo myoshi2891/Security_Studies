@@ -37,6 +37,8 @@ jobs:
         run: bun run types:check
 
       - name: Test
+        # 原本(archive/)は意図的に未追跡。原本依存テストは各ガイドの fidelity-helpers の sourceTest で
+        # 原本がない場合のみスキップされるため、パス除外は行わず原本非依存のテストをCIで実行する
         run: bun test --coverage
 
       - name: Upload coverage to Codecov

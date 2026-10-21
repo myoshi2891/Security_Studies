@@ -1,14 +1,14 @@
 import { expect, test } from 'bun:test';
-import { canonical, renderedPage, sectionContracts, sourceDocument } from './fidelity-helpers';
+import { canonical, renderedPage, sectionContracts, sourceDocument, sourceTest } from './fidelity-helpers';
 sectionContracts(['ch6', 's6-1', 's6-2', 's6-3', 's6-4', 's6-5', 's6-6', 'refs', 'ref-a', 'ref-b', 'ref-c', 'ref-d', 'ref-e', 'ref-f']);
 
-test('preserves all 25 questions and all 100 answer options in their original order', async () => {
+sourceTest('preserves all 25 questions and all 100 answer options in their original order', async () => {
   const page = await renderedPage();
   expect(page.querySelectorAll('.qa')).toHaveLength(25);
   expect(page.querySelectorAll('.opt')).toHaveLength(100);
   expect([...page.querySelectorAll('.qa')].map(canonical)).toEqual([...sourceDocument.querySelectorAll('.qa')].map(canonical));
 });
-test('preserves all 60 numbered reference titles, URLs and source-status badges visibly', async () => {
+sourceTest('preserves all 60 numbered reference titles, URLs and source-status badges visibly', async () => {
   const refs = [...(await renderedPage()).querySelectorAll('.ref')];
   expect(refs).toHaveLength(60);
   expect(refs.map(canonical)).toEqual([...sourceDocument.querySelectorAll('.ref')].map(canonical));

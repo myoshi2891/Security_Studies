@@ -1,3 +1,4 @@
+import { sourceTest } from './fidelity-helpers';
 import { afterEach, expect, spyOn, test } from 'bun:test';
 import { createElement } from 'react';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
@@ -47,7 +48,7 @@ test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions
  await act(async()=>finish!({svg:'<svg viewBox="0 0 10 10"></svg>'}));expect(pending.container.querySelector('svg')).toBeNull();
  }finally{globalThis.IntersectionObserver=original;messages.mockRestore();}
 });
-test('all twelve diagram definitions parse in the real Mermaid engine and retain per-diagram settings and dark theme',async()=>{
+sourceTest('all twelve diagram definitions parse in the real Mermaid engine and retain per-diagram settings and dark theme',async()=>{
  const {diagrams,diagramOverrides}=await import(new URL('./diagrams.ts',import.meta.url).href);
  const {definitions,sourceHtml}=await import('./fidelity-helpers');expect(Object.entries(diagrams)).toEqual([...definitions]);expect(definitions.size).toBe(12);
  const {default:mermaid}=await import('mermaid');mermaid.initialize({startOnLoad:false,securityLevel:'strict'});for(const [id,source] of definitions)expect(await mermaid.parse(source),id).toBeTruthy();

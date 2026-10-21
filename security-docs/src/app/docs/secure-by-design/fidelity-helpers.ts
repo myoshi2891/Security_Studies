@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
@@ -10,11 +10,25 @@ import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
 export const here = import.meta.dir;
-export const sourceHtml = readFileSync(resolve(here, '../../../../../archive/html/Secure-by-design-guide.html'), 'utf8');
+const sourcePath = resolve(here, '../../../../../archive/html/Secure-by-design-guide.html');
+// 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
+export const hasSource = existsSync(sourcePath);
+export let sourceHtml = '';
 // Never execute legacy scripts or load CDN assets while inspecting the source.
-export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
-export const definitions = new Map([...sourceHtml.matchAll(/"(d\d+)":\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
-export const sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+export let sourceDocument: Document;
+export let definitions: Map<string, string>;
+export let sourceCss: postcss.Root;
+function loadSource() {
+  if (sourceHtml) return;
+  sourceHtml = readFileSync(sourcePath, 'utf8');
+  sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+  definitions = new Map([...sourceHtml.matchAll(/"(d\d+)":\s*`([\s\S]*?)`/g)].map(m => [m[1], m[2]]));
+  sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+}
+/** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
+  test.skipIf(!hasSource)(name, () => { loadSource(); return fn(); }, timeout);
+}
 export const scope = '.secure-by-design-guide.secure-by-design-guide';
 
 export function canonical(node: Node): unknown {
@@ -49,7 +63,7 @@ export function renderedPage() {
 
 export function sectionContracts(first: number, last: number) {
   for (let i = first; i <= last; i++) {
-    test(`section ${i}: complete structure, text, tables, lists, code, links and diagram placement`, async () => {
+    sourceTest(`section ${i}: complete structure, text, tables, lists, code, links and diagram placement`, async () => {
       const original = sourceDocument.getElementById(`sec-${i}`)!;
       const migrated = (await renderedPage()).getElementById(`sec-${i}`);
       expect(migrated).not.toBeNull();

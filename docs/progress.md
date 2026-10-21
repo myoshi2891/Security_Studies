@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-17（ISO/IEC 27001:2022初学者向けガイドページ追加・ダッシュボード集計を実測値へ同期・全564件成功・lint/型検査成功）
+> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本依存テストはCIで条件付きスキップ・原本非依存テストはCIでも実行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,42 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **564件** | `npm test`: 564 pass / 0 fail、89ファイル、59,760 expect（2026-10-17実測。ISO/IEC 27001:2022ガイドページ6件を追加 Red `bc8b7b2` → Green `3061d16`・lint/型検査成功） |
-| テストファイル数 | **89ファイル** | `npm test` の実行ファイル数（上段の記録と同じ集計単位）。ページ移行テストはロジック単位と別集計 |
-| File Unit Coverage | **46/46 (100%)** | 既存41 + WAHH部品4 + HomePage1。テストファイル89件とは別集計（MDXと純粋なデータ・レイアウトを除外する既存基準） |
+| テストケース総数 | **687件** | `bun test`: 687 pass / 0 fail、114ファイル、118,047 expect（2026-10-18レビュー対応後の全体実測）。Threat Modeling専用62件/13ファイル、Applied Cryptography専用61件/12ファイル。lint/型検査成功。ビルド禁止・未実行 |
+| テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage） |
+| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存するテストは `sourceTest` で原本がないCIのみスキップ（CI条件実測 364 pass / 312 skip / 0 fail、112ファイル。2026-10-18）。パス除外は ISO 27000/27001 の `page.test.ts` のみ |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-17 実測: 89ファイル・合計564件。`bun test --reporter=junit` のファイル別件数と照合。備考の日付は各行の追加・更新日）
+#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計687件。レビュー対応後のbun testログと照合）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/threat-modeling-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/interactions.test.tsx` | 2 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/runtime.test.tsx` | 10 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen。レビュー対応でスタジアム形/円柱形ノードのラベル抽出1件追加 |
+| `src/app/docs/threat-modeling-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/cascade.test.tsx` | 7 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-16-18.test.tsx` | 3 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-13-15.test.tsx` | 3 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-9-12.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-5-8.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/chapters-1-4.test.tsx` | 4 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/threat-modeling-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/applied-cryptography-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本バイト一致/ルート原本除去/台帳/比較参照のGreen |
+| `src/app/docs/applied-cryptography-guide/cascade.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/foundation.test.tsx` | 2 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/hydration.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/runtime.test.tsx` | 9 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green。レビュー対応で図9の引用符なし点線ラベル1件追加 |
+| `src/app/docs/applied-cryptography-guide/sections-1-4.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-13-16.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-5-8.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sections-9-12.test.tsx` | 4 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
+| `src/app/docs/applied-cryptography-guide/style-isolation.test.tsx` | 7 | 2026-10-18 追加・原本との完全比較/スタイル/操作/統合検証Green |
 | `src/components/docs/DocsHeaderNav.test.tsx` | 9 | 2026-10-16 実測・ホーム/docs共通ガイド一覧・絞り込み・97ページ拡張・狭幅表示・可視ラベル由来のアクセシブルネームGreen |
 | `src/app/docs/web-application-hackers-handbook/archive.test.ts` | 5 | 2026-10-15 更新・移行・共通ナビGreen・ホームとdocsのガイド一覧/絞り込み・移行完了時点の全538件成功・lint/型検査成功 |
 | `src/app/page.test.tsx` | 3 | 2026-10-15 追加・ホーム一覧・統計・共通ヘッダー/登録件数追従Green |
@@ -190,6 +215,7 @@ form-action 'self'
 | 項目 | 状態 | 詳細 |
 |---|---|---|
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
+| 原本比較テストの CI 除外 | ✅ **適用中** | `archive/` は意図的に未追跡のため、移行済み8ガイド（ccie-security / ccst-cybersecurity / secure-by-design / mitre-atlas / hacking-kubernetes / web-application-hackers-handbook / applied-cryptography-guide / threat-modeling-guide）のテストディレクトリと ISO 27000/27001 `page.test.ts` をCIのみ除外。ローカルは全件実行。**今後の移行で原本を読むテストを追加したら `ci.yml` の除外パターンへ追記必須**（詳細: ルート `CLAUDE.md`「原本比較テストの CI 除外」） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
 | カバレッジ CI 連携 | ⚠️ **送信停止中** | `bun test --coverage` による lcov.info 生成は稼働中、Codecov へのアップロードは停止中。2026-10-05 時点で Codecov 側に接続不可（TLS ハンドシェイク拒否）。`codecov-action` v7.1.1 + `continue-on-error` で CI は通過させている（CLI の署名・ハッシュ検証を維持するため `use_pypi` は不使用）。CODECOV_TOKEN 未登録 → 次のアクション #11 |
@@ -204,6 +230,9 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
+| THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
+| APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功（移行完了時点の件数。現在の実測値は冒頭のテスト表を参照）、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
 | ISO-27001 | **ISO/IEC 27001:2022初学者向けガイドページ追加** — `/docs/iso-iec-27001-2022-guide`（タイトル「ISO/IEC 27001:2022 初学者向けガイド」）をSecurity Guidesの27000ガイド直後に登録、静的検索は19ページ。既存27000ガイドは変更なし。Mermaid図は共通部品（DataTable/StepTimeline）で表現、出典URL全件を保持。Red `bc8b7b2` → Green `3061d16`。ダッシュボードの集計を実測値（564件/89ファイル/59,760 expect、DocsHeaderNav 9件）へ同期。lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施。再開時は目視指摘を再現する失敗テストから対応する | 2026-10-17 |
 | ISO-27000 | **ISO/IEC 27000:2026ガイドページ追加** — `/docs/iso-iec-27000-2026-guide` をSecurity Guidesに登録、静的検索は18ページ。Mermaid図は共通部品（DataTable/StepTimeline）で表現。Red `7795079` → Green `c8ae34d`。同時にISOガイド2件とprogressのレビュー指摘を修正（`4f80c90`）。全558件/88ファイル・lint/型検査成功、ビルド未実行（禁止）・ユーザー目視待ち・push未実施 | 2026-10-17 |
 | WAHH-THEME | **WAHH Mermaidテーマ修正**<br>themeVariablesの配色が全面反映されるよう `theme` を `dark` → `base` に変更（Red `10c4494` → Green `9cce30d`）。全543件・lint・型検査成功、ビルド未実行（禁止）、push未実施 | 2026-10-15 |
@@ -597,10 +626,147 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
+- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の101ページ（21+80）はテスト値であり、実際のページ数（現在21ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+- 2026-10-18: Applied Cryptography: 表示基盤Red・2件失敗・実装前。564 pass / 2 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `af86f10`。
+
+- 2026-10-18: Applied Cryptography: 表示基盤Green・専用2件成功・本文と図は未完了。566 pass / 0 fail、90ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `bf56515`。
+
+- 2026-10-18: Applied Cryptography: 第1〜4節Red・4件失敗。566 pass / 4 fail、91ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `d43d95d`。
+
+- 2026-10-18: Applied Cryptography: 第1〜4節Green・第1〜4節の原本構造一致。570 pass / 0 fail、91ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `5715336`。
+
+- 2026-10-18: Applied Cryptography: 第5〜8節Red・4件失敗。570 pass / 4 fail、92ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `3db6265`。
+
+- 2026-10-18: Applied Cryptography: 第5〜8節Green・第1〜8節の原本構造一致。574 pass / 0 fail、92ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `316cd96`。
+
+- 2026-10-18: Applied Cryptography: 第9〜12節Red・4件失敗。574 pass / 4 fail、93ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `576ee6c`。
+
+- 2026-10-18: Applied Cryptography: 第9〜12節Green・第1〜12節の原本構造一致。578 pass / 0 fail、93ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `9c419ac`。
+
+- 2026-10-18: Applied Cryptography: 第13〜16節Red・4件失敗。578 pass / 4 fail、94ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `9b30e3a`。
+
+- 2026-10-18: Applied Cryptography: 第13〜16節Green・第1〜16節の原本構造一致。582 pass / 0 fail、94ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `e1ac1cd`。
+
+- 2026-10-18: Applied Cryptography: 装飾・Mermaid・hydration Red・12件失敗。586 pass / 12 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `be3a040`。
+
+- 2026-10-18: Applied Cryptography: 装飾・図のテスト期待値補正・34件成功・実装修正は未コミット。598 pass / 0 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `3a722f1`。
+
+- 2026-10-18: Applied Cryptography: 装飾・Mermaid・hydration Green・専用34件と型検査成功。598 pass / 0 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `1e9cd71`。
+
+- 2026-10-18: Applied Cryptography: 復旧開始・Green誤記訂正・専用33成功1失敗・ユーザー承認済み。597 pass / 1 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `57fd5a1`。
+
+- 2026-10-18 訂正: `1e9cd71` と `57fd5a1` 時点は専用33 pass / 1 fail。直前の専用34件成功・Green記録は誤り。テスト失敗後のコミットをユーザーへ報告し、履歴保持での修正継続を承認済み。履歴のreset/rebaseは行わない。
+
+- 2026-10-18: Applied Cryptography: 復旧Green・不足アイコン修正・専用34件成功。598 pass / 0 fail、97ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `473fc14`。
+
+- 2026-10-18: Applied Cryptography: 統合・共通CSS隔離Red・専用46成功6失敗。610 pass / 6 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `2877e69`。
+
+- 2026-10-18: Applied Cryptography: CSS既定値のテスト正規化・専用52件成功・統合実装は未コミット。616 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `9b99f6d`。
+
+- 2026-10-18: Applied Cryptography: 統合Green・ナビ/検索/共通CSS隔離・専用52件成功。616 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `c500ddc`。
+
+- 2026-10-18: Applied Cryptography: 最終スタイル監査Red・ブランド/コード継承書体1件失敗・全表セル照合追加。618 pass / 1 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `7fc208f`。
+
+- 2026-10-18: Applied Cryptography: 最終スタイル監査Green・専用55件成功・全見出し/全表セル/書体一致。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `bdbc21f`。
+
+- 2026-10-18: Applied Cryptography: 原本図定義の節別照合を追加・専用55件成功・最終全体検証へ。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `836e173`。
+
+- 2026-10-18: Applied Cryptography: 専用55件成功・CSS比較の型検査エラー修正・型検査成功・全体検証中。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。直前コードHEAD `0015790`。
+
+- 2026-10-18: Applied Cryptography: 自動検証完了・全619件/専用55件成功・lint/型検査成功・目視待ち。619 pass / 0 fail、100ファイル。npm経由・Next.jsビルド未実行（禁止）・目視確認はユーザー担当／未完了。同期前HEAD `d6cb2b1`。
+
+## Applied Cryptography 最終確認・再開情報（2026-10-18）
+
+- 実装HEAD: `bdbc21f`。検証テストHEAD: `0015790`。最終検証: 619 pass / 0 fail、100ファイル、77,735 expect。専用55件/11ファイル。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。検索索引20ページ・65見出しを検証。Next.jsビルド禁止・未実行。push・公開未実施。
+- 残る確認はユーザーの目視: `docs/migration-inventory/applied-cryptography-guide-review.md`。自動検証済みと目視未確認を区別する。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
+- 手順違反からの復旧はユーザー承認済み。`dbace04`で誤記訂正、`473fc14`で不足アイコンを修正。履歴は保持。
+
+- 2026-10-18: Applied Cryptography: 原本アーカイブRed・専用55成功5失敗・移動未実施（台帳に移動予定先を記録）。619 pass / 5 fail、101ファイル（開始時619件成功＋アーカイブ5件失敗）。同期前HEAD `5691ce9`。npm使用・ビルド禁止・未実行。
+
+- 2026-10-18: Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル。同期前HEAD `7627df6`。npm使用・ビルド禁止・未実行。
+
+## Applied Cryptography 原本アーカイブ（2026-10-18）
+
+- HTML: `archive/html/Applied-cryptography-guide.html`
+- MD: `archive/md/Applied-cryptography-guide.md`
+- 原本のSHA-256とバイト一致を維持。ルート原本なし。原本比較テストはアーカイブを直接参照。
+- 最終全体: 624 pass / 0 fail、101ファイル、77,750 expect。専用60件/12ファイル。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。ビルド禁止・未実行。目視はユーザー担当・未完了。
+
+- 2026-10-18: Threat Modeling: 表示基盤Red・2件失敗・実装前。624 pass / 2 fail、102ファイル。専用0成功/2失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `4efba0b`。
+
+- 2026-10-18: Threat Modeling: 表示基盤Green・本文と図描画は未完了。626 pass / 0 fail、102ファイル。専用2成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `bd1df4a`。
+
+- 2026-10-18: Threat Modeling: 第1〜4章Red・4件失敗。626 pass / 4 fail、103ファイル。専用2成功/4失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `3b12ffc`。
+
+- 2026-10-18: Threat Modeling: 第1〜4章Green・第1〜4章の原本構造一致。630 pass / 0 fail、103ファイル。専用6成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `d55ba7c`。
+
+- 2026-10-18: Threat Modeling: 第5〜8章Red・4件失敗。630 pass / 4 fail、104ファイル。専用6成功/4失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `6e529e6`。
+
+- 2026-10-18: Threat Modeling: 第5〜8章Green・第1〜8章の原本構造一致。634 pass / 0 fail、104ファイル。専用10成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `b76be8b`。
+
+- 2026-10-18: Threat Modeling: 第9〜12章Red・4件失敗。634 pass / 4 fail、105ファイル。専用10成功/4失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `04a0d2d`。
+
+- 2026-10-18: Threat Modeling: 第9〜12章Green・第1〜12章の原本構造一致。638 pass / 0 fail、105ファイル。専用14成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `03f69a8`。
+
+- 2026-10-18: Threat Modeling: 第13〜15章Red・3件失敗。638 pass / 3 fail、106ファイル。専用14成功/3失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `1553a3a`。
+
+- 2026-10-18: Threat Modeling: 第13〜15章Green・第1〜15章の原本構造一致。641 pass / 0 fail、106ファイル。専用17成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `2a4ad3c`。
+
+- 2026-10-18: Threat Modeling: 第16〜18章Red・3件失敗。641 pass / 3 fail、107ファイル。専用17成功/3失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `b394669`。
+
+- 2026-10-18: Threat Modeling: 第16〜18章Green・第1〜18章の原本構造一致。644 pass / 0 fail、107ファイル。専用20成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `a018e3a`。
+
+- 2026-10-18: Threat Modeling: 装飾・図・hydration Red・13件失敗。651 pass / 13 fail、110ファイル。専用27成功/13失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `317d6e7`。
+
+- 2026-10-18: Threat Modeling: CSS比較の単位正規化・専用40件成功・図/装飾実装は未コミット。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `2cad1a5`。
+
+- 2026-10-18: Threat Modeling: 装飾・Mermaid・hydration Green・専用40件成功。664 pass / 0 fail、110ファイル。専用40成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `51e15d2`。
+
+- 2026-10-18: Threat Modeling: ナビ・検索統合Red・専用53成功3失敗・17チェック/5解答/目次操作成功。677 pass / 3 fail、113ファイル。専用53成功/3失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `dda342b`。
+
+- 2026-10-18: Threat Modeling: 目次fixtureの型修正・型検査と専用56件成功・ナビ実装未コミット。680 pass / 0 fail、113ファイル。専用56成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `609fea7`。
+
+- 2026-10-18: Threat Modeling: 統合Green・専用56件成功・ナビと89見出しの検索登録。680 pass / 0 fail、113ファイル。専用56成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `9fcbc72`。
+
+- 2026-10-18: Threat Modeling: 原本アーカイブRed・5件失敗・移動未実施。680 pass / 5 fail、114ファイル。専用56成功/5失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `12eca0b`。
+
+- アーカイブ台帳にHTML/MDの移動予定先を記録。原本移動・参照先更新は次の実装段階で実施する。
+
+- 2026-10-18: Threat Modeling: 原本アーカイブGreen・専用61件成功・両SHA-256一致。685 pass / 0 fail、114ファイル。専用61成功/0失敗の実測＋開始時624件。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `1afadef`。
+
+- 2026-10-18: Threat Modeling: 最終全体再検証中・前回1失敗・画面幅fixture修正（専用61件とlint/型検査成功）。684 pass / 1 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `09993be`。
+
+- 2026-10-18: Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `701a8e1`。
+
+## Threat Modeling 最終確認・再開情報（2026-10-18）
+
+- 最終コード/テストHEAD: `09993be`。全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。
+- 原本HTML/MDは `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
+- `npm test`・`npm run lint`・`npm run types:check` 成功。静的検索21ページ・原本89見出しを検証。ビルド禁止・未実行。push・公開未実施。
+- 残る確認はユーザーの目視: `docs/migration-inventory/threat-modeling-guide-review.md`。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
+
+## 原本比較テストの CI 除外（2026-10-18）
+
+- 背景: `2930942` で移行済みガイドの原本を `archive/` へ整理し追跡対象外にした結果、CI のチェックアウトに原本がなく、原本比較テストが ENOENT で失敗（CI: 230 pass / 92 fail / 71 errors）。各ガイドの `fidelity-helpers.ts` はモジュール読み込み時に原本を読むため、同ディレクトリの全テストが巻き込まれる。
+- 対応: `.github/workflows/ci.yml` の Test ステップに `--path-ignore-patterns` を追加（`1ce9728`）。対象は8ガイドのディレクトリと ISO 27000/27001 の `page.test.ts`。`bunfig.toml` は変更しないため、ローカルの `bun test` / `npm test` は原本比較を含む全件を実行する。
+- 検証: `archive/` なしのクリーン worktree で CI と同じコマンドを実行し 147 pass / 0 fail（24ファイル）。
+- **今後の移行作業での必須手順**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更したら、同じコミット系列で `ci.yml` の除外パターンへ該当ディレクトリを追記する。完了前にクリーン worktree で CI コマンドを実行して 0 fail を確認する。
+- 改修（2026-10-18、レビュー対応）: ディレクトリ単位の除外を廃止。8ガイドの `fidelity-helpers.ts` を遅延読み込みにし、`hasSource` / `sourceTest`（`test.skipIf`）を追加。原本を参照するテストのみ `sourceTest` に切り替え、モジュールレベルの即時評価（CCIE sidebar/foundation、Hacking Kubernetes・WAHH integration）を関数化。`archive.test.ts` はバイト一致のみスキップ対象。検証: ローカル 687 pass / 0 fail、`archive/` なしのクリーン worktree で 364 pass / 312 skip / 0 fail（112ファイル）。lint・型検査成功。ビルド未実行。
+
+## レビュー対応（2026-10-18）
+
+- 図のテキスト説明: Applied Cryptography の `EDGE_PATTERN` が引用符なし点線ラベル（図9「影響を受ける」）を読み取るよう修正。Threat Modeling の `NODE_PATTERN` がスタジアム形 `([..])`・円柱形 `[(..)]` のラベルを抽出するよう修正。Red `1917a9a` → Green `e6be2b3`。
+- ガイド本文（`c51e3d7`）: ISO 27017 の全デプロイメントモデル表記、ISO/IEC 18045 ロードマップの AVA 位置、ISO/IEC 29100 の Third party 定義、ISSAP の目次アンカー・問題形式・NIST IR 8547 強度区分・Kerberos 相互認証。
+- 仕様書: File Unit Coverage 内訳（46 + 4 + 4）、Applied Cryptography 記録の当時件数注記、ナビ拡張テスト値（登録ページ＋仮80件）の注記、ダッシュボードの移行状況セクションを履歴領域へ移動。
+- 全体: 687 pass / 0 fail、114ファイル、118,047 expect。lint/型検査成功。ビルド禁止・未実行。
+- 見送り: `archive/` の再追跡（ユーザー判断で意図的に未追跡、CI除外で対応済み）、Applied Cryptography CSS の `body.drawer-open` 3ルール削除（`foundation.test.tsx` が原本CSSの全ルール保持を契約として検証するため）、MermaidFigure/GuideSidebar の共通モジュール化（大規模リファクタリングのため要確認）。

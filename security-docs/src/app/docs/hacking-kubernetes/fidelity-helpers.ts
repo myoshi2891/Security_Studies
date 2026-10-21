@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
@@ -9,10 +9,24 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-export const sourceHtml = readFileSync(resolve(import.meta.dir, '../../../../../archive/html/Hacking-kubernetes-guide.html'), 'utf8');
-export const sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
-export const definitions = new Map([...sourceHtml.matchAll(/window\.DIAGRAMS\["(d\d+)"\]\s*=\s*`([\s\S]*?)`;/g)].map(m => [m[1], m[2]]));
-export const sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/html/Hacking-kubernetes-guide.html');
+// 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
+export const hasSource = existsSync(sourcePath);
+export let sourceHtml = '';
+export let sourceDocument: Document;
+export let definitions: Map<string, string>;
+export let sourceCss: postcss.Root;
+function loadSource() {
+  if (sourceHtml) return;
+  sourceHtml = readFileSync(sourcePath, 'utf8');
+  sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+  definitions = new Map([...sourceHtml.matchAll(/window\.DIAGRAMS\["(d\d+)"\]\s*=\s*`([\s\S]*?)`;/g)].map(m => [m[1], m[2]]));
+  sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+}
+/** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
+  test.skipIf(!hasSource)(name, () => { loadSource(); return fn(); }, timeout);
+}
 export const scope = '.kubernetes-guide.kubernetes-guide';
 
 export function canonical(node: Node): unknown {
@@ -41,7 +55,7 @@ export function declarations(css: postcss.Root, selector: string) {
   return values;
 }
 export function sectionContracts(ids: string[]) {
-  for (const id of ids) test(`${id}: complete source structure, text, table cells, list hierarchy, links and emphasis`, async () => {
+  for (const id of ids) sourceTest(`${id}: complete source structure, text, table cells, list hierarchy, links and emphasis`, async () => {
     const original = sourceDocument.getElementById(id)!;
     const migrated = (await renderedPage()).getElementById(id);
     expect(original).not.toBeNull(); expect(migrated).not.toBeNull();

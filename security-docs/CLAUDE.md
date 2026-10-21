@@ -1,6 +1,6 @@
 # Includes / Directives
 
-Updated 2026-10-15
+Updated 2026-10-18
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
@@ -21,13 +21,17 @@ The following directive is used to include agent-specific rules and context. Thi
 - **Next.js**: 16.3.8, App Router, TypeScript (strict).
 - **Content**: MDX via `@next/mdx`. All pages live in `src/app/docs/<slug>/page.mdx`. Register new slugs in `src/config/docs.ts`.
 - **Components**: Custom docs components in `src/components/docs/` (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
-- **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes by default; the CCIE Security, Secure by Design and MITRE ATLAS migrations use page-scoped CSS to preserve the original styling.
+- **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes by default; the CCIE Security, CCST Cybersecurity, Secure by Design, MITRE ATLAS, Hacking Kubernetes, WAHH, Applied Cryptography and Threat Modeling migrations use page-scoped CSS to preserve the original styling.
 - **Testing**: Bun test with React Testing Library.
 - **Syntax Highlighting**: `highlight.js` (v11) — tree-shaken via `highlight.js/lib/core` + per-language static imports. Supported languages: `bash`, `typescript`, `yaml`, `json`, `markdown`. Theme applied via `highlight.js/styles/github-dark.css`. `<Terminal>` is a **synchronous** component; language is auto-detected from the `title` prop file extension (`.sh`→bash / `.yaml`/`.yml`→yaml / `.json`→json / `.md`→markdown; unrecognised extensions fall back to `typescript`).
 - **Security / CSP**: `src/proxy.ts` implements Next.js Proxy (Next.js 16 renamed the convention from `middleware.ts` to `proxy.ts`). It sets a **static** `Content-Security-Policy` response header without nonces or `'strict-dynamic'`.
   - **Background**: Netlify Next.js Runtime (`@netlify/plugin-nextjs`) generates an independent nonce and overwrites all `<script nonce>` attributes, causing every script to be blocked when our header carried a different nonce (Issue [#32](https://github.com/myoshi2891/Security_Studies/issues/32)). Since Next.js Flight data inline scripts have per-page content and cannot be pre-hashed, the directives fall back to `'unsafe-inline'`.
   - **Directives**: `script-src 'self' 'unsafe-inline'` (prod) / `'self' 'unsafe-inline' 'unsafe-eval'` (dev for React dev runtime / Turbopack); `style-src 'self' 'unsafe-inline'`; `connect-src 'self' ws://localhost:* ws://127.0.0.1:*` (dev HMR) / `'self'` (prod).
   - **Hardening preserved**: `default-src 'self'`, `frame-ancestors 'none'`, `base-uri 'self'`, `form-action 'self'`, `img-src 'self' data:`, `font-src 'self'`.
+
+### CI handling of archive-dependent tests (2026-10-18)
+
+`../archive/` is intentionally untracked, so each migrated guide's `fidelity-helpers.ts` loads the original lazily and exports `sourceTest`, which skips only source-dependent tests when the original is missing; source-independent tests run in CI. Only ISO 27000/27001 `page.test.ts` remain path-excluded. **When a future migration adds tests that read `archive/` originals, use lazy loading and `sourceTest` instead of adding exclusion patterns.** Details: root `CLAUDE.md` → 「原本比較テストの CI 扱い」.
 
 ### CCIE Security migration status
 
@@ -136,10 +140,26 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+<!-- applied-migration-status -->
+## Applied Cryptography移行（2026-10-18）
+
+Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル（移行完了時点の実測。最新の全体結果はdocs/progress.mdを参照）。npm経由・Next.jsビルド未実行（禁止）・目視はユーザー担当／未完了。同期前HEAD `7627df6`。
+
+移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本: `archive/html/Applied-cryptography-guide.html`・`archive/md/Applied-cryptography-guide.md`。バイト一致・ルート原本除去・全比較参照の移行を検証済み。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。原本の65見出しを検索可能。専用60件/12ファイル。最新の全体結果はdocs/progress.mdを参照。`npm run lint`・`npm run types:check` 成功。目視確認表: `docs/migration-inventory/applied-cryptography-guide-review.md`（ユーザー確認待ち）。Next.jsビルド・push・公開は未実施。Mermaidの色設定を反映するためbaseテーマを使用し、各図の設定を描画ごとに渡す。狭い図は中央、幅広図は縮めず左右スクロール。
+<!-- /applied-migration-status -->
+
+<!-- threat-migration-status -->
+## Threat Modeling移行（2026-10-18）
+
+Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `701a8e1`。
+
+移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。最終全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。検索索引21ページ・原本89見出しを検証。目視確認表: `docs/migration-inventory/threat-modeling-guide-review.md`（ユーザー確認待ち）。push/公開未実施。Mermaidはbaseテーマ・strictモードで全定義/配色/間隔を保持し、実際の描画境界で高さを調整。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
+<!-- /threat-migration-status -->

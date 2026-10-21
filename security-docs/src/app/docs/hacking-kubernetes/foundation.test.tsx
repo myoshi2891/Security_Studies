@@ -4,10 +4,10 @@ import { createElement } from 'react';
 import { cleanup, render } from '@testing-library/react';
 import { Window } from 'happy-dom';
 import postcss from 'postcss';
-import { canonical, declarations, renderedPage, scope, sourceCss, sourceDocument } from './fidelity-helpers';
+import { canonical, declarations, renderedPage, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
 afterEach(cleanup);
 
-test('preserves every original CSS rule and media condition in an isolated scope', () => {
+sourceTest('preserves every original CSS rule and media condition in an isolated scope', () => {
   const css=postcss.parse(readFileSync(new URL('./hacking-kubernetes.css',import.meta.url),'utf8'));
   sourceCss.walkRules(rule=>{
     const expected=rule.selector.split(',').map(s=>[':root','body','html'].includes(s.trim())?scope:`${scope} ${s.trim()}`).join(',');
@@ -19,7 +19,7 @@ test('preserves every original CSS rule and media condition in an isolated scope
   });
   css.walkRules(rule=>{expect(rule.selector.split(',').every(s=>s.trim().startsWith(scope)||s.trim().startsWith('.docs-main:has(.kubernetes-guide)')||s.trim()==='html:has(.kubernetes-guide)')).toBe(true);});
 });
-test('preserves hero metadata, heading and inline emphasis',async()=>{
+sourceTest('preserves hero metadata, heading and inline emphasis',async()=>{
   const page=await renderedPage(); expect(canonical(page.querySelector('.hero')!)).toEqual(canonical(sourceDocument.querySelector('.hero')!));
 });
 test('restores ordered numbers, scoped prose width, original spacing and application header clearance at all widths',async()=>{
@@ -43,7 +43,7 @@ test('restores ordered numbers, scoped prose width, original spacing and applica
     }finally{await w.happyDOM.close();}
   }
 });
-test('preserves dots, colored ordered markers and numbered checkbox styling including checked and keyboard states',()=>{
+sourceTest('preserves dots, colored ordered markers and numbered checkbox styling including checked and keyboard states',()=>{
  const css=postcss.parse(readFileSync(new URL('./hacking-kubernetes.css',import.meta.url),'utf8'));
  for(const selector of ['.prose ul>li::before','.prose ol>li::marker','.checklist','.check-num::before','.check-card input:checked+.box','.check-card input:focus-visible+.box']){
   expect(declarations(css,`${scope} ${selector}`)).toEqual(declarations(sourceCss,selector));

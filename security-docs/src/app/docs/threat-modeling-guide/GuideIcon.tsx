@@ -1,0 +1,5 @@
+import { TriangleAlert, BookOpen, CalendarDays, Network, Check, ChevronDown, Code, Eye, Info, Menu, Target, Users, X } from 'lucide-react';
+function ShieldLock(){return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7Z"/><rect x="8" y="10" width="8" height="6" rx="1"/><path d="M10 10V8a2 2 0 0 1 4 0v2"/></svg>;}
+/** Local decorative SVGs replace all original icon names, including drawer states. */
+export const guideIcons = {'ti-alert-triangle':TriangleAlert,'ti-book':BookOpen,'ti-calendar':CalendarDays,'ti-chart-dots-3':Network,'ti-check':Check,'ti-chevron-down':ChevronDown,'ti-code':Code,'ti-eye':Eye,'ti-info-circle':Info,'ti-menu-2':Menu,'ti-shield-lock':ShieldLock,'ti-target':Target,'ti-users':Users,'ti-x':X} as const;
+export function GuideIcon({name,className=`ti ${name}`}:{name:keyof typeof guideIcons;className?:string}) { const Icon=guideIcons[name];return <i className={className} aria-hidden="true"><Icon aria-hidden="true" /></i>; }

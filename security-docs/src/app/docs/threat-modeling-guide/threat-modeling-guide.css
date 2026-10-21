@@ -1,0 +1,264 @@
+.threat-guide.threat-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.threat-guide.threat-guide code.hljs {
+  padding: 3px 5px
+}
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.threat-guide.threat-guide .hljs {
+  color: #abb2bf;
+  background: #282c34
+}
+.threat-guide.threat-guide .hljs-comment,.threat-guide.threat-guide .hljs-quote {
+  color: #8f96a3;
+  font-style: italic
+}
+.threat-guide.threat-guide .hljs-doctag,.threat-guide.threat-guide .hljs-keyword,.threat-guide.threat-guide .hljs-formula {
+  color: #c678dd
+}
+.threat-guide.threat-guide .hljs-section,.threat-guide.threat-guide .hljs-name,.threat-guide.threat-guide .hljs-selector-tag,.threat-guide.threat-guide .hljs-deletion,.threat-guide.threat-guide .hljs-subst {
+  color: #e06c75
+}
+.threat-guide.threat-guide .hljs-literal {
+  color: #56b6c2
+}
+.threat-guide.threat-guide .hljs-string,.threat-guide.threat-guide .hljs-regexp,.threat-guide.threat-guide .hljs-addition,.threat-guide.threat-guide .hljs-attribute,.threat-guide.threat-guide .hljs-meta .hljs-string {
+  color: #98c379
+}
+.threat-guide.threat-guide .hljs-attr,.threat-guide.threat-guide .hljs-variable,.threat-guide.threat-guide .hljs-template-variable,.threat-guide.threat-guide .hljs-type,.threat-guide.threat-guide .hljs-selector-class,.threat-guide.threat-guide .hljs-selector-attr,.threat-guide.threat-guide .hljs-selector-pseudo,.threat-guide.threat-guide .hljs-number {
+  color: #d19a66
+}
+.threat-guide.threat-guide .hljs-symbol,.threat-guide.threat-guide .hljs-bullet,.threat-guide.threat-guide .hljs-link,.threat-guide.threat-guide .hljs-meta,.threat-guide.threat-guide .hljs-selector-id,.threat-guide.threat-guide .hljs-title {
+  color: #61aeee
+}
+.threat-guide.threat-guide .hljs-built_in,.threat-guide.threat-guide .hljs-title.class_,.threat-guide.threat-guide .hljs-class .hljs-title {
+  color: #e6c07b
+}
+.threat-guide.threat-guide .hljs-emphasis {
+  font-style: italic
+}
+.threat-guide.threat-guide .hljs-strong {
+  font-weight: bold
+}
+.threat-guide.threat-guide .hljs-link {
+  text-decoration: underline
+}
+
+.threat-guide.threat-guide{
+  --color-background-primary:#07111e;
+  --color-background-secondary:#0c1b30;
+  --color-background-tertiary:#112441;
+  --color-background-info:#0f2347;
+  --color-background-danger:#3a1620;
+  --color-background-success:#0f2f27;
+  --color-background-warning:#33280f;
+  --color-text-primary:#f3f5fa;
+  --color-text-secondary:#c6d0e3;
+  --color-text-tertiary:#93a1bd;
+  --color-text-info:#9db8ff;
+  --color-text-danger:#f5a3a3;
+  --color-text-success:#7fd8b6;
+  --color-text-warning:#f0c674;
+  --color-border-tertiary:#1e2f4d;
+  --color-border-secondary:#2d456e;
+  --color-border-primary:#3e5c8f;
+  --accent:#7c9eff;
+  --font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Noto Sans Mono CJK JP",monospace;
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --border-radius-xl:16px;
+  --sidebar-w:300px;
+}
+.threat-guide.threat-guide *{box-sizing:border-box}
+.threat-guide.threat-guide{scroll-behavior:smooth;scroll-padding-top:24px}
+.threat-guide.threat-guide{margin:0;background:var(--color-background-primary);color:var(--color-text-primary);font-family:var(--font-sans);font-size:1rem;line-height:1.7;font-weight:400;-webkit-text-size-adjust:100%}
+.threat-guide.threat-guide a{color:var(--color-text-info);text-decoration:none}
+.threat-guide.threat-guide a:hover{text-decoration:underline}
+.threat-guide.threat-guide strong,.threat-guide.threat-guide b{font-weight:500;color:var(--color-text-primary)}
+.threat-guide.threat-guide em{font-style:italic}
+
+/* sidebar */
+.threat-guide.threat-guide .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);overflow-y:auto;z-index:40;padding:20px 14px 28px}
+.threat-guide.threat-guide .brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:14px}
+.threat-guide.threat-guide .brand i{font-size:1.9rem;color:var(--accent)}
+.threat-guide.threat-guide .brand .b1{font-size:1rem;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.threat-guide.threat-guide .brand .b2{font-size:1rem;color:var(--color-text-tertiary);line-height:1.3}
+.threat-guide.threat-guide .sidebar nav ul{list-style:none;margin:0;padding:0}
+.threat-guide.threat-guide .sidebar nav li{padding-left:0;margin:2px 0}
+.threat-guide.threat-guide .sidebar nav li::before{content:none}
+.threat-guide.threat-guide .sidebar nav a{display:flex;gap:10px;align-items:baseline;padding:8px 10px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:1rem;line-height:1.45;border:1px solid transparent}
+.threat-guide.threat-guide .sidebar nav a:hover{background:var(--color-background-tertiary);text-decoration:none;color:var(--color-text-primary)}
+.threat-guide.threat-guide .sidebar nav a .n{flex:0 0 1.8rem;color:var(--color-text-tertiary);font-weight:500}
+.threat-guide.threat-guide .sidebar nav a.active{background:var(--color-background-tertiary);border-color:var(--color-border-secondary);color:var(--color-text-primary)}
+.threat-guide.threat-guide .sidebar nav a.active .n{color:var(--accent)}
+
+/* layout */
+.threat-guide.threat-guide .layout{display:block;margin-left:var(--sidebar-w)}
+.threat-guide.threat-guide .main{padding:0 clamp(20px,4vw,64px) 64px}
+.threat-guide.threat-guide .hero{padding:56px 0 28px;border-bottom:1px solid var(--color-border-tertiary)}
+.threat-guide.threat-guide .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:500;font-size:1rem;margin-bottom:14px}
+.threat-guide.threat-guide .hero h1{font-size:2.25rem;line-height:1.3;font-weight:500;margin:0 0 16px;color:var(--color-text-primary)}
+.threat-guide.threat-guide .hero .lead{margin:0 0 24px;color:var(--color-text-secondary);font-size:1.125rem}
+.threat-guide.threat-guide .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.threat-guide.threat-guide .meta-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg)}
+.threat-guide.threat-guide .meta-card>i{font-size:1.5rem;color:var(--accent);margin-top:2px}
+.threat-guide.threat-guide .meta-label{color:var(--color-text-tertiary);font-size:1rem}
+.threat-guide.threat-guide .meta-val{color:var(--color-text-primary)}
+.threat-guide.threat-guide section{padding-top:44px}
+.threat-guide.threat-guide h2{display:flex;align-items:center;gap:14px;font-size:1.75rem;font-weight:500;line-height:1.35;margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid var(--color-border-secondary)}
+.threat-guide.threat-guide .h-num{display:inline-grid;place-items:center;min-width:2.6rem;height:2.6rem;padding:0 10px;border-radius:var(--border-radius-md);background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-size:1.125rem;font-weight:500}
+.threat-guide.threat-guide h3{font-size:1.3rem;font-weight:500;margin:34px 0 12px;color:var(--color-text-primary);line-height:1.4;scroll-margin-top:24px}
+.threat-guide.threat-guide h4{font-size:1.125rem;font-weight:500;margin:24px 0 8px}
+.threat-guide.threat-guide p{margin:0 0 14px;color:var(--color-text-secondary)}
+
+/* lists */
+.threat-guide.threat-guide ul,.threat-guide.threat-guide ol{margin:0 0 16px;padding:0;list-style:none;color:var(--color-text-secondary)}
+.threat-guide.threat-guide ul>li{position:relative;padding-left:1.5rem;margin:6px 0}
+.threat-guide.threat-guide ul>li::before{content:"";position:absolute;left:.4rem;top:.78em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.threat-guide.threat-guide ol{counter-reset:step}
+.threat-guide.threat-guide ol>li{position:relative;counter-increment:step;padding-left:2.6rem;margin:10px 0;min-height:1.9rem}
+.threat-guide.threat-guide ol>li::before{content:counter(step);position:absolute;left:0;top:.1rem;width:1.9rem;height:1.9rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-size:1rem;font-weight:500;line-height:1}
+.threat-guide.threat-guide li>ul,.threat-guide.threat-guide li>ol{margin:6px 0 4px}
+
+/* tables */
+.threat-guide.threat-guide .table-wrap{overflow-x:auto;margin:6px 0 22px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-secondary)}
+.threat-guide.threat-guide table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.55}
+.threat-guide.threat-guide th,.threat-guide.threat-guide td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.threat-guide.threat-guide th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;white-space:nowrap;border-bottom:1px solid var(--color-border-secondary)}
+.threat-guide.threat-guide tr:last-child td{border-bottom:none}
+.threat-guide.threat-guide td strong{color:var(--color-text-primary)}
+.threat-guide.threat-guide td:first-child{color:var(--color-text-primary)}
+
+/* code */
+.threat-guide.threat-guide code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:1px 6px;color:#e6c88a;word-break:break-word}
+.threat-guide.threat-guide .code-head{display:flex;align-items:center;gap:8px;margin-top:6px;padding:8px 14px;background:var(--color-background-tertiary);border:1px solid var(--color-border-secondary);border-bottom:none;border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0;color:var(--color-text-tertiary);font-size:1rem}
+.threat-guide.threat-guide pre{margin:0 0 22px;padding:16px 18px;background:#050d18;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto;line-height:1.6}
+.threat-guide.threat-guide .code-head+pre{border-radius:0 0 var(--border-radius-lg) var(--border-radius-lg)}
+.threat-guide.threat-guide pre code{background:transparent;border:none;padding:0;color:inherit;word-break:normal;white-space:pre}
+.threat-guide.threat-guide pre code.hljs{background:transparent;padding:0}
+
+/* callouts */
+.threat-guide.threat-guide .callout{display:flex;gap:14px;align-items:flex-start;margin:6px 0 22px;padding:14px 18px;border-radius:var(--border-radius-lg);border:1px solid var(--color-border-secondary)}
+.threat-guide.threat-guide .callout>i{font-size:1.4rem;margin-top:2px}
+.threat-guide.threat-guide .callout-body{flex:1 1 auto;min-width:0}
+.threat-guide.threat-guide .callout-body p{margin:0 0 8px}
+.threat-guide.threat-guide .callout-body p:last-child{margin-bottom:0}
+.threat-guide.threat-guide .callout.info{background:var(--color-background-info);border-color:var(--color-border-primary)}
+.threat-guide.threat-guide .callout.info>i{color:var(--color-text-info)}
+.threat-guide.threat-guide .callout.warn{background:var(--color-background-warning);border-color:#6b5320}
+.threat-guide.threat-guide .callout.warn>i{color:var(--color-text-warning)}
+
+/* diagrams */
+.threat-guide.threat-guide figure.diagram{margin:10px 0 26px;padding:18px 14px 12px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.threat-guide.threat-guide .mermaid{display:flex;justify-content:center}
+.threat-guide.threat-guide .mermaid svg{overflow:visible}
+.threat-guide.threat-guide figcaption{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px;color:var(--color-text-tertiary);font-size:1rem}
+
+/* checklist cards */
+.threat-guide.threat-guide .check-list{display:grid;gap:10px;margin:8px 0 24px;counter-reset:ck}
+.threat-guide.threat-guide .check-item{display:flex;gap:14px;align-items:flex-start;padding:12px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary)}
+.threat-guide.threat-guide .check-item:hover{border-color:var(--color-border-primary)}
+.threat-guide.threat-guide .ck-num{flex:0 0 1.9rem;height:1.9rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500;line-height:1}
+.threat-guide.threat-guide .check-item input{position:absolute;opacity:0;pointer-events:none}
+.threat-guide.threat-guide .box{flex:0 0 1.6rem;height:1.6rem;display:grid;place-items:center;border:2px solid var(--color-border-primary);border-radius:6px;background:var(--color-background-primary);margin-top:.15rem}
+.threat-guide.threat-guide .box i{opacity:0;color:var(--color-background-primary);font-size:1.1rem}
+.threat-guide.threat-guide .check-item input:checked + .box{background:var(--color-text-success);border-color:var(--color-text-success)}
+.threat-guide.threat-guide .check-item input:checked + .box i{opacity:1}
+.threat-guide.threat-guide .check-item input:focus-visible + .box{outline:2px solid var(--accent);outline-offset:2px}
+.threat-guide.threat-guide .check-item:has(input:checked){border-color:#2a6b57;background:var(--color-background-success)}
+.threat-guide.threat-guide .check-item:has(input:checked) .ck-text{text-decoration:line-through;color:var(--color-text-tertiary)}
+.threat-guide.threat-guide .ck-text{flex:1 1 auto;min-width:0}
+
+/* exercises */
+.threat-guide.threat-guide .exercise{margin:22px 0;padding:6px 22px 20px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-xl)}
+.threat-guide.threat-guide .exercise h3{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 14px}
+.threat-guide.threat-guide .ex-badge{display:inline-block;padding:3px 14px;border-radius:999px;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500}
+.threat-guide.threat-guide details.answer{margin-top:14px;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);background:var(--color-background-primary);overflow:hidden}
+.threat-guide.threat-guide details.answer summary{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;color:var(--color-text-info);font-weight:500;list-style:none}
+.threat-guide.threat-guide details.answer summary::-webkit-details-marker{display:none}
+.threat-guide.threat-guide .chev{margin-left:auto;color:var(--color-text-tertiary);transition:transform .2s ease}
+.threat-guide.threat-guide details.answer[open] .chev{transform:rotate(180deg)}
+.threat-guide.threat-guide details.answer[open] summary{border-bottom:1px solid var(--color-border-tertiary);background:var(--color-background-tertiary)}
+.threat-guide.threat-guide .answer-body{padding:14px 18px 6px}
+.threat-guide.threat-guide .answer-body .code-head{margin-top:0}
+
+/* references */
+.threat-guide.threat-guide .ref-list{display:grid;gap:10px;margin:8px 0 26px}
+.threat-guide.threat-guide .ref-card{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--color-background-secondary);border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.threat-guide.threat-guide .ref-num{flex:0 0 2.2rem;height:2.2rem;display:grid;place-items:center;border-radius:50%;background:var(--color-background-tertiary);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500;line-height:1}
+.threat-guide.threat-guide .ref-body{flex:1 1 auto;min-width:0}
+.threat-guide.threat-guide .ref-title{color:var(--color-text-primary);font-weight:500;margin-bottom:2px}
+.threat-guide.threat-guide .ref-url{display:block;word-break:break-all;margin-bottom:8px}
+.threat-guide.threat-guide .ref-meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:var(--color-text-tertiary)}
+.threat-guide.threat-guide .badge{display:inline-block;padding:1px 12px;border-radius:999px;border:1px solid;font-weight:500}
+.threat-guide.threat-guide .rel-a{color:var(--color-text-success);border-color:#2a6b57;background:var(--color-background-success)}
+.threat-guide.threat-guide .rel-b{color:var(--color-text-info);border-color:var(--color-border-primary);background:var(--color-background-info)}
+.threat-guide.threat-guide .rel-c{color:var(--color-text-warning);border-color:#6b5320;background:var(--color-background-warning)}
+
+.threat-guide.threat-guide .footer{margin-top:56px;padding:22px 0;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary);display:flex;gap:10px;align-items:center}
+
+/* mobile drawer */
+.threat-guide.threat-guide .menu-btn,.threat-guide.threat-guide .backdrop{display:none}
+@media (max-width:1024px){
+  .threat-guide.threat-guide .layout{margin-left:0}
+  .threat-guide.threat-guide .sidebar{transform:translateX(-100%);transition:transform .25s ease;width:min(86vw,320px);z-index:60}
+  .threat-guide.threat-guide body.nav-open .sidebar{transform:translateX(0)}
+  .threat-guide.threat-guide .backdrop{display:block;position:fixed;inset:0;background:rgba(3,8,16,.65);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:50}
+  .threat-guide.threat-guide body.nav-open .backdrop{opacity:1;pointer-events:auto}
+  .threat-guide.threat-guide .menu-btn{display:grid;place-items:center;position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#07111e;border:none;font-size:1.6rem;cursor:pointer;z-index:70}
+  .threat-guide.threat-guide .hero h1{font-size:1.75rem}
+  .threat-guide.threat-guide h2{font-size:1.45rem}
+}
+@media (max-width:640px){
+  .threat-guide.threat-guide .main{padding:0 16px 80px}
+  .threat-guide.threat-guide .exercise{padding:4px 14px 16px}
+  .threat-guide.threat-guide th{white-space:normal}
+}
+
+/* Application header integration and intrinsic-width diagrams. */
+.docs-main:has(.threat-guide) { padding: 0; }
+.threat-guide.threat-guide { width: 100%; min-width: 0; }
+.threat-guide.threat-guide .sidebar { top: 64px; visibility: visible; }
+.threat-guide.threat-guide .ti { display: inline-flex; align-items: center; justify-content: center; }
+.threat-guide.threat-guide .ti svg { width: 1em; height: 1em; }
+.threat-guide.threat-guide .menu-btn svg { width: 26px; height: 26px; }
+.threat-guide.threat-guide section, .threat-guide.threat-guide h3 { scroll-margin-top: 88px; }
+.threat-guide.threat-guide .mermaid { display: block; overflow-x: auto; }
+.threat-guide.threat-guide .diagram-viewport { display: block; overflow-x: auto; }
+.threat-guide.threat-guide .mermaid svg { display: block; margin-left: auto; margin-right: auto; max-width: none; }
+html:has(.threat-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
+@media (prefers-reduced-motion: reduce) { html:has(.threat-guide) { scroll-behavior: auto; } }
+@media (max-width: 1024px) {
+ .threat-guide.threat-guide .sidebar { visibility: hidden; }
+ .threat-guide.threat-guide .sidebar.open { visibility: visible; transform: translateX(0); }
+ .threat-guide.threat-guide .backdrop[hidden] { display: none; }
+ .threat-guide.threat-guide .backdrop.show { top: 64px; opacity: 1; pointer-events: auto; }
+}
+
+/* Restore source defaults overridden by shared prose and landing styles. */
+.threat-guide.threat-guide h1, .threat-guide.threat-guide h2, .threat-guide.threat-guide h3, .threat-guide.threat-guide h4 { letter-spacing: normal; }
+.threat-guide.threat-guide table { margin: 0; }
+.threat-guide.threat-guide pre { font-family: var(--font-sans); color: var(--color-text-primary); }
+.threat-guide.threat-guide .brand { font-size: 1rem; font-weight: 400; color: var(--color-text-primary); letter-spacing: normal; }
+.threat-guide.threat-guide tr:hover td { background: transparent; }

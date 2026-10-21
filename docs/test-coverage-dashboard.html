@@ -15,7 +15,7 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-10-17</span>
+                            <span><span class="live-dot"></span>Scanned 2026-10-18</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
@@ -51,7 +51,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            46 ロジックファイル中 46 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            54 ロジックファイル中 54 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -62,8 +62,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">564</div>
-                        <div class="summary-sub">最新（2026-10-17実測）: 前回記録（547件）以降、ISO/IEC 27000:2026（5件）・ISO/IEC 27001:2022（6件）ガイドページのページ登録・検索契約ほかを追加・全564件成功。564 pass / 0 fail、89ファイル、59,760 expect。DocsHeaderNav.test.tsx 9件。npm経由・ビルド未実行（禁止）。</div>
+                        <div class="summary-value">687</div>
+                        <div class="summary-sub">687 pass / 0 fail、114ファイル · レビュー対応後の全体実測（Threat Modeling専用62件 / Applied Cryptography専用61件）・lint/型検査成功・目視待ち</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -88,6 +88,8 @@
 <section class="container" aria-label="Secure by Design migration test status"><p>Secure by Design: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功 · 231 pass / 0 fail、36ファイル、9,070 expect · npm test（内部Bun） · ビルド未実行 · 目視確認はユーザー担当</p></section>
 <section class="container" aria-label="MITRE ATLAS migration test status"><p>MITRE ATLAS: 図の可読性Green・全277件成功・18px/コントラスト7以上/縮小防止・lint/型検査成功 · 277 pass / 0 fail、42ファイル、10,627 expect · ビルド未実行・目視はユーザー担当</p></section>
 <section class="container" aria-label="CCIE Security migration test status"><p>CCIE Security: 原本HTML・MDのアーカイブ完了・バイト一致・全テストとlint/型検査成功 · 291 pass / 0 fail、46ファイル、12,618 expect · ビルド未実行・目視はユーザー担当</p></section>
+<!-- applied-migration-status --><section class="container" aria-label="Applied Cryptography migration status"><p>原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル。npm使用・ビルド禁止・未実行・目視確認待ち。</p></section><!-- /applied-migration-status -->
+<!-- threat-migration-status --><section class="container" aria-label="Threat Modeling migration status"><p>Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル。全体実測。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD 701a8e1。</p></section><!-- /threat-migration-status -->
         <!-- FILTERS -->
         <section class="filters-section">
             <div class="container">
@@ -241,7 +243,7 @@
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 14×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 21×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -268,7 +270,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">✅</span>
-                                            <span class="cell-count">64 unit + 10 layout tests · 17/17 files</span>
+                                            <span class="cell-count">73 unit + 12 shared layout tests · 17/17 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
@@ -277,7 +279,7 @@
                                             <div class="tt-title">✅ Good — 17/17 対象ファイル</div>
                                             全ファイルに十分なテストあり。バリアント・エッジケース等もカバー。
                                             <ul class="tt-files">
-                                                <li>✓ DocsHeaderNav: layout.test.tsx (10 tests、App/Pagesと共有)</li>
+                                                <li>✓ DocsHeaderNav: layout.test.tsx (12 tests、App/Pagesと共有)</li>
                                                 <li>✓ Callout.test.tsx (4 tests)</li>
                                                 <li>✓ DocsSubheading.test.tsx (4 tests)</li>
                                                 <li>✓ SectionCard.test.tsx (3 tests)</li>
@@ -326,26 +328,28 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 56 Kubernetes tests + 74 WAHH tests · 24/25 logic files</span>
+                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 62 Threat Modeling + 61 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 tests · 32/33 logic files</span>
                                             <div class="cell-bar">
-                                                <div class="cell-bar-fill" style="width: 96%"></div>
+                                                <div class="cell-bar-fill" style="width: 97%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 24/25 ロジックファイル</div>
-                                            docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHHの描画・コード・本文をテスト済み。root layout は未カバー（HomePageは3件の一覧/統計/共通メニューテストで検証）。
+                                            <div class="tt-title">⚠️ Partial — 32/33 ロジックファイル</div>
+                                            docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modelingの描画・コード・本文をテスト済み。root layout は未カバー（HomePageは3件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (3 tests): ホーム一覧/統計/共通メニューと登録件数</li>
-<li>✓ DocsHeaderNav.test.tsx (9 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・99ページ拡張・開閉/フォーカス・320/375px</li>
+<li>✓ DocsHeaderNav.test.tsx (9 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在21+80=101ページ、テスト値）・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
-                                                <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行・表示テストで検証）</li>
+                                                <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行時点テストで検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（43移行・表示テストで検証）</li>
-                                                <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（104移行・表示・アーカイブテストで検証）</li>
-                                                <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（74テスト）</li>
-                                                <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（56移行・表示・操作・コントラスト・アーカイブテストで検証）</li>
+                                                <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（104移行時点テストで検証）</li>
+                                                <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（83テスト）</li>
+                                                <li>✓ Hacking Kubernetes: GuideSidebar / GuideRuntime / GuideIcon / GuideCode / MermaidFigure（61テストで検証）</li>
+                                                <li>✓ Applied Cryptography: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（61件/12ファイル、全16節・28表・14図・10コード・65見出しを照合）</li>
+                                                <li>✓ Threat Modeling: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（62件/13ファイル。18章・839表セル・9図・17チェック・5解答・89見出し・原本アーカイブを検証）</li>
                                                 <li>✗ src/app/layout.tsx</li>
-                                                <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、Kubernetesは56件、その他MDXは個別移行テスト対象外）</li>
+                                                <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、Kubernetesは61件、WAHHは83件、Applied Cryptographyは61件、Threat Modelingは62件、ISO 27000は5件、ISO 27001は6件。その他MDXは個別移行テスト対象外）</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -392,7 +396,7 @@
                                         <div class="tooltip" role="tooltip">
                                             <div class="tt-title">⚠️ Partial — CCIE・CCST・Secure by Design・ATLAS・Kubernetes・WAHHナビ契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録 + CCSTのCCIE直後登録 + KubernetesとWAHHのSecurity Guides登録（各integration.test.tsx）。WAHHはホームの表示もpage.test.tsxで検証。DocsHeaderNav.test.tsxで80ページ追加時（計99ページ）の共通メニューを検証</li>
+                                                <li>✓ src/config/docs.ts: CCIEカテゴリー・順序・Resources保持 + Secure by DesignのSecurity Guides登録 + MITRE ATLASのAdvanced Topics登録 + CCSTのCCIE直後登録 + KubernetesとWAHHのSecurity Guides登録（各integration.test.tsx）。WAHHはホームの表示もpage.test.tsxで検証。DocsHeaderNav.test.tsxで登録ページ＋仮ページ80件の拡張（現在21+80=101ページ、テスト値）の共通メニューを検証</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1165,10 +1169,10 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-17</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-18</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 89 files · 564 test cases · CI:
-                        GitHub Actions ✅ · Coverage: lcov生成 · Codecov送信停止中</span
+                        >Runner: bun test --coverage · DOM: happy-dom · 114 files · 687 test cases · CI:
+                        GitHub Actions ✅（原本比較テストはCI除外・ローカル実行） · Coverage: lcov生成 · Codecov送信停止中</span
                     >
                 </div>
             </div>

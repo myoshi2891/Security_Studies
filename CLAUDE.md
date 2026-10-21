@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-10-15
+Updated 2026-10-20
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -183,9 +183,20 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 1. `bun install --frozen-lockfile`
 2. `bun run lint`
 3. `bun run types:check`
-4. `bun test`
+4. `bun test --coverage`（パス除外なし。ISO 27000/27001 の `page.test.ts` も実行対象。移行ガイドの原本依存テストは `sourceTest` で自動スキップ、下記参照）
+5. Codecov へカバレッジ送信（`continue-on-error`、品質ゲートではない）
 
 作業ディレクトリは `security-docs/` 固定。
+
+#### 原本比較テストの CI 扱い（2026-10-18、`1ce9728` を改修）
+
+`archive/` は `.gitignore` 対象（意図的に未追跡）のため、CI のチェックアウトには原本が存在しない。移行済みガイドの各 `fidelity-helpers.ts` は原本を **最初の原本依存テストの実行時まで遅延読み込み** し、`hasSource`（原本の存在）と `sourceTest`（原本がなければ `test.skipIf` でスキップ）を公開する。原本 HTML に依存するテスト（節/章契約・原本比較）だけが `sourceTest` を使う。`archive.test.ts` のバイト一致テストと Markdown 原本のハッシュ検証は、ファイルごとに `test.skipIf(!existsSync(path))` で判定するため、Markdown 原本の欠落は HTML 原本の有無と独立してスキップされる。原本非依存の表示・操作・統合テストは CI でも実行される。ローカルの `bun test` / `npm test` も、原本依存テストを実行するのは `archive/` に原本がある場合のみで、原本がなければ同様にスキップされる（原本非依存のテストは常に実行される）。
+
+- パス除外は廃止（ISO 27000/27001 の `page.test.ts` も `fidelity-helpers` 経由で `sourceTest` を使用）
+- CI 条件の実測（2026-10-18 時点の記録、パス除外なし）: 391 pass / 296 skip / 0 fail、114ファイル・687件（`archive/` なしのクリーン worktree で再現）。ローカル（同日）: 687 pass / 0 fail。最新の全体件数は `docs/progress.md` を参照
+- 注意: 負荷が高い初回実行では、CSS・コントラスト系の重いテスト（例: `hacking-kubernetes/contrast.test.tsx`）が Bun 既定の 5秒タイムアウトを僅かに超えて fail することがある（再実行で解消）
+
+> **⚠️ 今後の移行作業で必須**: 原本を `archive/` へ移動し、原本を読むテストを追加・変更した場合は、原本の読み込みを `fidelity-helpers.ts` の遅延ロード（モジュールレベルで `readFileSync` しない）に揃え、原本 HTML を参照するテストは `test` ではなく `sourceTest` で登録し、`archive.test.ts` のバイト一致や Markdown 原本のハッシュ検証はファイルごとに `test.skipIf(!existsSync(path))` で登録すること。モジュールレベルで原本由来の値を即時評価しない（関数化する）。ディレクトリ単位の除外パターンは追加しない。漏れは CI で ENOENT や `undefined` 参照の失敗として現れる。確認は `git worktree add` したクリーンな作業ツリー（`archive/` なし）で CI と同じコマンドを実行し、0 fail を確認する。
 
 ### CCIE Security migration status
 
@@ -294,10 +305,26 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在17ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
 
 <!-- /shared-guide-navigation-status -->
+
+<!-- applied-migration-status -->
+## Applied Cryptography移行（2026-10-18）
+
+Applied Cryptography: 原本アーカイブGreen・全624件/専用60件成功・lint/型検査成功・目視待ち。624 pass / 0 fail、101ファイル（2026-10-18 移行完了時点の実測。最新の全体結果はdocs/progress.mdを参照）。npm経由・Next.jsビルド未実行（禁止）・目視はユーザー担当／未完了。同期前HEAD `7627df6`。
+
+移行先: `security-docs/src/app/docs/applied-cryptography-guide/page.mdx`、URL `/docs/applied-cryptography-guide`。原本: `archive/html/Applied-cryptography-guide.html`・`archive/md/Applied-cryptography-guide.md`。バイト一致・ルート原本除去・全比較参照の移行を検証済み。全16節・28表・10コード・14図・26参考文献を原本と比較。台帳: `docs/migration-inventory/applied-cryptography-guide.json`。原本の65見出しを検索可能。専用60件/12ファイル。最新の全体結果はdocs/progress.mdを参照。`npm run lint`・`npm run types:check` 成功。目視確認表: `docs/migration-inventory/applied-cryptography-guide-review.md`（ユーザー確認待ち）。Next.jsビルド・push・公開は未実施。Mermaidの色設定を反映するためbaseテーマを使用し、各図の設定を描画ごとに渡す。狭い図は中央、幅広図は縮めず左右スクロール。
+<!-- /applied-migration-status -->
+
+<!-- threat-migration-status -->
+## Threat Modeling移行（2026-10-18）
+
+Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685件/専用61件成功・lint/型検査成功・目視待ち。685 pass / 0 fail、114ファイル（2026-10-18 移行完了時点の全体実測。最新の全体結果はdocs/progress.mdを参照）。npm使用・ビルド禁止/未実行・目視はユーザー担当/未完了。同期前HEAD `701a8e1`。
+
+移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。最終全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。検索索引21ページ・原本89見出しを検証。目視確認表: `docs/migration-inventory/threat-modeling-guide-review.md`（ユーザー確認待ち）。push/公開未実施。Mermaidはbaseテーマ・strictモードで全定義/配色/間隔を保持し、実際の描画境界で高さを調整。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
+<!-- /threat-migration-status -->

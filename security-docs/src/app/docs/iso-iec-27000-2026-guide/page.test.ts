@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { docsConfig } from "@/config/docs";
 import { getSearchIndex } from "@/lib/search";
+import { SOURCE_PATH, sourceTest } from "./fidelity-helpers";
 
 const SLUG = "iso-iec-27000-2026-guide";
 const HREF = `/docs/${SLUG}`;
@@ -46,9 +47,9 @@ describe("ISO/IEC 27000:2026 ガイドページ", () => {
     expect(missing).toEqual([]);
   });
 
-  test("原本の参照URLをすべて保持する", () => {
+  sourceTest("原本の参照URLをすべて保持する", () => {
     // Arrange
-    const source = fs.readFileSync(path.join(process.cwd(), "..", "Iso-iec-27000-2026-guide.md"), "utf8");
+    const source = fs.readFileSync(SOURCE_PATH, "utf8");
     const urls = source.match(/https:\/\/[^\s|]+/g) ?? [];
     const content = readPage();
 

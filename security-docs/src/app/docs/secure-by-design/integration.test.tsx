@@ -5,10 +5,10 @@ import { resolve } from 'node:path';
 import postcss from 'postcss';
 import { docsConfig } from '@/config/docs';
 import { getSearchIndex } from '@/lib/search';
-import { canonical, declarations, definitions, evaluatedPage, here, renderedPage, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { canonical, declarations, definitions, evaluatedPage, here, renderedPage, scope, sourceCss, sourceDocument, sourceHtml, sourceTest } from './fidelity-helpers';
 
 describe('Secure by Design complete migration', () => {
-  test('locks source hash and complete content inventory without counting diagram fallback text as article content', async () => {
+  sourceTest('locks source hash and complete content inventory without counting diagram fallback text as article content', async () => {
     const inventory = JSON.parse(readFileSync(resolve(here, '../../../../../docs/migration-inventory/secure-by-design.json'), 'utf8'));
     expect(createHash('sha256').update(sourceHtml).digest('hex')).toBe(inventory.sha256);
     const original = sourceDocument.querySelector('main')!;
@@ -20,7 +20,7 @@ describe('Secure by Design complete migration', () => {
     expect([...page.querySelectorAll('.section')].map(el => el.id)).toEqual(inventory.sections.map((item: { id: string }) => item.id));
   });
 
-  test('resolves every original TOC link to one unique destination, including the top anchor', async () => {
+  sourceTest('resolves every original TOC link to one unique destination, including the top anchor', async () => {
     const page = await renderedPage();
     const links = [...page.querySelectorAll('aside a')];
     expect(links.map(el => [el.textContent, el.getAttribute('href')])).toEqual([...sourceDocument.querySelectorAll('aside a')].map(el => [el.textContent, el.getAttribute('href')]));
@@ -37,7 +37,7 @@ describe('Secure by Design complete migration', () => {
     expect(docsConfig.sidebarNav.find(section => section.title === 'Security Guides')?.items).toContainEqual({ title: 'Secure SDLC Guide', href: '/docs/secdev-guide' });
   });
 
-  test('exports original metadata and indexes all 77 article headings through live search', async () => {
+  sourceTest('exports original metadata and indexes all 77 article headings through live search', async () => {
     const metadata = (await evaluatedPage()).metadata as { title: string; description: string };
     expect(metadata.title).toBe(sourceDocument.querySelector('h1')!.textContent!);
     expect(metadata.description).toBe(sourceHtml.match(/<meta name="description" content="([^"]+)"/)![1]);
@@ -56,15 +56,19 @@ describe('Secure by Design complete migration', () => {
     expect(entries).toEqual([live]);
   });
 
-  test('preserves all 32 reference numbers, descriptions, categories and safe external link attributes', async () => {
+  sourceTest('preserves all 32 reference numbers, descriptions and categories', async () => {
     const page = await renderedPage();
     const refs = [...page.querySelectorAll('.ref-card')];
     expect(refs.map(canonical)).toEqual([...sourceDocument.querySelectorAll('.ref-card')].map(canonical));
     expect(refs.map(el => Number(el.querySelector('.ref-badge')?.textContent))).toEqual(Array.from({ length: 32 }, (_, i) => i + 1));
+  });
+
+  test('opens every external link with safe rel attributes', async () => {
+    const page = await renderedPage();
     for (const link of page.querySelectorAll('a[target="_blank"]')) expect(link.getAttribute('rel')).toBe('noopener noreferrer');
   });
 
-  test('all 15 original definitions pass the real local Mermaid parser with the per-diagram config', async () => {
+  sourceTest('all 15 original definitions pass the real local Mermaid parser with the per-diagram config', async () => {
     const { default: mermaid } = await import('mermaid');
     const { diagramConfig } = await import('./MermaidFigure');
     expect(definitions.size).toBe(15);
@@ -112,7 +116,7 @@ describe('Secure by Design complete migration', () => {
     expect(mdx).toContain("import './secure-by-design.css'");
   });
 
-  test('comparison detects removed list items, changed table cells, missing emphasis, changed code and changed URLs', async () => {
+  sourceTest('comparison detects removed list items, changed table cells, missing emphasis, changed code and changed URLs', async () => {
     for (const selector of ['.section li', '.section td', '.section strong', '.code-block code', '.ref-url']) {
       const section = (await renderedPage()).querySelector(selector)!.closest('.section')!;
       const copy = section.cloneNode(true) as Element;
@@ -123,7 +127,7 @@ describe('Secure by Design complete migration', () => {
     }
   });
 
-  test('CSS contracts detect removed dots, numbering, resets, increments and sidebar marker suppression', () => {
+  sourceTest('CSS contracts detect removed dots, numbering, resets, increments and sidebar marker suppression', () => {
     const original = postcss.parse(readFileSync(resolve(here, 'secure-by-design.css'), 'utf8'));
     for (const selector of ['.prose ul>li::before', '.prose ol', '.prose ol>li', '.prose ol>li::before', '.sidebar nav li::before']) {
       const expected = declarations(sourceCss, selector);

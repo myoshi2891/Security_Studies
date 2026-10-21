@@ -2,7 +2,7 @@ import { expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { Window } from 'happy-dom';
 import postcss from 'postcss';
-import { declarations, renderedPage, scope, sourceCss } from './fidelity-helpers';
+import { declarations, renderedPage, scope, sourceCss, sourceTest } from './fidelity-helpers';
 
 const migratedCss = () => postcss.parse(readFileSync(new URL('./ccst-cybersecurity.css', import.meta.url), 'utf8'));
 function combinedStyles() {
@@ -25,7 +25,7 @@ async function windowFor(width = 1440, mode: 'light' | 'dark' = 'light') {
   window.document.head.innerHTML = `<style>${combinedStyles()}</style>`;
   return window;
 }
-test('keeps every original CSS rule and declaration under a page-local scope', () => {
+sourceTest('keeps every original CSS rule and declaration under a page-local scope', () => {
   const css = migratedCss();
   sourceCss.walkRules(original => {
     const selector = original.selectors.map(s => [':root', 'html', 'body'].includes(s) ? scope : s.startsWith('body.nav-open') ? s.replace('body.nav-open', `${scope}.nav-open`) : `${scope} ${s}`).join(',');

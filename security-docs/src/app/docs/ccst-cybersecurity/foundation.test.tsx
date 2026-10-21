@@ -3,13 +3,13 @@ import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import postcss from 'postcss';
-import { canonical, declarations, renderedPage, scope, sourceCss, sourceDocument } from './fidelity-helpers';
+import { canonical, declarations, renderedPage, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
 
 afterEach(cleanup);
-test('renders the complete original hero and preserves the creation date', async () => {
+sourceTest('renders the complete original hero and preserves the creation date', async () => {
   expect(canonical((await renderedPage()).querySelector('.hero')!)).toEqual(canonical(sourceDocument.querySelector('.hero')!));
 });
-test('retains round dots, native ordered markers, nested spacing, check counters and reference badges', () => {
+sourceTest('retains round dots, native ordered markers, nested spacing, check counters and reference badges', () => {
   const css = postcss.parse(readFileSync(new URL('./ccst-cybersecurity.css', import.meta.url), 'utf8'));
   for (const selector of ['ul', 'ul>li', 'ul>li::before', 'ol>li::marker', 'li>ul,li>ol', '.checklist', '.n::before', '.box', '.check input:checked+.box', '.check input:checked+.box::after', '.check input:focus-visible+.box', '.check:has(input:checked)', '.check:has(input:checked) .t', '.ref-n']) {
     const original = declarations(sourceCss, selector);
@@ -26,7 +26,7 @@ test('keeps every source CSS rule isolated and preserves responsive and reduced 
   expect(css.toString()).toContain('(prefers-reduced-motion:reduce)');
   expect(css.toString()).toContain('var(--docs-header-height');
 });
-test('preserves the entire original TOC link order and grouped chapter labels', async () => {
+sourceTest('preserves the entire original TOC link order and grouped chapter labels', async () => {
   const page = await renderedPage();
   const links = (el: Element) => [...el.querySelectorAll('nav a')].map(a => [a.textContent, a.getAttribute('href')]);
   expect(links(page.querySelector('.sidebar')!)).toEqual(links(sourceDocument.querySelector('.sidebar')!));

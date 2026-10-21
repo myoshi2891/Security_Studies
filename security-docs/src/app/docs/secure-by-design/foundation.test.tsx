@@ -5,7 +5,7 @@ import { createElement } from 'react';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import postcss from 'postcss';
 import { Window } from 'happy-dom';
-import { declarations, definitions, here, renderedPage, scope, sourceCss, sourceDocument, sourceHtml } from './fidelity-helpers';
+import { declarations, definitions, here, renderedPage, scope, sourceCss, sourceDocument, sourceHtml, sourceTest } from './fidelity-helpers';
 
 const originalObserver = globalThis.IntersectionObserver;
 beforeEach(() => { globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver; });
@@ -41,7 +41,7 @@ describe('Secure by Design display foundation', () => {
     }
   });
 
-  test('preserves every source CSS declaration and media context under an isolated scope', () => {
+  sourceTest('preserves every source CSS declaration and media context under an isolated scope', () => {
     const css = postcss.parse(readFileSync(resolve(here, 'secure-by-design.css'), 'utf8'));
     sourceCss.walkRules(rule => {
       const parent = rule.parent;
@@ -89,7 +89,7 @@ describe('Secure by Design display foundation', () => {
     expect(container.querySelector('script')).toBeNull();
   });
 
-  test('retains all 15 diagram definitions and every dark theme variable', async () => {
+  sourceTest('retains all 15 diagram definitions and every dark theme variable', async () => {
     const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
     expect(Object.entries(diagrams)).toEqual([...definitions]);
     const implementation = readFileSync(resolve(here, 'MermaidFigure.tsx'), 'utf8');
@@ -139,10 +139,14 @@ describe('Secure by Design display foundation', () => {
     } finally { error.mockRestore(); }
   });
 
-  test('preserves original TOC and hash selection; mobile closes on link, Escape, backdrop and desktop resize', async () => {
-    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+  sourceTest('preserves original TOC', async () => {
     const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     expect(toc.map((item: { id: string; title: string }) => [`#${item.id}`, item.title])).toEqual([...sourceDocument.querySelectorAll('aside nav a')].map(a => [a.getAttribute('href'), a.textContent]));
+  });
+
+  test('preserves hash selection; mobile closes on link, Escape, backdrop and desktop resize', async () => {
+    const { GuideSidebar } = await import(new URL('./GuideSidebar.tsx', import.meta.url).href);
+    const { toc } = await import(new URL('./toc.ts', import.meta.url).href);
     window.history.replaceState(null, '', '#sec-12');
     const { container, getByRole } = render(createElement('div', { className: 'secure-by-design-guide' }, createElement(GuideSidebar, { items: toc })));
     await waitFor(() => expect(container.querySelector('a[aria-current="location"]')).toHaveAttribute('href', '#sec-12'));
