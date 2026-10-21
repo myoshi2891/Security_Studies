@@ -26,16 +26,20 @@ test('sequence diagrams preserve source height allowance and comma-separated vie
  await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());const svg=view.container.querySelector('svg')!;expect(svg.getAttribute('viewBox')).toBe('0 0 900 410');expect(svg.style.width).toBe('900px');expect(svg.hasAttribute('height')).toBe(false);
  }finally{globalThis.IntersectionObserver=original;}
 });
-sourceTest('all sixteen immutable definitions parse locally and renderer configuration is isolated',async()=>{
+sourceTest('all sixteen immutable definitions parse locally and preserve source theme variables',async()=>{
  const {diagrams}=await import(new URL('./diagrams.ts',import.meta.url).href);const {definitions,sourceHtml}=await import('./fidelity-helpers');expect(Object.entries(diagrams)).toEqual([...definitions]);expect(definitions.size).toBe(16);
  const {default:mermaid}=await import('mermaid');for(const [id,source] of definitions)expect(await mermaid.parse(source),id).toBeTruthy();
+ const {diagramConfig}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ for(const [,key,value] of sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1].matchAll(/(\w+):\s*'([^']*)'/g))expect((diagramConfig.themeVariables as Record<string,unknown>)[key]).toBe(value);
+});
+test('renderer configuration is isolated',async()=>{
+ const {default:mermaid}=await import('mermaid');
  const {renderDiagram,diagramConfig}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  const draw=spyOn(mermaid,'render').mockImplementation(async()=>({svg:'<svg></svg>',diagramType:'flowchart-v2'}));const init=spyOn(mermaid,'initialize');
  try{await renderDiagram('wahh-d1','flowchart LR\nA-->B');expect(init).not.toHaveBeenCalled();expect(draw).toHaveBeenCalledWith('wahh-d1',`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart LR\nA-->B`);
  expect(diagramConfig.sequence).toEqual({useMaxWidth:false,actorMargin:50,messageMargin:36});expect(diagramConfig.securityLevel).toBe('strict');
  // themeVariables の配色を全面的に反映できるのは base テーマのみ
  expect(diagramConfig.theme).toBe('base');
- for(const [,key,value] of sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\}/)![1].matchAll(/(\w+):\s*'([^']*)'/g))expect((diagramConfig.themeVariables as Record<string,unknown>)[key]).toBe(value);
  }finally{draw.mockRestore();init.mockRestore();}
 });
 sourceTest('all source icon names have decorative local SVG equivalents and code retains exact Python/JavaScript text',async()=>{
