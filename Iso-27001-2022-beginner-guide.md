@@ -116,7 +116,7 @@ ISO/IEC 27001は、情報の次の**3つの性質を守る**ことを目的に�
 
 ## 3. 規格ファミリーの地図
 
-ISO/IEC 27001には「兄弟規格」があり、役割が違います。**認証の対象になるのは27001だけ**です [S37](https://www.vikingcloud.com/blog/iso-27002-2022)。
+ISO/IEC 27001には「兄弟規格」があり、役割が違います。**ISMSとして認証の対象になるのは27001**です [S37](https://www.vikingcloud.com/blog/iso-27002-2022)。ただし、ISO/IEC 27701:2025はプライバシー情報マネジメントシステムとして単独で認証を受けられます [S22](https://en.wikipedia.org/wiki/ISO/IEC_27701)。
 
 ```mermaid
 flowchart TD
@@ -617,7 +617,7 @@ timeline
 |---|---|---|
 | 2022年2月15日 | ISO/IEC 27002:2022 発行(93管理策・4分類) | [S8](https://www.sgs.com/en-ke/news/2022/07/key-changes-in-iso-iec-27002-2022) |
 | 2022年10月25日 | ISO/IEC 27001:2022 発行(第3版) | [S1](https://www.iso.org/standard/27001) |
-| 2022年11月1日 | 2013年版からの3年間の移行期間が開始 | [S6](https://www.sgs.com/en/news/2024/05/iso-iec-27001-transition-what-you-should-know)[S7](https://www.bsigroup.com/globalassets/localfiles/en-au/ISO%2027001/documents/iso-iec-27001-transition-guide.pdf) |
+| 2022年10月31日 | 2013年版からの3年間の移行期間が開始(2025年10月31日まで) | [S6](https://www.sgs.com/en/news/2024/05/iso-iec-27001-transition-what-you-should-know)[S7](https://www.bsigroup.com/globalassets/localfiles/en-au/ISO%2027001/documents/iso-iec-27001-transition-guide.pdf) |
 | 2023年9月 | 経済産業省がJIS Q 27001を改正(2022年版に対応) | [S15](https://www.meti.go.jp/press/2023/09/20230920001/20230920001-2.pdf) |
 | 2023年10月 | 日本のISMS認証機関側の認定移行が完了 | [S12](https://www.jnsa.org/result/isms/seminar/2023/2023-005.pdf) |
 | 2024年2月 | Amd 1:2024(気候変動への対応)発行 | [S1](https://www.iso.org/standard/27001)[S10](https://www.tuvsud.com/en-ae/services/auditing-and-system-certification/climate-action-changes-amendment-1-in-management-system-standards) |
@@ -794,10 +794,10 @@ ISO/IEC 27001は、英国規格BS 7799-2を起源とし、**2005年10月**にISO
 |---|---|---|
 | 位置づけ | 要求事項を定めた**マネジメントシステム規格** | リスクに基づく**成果(アウトカム)中心のフレームワーク** |
 | 認証 | **可能**(認証機関による審査) | 認証制度なし(自己評価・プロファイルで活用) |
-| 構成 | 本文(箇条4〜10)+附属書A(93管理策) | Govern、Identify、Protect、Detect、Respond、Recoverの6機能 [S30](https://cdn.presencis.com/regulations/nist-csf/documents/) |
-| 関係 | NISTが公開する**参照マッピング(Informative References)**で、CSF 2.0とISO/IEC 27001が対応づけられている | 同左 [S30](https://cdn.presencis.com/regulations/nist-csf/documents/) |
+| 構成 | 本文(箇条4〜10)+附属書A(93管理策) | Govern、Identify、Protect、Detect、Respond、Recoverの6機能 [S30](https://csrc.nist.gov/projects/olir/informative-reference-catalog) |
+| 関係 | NISTのカタログに登録された**参照マッピング(Informative References)**で、CSF 2.0とISO/IEC 27001が対応づけられている | 同左 [S30](https://csrc.nist.gov/projects/olir/informative-reference-catalog) |
 
-> CSF 2.0は2024年2月26日に公開され、従来の5機能に**Govern(統治)**が加わりました [S30](https://cdn.presencis.com/regulations/nist-csf/documents/)。組織の状況によっては「社内の統制はNIST CSFで整理し、顧客要求への対応でISO 27001認証を取る」「SOC 2も求められる」といった**段階的な組み合わせ**がよく選ばれます。実際のマッピングは、NIST公式のOnline Informative Referencesを確認してください。
+> CSF 2.0は2024年2月26日に公開され、従来の5機能に**Govern(統治)**が加わりました [S30](https://csrc.nist.gov/projects/olir/informative-reference-catalog)。組織の状況によっては「社内の統制はNIST CSFで整理し、顧客要求への対応でISO 27001認証を取る」「SOC 2も求められる」といった**段階的な組み合わせ**がよく選ばれます。実際のマッピングは、NIST公式のOnline Informative Referencesを確認してください。
 
 ### 14-4. 自己診断チェックリスト(自分の組織を点検する)
 
@@ -881,7 +881,7 @@ ISO/IEC 27001は、英国規格BS 7799-2を起源とし、**2005年10月**にISO
 | S27 | 二次 | Bastion/Effivity:箇条4〜10の解説(箇条10の並び替えなど) | https://bastion.tech/learn/iso27001/iso-27001-requirements 、 https://www.effivity.com/information-security-management-system/iso-27001-clauses |
 | S28 | 二次 | A-LIGN/Secfix/Elevate Consulting:認証審査の流れ(Stage 1・2、維持審査、再認証) | https://www.a-lign.com/articles/iso-27001-audit-essentials 、 https://help.secfix.com/en/articles/6897312-key-stages-of-iso-27001-certification 、 https://elevateconsult.com/insights/iso-27001-audit-stage-1-vs-stage-2-differences-explained/ |
 | S29 | 二次 | Orbiq:SoAテンプレート(6.1.3 d の要求と除外理由) | https://www.orbiqhq.com/templates/iso-27001-statement-of-applicability-template.md |
-| S30 | 二次 | Presencis:NIST CSF 2.0の公式資料一覧(参照元:nist.gov/cyberframework) | https://cdn.presencis.com/regulations/nist-csf/documents/ |
+| S30 | 一次 | NIST公式:Informative Reference Catalog(OLIR)。ISO/IEC 27001とCSF 2.0の対応は提出者が作成し、カタログに登録された参照マッピング | https://csrc.nist.gov/projects/olir/informative-reference-catalog |
 | S31 | 二次 | Presencis:ISO 27001移行タイムライン | https://presencis.com/regulations/iso-27001/timeline/ |
 | S32 | 二次 | Bright Defense:2025年10月31日の移行期限の影響 | https://www.brightdefense.com/news/iso-270012022-deadline-puts-legacy-certificates-at-risk/ |
 | S33 | 二次 | 一創:ISMSとISO 27001の違い、JIS Q 27001:2025の説明 | https://www.issoh.co.jp/column/details/12644/ |
