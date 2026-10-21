@@ -40,9 +40,9 @@ test('does not render before entering the viewport and disconnects its observer'
   await waitFor(() => expect(container.querySelector('svg')).not.toBeNull());
   expect(calls).toBe(1); unmount(); expect(disconnected).toBeGreaterThan(0);
 });
-sourceTest('gives diagrams unique accessible IDs, intrinsic SVG width and non-empty content descriptions', async () => {
+test('gives diagrams unique accessible IDs, intrinsic SVG width and linked descriptions', async () => {
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
-  const { MermaidFigure, describeDiagram } = await load();
+  const { MermaidFigure } = await load();
   const ids: string[] = [];
   const renderer = async (id: string) => { ids.push(id); return { svg: '<svg viewBox="0 0 200 80"></svg>' }; };
   const { container } = render(createElement('div', null, createElement(MermaidFigure, { id: 'd0', source: 'flowchart LR\nA["開始"]-->B["終了"]', renderer }), createElement(MermaidFigure, { id: 'd0', source: 'sequenceDiagram\nA->>B: hello', renderer })));
@@ -54,6 +54,9 @@ sourceTest('gives diagrams unique accessible IDs, intrinsic SVG width and non-em
     expect(img.getAttribute('tabindex')).toBe('0');
     expect(container.querySelector(`[id="${img.getAttribute('aria-describedby')}"]`)).not.toBeNull();
   }
+});
+sourceTest('gives every archived diagram definition a non-empty content description', async () => {
+  const { describeDiagram } = await load();
   for (const definition of definitions.values()) expect(describeDiagram(definition).length).toBeGreaterThan(1);
 });
 test('shows the exact original definition on failure rather than silently dropping a figure', async () => {
