@@ -10,6 +10,8 @@ sourceTest('hero and footer preserve complete source content and structure', asy
 sourceTest('every original CSS declaration and media condition is preserved under the page scope', () => {
  const css = postcss.parse(readFileSync(new URL('./applied-cryptography-guide.css',import.meta.url),'utf8'));
  sourceCss.walkRules(rule => {
+  // body.drawer-open はページスコープ配下で一致し得ないため移行しない（開閉は .sidebar.open / .backdrop.show、overflow は GuideSidebar が制御）
+  if (rule.selector.includes('body.drawer-open')) return;
   const expected = rule.selector.split(',').map(s => ['html','body',':root'].includes(s.trim()) ? scope : `${scope} ${s.trim()}`).join(',');
   const media = rule.parent?.type === 'atrule' ? rule.parent.params : undefined;
   const original: string[] = [];rule.walkDecls(d=>{original.push(`${d.prop}:${d.value}`);});
