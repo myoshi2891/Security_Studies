@@ -1,4 +1,4 @@
-import { expect } from 'bun:test';
+import { expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import postcss from 'postcss';
 import { canonical, renderedPage, scope, sourceCss, sourceDocument, sourceTest } from './fidelity-helpers';
@@ -11,8 +11,10 @@ sourceTest('every original CSS declaration and media condition is preserved unde
  const css = postcss.parse(readFileSync(new URL('./applied-cryptography-guide.css',import.meta.url),'utf8'));
  sourceCss.walkRules(rule => {
   // body.drawer-open はページスコープ配下で一致し得ないため移行しない（開閉は .sidebar.open / .backdrop.show、overflow は GuideSidebar が制御）
-  if (rule.selector.includes('body.drawer-open')) return;
-  const expected = rule.selector.split(',').map(s => ['html','body',':root'].includes(s.trim()) ? scope : `${scope} ${s.trim()}`).join(',');
+  // 除外はカンマ区切りの個々のセレクターに限定し、同じ規則の他セレクターは検証を続ける
+  const selectors = rule.selector.split(',').map(s => s.trim()).filter(s => !s.includes('body.drawer-open'));
+  if (selectors.length === 0) return;
+  const expected = selectors.map(s => ['html','body',':root'].includes(s) ? scope : `${scope} ${s}`).join(',');
   const media = rule.parent?.type === 'atrule' ? rule.parent.params : undefined;
   const original: string[] = [];rule.walkDecls(d=>{original.push(`${d.prop}:${d.value}`);});
   const matches: string[][] = [];css.walkRules(expected, r=>{
@@ -22,4 +24,9 @@ sourceTest('every original CSS declaration and media condition is preserved unde
   expect(matches.some(v=>JSON.stringify(v)===JSON.stringify(original)),rule.selector).toBe(true);
  });
  css.walkRules(rule => {expect(rule.selector.split(',').every(s=>s.trim().startsWith(scope)||s.trim().startsWith('.docs-main:has(.applied-guide)')||s.trim()==='html:has(.applied-guide)')).toBe(true);});
+});
+test('page CSS emits no body.drawer-open selector, scoped or unscoped', () => {
+ const css = postcss.parse(readFileSync(new URL('./applied-cryptography-guide.css',import.meta.url),'utf8'));
+ // `${scope} body.drawer-open` のようなスコープ付きの変種も含めて出力しない
+ css.walkRules(rule => {expect(rule.selector.split(',').some(s=>s.includes('body.drawer-open')),rule.selector).toBe(false);});
 });
