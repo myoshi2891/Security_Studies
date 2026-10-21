@@ -453,7 +453,7 @@ flowchart LR
 6. 認証と認可はアクセス許可前に動的に厳格に実施する
 7. 資産・ネットワーク・通信の状態をできるだけ収集し、態勢改善に使う
 
-（概念の要約。正確な文言は [S10] 本文で確認してください）
+（概念の要約。正確な文言は [S10b] 本文で確認してください）
 
 #### 6.1.4 脅威モデリングフレームワーク
 
@@ -1304,7 +1304,7 @@ flowchart TD
 | ID | 内容 | URL |
 |---|---|---|
 | S10 | NIST SP 800-207 ゼロトラストアーキテクチャ（発表） | https://csrc.nist.gov/news/2020/zero-trust-architecture-nist-publishes-sp-800-207 |
-| S10 | 同 本文 PDF | https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf |
+| S10b | 同 本文 PDF | https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf |
 | S11 | NIST SP 800-63-4 デジタルアイデンティティガイドライン（最終版） | https://csrc.nist.gov/pubs/sp/800/63/4/final |
 | S11 | 同 Web 版・実装リソース | https://pages.nist.gov/800-63-4/ |
 | S12 | NIST SP 800-57 Part 1 Rev.5 鍵管理 | https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf |
@@ -1363,6 +1363,7 @@ flowchart TD
 [S7]: https://www.isc2.org/exams/after-your-exam#retakePolicy
 [S8]: https://www.examcert.app/blog/cissp-issap-readiness-checklist/
 [S10]: https://csrc.nist.gov/news/2020/zero-trust-architecture-nist-publishes-sp-800-207
+[S10b]: https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-207.pdf
 [S11]: https://csrc.nist.gov/pubs/sp/800/63/4/final
 [S12]: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf
 [S13]: https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf
