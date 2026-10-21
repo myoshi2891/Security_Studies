@@ -1,0 +1,3514 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="dark" />
+        <title>ISO/IEC 15408-1:2026 初学者向けステップバイステップ解説ガイド</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.49.0/dist/tabler-icons.min.css"
+        />
+        <style>
+            :root {
+                --color-background-primary: #07111e;
+                --color-background-secondary: #0d1b2e;
+                --color-background-tertiary: #13243b;
+                --color-background-info: #14284d;
+                --color-background-danger: #3a1620;
+                --color-background-success: #10302a;
+                --color-background-warning: #3a2c10;
+                --color-text-primary: #f3f5fa;
+                --color-text-secondary: #c6d0e3;
+                --color-text-tertiary: #93a1bd;
+                --color-text-info: #7c9eff;
+                --color-text-danger: #ff8a8a;
+                --color-text-success: #5eead4;
+                --color-text-warning: #f5c451;
+                --color-border-tertiary: #1e2f4d;
+                --color-border-secondary: #2d456e;
+                --color-border-primary: #3e5c8f;
+                --font-sans:
+                    'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',
+                    'Meiryo', system-ui, sans-serif;
+                --font-serif: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+                --accent: #7c9eff;
+                --sidebar-w: 300px;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 1.25rem;
+                font-size: 16px;
+            }
+            body {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.7;
+                font-weight: 400;
+                overflow-wrap: anywhere;
+            }
+            a {
+                color: var(--color-text-info);
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            strong {
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            em {
+                font-style: italic;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            /* sidebar */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                overflow-y: auto;
+                background: var(--color-background-secondary);
+                border-right: 1px solid var(--color-border-tertiary);
+                padding: 1.25rem 1rem 2rem;
+                z-index: 30;
+            }
+            .brand {
+                display: flex;
+                gap: 0.75rem;
+                align-items: flex-start;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .brand .ti {
+                font-size: 1.75rem;
+                color: var(--accent);
+                flex: none;
+                margin-top: 0.1rem;
+            }
+            .brand-title {
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                line-height: 1.4;
+            }
+            .brand-sub {
+                font-size: 1rem;
+                color: var(--color-text-tertiary);
+                line-height: 1.5;
+                margin-top: 0.15rem;
+            }
+            .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .sidebar nav li::before {
+                content: none;
+            }
+            .sidebar nav a {
+                display: flex;
+                gap: 0.6rem;
+                align-items: flex-start;
+                padding: 0.45rem 0.6rem;
+                border-left: 3px solid transparent;
+                border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+                color: var(--color-text-secondary);
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            .sidebar nav a:hover {
+                background: var(--color-background-tertiary);
+                text-decoration: none;
+                color: var(--color-text-primary);
+            }
+            .sidebar nav a.active {
+                background: var(--color-background-info);
+                border-left-color: var(--accent);
+                color: var(--color-text-primary);
+            }
+            .nav-num {
+                flex: none;
+                min-width: 1.6rem;
+                color: var(--color-text-tertiary);
+                font-weight: 500;
+                text-align: right;
+            }
+            .sidebar nav a.active .nav-num {
+                color: var(--accent);
+            }
+
+            /* main */
+            main {
+                margin-left: var(--sidebar-w);
+                padding: 2.25rem 3rem 4rem;
+            }
+            .hero {
+                padding-bottom: 1.5rem;
+                margin-bottom: 2rem;
+                border-bottom: 1px solid var(--color-border-secondary);
+            }
+            .hero h1 {
+                font-size: 22px;
+                font-weight: 500;
+                line-height: 1.4;
+                margin: 0 0 1rem;
+                color: var(--color-text-primary);
+                padding-left: 0.9rem;
+                border-left: 4px solid var(--accent);
+            }
+            .hero p {
+                margin: 0;
+                color: var(--color-text-secondary);
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                padding: 1rem 1.25rem;
+            }
+            .section {
+                padding-bottom: 1rem;
+                margin-bottom: 2.25rem;
+            }
+            .section h2 {
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 1.5;
+                margin: 0 0 1.25rem;
+                padding: 0.65rem 0.9rem;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-left: 4px solid var(--accent);
+                border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+            }
+            .section h3 {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 1.5;
+                margin: 2rem 0 0.75rem;
+                color: var(--color-text-info);
+            }
+            .section p {
+                margin: 0.75rem 0;
+            }
+
+            /* lists */
+            .section ul {
+                list-style: none;
+                padding-left: 0;
+                margin: 0.75rem 0;
+            }
+            .section ul > li {
+                position: relative;
+                padding-left: 1.4rem;
+                margin: 0.4rem 0;
+            }
+            .section ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.3rem;
+                top: 0.72em;
+                width: 0.4rem;
+                height: 0.4rem;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            .section ol {
+                padding-left: 1.8rem;
+                margin: 0.75rem 0;
+            }
+            .section ol > li {
+                margin: 0.4rem 0;
+                padding-left: 0.2rem;
+            }
+            .section ol > li::marker {
+                color: var(--accent);
+                font-weight: 500;
+            }
+            .section li > ul,
+            .section li > ol {
+                margin: 0.35rem 0;
+            }
+
+            /* tables */
+            .table-wrap {
+                overflow-x: auto;
+                margin: 1.1rem 0;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-md);
+            }
+            .table-wrap table {
+                border-collapse: collapse;
+                width: 100%;
+                min-width: 560px;
+                font-size: 1rem;
+            }
+            .table-wrap th {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                text-align: left;
+                padding: 0.65rem 0.9rem;
+                border-bottom: 1px solid var(--color-border-primary);
+                white-space: nowrap;
+            }
+            .table-wrap td {
+                padding: 0.65rem 0.9rem;
+                border-top: 1px solid var(--color-border-tertiary);
+                vertical-align: top;
+                color: var(--color-text-secondary);
+            }
+            .table-wrap tbody tr:first-child td {
+                border-top: none;
+            }
+            .table-wrap tbody tr:nth-child(even) td {
+                background: var(--color-background-secondary);
+            }
+            .table-wrap td:first-child {
+                color: var(--color-text-primary);
+            }
+
+            /* callouts */
+            .callout {
+                display: flex;
+                gap: 0.75rem;
+                align-items: flex-start;
+                margin: 1.25rem 0;
+                padding: 1rem 1.1rem;
+                border: 1px solid var(--color-border-secondary);
+                border-left-width: 4px;
+                border-radius: var(--border-radius-md);
+            }
+            .callout .ti {
+                flex: none;
+                font-size: 1.25rem;
+                line-height: 1.7;
+            }
+            .callout-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .callout-body p {
+                margin: 0.4rem 0;
+            }
+            .callout-body p:first-child {
+                margin-top: 0;
+            }
+            .callout-body p:last-child {
+                margin-bottom: 0;
+            }
+            .callout.note {
+                background: var(--color-background-info);
+                border-left-color: var(--color-text-info);
+            }
+            .callout.note .ti {
+                color: var(--color-text-info);
+            }
+            .callout.warn {
+                background: var(--color-background-warning);
+                border-left-color: var(--color-text-warning);
+            }
+            .callout.warn .ti {
+                color: var(--color-text-warning);
+            }
+            .callout.practice {
+                background: var(--color-background-success);
+                border-left-color: var(--color-text-success);
+            }
+            .callout.practice .ti {
+                color: var(--color-text-success);
+            }
+
+            /* diagrams */
+            .diagram {
+                display: flex;
+                justify-content: center;
+                margin: 1.5rem 0;
+                padding: 1.25rem;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                overflow-x: auto;
+            }
+            .diagram svg {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+            .diagram .diagram-error {
+                margin: 0;
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                color: var(--color-text-secondary);
+            }
+
+            /* quiz */
+            .quiz-card {
+                margin: 0.9rem 0;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: var(--color-background-secondary);
+                overflow: hidden;
+            }
+            .quiz-q {
+                display: flex;
+                gap: 0.9rem;
+                align-items: flex-start;
+                padding: 1rem 1.1rem;
+            }
+            .qnum {
+                flex: none;
+                min-width: 2.6rem;
+                text-align: center;
+                padding: 0.15rem 0.5rem;
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-info);
+                color: var(--color-text-info);
+                font-weight: 500;
+            }
+            .qtext {
+                flex: 1;
+                min-width: 0;
+            }
+            .quiz-card details {
+                border-top: 1px solid var(--color-border-tertiary);
+            }
+            .quiz-card summary {
+                list-style: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.7rem 1.1rem;
+                color: var(--color-text-info);
+                font-weight: 500;
+            }
+            .quiz-card summary::-webkit-details-marker {
+                display: none;
+            }
+            .quiz-card summary .ti {
+                transition: transform 0.2s;
+            }
+            .quiz-card details[open] summary .ti {
+                transform: rotate(90deg);
+            }
+            .quiz-card .ans {
+                padding: 0.2rem 1.1rem 1rem 1.1rem;
+                color: var(--color-text-secondary);
+            }
+
+            /* references */
+            .ref-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+            .ref-card {
+                display: flex;
+                gap: 1rem;
+                align-items: flex-start;
+                padding: 0.9rem 1.1rem;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: var(--color-background-secondary);
+            }
+            .ref-num {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 2.2rem;
+                height: 2.2rem;
+                border-radius: 50%;
+                background: var(--color-background-info);
+                border: 1px solid var(--color-border-primary);
+                color: var(--color-text-info);
+                font-weight: 500;
+            }
+            .ref-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .ref-kind {
+                color: var(--color-text-tertiary);
+                font-weight: 500;
+            }
+            .ref-desc {
+                color: var(--color-text-primary);
+                margin: 0.15rem 0 0.35rem;
+            }
+            .ref-url {
+                word-break: break-all;
+                display: inline-block;
+            }
+
+            .footer {
+                margin-top: 3rem;
+                padding-top: 1.25rem;
+                border-top: 1px solid var(--color-border-secondary);
+                color: var(--color-text-secondary);
+            }
+            .footer p {
+                margin: 0;
+            }
+
+            /* mobile drawer */
+            .nav-toggle {
+                display: none;
+                position: fixed;
+                right: 1rem;
+                bottom: 1rem;
+                width: 3.25rem;
+                height: 3.25rem;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid var(--color-border-primary);
+                border-radius: 50%;
+                background: var(--color-background-info);
+                color: var(--color-text-info);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 50;
+                padding: 0;
+            }
+            .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: var(--color-background-primary);
+                opacity: 0.7;
+                z-index: 20;
+            }
+            @media (max-width: 1024px) {
+                .sidebar {
+                    width: min(var(--sidebar-w), 85vw);
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                }
+                .sidebar.open {
+                    transform: translateX(0);
+                }
+                main {
+                    margin-left: 0;
+                    padding: 1.5rem 1.1rem 5.5rem;
+                }
+                .nav-toggle {
+                    display: flex;
+                }
+                .backdrop.show {
+                    display: block;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar" aria-label="目次">
+                <div class="brand">
+                    <i class="ti ti-shield-check"></i>
+                    <div>
+                        <div class="brand-title">ISO/IEC 15408-1:2026</div>
+                        <div class="brand-sub">初学者向けステップバイステップ解説ガイド</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#sec-0"
+                                ><span class="nav-num">0</span
+                                ><span class="nav-label"
+                                    >このガイドの使い方と、先に伝えておく注意点</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-1"
+                                ><span class="nav-num">1</span
+                                ><span class="nav-label">Step 1: 規格の基本情報と位置づけ</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-2"
+                                ><span class="nav-num">2</span
+                                ><span class="nav-label"
+                                    >Step 2: 第5版(2026年版)で何が変わったか</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-3"
+                                ><span class="nav-num">3</span
+                                ><span class="nav-label"
+                                    >Step 3: ISO/IEC 15408 シリーズの全体像</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-4"
+                                ><span class="nav-num">4</span
+                                ><span class="nav-label"
+                                    >Step 4: なぜ CC が必要なのか(一般モデルの出発点)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-5"
+                                ><span class="nav-num">5</span
+                                ><span class="nav-label">Step 5: TOE(評価対象)を理解する</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-6"
+                                ><span class="nav-num">6</span
+                                ><span class="nav-label">Step 6: セキュリティ課題定義(SPD)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-7"
+                                ><span class="nav-num">7</span
+                                ><span class="nav-label"
+                                    >Step 7: セキュリティ対策目標(Security Objectives)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-8"
+                                ><span class="nav-num">8</span
+                                ><span class="nav-label"
+                                    >Step 8: セキュリティ要件(SFR と SAR)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-9"
+                                ><span class="nav-num">9</span
+                                ><span class="nav-label"
+                                    >Step 9: セキュリティコンポーネントの構造と操作</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-10"
+                                ><span class="nav-num">10</span
+                                ><span class="nav-label"
+                                    >Step 10: 5つの核となる構成物と適合の種類</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-11"
+                                ><span class="nav-num">11</span
+                                ><span class="nav-label">Step 11: 評価と評価結果</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-12"
+                                ><span class="nav-num">12</span
+                                ><span class="nav-label">Step 12: 保証の合成(Composition)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-13"
+                                ><span class="nav-num">13</span
+                                ><span class="nav-label"
+                                    >Step 13: 読者別ロードマップ(どのパートを誰が使うか)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-14"
+                                ><span class="nav-num">14</span
+                                ><span class="nav-label"
+                                    >Step 14: 実務での使われ方(制度・運用)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-15"
+                                ><span class="nav-num">15</span
+                                ><span class="nav-label"
+                                    >Step 15: CC の範囲外にあるもの(重要)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-16"
+                                ><span class="nav-num">16</span
+                                ><span class="nav-label">Step 16: よくある誤解と正しい理解</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-17"
+                                ><span class="nav-num">17</span
+                                ><span class="nav-label">用語集(初学者向けの言い換え付き)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-18"
+                                ><span class="nav-num">18</span
+                                ><span class="nav-label">理解度チェック(10問)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-19"
+                                ><span class="nav-num">19</span
+                                ><span class="nav-label">次に学ぶ順序(学習ロードマップ)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#sec-20"
+                                ><span class="nav-num">20</span
+                                ><span class="nav-label"
+                                    >参考文献・出典URL(2026年10月15日時点で確認)</span
+                                ></a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <div class="backdrop" id="backdrop"></div>
+            <button
+                class="nav-toggle"
+                id="navToggle"
+                type="button"
+                aria-label="目次を開く"
+                aria-expanded="false"
+            >
+                <i class="ti ti-menu-2"></i>
+            </button>
+            <main>
+                <header class="hero">
+                    <h1>ISO/IEC 15408-1:2026 初学者向けステップバイステップ解説ガイド</h1>
+                    <p>
+                        <strong>正式名称</strong>: Information security, cybersecurity and privacy
+                        protection — Evaluation criteria for IT security — Part 1: Introduction and
+                        general model<br />
+                        <strong>通称</strong>: コモンクライテリア(Common Criteria、CC)Part 1 ／
+                        「概要と一般モデル」<br />
+                        <strong>情報の基準日</strong>: 2026年10月15日<br />
+                        <strong>対象読者</strong>:
+                        セキュリティ評価・認証をはじめて学ぶソフトウェアエンジニア、QAエンジニア、プロダクトセキュリティ担当者
+                    </p>
+                </header>
+                <section class="section" id="sec-0">
+                    <h2>0. このガイドの使い方と、先に伝えておく注意点</h2>
+                    <h3>0.1 3行でわかる ISO/IEC 15408-1</h3>
+                    <ol>
+                        <li>
+                            <strong>ITセキュリティ評価の「共通言語と地図」</strong
+                            >を定めた規格で、「何を、どんな枠組みで評価するのか」の土台を説明している。
+                        </li>
+                        <li>
+                            評価対象を <strong>TOE(評価対象)</strong> と呼び、「<strong
+                                >セキュリティ課題 → 対策目標 → 要件 → 評価</strong
+                            >」という一本の論理でつなぐ。
+                        </li>
+                        <li>
+                            シリーズ全体(Part
+                            1〜5)の入口であり、<strong>用語の定義</strong>と<strong
+                                >PP / ST などの部品</strong
+                            >の説明が中心になっている。
+                        </li>
+                    </ol>
+                    <h3>0.2 このガイドの根拠と限界(重要)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2026年版の本文</td>
+                                    <td>
+                                        IEC Webstore での掲載価格は
+                                        <strong>CHF 0</strong>(2026年10月時点)だが、本文の著作権は
+                                        ISO/IEC
+                                        に帰属し、転載・再利用には別途の許諾条件がある(掲載価格と再利用条件は別の問題)。本ガイドは<strong>本文全文を参照しておらず</strong>、ISO公式ページの公開情報(概要・版情報・ライフサイクル)と、公開されている序文(Foreword)の変更点要約を根拠にしている
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>概念・構造の解説</td>
+                                    <td>
+                                        2026年版の直前版にあたる
+                                        <strong>CC:2022 Revision 1 Part 1</strong
+                                        >(CCRAが無償公開、著作権者が再利用を許諾している文書)に基づく。第5版は技術的改訂版だが、序文の変更点を見る限り<strong
+                                            >骨格は2022年版を引き継いでいる</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>条文番号</td>
+                                    <td>
+                                        本文中の「箇条」番号は CC:2022 R1
+                                        のもの。2026年版で番号がずれている可能性があるため、<strong>引用・監査で使う場合は必ず2026年版の本文で確認</strong>すること
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>個人ブログ</td>
+                                    <td>
+                                        2026年版を扱った著名な開発者個人の投稿は今回の検索では見つからなかった。代わりに、国際的に知られた評価機関(atsec)、CCRA公式、各国の認証機関、ENISAなどの<strong>一次・準一次情報</strong>を優先した
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>規格の転載</td>
+                                    <td>
+                                        著作権に配慮し、定義や規定は<strong>自分の言葉で言い換えて</strong>説明している
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>0.3 学習の進め方</h3>
+                    <div class="diagram" id="dg-d1" role="img" aria-label="フローチャート 1"></div>
+                </section>
+                <section class="section" id="sec-1">
+                    <h2>1. Step 1: 規格の基本情報と位置づけ</h2>
+                    <h3>1.1 基本情報(ISO公式ページより)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>規格番号</td>
+                                    <td>ISO/IEC 15408-1:2026</td>
+                                </tr>
+                                <tr>
+                                    <td>版</td>
+                                    <td>第5版(Edition 5)</td>
+                                </tr>
+                                <tr>
+                                    <td>発行</td>
+                                    <td>2026年5月(公開日 2026-05-19)</td>
+                                </tr>
+                                <tr>
+                                    <td>ページ数</td>
+                                    <td>138ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>担当委員会</td>
+                                    <td>
+                                        ISO/IEC JTC 1/SC
+                                        27(情報セキュリティ、サイバーセキュリティ及びプライバシー保護)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ICS分類</td>
+                                    <td>35.030(ITセキュリティ)</td>
+                                </tr>
+                                <tr>
+                                    <td>ステージ</td>
+                                    <td>60.60(国際規格として発行済み)</td>
+                                </tr>
+                                <tr>
+                                    <td>言語</td>
+                                    <td>英語、フランス語</td>
+                                </tr>
+                                <tr>
+                                    <td>置き換えた規格</td>
+                                    <td>ISO/IEC 15408-1:2022(撤回済み)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>1.2 公式ページの概要(要旨)</h3>
+                    <p>ISO公式ページの概要を言い換えると、この文書は次の役割を持つ。</p>
+                    <ul>
+                        <li>ITセキュリティ評価の<strong>一般的な概念と原則</strong>を確立する。</li>
+                        <li>
+                            ITプロダクトのセキュリティ特性を評価するための<strong>一般モデル</strong>を示す。
+                        </li>
+                        <li>ISO/IEC 15408シリーズ全体の<strong>概観</strong>を与える。</li>
+                        <li>シリーズ共通の<strong>用語と略語</strong>を定義する。</li>
+                        <li>
+                            評価の中心概念である
+                            <strong>TOE(Target of Evaluation)</strong> を確立する。
+                        </li>
+                        <li>
+                            <strong>評価の文脈</strong>と、<strong>想定する読者</strong>を説明する。
+                        </li>
+                        <li>評価に必要な<strong>基本的なセキュリティ概念</strong>を導入する。</li>
+                    </ul>
+                    <h3>1.3 規格が発行されるまでの流れ</h3>
+                    <p>
+                        ISOの進行記録によると、新規プロジェクト承認から発行まで約2年7か月かかっている。
+                    </p>
+                    <div class="diagram" id="dg-d2" role="img" aria-label="フローチャート 2"></div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                補足: 欧州規格としては EN ISO/IEC 15408
+                                シリーズ(2026年版)も採用されている(CEN/CLC/TC 13、有効日 2026-06-03
+                                とする記載が標準カタログサイトにある)。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-2">
+                    <h2>2. Step 2: 第5版(2026年版)で何が変わったか</h2>
+                    <h3>2.1 序文(Foreword)が示す主な変更点</h3>
+                    <p>
+                        ISO/OBPの序文によると、第5版は第4版(2022年版)を<strong>技術的に改訂</strong>したもので、主な変更は次の4点とされている。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>変更点(要約)</th>
+                                    <th>初学者向けの意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>用語を見直し・更新</strong></td>
+                                    <td>
+                                        定義の曖昧さや不整合を整理した。用語集(第3章)を読み直す価値がある
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        ST・PP・PP-Module
+                                        の<strong>パッケージ適合主張</strong>を見直し、ISO/IEC
+                                        18045(CEM)と整合
+                                    </td>
+                                    <td>
+                                        「どのパッケージに従うか」の書き方と、評価方法側の扱いをそろえた
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        <strong>複数の PP-Module Base</strong>
+                                        の記述を、より正確に改善
+                                    </td>
+                                    <td>PP-Module を組み合わせる際の土台指定が厳密になった</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td><strong>誤りの訂正</strong></td>
+                                    <td>2022年版の誤記・不備の修正</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>2.2 初学者が押さえるべきポイント</h3>
+                    <ul>
+                        <li>
+                            2022年版で入った大きな考え方(5部構成、<strong>Exact Conformance</strong
+                            >、<strong>Direct Rationale</strong
+                            >、<strong>Multi-assurance</strong>、<strong>Composition</strong>)は<strong>2026年版でも前提</strong>になっていると考えてよい。
+                        </li>
+                        <li>
+                            2026年版は「大改革」というより<strong>整備・精度向上のための改訂</strong>という性格が強い。
+                        </li>
+                        <li>
+                            具体的な条文レベルの差分は有償本文で確認が必要。CCRAは2022年版向けの正誤・解釈集(CCMB
+                            Errata and Interpretation)も公開しており、改訂の背景理解に役立つ。
+                        </li>
+                    </ul>
+                    <h3>2.3 参考: 2022年版で何が大きく変わったのか(CC v3.1 R5 → CC:2022)</h3>
+                    <p>
+                        2026年版を理解するうえで、2022年の大改訂を知っておくと流れがつかめる。CC:2022
+                        の序文は、次のような変更を挙げている。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>区分</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>構成</td>
+                                    <td>
+                                        文書を再構成し、<strong
+                                            >Part 4(評価方法とアクティビティの枠組み)</strong
+                                        >と <strong>Part 5(定義済みパッケージ)</strong>を新設
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>用語</td>
+                                    <td>用語の見直し・更新</td>
+                                </tr>
+                                <tr>
+                                    <td>要件</td>
+                                    <td>新しい機能要件・保証要件を追加</td>
+                                </tr>
+                                <tr>
+                                    <td>適合</td>
+                                    <td><strong>Exact Conformance(完全適合)</strong>を導入</td>
+                                </tr>
+                                <tr>
+                                    <td>PP</td>
+                                    <td>
+                                        低保証PPを廃止し、<strong>Direct Rationale PP</strong>を導入
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>評価</td>
+                                    <td><strong>Multi-assurance(複数保証)評価</strong>を導入</td>
+                                </tr>
+                                <tr>
+                                    <td>合成</td>
+                                    <td><strong>Composition(保証の合成)</strong>を導入</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        また、CC:2022
+                        は「まずISO/IEC規格として作られ、その後CCRAが新バージョンとして公開した」点も特徴的で、これまでのCC
+                        v3.1 までとは開発の順序が逆になっている。
+                    </p>
+                </section>
+                <section class="section" id="sec-3">
+                    <h2>3. Step 3: ISO/IEC 15408 シリーズの全体像</h2>
+                    <h3>3.1 シリーズの構成</h3>
+                    <div class="diagram" id="dg-d3" role="img" aria-label="フローチャート 3"></div>
+                    <h3>3.2 各パートの役割</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>パート</th>
+                                    <th>題名(概略)</th>
+                                    <th>一言でいうと</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Part 1</td>
+                                    <td>概要と一般モデル</td>
+                                    <td>
+                                        用語、TOE、PP・STなどの<strong>部品の考え方</strong>と<strong
+                                            >全体の地図</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Part 2</td>
+                                    <td>セキュリティ機能コンポーネント</td>
+                                    <td>
+                                        「何ができるべきか」を書くための<strong
+                                            >標準テンプレート集</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Part 3</td>
+                                    <td>セキュリティ保証コンポーネント</td>
+                                    <td>
+                                        「どう確かめるか」を書くための<strong>標準テンプレート集</strong>。<strong>PP、PP-Configuration、PP-Module、ST</strong>の評価基準とTOEの評価基準も含む。PP-Moduleは単独では評価せず、そのPP-Moduleを使う<strong>PP-Configurationの評価時に評価</strong>される
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Part 4</td>
+                                    <td>評価方法・アクティビティの枠組み</td>
+                                    <td>
+                                        CEMから<strong>評価アクティビティ</strong>を導き出し記述するための枠組み
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Part 5</td>
+                                    <td>定義済みパッケージ</td>
+                                    <td>
+                                        <strong>EAL</strong
+                                        >(評価保証レベル)や<strong>CAP</strong>(合成保証パッケージ)など、使い回せる要件セット
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 18045</td>
+                                    <td>CEM</td>
+                                    <td>
+                                        評価者が<strong>実際にどう評価するか</strong>を定める方法論(CC本体とは別の規格)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>3.3 補助文書</h3>
+                    <p>
+                        ISO/IEC TR 22216
+                        は、2022年版での新概念や変更点を解説する技術報告書として知られ、第5版の参考文献等でも言及されている。移行期の疑問を解く手掛かりになる。
+                    </p>
+                </section>
+                <section class="section" id="sec-4">
+                    <h2>4. Step 4: なぜ CC が必要なのか(一般モデルの出発点)</h2>
+                    <h3>4.1 資産・脅威・対策・リスクの関係</h3>
+                    <p>CC Part 1 の一般モデルは、まず非常に基本的な話から始まる。</p>
+                    <div class="diagram" id="dg-d4" role="img" aria-label="フローチャート 4"></div>
+                    <p>ポイントは次のとおり。</p>
+                    <ul>
+                        <li>
+                            セキュリティとは、<strong>運用環境の中にある資産を守ること</strong>。
+                        </li>
+                        <li>
+                            損なわれるものは、典型的には<strong>機密性・完全性・可用性</strong>。
+                        </li>
+                        <li>
+                            対策には、ファイアウォールやスマートカードなどの<strong>IT対策</strong>と、警備や手順などの<strong>非IT対策</strong>がある。
+                        </li>
+                        <li>
+                            CC
+                            は、機密性・完全性・可用性の3つ以外のITセキュリティ側面にも適用できる余地があるとされている。
+                        </li>
+                    </ul>
+                    <h3>4.2 「十分性」と「正しさ」: 評価が答える2つの問い</h3>
+                    <p>
+                        資産の所有者は、リスクを受け入れる判断を<strong>説明できる</strong>必要がある。そのために次の2点を示したい。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>問い</th>
+                                    <th>意味</th>
+                                    <th>CCでの扱い</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>十分か(Sufficiency)</strong></td>
+                                    <td>
+                                        対策が<strong>主張どおりに動けば</strong>、脅威は打ち消されるか
+                                    </td>
+                                    <td>
+                                        STの<strong>論証</strong>(目標・要件が課題をカバーしているか)で確認
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>正しいか(Correctness)</strong></td>
+                                    <td>対策は<strong>主張どおりに動いているか</strong></td>
+                                    <td><strong>保証要件(SAR)</strong>に基づく評価で確認</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        多くの所有者には、これを自力で判断する知識やリソースがないため、<strong>第三者による評価</strong>で信頼を高める。これがCCの存在理由である。
+                    </p>
+                    <div class="diagram" id="dg-d5" role="img" aria-label="フローチャート 5"></div>
+                    <h3>4.3 CC が「意味を持つ範囲」についての警告</h3>
+                    <p>
+                        CC Part 1
+                        の序文には、初学者が必ず理解しておきたい注意書きがある。要約すると次のとおり。
+                    </p>
+                    <ul>
+                        <li>
+                            CC
+                            は意図的に<strong>柔軟</strong>に作られている。だからこそ、<strong>不適切な評価方法・無関係なセキュリティ特性・不適切な製品</strong>と組み合わせると、<strong>意味のない評価結果</strong>になりうる。
+                        </li>
+                        <li>
+                            つまり「評価された」という事実は、<strong>どのセキュリティ特性を、どの方法で評価したか</strong>という文脈の中でのみ意味を持つ。
+                        </li>
+                        <li>
+                            購入者も、その文脈を確認して、自分の状況に合うか判断する必要がある。
+                        </li>
+                    </ul>
+                    <div class="callout practice">
+                        <i class="ti ti-bulb"></i>
+                        <div class="callout-body">
+                            <p>
+                                <strong>現場での教訓</strong>:
+                                「CC認証済み」というラベルだけで安全とは言えない。<strong>認証書とSTをセットで読む</strong>ことが必須である。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-5">
+                    <h2>5. Step 5: TOE(評価対象)を理解する</h2>
+                    <h3>5.1 TOE とは</h3>
+                    <p>
+                        <strong>TOE(Target of Evaluation)</strong
+                        >は、評価の対象となる<strong>ソフトウェア・ファームウェア・ハードウェアの集合</strong>(必要に応じてガイダンス文書を伴う)である。
+                    </p>
+                    <p>
+                        CC
+                        は「製品」ではなく「TOE」という言葉を使う。理由は、評価対象が必ずしも製品と一致しないからである。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>TOEになりうるもの</th>
+                                    <th>例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>製品全体</td>
+                                    <td>ネットワーク機器、OS、アプリ</td>
+                                </tr>
+                                <tr>
+                                    <td>製品の一部</td>
+                                    <td>
+                                        ICの暗号コプロセッサ、DBアプリ本体(リモートクライアントを除く)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>複数製品の集合</td>
+                                    <td>端末・サーバ・ネットワーク機器・ソフトを含むLAN</td>
+                                </tr>
+                                <tr>
+                                    <td>技術そのもの</td>
+                                    <td>製品化されない固有技術</td>
+                                </tr>
+                                <tr>
+                                    <td>上記の組み合わせ</td>
+                                    <td>OS上のアプリケーションと組み合わせたもの</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        CC Part 1
+                        は、比較的単純なTOE(インタフェースが少なく、サプライチェーンが明確)と、複雑なTOE(インタフェースやコンポーネントが多い、複数の製造・統合工程がある)の例を挙げている。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>比較的シンプル</th>
+                                    <th>より複雑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        ネットワーク機器、ソフトウェアアプリ、OS、仮想化システム、IC、モバイルアプリ
+                                    </td>
+                                    <td>LAN全体、モバイル機器、ゲートウェイ、複合機、HSM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>5.2 TOE の境界(Boundary)</h3>
+                    <p>TOEの<strong>境界</strong>は、STを書くうえで根本的に重要な概念である。</p>
+                    <div class="diagram" id="dg-d6" role="img" aria-label="フローチャート 6"></div>
+                    <ul>
+                        <li>
+                            STは、<strong>顧客に提供される形での物理的・論理的な範囲</strong>を明確に示す。
+                        </li>
+                        <li>
+                            TOE境界の外にある製品部分は<strong>非TOE部分</strong>と呼ばれ、評価の対象外。
+                        </li>
+                        <li>
+                            <strong
+                                >TOEの一部だけを評価したのに、製品全体を評価したかのように見せてはいけない</strong
+                            >(CCが明示的に注意している点)。
+                        </li>
+                        <li>TOE境界の外側はすべて<strong>運用環境</strong>に属する。</li>
+                    </ul>
+                    <h3>5.3 TOE の「表現」と「構成」</h3>
+                    <p><strong>表現の違い</strong>: 評価の観点によって、TOEは異なる姿で現れる。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>保証の観点</th>
+                                    <th>必要なTOEの姿(ソフトウェアの例)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>テスト、脆弱性分析</td>
+                                    <td>
+                                        動作する<strong>サンプル</strong>(インストール済みの実機・実行ファイル)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>実装表現の検査</td>
+                                    <td>特定バージョンの<strong>ソースコード</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>ライフサイクル管理</td>
+                                    <td>
+                                        構成管理システム上の<strong
+                                            >ファイル一覧(構成リスト)</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>配布・納品</td>
+                                    <td>梱包された媒体、ダウンロード用バイナリ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <strong>構成の違い</strong>: 同じ製品でも設定次第で挙動が変わる。そのため、
+                    </p>
+                    <ul>
+                        <li>
+                            TOE向けガイダンスは、一般製品向けガイダンスより<strong>構成を厳しく絞る</strong>ことが多い。
+                        </li>
+                        <li>
+                            ガイダンスが複数の構成を許す場合、それらの構成を<strong>まとめて「TOE」</strong>と呼び、<strong>すべての構成が要件を満たす</strong>必要がある。
+                        </li>
+                    </ul>
+                </section>
+                <section class="section" id="sec-6">
+                    <h2>6. Step 6: セキュリティ課題定義(SPD)</h2>
+                    <h3>6.1 SPD とは</h3>
+                    <p>
+                        <strong>SPD(Security Problem Definition)</strong
+                        >は、「このTOEが対処すべきセキュリティ課題」を形式的に定義した記述である。<strong>脅威・組織のセキュリティ方針(OSP)・前提条件</strong>の3要素でできている。
+                    </p>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                SPD
+                                の導出プロセスそのものはCCの範囲外(CCにとってSPDは公理的に与えられる)。ただし、<strong>SPDの質が評価結果の有用性を大きく左右する</strong>ため、リスク分析などに十分な労力をかけるべきとされている。導出の手引きとして
+                                ISO/IEC 15446 が参照されている。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>要素</th>
+                                    <th>意味</th>
+                                    <th>例(筆者による例示)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>脅威(Threat)</strong></td>
+                                    <td>
+                                        脅威エージェントが資産に対して行う<strong>悪い行為</strong>
+                                    </td>
+                                    <td>
+                                        「ネットワーク上の攻撃者が、転送中のファイルを盗み見る」
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>OSP(組織のセキュリティ方針)</strong></td>
+                                    <td>組織や法規制が課す<strong>ルール・手順・指針</strong></td>
+                                    <td>「管理操作は管理者権限を持つ者のみが行えること」</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>前提条件(Assumption)</strong></td>
+                                    <td>運用環境について<strong>真であると仮定する事柄</strong></td>
+                                    <td>「管理コンソールは入退室管理された部屋に置かれる」</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>6.2 脅威の構成</h3>
+                    <p>脅威は、次の3要素で表せる。</p>
+                    <div class="diagram" id="dg-d7" role="img" aria-label="フローチャート 7"></div>
+                    <p>
+                        脅威エージェントは、個人だけでなく<strong>種類やグループ</strong>として記述してもよい。
+                    </p>
+                    <h3>6.3 前提条件の重要な性質</h3>
+                    <ul>
+                        <li>
+                            評価中、前提条件は<strong>真であるものとして扱われ、テストされない</strong>。
+                        </li>
+                        <li>
+                            前提を置いてよいのは<strong>運用環境に対してだけ</strong>。<strong>TOEの振る舞いについて前提を置くことは決して許されない</strong>(評価とは、TOEに関する主張を検証する行為であって、主張が真だと仮定する行為ではないため)。
+                        </li>
+                        <li>
+                            一方で、PP・ST評価は、そのTOE種別や環境にとって<strong>非現実的な前提</strong>を見つける助けにもなる。
+                        </li>
+                    </ul>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="callout-body">
+                            <p>
+                                <strong>よくある失敗</strong>:
+                                守れない仕事を「前提」に押し込んで評価を楽にしようとする。非現実的な前提は評価で指摘され、製品の利用者にとっても無意味になる。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-7">
+                    <h2>7. Step 7: セキュリティ対策目標(Security Objectives)</h2>
+                    <h3>7.1 役割は3つ</h3>
+                    <p>
+                        セキュリティ対策目標は、課題に対する<strong>簡潔な解決策の宣言</strong>で、自然言語で書かれる。
+                    </p>
+                    <ol>
+                        <li>
+                            課題に対する<strong>高レベルの解決策</strong>を、読み手(購入候補者)に分かりやすく示す。
+                        </li>
+                        <li>
+                            解決策を<strong>TOEの役割</strong>と<strong>運用環境の役割</strong>に<strong>分割</strong>する。
+                        </li>
+                        <li>
+                            この分割された解決策が<strong>課題を過不足なく解く</strong>ことを示す。
+                        </li>
+                    </ol>
+                    <h3>7.2 2種類の対策目標</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>種類</th>
+                                    <th>担い手</th>
+                                    <th>評価での扱い</th>
+                                    <th>例(CC Part 1の例示を要約)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>TOE のセキュリティ対策目標</strong></td>
+                                    <td>TOE自身</td>
+                                    <td><strong>正しさ(実装)が評価される</strong></td>
+                                    <td>
+                                        「利用者を識別・認証してからサービスを使わせる」「ファイル内容の機密性を保つ」
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>運用環境のセキュリティ対策目標</strong></td>
+                                    <td>運用環境</td>
+                                    <td>
+                                        <strong>正しさは評価されない</strong
+                                        >(正しく実現されると仮定)
+                                    </td>
+                                    <td>
+                                        「利用者に適切な訓練を行う」「TOEへの物理アクセスを管理者に限る」
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>7.3 なぜ「環境の対策」を評価の外に置くのか</h3>
+                    <p>CC Part 1 は理由を3点挙げている。</p>
+                    <ul>
+                        <li>
+                            CCは、<strong>開発・製造環境や製品ライフサイクル管理</strong>の正しさを評価するのに向いており、運用環境側の対策は評価対象外とするのが筋である。
+                        </li>
+                        <li>
+                            対策の正しさの評価には<strong>時間と費用</strong>がかかり、すべてを評価するのは現実的でない。
+                        </li>
+                        <li>
+                            ある対策の正しさが<strong>別の評価ですでに確認済み</strong>の場合もあり、再評価は非効率である。
+                        </li>
+                    </ul>
+                    <p>
+                        ただし、<strong>購入者が別の手段で環境の正しさを確認することは妨げない</strong>。例えば、OSのTOEが「信頼できないネットワークからはFTPだけを許可する」という環境目標を持つなら、購入者は評価済みのファイアウォールを選んで設定すればよい。
+                    </p>
+                    <h3>7.4 トレース(追跡)と正当化</h3>
+                    <p>
+                        STなどには、対策目標と課題をつなぐ<strong>根拠説明(rationale)</strong>が含まれる。
+                    </p>
+                    <div class="diagram" id="dg-d8" role="img" aria-label="フローチャート 8"></div>
+                    <p>トレースの規則(Part 1の要旨)は次のとおり。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>規則</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>余計な目標がない</strong></td>
+                                    <td>
+                                        すべての対策目標は、少なくとも1つのSPD要素にさかのぼれる
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>課題が漏れなく覆われる</strong></td>
+                                    <td>すべてのSPD要素に、少なくとも1つの対策目標が対応する</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>対応が正しい</strong></td>
+                                    <td>トレースが論理的に成り立つ</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>前提へのトレースはTOE目標では不可</strong></td>
+                                    <td>
+                                        前提条件は常に「環境」に置くため、TOEの対策目標は前提条件にさかのぼらない
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>複数目標で1脅威を扱える</strong></td>
+                                    <td>複数の目標の組み合わせで、1つの脅威を打ち消してよい</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>7.5 「脅威を打ち消す(counter)」の意味</h3>
+                    <p>「打ち消す」は、<strong>脅威を完全に除去する</strong>ことだけを指さない。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>方法</th>
+                                    <th>例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>除去</strong></td>
+                                    <td>
+                                        脅威エージェントから悪い行為の能力を奪う、資産を移動・保護して行為を無効にする
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>低減</strong></td>
+                                    <td>
+                                        攻撃者の能力・機会を制限する、成功率を下げる、抑止する、より高い専門性やリソースを要求する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>影響の緩和</strong></td>
+                                    <td>頻繁なバックアップ、予備の確保、保険、迅速な検知と対応</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>7.6 結論</h3>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                すべての対策目標が達成されれば、SPDは解決される。すべての脅威は打ち消され、すべてのOSPは実施され、すべての前提は維持される。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-8">
+                    <h2>8. Step 8: セキュリティ要件(SFR と SAR)</h2>
+                    <h3>8.1 全体像</h3>
+                    <div class="diagram" id="dg-d9" role="img" aria-label="フローチャート 9"></div>
+                    <h3>8.2 SFR(セキュリティ機能要件)</h3>
+                    <ul>
+                        <li>
+                            「TOEが課題にどう対処するか」を<strong>標準化された言語</strong>で記述する。
+                        </li>
+                        <li>
+                            TOEの対策目標を<strong>完全に翻訳</strong>したものでなければならない。
+                        </li>
+                        <li>
+                            <strong>標準言語で書く理由</strong>:
+                            <ol>
+                                <li>
+                                    評価対象を<strong>正確に</strong>記述するため(自然言語の目標を精密化する)。
+                                </li>
+                                <li>
+                                    異なるSTを<strong>比較</strong>できるようにするため(同じ用語・概念を使うため、著者が違っても比較できる)。
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            PPやPP-Moduleでは、SFRは<strong>特定の実装に依存しない</strong>ように書く。
+                        </li>
+                        <li>
+                            <strong>運用環境の対策目標</strong
+                            >は評価されないため、標準言語に翻訳する必要がない。
+                        </li>
+                    </ul>
+                    <h3>8.3 SAR(セキュリティ保証要件)</h3>
+                    <ul>
+                        <li>
+                            「TOEがSFRを満たしていることに、どうやって<strong>確信</strong>を得るか」を記述する。
+                        </li>
+                        <li>
+                            TOEの<strong>開発・納品の条件やプロセス</strong>と、それに関する<strong>評価者の作業</strong>を定める。
+                        </li>
+                        <li>例: 設計の検査、テスト、開発環境の物理セキュリティの確認など。</li>
+                        <li>
+                            SARは<strong>課題のカバー</strong>には関与しない(カバーは対策目標とSFRの役割)。SARが扱うのは「TOEがSTに忠実か」である。
+                        </li>
+                    </ul>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>比較</th>
+                                    <th>SFR</th>
+                                    <th>SAR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>問い</td>
+                                    <td>TOEは<strong>何をするか</strong></td>
+                                    <td>その主張を<strong>どう確かめるか</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>対象</td>
+                                    <td>TOEのセキュリティ機能</td>
+                                    <td>開発・納品プロセス、証拠、評価者の作業</td>
+                                </tr>
+                                <tr>
+                                    <td>部品の出どころ</td>
+                                    <td>Part 2</td>
+                                    <td>Part 3</td>
+                                </tr>
+                                <tr>
+                                    <td>代表的なクラスの例*</td>
+                                    <td>
+                                        FAU(監査)、FCS(暗号サポート)、FDP(利用者データ保護)、FIA(識別と認証)、FMT(セキュリティ管理)、FPT(TSFの保護)、FTP(高信頼パス/チャネル)など
+                                    </td>
+                                    <td>
+                                        ADV(開発)、AGD(ガイダンス)、ALC(ライフサイクル)、ATE(テスト)、AVA(脆弱性評定)、ACO(合成)など
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        * クラス名は一般に知られるものの例示。2026年版Part 2・Part
+                        3での正確な一覧は各パートで確認すること。
+                    </p>
+                    <h3>8.4 Direct Rationale(直接的根拠)</h3>
+                    <p>
+                        標準的な方法では、課題 → TOE対策目標 → SFR
+                        と段階を踏む。しかし場合によっては、<strong>TOEの対策目標を省略して、SPDからSFRへ直接対応づける</strong>ほうが適切なことがある。これが
+                        <strong>Direct Rationale</strong>
+                        で、PP・PP-Module・STで使える。この場合、TOEの対策目標は含まれず、運用環境の対策目標は残りうる。
+                    </p>
+                    <div
+                        class="diagram"
+                        id="dg-d10"
+                        role="img"
+                        aria-label="フローチャート 10"
+                    ></div>
+                </section>
+                <section class="section" id="sec-9">
+                    <h2>9. Step 9: セキュリティコンポーネントの構造と操作</h2>
+                    <h3>9.1 部品の階層</h3>
+                    <p>要件は、決まった階層構造の部品から作られる。</p>
+                    <div
+                        class="diagram"
+                        id="dg-d11"
+                        role="img"
+                        aria-label="フローチャート 11"
+                    ></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>階層</th>
+                                    <th>説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>クラス</td>
+                                    <td>共通の焦点を持つファミリの集まり</td>
+                                </tr>
+                                <tr>
+                                    <td>ファミリ</td>
+                                    <td>
+                                        目的は同じだが、強調点や厳しさが異なるコンポーネントの集まり
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>コンポーネント</td>
+                                    <td>
+                                        要件の基礎として<strong>選択できる最小のまとまり</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>エレメント</td>
+                                    <td>個別のセキュリティニーズの自己完結した記述</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>9.2 4つの操作(Operations)</h3>
+                    <p>
+                        部品は「穴あきテンプレート」のようなもので、<strong>操作</strong>によって自分のTOEに合わせて仕上げる。この仕上げ作業を<strong>完成(completion)</strong>と呼ぶ。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>操作</th>
+                                    <th>英語</th>
+                                    <th>内容</th>
+                                    <th>イメージ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>反復</strong></td>
+                                    <td>Iteration</td>
+                                    <td>
+                                        同じコンポーネントを<strong>複数回</strong>使い、異なる要件を表す
+                                    </td>
+                                    <td>認証要件を「管理者用」「一般利用者用」で2回使う</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>割当</strong></td>
+                                    <td>Assignment</td>
+                                    <td>指定されたパラメータに<strong>値を入れる</strong></td>
+                                    <td>認証失敗の許容回数に数値を入れる</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>選択</strong></td>
+                                    <td>Selection</td>
+                                    <td>用意された<strong>選択肢から選ぶ</strong></td>
+                                    <td>「監査記録の対象」から該当するものを選ぶ</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>詳細化</strong></td>
+                                    <td>Refinement</td>
+                                    <td>部品に<strong>詳細を追加</strong>する</td>
+                                    <td>自分のTOEに即した具体的な条件を書き足す</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                STでは<strong>完全に完成した</strong>コンポーネントだけを示す。PP・PP-Module・パッケージは、利用者に柔軟性を残すため<strong>未完成のコンポーネント</strong>を含むことが多い。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>9.3 依存関係</h3>
+                    <p>
+                        コンポーネントの中には、他のコンポーネントを<strong>前提として必要とする</strong>ものがある。PP・ST・パッケージにあるコンポーネントを含めたら、その依存先も含める必要がある(含めない場合は<strong>根拠</strong>を示す)。
+                    </p>
+                    <h3>9.4 拡張コンポーネント</h3>
+                    <p>
+                        Part 2・Part 3にない要件が必要な場合、CC Part 1のルールに従って<strong
+                            >拡張要件(extended components)</strong
+                        >を定義できる。拡張要件はPart
+                        2の形式・構文を保ち、ST・PP・PP-Moduleの著者が定義できる。
+                    </p>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="callout-body">
+                            <p>
+                                注意(移行期): CCRAの移行ポリシーでは、CC
+                                v3.1のPPにある拡張コンポーネントは、CC:2022のPart
+                                2・3の部品への置き換えが望ましいとされている。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-10">
+                    <h2>10. Step 10: 5つの核となる構成物と適合の種類</h2>
+                    <h3>10.1 5つの構成物</h3>
+                    <p>CC のパラダイムは、次の5つの構成物でできている。</p>
+                    <div
+                        class="diagram"
+                        id="dg-d12"
+                        role="img"
+                        aria-label="フローチャート 12"
+                    ></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>構成物</th>
+                                    <th>一言で</th>
+                                    <th>実装依存か</th>
+                                    <th>主な書き手</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>パッケージ</strong></td>
+                                    <td>
+                                        要件の再利用可能なセット(<strong>機能パッケージ</strong>と<strong>保証パッケージ</strong>がある)
+                                    </td>
+                                    <td>非依存</td>
+                                    <td>技術作業部会など</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP</strong></td>
+                                    <td>
+                                        あるTOE<strong>種別</strong>に期待されるSFR・SARをまとめた「共通の要求仕様」
+                                    </td>
+                                    <td>非依存</td>
+                                    <td>利用者団体、技術作業部会</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP-Module</strong></td>
+                                    <td>
+                                        基本PPの種別を詳細化したり、特定技術の要件を<strong>追加</strong>する部品
+                                    </td>
+                                    <td>非依存</td>
+                                    <td>技術作業部会</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP-Configuration</strong></td>
+                                    <td>複数のPPとPP-Moduleを<strong>組み合わせた</strong>仕様</td>
+                                    <td>非依存</td>
+                                    <td>技術作業部会</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ST</strong></td>
+                                    <td>
+                                        <strong>特定のTOE</strong
+                                        >について、SPDからSFR・SARまでを記した<strong
+                                            >核心文書</strong
+                                        >
+                                    </td>
+                                    <td>依存</td>
+                                    <td>開発者</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>10.2 PP-Module と PP-Configuration の考え方(CC Part 1の例を要約)</h3>
+                    <p>
+                        基本PPが「OS」「モバイル機器」で、PP-Moduleが「Bluetooth」「無線LANクライアント」だとする。すると、次の6通りのPP-Configurationが作れる。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>組み合わせ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>OS + Bluetooth</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>OS + 無線LANクライアント</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>OS + Bluetooth + 無線LANクライアント</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>モバイル機器 + Bluetooth</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>モバイル機器 + 無線LANクライアント</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>モバイル機器 + Bluetooth + 無線LANクライアント</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        PP-Moduleは、他のPP-Moduleを土台にすることもできる(基本のPP-Moduleを辿ると最終的にPPに行き着く)。
+                    </p>
+                    <h3>10.3 ST の中身(概略)</h3>
+                    <p>
+                        STは、<strong>課題定義から始まる一貫した論理</strong>を持つ。Part
+                        1は、STが次の流れを示すとしている。
+                    </p>
+                    <div
+                        class="diagram"
+                        id="dg-d13"
+                        role="img"
+                        aria-label="フローチャート 13"
+                    ></div>
+                    <p>
+                        STは単独の文書でも、既存のPP・PP-Configurationに<strong>適合する</strong>形でもよい。後者なら、同じ種別のTOE同士で<strong>評価結果の比較</strong>がしやすくなり、効率も上がる。
+                    </p>
+                    <h3>10.4 適合の種類(Conformance Types)</h3>
+                    <p>
+                        STがPPやPP-Configurationに「従う」とき、その<strong>従い方</strong>には3種類ある。PP・PP-Module・PP-Configurationは、<strong>どの種類かを必ず明示</strong>しなければならない。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>種類</th>
+                                    <th>略称</th>
+                                    <th>内容(要約)</th>
+                                    <th>こんなときに</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Exact(完全)適合</strong></td>
+                                    <td>EC</td>
+                                    <td>
+                                        選択ベース／任意SFRの例外を除き、参照先PP/PP-Configurationの<strong>要件をすべて満たす</strong>必要があり、STの要件はその中のものだけで構成される。範囲を超えた追加も、<strong
+                                            >一部を省略する部分適合も認められない</strong
+                                        >
+                                    </td>
+                                    <td>
+                                        同一の厳密な要件で評価結果を<strong>揃えたい</strong>(cPPなど)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Strict(厳格)適合</strong></td>
+                                    <td>SC</td>
+                                    <td>
+                                        PPの要件が<strong>すべてSTにも含まれる</strong>。STはそれに<strong>追加</strong>してもよい
+                                    </td>
+                                    <td>守るべき要件は厳しく守らせつつ、拡張は許す</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Demonstrable(実証可能)適合</strong></td>
+                                    <td>DC</td>
+                                    <td>
+                                        PP/STが、PPの課題を解く<strong>同等以上に厳しい解決策</strong>を示す
+                                    </td>
+                                    <td>構成が違っても、同等の保証を<strong>論証</strong>できる</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                補足:
+                                STは<strong>1つ以上のPP</strong>に完全適合を主張できるが、<strong>PP-Configurationには1つだけ</strong>。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>10.5 低保証PPの廃止</h3>
+                    <p>
+                        CC:2022で<strong>低保証PP</strong>は廃止され、代わりに<strong
+                            >Direct Rationale PP</strong
+                        >が導入された(2.3節参照)。
+                    </p>
+                </section>
+                <section class="section" id="sec-11">
+                    <h2>11. Step 11: 評価と評価結果</h2>
+                    <h3>11.1 何が評価されるのか</h3>
+                    <p>
+                        CCでの「評価」とは、<strong>PP-Configuration、PP、ST、TOE</strong>のいずれかを、<strong>定められた基準に照らして評価</strong>することである。
+                    </p>
+                    <div
+                        class="diagram"
+                        id="dg-d14"
+                        role="img"
+                        aria-label="フローチャート 14"
+                    ></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>対象</th>
+                                    <th>何を確認するか(イメージ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PP / PP-Configuration</td>
+                                    <td>
+                                        (STがPP等への適合を任意に主張する場合に前提となる。STは単独でも評価できる)内部矛盾がなく、課題・目標・要件が整合し、実用になるか
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ST</td>
+                                    <td>STが一貫していて、TOEの評価の基礎として使えるか</td>
+                                </tr>
+                                <tr>
+                                    <td>TOE</td>
+                                    <td>TOEがSTの主張(SFR)を、SARに沿って満たしているか</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>11.2 評価の関係者</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>役割</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>開発者</td>
+                                    <td>
+                                        TOEを開発し、評価に必要な<strong>証拠</strong>を提供する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>評価者</td>
+                                    <td>規格と方法論に従い評価を実施する</td>
+                                </tr>
+                                <tr>
+                                    <td>評価当局</td>
+                                    <td>
+                                        <strong>評価スキーム</strong>を運用し、評価の品質を監視する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>評価スキーム</td>
+                                    <td>
+                                        評価を実施するための規則・手続き・運営。CCの全パートを実装する
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>11.3 評価方法・評価アクティビティ(Part 4 と CEM)</h3>
+                    <ul>
+                        <li>
+                            <strong>CEM(ISO/IEC 18045)</strong
+                            >は、評価の<strong>基本となる方法論</strong>で、「作業単位(work
+                            unit)」が定められている。
+                        </li>
+                        <li>
+                            <strong>Part 4</strong
+                            >は、そのCEMの作業単位から<strong>評価アクティビティ(EA)</strong>を導き、PPやSTなどに含めるための<strong>枠組み</strong>。
+                        </li>
+                        <li>
+                            <strong>評価方法(EM)</strong
+                            >は、特定の文脈で適用する1つ以上のEAの集まり。
+                        </li>
+                        <li>
+                            これにより、製品種別ごとに<strong>保証活動をカスタマイズ</strong>でき、個々のセキュリティ機能に対する客観的な評価指針が作れる。
+                        </li>
+                    </ul>
+                    <h3>11.4 EAL(評価保証レベル)</h3>
+                    <p>
+                        EALは、Part
+                        5で定義される、<strong>あらかじめ用意された保証要件のパッケージ</strong>である。保証の厳しさが段階的に上がる。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>レベル</th>
+                                    <th>一般に知られる名称</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EAL1</td>
+                                    <td>機能テスト済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL2</td>
+                                    <td>構造テスト済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL3</td>
+                                    <td>方法論的にテスト・チェック済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL4</td>
+                                    <td>方法論的に設計・テスト・レビュー済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL5</td>
+                                    <td>準形式的に設計・テスト済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL6</td>
+                                    <td>準形式的に検証された設計とテスト済み</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL7</td>
+                                    <td>形式的に検証された設計とテスト済み</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                目安: 市販製品では EAL2〜EAL4
+                                を狙う例が多いと一般に紹介されている。EALは<strong>数字が大きいほど優れた製品という意味ではなく、保証活動の厳しさの違い</strong>である。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>11.5 単一保証評価と複数保証(Multi-assurance)評価</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>単一保証評価</th>
+                                    <th>複数保証評価</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>考え方</td>
+                                    <td>TOE全体に<strong>同じ</strong>SARを適用</td>
+                                    <td>
+                                        TOEの部分(<strong>sub-TSF</strong>)ごとに<strong>異なる</strong>SARを適用しつつ、全体には<strong>共通のSAR</strong>も課す
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>向く製品</td>
+                                    <td>全体に同じ保証が妥当な製品</td>
+                                    <td>一部の機能だけ高い保証が必要な異種混合製品</td>
+                                </tr>
+                                <tr>
+                                    <td>例</td>
+                                    <td>通常のSTによる評価</td>
+                                    <td>
+                                        鍵の保管・処理部、セキュアブート部だけを高保証にする製品、電子パスポート(BACとEACで異なる保証要件)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>仕組み</td>
+                                    <td>STが(任意の)PPなどに適合</td>
+                                    <td>
+                                        STが<strong>1つだけ</strong>の複数保証PP-Configurationに適合
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>複数保証評価が特に有効な状況(Part 1の例の要約)は次のとおり。</p>
+                    <ul>
+                        <li>
+                            製品の<strong>一部の機能だけ</strong>がより高い保証を必要とする(鍵保管ユニット、セキュアブートなど)。
+                        </li>
+                        <li>
+                            製品の<strong>露出の大きい部分</strong>と、そうでない部分で、必要な保証が異なる(インターネットゲートウェイなど)。
+                        </li>
+                        <li>
+                            <strong>製品ファミリ</strong
+                            >で、共通機能は同じ保証、実装が異なる機能は別の保証が必要(耐タンパーモジュール版とソフトウェア版など)。
+                        </li>
+                    </ul>
+                </section>
+                <section class="section" id="sec-12">
+                    <h2>12. Step 12: 保証の合成(Composition)</h2>
+                    <h3>12.1 なぜ合成が必要か</h3>
+                    <p>
+                        実際の製品は、<strong>すでに評価済みの部品</strong>の上に作られることが多い(例:
+                        評価済みICの上のアプリ)。その評価結果を<strong>再利用</strong>して、重複作業を減らすための仕組みが、2022年版で導入された<strong>合成</strong>である。
+                    </p>
+                    <h3>12.2 3つの合成モデル(Part 1の構成より)</h3>
+                    <div
+                        class="diagram"
+                        id="dg-d15"
+                        role="img"
+                        aria-label="フローチャート 15"
+                    ></div>
+                    <h3>12.3 2つの評価手法</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>手法</th>
+                                    <th>対象</th>
+                                    <th>使う仕組み</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>合成評価(Composed evaluation)</strong></td>
+                                    <td>
+                                        <strong>階層型合成モデル</strong
+                                        >の評価に限られる。評価済みの基盤コンポーネントの上に依存コンポーネントを載せた<strong>合成TOE</strong>が対象で、適用できる保証は<strong
+                                            >enhanced-basic assurance level</strong
+                                        >が上限
+                                    </td>
+                                    <td>
+                                        Part
+                                        3の<strong>ACOクラス</strong>、<strong>CAP</strong>(合成保証パッケージ)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>複合評価(Composite evaluation)</strong></td>
+                                    <td>
+                                        <strong>評価済みの基盤コンポーネント</strong
+                                        >の上に<strong>依存コンポーネント</strong>を載せた<strong
+                                            >複合製品</strong
+                                        >
+                                    </td>
+                                    <td>
+                                        Part
+                                        3の<strong>COMP</strong>関連ファミリ(ADV・ALC・ASE・ATE・AVAに追加)、基盤側の<strong
+                                            >ETR_COMP</strong
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="callout-body">
+                            <p>
+                                注意:
+                                ACOによる合成評価は、複数コンポーネントから成る合成TOEすべてに使える手法ではない。12.2のネットワーク型・組込み型の合成は、規格で明示的には扱われていない。
+                            </p>
+                        </div>
+                    </div>
+                    <p>
+                        <strong>複合評価(composite evaluation)</strong
+                        >は、スマートカードのように、評価済みのIC(基盤)の上にOSやアプリ(依存側)を載せるときの典型的な方法で、基盤側の評価者が、攻撃経路やテストの情報を<strong>複合評価用に整理した報告書(ETR_COMP)</strong>として提供する。
+                    </p>
+                    <h3>12.4 再利用の注意</h3>
+                    <p>
+                        評価結果を再利用するときは、再利用してよい範囲や、合成特有の評価上の論点を意識する必要がある。この詳細はPart
+                        1の合成に関する箇条に書かれている。
+                    </p>
+                </section>
+                <section class="section" id="sec-13">
+                    <h2>13. Step 13: 読者別ロードマップ(どのパートを誰が使うか)</h2>
+                    <p>CC Part 1は、5つの読者グループを想定している。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>グループ</th>
+                                    <th>主な関心</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>消費者(リスク所有者)</strong></td>
+                                    <td>
+                                        評価結果を見て、製品が自分のニーズに合うか判断し、製品を比較する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>開発者</strong></td>
+                                    <td>評価の準備・支援、要件の把握、証拠の整備</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>技術作業部会</strong></td>
+                                    <td>PP・PP-Module・PP-Configuration・パッケージの作成</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>評価者</strong></td>
+                                    <td>TOE・ST・PP・PP-Configurationの適合性を判断</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>その他</strong></td>
+                                    <td>
+                                        監査人、セキュリティアーキテクト、承認者、評価依頼者、評価当局、研究者など
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Part 1のロードマップ表の要点を整理すると次のとおり。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>パート</th>
+                                    <th>消費者</th>
+                                    <th>開発者</th>
+                                    <th>技術作業部会</th>
+                                    <th>評価者</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Part 1</td>
+                                    <td>背景理解・参照用(should)</td>
+                                    <td>
+                                        <strong>セキュリティ仕様とSPDの開発に使う(shall)</strong>
+                                    </td>
+                                    <td>
+                                        背景・構造の参照(should)、<strong
+                                            >仕様作成に使う(shall)</strong
+                                        >
+                                    </td>
+                                    <td>
+                                        <strong>PP・PP-Configuration・ST評価に使う(shall)</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Part 2</td>
+                                    <td>リスク環境のための機能コンポーネントの検討に使う(shall)</td>
+                                    <td><strong>ST作成に使う(shall)</strong></td>
+                                    <td>機能コンポーネントの記述に使う(shall)</td>
+                                    <td>機能コンポーネントやSFRの評価に使う(shall)</td>
+                                </tr>
+                                <tr>
+                                    <td>Part 3</td>
+                                    <td>必要な保証の判断に使う(shall)</td>
+                                    <td><strong>ST作成に使う(shall)</strong></td>
+                                    <td>保証コンポーネントの記述に使う(shall)</td>
+                                    <td>保証コンポーネントやSARの評価に使う(shall)</td>
+                                </tr>
+                                <tr>
+                                    <td>Part 4</td>
+                                    <td>参考(should)</td>
+                                    <td>参考(should)</td>
+                                    <td>参考(should)</td>
+                                    <td>評価方法・アクティビティの策定に使う(should)</td>
+                                </tr>
+                                <tr>
+                                    <td>Part 5</td>
+                                    <td>定義済みパッケージの内容確認(should)</td>
+                                    <td>定義済みパッケージを使うST作成で使う(shall)</td>
+                                    <td>定義済みパッケージを使うPP等の作成で使う(shall)</td>
+                                    <td>定義済みパッケージを主張するPP・STの評価に使う(shall)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="callout-body">
+                            <p>
+                                読み方: <strong>shall = 必須</strong>、<strong>should = 推奨</strong
+                                >。開発者は、<strong>Part 1・2・3</strong>が実質必読。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="sec-14">
+                    <h2>14. Step 14: 実務での使われ方(制度・運用)</h2>
+                    <h3>14.1 評価・認証の関係者と流れ</h3>
+                    <p>
+                        CCは<strong>規格</strong>であり、実際の評価・認証は国や地域ごとの<strong>スキーム</strong>が運営する。
+                    </p>
+                    <div
+                        class="diagram"
+                        id="dg-d16"
+                        role="img"
+                        aria-label="フローチャート 16"
+                    ></div>
+                    <h3>14.2 日本の場合(JISEC)</h3>
+                    <p>IPAの公式ページによると、</p>
+                    <ul>
+                        <li>
+                            <strong>JISEC</strong
+                            >(ITセキュリティ評価及び認証制度)は、IT関連製品のセキュリティ機能の適切性・確実性を、<strong
+                                >ISO/IEC 15408</strong
+                            >に基づき第三者(評価機関)が評価し、<strong>認証機関</strong>が認証する日本の制度である。
+                        </li>
+                        <li>主に<strong>政府調達</strong>で活用されている。</li>
+                        <li>
+                            認証機関は<strong>IPA</strong>(経済産業省の事業を受託して運営)。評価機関は認定機関から認定を受ける必要がある。
+                        </li>
+                        <li>
+                            日本は2003年10月31日に国際相互承認アレンジメント<strong>CCRA</strong>に加盟し、JISECの認証製品が加盟国でも承認される枠組みに入っている。
+                        </li>
+                        <li>
+                            IPAの公式ページでは、2025年にウクライナが、2025年にバングラデシュが<strong>CCRA受入国(承認のみを行う参加国)</strong>として承認されたとの掲載がある。
+                        </li>
+                    </ul>
+                    <h3>14.3 欧州の場合(EUCC)</h3>
+                    <ul>
+                        <li>
+                            <strong>EUCC</strong
+                            >は、サイバーセキュリティ法に基づく最初の欧州認証スキームで、<strong
+                                >Commission Implementing Regulation (EU) 2024/482</strong
+                            >
+                            により制定され、<strong>ISO/IEC 15408とISO/IEC 18045</strong
+                            >を基礎にしている。
+                        </li>
+                        <li>
+                            EUCCの保証レベルは <strong>Substantial(相当)</strong> と
+                            <strong>High(高)</strong>
+                            の2つで、CCの<strong>AVA_VAN(脆弱性評定)</strong>にひも付く。規則上、AVA_VAN
+                            1〜2が Substantial、3〜5が High に対応する。
+                        </li>
+                        <li>2025年2月27日から全面適用とする解説がある。</li>
+                        <li>
+                            ENISAは、EUCCが現在運用中で、定期的に保守されているとしている。また、EUCC規則が適用する規格のバージョンは、改正された第2条・第3条で定められ、移行規則は第3条にあるとされている。
+                        </li>
+                    </ul>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="callout-body">
+                            <p>
+                                <strong>注意(情報の食い違い)</strong>:
+                                一部の事業者の解説に「2026年2月以降、EALは使われなくなる」とする記述がある一方、別の解説では「EUCCはEALを廃止せず、2つの保証区分の下に位置づけ直した」としている。<strong
+                                    >EUCCの規則(EUR-Lex)と ENISA
+                                    の公式文書で、自分のケースを必ず確認</strong
+                                >すること。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>14.4 米国など</h3>
+                    <ul>
+                        <li>
+                            米国では NIAP(National Information Assurance
+                            Partnership)が承認するPPに基づく評価が一般的。ある解説は、<strong>CCの暗号評価は、CAVP/CMVPによる暗号アルゴリズム・モジュールの検証を代替せず、その上に積み上げる</strong>関係にあると説明している(NIAP
+                            Policy Letter
+                            #5に言及)。これは二次情報なので、実務では一次情報の確認を推奨する。
+                        </li>
+                    </ul>
+                    <h3>14.5 CC:2022への移行(CCRAの方針)</h3>
+                    <p>
+                        CCRAの移行ポリシーと各国の認証機関の公開情報から確認できる要点は次のとおり。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>新規評価</td>
+                                    <td>
+                                        2024年7月1日以降、新規の認証申請は<strong
+                                            >CC:2022 Rev.1</strong
+                                        >を示す必要がある(ポーランド認証機関NASKなどの案内)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>旧版</td>
+                                    <td>
+                                        CC v3.1 R5 は v3.1
+                                        の最終リビジョン。移行期間中は一定の条件下で使用できる
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>再利用</td>
+                                    <td>
+                                        一定の条件下で、旧版の評価結果(ALCなど)を新版評価で再利用できる
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PP移行</td>
+                                    <td>CC v3.1 のPPを、段階的にCC:2022へ移行できる</td>
+                                </tr>
+                                <tr>
+                                    <td>2026年版</td>
+                                    <td>
+                                        ISO側は2026年に第5版が発行。<strong>CCRAや各スキームがどのタイミングで2026年版に追随するか</strong>は、各スキームの最新の公表で確認すること
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="sec-15">
+                    <h2>15. Step 15: CC の範囲外にあるもの(重要)</h2>
+                    <p>
+                        CC Part
+                        1の序文は、<strong>CCが扱わない事項</strong>を明示している。これを知らないと過信につながる。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>範囲外の事項</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>管理的なセキュリティ対策</strong
+                                        >(IT機能に直結しない)
+                                    </td>
+                                    <td>
+                                        組織・人事・物理・手続き面の対策は評価基準に含まれない(重要だが別途必要)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>評価方法論そのもの</strong></td>
+                                    <td>基準をどう適用するかはCEM等が担う</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>評価を適用する行政・法制度の枠組み</strong></td>
+                                    <td>各国のスキームが担う</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>認定(accreditation)の手続き</strong></td>
+                                    <td>
+                                        評価結果は認定の<strong>入力</strong>の一つにすぎず、非ITの側面は別途検討が必要
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>暗号アルゴリズムの固有の品質の評価</strong></td>
+                                    <td>
+                                        数学的性質の独立評価が必要なら、スキーム側が別途規定する
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="sec-16">
+                    <h2>16. Step 16: よくある誤解と正しい理解</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>よくある誤解</th>
+                                    <th>正しい理解</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>「CC認証=製品全体が安全」</td>
+                                    <td>
+                                        <strong>TOEとSTで定義された範囲と主張</strong
+                                        >に対する評価結果。TOEが製品の一部のこともある
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「EALが高い=優れた製品」</td>
+                                    <td>
+                                        EALは<strong>保証活動の厳しさ</strong>を表す。機能の良し悪しではない
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「運用環境の対策も評価される」</td>
+                                    <td>
+                                        <strong>評価されない</strong
+                                        >。運用環境の対策は正しく実現されると仮定される
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「前提条件はTOEの機能にも置ける」</td>
+                                    <td>
+                                        前提を置けるのは<strong>運用環境だけ</strong>。TOEの挙動に前提は置けない
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「PPがあればSTは不要」</td>
+                                    <td>
+                                        PPは<strong>種別</strong>の要求、STは<strong>特定のTOE</strong>の記述。評価にはSTが必須
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「Part 1に評価手順が書いてある」</td>
+                                    <td>
+                                        <strong>手順はCEM</strong>。Part 1は概念・構造・要求の考え方
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「暗号アルゴリズムの強さもCCで保証される」</td>
+                                    <td>
+                                        暗号アルゴリズムの固有の品質評価は<strong
+                                            >CCの範囲外</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「2026年版で全部が変わった」</td>
+                                    <td>
+                                        第5版は<strong>技術的改訂</strong>。主な変更は用語、パッケージ適合主張、PP-Module
+                                        Baseの記述、誤り訂正(序文より)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="sec-17">
+                    <h2>17. 用語集(初学者向けの言い換え付き)</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>略称</th>
+                                    <th>やさしい説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Target of Evaluation</td>
+                                    <td>TOE</td>
+                                    <td>評価の対象になるソフト・ファーム・ハードの集まり</td>
+                                </tr>
+                                <tr>
+                                    <td>TOE Security Functionality</td>
+                                    <td>TSF</td>
+                                    <td>
+                                        TOEの中で、セキュリティ要件を正しく実行するために頼る機能の全体
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Operational environment</td>
+                                    <td>-</td>
+                                    <td>TOE境界の外側すべて</td>
+                                </tr>
+                                <tr>
+                                    <td>Asset</td>
+                                    <td>-</td>
+                                    <td>TOEの所有者が価値を置くもの</td>
+                                </tr>
+                                <tr>
+                                    <td>Threat agent</td>
+                                    <td>-</td>
+                                    <td>
+                                        資産に悪い行為をしうる主体(攻撃者、誤操作する利用者、事故など)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Security Problem Definition</td>
+                                    <td>SPD</td>
+                                    <td>脅威・OSP・前提で書かれた、守るべき課題の定義</td>
+                                </tr>
+                                <tr>
+                                    <td>Organizational Security Policy</td>
+                                    <td>OSP</td>
+                                    <td>組織や法規制が課すセキュリティのルール</td>
+                                </tr>
+                                <tr>
+                                    <td>Assumption</td>
+                                    <td>-</td>
+                                    <td>運用環境について真と仮定する事柄</td>
+                                </tr>
+                                <tr>
+                                    <td>Security objective</td>
+                                    <td>-</td>
+                                    <td>課題を解くための意図の宣言(TOE用と環境用)</td>
+                                </tr>
+                                <tr>
+                                    <td>Security Functional Requirement</td>
+                                    <td>SFR</td>
+                                    <td>TOEが何をするかを標準言語で書いた要件</td>
+                                </tr>
+                                <tr>
+                                    <td>Security Assurance Requirement</td>
+                                    <td>SAR</td>
+                                    <td>TOEの正しさを確かめる方法を書いた要件</td>
+                                </tr>
+                                <tr>
+                                    <td>Protection Profile</td>
+                                    <td>PP</td>
+                                    <td>TOE種別ごとの、実装に依存しないセキュリティニーズ</td>
+                                </tr>
+                                <tr>
+                                    <td>PP-Module</td>
+                                    <td>-</td>
+                                    <td>基本PPを補う、実装非依存の要件部品</td>
+                                </tr>
+                                <tr>
+                                    <td>PP-Configuration</td>
+                                    <td>-</td>
+                                    <td>PPとPP-Moduleの組み合わせ仕様</td>
+                                </tr>
+                                <tr>
+                                    <td>Security Target</td>
+                                    <td>ST</td>
+                                    <td>特定TOEの、実装に依存したセキュリティ要件の記述</td>
+                                </tr>
+                                <tr>
+                                    <td>Package</td>
+                                    <td>-</td>
+                                    <td>要件の再利用可能なまとまり(機能・保証)</td>
+                                </tr>
+                                <tr>
+                                    <td>Evaluation Assurance Level</td>
+                                    <td>EAL</td>
+                                    <td>定義済みの保証パッケージの段階</td>
+                                </tr>
+                                <tr>
+                                    <td>Composed Assurance Package</td>
+                                    <td>CAP</td>
+                                    <td>合成の保証のための定義済みパッケージ</td>
+                                </tr>
+                                <tr>
+                                    <td>Evaluation Activity</td>
+                                    <td>EA</td>
+                                    <td>CEMの作業単位から導いた評価の活動</td>
+                                </tr>
+                                <tr>
+                                    <td>Evaluation Method</td>
+                                    <td>EM</td>
+                                    <td>特定の文脈で使うEAの集まり</td>
+                                </tr>
+                                <tr>
+                                    <td>Evaluation Technical Report</td>
+                                    <td>ETR</td>
+                                    <td>総合判定とその根拠を書いた評価報告書</td>
+                                </tr>
+                                <tr>
+                                    <td>Exact / Strict / Demonstrable Conformance</td>
+                                    <td>EC / SC / DC</td>
+                                    <td>PP等への適合の3種類</td>
+                                </tr>
+                                <tr>
+                                    <td>Direct Rationale</td>
+                                    <td>-</td>
+                                    <td>TOE対策目標を省き、SPDからSFRへ直接対応づける方式</td>
+                                </tr>
+                                <tr>
+                                    <td>Multi-assurance evaluation</td>
+                                    <td>-</td>
+                                    <td>TOEの部分ごとに異なる保証を適用する評価</td>
+                                </tr>
+                                <tr>
+                                    <td>sub-TSF</td>
+                                    <td>-</td>
+                                    <td>
+                                        複数保証で、あるPP-Configuration構成要素に対応するTSFの部分
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Iteration / Assignment / Selection / Refinement</td>
+                                    <td>-</td>
+                                    <td>部品を仕上げる4つの操作</td>
+                                </tr>
+                                <tr>
+                                    <td>Attack potential</td>
+                                    <td>-</td>
+                                    <td>
+                                        脆弱性の悪用に必要な労力(攻撃者の専門性・リソース等で決まる)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Attack surface</td>
+                                    <td>-</td>
+                                    <td>
+                                        対象にアクセスしようとする入口(論理・物理インタフェース)の集合
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="sec-18">
+                    <h2>18. 理解度チェック(10問)</h2>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q1</span>
+                            <div class="qtext">TOEとITプロダクトは、いつも同じものか。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                同じとは限らない。TOEは製品全体、製品の一部、複数製品、技術などでありうる。一部だけの評価を製品全体の評価として見せてはならない。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q2</span>
+                            <div class="qtext">
+                                前提条件(Assumption)を置けるのは、TOEと運用環境のどちらか。
+                            </div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">運用環境のみ。TOEの挙動については前提を置けない。</div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q3</span>
+                            <div class="qtext">運用環境の対策目標は評価されるか。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                評価されない。評価上は正しく実現されると仮定される。ただし購入者が別の手段で確認することは妨げない。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q4</span>
+                            <div class="qtext">SFRとSARの違いを一言で述べよ。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                SFRはTOEが何をするか、SARはその主張をどう確かめるか。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q5</span>
+                            <div class="qtext">部品を仕上げる4つの操作は何か。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">反復、割当、選択、詳細化。</div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q6</span>
+                            <div class="qtext">Exact適合とStrict適合の違いは。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                Exactは、選択ベース／任意SFRの例外を除きPP等の要件をすべて満たす必要があり、要件はその中のものだけで構成される(追加も一部省略の部分適合も不可)。StrictはPPの要件をすべて含めば追加してよい。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q7</span>
+                            <div class="qtext">Direct Rationaleでは何が省かれるか。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                TOEのセキュリティ対策目標。SPDからSFRへ直接対応づける。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q8</span>
+                            <div class="qtext">
+                                第5版(2026年版)の主な変更点を、序文に沿って挙げよ。
+                            </div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                用語の見直し、パッケージ適合主張の見直し(ISO/IEC
+                                18045と整合)、複数のPP-Module Baseの記述の改善、誤りの訂正。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q9</span>
+                            <div class="qtext">複数保証評価が有効なのはどんな製品か。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                一部の機能(鍵保管、セキュアブートなど)だけ高い保証が必要な製品、露出度の違う機能を持つ製品、共通機能と個別実装を持つ製品ファミリなど。
+                            </div>
+                        </details>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-q">
+                            <span class="qnum">Q10</span>
+                            <div class="qtext">CCが扱わない事項を3つ挙げよ。</div>
+                        </div>
+                        <details>
+                            <summary><i class="ti ti-chevron-right"></i>答え</summary>
+                            <div class="ans">
+                                管理的セキュリティ対策、評価方法論、行政・法制度の枠組み、認定手続き、暗号アルゴリズムの固有の品質評価など(いずれか3つ)。
+                            </div>
+                        </details>
+                    </div>
+                </section>
+                <section class="section" id="sec-19">
+                    <h2>19. 次に学ぶ順序(学習ロードマップ)</h2>
+                    <div
+                        class="diagram"
+                        id="dg-d17"
+                        role="img"
+                        aria-label="フローチャート 17"
+                    ></div>
+                    <p>実践的な学習のコツは次のとおり。</p>
+                    <ol>
+                        <li>
+                            <strong>実際のSTを1つ</strong
+                            >読む(CCポータルや各国の認証製品一覧で公開されている)。本ガイドの Step
+                            6〜10 の構造がそのまま現れる。
+                        </li>
+                        <li>
+                            同じ種別のPPと、それに適合するSTを<strong>並べて</strong>、適合の種類(Exact
+                            / Strict / Demonstrable)を確認する。
+                        </li>
+                        <li>
+                            自社製品で<strong>TOE境界を仮に引いてみる</strong>。どこが非TOEで、どこが運用環境か。
+                        </li>
+                        <li>
+                            前提条件を書き出し、<strong>本当に環境側で守れるか</strong>を点検する。
+                        </li>
+                    </ol>
+                </section>
+                <section class="section" id="sec-20">
+                    <h2>20. 参考文献・出典URL(2026年10月15日時点で確認)</h2>
+                    <h3>20.1 規格・公式情報</h3>
+                    <div class="ref-list">
+                        <div class="ref-card">
+                            <span class="ref-num">1</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">ISO公式</div>
+                                <div class="ref-desc">
+                                    ISO/IEC 15408-1:2026
+                                    製品ページ(版、発行日、ステージ、概要、ライフサイクル)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.iso.org/standard/15408-1"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.iso.org/standard/15408-1</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">2</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">ISO公式(OBP)</div>
+                                <div class="ref-desc">
+                                    ISO/IEC 15408-1:2026 プレビュー(序文の変更点要約、導入の記述)
+                                    ※閲覧にJavaScriptが必要
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.iso.org/obp/ui/#iso:std:iso-iec:15408:-1:en"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.iso.org/obp/ui/#iso:std:iso-iec:15408:-1:en</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">3</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">IEC Webstore</div>
+                                <div class="ref-desc">
+                                    ISO/IEC 15408-1:2026
+                                    の書誌情報(発行日2026-05-19、第5版、138ページ)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://webstore.iec.ch/en/publication/113680"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://webstore.iec.ch/en/publication/113680</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">4</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">CCRA公式</div>
+                                <div class="ref-desc">
+                                    CC:2022 Part 1 Revision
+                                    1(概念・構造・用語の根拠。本ガイドの解説の主な土台)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://commoncriteriaportal.org/files/ccfiles/CC2022PART1R1.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://commoncriteriaportal.org/files/ccfiles/CC2022PART1R1.pdf</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">5</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">CCRA公式</div>
+                                <div class="ref-desc">
+                                    CC/CEM 各版の一覧と著作権・再利用に関する案内
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://commoncriteriaportal.org/cc/index.cfm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://commoncriteriaportal.org/cc/index.cfm</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">6</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">CCRA公式</div>
+                                <div class="ref-desc">CC:2022 / CEM:2022 移行ポリシー</div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.commoncriteriaportal.org/files/ccfiles/CC2022CEM2022TransitionPolicy.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.commoncriteriaportal.org/files/ccfiles/CC2022CEM2022TransitionPolicy.pdf</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">7</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">CCRA公式(CCMB)</div>
+                                <div class="ref-desc">CC:2022 / CEM:2022 正誤・解釈集</div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.commoncriteriaportal.org/files/ccfiles/CCMB-2025-001-v1_2-Errata_Interpretation_CC_CEM_2022.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.commoncriteriaportal.org/files/ccfiles/CCMB-2025-001-v1_2-Errata_Interpretation_CC_CEM_2022.pdf</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3>20.2 国際的に著名な評価機関・コミュニティの解説</h3>
+                    <div class="ref-list">
+                        <div class="ref-card">
+                            <span class="ref-num">8</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">atsec(国際的な評価機関)</div>
+                                <div class="ref-desc">
+                                    CC:2022の解説ブログ(CC v3.1 R5からの変化、Exact
+                                    Conformance、移行期限など)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://atsec.de/cc2022-is-here/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://atsec.de/cc2022-is-here/</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">9</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">atsec</div>
+                                <div class="ref-desc">
+                                    開発者向けCC入門スライド(一般モデル、STの構造、PP・ST・パッケージの関係)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://atsec.de/wp-content/uploads/2024/07/Developer-intro-to-CC.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://atsec.de/wp-content/uploads/2024/07/Developer-intro-to-CC.pdf</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">10</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">ICCC(国際CC会議)</div>
+                                <div class="ref-desc">
+                                    プログラム(Part 4のEA、CC:2022への移行、PP更新などの発表)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://iccconference.org/?page_id=3244"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://iccconference.org/?page_id=3244</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3>20.3 各国・地域の制度</h3>
+                    <div class="ref-list">
+                        <div class="ref-card">
+                            <span class="ref-num">11</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">IPA(日本)</div>
+                                <div class="ref-desc">
+                                    JISECのトップページ(CCRA受入国の承認など)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.ipa.go.jp/security/jisec/index.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.ipa.go.jp/security/jisec/index.html</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">12</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">IPA(日本)</div>
+                                <div class="ref-desc">
+                                    評価認証制度(JISEC)概要(制度の目的、CCRA加盟、政府調達での活用)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.ipa.go.jp/security/jisec/scheme/index.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.ipa.go.jp/security/jisec/scheme/index.html</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">13</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">ENISA(EU)</div>
+                                <div class="ref-desc">
+                                    EUCC(保証レベルとAVA_VANの対応、適用規格)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://certification.enisa.europa.eu/browse-topic/EUCC_en"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://certification.enisa.europa.eu/browse-topic/EUCC_en</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">14</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">EUR-Lex(EU)</div>
+                                <div class="ref-desc">
+                                    Commission Implementing Regulation (EU)
+                                    2024/482(EUCC)統合版(2025年12月29日版)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-12-29/eng"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-12-29/eng</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3>20.4 補助的な情報源(二次情報。参考として利用)</h3>
+                    <div class="ref-list">
+                        <div class="ref-card">
+                            <span class="ref-num">15</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">Keyfactor</div>
+                                <div class="ref-desc">CCとCAVP/CMVP・NIAPポリシーの関係の解説</div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.keyfactor.com/compliance-hub/iso-iec-15408-common-criteria/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.keyfactor.com/compliance-hub/iso-iec-15408-common-criteria/</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">16</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">QIMA</div>
+                                <div class="ref-desc">EUCCとCCの保証レベル対応の解説</div>
+                                <a
+                                    class="ref-url"
+                                    href="https://blog.qima.com/due-cybersecurity/mapping-eucc-to-common-criteria-a-technical-overview-of-assurance-levels-and-evaluation-requirements"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://blog.qima.com/due-cybersecurity/mapping-eucc-to-common-criteria-a-technical-overview-of-assurance-levels-and-evaluation-requirements</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">17</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">UL Solutions</div>
+                                <div class="ref-desc">
+                                    CCとEUCC、AVA_VANレベルの解説(EALの扱いについて他の資料と表現が異なる点に注意)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://www.ul.com/services/common-criteria-certification-information-technology-it-security"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://www.ul.com/services/common-criteria-certification-information-technology-it-security</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">18</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">NASK(ポーランド認証機関)</div>
+                                <div class="ref-desc">
+                                    CC:2022への移行に関する案内(2024年7月1日以降の扱い)
+                                </div>
+                                <a
+                                    class="ref-url"
+                                    href="https://certyfikacja.nask.pl/?p=2401"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://certyfikacja.nask.pl/?p=2401</a
+                                >
+                            </div>
+                        </div>
+                        <div class="ref-card">
+                            <span class="ref-num">19</span>
+                            <div class="ref-body">
+                                <div class="ref-kind">Wikipedia</div>
+                                <div class="ref-desc">Common Criteria の概説</div>
+                                <a
+                                    class="ref-url"
+                                    href="https://en.wikipedia.org/wiki/Common_Criteria"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    >https://en.wikipedia.org/wiki/Common_Criteria</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3>20.5 この文書の確度についてのまとめ</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>内容</th>
+                                    <th>確度</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>版情報、発行日、ステージ、置き換え関係</td>
+                                    <td>高</td>
+                                    <td>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>第5版の主な変更点(4点)</td>
+                                    <td>高(要約)</td>
+                                    <td>ISO OBPの序文</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        一般モデル、TOE、SPD、対策目標、SFR/SAR、構成物、適合、評価、合成の概念
+                                    </td>
+                                    <td>高(2022年版に基づく)</td>
+                                    <td>
+                                        CC:2022 R1 Part
+                                        1。2026年版で表現・番号が変わっている可能性あり
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EALの名称一覧、クラス名の例</td>
+                                    <td>中(一般に知られる内容)</td>
+                                    <td>2026年版Part 3・5で要確認</td>
+                                </tr>
+                                <tr>
+                                    <td>各国スキームの2026年版への移行時期</td>
+                                    <td>未確定</td>
+                                    <td>各スキームの最新公表を確認</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <footer class="footer">
+                    <p>
+                        <em
+                            >本ガイドは学習用の解説であり、規格そのものの代替ではありません。認証取得・調達・監査などで正式な根拠が必要な場合は、ISO/IEC
+                            15408-1:2026
+                            の本文(英語または仏語)と、適用する各スキームの最新の公式文書を確認してください。</em
+                        >
+                    </p>
+                </footer>
+            </main>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+        <script>
+            window.DIAGRAMS = {
+                d1: `flowchart LR
+A["Step 1<br/>全体像と位置づけ"] --> B["Step 2<br/>なぜCCが必要か"]
+B --> C["Step 3<br/>TOEを理解する"]
+C --> D["Step 4<br/>セキュリティ課題と対策目標"]
+D --> E["Step 5<br/>要件 SFRとSAR"]
+E --> F["Step 6<br/>要件の部品と操作"]
+F --> G["Step 7<br/>PP・ST・パッケージ"]
+G --> H["Step 8<br/>評価と合成"]
+H --> I["Step 9<br/>実務と制度"]
+`,
+                d2: `flowchart LR
+A["2023-10-27<br/>新規プロジェクト承認"] --> B["2024-02<br/>作業計画に登録<br/>WD検討開始"]
+B --> C["2024-06<br/>DIS登録"]
+C --> D["2024-08〜11<br/>DIS投票 12週間"]
+D --> E["2025-07-18<br/>FDIS登録の承認"]
+E --> F["2025-12-19<br/>FDIS投票開始 8週間"]
+F --> G["2026-02-14<br/>投票終了"]
+G --> H["2026-05-19<br/>国際規格として発行"]
+`,
+                d3: `flowchart TB
+P1["Part 1<br/>概要と一般モデル<br/>本ガイドの対象"]
+P2["Part 2<br/>セキュリティ機能コンポーネント<br/>SFRの部品カタログ"]
+P3["Part 3<br/>セキュリティ保証コンポーネント<br/>SARの部品カタログ<br/>PP・PP-Configuration・PP-Module・STの評価基準<br/>PP-ModuleはPP-Configuration評価の中で評価"]
+P4["Part 4<br/>評価方法とアクティビティの枠組み"]
+P5["Part 5<br/>定義済みパッケージ<br/>EAL・CAPなど"]
+CEM["ISO/IEC 18045<br/>CEM 評価方法論"]
+P1 --> P2
+P1 --> P3
+P1 --> P4
+P1 --> P5
+CEM --> P4
+P3 --> P5
+`,
+                d4: `flowchart LR
+OWN["資産の所有者<br/>価値を置く人"] -->|"価値を置く"| AST["資産<br/>情報・サーバ・ファイルなど"]
+TA["脅威エージェント<br/>攻撃者・誤操作する利用者<br/>プロセス・事故など"] -->|"悪用しようとする"| AST
+TA --> THR["脅威<br/>資産への悪い行為"]
+THR --> RSK["リスク<br/>発生可能性 × 影響"]
+OWN -->|"リスクを下げるため課す"| CTL["セキュリティ対策<br/>IT対策と非IT対策"]
+CTL -->|"低減"| RSK
+`,
+                d5: `flowchart TB
+Q["所有者の疑問<br/>この製品を信じてよいか"] --> S["十分性<br/>対策は課題を打ち消せる設計か"]
+Q --> C["正しさ<br/>対策は主張どおり実装されているか"]
+S --> ST["STの論証と<br/>STの評価"]
+C --> SAR["SARに基づく<br/>TOEの評価"]
+ST --> R["評価結果<br/>判断材料になる"]
+SAR --> R
+`,
+                d6: `flowchart TB
+subgraph PRODUCT["ITプロダクト"]
+subgraph TOE["TOE 評価の対象"]
+TSF["TSF<br/>TOEセキュリティ機能"]
+GD["ガイダンス文書"]
+end
+NONTOE["非TOE部分<br/>評価の対象外"]
+end
+subgraph ENV["運用環境 TOEの外側すべて"]
+OE1["運用環境が提供する<br/>技術的・手続き的対策"]
+OE2["他のIT製品<br/>人 手順 施設"]
+end
+USER["外部エンティティ<br/>利用者"] -->|"インタフェース越しに操作"| TOE
+TOE <--> NONTOE
+TOE <--> ENV
+`,
+                d7: `flowchart LR
+TA["脅威エージェント<br/>例 リモート攻撃者"] -->|"悪い行為<br/>例 ファイルの複写"| AST["資産<br/>例 機密ファイル"]
+ATTR["エージェントの属性<br/>専門性 リソース<br/>機会 動機"] -.-> TA
+`,
+                d8: `flowchart LR
+T["脅威 T17<br/>攻撃者が通信中の機密情報を読む"] --> OT["TOEの対策目標 OT12<br/>通信内容の機密性を保つ"]
+OT --> J["正当化<br/>T17はOT12によって直接打ち消される"]
+`,
+                d9: `flowchart TB
+SPD["セキュリティ課題 SPD<br/>脅威 OSP 前提"] --> OBJ["対策目標<br/>TOE用 と 運用環境用"]
+OBJ --> SFR["SFR<br/>セキュリティ機能要件<br/>Part 2の部品から作る"]
+OBJ -.-> OENV["運用環境の対策目標<br/>標準言語への翻訳は不要"]
+SFR --> TSF["TSF<br/>TOEセキュリティ機能"]
+SAR["SAR<br/>セキュリティ保証要件<br/>Part 3の部品から作る"] --> ASS["TOEが主張どおりであることの<br/>確からしさ 保証"]
+TSF --> ASS
+`,
+                d10: `flowchart LR
+subgraph STD["標準モデル"]
+A1["SPD"] --> A2["TOE対策目標"] --> A3["SFR"]
+end
+subgraph DR["Direct Rationale"]
+B1["SPD"] --> B3["SFR"]
+end
+`,
+                d11: `flowchart TB
+CL["クラス Class<br/>共通の関心を持つファミリの集合"] --> FM["ファミリ Family<br/>目的は似るが<br/>重点や厳格さが違うコンポーネントの集合"]
+FM --> CP["コンポーネント Component<br/>要件として選べる最小単位"]
+CP --> EL["エレメント Element<br/>個々のセキュリティ上の必要性の記述"]
+`,
+                d12: `flowchart TB
+PKG["パッケージ Package<br/>よく一緒に使う要件の再利用可能なセット"]
+PP["PP Protection Profile<br/>TOE種別ごとの実装非依存のニーズ"]
+PPM["PP-Module<br/>基本PPに追加・詳細化する部品"]
+PPC["PP-Configuration<br/>PPとPP-Moduleの組み合わせ定義"]
+ST["ST Security Target<br/>特定TOEの実装依存の要件"]
+TOE["TOE"]
+PKG --> PP
+PKG --> PPM
+PKG --> ST
+PP --> PPC
+PPM --> PPC
+PP --> ST
+PPC --> ST
+ST --> TOE
+`,
+                d13: `flowchart TB
+S1["ST序論<br/>ST参照 TOE参照 TOE概要 TOE記述"] --> S2["適合主張<br/>CC適合 PP・パッケージ適合"]
+S2 --> S3["セキュリティ課題定義<br/>脅威 OSP 前提"]
+S3 --> S4["セキュリティ対策目標<br/>TOE用 運用環境用 根拠"]
+S4 --> S5["セキュリティ要件<br/>SFR と SAR 根拠"]
+S5 --> S6["TOE要約仕様<br/>SFRをどう実現するか"]
+`,
+                d14: `flowchart LR
+PPE["PP・PP-Configurationの評価"] -.->|"STがPP等への適合を主張する場合のみ"| STE["STの評価"]
+STE --> TOEE["TOEの評価"]
+TOEE --> VER["総合判定 Overall verdict<br/>合格 または 不合格"]
+VER --> ETR["評価技術報告書 ETR<br/>判定とその根拠"]
+ETR --> AUTH["評価当局へ提出"]
+`,
+                d15: `flowchart TB
+subgraph L["階層型 Layered"]
+L1["上位コンポーネント"] --> L2["下位コンポーネント<br/>サービスを提供"]
+end
+subgraph N["ネットワーク型 双方向"]
+N1["コンポーネントA"] <--> N2["コンポーネントB"]
+end
+subgraph E["組込み型 Embedded"]
+E1["全体製品"] --- E2["内部に評価済みコンポーネントを組込み"]
+end
+`,
+                d16: `flowchart LR
+DEV["開発者・依頼者<br/>ST作成と証拠の準備"] --> LAB["評価機関 ITSEF<br/>認定を受けた第三者"]
+LAB -->|"評価報告 ETR"| CB["認証機関<br/>評価結果を検査"]
+CB --> CERT["認証書と認証報告書<br/>公開"]
+CERT --> BUYER["調達者<br/>認証書とSTを併せて確認"]
+CERT -.->|"CCRAによる相互承認"| OTHER["他の加盟国"]
+`,
+                d17: `flowchart TB
+A["本ガイド<br/>Part 1 概要と一般モデル"] --> B["Part 2<br/>機能コンポーネント<br/>FIA FCS FDPなどから"]
+A --> C["Part 3<br/>保証コンポーネント<br/>ASE ADV ATE AVAを中心に"]
+C --> D["Part 5<br/>EALと定義済みパッケージ"]
+A --> E["Part 4とCEM ISO/IEC 18045<br/>評価アクティビティの導出"]
+B --> F["実際のPPを読む<br/>cPP 国別PP"]
+D --> G["実際のSTと認証報告書を読む<br/>認証製品の公開情報"]
+E --> G
+F --> G
+`,
+            };
+        </script>
+        <script>
+            (function () {
+                var sidebar = document.getElementById('sidebar');
+                var backdrop = document.getElementById('backdrop');
+                var toggle = document.getElementById('navToggle');
+                var icon = toggle.querySelector('.ti');
+                function setOpen(open) {
+                    sidebar.classList.toggle('open', open);
+                    backdrop.classList.toggle('show', open);
+                    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    toggle.setAttribute('aria-label', open ? '目次を閉じる' : '目次を開く');
+                    icon.className = open ? 'ti ti-x' : 'ti ti-menu-2';
+                }
+                toggle.addEventListener('click', function () {
+                    setOpen(!sidebar.classList.contains('open'));
+                });
+                backdrop.addEventListener('click', function () {
+                    setOpen(false);
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') setOpen(false);
+                });
+                var links = Array.prototype.slice.call(document.querySelectorAll('.sidebar nav a'));
+                links.forEach(function (a) {
+                    a.addEventListener('click', function () {
+                        setOpen(false);
+                    });
+                });
+
+                var map = {};
+                links.forEach(function (a) {
+                    map[a.getAttribute('href').slice(1)] = a;
+                });
+                var io = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (en) {
+                            if (en.isIntersecting) {
+                                links.forEach(function (l) {
+                                    l.classList.remove('active');
+                                });
+                                var a = map[en.target.id];
+                                if (a) {
+                                    a.classList.add('active');
+                                    var r = a.getBoundingClientRect(),
+                                        sr = sidebar.getBoundingClientRect();
+                                    if (r.top < sr.top || r.bottom > sr.bottom) {
+                                        a.scrollIntoView({ block: 'nearest' });
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    { rootMargin: '-20% 0px -70% 0px' },
+                );
+                document.querySelectorAll('section[id]').forEach(function (s) {
+                    io.observe(s);
+                });
+            })();
+        </script>
+        <script>
+            (async function () {
+                if (typeof mermaid === 'undefined' || !window.DIAGRAMS) {
+                    return;
+                }
+                try {
+                    await document.fonts.ready;
+                } catch (e) {}
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'dark',
+                    securityLevel: 'loose',
+                    fontFamily:
+                        '"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif',
+                    flowchart: {
+                        useMaxWidth: false,
+                        htmlLabels: true,
+                        nodeSpacing: 45,
+                        rankSpacing: 50,
+                        padding: 12,
+                    },
+                    themeVariables: {
+                        darkMode: true,
+                        fontSize: '16px',
+                        background: '#07111e',
+                        primaryColor: '#16294a',
+                        primaryTextColor: '#f3f5fa',
+                        primaryBorderColor: '#7c9eff',
+                        secondaryColor: '#13243b',
+                        tertiaryColor: '#0d1b2e',
+                        lineColor: '#93a1bd',
+                        textColor: '#f3f5fa',
+                        mainBkg: '#16294a',
+                        nodeBorder: '#7c9eff',
+                        clusterBkg: '#0d1b2e',
+                        clusterBorder: '#3e5c8f',
+                        titleColor: '#c6d0e3',
+                        edgeLabelBackground: '#0d1b2e',
+                    },
+                });
+                var keys = Object.keys(window.DIAGRAMS);
+                for (var i = 0; i < keys.length; i++) {
+                    var k = keys[i];
+                    var target = document.getElementById('dg-' + k);
+                    if (!target) {
+                        continue;
+                    }
+                    try {
+                        var res = await mermaid.render('mmd-' + k, window.DIAGRAMS[k]);
+                        target.innerHTML = res.svg;
+                        var svg = target.querySelector('svg');
+                        if (svg) {
+                            var vb = (svg.getAttribute('viewBox') || '')
+                                .split(/[\s,]+/)
+                                .map(Number);
+                            if (vb.length === 4 && vb[2] > 0) {
+                                vb[3] = vb[3] + 15;
+                                svg.setAttribute('viewBox', vb.join(' '));
+                                svg.style.width = vb[2] + 'px';
+                            }
+                            svg.removeAttribute('width');
+                            svg.removeAttribute('height');
+                            svg.style.maxWidth = '100%';
+                            svg.style.height = 'auto';
+                            svg.style.overflow = 'visible';
+                        }
+                    } catch (err) {
+                        console.error('mermaid render failed', k, err);
+                        var pre = document.createElement('pre');
+                        pre.className = 'diagram-error';
+                        pre.textContent = window.DIAGRAMS[k];
+                        target.innerHTML = '';
+                        target.appendChild(pre);
+                    }
+                }
+            })();
+        </script>
+    </body>
+</html>

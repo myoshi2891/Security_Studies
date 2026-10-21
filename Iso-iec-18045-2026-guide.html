@@ -1,0 +1,3951 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>ISO/IEC 18045:2026 初学者向けステップバイステップ解説ガイド</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"
+        />
+        <style>
+            :root {
+                --color-background-primary: #07111e;
+                --color-background-secondary: #0d1b30;
+                --color-background-tertiary: #13243f;
+                --color-background-info: #12244a;
+                --color-background-success: #0e2b27;
+                --color-background-warning: #2b2410;
+                --color-background-danger: #2e1520;
+                --color-text-primary: #f3f5fa;
+                --color-text-secondary: #c6d0e3;
+                --color-text-tertiary: #93a1bd;
+                --color-text-info: #7c9eff;
+                --color-text-success: #4fd1a5;
+                --color-text-warning: #f2b45a;
+                --color-text-danger: #fb7185;
+                --color-border-tertiary: #1e2f4d;
+                --color-border-secondary: #2d456e;
+                --color-border-primary: #3e5c8f;
+                --color-border-success: #2c6b5b;
+                --color-border-warning: #6b5222;
+                --color-border-info: #3a5399;
+                --color-backdrop: rgba(7, 17, 30, 0.72);
+                --accent: #7c9eff;
+                --font-sans:
+                    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI',
+                    'Yu Gothic', Meiryo, system-ui, sans-serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+                --sidebar-w: 300px;
+            }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+            html {
+                font-size: 16px;
+                scroll-behavior: smooth;
+                scroll-padding-top: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+                font-family: var(--font-sans);
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.7;
+                overflow-wrap: anywhere;
+            }
+            a {
+                color: var(--accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            a:hover {
+                color: var(--color-text-primary);
+            }
+            :focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            strong,
+            b {
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            code {
+                font-family: var(--font-mono);
+                font-size: 16px;
+                background: var(--color-background-tertiary);
+                padding: 1px 6px;
+                border-radius: 4px;
+            }
+
+            /* layout: block + fixed sidebar */
+            .layout {
+                display: block;
+            }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--color-background-secondary);
+                border-right: 1px solid var(--color-border-tertiary);
+                overflow-y: auto;
+                padding: 20px 14px 40px;
+                z-index: 40;
+            }
+            .brand {
+                display: block;
+                text-decoration: none;
+                padding: 4px 10px 18px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                line-height: 1.5;
+            }
+            .brand i {
+                color: var(--accent);
+                margin-right: 8px;
+                font-size: 20px;
+                vertical-align: -3px;
+            }
+            .brand small {
+                display: block;
+                font-size: 16px;
+                font-weight: 400;
+                color: var(--color-text-tertiary);
+                margin-top: 4px;
+            }
+            .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .sidebar nav li {
+                padding-left: 0;
+                margin: 2px 0;
+            }
+            .sidebar nav li::before {
+                content: none;
+            }
+            .sidebar nav a {
+                display: block;
+                padding: 8px 12px;
+                border-left: 3px solid transparent;
+                border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                line-height: 1.5;
+            }
+            .sidebar nav a .n {
+                display: block;
+                color: var(--color-text-tertiary);
+            }
+            .sidebar nav a .t {
+                display: block;
+            }
+            .sidebar nav a:hover {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+            }
+            .sidebar nav a.active {
+                background: var(--color-background-info);
+                border-left-color: var(--accent);
+                color: var(--color-text-primary);
+            }
+            .sidebar nav a.active .n {
+                color: var(--color-text-info);
+            }
+            .main {
+                margin-left: var(--sidebar-w);
+                padding: 40px 48px 80px;
+            }
+            .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: var(--color-backdrop);
+                z-index: 35;
+            }
+            .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 50;
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+                border: 1px solid var(--color-border-primary);
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-size: 24px;
+                line-height: 1;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+            }
+            .menu-btn:hover {
+                background: var(--color-background-info);
+            }
+
+            /* hero */
+            .hero {
+                padding: 8px 0 28px;
+                border-bottom: 1px solid var(--color-border-secondary);
+            }
+            .hero h1 {
+                font-size: 28px;
+                line-height: 1.45;
+                font-weight: 500;
+                margin: 0 0 20px;
+            }
+            .meta {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+                gap: 8px 20px;
+                margin: 0;
+            }
+            .meta dt {
+                color: var(--color-text-tertiary);
+            }
+            .meta dd {
+                margin: 0;
+                color: var(--color-text-secondary);
+            }
+
+            /* sections */
+            .sec {
+                padding-top: 36px;
+            }
+            .sec > h2 {
+                font-size: 22px;
+                line-height: 1.5;
+                font-weight: 500;
+                margin: 0 0 16px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid var(--color-border-secondary);
+            }
+            .sec h3 {
+                font-size: 18px;
+                line-height: 1.5;
+                font-weight: 500;
+                margin: 32px 0 10px;
+                padding-left: 12px;
+                border-left: 3px solid var(--accent);
+            }
+            .sec p {
+                margin: 12px 0;
+                color: var(--color-text-secondary);
+            }
+            .sec ul,
+            .sec ol {
+                margin: 12px 0;
+                color: var(--color-text-secondary);
+            }
+            .sec ol {
+                padding-left: 24px;
+            }
+            .sec ul {
+                list-style: none;
+                padding-left: 0;
+            }
+            .sec ul > li {
+                position: relative;
+                padding-left: 20px;
+                margin: 6px 0;
+            }
+            .sec ul > li::before {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 0.8em;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+
+            /* tables */
+            .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-md);
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                font-size: 16px;
+            }
+            th,
+            td {
+                padding: 10px 14px;
+                text-align: left;
+                vertical-align: top;
+                line-height: 1.6;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            th {
+                background: var(--color-background-tertiary);
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            td {
+                color: var(--color-text-secondary);
+            }
+            tbody tr:last-child td {
+                border-bottom: 0;
+            }
+            tbody tr:hover td {
+                background: var(--color-background-secondary);
+            }
+
+            /* callouts */
+            .callout {
+                position: relative;
+                margin: 16px 0;
+                padding: 14px 18px 14px 52px;
+                border: 1px solid var(--color-border-info);
+                border-left-width: 4px;
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-info);
+            }
+            .callout > i {
+                position: absolute;
+                left: 16px;
+                top: 15px;
+                font-size: 22px;
+                line-height: 1.4;
+                color: var(--color-text-info);
+            }
+            .callout p {
+                margin: 6px 0;
+                color: var(--color-text-primary);
+            }
+            .callout.tip {
+                border-color: var(--color-border-success);
+                background: var(--color-background-success);
+            }
+            .callout.tip > i,
+            .callout.tip strong:first-child {
+                color: var(--color-text-success);
+            }
+            .callout.warn {
+                border-color: var(--color-border-warning);
+                background: var(--color-background-warning);
+            }
+            .callout.warn > i,
+            .callout.warn strong:first-child {
+                color: var(--color-text-warning);
+            }
+            .callout.note strong:first-child {
+                color: var(--color-text-info);
+            }
+
+            /* confidence tags */
+            .tag {
+                display: inline-block;
+                padding: 0 8px;
+                margin: 0 2px;
+                border: 1px solid var(--color-border-info);
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-info);
+                color: var(--color-text-info);
+                font-weight: 500;
+                line-height: 1.5;
+            }
+            .tag-ok {
+                border-color: var(--color-border-success);
+                background: var(--color-background-success);
+                color: var(--color-text-success);
+            }
+            .tag-gen {
+                border-color: var(--color-border-warning);
+                background: var(--color-background-warning);
+                color: var(--color-text-warning);
+            }
+            .tag-self {
+                border-color: var(--color-border-info);
+                background: var(--color-background-info);
+                color: var(--color-text-info);
+            }
+
+            /* diagrams */
+            .diagram {
+                margin: 20px 0;
+                padding: 20px 16px;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: var(--color-background-secondary);
+            }
+            .mermaid {
+                display: flex;
+                justify-content: center;
+                min-height: 48px;
+            }
+            .mermaid.err {
+                display: block;
+                color: var(--color-text-danger);
+            }
+            .mermaid svg {
+                overflow: visible;
+            }
+
+            /* references */
+            .ref-list {
+                display: grid;
+                gap: 12px;
+                grid-template-columns: repeat(auto-fill, minmax(min(440px, 100%), 1fr));
+                margin: 16px 0;
+            }
+            .ref {
+                position: relative;
+                padding: 14px 16px 14px 62px;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-secondary);
+            }
+            .ref-n {
+                position: absolute;
+                left: 14px;
+                top: 14px;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: 1px solid var(--color-border-primary);
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                text-align: center;
+                line-height: 34px;
+            }
+            .ref-cat {
+                color: var(--color-text-tertiary);
+                line-height: 1.5;
+            }
+            .ref-desc {
+                color: var(--color-text-primary);
+                margin: 2px 0 6px;
+                line-height: 1.6;
+            }
+            .ref a {
+                display: inline-block;
+                word-break: break-all;
+                line-height: 1.5;
+            }
+            .ref a i {
+                margin-right: 4px;
+                vertical-align: -2px;
+            }
+
+            .footer {
+                margin-top: 56px;
+                padding-top: 20px;
+                border-top: 1px solid var(--color-border-secondary);
+                color: var(--color-text-tertiary);
+            }
+            .footer p {
+                color: var(--color-text-tertiary);
+                margin: 6px 0;
+            }
+
+            /* tablet and below: drawer */
+            @media (max-width: 1100px) {
+                .menu-btn {
+                    display: flex;
+                }
+                .sidebar {
+                    width: min(320px, 86vw);
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                }
+                .sidebar.open {
+                    transform: translateX(0);
+                }
+                .backdrop.open {
+                    display: block;
+                }
+                .main {
+                    margin-left: 0;
+                    padding: 28px 20px 96px;
+                }
+                .hero h1 {
+                    font-size: 24px;
+                }
+            }
+            @media (max-width: 640px) {
+                .diagram {
+                    overflow-x: auto;
+                    padding: 16px 12px;
+                }
+                .mermaid {
+                    justify-content: flex-start;
+                }
+                .mermaid svg {
+                    max-width: none !important;
+                    flex-shrink: 0;
+                }
+                .meta {
+                    grid-template-columns: 1fr;
+                    gap: 2px 0;
+                }
+                .meta dd {
+                    margin-bottom: 10px;
+                }
+                .callout {
+                    padding: 12px 14px 12px 46px;
+                }
+                .callout > i {
+                    left: 12px;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+                .sidebar {
+                    transition: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar" aria-label="目次">
+                <a class="brand" href="#top"
+                    ><i class="ti ti-shield-check"></i>ISO/IEC 18045:2026<small
+                        >初学者向け解説ガイド</small
+                    ></a
+                >
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#s0"
+                                ><span class="n">0</span
+                                ><span class="t">このガイドの読み方</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s1"
+                                ><span class="n">STEP 1</span
+                                ><span class="t">ISO/IEC 18045:2026 を一言でいうと</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s2"
+                                ><span class="n">STEP 2</span
+                                ><span class="t">なぜ「評価方法の規格」が必要なのか</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s3"
+                                ><span class="n">STEP 3</span
+                                ><span class="t">Common Criteria(ISO/IEC 15408)との関係</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s4"
+                                ><span class="n">STEP 4</span
+                                ><span class="t">登場人物と役割</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s5"
+                                ><span class="n">STEP 5</span
+                                ><span class="t">評価の全体の流れと「判定」</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s6"
+                                ><span class="n">STEP 6</span
+                                ><span class="t">規格の章構成を読む</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s7"
+                                ><span class="n">STEP 7</span
+                                ><span class="t"
+                                    >評価の対象は4種類 — PP、PP-Module、PP-Configuration、ST</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s8"
+                                ><span class="n">STEP 8</span
+                                ><span class="t"
+                                    >クラス別の評価ポイント(ADV・AGD・ALC・ATE・AVA・ACO)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s9"
+                                ><span class="n">STEP 9</span
+                                ><span class="t">work unit と action element の読み方</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s10"
+                                ><span class="n">STEP 10</span
+                                ><span class="t"
+                                    >脆弱性評価(AVA)と攻撃能力(Attack potential)</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s11"
+                                ><span class="n">STEP 11</span
+                                ><span class="t">EAL と評価の深さ</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s12"
+                                ><span class="n">STEP 12</span
+                                ><span class="t">2022年版から何が変わったか</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s13"
+                                ><span class="n">STEP 13</span
+                                ><span class="t">認証制度での使われ方(CCRA、EUCC、日本)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s14"
+                                ><span class="n">STEP 14</span
+                                ><span class="t"
+                                    >開発者・セキュリティエンジニア向けの実務ロードマップ</span
+                                ></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s15"
+                                ><span class="n">STEP 15</span
+                                ><span class="t">最近の動向(2026年秋時点)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s16"
+                                ><span class="n">STEP 16</span><span class="t">用語集</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s17"
+                                ><span class="n">STEP 17</span
+                                ><span class="t">よくある質問と誤解</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s18"
+                                ><span class="n">STEP 18</span
+                                ><span class="t">学習ロードマップ</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s19"
+                                ><span class="n">STEP 19</span
+                                ><span class="t">出典URL一覧(2026年10月14日時点で参照)</span></a
+                            >
+                        </li>
+                        <li>
+                            <a href="#s20"
+                                ><span class="n">STEP 20</span
+                                ><span class="t">確認できなかった点と注意事項</span></a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <div class="backdrop" id="backdrop"></div>
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                type="button"
+                aria-label="目次を開く"
+                aria-expanded="false"
+                aria-controls="sidebar"
+            >
+                <i class="ti ti-menu-2"></i>
+            </button>
+            <main class="main" id="top">
+                <header class="hero">
+                    <h1>ISO/IEC 18045:2026 初学者向けステップバイステップ解説ガイド</h1>
+                    <dl class="meta">
+                        <dt>対象規格</dt>
+                        <dd>
+                            ISO/IEC 18045:2026 — Information security, cybersecurity and privacy
+                            protection — Evaluation criteria for IT security — Requirements and
+                            methodology for IT security evaluation
+                        </dd>
+                        <dt>通称</dt>
+                        <dd>
+                            CEM(正式名称: Common Methodology for Information Technology Security
+                            Evaluation。「Common Evaluation
+                            Methodology」は非公式の展開形で、正式名称ではない)
+                        </dd>
+                        <dt>情報時点</dt>
+                        <dd>2026年10月14日までのウェブ公開情報</dd>
+                        <dt>作成日</dt>
+                        <dd>2026年10月15日</dd>
+                        <dt>読者想定</dt>
+                        <dd>
+                            ソフトウェアエンジニア、セキュリティエンジニア、QAエンジニア、Common
+                            Criteria を初めて学ぶ方
+                        </dd>
+                    </dl>
+                </header>
+                <section class="sec" id="s0">
+                    <h2>0. このガイドの読み方</h2>
+                    <h3 id="h0-1">0.1 このガイドが扱う範囲と扱わない範囲</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>区分</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>扱うこと</td>
+                                    <td>
+                                        ISO/IEC 18045:2026
+                                        の位置づけ、構造、評価の流れ、各評価クラスの考え方、認証制度での使われ方、2022年版からの変更点(公開情報で確認できた範囲)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>扱わないこと</td>
+                                    <td>
+                                        規格本文の逐語的な転載、各 work unit
+                                        の全文解説、ITSEF(評価機関)の内部手順書の再現
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>理由</td>
+                                    <td>
+                                        規格本文は ISO/IEC の著作物です。本ガイドは ISO
+                                        公式ページ、公式プレビューの目次・序文、各国認証機関・評価機関・業界団体の公開資料に基づき、<strong>自分の言葉で要点を解説</strong>しています
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h0-2">0.2 根拠の信頼度タグ</h3>
+                    <p>本ガイドでは、記述の確からしさを次のタグで区別します。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>タグ</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong><span class="tag tag-ok">確認済</span></strong>
+                                    </td>
+                                    <td>
+                                        今回のウェブ調査で、出典URLの記載内容として確認できた事項
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong><span class="tag tag-gen">一般知識</span></strong>
+                                    </td>
+                                    <td>
+                                        Common Criteria / CEM
+                                        の解説書や認証制度で広く知られている事項。ただし
+                                        2026年版の全文では今回再確認していないため、<strong>実務で使う前に規格本文で確認</strong>してください
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong><span class="tag tag-self">筆者整理</span></strong>
+                                    </td>
+                                    <td>
+                                        初学者の理解のために、ソフトウェア開発の実務用語へ読み替えた整理。規格の記述ではありません
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h0-3">0.3 学習の全体像</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d1" role="img" aria-label="図 1"></div>
+                    </figure>
+                </section>
+                <section class="sec" id="s1">
+                    <h2>STEP 1. ISO/IEC 18045:2026 を一言でいうと</h2>
+                    <h3 id="h1-1">1.1 一言での説明</h3>
+                    <p>
+                        <strong
+                            >「Common Criteria(ISO/IEC
+                            15408)で製品を評価するとき、評価者は最低限何をどう確認しなければならないか」を定めた規格</strong
+                        >です。
+                    </p>
+                    <p>
+                        ISO の公式ページの要旨(Abstract)によると、この規格は ISO/IEC 15408
+                        シリーズの評価基準と評価証拠を使って評価を行うために、評価者が実施する<strong>要件と最低限のアクション</strong>を規定しています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <p>たとえ話をすると次のようになります。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>たとえ</th>
+                                    <th>対応する規格</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        運転免許の<strong>試験項目表</strong>(何ができれば合格か)
+                                    </td>
+                                    <td>ISO/IEC 15408(Common Criteria)</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        試験官向けの<strong>採点マニュアル</strong>(どう確認し、どう判定するか)
+                                    </td>
+                                    <td><strong>ISO/IEC 18045(CEM)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>
+                            <strong>つまずきポイント</strong>: ISO/IEC 18045
+                            は「製品がどうあるべきか」を直接定める規格ではありません。<strong>評価する人(評価者)の作業手順と判定の考え方</strong>を定める規格です。
+                        </p>
+                    </div>
+                    <h3 id="h1-2">1.2 基本情報</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>規格番号</td>
+                                    <td>ISO/IEC 18045:2026</td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>版</td>
+                                    <td>Edition 4(第4版)</td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>発行</td>
+                                    <td>
+                                        2026年5月(ISOのライフサイクル上、60.60 の日付は 2026-05-19)
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>ページ数</td>
+                                    <td>447ページ</td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>担当委員会</td>
+                                    <td>
+                                        ISO/IEC JTC 1/SC
+                                        27(情報セキュリティ、サイバーセキュリティ及びプライバシー保護)
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>ICS</td>
+                                    <td>35.030(IT Security)</td>
+                                    <td><span class="tag tag-ok">確認済</span>ISO公式ページ</td>
+                                </tr>
+                                <tr>
+                                    <td>前版</td>
+                                    <td>
+                                        ISO/IEC 18045:2022(第3版)。2026年5月19日付で廃止(Withdrawn)
+                                    </td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span
+                                        >ISO公式ページ、モンテネグロ規格協会ページ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISOサイトの価格表示</td>
+                                    <td>取得時点で「CHF 0」と表示</td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span
+                                        >ISO公式ページ。購入・閲覧条件は変わり得るため公式サイトで確認してください
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>欧州規格化</td>
+                                    <td>
+                                        EN ISO/IEC 18045:2026
+                                        として採用(エストニア規格協会の掲載では
+                                        2026年6月15日から有効)
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>EVS、BSI</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h1-3">1.3 規格の策定タイムライン</h3>
+                    <p>
+                        ISO公式ページのステージ履歴から、策定の流れを整理します<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d2" role="img" aria-label="図 2"></div>
+                    </figure>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            用語: <strong>DIS</strong> = Draft International
+                            Standard(国際規格案)、<strong>FDIS</strong> = Final Draft International
+                            Standard(最終国際規格案)。
+                        </p>
+                    </div>
+                </section>
+                <section class="sec" id="s2">
+                    <h2>STEP 2. なぜ「評価方法の規格」が必要なのか</h2>
+                    <h3 id="h2-1">2.1 歴史を知ると目的が分かる</h3>
+                    <p>
+                        atsec information security(Common Criteria
+                        評価で国際的に知られる評価機関)の解説記事によると、Common Criteria
+                        は各国で別々に作られていた評価基準が統合されて生まれました<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d3" role="img" aria-label="図 3"></div>
+                    </figure>
+                    <h3 id="h2-2">2.2 「基準」だけでは足りない理由</h3>
+                    <p>
+                        評価基準(ものさし)だけがあっても、<strong>評価者ごとに確認の深さや判定がバラバラ</strong>だと、次の問題が起きます。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>問題</th>
+                                    <th>具体例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>評価結果が比較できない</td>
+                                    <td>A社の評価機関では合格、B社の評価機関では不合格</td>
+                                </tr>
+                                <tr>
+                                    <td>国をまたいだ相互承認ができない</td>
+                                    <td>日本で取得した認証書が海外で信頼されない</td>
+                                </tr>
+                                <tr>
+                                    <td>開発者が準備できない</td>
+                                    <td>何の証拠をどの程度用意すれば良いか分からない</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        そこで、<strong>評価者が最低限やるべきことを共通化する規格</strong>として
+                        CEM(= ISO/IEC
+                        18045)が存在します。国際相互承認の枠組み(CCRA)の下で、各国の認証制度が同じ水準で評価結果を受け入れるための土台になっています<span
+                            class="tag tag-gen"
+                            >一般知識</span
+                        >。
+                    </p>
+                    <h3 id="h2-3">2.3 CEM の著作権と ISO 版の関係</h3>
+                    <p>
+                        2026年版の序文(Introduction)によると、CEM
+                        は複数の政府機関が共同で著作権を保有しており、ISO/IEC に対して ISO/IEC 18045
+                        の継続的な開発・保守のために CEM
+                        を使用する非独占的ライセンスを許諾しています。政府機関側は CEM
+                        を使用・複製・配布・翻訳・改変する権利を保持しています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >(ANSI公式プレビュー)。
+                    </p>
+                </section>
+                <section class="sec" id="s3">
+                    <h2>STEP 3. Common Criteria(ISO/IEC 15408)との関係</h2>
+                    <h3 id="h3-1">3.1 ISO/IEC 15408 シリーズと 18045 の関係</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d4" role="img" aria-label="図 4"></div>
+                    </figure>
+                    <h3 id="h3-2">3.2 各パートの役割</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>規格</th>
+                                    <th>役割</th>
+                                    <th>初学者向けの言い換え</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO/IEC 15408-1</td>
+                                    <td>一般概念、用語、TOE(評価対象)の概念、評価の全体モデル</td>
+                                    <td>取扱説明書の「はじめに」</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 15408-2</td>
+                                    <td>セキュリティ機能要件(SFR)のカタログ</td>
+                                    <td>「製品がこんな機能を持つべき」の部品表</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 15408-3</td>
+                                    <td>
+                                        セキュリティ保証要件(SAR)のカタログと、PP・PP-Module・PP-Configuration・ST
+                                        の評価基準
+                                    </td>
+                                    <td>「この証拠でここまで確認する」の部品表</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 15408-4</td>
+                                    <td>
+                                        評価方法(EM)と評価アクティビティ(EA)を定めるための枠組み
+                                    </td>
+                                    <td>技術分野ごとの評価手順を作るための型枠</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 15408-5</td>
+                                    <td>EAL などの定義済みパッケージ</td>
+                                    <td>要件のセットメニュー</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ISO/IEC 18045</strong></td>
+                                    <td><strong>評価者が何をどう確認し、どう判定するか</strong></td>
+                                    <td><strong>採点マニュアル</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        各パートの説明は、ISO/IEC 15408-1:2026 と 15408-3:2026
+                        の公開されている要旨に基づいています<span class="tag tag-ok">確認済</span
+                        >(EVS、ISO各ページ)。Part 1 の要旨では、18045 に関する一般情報と、18045
+                        から派生する評価方法・評価アクティビティを作るための Part 4
+                        の適用指針も扱うと説明されています<span class="tag tag-ok">確認済</span>。
+                    </p>
+                    <h3 id="h3-3">3.3 2026年に 15408 シリーズも改訂されている</h3>
+                    <p>
+                        エストニア規格協会(EVS)のページによると、ISO/IEC 15408-1 から -5 までの
+                        <strong>2026年版</strong>(いずれも 2026年6月15日から有効)が EN
+                        として採用されています<span class="tag tag-ok">確認済</span>。ISO
+                        のページでは ISO/IEC 15408-1 は Edition 5(2026年)と表示されています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="callout tip">
+                        <i class="ti ti-bulb"></i>
+                        <p>
+                            <strong>ポイント</strong>: 18045:2026 の序文は「15408
+                            シリーズの変更に合わせた」と述べています。つまり
+                            <strong>15408 と 18045 はセットで読む</strong>のが基本です。
+                        </p>
+                    </div>
+                    <h3 id="h3-4">3.4 他の ISO 規格との違い</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>規格</th>
+                                    <th>対象</th>
+                                    <th>何を確認するか</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO/IEC 27001</td>
+                                    <td>組織の ISMS(情報セキュリティマネジメントシステム)</td>
+                                    <td>組織の管理の仕組み</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 15408 + 18045</td>
+                                    <td><strong>IT 製品・システム(TOE)</strong></td>
+                                    <td>製品が主張するセキュリティ機能と、その保証の確からしさ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>ISO/IEC 27001
+                        は組織の仕組みを認証し、Common Criteria
+                        は<strong>個別の製品</strong>を評価します。両者は補完関係にあり、置き換え関係ではありません。
+                    </p>
+                </section>
+                <section class="sec" id="s4">
+                    <h2>STEP 4. 登場人物と役割</h2>
+                    <h3 id="h4-1">4.1 評価に関わる主な役割</h3>
+                    <p>
+                        2026年版の序文では、<strong
+                            >主な読者は ISO/IEC 15408
+                            を適用する評価者と、評価者の作業を確認する認証者(certifier)</strong
+                        >とされています。副次的な読者として、評価スポンサー、開発者、PP・PP-Module・PP-Configuration・ST
+                        の作成者、その他 IT セキュリティに関心のある方が挙げられています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>役割</th>
+                                    <th>英語</th>
+                                    <th>主な責任</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>スポンサー</td>
+                                    <td>Sponsor</td>
+                                    <td>評価を依頼し、必要な証拠の提供を取りまとめる</td>
+                                    <td><span class="tag tag-gen">一般知識</span></td>
+                                </tr>
+                                <tr>
+                                    <td>開発者</td>
+                                    <td>Developer</td>
+                                    <td>
+                                        ST、設計文書、ソース、テスト証拠などの評価証拠を用意する
+                                    </td>
+                                    <td><span class="tag tag-gen">一般知識</span></td>
+                                </tr>
+                                <tr>
+                                    <td>評価者</td>
+                                    <td>Evaluator</td>
+                                    <td>CEM に従って評価アクティビティを実施し、判定する</td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>認証者</td>
+                                    <td>Certifier</td>
+                                    <td>評価者の作業が CEM に沿っているか確認し、認証判断に使う</td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>認証制度(スキーム)</td>
+                                    <td>Scheme</td>
+                                    <td>国・地域ごとの運用ルールを決める</td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h4-2">4.2 スキームの役割がなぜ重要か</h3>
+                    <p>
+                        序文には、この規格は IT
+                        セキュリティ評価に関するすべての疑問に答えるものではなく、追加の解釈が必要になり得ること、そうした解釈の扱いは<strong>個々のスキームが決めるが、相互承認協定の対象になり得る</strong>ことが書かれています。スキームが扱い得る方法論関連の活動の一覧は
+                        <strong>Annex A</strong> に載っています<span class="tag tag-ok">確認済</span
+                        >。
+                    </p>
+                    <h3 id="h4-3">4.3 評価の一般的なやり取り</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d5" role="img" aria-label="図 5"></div>
+                    </figure>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            用語: <strong>ITSEF</strong> = IT Security Evaluation
+                            Facility(評価機関)、<strong>OR</strong> = Observation
+                            Report(所見報告書)、<strong>ETR</strong> = Evaluation Technical
+                            Report(評価技術報告書)。OR と ETR の作成は 18045
+                            の章構成で「評価出力タスク」の一部として登場します<span
+                                class="tag tag-ok"
+                                >確認済</span
+                            >(目次の 8.5.4 と 8.5.5)。
+                        </p>
+                    </div>
+                </section>
+                <section class="sec" id="s5">
+                    <h2>STEP 5. 評価の全体の流れと「判定」</h2>
+                    <h3 id="h5-1">5.1 評価プロセスの3段構え</h3>
+                    <p>
+                        18045 の第8章「Evaluation process and related
+                        tasks」は、次の構成になっています<span class="tag tag-ok">確認済</span
+                        >(目次)。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>節</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>8.1 General</td>
+                                    <td>総論</td>
+                                </tr>
+                                <tr>
+                                    <td>8.2 Evaluation process overview</td>
+                                    <td>
+                                        目的、役割ごとの責任、役割の関係、一般的な評価モデル、評価者の判定(verdict)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>8.3 Evaluation input task</td>
+                                    <td>評価入力タスク(証拠の受領と管理)</td>
+                                </tr>
+                                <tr>
+                                    <td>8.4 Evaluation sub-activities</td>
+                                    <td>評価サブアクティビティ</td>
+                                </tr>
+                                <tr>
+                                    <td>8.5 Evaluation output task</td>
+                                    <td>評価出力タスク(成果物の管理、OR の作成、ETR の作成)</td>
+                                </tr>
+                                <tr>
+                                    <td>共通タスク(別項目)</td>
+                                    <td>
+                                        evaluation authority task
+                                        を遂行する技術的能力の実証。入力・サブアクティビティ・出力の3段とは別に、評価全体に共通して求められる<span
+                                            class="tag tag-gen"
+                                            >一般知識</span
+                                        >(2026年版での節番号は本文で確認)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h5-2">5.2 評価の流れ(フローチャート)</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d6" role="img" aria-label="図 6"></div>
+                    </figure>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            上記は評価の一般的なイメージです。実際の手戻りの扱い、タイミング、報告様式は<strong>各スキームのルール</strong>によって異なります<span
+                                class="tag tag-gen"
+                                >一般知識</span
+                            >。
+                        </p>
+                    </div>
+                    <h3 id="h5-3">5.3 評価者の判定(Evaluator verdicts)</h3>
+                    <p>
+                        18045 には「評価者の判定」を扱う節(8.2.5)があります<span class="tag tag-ok"
+                            >確認済</span
+                        >(目次)。判定の対象は ISO/IEC 15408
+                        シリーズの<strong>評価者アクション要素</strong>であり、work unit
+                        の実施結果は判定そのものではなく、<strong>その判定の根拠</strong>として扱われます<span
+                            class="tag tag-gen"
+                            >一般知識</span
+                        >。CEM の判定は一般に次の3種類です<span class="tag tag-gen">一般知識</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>判定</th>
+                                    <th>意味</th>
+                                    <th>開発者への影響</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>pass</strong></td>
+                                    <td>要求を満たし、かつ証拠に一貫性があると評価者が判断</td>
+                                    <td>次へ進める</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>fail</strong></td>
+                                    <td>
+                                        要求を満たしていない、または証拠に不整合や明白な矛盾があると評価者が判断
+                                    </td>
+                                    <td>修正が必要</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>inconclusive</strong></td>
+                                    <td>まだ判断できない(証拠が不足、確認待ちなど)</td>
+                                    <td>追加の証拠や説明が必要</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        CEM
+                        では、下位の判定が積み上がって上位の判定になる構造をとります。基本的な考え方は「<strong
+                            >すべての下位判定が pass のときだけ上位も pass</strong
+                        >」です<span class="tag tag-gen">一般知識</span>。
+                    </p>
+                    <h3 id="h5-4">5.4 評価の階層構造</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d7" role="img" aria-label="図 7"></div>
+                    </figure>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>ADV_FSP.4
+                        のようなコンポーネントに対して、CEM は評価者の作業を
+                        <strong>work unit</strong> という単位に分解して示します。
+                    </p>
+                </section>
+                <section class="sec" id="s6">
+                    <h2>STEP 6. 規格の章構成を読む</h2>
+                    <h3 id="h6-1">6.1 18045:2026 の全体地図</h3>
+                    <p>
+                        ANSI が公開している公式プレビューの目次に基づく章構成です<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>章</th>
+                                    <th>タイトル(英語)</th>
+                                    <th>内容の概要</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Foreword / Introduction</td>
+                                    <td>序文と導入</td>
+                                    <td>改訂の要点、想定読者、スキームとの関係</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Scope</td>
+                                    <td>適用範囲</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Normative references</td>
+                                    <td>引用規格</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Terms and definitions</td>
+                                    <td>用語と定義</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Terminology</td>
+                                    <td>用語の使い方</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Verb usage</td>
+                                    <td>動詞の使い方(義務を示す動詞の規則)</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>General evaluation guidance</td>
+                                    <td>一般的な評価ガイダンス</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>
+                                        Relationship between structures within the CC and the
+                                        structure of this document
+                                    </td>
+                                    <td>CC の構造と本書の構造の対応</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Evaluation process and related tasks</td>
+                                    <td>評価プロセスと関連タスク</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Protection Profile (PP) evaluation</td>
+                                    <td>PP の評価(APE)</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Protection Profile Configuration evaluation</td>
+                                    <td>PP-Module と PP-Configuration の評価(ACE)</td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Security Target (ST) evaluation</td>
+                                    <td>ST の評価(ASE)</td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>Development</td>
+                                    <td>開発(ADV)</td>
+                                </tr>
+                                <tr>
+                                    <td>13</td>
+                                    <td>Guidance documents</td>
+                                    <td>ガイダンス文書(AGD)</td>
+                                </tr>
+                                <tr>
+                                    <td>14</td>
+                                    <td>Life cycle support</td>
+                                    <td>ライフサイクルサポート(ALC)</td>
+                                </tr>
+                                <tr>
+                                    <td>15</td>
+                                    <td>Tests</td>
+                                    <td>テスト(ATE)</td>
+                                </tr>
+                                <tr>
+                                    <td>16</td>
+                                    <td>Vulnerability assessment</td>
+                                    <td>脆弱性評価(AVA)</td>
+                                </tr>
+                                <tr>
+                                    <td>17</td>
+                                    <td>Composition</td>
+                                    <td>コンポジション(ACO)</td>
+                                </tr>
+                                <tr>
+                                    <td>Annex A(参考)</td>
+                                    <td>General evaluation guidance and requirements</td>
+                                    <td>一般的な評価ガイダンスと要件</td>
+                                </tr>
+                                <tr>
+                                    <td>Annex B(規定)</td>
+                                    <td>Vulnerability assessment (AVA)</td>
+                                    <td>脆弱性評価の詳細</td>
+                                </tr>
+                                <tr>
+                                    <td>Annex C(参考)</td>
+                                    <td>
+                                        Evaluation techniques and tools — Semi-formal and formal
+                                        methods
+                                    </td>
+                                    <td>セミフォーマル手法・フォーマル手法</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            序文によれば、この文書では、必須の評価アクティビティに関する特別な動詞を<strong>太字の斜体</strong>で表します<span
+                                class="tag tag-ok"
+                                >確認済</span
+                            >。読むときは、まずここに注目すると「評価者が必ずやること」が見分けられます。
+                        </p>
+                    </div>
+                    <h3 id="h6-2">6.2 章ごとのボリューム感</h3>
+                    <p>
+                        目次の開始ページから、おおよそのページ数を計算しました。<strong>正確なページ数ではなく、目次の開始ページ同士の差による概算</strong>です<span
+                            class="tag tag-self"
+                            >筆者整理</span
+                        >。
+                    </p>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d8" role="img" aria-label="図 8"></div>
+                    </figure>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>読み取れること</th>
+                                    <th>解説</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ADV(開発)が最大</td>
+                                    <td>
+                                        設計情報の評価は、評価のなかで最も作業量が大きい領域です
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ALC(ライフサイクル)も大きい</td>
+                                    <td>
+                                        構成管理、開発環境のセキュリティ、欠陥修正などソフトウェア開発プロセスの評価が含まれます
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AGD(ガイダンス)は小さい</td>
+                                    <td>
+                                        評価対象の文書は少なめですが、運用上の重要情報が含まれます
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h6-3">6.3 初学者のおすすめの読み順</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d9" role="img" aria-label="図 9"></div>
+                    </figure>
+                </section>
+                <section class="sec" id="s7">
+                    <h2>STEP 7. 評価の対象は4種類 — PP、PP-Module、PP-Configuration、ST</h2>
+                    <h3 id="h7-1">7.1 キーワード整理</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>正式名</th>
+                                    <th>一言でいうと</th>
+                                    <th>18045 の該当章</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>TOE</strong></td>
+                                    <td>Target of Evaluation</td>
+                                    <td>評価対象の製品・システム(の範囲)</td>
+                                    <td>全体</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP</strong></td>
+                                    <td>Protection Profile</td>
+                                    <td>製品カテゴリごとの、再利用できるセキュリティ要件の雛形</td>
+                                    <td>第9章(APE)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP-Module</strong></td>
+                                    <td>Protection Profile Module</td>
+                                    <td>PP に追加する機能単位の要件の部品</td>
+                                    <td>第10章(ACE)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PP-Configuration</strong></td>
+                                    <td>Protection Profile Configuration</td>
+                                    <td>PP と PP-Module を組み合わせた構成</td>
+                                    <td>第10章(ACE)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ST</strong></td>
+                                    <td>Security Target</td>
+                                    <td>特定の製品について、そのセキュリティの主張を記したもの</td>
+                                    <td>第11章(ASE)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h7-2">7.2 評価の順序</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d10" role="img" aria-label="図 10"></div>
+                    </figure>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>基本的な考え方は、<strong
+                            >まず ST(主張)が評価に値する品質かを確認し、次に TOE が ST
+                            の主張どおりかを確認する</strong
+                        >というものです。
+                    </p>
+                    <h3 id="h7-3">7.3 ST 評価(ASE)と PP 評価(APE)のファミリー</h3>
+                    <p>
+                        目次に基づくファミリー(評価の観点)の一覧です<span class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>観点</th>
+                                    <th>APE(PP評価)</th>
+                                    <th>ASE(ST評価)</th>
+                                    <th>ACE(PP-Module / PP-Config)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Introduction(導入)</td>
+                                    <td>APE_INT.1</td>
+                                    <td>ASE_INT.1</td>
+                                    <td>ACE_INT.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Conformance claims(適合主張)</td>
+                                    <td>APE_CCL.1</td>
+                                    <td>ASE_CCL.1</td>
+                                    <td>ACE_CCL.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Security problem definition(セキュリティ課題定義)</td>
+                                    <td>APE_SPD.1</td>
+                                    <td>ASE_SPD.1</td>
+                                    <td>ACE_SPD.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Security objectives(セキュリティ対策方針)</td>
+                                    <td>APE_OBJ.1 から .2</td>
+                                    <td>ASE_OBJ.1 から .2</td>
+                                    <td>ACE_OBJ.1 から .2</td>
+                                </tr>
+                                <tr>
+                                    <td>Extended components definition(拡張コンポーネント定義)</td>
+                                    <td>APE_ECD.1</td>
+                                    <td>ASE_ECD.1</td>
+                                    <td>ACE_ECD.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Security requirements(セキュリティ要件)</td>
+                                    <td>APE_REQ.1 から .2</td>
+                                    <td>ASE_REQ.1 から .2</td>
+                                    <td>ACE_REQ.1 から .2</td>
+                                </tr>
+                                <tr>
+                                    <td>TOE summary specification(TOE要約仕様)</td>
+                                    <td>なし</td>
+                                    <td>ASE_TSS.1 から .2</td>
+                                    <td>なし</td>
+                                </tr>
+                                <tr>
+                                    <td>Composite product ST 整合性</td>
+                                    <td>なし</td>
+                                    <td>ASE_COMP.1</td>
+                                    <td>なし</td>
+                                </tr>
+                                <tr>
+                                    <td>PP-Module の整合性</td>
+                                    <td>なし</td>
+                                    <td>なし</td>
+                                    <td>ACE_MCO.1</td>
+                                </tr>
+                                <tr>
+                                    <td>PP-Configuration の整合性</td>
+                                    <td>なし</td>
+                                    <td>なし</td>
+                                    <td>ACE_CCO.1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout tip">
+                        <i class="ti ti-bulb"></i>
+                        <p>
+                            <strong>ポイント</strong>: ST 評価は、<strong
+                                >セキュリティ課題 → 対策方針 → 要件 → TOE要約仕様</strong
+                            >という論理の筋が通っているかを確認する作業です。ソフトウェアで言えば「脅威
+                            → セキュリティ設計方針 → 実装要件 →
+                            実装の概要」のトレーサビリティ確認に近いものです<span
+                                class="tag tag-self"
+                                >筆者整理</span
+                            >。
+                        </p>
+                    </div>
+                </section>
+                <section class="sec" id="s8">
+                    <h2>STEP 8. クラス別の評価ポイント(ADV・AGD・ALC・ATE・AVA・ACO)</h2>
+                    <p>
+                        TOE
+                        本体の評価では、保証クラスごとに評価者が確認する観点があります。以下の表のファミリーとコンポーネントの範囲は、<strong
+                            >保証コンポーネントを定義する ISO/IEC 15408-3:2026</strong
+                        >
+                        に基づくもので、ISO/IEC 18045:2026
+                        の目次に載っている範囲そのものではありません<span class="tag tag-gen"
+                            >一般知識:範囲と解説</span
+                        >。
+                    </p>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            <strong>18045 との違い</strong>: 18045
+                            では、すべてのコンポーネントに個別の評価サブアクティビティがあるわけではありません。たとえば
+                            ADV_FSP は .5 まで、ADV_TDS は .5 まで、ATE_DPT は .3 まで、ATE_IND は
+                            .2 までしか個別のサブアクティビティがありません。表に載っている .6 や
+                            .4、.3 といった上位コンポーネントは 15408-3
+                            には定義されていますが、18045 に個別のサブアクティビティはありません。
+                        </p>
+                    </div>
+                    <h3 id="h8-1">8.1 ADV — Development(開発)</h3>
+                    <p>
+                        「製品がどう設計・実装されているか」の説明が、ST
+                        の主張と矛盾しないかを確認します。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ADV_ARC</td>
+                                    <td>Security architecture</td>
+                                    <td>.1</td>
+                                    <td>
+                                        セキュリティアーキテクチャ(自己保護、バイパス防止など)の説明
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_FSP</td>
+                                    <td>Functional specification</td>
+                                    <td>.1 から .6</td>
+                                    <td>
+                                        外部インターフェース(API、コマンドなど)の仕様。番号が上がるほど詳細で形式的
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_IMP</td>
+                                    <td>Implementation representation</td>
+                                    <td>.1 から .2</td>
+                                    <td>実装表現(ソースコードなど)の確認</td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_INT</td>
+                                    <td>TSF internals</td>
+                                    <td>.1 から .3</td>
+                                    <td>セキュリティ機能の内部構造(モジュール化、複雑さの抑制)</td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_SPM</td>
+                                    <td>Formal TSF model</td>
+                                    <td>.1</td>
+                                    <td>セキュリティ方針の形式モデル</td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_TDS</td>
+                                    <td>TOE design</td>
+                                    <td>.1 から .6</td>
+                                    <td>TOE の設計(サブシステム、モジュールの説明)</td>
+                                </tr>
+                                <tr>
+                                    <td>ADV_COMP</td>
+                                    <td>Composite design compliance</td>
+                                    <td>.1</td>
+                                    <td>複合製品の設計適合性</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h8-2">8.2 AGD — Guidance documents(ガイダンス文書)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AGD_OPE</td>
+                                    <td>Operational user guidance</td>
+                                    <td>.1</td>
+                                    <td>
+                                        利用者向けの運用ガイダンスが、安全な使い方を正しく示しているか
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AGD_PRE</td>
+                                    <td>Preparative procedures</td>
+                                    <td>.1</td>
+                                    <td>
+                                        受け入れ手順と導入手順(セットアップ)が、評価した構成を再現できるか
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout tip">
+                        <i class="ti ti-bulb"></i>
+                        <p>
+                            実務の観点:
+                            「安全に使うための手順書」も評価対象です。ハードニングガイドや初期設定手順書が曖昧だと、ここで指摘されます<span
+                                class="tag tag-self"
+                                >筆者整理</span
+                            >。
+                        </p>
+                    </div>
+                    <h3 id="h8-3">8.3 ALC — Life-cycle support(ライフサイクルサポート)</h3>
+                    <p>
+                        ソフトウェア開発・保守のプロセスが、製品の信頼性を裏付けるかを確認します。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                    <th>
+                                        実務への読み替え<span class="tag tag-self">筆者整理</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ALC_CMC</td>
+                                    <td>CM capabilities</td>
+                                    <td>.1 から .5</td>
+                                    <td>構成管理の能力</td>
+                                    <td>Git、ブランチ戦略、CI による変更追跡</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_CMS</td>
+                                    <td>CM scope</td>
+                                    <td>.1 から .5</td>
+                                    <td>構成管理の対象範囲</td>
+                                    <td>
+                                        何をバージョン管理するか(ソース、設計書、テスト、ツール)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_DEL</td>
+                                    <td>Delivery</td>
+                                    <td>.1</td>
+                                    <td>配布の安全性</td>
+                                    <td>署名付き配布、改ざん検知</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_DVS</td>
+                                    <td>Developer environment security</td>
+                                    <td>.1 から .2</td>
+                                    <td>開発環境のセキュリティ</td>
+                                    <td>開発環境のアクセス制御、ビルド環境の保護</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_FLR</td>
+                                    <td>Flaw remediation</td>
+                                    <td>.1 から .3</td>
+                                    <td>欠陥修正の手順</td>
+                                    <td>脆弱性対応、パッチ提供、PSIRT の運用</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_LCD</td>
+                                    <td>Development life cycle definition</td>
+                                    <td>.1 から .2</td>
+                                    <td>開発ライフサイクルの定義</td>
+                                    <td>SDLC、DevSecOps の定義</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_TDA</td>
+                                    <td>TOE development artefacts</td>
+                                    <td>.1 から .3</td>
+                                    <td>TOE の開発成果物</td>
+                                    <td>目次上の名称のみ確認。詳細は規格本文を参照</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_TAT</td>
+                                    <td>Tools and techniques</td>
+                                    <td>.1 から .3</td>
+                                    <td>開発ツールと技法</td>
+                                    <td>コンパイラ、静的解析、実装標準</td>
+                                </tr>
+                                <tr>
+                                    <td>ALC_COMP</td>
+                                    <td>
+                                        Integration of composition parts and consistency check of
+                                        delivery procedures
+                                    </td>
+                                    <td>.1</td>
+                                    <td>複合製品の統合と配布手順の整合性</td>
+                                    <td>下位製品との統合確認</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h8-4">8.4 ATE — Tests(テスト)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ATE_COV</td>
+                                    <td>Coverage</td>
+                                    <td>.1 から .3</td>
+                                    <td>
+                                        開発者のテストが、機能インターフェースをどの程度カバーしているか
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ATE_DPT</td>
+                                    <td>Depth</td>
+                                    <td>.1 から .4</td>
+                                    <td>
+                                        テストが設計のどの深さ(サブシステム、モジュール)まで届いているか
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ATE_FUN</td>
+                                    <td>Functional tests</td>
+                                    <td>.1 から .2</td>
+                                    <td>開発者の機能テストの計画・実施・結果</td>
+                                </tr>
+                                <tr>
+                                    <td>ATE_IND</td>
+                                    <td>Independent testing</td>
+                                    <td>.1 から .3</td>
+                                    <td><strong>評価者自身が行う</strong>独立テスト</td>
+                                </tr>
+                                <tr>
+                                    <td>ATE_COMP</td>
+                                    <td>Composite functional testing</td>
+                                    <td>.1</td>
+                                    <td>複合製品の機能テスト</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        2026年版の第15章には、応用上の注記として次の見出しが目次に載っています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>節</th>
+                                    <th>見出し</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15.2.2</td>
+                                    <td>
+                                        Understanding the expected behaviour of the TOE(TOE
+                                        の期待される動作の理解)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>15.2.3</td>
+                                    <td>
+                                        Testing vs. alternate approaches to verify the expected
+                                        behaviour of functionality(テストと他の検証手段の比較)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>15.2.4</td>
+                                    <td>Verifying the adequacy of tests(テストの妥当性の検証)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout tip">
+                        <i class="ti ti-bulb"></i>
+                        <p>
+                            <strong>QA エンジニア向けの要点</strong>: ATE
+                            は「テストがある」ことではなく、<strong>テストが何をどの深さで検証しているか</strong>を問われます。カバレッジ表、テスト仕様、期待結果と実績の対応が重要です<span
+                                class="tag tag-self"
+                                >筆者整理</span
+                            >。
+                        </p>
+                    </div>
+                    <h3 id="h8-5">8.5 AVA — Vulnerability assessment(脆弱性評価)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AVA_VAN</td>
+                                    <td>Vulnerability analysis</td>
+                                    <td>.1 から .5</td>
+                                    <td>評価者が脆弱性を調査し、侵入テストで確認する</td>
+                                </tr>
+                                <tr>
+                                    <td>AVA_COMP</td>
+                                    <td>Composite vulnerability assessment</td>
+                                    <td>.1</td>
+                                    <td>複合製品の脆弱性評価</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>詳細は STEP 10 で解説します。</p>
+                    <h3 id="h8-6">8.6 ACO — Composition(コンポジション)</h3>
+                    <p>
+                        すでに評価・認証された製品(下位コンポーネント)の上に、別の製品(上位コンポーネント)を載せる場合の評価です。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ファミリー</th>
+                                    <th>名称</th>
+                                    <th>コンポーネント</th>
+                                    <th>初学者向けの説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ACO_COR</td>
+                                    <td>Composition rationale</td>
+                                    <td>.1</td>
+                                    <td>組み合わせの妥当性の根拠</td>
+                                </tr>
+                                <tr>
+                                    <td>ACO_DEV</td>
+                                    <td>Development evidence</td>
+                                    <td>.1 から .3</td>
+                                    <td>組み合わせに必要な開発証拠</td>
+                                </tr>
+                                <tr>
+                                    <td>ACO_REL</td>
+                                    <td>Reliance of dependent component</td>
+                                    <td>.1 から .2</td>
+                                    <td>上位が下位にどう依存しているか</td>
+                                </tr>
+                                <tr>
+                                    <td>ACO_CTT</td>
+                                    <td>Composed TOE testing</td>
+                                    <td>.1 から .2</td>
+                                    <td>組み合わせた TOE のテスト</td>
+                                </tr>
+                                <tr>
+                                    <td>ACO_VUL</td>
+                                    <td>Composition vulnerability analysis</td>
+                                    <td>.1 から .3</td>
+                                    <td>組み合わせに特有の脆弱性分析</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d11" role="img" aria-label="図 11"></div>
+                    </figure>
+                </section>
+                <section class="sec" id="s9">
+                    <h2>STEP 9. work unit と action element の読み方</h2>
+                    <h3 id="h9-1">9.1 コンポーネント名の読み方</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d12" role="img" aria-label="図 12"></div>
+                    </figure>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>部分</th>
+                                    <th>意味</th>
+                                    <th>例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>先頭3文字</td>
+                                    <td><strong>クラス</strong>(大分類)</td>
+                                    <td>ADV, AGD, ALC, ATE, AVA, ACO, APE, ASE, ACE</td>
+                                </tr>
+                                <tr>
+                                    <td>アンダースコア後の3文字</td>
+                                    <td><strong>ファミリー</strong>(中分類)</td>
+                                    <td>FSP, TDS, CMC</td>
+                                </tr>
+                                <tr>
+                                    <td>ドット後の数字</td>
+                                    <td><strong>コンポーネント</strong>(厳しさのレベル)</td>
+                                    <td>
+                                        .1 から .5 など。数字が大きいほど一般に要求が厳しい<span
+                                            class="tag tag-gen"
+                                            >一般知識</span
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h9-2">9.2 CC 側の要素と CEM 側の work unit</h3>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>CC Part 3
+                        の各コンポーネントは、次の3種類の要素(element)から成ります。CEM
+                        は、このうち<strong>評価者アクション要素</strong>を、さらに具体的な work
+                        unit
+                        へ分解します。加えて、評価者アクション要素の多くは「提供された情報が内容・提示の要求を満たすことを確認する」ものであるため、<strong>開発者アクション要素(D)</strong>や<strong>内容・提示要素(C)</strong>の要求も、その確認を通じて
+                        work unit の派生元になります。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>要素</th>
+                                    <th>記号</th>
+                                    <th>誰が何をするか</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Developer action elements</td>
+                                    <td>D</td>
+                                    <td>開発者が提供しなければならないこと</td>
+                                </tr>
+                                <tr>
+                                    <td>Content and presentation elements</td>
+                                    <td>C</td>
+                                    <td>提供される証拠が含むべき内容と表現</td>
+                                </tr>
+                                <tr>
+                                    <td>Evaluator action elements</td>
+                                    <td>E</td>
+                                    <td>評価者が行わなければならないこと</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d13" role="img" aria-label="図 13"></div>
+                    </figure>
+                    <h3 id="h9-3">9.3 「動詞」に注目する読み方</h3>
+                    <p>
+                        序文によれば、この文書は<strong>必須の評価アクティビティに関する特別な動詞を太字の斜体</strong>で示します<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。第5章「Verb usage」はその動詞の使い方を定めています<span
+                            class="tag tag-ok"
+                            >確認済:章題</span
+                        >。
+                    </p>
+                    <p>
+                        読むときのコツは次のとおりです<span class="tag tag-self">筆者整理</span>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>読み方のコツ</th>
+                                    <th>具体的な意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>太字の斜体の動詞を探す</td>
+                                    <td>評価者が<strong>必ず</strong>行う動作</td>
+                                </tr>
+                                <tr>
+                                    <td>1つの work unit は1つの判断</td>
+                                    <td>「確認する」「検討する」「決定する」といった動作の単位</td>
+                                </tr>
+                                <tr>
+                                    <td>証拠と結びつける</td>
+                                    <td>どの証拠(ST、設計文書、ソースコード、テスト)を見るのか</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s10">
+                    <h2>STEP 10. 脆弱性評価(AVA)と攻撃能力(Attack potential)</h2>
+                    <h3 id="h10-1">10.1 AVA_VAN の5段階</h3>
+                    <p>
+                        第16章と Annex B(規定)が脆弱性評価を扱います<span class="tag tag-ok"
+                            >確認済:構成</span
+                        >。以下は一般的な理解です<span class="tag tag-gen">一般知識</span>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>コンポーネント</th>
+                                    <th>名称(一般)</th>
+                                    <th>評価者の主な作業</th>
+                                    <th>想定する攻撃者の能力</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AVA_VAN.1</td>
+                                    <td>Vulnerability survey</td>
+                                    <td>公開情報の調査と基本的な確認</td>
+                                    <td>基本レベル程度の確認</td>
+                                </tr>
+                                <tr>
+                                    <td>AVA_VAN.2</td>
+                                    <td>Vulnerability analysis</td>
+                                    <td>脆弱性分析と侵入テスト</td>
+                                    <td>Basic に耐える</td>
+                                </tr>
+                                <tr>
+                                    <td>AVA_VAN.3</td>
+                                    <td>Focused vulnerability analysis</td>
+                                    <td>重点を絞った分析</td>
+                                    <td>Enhanced-Basic に耐える</td>
+                                </tr>
+                                <tr>
+                                    <td>AVA_VAN.4</td>
+                                    <td>Methodical vulnerability analysis</td>
+                                    <td>体系的な分析</td>
+                                    <td>Moderate に耐える</td>
+                                </tr>
+                                <tr>
+                                    <td>AVA_VAN.5</td>
+                                    <td>Advanced methodical vulnerability analysis</td>
+                                    <td>高度で体系的な分析</td>
+                                    <td>High に耐える</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            EUCC では、Common Criteria の脆弱性評価ファミリー AVA_VAN
+                            のコンポーネント 1 から 5 を使うと、EUCC 関連の解説(Applus+
+                            Laboratories)が述べています<span class="tag tag-ok">確認済</span>。
+                        </p>
+                    </div>
+                    <h3 id="h10-2">10.2 脆弱性評価の流れ</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d14" role="img" aria-label="図 14"></div>
+                    </figure>
+                    <h3 id="h10-3">10.3 攻撃能力(Attack potential)を決める要素</h3>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>CEM の Annex B
+                        では、攻撃の難しさを次の要素で評価します。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>要素</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Elapsed time</td>
+                                    <td>攻撃の準備と実行にかかる時間</td>
+                                </tr>
+                                <tr>
+                                    <td>Specialist expertise</td>
+                                    <td>必要な専門知識のレベル</td>
+                                </tr>
+                                <tr>
+                                    <td>Knowledge of the TOE</td>
+                                    <td>TOE についてどの程度の情報が必要か</td>
+                                </tr>
+                                <tr>
+                                    <td>Window of opportunity</td>
+                                    <td>攻撃の機会がどれだけ得られるか</td>
+                                </tr>
+                                <tr>
+                                    <td>Equipment</td>
+                                    <td>必要な機材やソフトウェア</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout note">
+                        <i class="ti ti-info-circle"></i>
+                        <p>
+                            具体的な点数表と判定のしきい値は、規格本文(Annex
+                            B)と各スキームの運用文書で確認してください。本ガイドでは数値を転載しません。
+                        </p>
+                    </div>
+                </section>
+                <section class="sec" id="s11">
+                    <h2>STEP 11. EAL と評価の深さ</h2>
+                    <h3 id="h11-1">11.1 EAL とは</h3>
+                    <p>
+                        EAL(Evaluation Assurance
+                        Level)は、保証要件を段階的にまとめた定義済みパッケージです。ISO/IEC 15408-5
+                        に定義されています<span class="tag tag-ok"
+                            >確認済:パッケージが Part 5 にあること</span
+                        >(atsec による CC:2022 の概要では、Part 5 に CC 3.1 R5 の EAL1〜7 と CAP
+                        が含まれると説明されています)。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>EAL</th>
+                                    <th>一般的な呼び名</th>
+                                    <th>一言でいうと</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EAL1</td>
+                                    <td>Functionally tested</td>
+                                    <td>機能テストした</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL2</td>
+                                    <td>Structurally tested</td>
+                                    <td>構造的にテストした</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL3</td>
+                                    <td>Methodically tested and checked</td>
+                                    <td>体系的にテストし確認した</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL4</td>
+                                    <td>Methodically designed, tested and reviewed</td>
+                                    <td>体系的に設計・テスト・レビューした</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL5</td>
+                                    <td>Semiformally designed and tested</td>
+                                    <td>セミフォーマルに設計しテストした</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL6</td>
+                                    <td>Semiformally verified design and tested</td>
+                                    <td>セミフォーマルに設計を検証しテストした</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL7</td>
+                                    <td>Formally verified design and tested</td>
+                                    <td>フォーマルに設計を検証しテストした</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <span class="tag tag-gen">一般知識</span>上記は一般的な呼び名です。<strong
+                            >EAL が高い = 製品が安全</strong
+                        >ではなく、「<strong>セキュリティ機能の保証を確認した深さ</strong>が深い」という意味です。
+                    </p>
+                    <h3 id="h11-2">11.2 EAL と CEM の関係</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d15" role="img" aria-label="図 15"></div>
+                    </figure>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>
+                            <strong>つまずきポイント</strong>: EAL の「plus(+)」は、EAL
+                            の標準パッケージに<strong>追加または強化したコンポーネント</strong>があることを示します<span
+                                class="tag tag-gen"
+                                >一般知識</span
+                            >。
+                        </p>
+                    </div>
+                </section>
+                <section class="sec" id="s12">
+                    <h2>STEP 12. 2022年版から何が変わったか</h2>
+                    <h3 id="h12-1">12.1 公式に確認できた変更点</h3>
+                    <p>
+                        2026年版の序文には、第3版(ISO/IEC
+                        18045:2022)を置き換える第4版で、技術的に改訂されたと書かれています。主な変更点は次の2点です<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>変更の区分</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO/IEC 15408 シリーズとの整合</td>
+                                    <td>15408 シリーズの変更に合わせた</td>
+                                </tr>
+                                <tr>
+                                    <td>技術的変更</td>
+                                    <td>
+                                        用語の見直しと更新、各コンポーネントの work unit
+                                        の見直しと更新
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h12-2">12.2 2022年版と2026年版の比較表</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>2022年版</th>
+                                    <th>2026年版</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>版</td>
+                                    <td>Edition 3</td>
+                                    <td>Edition 4</td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>タイトル</td>
+                                    <td>…Methodology for IT security evaluation</td>
+                                    <td>
+                                        …<strong>Requirements and</strong> methodology for IT
+                                        security evaluation
+                                    </td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span
+                                        >ISO、モンテネグロ規格協会
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>適用範囲の表現</td>
+                                    <td>評価者が実施する最低限のアクションを定義</td>
+                                    <td>
+                                        評価者が実施する<strong>要件</strong>と最低限のアクションを規定
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>状態</td>
+                                    <td>2026-05-19 に廃止</td>
+                                    <td>発行済み</td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>欧州との連携</td>
+                                    <td>(本調査では未確認)</td>
+                                    <td>CEN/CLC/JTC 13 との協力で作成(ウィーン協定)</td>
+                                    <td><span class="tag tag-ok">確認済</span>序文</td>
+                                </tr>
+                                <tr>
+                                    <td>関連する 15408</td>
+                                    <td>ISO/IEC 15408 Part 1 から 5 の 2022年版</td>
+                                    <td>15408-1:2026(Edition 5)ほか Part 1 から 5 の 2026年版</td>
+                                    <td><span class="tag tag-ok">確認済</span>EVS、ISO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>
+                            <strong>注意</strong>: 2022年版と2026年版の<strong
+                                >work unit 単位の差分</strong
+                            >は、公開情報だけでは確認できていません。実務で影響を調べる際は、規格本文を入手して差分を確認してください。
+                        </p>
+                    </div>
+                    <h3 id="h12-3">
+                        12.3 CC:2022 で導入された主要概念(2026年版でも前提となる土台)
+                    </h3>
+                    <p>
+                        atsec の解説と ICCC 2023 の講演概要によると、CC:2022
+                        では次の変化がありました<span class="tag tag-ok">確認済</span>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>概念</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>5パート構成 + CEM</td>
+                                    <td>Part 1 から 5 と CEM</td>
+                                </tr>
+                                <tr>
+                                    <td>新しい SAR</td>
+                                    <td>新たな保証要件の追加</td>
+                                </tr>
+                                <tr>
+                                    <td>Exact Conformance</td>
+                                    <td>
+                                        以前はアドンダム(追補)だった適合方法を正式化し、cPP(collaborative
+                                        PP)の方式を支持
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TOE のモジュール化</td>
+                                    <td>許容されるようになった</td>
+                                </tr>
+                                <tr>
+                                    <td>新しい機能要件</td>
+                                    <td>追加された</td>
+                                </tr>
+                                <tr>
+                                    <td>マルチアシュアランス評価</td>
+                                    <td>評価の保証水準を部分ごとに変える考え方</td>
+                                </tr>
+                                <tr>
+                                    <td>コンポジションの3類型</td>
+                                    <td>Layered、Network(双方向)、Embedded</td>
+                                </tr>
+                                <tr>
+                                    <td>評価方法と評価アクティビティの枠組み(Part 4)</td>
+                                    <td>PP の作者が技術分野ごとの評価作業を調整できる</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s13">
+                    <h2>STEP 13. 認証制度での使われ方(CCRA、EUCC、日本)</h2>
+                    <h3 id="h13-1">13.1 全体像</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d16" role="img" aria-label="図 16"></div>
+                    </figure>
+                    <h3 id="h13-2">13.2 CCRA と CC:2022 / CEM:2022 への移行</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CC/CEM:2022 の公開</td>
+                                    <td>
+                                        CC:2022 Release 1 と CEM:2022 が CC ポータルに掲載。CC:2022
+                                        の ISO 版は ISO/IEC 15408-1 から -5:2022、CEM の ISO 版は
+                                        ISO/IEC 18045:2022
+                                    </td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span>CCポータル、IPA 翻訳
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>公開の特徴</td>
+                                    <td>
+                                        これまでと異なり、<strong
+                                            >まず ISO/IEC 規格として開発され、その後に CCRA
+                                            が発行</strong
+                                        >した
+                                    </td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span>atsec(イタリア)の解説
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>移行ポリシー</td>
+                                    <td>
+                                        CC v3.1 R5 は 3.1 系の最後の改訂。CC:2022
+                                        への移行に関する規則が CCRA の移行ポリシーに定義されている
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>CCポータル</td>
+                                </tr>
+                                <tr>
+                                    <td>新規評価の受付</td>
+                                    <td>
+                                        2024年7月1日以降の新規認証申請は CC:2022 Release 1
+                                        が必須(NASK、シンガポール SCCS)
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span></td>
+                                </tr>
+                                <tr>
+                                    <td>日本(JISEC)</td>
+                                    <td>
+                                        CC/CEM v3.1 R5 に基づく認証申請は、原則として
+                                        2024年5月31日で受付終了。現行標準は CC/CEM:2022 Release 1
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>IPA</td>
+                                </tr>
+                                <tr>
+                                    <td>日本(JISEC)の例外</td>
+                                    <td>
+                                        (1) Exact Conformance を要求する PP
+                                        に適合する申請には、上記とは別の期限がある(日付は下の「日付に関する注意」を参照)。(2)
+                                        指定された cPP は、後継の PP が公開されてから6か月間、v3.1
+                                        R5 から移行できる
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>IPA</td>
+                                </tr>
+                                <tr>
+                                    <td>PP が v3.1 の場合の猶予</td>
+                                    <td>
+                                        3.1 R5 を前提とする PP に準拠する ST の申請は
+                                        <strong>2027年12月31日</strong>まで受付(NASK の掲載)
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>NASK</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>
+                            <strong>日付に関する注意</strong>: Exact Conformance の cPP に関する
+                            v3.1 での評価開始の期限は、資料により異なる記載が見られます(atsec の
+                            2023年10月時点の資料では 2026年12月31日、IPA の掲載では 2025年12月31日と
+                            cPP 移行の遅れへの対応に言及)。<strong
+                                >最新の CCRA 移行ポリシーと各スキームの通知を必ず確認</strong
+                            >してください。
+                        </p>
+                    </div>
+                    <h3 id="h13-3">13.3 2026年版との関係(重要な未確認事項)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>確認できたこと</th>
+                                    <th>確認できなかったこと</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        ISO/IEC 18045:2026 と 15408:2026 が ISO から発行され、EN
+                                        として採用された
+                                    </td>
+                                    <td>
+                                        CCRA が
+                                        <strong>CC/CEM の2026年相当版</strong
+                                        >をいつ公開するか(今回の調査では、CC ポータルの掲載ページに
+                                        CC:2022 Release 1 と CEM:2022 が現行として表示されていた)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        EUCC の実施規則(EU 2024/482)は、2022年版の ISO/IEC 15408 と
+                                        18045 を参照している
+                                    </td>
+                                    <td>EUCC が 2026年版を参照するよう更新される時期</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        補足: CC
+                        ポータルのニュースページ(2026年7月31日付の掲載が最新)を再確認したところ、CC:2022
+                        Release 1 の公開(2022年11月14日)以降に、新しい CC/CEM
+                        本体の公開を知らせる項目は見当たりませんでした。直近の項目は
+                        cPP(HCD、DBMS)関連です<span class="tag tag-ok">確認済</span>。
+                    </p>
+                    <p>
+                        つまり、<strong
+                            >規格としての ISO/IEC 18045:2026 は発行済みですが、各認証制度がいつ
+                            2026年版を採用するかは、各スキームの通知を確認する必要があります</strong
+                        >。
+                    </p>
+                    <h3 id="h13-4">13.4 EUCC(欧州の Common Criteria ベース認証スキーム)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>位置づけ</td>
+                                    <td>
+                                        Cybersecurity Act(規則 2019/881)に基づく最初の認証スキーム
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>EUR-Lex、Applus+</td>
+                                </tr>
+                                <tr>
+                                    <td>法的根拠</td>
+                                    <td>実施規則(EU) 2024/482</td>
+                                    <td><span class="tag tag-ok">確認済</span>EUR-Lex</td>
+                                </tr>
+                                <tr>
+                                    <td>評価の基準と方法</td>
+                                    <td>
+                                        Common Criteria(ISO/IEC 15408)と共通評価方法(ISO/IEC
+                                        18045)を使用
+                                    </td>
+                                    <td>
+                                        <span class="tag tag-ok">確認済</span>ENISA、EUR-Lex、Thales
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>自己評価</td>
+                                    <td>適合性の自己評価は認められない</td>
+                                    <td><span class="tag tag-ok">確認済</span>EUR-Lex の要約</td>
+                                </tr>
+                                <tr>
+                                    <td>評価機関</td>
+                                    <td>認定された ITSEF による第三者評価</td>
+                                    <td><span class="tag tag-ok">確認済</span>Applus+</td>
+                                </tr>
+                                <tr>
+                                    <td>参照する版</td>
+                                    <td>
+                                        実施規則では ISO/IEC 15408-1 から -5:2022 と ISO/IEC
+                                        18045:2022、または CC:2022 と CEM:2022 を参照
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>ENISA、EUR-Lex</td>
+                                </tr>
+                                <tr>
+                                    <td>旧版の移行措置</td>
+                                    <td>
+                                        実施規則(EU) 2024/3144
+                                        で改正された第3条により、<strong>2027年12月31日まで</strong>は、旧版の
+                                        ISO/IEC 15408(15408-1:2009、15408-2:2008、15408-3:2008)と
+                                        ISO/IEC 18045:2008、または CC v3.1 R5 と CEM v3.1 R5
+                                        を適用した証明書も発行できる。同じ期限まで、2022年版を適用しつつ旧版で作られた
+                                        PP
+                                        への適合を主張する証明書も発行できる。期限後は2022年版の適用が必要
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>ENISA</td>
+                                </tr>
+                                <tr>
+                                    <td>期限のない例外</td>
+                                    <td>
+                                        CC/CEM v3.1 R1〜R4 を適用した PP
+                                        への適合を主張する場合でも、その PP の使用が実施規則(EU)
+                                        2016/799、規則(EU) 910/2014、または実施決定(EU) 2016/650
+                                        で求められているときは、2022年版を適用した証明書を発行できる
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>ENISA</td>
+                                </tr>
+                                <tr>
+                                    <td>証明書の発行</td>
+                                    <td>
+                                        フランス ANSSI などの<strong>認証機関(CB)</strong>が EUCC
+                                        証明書を発行する。<strong
+                                            >ENISA は証明書を掲載するウェブサイトを運営</strong
+                                        >する立場であり、証明書の発行者ではない
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>EUR-Lex、Thales</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h13-5">13.5 日本(JISEC)</h3>
+                    <p>
+                        IPA の JISEC は、CC/CEM
+                        の英語版と日本語翻訳版の両方を提供しており、どちらも利用できます<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。CC:2022 Part 5 などの日本語訳も IPA が公開しています<span
+                            class="tag tag-ok"
+                            >確認済</span
+                        >。
+                    </p>
+                </section>
+                <section class="sec" id="s14">
+                    <h2>STEP 14. 開発者・セキュリティエンジニア向けの実務ロードマップ</h2>
+                    <h3 id="h14-1">14.1 評価を受ける側の準備の流れ</h3>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d17" role="img" aria-label="図 17"></div>
+                    </figure>
+                    <h3 id="h14-2">
+                        14.2 開発プロセスと CEM の対応<span class="tag tag-self">筆者整理</span>
+                    </h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>開発の実務</th>
+                                    <th>関連する CEM のクラスとファミリー</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>脅威モデリング、セキュリティ設計書</td>
+                                    <td>ASE_SPD, ASE_OBJ, ADV_ARC</td>
+                                </tr>
+                                <tr>
+                                    <td>API 仕様書、インターフェース定義</td>
+                                    <td>ADV_FSP</td>
+                                </tr>
+                                <tr>
+                                    <td>設計書(モジュール構成)</td>
+                                    <td>ADV_TDS, ADV_INT</td>
+                                </tr>
+                                <tr>
+                                    <td>Git、ブランチ運用、CI</td>
+                                    <td>ALC_CMC, ALC_CMS</td>
+                                </tr>
+                                <tr>
+                                    <td>ビルド環境のアクセス制御</td>
+                                    <td>ALC_DVS</td>
+                                </tr>
+                                <tr>
+                                    <td>署名付きリリース、配布</td>
+                                    <td>ALC_DEL</td>
+                                </tr>
+                                <tr>
+                                    <td>PSIRT、脆弱性対応、パッチ提供</td>
+                                    <td>ALC_FLR</td>
+                                </tr>
+                                <tr>
+                                    <td>静的解析、コーディング規約</td>
+                                    <td>ALC_TAT</td>
+                                </tr>
+                                <tr>
+                                    <td>自動テスト、カバレッジ計測</td>
+                                    <td>ATE_COV, ATE_DPT, ATE_FUN</td>
+                                </tr>
+                                <tr>
+                                    <td>ペネトレーションテスト、ファジング</td>
+                                    <td>AVA_VAN</td>
+                                </tr>
+                                <tr>
+                                    <td>ハードニングガイド、導入手順書</td>
+                                    <td>AGD_OPE, AGD_PRE</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="h14-3">14.3 よくある準備不足</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>失敗パターン</th>
+                                    <th>原因</th>
+                                    <th>対策</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>証拠が評価の粒度に合わない</td>
+                                    <td>設計書が概要レベルで止まっている</td>
+                                    <td>
+                                        選んだ EAL や SAR のレベルに必要な詳細度を早期に確認する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ST の主張が曖昧</td>
+                                    <td>TOE の境界(何が評価対象か)が不明確</td>
+                                    <td>TOE と運用環境の境界を最初に明確化する</td>
+                                </tr>
+                                <tr>
+                                    <td>テスト証拠がトレースできない</td>
+                                    <td>テストと機能インターフェースの対応表がない</td>
+                                    <td>カバレッジ表を作る</td>
+                                </tr>
+                                <tr>
+                                    <td>脆弱性対応の記録がない</td>
+                                    <td>受付から修正までの手順が非公式</td>
+                                    <td>受付窓口、トリアージ、修正、配布の手順を文書化する</td>
+                                </tr>
+                                <tr>
+                                    <td>開発環境の統制が不十分</td>
+                                    <td>ビルド環境の管理が属人化</td>
+                                    <td>アクセス制御とビルドの再現性を整える</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s15">
+                    <h2>STEP 15. 最近の動向(2026年秋時点)</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>動向</th>
+                                    <th>内容</th>
+                                    <th>根拠</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ICCC 2026</td>
+                                    <td>
+                                        2026年9月28日に開幕(ローマ)。欧州の EUCC
+                                        など規制要件への対応が焦点
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>atsec</td>
+                                </tr>
+                                <tr>
+                                    <td>注目テーマ</td>
+                                    <td>
+                                        SBOM、人工知能、Cyber Resilience Act(CRA)が複数の発表で議論
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>atsec</td>
+                                </tr>
+                                <tr>
+                                    <td>SBOM と EUCC</td>
+                                    <td>
+                                        EUCC 第33条に関連して、SBOM
+                                        をライフサイクルの脆弱性管理に活用する発表がある
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>atsec</td>
+                                </tr>
+                                <tr>
+                                    <td>パッチ管理</td>
+                                    <td>
+                                        jtsec(Applus+)の専門家が、ISO SC 27 WG 3
+                                        の技術報告書「Towards Creating an Extension for Patch
+                                        Management for ISO/IEC 15408 and ISO/IEC 18045」に協力
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>Applus+</td>
+                                </tr>
+                                <tr>
+                                    <td>暗号</td>
+                                    <td>
+                                        CC 開発委員会の暗号作業部会が「Specification of Functional
+                                        Requirements for Cryptography」を公開
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>CCポータル</td>
+                                </tr>
+                                <tr>
+                                    <td>クラウド</td>
+                                    <td>
+                                        Common Criteria in the Cloud(CCitC)が評価ガイダンスを公開
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>CCポータル</td>
+                                </tr>
+                                <tr>
+                                    <td>相互承認</td>
+                                    <td>
+                                        ICCC 2026
+                                        の閉会プレナリーで「相互承認における課題は改善しているか」のパネルが開催
+                                    </td>
+                                    <td><span class="tag tag-ok">確認済</span>atsec</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s16">
+                    <h2>STEP 16. 用語集</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>正式名</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CC</td>
+                                    <td>Common Criteria</td>
+                                    <td>IT セキュリティ評価の国際基準(ISO/IEC 15408)</td>
+                                </tr>
+                                <tr>
+                                    <td>CEM</td>
+                                    <td>
+                                        Common Methodology for Information Technology Security
+                                        Evaluation
+                                    </td>
+                                    <td>
+                                        CC に基づく評価方法(ISO/IEC 18045)。「Common Evaluation
+                                        Methodology」は非公式の展開形
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CCRA</td>
+                                    <td>Common Criteria Recognition Arrangement</td>
+                                    <td>CC 認証の国際相互承認の枠組み</td>
+                                </tr>
+                                <tr>
+                                    <td>TOE</td>
+                                    <td>Target of Evaluation</td>
+                                    <td>評価対象</td>
+                                </tr>
+                                <tr>
+                                    <td>TSF</td>
+                                    <td>TOE Security Functionality</td>
+                                    <td>TOE のセキュリティ機能</td>
+                                </tr>
+                                <tr>
+                                    <td>PP</td>
+                                    <td>Protection Profile</td>
+                                    <td>製品カテゴリ向けのセキュリティ要件の雛形</td>
+                                </tr>
+                                <tr>
+                                    <td>cPP</td>
+                                    <td>collaborative Protection Profile</td>
+                                    <td>国際的な技術コミュニティが作る PP</td>
+                                </tr>
+                                <tr>
+                                    <td>ST</td>
+                                    <td>Security Target</td>
+                                    <td>特定製品のセキュリティ主張</td>
+                                </tr>
+                                <tr>
+                                    <td>SFR</td>
+                                    <td>Security Functional Requirement</td>
+                                    <td>セキュリティ機能要件</td>
+                                </tr>
+                                <tr>
+                                    <td>SAR</td>
+                                    <td>Security Assurance Requirement</td>
+                                    <td>セキュリティ保証要件</td>
+                                </tr>
+                                <tr>
+                                    <td>EAL</td>
+                                    <td>Evaluation Assurance Level</td>
+                                    <td>評価保証レベル</td>
+                                </tr>
+                                <tr>
+                                    <td>CAP</td>
+                                    <td>Composed Assurance Package</td>
+                                    <td>合成保証パッケージ</td>
+                                </tr>
+                                <tr>
+                                    <td>ITSEF</td>
+                                    <td>IT Security Evaluation Facility</td>
+                                    <td>評価機関</td>
+                                </tr>
+                                <tr>
+                                    <td>OR</td>
+                                    <td>Observation Report</td>
+                                    <td>所見報告書</td>
+                                </tr>
+                                <tr>
+                                    <td>ETR</td>
+                                    <td>Evaluation Technical Report</td>
+                                    <td>評価技術報告書</td>
+                                </tr>
+                                <tr>
+                                    <td>work unit</td>
+                                    <td>(CEM の用語)</td>
+                                    <td>評価者アクションを分解した具体的作業単位</td>
+                                </tr>
+                                <tr>
+                                    <td>verdict</td>
+                                    <td>(CEM の用語)</td>
+                                    <td>pass、fail、inconclusive の判定</td>
+                                </tr>
+                                <tr>
+                                    <td>EM / EA</td>
+                                    <td>Evaluation Method / Evaluation Activity</td>
+                                    <td>Part 4 で定める評価方法と評価アクティビティ</td>
+                                </tr>
+                                <tr>
+                                    <td>EUCC</td>
+                                    <td>
+                                        European Common Criteria-based cybersecurity certification
+                                        scheme
+                                    </td>
+                                    <td>EU の CC ベース認証スキーム</td>
+                                </tr>
+                                <tr>
+                                    <td>JISEC</td>
+                                    <td>
+                                        Japan Information Technology Security Evaluation and
+                                        Certification Scheme
+                                    </td>
+                                    <td>日本の IT セキュリティ評価・認証制度(IPA)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s17">
+                    <h2>STEP 17. よくある質問と誤解</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>質問・誤解</th>
+                                    <th>回答</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO/IEC 18045 を読めば製品のセキュリティ要件が分かる?</td>
+                                    <td>
+                                        いいえ。要件の中身は ISO/IEC 15408(特に Part 2 と Part
+                                        3、および PP や ST)にあります。18045
+                                        は評価者の作業を定めます
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>開発者は 18045 を読まなくてよい?</td>
+                                    <td>
+                                        序文では開発者は副次的な読者です。ただし、評価者が何を見るかを知ると、<strong
+                                            >証拠の準備の質が上がります</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CC 認証を取れば製品は安全?</td>
+                                    <td>
+                                        認証は、<strong
+                                            >ST に書かれた主張が評価された範囲で確認された</strong
+                                        >ことの証明です。範囲外の安全性は保証しません<span
+                                            class="tag tag-gen"
+                                            >一般知識</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>EAL が高いほど良い製品?</td>
+                                    <td>
+                                        EAL は確認の深さであり、製品の優劣ではありません。用途と PP
+                                        の要求で適切な水準が決まります
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2026年版が出たので今すぐ全部切り替わる?</td>
+                                    <td>
+                                        いいえ。各スキームがいつ採用するかは別です(STEP 13.3 参照)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 27001 と何が違う?</td>
+                                    <td>27001 は組織の ISMS、CC は製品の評価です(STEP 3.4 参照)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s18">
+                    <h2>STEP 18. 学習ロードマップ</h2>
+                    <figure class="diagram">
+                        <div class="mermaid" data-diagram="d18" role="img" aria-label="図 18"></div>
+                    </figure>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>レベル</th>
+                                    <th>学ぶこと</th>
+                                    <th>教材</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>全体像と用語</td>
+                                    <td>本ガイド、IPA JISEC のページ</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>CC の5パート構成</td>
+                                    <td>CC:2022 Part 1(CC ポータル、IPA 翻訳)</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>実際の ST と認証報告書</td>
+                                    <td>CC ポータルの認証済み製品の ST と Certification Report</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>評価者視点の work unit</td>
+                                    <td>ISO/IEC 18045:2026 本文、CEM:2022</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>実務</td>
+                                    <td>評価機関、国際会議(ICCC)、CCUF のワークショップ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="sec" id="s19">
+                    <h2>STEP 19. 出典URL一覧(2026年10月14日時点で参照)</h2>
+                    <h3 id="h19-1">19.1 規格の一次情報(ISO と各国の規格団体)</h3>
+                    <div class="ref-list">
+                        <div class="ref">
+                            <span class="ref-n">1</span>
+                            <div class="ref-cat">ISO 公式</div>
+                            <div class="ref-desc">
+                                ISO/IEC 18045:2026 のページ(要旨、版、ステージ履歴、前版の情報)
+                            </div>
+                            <a
+                                href="https://www.iso.org/standard/18045"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.iso.org/standard/18045</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">2</span>
+                            <div class="ref-cat">公式プレビュー</div>
+                            <div class="ref-desc">
+                                ANSI 掲載の ISO/IEC 18045:2026 プレビュー(目次、序文、変更点)
+                            </div>
+                            <a
+                                href="https://webstore.ansi.org/preview-pages/ISO/preview_ISO+IEC+18045-2026.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://webstore.ansi.org/preview-pages/ISO/preview_ISO+IEC+18045-2026.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">3</span>
+                            <div class="ref-cat">前版の状態</div>
+                            <div class="ref-desc">
+                                モンテネグロ規格協会の ISO/IEC 18045:2022(廃止の情報)
+                            </div>
+                            <a
+                                href="https://isme.me/en/project/show/iso:proj:72889"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://isme.me/en/project/show/iso:proj:72889</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">4</span>
+                            <div class="ref-cat">欧州規格</div>
+                            <div class="ref-desc">EVS-EN ISO/IEC 18045:2026</div>
+                            <a
+                                href="https://www.evs.ee/en/evs-en-iso-iec-18045-2026"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.evs.ee/en/evs-en-iso-iec-18045-2026</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">5</span>
+                            <div class="ref-cat">英国規格</div>
+                            <div class="ref-desc">BSI の BS EN ISO/IEC 18045:2026</div>
+                            <a
+                                href="https://knowledge.bsigroup.com/products/information-security-cybersecurity-and-privacy-protection-evaluation-criteria-for-it-security-requirements-and-methodology-for-it-security-evaluation-1"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://knowledge.bsigroup.com/products/information-security-cybersecurity-and-privacy-protection-evaluation-criteria-for-it-security-requirements-and-methodology-for-it-security-evaluation-1</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">6</span>
+                            <div class="ref-cat">カナダ規格</div>
+                            <div class="ref-desc">SCC の ISO/IEC 18045:2026</div>
+                            <a
+                                href="https://scc-ccn.ca/standardsdb/standards/2058669"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://scc-ccn.ca/standardsdb/standards/2058669</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">7</span>
+                            <div class="ref-cat">15408-1</div>
+                            <div class="ref-desc">EVS-EN ISO/IEC 15408-1:2026</div>
+                            <a
+                                href="https://www.evs.ee/en/evs-en-iso-iec-15408-1-2026"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.evs.ee/en/evs-en-iso-iec-15408-1-2026</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">8</span>
+                            <div class="ref-cat">15408-3</div>
+                            <div class="ref-desc">EVS-EN ISO/IEC 15408-3:2026</div>
+                            <a
+                                href="https://www.evs.ee/en/evs-en-iso-iec-15408-3-2026"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.evs.ee/en/evs-en-iso-iec-15408-3-2026</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">9</span>
+                            <div class="ref-cat">15408-1 ISO</div>
+                            <div class="ref-desc">ISO/IEC 15408-1 のページ(Part 1 の要旨)</div>
+                            <a
+                                href="https://committee.iso.org/standard/88134.html"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://committee.iso.org/standard/88134.html</a
+                            >
+                        </div>
+                    </div>
+                    <h3 id="h19-2">19.2 CCRA、CC ポータル、各国認証機関</h3>
+                    <div class="ref-list">
+                        <div class="ref">
+                            <span class="ref-n">10</span>
+                            <div class="ref-cat">CC ポータル</div>
+                            <div class="ref-desc">CC:2022 と CEM:2022 の公開ページ</div>
+                            <a
+                                href="https://www.commoncriteriaportal.org/cc/index.cfm"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.commoncriteriaportal.org/cc/index.cfm</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">11</span>
+                            <div class="ref-cat">CC ポータル</div>
+                            <div class="ref-desc">CC:2022 と CEM:2022 の移行ポリシー</div>
+                            <a
+                                href="https://www.commoncriteriaportal.org/files/ccfiles/CC2022CEM2022TransitionPolicy.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.commoncriteriaportal.org/files/ccfiles/CC2022CEM2022TransitionPolicy.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">12</span>
+                            <div class="ref-cat">CC ポータル</div>
+                            <div class="ref-desc">
+                                ニュース(暗号、クラウド、XML 版などの公開情報)
+                            </div>
+                            <a
+                                href="https://www.commoncriteriaportal.org/news/index.cfm"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.commoncriteriaportal.org/news/index.cfm</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">13</span>
+                            <div class="ref-cat">CC ポータル</div>
+                            <div class="ref-desc">CC:2022 と CEM:2022 の正誤表と解釈</div>
+                            <a
+                                href="https://www.commoncriteriaportal.org/files/ccfiles/CCMB-2025-001-v1_2-Errata_Interpretation_CC_CEM_2022.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.commoncriteriaportal.org/files/ccfiles/CCMB-2025-001-v1_2-Errata_Interpretation_CC_CEM_2022.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">14</span>
+                            <div class="ref-cat">日本 IPA</div>
+                            <div class="ref-desc">JISEC の CC/CEM ページ</div>
+                            <a
+                                href="https://www.ipa.go.jp/en/security/jisec/cc-cem.html"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.ipa.go.jp/en/security/jisec/cc-cem.html</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">15</span>
+                            <div class="ref-cat">日本 IPA</div>
+                            <div class="ref-desc">CC:2022 Part 5 日本語訳</div>
+                            <a
+                                href="https://www.ipa.go.jp/security/jisec/about/cdk3vs000000240h-att/CC2022PART5R1-J1.0.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.ipa.go.jp/security/jisec/about/cdk3vs000000240h-att/CC2022PART5R1-J1.0.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">16</span>
+                            <div class="ref-cat">フランス ANSSI</div>
+                            <div class="ref-desc">
+                                CC:2022 と CEM:2022 のスキームへの適用に関する通知
+                            </div>
+                            <a
+                                href="https://cyber.gouv.fr/sites/default/files/document/ANSSI-CC-NOTE-29_Transposition_CC2022_v1.1_ORIGINAL_SIGNE.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://cyber.gouv.fr/sites/default/files/document/ANSSI-CC-NOTE-29_Transposition_CC2022_v1.1_ORIGINAL_SIGNE.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">17</span>
+                            <div class="ref-cat">ポーランド NASK</div>
+                            <div class="ref-desc">CC 認証の移行情報</div>
+                            <a
+                                href="https://certyfikacja.nask.pl/en/en-common-criteria/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://certyfikacja.nask.pl/en/en-common-criteria/</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">18</span>
+                            <div class="ref-cat">シンガポール</div>
+                            <div class="ref-desc">SCCS の CC:2022 移行の情報</div>
+                            <a
+                                href="https://csa.gov.sg/our-programmes/certification-and-labelling-schemes/singapore-common-criteria-scheme/updates"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://csa.gov.sg/our-programmes/certification-and-labelling-schemes/singapore-common-criteria-scheme/updates</a
+                            >
+                        </div>
+                    </div>
+                    <h3 id="h19-3">19.3 EUCC</h3>
+                    <div class="ref-list">
+                        <div class="ref">
+                            <span class="ref-n">19</span>
+                            <div class="ref-cat">EU 法令</div>
+                            <div class="ref-desc">実施規則(EU) 2024/482(EUCC)</div>
+                            <a
+                                href="https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-01-08/eng/pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://eur-lex.europa.eu/eli/reg_impl/2024/482/2025-01-08/eng/pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">20</span>
+                            <div class="ref-cat">EU 法令</div>
+                            <div class="ref-desc">EUCC の要約</div>
+                            <a
+                                href="https://eur-lex.europa.eu/EN/legal-content/summary/european-common-criteria-based-cybersecurity-certification-scheme-eucc.html"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://eur-lex.europa.eu/EN/legal-content/summary/european-common-criteria-based-cybersecurity-certification-scheme-eucc.html</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">21</span>
+                            <div class="ref-cat">ENISA</div>
+                            <div class="ref-desc">EUCC のページ</div>
+                            <a
+                                href="https://certification.enisa.europa.eu/browse-topic/EUCC_en"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://certification.enisa.europa.eu/browse-topic/EUCC_en</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">22</span>
+                            <div class="ref-cat">Thales</div>
+                            <div class="ref-desc">EUCC の解説</div>
+                            <a
+                                href="https://www.thalesgroup.com/en/news-centre/insights/public-security/national-security/introducing-eucc-new-certificate-boost"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.thalesgroup.com/en/news-centre/insights/public-security/national-security/introducing-eucc-new-certificate-boost</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">23</span>
+                            <div class="ref-cat">Applus+ Laboratories(jtsec)</div>
+                            <div class="ref-desc">EUCC と CRA、パッチ管理に関する解説</div>
+                            <a
+                                href="https://appluslaboratories.com/global/en/news/publications/eucc-new-eu-common-criteria"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://appluslaboratories.com/global/en/news/publications/eucc-new-eu-common-criteria</a
+                            >
+                        </div>
+                    </div>
+                    <h3 id="h19-4">19.4 国際的な評価機関・専門家による解説と講演</h3>
+                    <div class="ref-list">
+                        <div class="ref">
+                            <span class="ref-n">24</span>
+                            <div class="ref-cat">atsec</div>
+                            <div class="ref-desc">
+                                CC:2022 の解説記事(歴史、5パート構成、主要な変更点)
+                            </div>
+                            <a
+                                href="https://atsec.de/cc2022-is-here/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://atsec.de/cc2022-is-here/</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">25</span>
+                            <div class="ref-cat">atsec</div>
+                            <div class="ref-desc">CC:2022 と CEM:2022 の移行の概要資料(PDF)</div>
+                            <a
+                                href="https://atsec.de/wp-content/uploads/2024/07/atsec_CC-2022-Transition.pdf"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://atsec.de/wp-content/uploads/2024/07/atsec_CC-2022-Transition.pdf</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">26</span>
+                            <div class="ref-cat">atsec</div>
+                            <div class="ref-desc">ICCC 2026 の参加報告(SBOM、AI、CRA、EUCC)</div>
+                            <a
+                                href="https://atsec.de/atsec-at-iccc-2026/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://atsec.de/atsec-at-iccc-2026/</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">27</span>
+                            <div class="ref-cat">ICCC</div>
+                            <div class="ref-desc">
+                                「CC:2022 – How it Compares and Differs from
+                                CC3.1R5」講演概要(ISO/IEC JTC 1/SC 27/WG 3 のコンビーナである Miguel
+                                Banon 氏ほかによる)
+                            </div>
+                            <a
+                                href="https://iccconference.org/session/cc2022-how-it-compares-and-differs-from-cc3-1r5-l21b/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://iccconference.org/session/cc2022-how-it-compares-and-differs-from-cc3-1r5-l21b/</a
+                            >
+                        </div>
+                        <div class="ref">
+                            <span class="ref-n">28</span>
+                            <div class="ref-cat">Agenda Digitale</div>
+                            <div class="ref-desc">
+                                CC:2022 の新機能と移行時期の解説(atsec
+                                のマネージングディレクターによる寄稿)
+                            </div>
+                            <a
+                                href="https://www.agendadigitale.eu/sicurezza/common-criteria-cc2022-nuova-versione-novita-e-tempi-di-transizione/"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                ><i class="ti ti-external-link"></i
+                                >https://www.agendadigitale.eu/sicurezza/common-criteria-cc2022-nuova-versione-novita-e-tempi-di-transizione/</a
+                            >
+                        </div>
+                    </div>
+                </section>
+                <section class="sec" id="s20">
+                    <h2>STEP 20. 確認できなかった点と注意事項</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>状況</th>
+                                    <th>推奨する対応</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2026年版の work unit ごとの差分</td>
+                                    <td>公開情報では確認できず</td>
+                                    <td>規格本文とCEM:2022の差分を直接比較する</td>
+                                </tr>
+                                <tr>
+                                    <td>規格本文の詳細(第9章から第17章の全文)</td>
+                                    <td>公式プレビューは序文と目次まで</td>
+                                    <td>ISO の Online Browsing Platform や購入版で確認する</td>
+                                </tr>
+                                <tr>
+                                    <td>CCRA の 2026年相当版の公開時期</td>
+                                    <td>取得したページでは CC:2022 Release 1 が現行表示</td>
+                                    <td>CC ポータルとスキームの最新通知を確認する</td>
+                                </tr>
+                                <tr>
+                                    <td>EUCC が 2026年版へ更新される時期</td>
+                                    <td>実施規則は 2022年版を参照</td>
+                                    <td>ENISA と各国認証機関の通知を確認する</td>
+                                </tr>
+                                <tr>
+                                    <td>移行期限の日付</td>
+                                    <td>資料により記載の差がある</td>
+                                    <td>最新の CCRA 移行ポリシーを確認する</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="tag tag-gen">一般知識</span>タグの記述</td>
+                                    <td>2026年版の全文では再確認していない</td>
+                                    <td>実務で使う前に規格本文で確認する</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>
+                            <strong>免責</strong>:
+                            本ガイドは学習のための解説であり、認証取得の可否や法的適合性を保証するものではありません。実際の評価や認証の申請では、選定したスキームの最新ルール、評価機関の指示、規格本文を必ず参照してください。
+                        </p>
+                    </div>
+                    <p><em>以上</em></p>
+                </section>
+                <footer class="footer">
+                    <p>情報時点: 2026年10月14日までのウェブ公開情報。作成日: 2026年10月15日。</p>
+                    <p>
+                        本ガイドは学習のための解説であり、認証取得の可否や法的適合性を保証するものではありません。実際の評価や認証の申請では、選定したスキームの最新ルール、評価機関の指示、規格本文を必ず参照してください。
+                    </p>
+                </footer>
+            </main>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+        <script>
+            window.DIAGRAMS = {
+                d1: `flowchart TD
+A["STEP 1 規格の基本情報"] --> B["STEP 2 なぜ評価方法の規格が必要か"]
+B --> C["STEP 3 15408 との関係"]
+C --> D["STEP 4 登場人物と役割"]
+D --> E["STEP 5 評価の流れと判定"]
+E --> F["STEP 6 規格の章構成"]
+F --> G["STEP 7 評価対象 PP ST TOE"]
+G --> H["STEP 8 クラス別の評価ポイント"]
+H --> I["STEP 9 work unit の読み方"]
+I --> J["STEP 10 脆弱性評価 AVA"]
+J --> K["STEP 11 EAL と評価の深さ"]
+K --> L["STEP 12 2022年版からの変更点"]
+L --> M["STEP 13 認証制度での使われ方"]
+M --> N["STEP 14 開発者の実務ロードマップ"]`,
+                d2: `flowchart LR
+A["2023-10-27<br/>新規プロジェクト承認"] --> B["2024-06-13<br/>DIS 登録"]
+B --> C["2024-08-14 から 2024-11-07<br/>DIS 投票"]
+C --> D["2025-07-18<br/>FDIS 登録承認"]
+D --> E["2025-12-08 から 2026-02-03<br/>FDIS 投票"]
+E --> F["2026-05-19<br/>国際規格として発行"]`,
+                d3: `flowchart LR
+A["1983<br/>TCSEC<br/>米国 オレンジブック"] --> B["1989<br/>ドイツ<br/>グリーンブック"]
+B --> C["1991<br/>ITSEC<br/>欧州"]
+C --> D["1992<br/>米国 Federal Criteria<br/>PP の概念が登場"]
+D --> E["1993<br/>CTCPEC<br/>カナダ"]
+E --> F["1993 から<br/>Common Criteria 開発開始"]
+F --> G["1999<br/>ISO/IEC 15408 初版"]
+G --> H["2017<br/>CC v3.1 R5"]
+H --> I["2022<br/>CC:2022 と CEM:2022"]
+I --> J["2026<br/>ISO/IEC 15408 と 18045 の改訂版"]`,
+                d4: `flowchart TD
+P1["ISO/IEC 15408-1<br/>Part 1 概要と一般モデル"]
+P2["ISO/IEC 15408-2<br/>Part 2 セキュリティ機能コンポーネント SFR"]
+P3["ISO/IEC 15408-3<br/>Part 3 セキュリティ保証コンポーネント SAR"]
+P4["ISO/IEC 15408-4<br/>Part 4 評価方法と評価アクティビティの枠組み"]
+P5["ISO/IEC 15408-5<br/>Part 5 定義済みパッケージ EAL CAP"]
+CEM["ISO/IEC 18045<br/>CEM 評価の要件と方法論"]
+P1 -->|"全体の概念と用語"| P2
+P1 -->|"全体の概念と用語"| P3
+P3 -->|"評価対象の保証要件"| CEM
+CEM -->|"評価方法の派生元"| P4
+P3 -->|"コンポーネントを束ねる"| P5`,
+                d5: `sequenceDiagram
+participant SP as スポンサー
+participant DV as 開発者
+participant EV as 評価者 ITSEF
+participant CB as 認証者 認証機関
+SP->>EV: 評価を依頼
+DV->>EV: ST と評価証拠を提供
+EV->>EV: CEM に従い評価アクティビティを実施
+EV->>DV: 不明点や不備の指摘 OR
+DV->>EV: 証拠の修正や追加
+EV->>CB: ETR を提出
+CB->>CB: 評価者の作業を確認
+CB-->>SP: 合格なら認証書を発行`,
+                d6: `flowchart TD
+S(["評価開始"]) --> I["評価入力タスク<br/>評価証拠の受領と管理"]
+I --> A["評価サブアクティビティ<br/>work unit を実施し<br/>判定の根拠を得る"]
+A --> V{"評価者アクション要素ごとの判定<br/>ISO/IEC 15408シリーズの要素"}
+V -->|"pass"| N{"未判定の評価者アクション要素あり?"}
+N -->|"はい"| A
+N -->|"いいえ"| O["評価出力タスク<br/>OR と ETR を作成"]
+V -->|"fail"| R1["問題点を OR で報告"]
+V -->|"inconclusive"| R2["追加の証拠や確認を要求"]
+R1 --> D["開発者が修正や追加提出"]
+R2 --> D
+D --> A
+O --> E(["評価完了 認証者が確認"])
+C["共通タスク<br/>evaluation authority task を遂行する<br/>技術的能力の実証"] -.->|"評価全体に共通"| I
+C -.-> A
+C -.-> O`,
+                d7: `flowchart TD
+EV["評価 Evaluation"] --> AC["評価アクティビティ<br/>例 ST 評価 開発の評価 テストの評価"]
+AC --> SA["サブアクティビティ<br/>コンポーネント単位 例 ADV_FSP.4"]
+SA --> ACT["アクション<br/>CC の評価者アクション要素に対応"]
+ACT --> WU["work unit<br/>評価者が実際に行う具体的な作業"]`,
+                d8: `pie showData
+title 章別ページ数の目安 区分合計446ページ 総ページ447
+"第1章から第8章 総論と評価プロセス" : 18
+"第9章 PP評価" : 32
+"第10章 PP-Module と PP-Configuration" : 42
+"第11章 ST評価" : 48
+"第12章 開発 ADV" : 88
+"第13章 ガイダンス AGD" : 6
+"第14章 ライフサイクル ALC" : 71
+"第15章 テスト ATE" : 32
+"第16章 脆弱性評価 AVA" : 40
+"第17章 コンポジション ACO" : 37
+"Annex A から C" : 32`,
+                d9: `flowchart LR
+A["Introduction"] --> B["第8章 評価プロセス"]
+B --> C["第11章 ST 評価"]
+C --> D["第16章 脆弱性評価と Annex B"]
+D --> E["第15章 テスト"]
+E --> F["第12章 開発"]
+F --> G["第14章 ライフサイクル"]
+G --> H["第9 10 17章 PP と合成"]`,
+                d10: `flowchart TD
+PP["PP 評価 APE"] -.->|"ST が PP 適合を主張する場合のみ"| ST
+PM["PP-Module 評価 ACE"] --> PC["PP-Configuration 整合性評価 ACE_CCO"]
+PC -.->|"ST が PP-Configuration 適合を主張する場合のみ"| ST
+ST["ST 評価 ASE<br/>主張の明確さと整合性を確認"] --> TOE
+TOE["TOE 評価<br/>ADV AGD ALC ATE AVA"] --> COMP{"どの評価方法か?"}
+COMP -->|"複合製品の複合評価<br/>下位製品の評価結果を利用"| CPE["複合評価<br/>ASE_COMP ADV_COMP ALC_COMP ATE_COMP AVA_COMP"]
+COMP -->|"評価済みコンポーネントを組み合わせた TOE"| ACO["コンポジション評価 ACO"]
+COMP -->|"どちらでもない"| END(["評価完了"])
+CPE --> END
+ACO --> END`,
+                d11: `flowchart TD
+BASE["下位コンポーネント<br/>例 OS や ハードウェア<br/>評価済み"] --> COMBO
+DEP["上位コンポーネント<br/>例 アプリケーション<br/>評価済み"] --> COMBO
+COMBO["組み合わせた TOE"] --> ACO["ACO クラスで確認<br/>依存関係 テスト 脆弱性"]`,
+                d12: `flowchart LR
+N["ADV_FSP.4"] --> C["ADV<br/>クラス Development"]
+N --> F["FSP<br/>ファミリー Functional specification"]
+N --> L[".4<br/>コンポーネント番号<br/>要求の厳しさ"]`,
+                d13: `flowchart TD
+COMP["保証コンポーネント<br/>例 ATE_COV.2"] --> D["D 開発者アクション"]
+COMP --> C["C 内容と表現"]
+COMP --> E["E 評価者アクション"]
+E --> WU1["work unit 1"]
+E --> WU2["work unit 2"]
+E --> WU3["work unit 3"]
+D -.->|"E の確認対象として要求を提供"| WU1
+C -.->|"E の確認対象として要求を提供"| WU2`,
+                d14: `flowchart TD
+A["潜在的脆弱性の候補を洗い出す<br/>公開情報 設計情報 ソースコード"] --> B["候補ごとに悪用可能性を分析"]
+B --> C{"悪用できそうか?"}
+C -->|"はい"| D["侵入テストで実証を試みる"]
+C -->|"いいえ"| E["候補から除外し理由を記録"]
+D --> F{"想定する攻撃能力で悪用できたか?"}
+F -->|"はい"| G["悪用可能な脆弱性<br/>要求された抵抗水準を満たさず fail の要因"]
+F -->|"いいえ"| H["悪用できないと判断し記録"]
+E --> I["総合判定"]
+G --> I
+H --> I`,
+                d15: `flowchart LR
+EAL["EAL を選ぶ<br/>例 EAL4 plus"] --> SAR["含まれる SAR コンポーネントが決まる"]
+SAR --> CEM["CEM が各コンポーネントごとの<br/>評価者の作業 work unit を定める"]
+CEM --> RES["評価の深さと作業量が決まる"]`,
+                d16: `flowchart TD
+CC["ISO/IEC 15408 CC"] --> USE
+CEM["ISO/IEC 18045 CEM"] --> USE
+USE["評価の共通ルール"] --> CCRA["CCRA<br/>国際相互承認"]
+USE --> EUCC["EUCC<br/>EU 共通の認証スキーム"]
+USE --> JISEC["JISEC<br/>日本 IPA"]
+USE --> OTHER["各国のスキーム<br/>フランス ANSSI ポーランド NASK シンガポール SCCS など"]`,
+                d17: `flowchart TD
+A["1 目的の確認<br/>なぜ CC 認証が必要か<br/>調達要件 規制 市場"] --> B["2 スキームと評価機関の選定"]
+B --> C["3 PP の有無を確認<br/>該当する cPP や PP"]
+C --> D["4 ST の作成"]
+D --> E["5 保証レベルを決める<br/>EAL や PP 指定のパッケージ"]
+E --> F["6 評価証拠の整備<br/>ADV AGD ALC ATE<br/>AVA に備えた脆弱性分析の準備"]
+F --> G["7 評価の実施<br/>AVA を含む各クラスの評価<br/>OR への対応"]
+G --> I["8 認証書の取得"]
+I --> J["9 維持管理<br/>保証の継続 パッチ対応"]`,
+                d18: `flowchart TD
+L1["レベル1 概念理解<br/>本ガイドの STEP 1 から 7"] --> L2["レベル2 構造理解<br/>ISO/IEC 15408-1 と 15408-3 の概要"]
+L2 --> L3["レベル3 実践準備<br/>PP や ST の実例を読む<br/>CC ポータルの認証済み製品の ST"]
+L3 --> L4["レベル4 規格本文の精読<br/>18045 第8章 と 第11章 と 第16章"]
+L4 --> L5["レベル5 評価への参加<br/>ITSEF や開発側の実務"]`,
+            };
+        </script>
+        <script>
+            (function () {
+                var sidebar = document.getElementById('sidebar');
+                var backdrop = document.getElementById('backdrop');
+                var btn = document.getElementById('menuBtn');
+                function setOpen(open) {
+                    sidebar.classList.toggle('open', open);
+                    backdrop.classList.toggle('open', open);
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    btn.setAttribute('aria-label', open ? '目次を閉じる' : '目次を開く');
+                    btn.firstElementChild.className = open ? 'ti ti-x' : 'ti ti-menu-2';
+                }
+                btn.addEventListener('click', function () {
+                    setOpen(!sidebar.classList.contains('open'));
+                });
+                backdrop.addEventListener('click', function () {
+                    setOpen(false);
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') setOpen(false);
+                });
+                sidebar.addEventListener('click', function (e) {
+                    if (e.target.closest('nav a')) setOpen(false);
+                });
+
+                var links = [].slice.call(document.querySelectorAll('.sidebar nav a'));
+                var byId = {};
+                links.forEach(function (a) {
+                    byId[a.getAttribute('href').slice(1)] = a;
+                });
+                var io = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (e) {
+                            if (!e.isIntersecting) return;
+                            links.forEach(function (l) {
+                                l.classList.remove('active');
+                            });
+                            var a = byId[e.target.id];
+                            if (!a) return;
+                            a.classList.add('active');
+                            var sr = sidebar.getBoundingClientRect(),
+                                r = a.getBoundingClientRect();
+                            if (r.top < sr.top + 80 || r.bottom > sr.bottom - 40) {
+                                sidebar.scrollTop += r.top - sr.top - sr.height / 2;
+                            }
+                        });
+                    },
+                    { rootMargin: '-20% 0px -70% 0px' },
+                );
+                [].slice.call(document.querySelectorAll('section[id]')).forEach(function (s) {
+                    io.observe(s);
+                });
+            })();
+        </script>
+        <script>
+            (async function () {
+                if (!window.mermaid || !window.DIAGRAMS) return;
+                try {
+                    await document.fonts.ready;
+                } catch (e) {}
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'dark',
+                    securityLevel: 'loose',
+                    fontFamily:
+                        '"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif',
+                    fontSize: 16,
+                    flowchart: {
+                        useMaxWidth: false,
+                        htmlLabels: true,
+                        nodeSpacing: 45,
+                        rankSpacing: 45,
+                        curve: 'basis',
+                        padding: 12,
+                    },
+                    sequence: {
+                        useMaxWidth: false,
+                        actorFontSize: 16,
+                        messageFontSize: 16,
+                        noteFontSize: 16,
+                        wrap: false,
+                        width: 190,
+                        messageMargin: 36,
+                    },
+                    pie: { useMaxWidth: false },
+                    themeVariables: {
+                        darkMode: true,
+                        fontSize: '16px',
+                        background: '#0d1b30',
+                        primaryColor: '#16294a',
+                        primaryTextColor: '#f3f5fa',
+                        primaryBorderColor: '#7c9eff',
+                        secondaryColor: '#13243f',
+                        secondaryTextColor: '#f3f5fa',
+                        secondaryBorderColor: '#3e5c8f',
+                        tertiaryColor: '#0d1b30',
+                        tertiaryTextColor: '#f3f5fa',
+                        tertiaryBorderColor: '#2d456e',
+                        mainBkg: '#16294a',
+                        nodeBorder: '#7c9eff',
+                        nodeTextColor: '#f3f5fa',
+                        textColor: '#f3f5fa',
+                        lineColor: '#93a1bd',
+                        edgeLabelBackground: '#0d1b30',
+                        clusterBkg: '#13243f',
+                        clusterBorder: '#3e5c8f',
+                        titleColor: '#f3f5fa',
+                        actorBkg: '#16294a',
+                        actorBorder: '#7c9eff',
+                        actorTextColor: '#f3f5fa',
+                        actorLineColor: '#93a1bd',
+                        signalColor: '#c6d0e3',
+                        signalTextColor: '#f3f5fa',
+                        labelBoxBkgColor: '#16294a',
+                        labelBoxBorderColor: '#7c9eff',
+                        labelTextColor: '#f3f5fa',
+                        loopTextColor: '#f3f5fa',
+                        noteBkgColor: '#2b2410',
+                        noteTextColor: '#f3f5fa',
+                        noteBorderColor: '#f2b45a',
+                        activationBkgColor: '#13243f',
+                        activationBorderColor: '#7c9eff',
+                        sequenceNumberColor: '#07111e',
+                        pie1: '#7c9eff',
+                        pie2: '#f2b45a',
+                        pie3: '#4fd1a5',
+                        pie4: '#f472b6',
+                        pie5: '#a78bfa',
+                        pie6: '#fb923c',
+                        pie7: '#86efac',
+                        pie8: '#fb7185',
+                        pie9: '#38bdf8',
+                        pie10: '#e9d5ff',
+                        pie11: '#facc15',
+                        pie12: '#5eead4',
+                        pieStrokeColor: '#0d1b30',
+                        pieOuterStrokeColor: '#0d1b30',
+                        pieStrokeWidth: '2px',
+                        pieOuterStrokeWidth: '2px',
+                        pieOpacity: '1',
+                        pieSectionTextColor: '#07111e',
+                        pieSectionTextSize: '16px',
+                        pieTitleTextColor: '#f3f5fa',
+                        pieTitleTextSize: '18px',
+                        pieLegendTextColor: '#f3f5fa',
+                        pieLegendTextSize: '16px',
+                    },
+                });
+                function place(target, svgText) {
+                    target.innerHTML = svgText;
+                    var svg = target.querySelector('svg');
+                    if (!svg) return null;
+                    var vb = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number);
+                    var extra = svg.getAttribute('aria-roledescription') === 'sequence' ? 110 : 15;
+                    svg.removeAttribute('width');
+                    svg.removeAttribute('height');
+                    var natural = 0;
+                    if (vb.length === 4 && vb[2] > 0) {
+                        svg.setAttribute(
+                            'viewBox',
+                            vb[0] + ' ' + vb[1] + ' ' + vb[2] + ' ' + (vb[3] + extra),
+                        );
+                        svg.style.width = vb[2] + 'px';
+                        natural = vb[2];
+                    }
+                    svg.style.maxWidth = '100%';
+                    svg.style.height = 'auto';
+                    svg.style.overflow = 'visible';
+                    return natural;
+                }
+                var keys = Object.keys(window.DIAGRAMS);
+                for (var i = 0; i < keys.length; i++) {
+                    var k = keys[i];
+                    var target = document.querySelector('[data-diagram="' + k + '"]');
+                    if (!target) continue;
+                    try {
+                        var src = window.DIAGRAMS[k];
+                        var out = await mermaid.render('mmd-' + k, src);
+                        var natural = place(target, out.svg);
+                        /* a wide left-to-right chart would be shrunk below 16px: re-render it top-down instead */
+                        if (
+                            natural &&
+                            /^flowchart LR/.test(src) &&
+                            natural > target.clientWidth * 1.02
+                        ) {
+                            var out2 = await mermaid.render(
+                                'mmd-' + k + '-td',
+                                src.replace(/^flowchart LR/, 'flowchart TD'),
+                            );
+                            place(target, out2.svg);
+                            target.setAttribute('data-orientation', 'td');
+                        }
+                    } catch (err) {
+                        target.classList.add('err');
+                        target.textContent =
+                            '図の描画に失敗しました: ' + (err && err.message ? err.message : err);
+                    }
+                }
+                document.documentElement.setAttribute('data-diagrams-done', '1');
+            })();
+        </script>
+    </body>
+</html>

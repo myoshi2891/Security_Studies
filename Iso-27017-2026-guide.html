@@ -1,0 +1,3104 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>ISO/IEC 27017:2026 初学者向けステップバイステップガイド</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+        />
+        <style>
+            :root {
+                --bg-primary: #07111e;
+                --bg-secondary: #0c1a2d;
+                --bg-tertiary: #122339;
+                --text-primary: #f3f5fa;
+                --text-secondary: #c6d0e3;
+                --text-tertiary: #93a1bd;
+                --border-tertiary: #1e2f4d;
+                --border-secondary: #2d456e;
+                --border-primary: #3e5c8f;
+                --accent: #7c9eff;
+                --accent-bg: #14233f;
+                --info-text: #7c9eff;
+                --info-bg: #101f3a;
+                --success-text: #5fd3b3;
+                --success-bg: #0d2a2a;
+                --warning-text: #f2b95c;
+                --warning-bg: #2a2210;
+                --danger-text: #ff8a8a;
+                --danger-bg: #2f1518;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+                    'Noto Sans JP', 'Yu Gothic UI', Meiryo, 'Segoe UI', Roboto, sans-serif;
+                --font-mono:
+                    ui-monospace, 'SF Mono', Menlo, Consolas, 'Noto Sans Mono CJK JP', monospace;
+                --sidebar-w: 300px;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 16px;
+            }
+            body {
+                margin: 0;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                font-family: var(--font-sans);
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.7;
+                -webkit-text-size-adjust: 100%;
+            }
+            body.lock {
+                overflow: hidden;
+            }
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--bg-secondary);
+                border-right: 1px solid var(--border-tertiary);
+                overflow-y: auto;
+                padding: 24px 16px 48px;
+                z-index: 60;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 0 8px 18px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .brand i {
+                font-size: 32px;
+                line-height: 1;
+                color: var(--accent);
+                flex: none;
+            }
+            .brand .bt {
+                display: block;
+                font-weight: 500;
+                color: var(--text-primary);
+                line-height: 1.4;
+            }
+            .brand .bs {
+                display: block;
+                color: var(--text-tertiary);
+                line-height: 1.4;
+            }
+            .toc {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .sidebar .toc li {
+                padding-left: 0;
+                margin: 2px 0;
+            }
+            .sidebar .toc li::before {
+                content: none;
+            }
+            .toc a {
+                display: block;
+                padding: 8px 12px;
+                border-radius: var(--border-radius-md);
+                border-left: 3px solid transparent;
+                color: var(--text-secondary);
+                text-decoration: none;
+                line-height: 1.5;
+                word-break: normal;
+            }
+            .toc a:hover {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+            }
+            .toc a.active {
+                background: var(--accent-bg);
+                border-left-color: var(--accent);
+                color: var(--text-primary);
+            }
+
+            main {
+                margin-left: var(--sidebar-w);
+                padding: 0 48px 96px;
+            }
+            .hero {
+                padding: 56px 0 32px;
+                border-bottom: 1px solid var(--border-secondary);
+            }
+            .hero h1 {
+                font-size: 22px;
+                font-weight: 500;
+                line-height: 1.45;
+                margin: 0 0 16px;
+                color: var(--text-primary);
+            }
+            .hero .lead {
+                margin: 0 0 24px;
+                color: var(--accent);
+                font-weight: 500;
+            }
+            .section {
+                padding: 48px 0 8px;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .section:last-of-type {
+                border-bottom: none;
+            }
+            h2 {
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 1.5;
+                margin: 0 0 24px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--border-secondary);
+                color: var(--text-primary);
+            }
+            h3 {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 1.6;
+                margin: 36px 0 12px;
+                color: var(--accent);
+            }
+            p {
+                margin: 0 0 16px;
+                color: var(--text-secondary);
+            }
+            strong {
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            em {
+                font-style: italic;
+            }
+            a {
+                color: var(--accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            a:hover {
+                color: var(--text-primary);
+            }
+            .cite {
+                color: var(--text-tertiary);
+            }
+
+            ul,
+            ol {
+                margin: 0 0 20px;
+                padding: 0;
+                color: var(--text-secondary);
+            }
+            ul {
+                list-style: none;
+            }
+            ul > li {
+                position: relative;
+                padding-left: 24px;
+                margin: 8px 0;
+            }
+            ul > li::before {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 0.78em;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            ol {
+                padding-left: 28px;
+            }
+            ol > li {
+                margin: 8px 0;
+                padding-left: 4px;
+            }
+            ol > li::marker {
+                color: var(--accent);
+                font-weight: 500;
+            }
+
+            code {
+                font-family: var(--font-mono);
+                font-size: 16px;
+                background: var(--bg-tertiary);
+                color: #d7e0ff;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+            pre {
+                margin: 20px 0;
+                padding: 16px 20px;
+                background: #0a1424;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--border-radius-lg);
+                overflow-x: auto;
+                line-height: 1.6;
+            }
+            pre code,
+            pre code.hljs {
+                display: block;
+                padding: 0;
+                background: transparent;
+                font-size: 16px;
+                color: inherit;
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0 28px;
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-md);
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                padding: 10px 14px;
+                text-align: left;
+                vertical-align: top;
+                font-size: 16px;
+                line-height: 1.6;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            th {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            td {
+                color: var(--text-secondary);
+            }
+            tbody tr:last-child td {
+                border-bottom: none;
+            }
+            tbody tr:nth-child(even) td {
+                background: #0a1727;
+            }
+            td strong {
+                color: var(--text-primary);
+            }
+
+            .callout {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                margin: 20px 0;
+                padding: 14px 18px;
+                background: var(--info-bg);
+                border: 1px solid var(--border-secondary);
+                border-left: 3px solid var(--info-text);
+                border-radius: var(--border-radius-md);
+            }
+            .callout > i {
+                flex: none;
+                font-size: 22px;
+                line-height: 1.5;
+                color: var(--info-text);
+            }
+            .callout .cbody {
+                flex: 1;
+                min-width: 0;
+            }
+            .callout .cbody > *:last-child {
+                margin-bottom: 0;
+            }
+            .callout .cbody p {
+                margin: 0 0 10px;
+                color: var(--text-secondary);
+            }
+            .callout.warn {
+                background: var(--warning-bg);
+                border-left-color: var(--warning-text);
+            }
+            .callout.warn > i {
+                color: var(--warning-text);
+            }
+            .callout.source {
+                background: var(--success-bg);
+                border-left-color: var(--success-text);
+            }
+            .callout.source > i {
+                color: var(--success-text);
+            }
+
+            .mermaid {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                margin: 24px 0;
+                padding: 24px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .mermaid svg {
+                flex: none;
+                overflow: visible;
+            }
+            .mermaid pre {
+                margin: 0;
+                border: none;
+                background: transparent;
+            }
+
+            .qa {
+                margin: 12px 0;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .qa[open] {
+                border-color: var(--border-secondary);
+            }
+            .qa summary {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 18px;
+                cursor: pointer;
+                list-style: none;
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .qa summary::-webkit-details-marker {
+                display: none;
+            }
+            .qa summary .chev {
+                flex: none;
+                color: var(--accent);
+                transition: transform 0.2s;
+            }
+            .qa[open] summary .chev {
+                transform: rotate(180deg);
+            }
+            .qa .qbody {
+                padding: 0 18px 16px;
+                color: var(--text-secondary);
+            }
+            .qa .qbody p {
+                margin: 0;
+            }
+
+            .checklist {
+                display: grid;
+                gap: 10px;
+                margin: 16px 0 28px;
+                counter-reset: chk;
+            }
+            .checklist > li {
+                padding: 0;
+                margin: 0;
+            }
+            .checklist > li::before {
+                content: none;
+            }
+            .check-item {
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 12px 16px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+                cursor: pointer;
+                counter-increment: chk;
+            }
+            .check-item:hover {
+                border-color: var(--border-primary);
+            }
+            .check-item input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .check-item .num {
+                flex: none;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--accent-bg);
+                border: 1px solid var(--border-secondary);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .check-item .num::before {
+                content: counter(chk);
+            }
+            .check-item .box {
+                flex: none;
+                position: relative;
+                width: 24px;
+                height: 24px;
+                margin-top: 2px;
+                border: 2px solid var(--border-primary);
+                border-radius: 6px;
+                background: var(--bg-primary);
+            }
+            .check-item .box::after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 1px;
+                width: 7px;
+                height: 13px;
+                border: solid var(--bg-primary);
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+                opacity: 0;
+            }
+            .check-item input:checked ~ .box {
+                background: var(--accent);
+                border-color: var(--accent);
+            }
+            .check-item input:checked ~ .box::after {
+                opacity: 1;
+            }
+            .check-item input:focus-visible ~ .box {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .check-item .txt {
+                flex: 1;
+                min-width: 0;
+                color: var(--text-secondary);
+            }
+            .check-item:has(input:checked) {
+                border-color: var(--success-text);
+                background: var(--success-bg);
+            }
+            .check-item:has(input:checked) .txt {
+                text-decoration: line-through;
+                color: var(--text-tertiary);
+            }
+
+            .ref-group {
+                margin: 32px 0 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .ref-group h3 {
+                margin: 0;
+            }
+            .tier {
+                display: inline-block;
+                padding: 2px 12px;
+                border: 1px solid var(--border-primary);
+                border-radius: 999px;
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            .tier.t3 {
+                border-color: var(--success-text);
+                color: var(--success-text);
+            }
+            .tier.t2 {
+                border-color: var(--info-text);
+                color: var(--info-text);
+            }
+            .ref {
+                display: flex;
+                align-items: flex-start;
+                gap: 14px;
+                margin: 10px 0;
+                padding: 14px 18px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .ref:hover {
+                border-color: var(--border-primary);
+            }
+            .ref-n {
+                flex: none;
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background: var(--accent-bg);
+                border: 1px solid var(--border-secondary);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .ref-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .ref-title {
+                margin: 0 0 4px;
+                color: var(--text-primary);
+            }
+            .ref-url {
+                display: flex;
+                align-items: flex-start;
+                gap: 6px;
+                word-break: break-all;
+                line-height: 1.5;
+            }
+            .ref-url i {
+                flex: none;
+                line-height: 1.5;
+            }
+
+            .footer {
+                margin-top: 64px;
+                padding-top: 24px;
+                border-top: 1px solid var(--border-tertiary);
+                color: var(--text-tertiary);
+            }
+            .footer p {
+                color: var(--text-tertiary);
+                margin: 0;
+            }
+
+            .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                width: 54px;
+                height: 54px;
+                border: none;
+                border-radius: 50%;
+                background: var(--accent);
+                color: var(--bg-primary);
+                font-size: 26px;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 80;
+            }
+            .backdrop {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(2, 6, 12, 0.72);
+                z-index: 50;
+            }
+            .backdrop.show {
+                display: block;
+            }
+
+            @media (max-width: 1100px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                }
+                .sidebar.open {
+                    transform: translateX(0);
+                }
+                main {
+                    margin-left: 0;
+                    padding: 0 20px 96px;
+                }
+                .menu-btn {
+                    display: flex;
+                }
+                .hero {
+                    padding-top: 40px;
+                }
+            }
+            @media (max-width: 640px) {
+                .callout {
+                    padding: 12px 14px;
+                }
+                .ref {
+                    padding: 12px 14px;
+                }
+                pre {
+                    padding: 14px;
+                }
+                .mermaid {
+                    padding: 16px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar" aria-label="目次">
+                <div class="brand">
+                    <i class="ti ti-shield-check"></i>
+                    <div>
+                        <span class="bt">ISO/IEC 27017:2026</span
+                        ><span class="bs">初学者向けガイド</span>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="toc">
+                        <li><a href="#s0">0. このガイドを読む前に（重要な前提）</a></li>
+                        <li><a href="#s1">STEP 1. ISO/IEC 27017 とは何か</a></li>
+                        <li><a href="#s2">STEP 2. 基本用語を押さえる</a></li>
+                        <li><a href="#s3">STEP 3. 2026年版の基本情報</a></li>
+                        <li><a href="#s4">STEP 4. 2015年版から何が変わったか</a></li>
+                        <li><a href="#s5">STEP 5. 規格の構造と読み方</a></li>
+                        <li><a href="#s6">STEP 6. 4つのCLD管理策を一つずつ理解する</a></li>
+                        <li>
+                            <a href="#s7">STEP 7. 2015年版の「7つのCLD管理策」はどうなったか</a>
+                        </li>
+                        <li><a href="#s8">STEP 8. 責任分担を実務に落とす</a></li>
+                        <li><a href="#s9">STEP 9. 導入ステップ（CSC向け・CSP向け）</a></li>
+                        <li><a href="#s10">STEP 10. 監査・証跡・認証</a></li>
+                        <li><a href="#s11">STEP 11. 27017 と 27018 の使い分け</a></li>
+                        <li><a href="#s12">STEP 12. よくある誤解</a></li>
+                        <li><a href="#s13">STEP 13. 学習ロードマップとチェックリスト</a></li>
+                        <li><a href="#s14">付録A. 用語集</a></li>
+                        <li>
+                            <a href="#s15">付録B. 情報の確度に関する注意（読者への正直な申告）</a>
+                        </li>
+                        <li><a href="#s16">参考文献・出典URL（2026年10月15日時点で参照）</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            <div class="backdrop" id="backdrop"></div>
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                type="button"
+                aria-label="目次を開く"
+                aria-expanded="false"
+            >
+                <i class="ti ti-menu-2"></i>
+            </button>
+            <main>
+                <header class="hero" id="top">
+                    <h1>ISO/IEC 27017:2026 初学者向けステップバイステップガイド</h1>
+                    <p class="lead">
+                        クラウドサービスの情報セキュリティ管理策（ISO/IEC
+                        27002に基づく）を、責任分担の視点で理解する
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>対象規格</td>
+                                    <td>ISO/IEC 27017:2026 第2版（2026年7月発行）</td>
+                                </tr>
+                                <tr>
+                                    <td>正式名称</td>
+                                    <td>
+                                        Information security, cybersecurity and privacy protection —
+                                        Information security controls based on ISO/IEC 27002 for
+                                        cloud services
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>本ガイドの情報時点</td>
+                                    <td>2026年10月15日</td>
+                                </tr>
+                                <tr>
+                                    <td>想定読者</td>
+                                    <td>
+                                        クラウドを「使う側」「提供する側」の両方の初学者（エンジニア、情シス、品質・監査担当）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>一次情報</td>
+                                    <td>
+                                        <a
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href="https://www.iso.org/standard/27017"
+                                            >https://www.iso.org/standard/27017</a
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </header>
+                <section class="section" id="s0">
+                    <h2>0. このガイドを読む前に（重要な前提）</h2>
+                    <h3>0-1. 本ガイドの立ち位置</h3>
+                    <ul>
+                        <li>
+                            規格本文は有料（ISOストア価格 CHF 196<span class="cite">［1］</span
+                            >）で、著作権で保護されています。本ガイドは本文を転載せず、<strong>ISO公式ページ・ISMS-AC・主要クラウド事業者の公開ページ・複数の実務家記事を突き合わせて整理した解説</strong>です。
+                        </li>
+                        <li>
+                            管理策の「名称と趣旨」は複数ソースで一致したものだけを採用しました。<strong
+                                >条文レベルの要求・細かな対応関係は、必ず規格本文（特にAnnex
+                                A）で確認してください。</strong
+                            >
+                        </li>
+                        <li>
+                            「著名で国際的な開発者の個人投稿」については、2026年版に特化したものは今回の調査では見つかりませんでした。代わりに、<strong
+                                >AWS・Microsoft・Google Cloudの公式ドキュメント</strong
+                            >（国際的に最も影響力のあるクラウド開発元）を、責任分担と証跡の説明の根拠として使っています。
+                        </li>
+                    </ul>
+                    <h3>0-2. 確度の凡例（出典一覧でも使います）</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>記号</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>★★★</td>
+                                    <td>規格発行元・認定機関・クラウド事業者の公式情報</td>
+                                </tr>
+                                <tr>
+                                    <td>★★</td>
+                                    <td>
+                                        規格本文を読んだ上で書かれたと思われる実務家・コンサルの記事（複数ソースで一致した内容）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>★</td>
+                                    <td>
+                                        単一ソースのみで、裏取りできていない内容（本文中で「要確認」と明記）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <strong>本文中の出典番号</strong>：<span class="cite">［1］</span
+                        >のような番号は末尾の参考文献一覧の番号です。
+                    </p>
+                    <ul>
+                        <li>
+                            <span class="cite">［10］</span
+                            ><span class="cite">［11］</span
+                            >のように<strong>複数の番号</strong>がある主張は、複数ソースで一致を確認したものです。
+                        </li>
+                        <li>
+                            「<span class="cite">［11］</span
+                            >（単一）」は<strong>単一ソース</strong>に基づく情報です。
+                        </li>
+                        <li>
+                            「【筆者整理】」は、0-1の注意書きに沿った<strong>筆者による整理</strong>で、特定の出典の記述ではありません。
+                        </li>
+                    </ul>
+                    <h3>0-3. 全体の学習ステップ</h3>
+                    <div class="mermaid" data-diagram="d1"></div>
+                </section>
+                <section class="section" id="s1">
+                    <h2>STEP 1. ISO/IEC 27017 とは何か</h2>
+                    <h3>1-1. 一言でいうと</h3>
+                    <p>
+                        <strong
+                            >「クラウドを使う側（顧客）と提供する側（事業者）が、情報セキュリティの責任をどう分け合い、どの管理策をどう実装するかを示したガイドライン」</strong
+                        >です。
+                    </p>
+                    <p>
+                        ISO公式ページの説明を要約すると、次の3点が核です<span class="cite"
+                            >［1］</span
+                        >。
+                    </p>
+                    <ol>
+                        <li>
+                            ISO/IEC 27002
+                            を土台に、<strong>クラウド固有の追加ガイダンスと追加の管理策</strong>を提供する
+                        </li>
+                        <li>
+                            <strong>クラウド顧客（CSC）とクラウド事業者（CSP）の両方</strong>が対象
+                        </li>
+                        <li>
+                            <strong
+                                >パブリック・プライベート・コミュニティ・ハイブリッドを含む全デプロイメントモデル</strong
+                            >のクラウドに適用でき、管理策はリスク評価や法令・契約要件に応じて選んで使う
+                        </li>
+                    </ol>
+                    <h3>1-2. なぜ必要なのか</h3>
+                    <p>クラウドでは、次のような「誰の仕事か曖昧な領域」が生まれやすくなります。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>曖昧になりやすいこと</th>
+                                    <th>起きがちな問題</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>パッチ適用</td>
+                                    <td>事業者がやると思っていたら、顧客側の責任だった</td>
+                                </tr>
+                                <tr>
+                                    <td>バックアップ・復旧</td>
+                                    <td>取得はされているが、復元テストは誰も実施していない</td>
+                                </tr>
+                                <tr>
+                                    <td>インシデント対応</td>
+                                    <td>通知の窓口・時間が決まっておらず、初動が遅れる</td>
+                                </tr>
+                                <tr>
+                                    <td>設定・権限</td>
+                                    <td>初期設定のまま公開状態になる</td>
+                                </tr>
+                                <tr>
+                                    <td>再委託先（パートナー）</td>
+                                    <td>契約の鎖のどこかで責任が消える</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        27017は、これらを<strong>共通の言葉と管理策で整理するための土台</strong>です。
+                    </p>
+                    <h3>1-3. 規格ファミリー内の位置づけ</h3>
+                    <div class="mermaid" data-diagram="d2"></div>
+                    <h3>1-4. 27001・27002・27017・27018 の違い（比較表）</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>規格</th>
+                                    <th>主な役割</th>
+                                    <th>認証の対象になるか</th>
+                                    <th>一言でいうと</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO/IEC 27001:2022</td>
+                                    <td>ISMSの<strong>要求事項</strong></td>
+                                    <td>なる</td>
+                                    <td>「仕組みを作って回す」ルール</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 27002:2022</td>
+                                    <td>汎用の<strong>管理策ガイダンス</strong></td>
+                                    <td>ならない（ガイダンス）</td>
+                                    <td>「何をやるか」のカタログ</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 27017:2026</td>
+                                    <td>クラウド固有のガイダンスと追加管理策</td>
+                                    <td>単独ではならない（後述STEP10）</td>
+                                    <td>「クラウドだとどう変わるか」の補足</td>
+                                </tr>
+                                <tr>
+                                    <td>ISO/IEC 27018:2025</td>
+                                    <td>公衆クラウドでPII処理者が守る事項</td>
+                                    <td>単独ではならない</td>
+                                    <td>「個人情報をクラウドで預かるとき」の補足</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s2">
+                    <h2>STEP 2. 基本用語を押さえる</h2>
+                    <h3>2-1. 登場人物（3つの役割）</h3>
+                    <div class="mermaid" data-diagram="d3"></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>略称</th>
+                                    <th>日本語の目安</th>
+                                    <th>例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC</td>
+                                    <td>クラウド利用者</td>
+                                    <td>Microsoft 365やSaaSを使う企業</td>
+                                </tr>
+                                <tr>
+                                    <td>CSP</td>
+                                    <td>クラウド提供者</td>
+                                    <td>AWS、Azure、Google Cloud、自社SaaS提供会社</td>
+                                </tr>
+                                <tr>
+                                    <td>CSN</td>
+                                    <td>クラウドパートナ</td>
+                                    <td>
+                                        クラウドブローカ、クラウド監査人、クラウドサービス開発者（ISO/IEC
+                                        22123-3が定義する3つの役割）<span class="cite">［11］</span
+                                        >（単一）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                <strong>ポイント</strong
+                                >：役割は「組織そのもの」ではなく「果たしている役割」です。<strong>1つの組織がCSCとCSPの両方を兼ねる</strong>ことがあります（たとえば、他社のIaaSを借りてSaaSを提供する会社、社内プラットフォームチームが社内向けに提供するプライベートクラウド）。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>2-2. その他の基本用語</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>やさしい説明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>共有責任（Shared Responsibility）</td>
+                                    <td>クラウドのセキュリティを、事業者と顧客で分担する考え方</td>
+                                </tr>
+                                <tr>
+                                    <td>マルチテナント</td>
+                                    <td>1つの基盤を複数の顧客が共用すること。顧客間の分離が重要</td>
+                                </tr>
+                                <tr>
+                                    <td>テナント</td>
+                                    <td>顧客ごとの論理的な区画</td>
+                                </tr>
+                                <tr>
+                                    <td>CLD管理策</td>
+                                    <td>
+                                        27017が追加した「クラウド拡張（CLouD service extended
+                                        controls）」の管理策。2026年版は4つ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>SoA（適用宣言書）</td>
+                                    <td>ISMSで、どの管理策を適用するか／しないかを示す文書</td>
+                                </tr>
+                                <tr>
+                                    <td>シャドーIT／シャドークラウド</td>
+                                    <td>組織が把握していないクラウド利用</td>
+                                </tr>
+                                <tr>
+                                    <td>属性（Attributes）</td>
+                                    <td>
+                                        管理策に付く分類タグ。フィルタや対応付けに使う（27002:2022で導入）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s3">
+                    <h2>STEP 3. 2026年版の基本情報</h2>
+                    <h3>3-1. ISO公式ページで確認できる事実<span class="cite">［1］</span></h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>規格番号</td>
+                                    <td>ISO/IEC 27017:2026</td>
+                                </tr>
+                                <tr>
+                                    <td>版</td>
+                                    <td>Edition 2（第2版）</td>
+                                </tr>
+                                <tr>
+                                    <td>発行</td>
+                                    <td>
+                                        2026年7月（ステージ記録上は2026-07-27に国際規格として発行）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ページ数</td>
+                                    <td>39</td>
+                                </tr>
+                                <tr>
+                                    <td>言語</td>
+                                    <td>英語・フランス語</td>
+                                </tr>
+                                <tr>
+                                    <td>担当委員会</td>
+                                    <td>ISO/IEC JTC 1/SC 27</td>
+                                </tr>
+                                <tr>
+                                    <td>ICS</td>
+                                    <td>
+                                        35.030（ITセキュリティ）、03.100.70（マネジメントシステム）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>前版</td>
+                                    <td>ISO/IEC 27017:2015（<strong>撤回済み</strong>）</td>
+                                </tr>
+                                <tr>
+                                    <td>価格</td>
+                                    <td>CHF 196（PDF+ePub／紙）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>
+                        3-2. 発行までの経緯（ISOのステージ記録より<span class="cite">［1］</span>）
+                    </h3>
+                    <div class="mermaid" data-diagram="d4"></div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                補足：日本のISMS-ACも2026年7月28日付で発行を告知しています<span
+                                    class="cite"
+                                    >［3］</span
+                                >（STEP10参照）。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="s4">
+                    <h2>STEP 4. 2015年版から何が変わったか</h2>
+                    <h3>4-1. 一目でわかる比較表</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>観点</th>
+                                    <th>ISO/IEC 27017:2015</th>
+                                    <th>ISO/IEC 27017:2026</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ベースの27002</td>
+                                    <td>ISO/IEC 27002:2013（14領域・114管理策の構造）</td>
+                                    <td>
+                                        <strong>ISO/IEC 27002:2022</strong
+                                        >（4テーマ・93管理策の構造）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>クラウド固有の追加管理策</td>
+                                    <td><strong>7つ</strong>（CLD番号。附属書に集約）</td>
+                                    <td>
+                                        <strong>4つ</strong>（本体内の 5.38 / 5.39 / 8.35 / 8.36）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>構造</td>
+                                    <td>27002:2013に準拠した分類</td>
+                                    <td>27002:2022と同じ<strong>簡素な分類＋属性</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>ガイダンスの書き方</td>
+                                    <td>各管理策に重複して記載しがち</td>
+                                    <td>
+                                        追加が不要な管理策は27002:2022への参照のみ（文章が軽くなった）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>適用範囲の明示</td>
+                                    <td>デプロイモデルの明示なし</td>
+                                    <td>
+                                        <strong
+                                            >プライベートクラウドを含む全デプロイメントモデル</strong
+                                        >（パブリック・プライベート・コミュニティ・ハイブリッド）に適用（NOTEで明記）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>用語の出典</td>
+                                    <td>ISO/IEC 17788</td>
+                                    <td>ISO/IEC 22123-1</td>
+                                </tr>
+                                <tr>
+                                    <td>供給網</td>
+                                    <td>ほぼ言及なし</td>
+                                    <td>
+                                        新しい箇条4でサプライヤ関係を扱い、<strong
+                                            >ISO/IEC 27036-4を参照</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>附属書</td>
+                                    <td>Annex A：クラウド拡張管理策（規範的）</td>
+                                    <td>
+                                        Annex A：<strong>2015年版との対応表</strong>（参考）／Annex
+                                        B：<strong>クラウドサービスの監視</strong>（参考）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout source">
+                        <i class="ti ti-link"></i>
+                        <div class="cbody">
+                            <p>
+                                出典：ベースの27002:2022 <span class="cite">［1］</span
+                                ><span class="cite">［11］</span>、2015年版のCLD 7つ
+                                <span class="cite">［8］</span
+                                ><span class="cite">［10］</span>、2026年版のCLD 4つ
+                                <span class="cite">［10］</span><span class="cite">［11］</span
+                                ><span class="cite">［12］</span
+                                >、プライベートクラウドを含む全モデル
+                                <span class="cite">［10］</span
+                                ><span class="cite">［13］</span>（NOTEでの明記は<span class="cite"
+                                    >［13］</span
+                                >）、箇条4と27036-4
+                                <span class="cite">［11］</span>（単一）、附属書A
+                                <span class="cite">［9］</span
+                                ><span class="cite">［11］</span>・附属書B
+                                <span class="cite">［11］</span>（単一）。用語の出典がISO/IEC
+                                22123-1である点は、今回確認したソースで直接の記載を確認できていません（★要確認）。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>4-2. 変更のポイントを5つに整理</h3>
+                    <ol>
+                        <li>
+                            <strong>構造の統一</strong
+                            >：27002:2022と同じ4テーマ（組織・人・物理・技術）になり、27001:2022のAnnex
+                            Aと並べて使いやすくなりました。
+                        </li>
+                        <li>
+                            <strong>CLD管理策は7つから4つへ</strong><span class="cite">［8］</span
+                            ><span class="cite">［10］</span
+                            ><span class="cite">［11］</span
+                            >：減ったのは「保護が減った」からではなく、<strong>多くが27002:2022の該当管理策のクラウド向けガイダンスに吸収された</strong>ためです（吸収の整理は【筆者整理】。個別の対応はAnnex
+                            Aで確認）。
+                        </li>
+                        <li>
+                            <strong>新しい論点</strong
+                            >：クラウドパートナ（ブローカ・監査人・開発者）の責任、シャドークラウド（未承認利用）の検知・防止<span
+                                class="cite"
+                                >［10］</span
+                            ><span class="cite">［11］</span>。
+                        </li>
+                        <li>
+                            <strong>プライベートクラウドも対象</strong
+                            ><span class="cite">［10］</span
+                            ><span class="cite">［13］</span
+                            >：社内の部門が顧客と提供者を兼ねる場合には、調整が必要になる点も注記されています<span
+                                class="cite"
+                                >［13］</span
+                            >（単一）。
+                        </li>
+                        <li>
+                            <strong>使い方の注意</strong
+                            >：2015年版のCLD番号（例：CLD.6.3.1）で管理策表やSoAを作っている場合は、<strong>「作り直す」前に「対応表で読み替える（remap）」</strong>のが現実的です<span
+                                class="cite"
+                                >［10］</span
+                            >（単一）。
+                        </li>
+                    </ol>
+                    <h3>4-3. 2つの書式（Type 1 と Type 2）</h3>
+                    <p>
+                        2026年版では、クラウド向けの追加ガイダンスが次の2形式で書かれていると複数ソースが説明しています<span
+                            class="cite"
+                            >［11］</span
+                        ><span class="cite">［13］</span>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>形式</th>
+                                    <th>使われる場面</th>
+                                    <th>読み方</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Type 1</td>
+                                    <td>CSCとCSPで<strong>ガイダンスが別々</strong>のとき</td>
+                                    <td>自分の立場（CSC／CSP）の項を読む</td>
+                                </tr>
+                                <tr>
+                                    <td>Type 2</td>
+                                    <td>CSCとCSPで<strong>同じ内容</strong>のとき</td>
+                                    <td>両者が同じ項を読む</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                27002:2022のままで足りる管理策には、クラウド向けの追記はなく「27002:2022を参照」とだけ書かれます。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="s5">
+                    <h2>STEP 5. 規格の構造と読み方</h2>
+                    <h3>5-1. 管理策の番号の意味（なぜ 5.38 や 8.36 なのか）</h3>
+                    <p>27002:2022の管理策は次の4テーマ・93個です。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>テーマ</th>
+                                    <th>番号の範囲</th>
+                                    <th>個数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>組織的管理策</td>
+                                    <td>5.1 〜 5.37</td>
+                                    <td>37</td>
+                                </tr>
+                                <tr>
+                                    <td>人的管理策</td>
+                                    <td>6.1 〜 6.8</td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>物理的管理策</td>
+                                    <td>7.1 〜 7.14</td>
+                                    <td>14</td>
+                                </tr>
+                                <tr>
+                                    <td>技術的管理策</td>
+                                    <td>8.1 〜 8.34</td>
+                                    <td>34</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        27017:2026のクラウド拡張管理策は、この番号の<strong>続き</strong>として
+                        5.38・5.39（組織的）と
+                        8.35・8.36（技術的）に置かれています。つまり「27002:2022の末尾に、クラウド専用の管理策を継ぎ足した」形です。
+                    </p>
+                    <h3>5-2. 管理策を読む手順（フローチャート）</h3>
+                    <div class="mermaid" data-diagram="d5"></div>
+                    <h3>5-3. 附属書の役割</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>附属書</th>
+                                    <th>性質</th>
+                                    <th>何が書いてあるか（複数ソースの要約）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Annex A</td>
+                                    <td>参考（informative）</td>
+                                    <td>
+                                        2026年版の管理策と2015年版の管理策の<strong>対応表</strong>。移行作業で使う<span
+                                            class="cite"
+                                            >［9］</span
+                                        ><span class="cite">［11］</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Annex B</td>
+                                    <td>参考（informative）</td>
+                                    <td>
+                                        クラウドサービスの<strong>監視</strong>。SaaSでは見える範囲が限られ、IaaSでは広い監視が可能。大規模では自動化が必要になる、という趣旨<span
+                                            class="cite"
+                                            >［11］</span
+                                        >（単一）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="cbody">
+                            <p>
+                                <strong>要注意（情報の食い違い）</strong
+                                >：FDIS（最終国際規格案）投票期間中の一部の解説には「附属書が3つある」とするものがありましたが、発行版を確認した実務家（Certi360）は<strong>附属書は2つ（A・B）</strong>と報告しています。本ガイドは後者に従っています。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="s6">
+                    <h2>STEP 6. 4つのCLD管理策を一つずつ理解する</h2>
+                    <h3>6-0. 全体像</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>番号</th>
+                                    <th>名称（意訳）</th>
+                                    <th>一言でいうと</th>
+                                    <th>2015年版との関係</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>5.38 CLD</td>
+                                    <td>クラウド環境での役割と責任の共有</td>
+                                    <td>「誰が何をやるか」を決めて書く</td>
+                                    <td>2015年の「共有責任」の管理策の後継</td>
+                                </tr>
+                                <tr>
+                                    <td>5.39 CLD</td>
+                                    <td>クラウドサービスパートナの役割と責任の合意</td>
+                                    <td>再委託・仲介先まで責任を定める</td>
+                                    <td><strong>新規</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>8.35 CLD</td>
+                                    <td>仮想コンピューティング環境での分離</td>
+                                    <td>他の顧客と混ざらない</td>
+                                    <td>2015年の「仮想環境の分離」に対応</td>
+                                </tr>
+                                <tr>
+                                    <td>8.36 CLD</td>
+                                    <td>クラウドサービスの未承認利用の検知と防止</td>
+                                    <td>勝手に使われていないか見つける</td>
+                                    <td><strong>新規</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout source">
+                        <i class="ti ti-link"></i>
+                        <div class="cbody">
+                            <p>
+                                出典：4つのCLD管理策の番号と名称 <span class="cite">［10］</span
+                                ><span class="cite">［11］</span><span class="cite">［12］</span>。
+                            </p>
+                            <p>
+                                注：「後継」「対応」は管理策の名称・趣旨の一致に基づく【筆者整理】です。正式な対応は規格本文のAnnex
+                                Aで確認してください。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>6-1. 5.38 CLD：役割と責任の共有</h3>
+                    <p>
+                        <strong>何を求めているか</strong
+                        >：クラウドのセキュリティ責任を、<strong>CSCとCSPの双方が割り当て・文書化・周知・実装する</strong>こと。
+                    </p>
+                    <p>
+                        <strong>なぜ重要か</strong
+                        >：事業者の「共有責任モデル」の図は一般論です。実際には、<strong>自分のサービス構成ごとに「誰がやるか」を決めない限り、空白が残ります</strong>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>立場</th>
+                                    <th>やること</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC</td>
+                                    <td>
+                                        事業者に、認証・暗号化・バックアップ・ログ等の<strong>セキュリティ機能の説明</strong>を求める／自社が担う範囲を実行できるか確認／分担を<strong>契約書（サービス合意）に明記</strong>する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CSP</td>
+                                    <td>
+                                        自社が提供する機能と、顧客が担う範囲を<strong>分かりやすく公開</strong>し、顧客がセキュリティ要件を満たせるよう情報を提供する
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>責任分担表（例：サービス単位で作成）</strong></p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>セキュリティ作業</th>
+                                    <th>CSC（顧客）の責任</th>
+                                    <th>CSP（事業者）の責任</th>
+                                    <th>証跡例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>IDとアクセス</td>
+                                    <td>ユーザー・ロール・権限・棚卸しの定義</td>
+                                    <td>IAM機能の提供</td>
+                                    <td>IAM設定、棚卸記録</td>
+                                </tr>
+                                <tr>
+                                    <td>暗号化</td>
+                                    <td>必要な暗号化設定の選択、顧客管理鍵の運用</td>
+                                    <td>暗号化・鍵管理の機能提供</td>
+                                    <td>設定エクスポート、鍵ポリシー</td>
+                                </tr>
+                                <tr>
+                                    <td>ログ</td>
+                                    <td>必要イベントの定義と有効化</td>
+                                    <td>ログの生成・提供</td>
+                                    <td>ログ設定、保存期間、サンプル</td>
+                                </tr>
+                                <tr>
+                                    <td>バックアップと復旧</td>
+                                    <td>対象範囲・保持期間・復旧目標の定義、復元テスト</td>
+                                    <td>管理型バックアップ機能の運用</td>
+                                    <td>復元テスト記録</td>
+                                </tr>
+                                <tr>
+                                    <td>プラットフォームのパッチ</td>
+                                    <td>顧客管理部分のパッチ</td>
+                                    <td>管理サービス基盤のパッチ</td>
+                                    <td>事業者の保証資料、社内パッチ記録</td>
+                                </tr>
+                                <tr>
+                                    <td>インシデント対応</td>
+                                    <td>顧客側の調査・封じ込め・エスカレーション</td>
+                                    <td>合意に沿った通知と支援</td>
+                                    <td>手順書、連絡網、通知条件</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>6-2. 5.39 CLD：クラウドパートナの役割と責任</h3>
+                    <p>
+                        <strong>何を求めているか</strong
+                        >：クラウドサービスパートナ（CSN）が関わる場合に、<strong>情報セキュリティの役割と責任を定める</strong>こと。
+                    </p>
+                    <p>
+                        <strong>例</strong
+                        >：クラウドブローカ、クラウド監査人、クラウドサービス開発者、MSP（運用委託先）、システムインテグレータなど。
+                    </p>
+                    <div class="mermaid" data-diagram="d6"></div>
+                    <p><strong>記録しておくと良い項目</strong>（実務家記事の整理より）</p>
+                    <ul>
+                        <li>パートナが運用する機能・サービス</li>
+                        <li>付与された権限の範囲</li>
+                        <li>割り当てられたセキュリティ責任</li>
+                        <li>パートナが提出すべき証跡</li>
+                        <li>インシデントとエスカレーションの責任</li>
+                        <li>責任がCSCまたはCSPに戻る点</li>
+                    </ul>
+                    <h3>6-3. 8.35 CLD：仮想環境の分離</h3>
+                    <p>
+                        <strong>何を求めているか</strong
+                        >：マルチテナント環境で、<strong>ある顧客の環境が他の顧客や事業者の管理系統から保護される</strong>こと（データ・アプリ・OS・ストレージ・ネットワークの論理的な分離）。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>立場</th>
+                                    <th>やること</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC</td>
+                                    <td>
+                                        自社データ・ワークロードの<strong>分離要件を定義</strong>する。SaaSでは自分で検証できないため、<strong
+                                            >事業者の保証（ISO 27001認証、SOC 2報告書など）</strong
+                                        >を確認する。IaaS等では自分が設定する境界（アカウント、ネットワーク、ID）を適切に構成する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CSP</td>
+                                    <td>
+                                        顧客間の分離、および顧客環境と事業者の<strong>管理用システムとの分離</strong>を実装し、その有効性を示せるようにする
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                <strong>証跡は二層で揃える</strong
+                                >：事業者側の保証（継承される仕組み）＋顧客側の設定証跡（自分が制御できる部分）。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>6-4. 8.36 CLD：未承認のクラウド利用の検知と防止</h3>
+                    <p>
+                        <strong>何を求めているか</strong
+                        >：組織の承認プロセスの外で使われるクラウド（シャドークラウド）を<strong>検知し、防止</strong>すること。
+                    </p>
+                    <p>
+                        <strong>典型例</strong
+                        >：部署が会社のクレジットカードで勝手にSaaSを契約する／承認外のAWSアカウントやAzureサブスクリプションを作る。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>やること</th>
+                                    <th>具体例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>クラウド利用ポリシーを定める</td>
+                                    <td>利用開始の承認フロー、禁止事項</td>
+                                </tr>
+                                <tr>
+                                    <td>利用状況を監視する</td>
+                                    <td>SSOログ、経費データ、ネットワークログ、CASBの活用</td>
+                                </tr>
+                                <tr>
+                                    <td>異常を検知する</td>
+                                    <td>想定外のサービス、急な利用量増加、未承認のデータ転送</td>
+                                </tr>
+                                <tr>
+                                    <td>例外を処理する</td>
+                                    <td>所有者の特定→承認可否判断→是正または正式な例外承認</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <strong
+                            >簡単な棚卸しスクリプト例（学習用・規格が定める手順ではありません）</strong
+                        >
+                    </p>
+                    <pre><code class="language-python">import csv
+
+def load(path: str, col: str) -&gt; set[str]:
+    with open(path, newline=&quot;&quot;, encoding=&quot;utf-8&quot;) as f:
+        return {row[col].strip().lower() for row in csv.DictReader(f)}
+
+approved = load(&quot;approved_cloud_services.csv&quot;, &quot;domain&quot;)   # 承認済みクラウド台帳
+observed = load(&quot;observed_usage.csv&quot;, &quot;domain&quot;)            # SSO・経費・プロキシログから抽出
+
+unknown = sorted(observed - approved)  # 台帳にないのに使われている（未承認の可能性）
+unused = sorted(approved - observed)   # 台帳にあるのに使われていない（棚卸し候補）
+
+print(&quot;要確認（未承認の可能性）:&quot;)
+for d in unknown:
+    print(f&quot;  - {d}&quot;)
+print(&quot;棚卸し候補（利用実績なし）:&quot;)
+for d in unused:
+    print(f&quot;  - {d}&quot;)
+</code></pre>
+                </section>
+                <section class="section" id="s7">
+                    <h2>STEP 7. 2015年版の「7つのCLD管理策」はどうなったか</h2>
+                    <p>
+                        2015年版が追加していた7つの論点は、AWS・Microsoft・Google
+                        Cloudの公式ページに今も記載されています<span class="cite">［5］</span
+                        ><span class="cite">［6］</span
+                        ><span class="cite">［8］</span
+                        >（いずれも<strong>2015年版</strong>を前提とした記述）。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>2015年版の論点</th>
+                                    <th>2026年版での扱い（複数ソースの要約）</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>共有責任（役割と責任）</td>
+                                    <td><strong>5.38 CLD</strong> として継続</td>
+                                </tr>
+                                <tr>
+                                    <td>契約終了時の顧客資産の返却・削除</td>
+                                    <td>
+                                        27002:2022の該当管理策のクラウド向けガイダンスで扱う想定（正確な対応はAnnex
+                                        A）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>顧客の仮想環境の保護・分離</td>
+                                    <td><strong>8.35 CLD</strong> として継続</td>
+                                </tr>
+                                <tr>
+                                    <td>仮想マシンの要塞化（構成）</td>
+                                    <td>
+                                        27002:2022の該当管理策のクラウド向けガイダンスで扱う想定（Annex
+                                        A）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>クラウド環境の管理運用手順</td>
+                                    <td>同上（Annex A）</td>
+                                </tr>
+                                <tr>
+                                    <td>顧客による活動の監視</td>
+                                    <td>27002:2022のガイダンスとAnnex B（監視）で扱う想定</td>
+                                </tr>
+                                <tr>
+                                    <td>仮想・物理ネットワークの整合</td>
+                                    <td>
+                                        27002:2022の該当管理策のクラウド向けガイダンスで扱う想定（Annex
+                                        A）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>（新規）パートナの責任</td>
+                                    <td><strong>5.39 CLD</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>（新規）未承認のクラウド利用</td>
+                                    <td><strong>8.36 CLD</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="cbody">
+                            <p>
+                                「Annex
+                                A」と書いた行は、私が条文対応を確認できていないものです。<strong
+                                    >既存のSoAやリスク対応表を移行する際は、Annex
+                                    Aの対応表を一次資料にしてください。</strong
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="s8">
+                    <h2>STEP 8. 責任分担を実務に落とす</h2>
+                    <h3>
+                        8-1. サービスモデルごとの責任の違い（Microsoft公式の整理<span class="cite"
+                            >［7］</span
+                        >）
+                    </h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>責任領域</th>
+                                    <th>オンプレ</th>
+                                    <th>IaaS</th>
+                                    <th>PaaS</th>
+                                    <th>SaaS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>データ</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                </tr>
+                                <tr>
+                                    <td>設定・構成</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                </tr>
+                                <tr>
+                                    <td>IDとユーザー</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                </tr>
+                                <tr>
+                                    <td>クライアント端末</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>共有</td>
+                                </tr>
+                                <tr>
+                                    <td>アプリケーション</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>共有</td>
+                                    <td>共有</td>
+                                </tr>
+                                <tr>
+                                    <td>ネットワーク制御</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>共有</td>
+                                    <td>事業者</td>
+                                </tr>
+                                <tr>
+                                    <td>OS</td>
+                                    <td>顧客</td>
+                                    <td>顧客</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                </tr>
+                                <tr>
+                                    <td>物理ホスト</td>
+                                    <td>顧客</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                </tr>
+                                <tr>
+                                    <td>物理ネットワーク</td>
+                                    <td>顧客</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                </tr>
+                                <tr>
+                                    <td>物理データセンター</td>
+                                    <td>顧客</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                    <td>事業者</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                どのモデルでも<strong>データ・設定・ID（アクセス管理）は顧客が責任を保持</strong>します。クライアント端末はオンプレ・IaaS・PaaSでは顧客、SaaSでは共有と、サービスモデルによって異なります。これは5.38で責任分担表を作るときの出発点になります。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>8-2. 「誰の責任か」を決めるフロー</h3>
+                    <div class="mermaid" data-diagram="d7"></div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                <strong>重要な考え方</strong
+                                >：<strong>実行を委託しても、説明責任（アカウンタビリティ）は残る</strong>。「事業者がやっている」ことと「自社の要件を満たしている」ことは別です。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>8-3. 責任分担レジスタのひな形（YAML例・学習用）</h3>
+                    <pre><code class="language-yaml"># 規格が定める書式ではなく、実務で使いやすい一例
+service: managed-database
+owner: platform-team
+roles:
+  csc: 自社（アプリ開発部門）
+  csp: クラウド事業者
+  csn: 運用委託先（MSP）
+controls:
+  - ref: &quot;5.38 CLD&quot;
+    task: ログの取得と保持
+    csc: 必要イベントの定義、保存期間の設定
+    csp: ログ機能の提供
+    csn: 日次確認と異常の一次報告
+    evidence: ログ設定のエクスポート、月次確認記録
+    last_validated: &quot;2026-10-01&quot;
+</code></pre>
+                </section>
+                <section class="section" id="s9">
+                    <h2>STEP 9. 導入ステップ（CSC向け・CSP向け）</h2>
+                    <h3>9-1. 導入の全体フロー</h3>
+                    <div class="mermaid" data-diagram="d8"></div>
+                    <h3>9-2. 立場別のチェックポイント</h3>
+                    <p><strong>CSC（使う側）</strong></p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>確認事項</th>
+                                    <th>目安</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>利用中クラウドの一覧がある</td>
+                                    <td>承認済み台帳と実利用が一致している</td>
+                                </tr>
+                                <tr>
+                                    <td>責任分担が契約に書かれている</td>
+                                    <td>利用規約の奥ではなく、サービス合意に明記</td>
+                                </tr>
+                                <tr>
+                                    <td>事業者のセキュリティ機能を把握している</td>
+                                    <td>認証・暗号化・バックアップ・ログ</td>
+                                </tr>
+                                <tr>
+                                    <td>事業者の保証資料を確認している</td>
+                                    <td>認証の版・対象サービス・リージョン・有効期間</td>
+                                </tr>
+                                <tr>
+                                    <td>監視の限界を理解している</td>
+                                    <td>SaaSは事業者が提供する範囲に依存（Annex Bの趣旨）</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p><strong>CSP（提供する側）</strong></p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>確認事項</th>
+                                    <th>目安</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>顧客向けの責任分担を公開している</td>
+                                    <td>サービスごとの分担を明示</td>
+                                </tr>
+                                <tr>
+                                    <td>顧客間分離の方式を説明できる</td>
+                                    <td>論理分離の考え方と保証資料</td>
+                                </tr>
+                                <tr>
+                                    <td>管理用システムと顧客環境を分離している</td>
+                                    <td>管理者の操作権限と記録</td>
+                                </tr>
+                                <tr>
+                                    <td>パートナ・再委託先の責任を定めている</td>
+                                    <td>契約の鎖が途切れていない</td>
+                                </tr>
+                                <tr>
+                                    <td>顧客が使える監視情報を提供している</td>
+                                    <td>ログ・イベント・通知の窓口</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>9-3. 自社が「顧客と提供者の両方」を兼ねる場合</h3>
+                    <p>
+                        2026年版では、プライベートクラウドも対象と明記され、<strong>社内のプラットフォームチームが提供者、事業部門が顧客</strong>となる場合も想定されます。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>落とし穴</th>
+                                    <th>対策</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>「同じ会社だから分担表は不要」と考える</td>
+                                    <td>内部でもCSC／CSPの責任分担を文書化する</td>
+                                </tr>
+                                <tr>
+                                    <td>自己評価を提供側のチームが書いている</td>
+                                    <td>顧客側のレビューは別の部門・担当者が行う</td>
+                                </tr>
+                                <tr>
+                                    <td>台帳が実環境とずれていく</td>
+                                    <td>変更のたびに台帳と実環境を突き合わせる</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s10">
+                    <h2>STEP 10. 監査・証跡・認証</h2>
+                    <h3>10-1. 証跡は3層で揃える</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>層</th>
+                                    <th>内容</th>
+                                    <th>例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>事業者の証跡</td>
+                                    <td>事業者が運用する部分の保証</td>
+                                    <td>認証書の範囲、SLA、サービス資料、第三者監査報告</td>
+                                </tr>
+                                <tr>
+                                    <td>顧客の証跡</td>
+                                    <td>顧客が制御する部分の状態</td>
+                                    <td>構成情報、ID・権限、ポリシー、ログ、変更履歴</td>
+                                </tr>
+                                <tr>
+                                    <td>運用の証跡</td>
+                                    <td>運用が回っている証拠</td>
+                                    <td>所有者、例外承認、是正記録、再テスト、最終確認日</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>10-2. 事業者のISO 27017保証を使うときの確認フロー</h3>
+                    <div class="mermaid" data-diagram="d9"></div>
+                    <h3>10-3. 主要クラウド事業者の公開ページは、まだ2015年版</h3>
+                    <p>
+                        筆者が2026年10月15日時点で確認した公開ページは、次のとおり<strong>2015年版を前提</strong>にしています。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>事業者</th>
+                                    <th>確認したページの記述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AWS <span class="cite">［5］</span></td>
+                                    <td>
+                                        ISO/IEC
+                                        27017:2015の準拠ページ。<strong>顧客が事業者の認証によって自動的に認証されるわけではない</strong>と明記
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Microsoft <span class="cite">［6］</span></td>
+                                    <td>
+                                        ISO/IEC
+                                        27017:2015のページ。事業者の認証や監査資料を顧客の評価に使えるが、<strong>自社の実装・統制・プロセスは自分で評価する必要がある</strong>と記載
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Google Cloud <span class="cite">［8］</span></td>
+                                    <td>
+                                        2015年版の「37管理策＋7つの新管理策」を説明。Google
+                                        CloudのISMSが認定された27017認証を取得している旨を記載
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                つまり、<strong>事業者への質問票や調達要件に「27017:2026」と書いても、相手の認証がまだ2015年版である可能性</strong>があります。移行計画の有無と時期を確認してください。
+                            </p>
+                        </div>
+                    </div>
+                    <h3>10-4. 「27017の認証」をどう考えるか</h3>
+                    <p>ここは情報が食い違いやすい部分なので、整理します。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>観点</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>規格の性質</td>
+                                    <td>
+                                        27017は<strong>ガイダンス</strong>であり、要求事項を持つ27001とは性質が異なる
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISO側の考え方</td>
+                                    <td>
+                                        認証は要求事項を持つ文書に対してのみ行える。SC
+                                        27の資料（2026年版）では、27017・27018は27001の拡張であり、<strong>拡張部分について別個の証明書を出すべきではない</strong>と説明されている（Cloudawareの引用による）<span
+                                            class="cite"
+                                            >［10］</span
+                                        >（単一）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>国・制度ごとの違い</td>
+                                    <td>
+                                        各国の適合性評価制度が27017をどう取り込むかは<strong
+                                            >市場ごとに異なる</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>日本の制度</td>
+                                    <td>
+                                        ISMS適合性評価制度に<strong>ISMSクラウドセキュリティ認証</strong>がある（次項）
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>10-5. 日本：ISMSクラウドセキュリティ認証（JIP-ISMS517）</h3>
+                    <p>
+                        ISMS-ACの公式情報から整理します<span class="cite">［3］</span
+                        ><span class="cite">［4］</span>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>位置づけ</td>
+                                    <td>
+                                        ISMS（JIS Q
+                                        27001）認証に<strong>上乗せ</strong>して、クラウド固有の管理策（ISO/IEC
+                                        27017）が適切に導入・実施されていることを認証する制度
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>認証基準</td>
+                                    <td>
+                                        JIPDECの「JIP-ISMS517」（現行はISO/IEC 27017:2015／JIS Q
+                                        27017:2016に基づく JIP-ISMS517-1.0）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>対象</td>
+                                    <td>
+                                        ISMS認証を取得している／取得する組織で、クラウドサービスの提供者・利用者・その両方
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2026年版への対応</td>
+                                    <td>
+                                        ISMS-ACは<strong>2026年7月28日</strong>付で2026年版の発行を告知。JIP-ISMS517は<strong
+                                            >2026年秋頃の発行を目途にJIPDECで改訂中</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>移行期間</td>
+                                    <td>
+                                        JIP-ISMS517改訂版の発行後<strong>3年間</strong>の予定<span
+                                            class="cite"
+                                            >［3］</span
+                                        ><span class="cite">［11］</span
+                                        >。詳細は改訂版の発行後に案内予定<span class="cite"
+                                            >［3］</span
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mermaid" data-diagram="d10"></div>
+                    <div class="callout warn">
+                        <i class="ti ti-alert-triangle"></i>
+                        <div class="cbody">
+                            <p>
+                                <strong>2026年10月15日時点の注意</strong
+                                >：改訂版JIP-ISMS517が発行済みかどうかは、今回の調査では確認できませんでした。<strong
+                                    >最新の状況はISMS-ACのトピックスで必ず確認してください。</strong
+                                >
+                                また、2026年版に対応するJIS規格についても、筆者の調べた範囲では確認できていません。
+                            </p>
+                        </div>
+                    </div>
+                    <p>
+                        認証機関の案内によると、ISMS認証とクラウドセキュリティ認証の審査は同時に受けられ、登録証はそれぞれ別に発行されます<span
+                            class="cite"
+                            >［17］</span
+                        ><span class="cite">［18］</span>。
+                    </p>
+                </section>
+                <section class="section" id="s11">
+                    <h2>STEP 11. 27017 と 27018 の使い分け</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>観点</th>
+                                    <th>ISO/IEC 27017:2026</th>
+                                    <th>ISO/IEC 27018:2025</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>主題</td>
+                                    <td>クラウドの<strong>情報セキュリティ管理策</strong></td>
+                                    <td>
+                                        クラウドでの<strong
+                                            >PII（個人を特定できる情報）の保護</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>対象者</td>
+                                    <td>CSCとCSPの両方</td>
+                                    <td>主に、PII処理者として公衆クラウドで処理を提供する組織</td>
+                                </tr>
+                                <tr>
+                                    <td>対象のクラウド</td>
+                                    <td>
+                                        パブリック・プライベート・コミュニティ・ハイブリッドを含む全デプロイメントモデル
+                                    </td>
+                                    <td>公衆クラウド</td>
+                                </tr>
+                                <tr>
+                                    <td>構造</td>
+                                    <td>27002:2022を拡張（クラウド拡張管理策は4つ）</td>
+                                    <td>独自の原則を持つ実施規範</td>
+                                </tr>
+                                <tr>
+                                    <td>併用の目安</td>
+                                    <td>クラウド利用・提供がある組織は基本</td>
+                                    <td>個人情報をクラウドで処理するなら追加で検討</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="callout">
+                        <i class="ti ti-info-circle"></i>
+                        <div class="cbody">
+                            <p>
+                                個人情報の法的義務（日本なら個人情報保護法など）は、規格の適用有無とは別に発生します。
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section" id="s12">
+                    <h2>STEP 12. よくある誤解</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>誤解</th>
+                                    <th>実際</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>「事業者が27017認証だから、自社も安全」</td>
+                                    <td>
+                                        事業者の保証は<strong>事業者の認証範囲だけ</strong>。顧客側の設定・運用は自社の責任
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「27017は事業者だけのもの」</td>
+                                    <td>
+                                        <strong>顧客にも</strong
+                                        >適用される（顧客向けガイダンスがある）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「パブリッククラウド専用」</td>
+                                    <td>
+                                        プライベート・コミュニティ・ハイブリッドを含む<strong>全デプロイメントモデル</strong>が対象（2026年版はNOTEで明記）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「27017は単独で認証できる」</td>
+                                    <td>
+                                        規格の性質はガイダンス。実際の認証は<strong>ISMS認証への上乗せ</strong>として運用される制度が多い（国により異なる）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「CLD管理策が4つに減ったから要求が減った」</td>
+                                    <td>
+                                        多くは27002:2022側のガイダンスに<strong>吸収</strong>されただけ
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>「2015年版のCLD番号をそのまま使い続けてよい」</td>
+                                    <td>
+                                        撤回済み版の番号。<strong>Annex Aの対応表で読み替え</strong
+                                        >、SoAや調達文書を更新する
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s13">
+                    <h2>STEP 13. 学習ロードマップとチェックリスト</h2>
+                    <h3>13-1. 初学者向けの進め方（目安）</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>段階</th>
+                                    <th>やること</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>① 全体像</td>
+                                    <td>ISO公式ページ、本ガイドのSTEP1〜4を読む</td>
+                                </tr>
+                                <tr>
+                                    <td>② 土台</td>
+                                    <td>
+                                        27001:2022と27002:2022の概要（4テーマ・93管理策）を理解する
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>③ 実物</td>
+                                    <td>
+                                        規格本文（特に箇条4、5.38・5.39・8.35・8.36、Annex
+                                        A・B）を購入して読む
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>④ 実践</td>
+                                    <td>利用中クラウド1サービスを選び、責任分担表を作ってみる</td>
+                                </tr>
+                                <tr>
+                                    <td>⑤ 応用</td>
+                                    <td>事業者の保証資料をチェックし、証跡の三層を揃える</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>13-2. 自己点検チェックリスト（CSC向け）</h3>
+                    <ul class="checklist">
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >利用中のクラウドサービスの台帳がある</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >サービスごとに責任分担表がある（5.38）</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >パートナ・再委託先まで把握している（5.39）</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >顧客間分離に関する事業者の保証を確認した（8.35）</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >未承認クラウド利用を検知する仕組みと棚卸しがある（8.36）</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >事業者のISO 27017保証が<strong>どの版か</strong>確認した</span
+                                ></label
+                            >
+                        </li>
+                        <li>
+                            <label class="check-item"
+                                ><input type="checkbox" /><span class="num"></span
+                                ><span class="box"></span
+                                ><span class="txt"
+                                    >SoA・リスク対応表・調達文書に2015年版のCLD番号が残っていないか確認した</span
+                                ></label
+                            >
+                        </li>
+                    </ul>
+                    <h3>13-3. 理解度クイズ</h3>
+                    <details class="qa">
+                        <summary>
+                            <span>Q1. 2026年版でCLD管理策はいくつ？ 番号は？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                <strong>4つ</strong
+                                >。5.38（役割と責任の共有）、5.39（パートナの役割と責任）、8.35（仮想環境の分離）、8.36（未承認利用の検知と防止）。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span>Q2. 2015年版と2026年版で、ベースとなる27002はどう違う？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>2015年版は27002:2013、2026年版は27002:2022（4テーマ・93管理策）。</p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span>Q3. CSNとは何で、例は？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                クラウドサービスパートナ。クラウドブローカ、クラウド監査人、クラウドサービス開発者など。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span
+                                >Q4. 事業者がISO
+                                27017の認証を持っていれば、顧客は何もしなくてよい？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                いいえ。事業者の保証は事業者が運用する範囲だけ。顧客側の設定・運用・証跡は自社で用意する。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span
+                                >Q5.
+                                社内のプラットフォームチームが社内向けに基盤を提供する場合、27017は関係ある？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                ある。2026年版はプライベートクラウドを含む全モデルに適用され、社内の部門間でCSCとCSPの役割分担を考える（調整が必要な場合がある）。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span
+                                >Q6.
+                                日本で2026年版に対応するクラウドセキュリティ認証の移行期間は？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                ISMS-ACの告知では、JIP-ISMS517の改訂版発行後3年間の予定（改訂版は2026年秋頃の発行を目途に改訂中）。詳細は改訂版発行後に案内される。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            <span>Q7. 2015年版のCLD番号で作ったSoAがある。どうする？</span
+                            ><i class="ti ti-chevron-down chev"></i>
+                        </summary>
+                        <div class="qbody">
+                            <p>
+                                作り直す前に、Annex
+                                Aの対応表で2026年版に読み替える（remap）。そのうえでSoA、リスク対応表、クラウド方針、質問票、契約を更新する。
+                            </p>
+                        </div>
+                    </details>
+                </section>
+                <section class="section" id="s14">
+                    <h2>付録A. 用語集</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>意味</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CSC</td>
+                                    <td>Cloud Service Customer。クラウドサービス利用者</td>
+                                </tr>
+                                <tr>
+                                    <td>CSP</td>
+                                    <td>Cloud Service Provider。クラウドサービス提供者</td>
+                                </tr>
+                                <tr>
+                                    <td>CSN</td>
+                                    <td>Cloud Service Partner。ブローカ・監査人・開発者など</td>
+                                </tr>
+                                <tr>
+                                    <td>CLD</td>
+                                    <td>
+                                        CLouD service extended controls。クラウド拡張管理策の接頭辞
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISMS</td>
+                                    <td>情報セキュリティマネジメントシステム</td>
+                                </tr>
+                                <tr>
+                                    <td>SoA</td>
+                                    <td>Statement of Applicability（適用宣言書）</td>
+                                </tr>
+                                <tr>
+                                    <td>FDIS／DIS／CD</td>
+                                    <td>
+                                        規格開発の段階（最終国際規格案／国際規格案／委員会原案）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>JIP-ISMS517</td>
+                                    <td>ISMSクラウドセキュリティ認証の認証基準（JIPDEC）</td>
+                                </tr>
+                                <tr>
+                                    <td>ISMS-AC</td>
+                                    <td>情報マネジメントシステム認定センター（日本の認定機関）</td>
+                                </tr>
+                                <tr>
+                                    <td>PII</td>
+                                    <td>個人を特定できる情報</td>
+                                </tr>
+                                <tr>
+                                    <td>IaaS／PaaS／SaaS</td>
+                                    <td>クラウドのサービスモデル</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s15">
+                    <h2>付録B. 情報の確度に関する注意（読者への正直な申告）</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>論点</th>
+                                    <th>状況</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>規格本文の直接確認</td>
+                                    <td>
+                                        <strong>していません</strong
+                                        >（有料のため）。管理策名・趣旨は公式ページ・目録情報・複数の実務家記事の一致点を採用
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>附属書の数</td>
+                                    <td>
+                                        一部解説は3つとしたが、発行版を確認した記事は2つ（A・B）。本ガイドは2つを採用
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>コンテナ・サーバーレスへの言及が追加された</td>
+                                    <td>
+                                        <strong>単一ソース（DJB Doradztwo）のみ</strong
+                                        >で、他で裏取りできていません（★要確認）
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2015年版CLDと2026年版の個別対応</td>
+                                    <td>
+                                        5.38と8.35は名称の一致に基づく整理。他は<strong
+                                            >Annex Aで確認が必要</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>認証の扱い</td>
+                                    <td>
+                                        ISO側の説明と日本の制度が異なる点があり、<strong
+                                            >国ごとの制度確認が必要</strong
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>JIP-ISMS517改訂版の発行状況</td>
+                                    <td>2026年10月15日時点では<strong>未確認</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>事業者ページの版</td>
+                                    <td>
+                                        取得時点でAWS・Microsoft・Google Cloudとも2015年版の記述
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="s16">
+                    <h2>参考文献・出典URL（2026年10月15日時点で参照）</h2>
+                    <div class="ref-group">
+                        <span class="tier t3">★★★</span>
+                        <h3>公式・規格発行元・認定機関・クラウド事業者</h3>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">1</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ISO公式：ISO/IEC
+                                27017:2026（版・発行日・ライフサイクル・前版撤回・FAQ）
+                            </p>
+                            <a class="ref-url" href="https://www.iso.org/standard/27017"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://www.iso.org/standard/27017</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">2</span>
+                        <div class="ref-body">
+                            <p class="ref-title">ISO公式：ISO/IEC 27017:2015（撤回済みの前版）</p>
+                            <a class="ref-url" href="https://www.iso.org/standard/43757.html"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://www.iso.org/standard/43757.html</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">3</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ISMS-AC：ISO/IEC 27017:2026発行のお知らせ（2026年7月28日）
+                            </p>
+                            <a class="ref-url" href="https://isms.jp/topics/news/20260728.html"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://isms.jp/topics/news/20260728.html</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">4</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ISMS-AC：ISMSクラウドセキュリティ認証（JIP-ISMS517の説明）
+                            </p>
+                            <a class="ref-url" href="https://isms.jp/isms-cls.html"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://isms.jp/isms-cls.html</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">5</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                AWS：ISO/IEC 27017 FAQ（顧客は自動的に認証されない旨）
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://aws.amazon.com/compliance/iso-27017-faqs"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://aws.amazon.com/compliance/iso-27017-faqs</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">6</span>
+                        <div class="ref-body">
+                            <p class="ref-title">Microsoft：ISO/IEC 27017:2015 コンプライアンス</p>
+                            <a
+                                class="ref-url"
+                                href="https://learn.microsoft.com/en-us/compliance/regulatory/offering-iso-27017"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://learn.microsoft.com/en-us/compliance/regulatory/offering-iso-27017</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">7</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                Microsoft：Azureの共有責任モデル（2026-08-24更新）
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">8</span>
+                        <div class="ref-body">
+                            <p class="ref-title">Google Cloud：ISO/IEC 27017 コンプライアンス</p>
+                            <a
+                                class="ref-url"
+                                href="https://cloud.google.com/security/compliance/iso-27017"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://cloud.google.com/security/compliance/iso-27017</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">9</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                CEN（EN ISO/IEC 27017:2026）の目録ページ（要旨・Annex
+                                A対応表の言及）
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://ecommerce.sist.si/catalog/standards/cen/c7a14ce5-5df4-43a3-a552-fe0a53590ab4/en-iso-iec-27017-2026"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://ecommerce.sist.si/catalog/standards/cen/c7a14ce5-5df4-43a3-a552-fe0a53590ab4/en-iso-iec-27017-2026</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref-group">
+                        <span class="tier t2">★★</span>
+                        <h3>実務家・専門家による解説（2026年版の内容）</h3>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">10</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                Cloudaware（2026-10-08）：2026年版の管理策、実装、証跡、認証の考え方
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://cloudaware.com/blog/iso-27017-cloud-security-controls/"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://cloudaware.com/blog/iso-27017-cloud-security-controls/</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">11</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                Certi360（2026-08-06）：4つの新CLD管理策、箇条4、附属書A・B、日本の移行予定
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://certi360.com/en/iso-iec-27017-2026-what-changes-for-your-cloud-providers/"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://certi360.com/en/iso-iec-27017-2026-what-changes-for-your-cloud-providers/</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">12</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                Assent Risk Management（2026-08-13）：変更点とCLD管理策の説明
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://www.assentriskmanagement.co.uk/iso-270172026-explained-key-changes-new-cloud-controls-and-what-it-means-for-certification/"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://www.assentriskmanagement.co.uk/iso-270172026-explained-key-changes-new-cloud-controls-and-what-it-means-for-certification/</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">13</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                Stribog（2026-09-06）：規格の序文・範囲・箇条4.3.1、プライベートクラウド
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://stribog.com/blog/iso-27017-cloud-controls-when-you-are-your-own-provider"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://stribog.com/blog/iso-27017-cloud-controls-when-you-are-your-own-provider</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">14</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                DJB
+                                Doradztwo（2026-08-12）：2015年版との比較（コンテナ等の言及は★要確認）
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://djb-doradztwo.pl/en/blog/the-second-edition-of-iso-iec-270172026-key-changes-to-cloud-security/"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://djb-doradztwo.pl/en/blog/the-second-edition-of-iso-iec-270172026-key-changes-to-cloud-security/</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">15</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ISMS Copilot：2026年版への移行（CLD 4管理策、2附属書）
+                            </p>
+                            <a
+                                class="ref-url"
+                                href="https://www.ismscopilot.com/blog/iso-27017-2026-edition"
+                                ><i class="ti ti-external-link"></i
+                                ><span
+                                    >https://www.ismscopilot.com/blog/iso-27017-2026-edition</span
+                                ></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">16</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ISMS CORE：27017:2026の構造（27002:2022の93管理策との対応）
+                            </p>
+                            <a class="ref-url" href="https://isms-core.com/isos/iso-27017/"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://isms-core.com/isos/iso-27017/</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref-group"><h3>補助的に参照した情報（日本の認証機関）</h3></div>
+                    <div class="ref">
+                        <span class="ref-n">17</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                ペリージョンソンレジストラー：ISMSクラウドセキュリティ認証の審査案内
+                            </p>
+                            <a class="ref-url" href="https://www.pjr.jp/service/iso-iec27017/"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://www.pjr.jp/service/iso-iec27017/</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="ref">
+                        <span class="ref-n">18</span>
+                        <div class="ref-body">
+                            <p class="ref-title">
+                                日本化学キューエイ：ISMSクラウドセキュリティ認証の案内（登録証が別々に発行される旨）
+                            </p>
+                            <a class="ref-url" href="https://www.jcqa.co.jp/iso27017/"
+                                ><i class="ti ti-external-link"></i
+                                ><span>https://www.jcqa.co.jp/iso27017/</span></a
+                            >
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="footer">
+                    <p>
+                        本ガイドは学習用の解説であり、法務・監査上の助言ではありません。実務への適用は、規格本文と所属組織の認証機関・監査人に確認してください。
+                    </p>
+                </footer>
+            </main>
+        </div>
+        <script>
+            window.DIAGRAMS = {
+                d1: `
+flowchart TB
+S1["STEP1 27017とは"] --> S2["STEP2 基本用語"]
+S2 --> S3["STEP3 2026年版の基本情報"]
+S3 --> S4["STEP4 2015年版からの変更点"]
+S4 --> S5["STEP5 構造の読み方"]
+S5 --> S6["STEP6 4つのCLD管理策"]
+S6 --> S7["STEP7 責任分担の実務"]
+S7 --> S8["STEP8 導入手順"]
+S8 --> S9["STEP9 監査・証跡"]
+S9 --> S10["STEP10 認証と日本の動向"]
+`,
+                d2: `
+flowchart TB
+A["ISO/IEC 27001:2022 ISMSの要求事項 (認証の対象になる)"]
+B["ISO/IEC 27002:2022 汎用の情報セキュリティ管理策 (93管理策・実装ガイダンス)"]
+C["ISO/IEC 27017:2026 クラウド向けの追加ガイダンス と追加管理策"]
+D["ISO/IEC 27018:2025 公衆クラウドでのPII保護"]
+E["ISO/IEC 22123-1 クラウドの用語・概念"]
+F["ISO/IEC 27036-4 クラウドサービスの サプライヤ関係"]
+A -- "管理策の選択元" --> B
+B -- "拡張される" --> C
+E -- "用語を提供" --> C
+C -- "供給網は参照" --> F
+C -. "プライバシーが必要なら併用" .-> D
+`,
+                d3: `
+flowchart LR
+CSC["CSC クラウドサービスカスタマ (利用する組織)"]
+CSP["CSP クラウドサービスプロバイダ (提供する組織)"]
+CSN["CSN クラウドサービスパートナ (周辺で関わる組織)"]
+CSC -- "契約・利用" --> CSP
+CSN -- "支援・仲介・監査" --> CSC
+CSN -- "開発・連携" --> CSP
+`,
+                d4: `
+flowchart TB
+A["2022-10-26 新規プロジェクト承認"] --> B["2023-10 委員会原案CD登録・照会"]
+B --> C["2024-04 CDを作業部会へ差し戻し 再度CD"]
+C --> D["2024-12-02 DIS登録"]
+D --> E["2025-02-03 ~ 04-29 DIS投票"]
+E --> F["2026-01-12 FDIS登録承認"]
+F --> G["2026-04-06 ~ 06-02 FDIS投票"]
+G --> H["2026-07-27 国際規格として発行"]
+`,
+                d5: `
+flowchart TD
+Start["リスク評価の結果、 27002:2022の管理策を選ぶ"] --> Q1{"対象サービスは クラウドか"}
+Q1 -- "いいえ" --> R1["27002:2022のガイダンスだけで実装"]
+Q1 -- "はい" --> Q2{"27017に クラウド向け追記があるか"}
+Q2 -- "なし" --> R2["27002:2022を参照して実装"]
+Q2 -- "あり" --> Q3{"形式は Type 1 か Type 2 か"}
+Q3 -- "Type 1 CSC/CSP別" --> R3["自分の立場の項を読んで 実装・相手側の責任も確認"]
+Q3 -- "Type 2 共通" --> R4["共通ガイダンスを両者で実装"]
+R3 --> Fin["SoAと責任分担表に反映"]
+R4 --> Fin
+R1 --> Fin
+R2 --> Fin
+`,
+                d6: `
+flowchart TB
+CSC["CSC 顧客"] --> MSP["CSN MSP・インテグレータ"]
+MSP --> CSP["CSP クラウド事業者"]
+CSP --> SUB["再委託先 ホスティング・サポート"]
+GAP["責任の空白が生まれやすい 受け渡し点"] -. "ここを明文化する" .-> MSP
+`,
+                d7: `
+flowchart TD
+A["対象のセキュリティ作業を選ぶ"] --> B{"サービスモデルは IaaS・PaaS・SaaSのどれか"}
+B --> C{"事業者が実行する機能が サービスに含まれるか"}
+C -- "含まれる" --> D["事業者が実行 ただし顧客は要件を満たすか確認する"]
+C -- "含まれない" --> E["顧客が実行"]
+D --> F{"間にパートナ(MSPなど)がいるか"}
+E --> F
+F -- "いる" --> G["5.39:パートナの責任と証跡を定義"]
+F -- "いない" --> H["5.38:責任分担表に記録"]
+G --> H
+H --> I["契約・運用手順・証跡に反映"]
+`,
+                d8: `
+flowchart TD
+A["1. 対象サービスと役割(CSC/CSP/両方)を整理"] --> B["2. ISMS(27001)のリスク評価と適用範囲を確認"]
+B --> C["3. 27002:2022の管理策から クラウドに関連するものを選ぶ"]
+C --> D["4. 27017のクラウド向けガイダンスと 4つのCLD管理策を確認"]
+D --> E["5. サービス単位で責任分担表を作る(5.38)"]
+E --> F["6. パートナ・再委託先を洗い出す(5.39)"]
+F --> G["7. 契約・SLA・運用手順に反映"]
+G --> H["8. 設定・ログ・分離などの証跡を整備"]
+H --> I["9. 未承認利用の監視と棚卸し(8.36)"]
+I --> J["10. 定期レビュー・内部監査・SoA更新"]
+J --> E
+`,
+                d9: `
+flowchart TD
+A["事業者のISO 27017の証明書・資料を入手"] --> B{"どの版か 2015年版か2026年版か"}
+B --> C{"使っているサービスは 認証範囲に含まれるか"}
+C -- "いいえ" --> X["範囲外:別の保証を求める"]
+C -- "はい" --> D{"使っているリージョンは 範囲に含まれるか"}
+D -- "いいえ" --> X
+D -- "はい" --> E{"有効期間内か"}
+E -- "いいえ" --> X
+E -- "はい" --> F["事業者が運用する部分の証跡として利用"]
+F --> G["顧客側の設定・運用の証跡は 自社で別途そろえる"]
+`,
+                d10: `
+flowchart TB
+A["2026-07-27 ISO/IEC 27017:2026 発行"] --> B["2026-07-28 ISMS-AC が発行を告知"]
+B --> C["2026年秋頃(目途) JIP-ISMS517 改訂版の発行"]
+C --> D["改訂版発行後 3年間の移行期間"]
+D --> E["全認証取得組織が 改訂版へ移行"]
+`,
+            };
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>
+            (function () {
+                var sidebar = document.getElementById('sidebar');
+                var backdrop = document.getElementById('backdrop');
+                var btn = document.getElementById('menuBtn');
+                var icon = btn.querySelector('i');
+                function setOpen(open) {
+                    sidebar.classList.toggle('open', open);
+                    backdrop.classList.toggle('show', open);
+                    document.body.classList.toggle('lock', open);
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    icon.className = open ? 'ti ti-x' : 'ti ti-menu-2';
+                }
+                btn.addEventListener('click', function () {
+                    setOpen(!sidebar.classList.contains('open'));
+                });
+                backdrop.addEventListener('click', function () {
+                    setOpen(false);
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') setOpen(false);
+                });
+                sidebar.querySelectorAll('a').forEach(function (a) {
+                    a.addEventListener('click', function () {
+                        setOpen(false);
+                    });
+                });
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth > 1100) setOpen(false);
+                });
+
+                var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+                var byId = {};
+                links.forEach(function (a) {
+                    byId[a.getAttribute('href').slice(1)] = a;
+                });
+                if ('IntersectionObserver' in window) {
+                    var io = new IntersectionObserver(
+                        function (entries) {
+                            entries.forEach(function (en) {
+                                if (en.isIntersecting) {
+                                    links.forEach(function (a) {
+                                        a.classList.remove('active');
+                                    });
+                                    var a = byId[en.target.id];
+                                    if (a) {
+                                        a.classList.add('active');
+                                        var r = a.getBoundingClientRect(),
+                                            s = sidebar.getBoundingClientRect();
+                                        if (r.top < s.top + 8 || r.bottom > s.bottom - 8) {
+                                            a.scrollIntoView({ block: 'nearest' });
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        { rootMargin: '-20% 0px -70% 0px' },
+                    );
+                    document.querySelectorAll('section[id]').forEach(function (s) {
+                        io.observe(s);
+                    });
+                }
+
+                if (window.hljs) {
+                    document
+                        .querySelectorAll('pre code[class*="language-"]')
+                        .forEach(function (el) {
+                            window.hljs.highlightElement(el);
+                        });
+                }
+            })();
+        </script>
+        <script>
+            (function () {
+                var targets = Array.prototype.slice.call(
+                    document.querySelectorAll('.mermaid[data-diagram]'),
+                );
+                var D = window.DIAGRAMS || {};
+                function fallback(el, src) {
+                    var pre = document.createElement('pre');
+                    var code = document.createElement('code');
+                    code.textContent = src;
+                    pre.appendChild(code);
+                    el.innerHTML = '';
+                    el.appendChild(pre);
+                }
+                function fix(svg) {
+                    if (!svg) return;
+                    var vb = svg.getAttribute('viewBox');
+                    var w = null;
+                    if (vb) {
+                        var p = vb.split(/[\s,]+/).map(Number);
+                        w = p[2];
+                        p[3] = p[3] + 15;
+                        svg.setAttribute('viewBox', p.join(' '));
+                    }
+                    svg.removeAttribute('width');
+                    svg.removeAttribute('height');
+                    svg.style.width = w ? Math.ceil(w) + 'px' : '';
+                    svg.style.maxWidth = '100%';
+                    svg.style.height = 'auto';
+                    svg.style.overflow = 'visible';
+                }
+                async function run() {
+                    if (!window.mermaid) {
+                        targets.forEach(function (el) {
+                            fallback(el, (D[el.dataset.diagram] || '').trim());
+                        });
+                        return;
+                    }
+                    if (document.fonts && document.fonts.ready) {
+                        await document.fonts.ready;
+                    }
+                    window.mermaid.initialize({
+                        startOnLoad: false,
+                        theme: 'dark',
+                        securityLevel: 'loose',
+                        fontFamily:
+                            '-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif',
+                        flowchart: {
+                            useMaxWidth: false,
+                            htmlLabels: true,
+                            nodeSpacing: 45,
+                            rankSpacing: 45,
+                            curve: 'basis',
+                            padding: 12,
+                        },
+                        themeVariables: {
+                            fontSize: '16px',
+                            primaryColor: '#14233f',
+                            primaryTextColor: '#f3f5fa',
+                            primaryBorderColor: '#7c9eff',
+                            lineColor: '#93a1bd',
+                            secondaryColor: '#122339',
+                            secondaryTextColor: '#f3f5fa',
+                            secondaryBorderColor: '#3e5c8f',
+                            tertiaryColor: '#0c1a2d',
+                            tertiaryTextColor: '#f3f5fa',
+                            tertiaryBorderColor: '#2d456e',
+                            background: '#0c1a2d',
+                            mainBkg: '#14233f',
+                            nodeBorder: '#7c9eff',
+                            clusterBkg: '#0c1a2d',
+                            clusterBorder: '#2d456e',
+                            titleColor: '#f3f5fa',
+                            edgeLabelBackground: '#0c1a2d',
+                            textColor: '#f3f5fa',
+                            nodeTextColor: '#f3f5fa',
+                        },
+                    });
+                    for (var i = 0; i < targets.length; i++) {
+                        var el = targets[i];
+                        var id = el.dataset.diagram;
+                        var src = (D[id] || '').trim();
+                        if (!src) continue;
+                        try {
+                            var out = await window.mermaid.render('mmd-' + id, src);
+                            el.innerHTML = out.svg;
+                            fix(el.querySelector('svg'));
+                        } catch (e) {
+                            console.error(id, e);
+                            fallback(el, src);
+                        }
+                    }
+                }
+                run();
+            })();
+        </script>
+    </body>
+</html>
