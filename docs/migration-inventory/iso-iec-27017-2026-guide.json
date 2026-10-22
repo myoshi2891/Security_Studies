@@ -3,11 +3,11 @@
   "route": "/docs/iso-iec-27017-2026-guide",
   "sources": [
     {
-      "path": "Iso-27017-2026-guide.html",
+      "path": "archive/html/Iso-27017-2026-guide.html",
       "sha256": "febe0dab1f1796d0cd80a7700a0bade732f51266f45262193afcf0934c414c32"
     },
     {
-      "path": "Iso-27017-2026-guide.md",
+      "path": "archive/md/Iso-27017-2026-guide.md",
       "sha256": "9e02a328e4cd257b6579761ab0d49a21f403ca3c040b1fc97352b7080440bcd6"
     }
   ],
@@ -102,7 +102,7 @@
     }
   ],
   "allowedDifferences": [
-    "Original HTML/Markdown will be archived after fidelity validation.",
+    "Original HTML/Markdown archived byte-for-byte in archive/html and archive/md; archive/ is intentionally ignored by Git.",
     "Native MDX elements retain all original structure, classes, IDs and content; inner main becomes div.guide-content to avoid nested app main landmarks.",
     "Local lucide SVG icons replace external icon fonts.",
     "Server-side highlight.js Python/YAML highlighting replaces CDN scripts; locally scoped atom-one-dark styles retain source token colors.",
@@ -119,6 +119,16 @@
     "testFiles": 12,
     "build": "prohibited, not run",
     "visual": "pending user review",
-    "phase": "archive Red: 51 pass / 2 skip / 2 fail"
+    "phase": "complete; user visual review pending",
+    "fullSuite": {
+      "passed": 512,
+      "skipped": 297,
+      "failed": 0,
+      "files": 136,
+      "total": 809,
+      "expects": 84599
+    },
+    "lint": "npm run lint passed",
+    "types": "npm run types:check passed"
   }
 }

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（ISO27017: 原本アーカイブRed・専用51成功/2 skip/2失敗（12ファイル）。原本はルートに残存し比較先未更新。全体の前回実測は下表、専用テストの最新状態は末尾）
+> **最終更新**: 2026-10-22（ISO27017移行・原本アーカイブ・専用55件成功。全体512成功/297 skip/0失敗。ビルド未実行・ユーザー目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,29 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **457成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・124ファイル・754件・41,155 expect。原本不在の既存比較テストはskip |
-| テストファイル数 | **124ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **57/57 (100%)** | 既存54 + ISO15408部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全124テストファイルとは別集計 |
+| テストケース総数 | **512成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・136ファイル・809件・84,599 expect。原本不在の既存比較テストはskip |
+| テストファイル数 | **136ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **61/61 (100%)** | 従来57 + ISO27017部品4（GuideSidebar / MermaidFigure / GuideIcon / GuideCode）。純粋データ・MDXは分母外。全136テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。今回ローカルではnpm testのみ・coverage未計測 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO15408欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO27017欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/iso-iec-27017-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/runtime.test.tsx` | 8 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-00-05.test.tsx` | 6 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-06-11.test.tsx` | 6 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/GuideCode.test.tsx` | 2 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-12-16.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/interactions.test.tsx` | 2 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/integration.test.tsx` | 8 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/hydration.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/style-isolation.test.tsx` | 1 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/iso-iec-15408-1-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本ハッシュ一致/ルート除去/比較参照を検証・Green |
 | `src/app/docs/iso-iec-15408-1-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・Green |
 | `src/app/docs/iso-iec-15408-1-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・Green |
@@ -636,9 +648,9 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在22ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在23ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
-- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の102ページ（22+80）はテスト値であり、実際のページ数（現在22ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
+- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の103ページ（23+80）はテスト値であり、実際のページ数（現在23ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
@@ -808,8 +820,13 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 
 <!-- iso27017-status -->
 
-ISO/IEC 27017:2026: 原本アーカイブRed・専用51成功/2 skip/2失敗（12ファイル）。原本はルートに残存し比較先未更新。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
-対象: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・30表・10図・2コード・7チェック項目・7 Q&A・18参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
+移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
 
 <!-- /iso27017-status -->
+
+### ISO27017 完了・目視引継ぎ（2026-10-22）
+
+- 表示基盤・0〜5節・6〜11節・12〜16節・ナビ検索・原本アーカイブごとにRed→テストコミット→Green→実装コミット→別の文書同期コミットを実施。
+- 次の対応: 専用目視確認表に沿ってユーザー確認。指摘があれば失敗テストから修正。ビルド・push・公開は未実施。
