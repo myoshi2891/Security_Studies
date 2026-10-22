@@ -346,3 +346,11 @@ ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。
 移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
 
 <!-- /iso27017-status -->
+
+<!-- iso18045-status -->
+
+ISO/IEC 18045:2026: 開始時監査・全体512 pass / 297 skip / 0 fail、136ファイル・原本未移行。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+
+対象: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・40表830セル・18図・28参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
+
+<!-- /iso18045-status -->
