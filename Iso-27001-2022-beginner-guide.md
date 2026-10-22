@@ -213,7 +213,7 @@ flowchart LR
 
 - **成果物:** 状況分析メモ、利害関係者一覧、**ISMS適用範囲文書**
 - **つまずき:** 範囲を広げすぎて運用が破綻する/狭すぎて顧客要求を満たせない。まずは「顧客に提供するサービスと、それを支える人・システム」から始めるのが定石です。
-- **ワンポイント(追補):** 気候変動が「関連課題ではない」と判断した場合も、その判断を記録しておけば追加対応は不要とする解説が複数あります [S10](https://www.tuvsud.com/en-ae/services/auditing-and-system-certification/climate-action-changes-amendment-1-in-management-system-standards)。具体的な運用は認証機関に確認してください。
+- **ワンポイント(追補):** 4.1で気候変動が関連課題かどうかを判断するだけでは足りません。4.2に基づき、顧客・規制当局などの利害関係者が気候変動に関する要求を持つかを確認し、その結果も踏まえて対応の要否を判断・記録します [S11](https://services.bis.gov.in/tmp/LITD23425400_06092024_1.pdf)。どちらにも該当しないと判断し根拠を残した場合に限り、追加対応は不要とする解説が複数あります [S10](https://www.tuvsud.com/en-ae/services/auditing-and-system-certification/climate-action-changes-amendment-1-in-management-system-standards)。具体的な運用は認証機関に確認してください。
 
 ### 箇条5:リーダーシップ — 「経営層が本気であること」を形にする
 
