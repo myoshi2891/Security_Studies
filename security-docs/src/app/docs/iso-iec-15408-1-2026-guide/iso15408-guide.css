@@ -153,7 +153,7 @@
             }
 
             /* main */
-            .iso15408-guide.iso15408-guide main {
+            .iso15408-guide.iso15408-guide .guide-content {
                 margin-left: var(--sidebar-w);
                 padding: 2.25rem 3rem 4rem;
             }
@@ -503,7 +503,7 @@
                 .iso15408-guide.iso15408-guide .sidebar.open {
                     transform: translateX(0);
                 }
-                .iso15408-guide.iso15408-guide main {
+                .iso15408-guide.iso15408-guide .guide-content {
                     margin-left: 0;
                     padding: 1.5rem 1.1rem 5.5rem;
                 }

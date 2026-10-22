@@ -126,6 +126,7 @@
     "App header adds 64px sidebar clearance and 88px anchor offsets.",
     "Page-local CSS restores original typography, pseudo bullets and decimal numbering after Tailwind resets.",
     "Diagram loading/retry state, noscript note and textual descriptions added.",
+    "Inner main becomes div.guide-content to avoid nested app main landmarks.",
     "Pure formatting whitespace omitted; table/tr structural whitespace removed for hydration."
   ],
   "validation": {
