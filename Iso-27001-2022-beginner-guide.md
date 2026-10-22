@@ -136,7 +136,7 @@ flowchart TD
 | ISO/IEC 27005 | リスクマネジメントの指針(2022年版) | リスク評価の進め方の参考書 | [S14](https://www.jnsa.org/seminar/std/isms/20251205/data/20251205_01.pdf) |
 | ISO/IEC 27006-1 | 認証機関への要求事項(2024年版) | 認証機関側の規格 | [S14](https://www.jnsa.org/seminar/std/isms/20251205/data/20251205_01.pdf) |
 | ISO/IEC 27701 | プライバシー情報マネジメント。2025年10月に**単独で実施・認証可能**な規格へ改訂 | 個人情報を重点的に扱う組織向け | [S22](https://en.wikipedia.org/wiki/ISO/IEC_27701) |
-| ISO/IEC 42001 | AIマネジメントシステム | AI利用組織が27001の上に重ねて検討 | [S1](https://www.iso.org/standard/27001) |
+| ISO/IEC 42001 | AIマネジメントシステム | AI利用組織が27001の上に重ねて検討 | [S43](https://www.iso.org/standard/42001) |
 
 ---
 
@@ -848,7 +848,7 @@ ISO/IEC 27001は、英国規格BS 7799-2を起源とし、**2005年10月**にISO
 
 ## 16. 出典URL一覧
 
-すべて**2026年10月14日**に参照しました。種別の見方:**一次**=規格・標準化機関・政府の発信、**準一次**=認証機関・クラウド事業者・専門機関の公式発信、**二次**=専門ベンダー等の解説(原典で確認することを推奨)。
+S1〜S42は**2026年10月14日**に参照しました(S43は**2026年10月22日**に追加)。種別の見方:**一次**=規格・標準化機関・政府の発信、**準一次**=認証機関・クラウド事業者・専門機関の公式発信、**二次**=専門ベンダー等の解説(原典で確認することを推奨)。
 
 | 番号 | 種別 | 内容 | URL |
 |---|---|---|---|
@@ -894,6 +894,7 @@ ISO/IEC 27001は、英国規格BS 7799-2を起源とし、**2005年10月**にISO
 | S40 | 二次 | Timewell:ISO/IEC 27001認証の全体ガイド(維持審査での記録) | https://timewell.jp/en/columns/iso-iec-27001-certification-complete-guide-2026 |
 | S41 | 二次 | ノジマ:2022年版への移行完了のプレスリリース(認証書の表記例) | https://www.nojima.co.jp/news/category/press/218441/ |
 | S42 | 一次 | IAF:Global Accreditation Cooperation Incorporatedの発足(IAF・ILACの統合、2026年1月1日) | https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/ |
+| S43 | 一次 | ISO公式:ISO/IEC 42001:2023(AIマネジメントシステム) | https://www.iso.org/standard/42001 |
 
 ### 16-1. 情報の確かさについての注意
 
