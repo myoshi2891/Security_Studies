@@ -313,7 +313,7 @@ ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 <!-- iso18045-status -->
 
-ISO/IEC 18045:2026: 表示基盤Red・14件失敗/未実装モジュール1エラー（専用3ファイル）。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+ISO/IEC 18045:2026: 表示基盤Green・専用18 pass / 0 fail（3ファイル）・本文21節未移行。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
 
 対象: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・40表830セル・18図・28参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
 
