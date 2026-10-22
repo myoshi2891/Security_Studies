@@ -1,0 +1,22 @@
+---
+title: "Zero Trust Networks, 2nd Edition 初学者向けステップバイステップ解説ガイド"
+description: "ゼロトラストの信頼管理、デバイス・ID・アプリ・通信の検証、導入と運用を25節・17図で段階的に学ぶ書籍解説ガイド。"
+---
+
+import './zero-trust-guide.css';
+import { E } from './GuideElements';
+import { GuideSidebar } from './GuideSidebar';
+import { GuideIcon } from './GuideIcon';
+import { GuideCode } from './GuideCode';
+import { MermaidFigure } from './MermaidFigure';
+import { diagrams } from './diagrams';
+
+export const metadata = {"title":"Zero Trust Networks, 2nd Edition 初学者向けステップバイステップ解説ガイド","description":"ゼロトラストの信頼管理、デバイス・ID・アプリ・通信の検証、導入と運用を25節・17図で段階的に学ぶ書籍解説ガイド。"};
+
+<E.div className="zero-trust-guide layout">
+<GuideSidebar><E.div className={"brand"}><E.div className={"brand-icon"}><GuideIcon name="ti-shield-lock" className="ti ti-shield-lock" /></E.div><E.div className={"brand-text"}><E.div className={"brand-title"}>{"Zero Trust Networks, 2nd Edition"}</E.div><E.div className={"brand-sub"}>{"初学者向けステップ解説ガイド"}</E.div></E.div></E.div><E.nav><E.ul><E.li className={"nav-group"}>{"導入"}</E.li><E.li><E.a href={"#intro-0"}>{"0. このガイドの使い方"}</E.a></E.li><E.li><E.a href={"#intro-1"}>{"1. 書籍の概要"}</E.a></E.li><E.li><E.a href={"#intro-2"}>{"2. 学習ロードマップ"}</E.a></E.li><E.li><E.a href={"#intro-3"}>{"3. 先に押さえる前提知識"}</E.a></E.li><E.li><E.a href={"#intro-4"}>{"4. ゼロトラストを3分で理解する"}</E.a></E.li><E.li className={"nav-group"}>{"本編"}</E.li><E.li><E.a href={"#ch1"}>{"第1章 ゼロトラストの基礎"}</E.a></E.li><E.li><E.a href={"#ch2"}>{"第2章 信頼の管理"}</E.a></E.li><E.li><E.a href={"#ch3"}>{"第3章 コンテキスト認識エージェント"}</E.a></E.li><E.li><E.a href={"#ch4"}>{"第4章 認可の意思決定"}</E.a></E.li><E.li><E.a href={"#ch5"}>{"第5章 デバイスを信頼する"}</E.a></E.li><E.li><E.a href={"#ch6"}>{"第6章 ID を信頼する"}</E.a></E.li><E.li><E.a href={"#ch7"}>{"第7章 アプリケーションを信頼する"}</E.a></E.li><E.li><E.a href={"#ch8"}>{"第8章 トラフィックを信頼する"}</E.a></E.li><E.li><E.a href={"#ch9"}>{"第9章 ゼロトラストネットワークの実現"}</E.a></E.li><E.li><E.a href={"#ch10"}>{"第10章 攻撃者の視点"}</E.a></E.li><E.li><E.a href={"#ch11"}>{"第11章 標準・フレームワーク・ガイドライン"}</E.a></E.li><E.li><E.a href={"#ch12"}>{"第12章 課題と今後"}</E.a></E.li><E.li><E.a href={"#appendix"}>{"付録 ネットワークモデル入門"}</E.a></E.li><E.li className={"nav-group"}>{"横断編"}</E.li><E.li><E.a href={"#cross-a"}>{"横断編A: 1つのリクエストが許可されるまで"}</E.a></E.li><E.li><E.a href={"#cross-b"}>{"横断編B: 導入ステップ（10ステップ）"}</E.a></E.li><E.li><E.a href={"#cross-c"}>{"横断編C: 2024〜2026年の最新動向"}</E.a></E.li><E.li className={"nav-group"}>{"まとめ"}</E.li><E.li><E.a href={"#glossary"}>{"用語集"}</E.a></E.li><E.li><E.a href={"#quiz"}>{"理解度チェック（総合）"}</E.a></E.li><E.li><E.a href={"#plan"}>{"4週間学習プラン"}</E.a></E.li><E.li><E.a href={"#sources"}>{"出典一覧（URL）"}</E.a></E.li></E.ul></E.nav></GuideSidebar>
+<E.div className="guide-content">
+<E.header className={"hero"}><E.div className={"hero-kicker"}><GuideIcon name="ti-book-2" className="ti ti-book-2" /><E.span>{"O'Reilly 書籍ガイド"}</E.span></E.div><E.h1>{"Zero Trust Networks, 2nd Edition 初学者向けステップバイステップ解説ガイド"}</E.h1><E.dl className={"meta"}><E.dt>{"対象書籍"}</E.dt><E.dd><E.em>{"Zero Trust Networks, 2nd Edition"}</E.em>{"（Razi Rais, Christina Morillo, Evan Gilman, Doug Barth／O'Reilly Media, 2024年2月）"}</E.dd><E.dt>{"情報基準日"}</E.dt><E.dd>{"2026年10月9日（Webで確認できた公開情報にもとづく）"}</E.dd><E.dt>{"想定読者"}</E.dt><E.dd>{"ネットワーク・セキュリティの実務経験が浅い、またはゼロトラストを体系的に学び直したいソフトウェア／QA／インフラエンジニア"}</E.dd><E.dt>{"ファイル形式"}</E.dt><E.dd>{"HTML（単一ファイル。図解は Mermaid と表のみ使用。ASCII アートは使用しません）"}</E.dd></E.dl></E.header>
+<E.div className={"footer"}><E.p>{"このガイドは、2026年10月9日時点の公開情報にもとづく学習用の解説であり、書籍の代替ではありません。実運用では必ず最新の一次情報を確認してください。"}</E.p></E.div>
+</E.div>
+</E.div>
