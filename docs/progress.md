@@ -874,5 +874,5 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 
 
 <!-- zero-trust-stage -->
-Zero Trust Networks 2nd Edition 表示基盤Red（2026-10-23）: 専用0成功/3失敗（1ファイル）。MDX・CSS・図部品の不在で失敗を確認。全体の最終Green実測は615成功/297 skip/0失敗・152ファイル。次に表示基盤を実装。ビルド禁止・未実行。
+Zero Trust Networks 2nd Edition 表示基盤Green（2026-10-23）: 専用3成功/0失敗（1ファイル）。ヒーロー・25リンクの目次・フッター・全CSS宣言とmedia条件・図設定を検証。本文25節は未移行。全体の最終Green実測は615成功/297 skip/0失敗・152ファイル。ビルド禁止・未実行。
 <!-- /zero-trust-stage -->
