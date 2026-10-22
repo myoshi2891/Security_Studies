@@ -17,8 +17,6 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (!selected) return;
     for (const a of links) { a.classList.remove('active'); a.removeAttribute('aria-current'); }
     selected.classList.add('active'); selected.setAttribute('aria-current', 'location');
-    const parent = selected.getAttribute('data-parent');
-    if (parent) links.find(a => a.getAttribute('data-target') === parent)?.classList.add('active');
     if (nav && (selected.offsetTop < nav.scrollTop || selected.offsetTop + selected.offsetHeight > nav.scrollTop + nav.clientHeight)) nav.scrollTop = Math.max(0, selected.offsetTop - nav.clientHeight / 2);
   }, []);
   useEffect(() => {
@@ -43,7 +41,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
       const candidates = [...(guide?.querySelectorAll('section[id]') ?? [])].filter(el => visible.has(el));
-      const current = candidates.filter(el => el.classList.contains('step')).at(-1) ?? candidates.at(-1);
+      const current = candidates.at(-1);
       if (current) select(current.id);
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);

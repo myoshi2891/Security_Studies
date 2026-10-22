@@ -4,12 +4,12 @@ import {createElement as h} from 'react';
 import {act,cleanup,fireEvent,render} from '@testing-library/react';
 import {GuideSidebar} from './GuideSidebar';
 afterEach(()=>{cleanup();(window as unknown as Window).happyDOM.setURL('http://localhost/');});
-// 原本に依存しない18章の目次。原本との一致は integration.test.tsx で検証する
+// 原本に依存しない17節の目次。原本との一致は integration.test.tsx で検証する
 const nav=()=>h('nav',{},Array.from({length:17},(_,i)=>h('a',{href:`#s${i}`,key:i},`章${i+1}`)));
 const sections=()=>Array.from({length:17},(_,i)=>h('section',{id:`s${i}`,key:i},h('h2',{},`章${i+1}`)));
 const harness=()=>h('div',{className:'iso27017-guide'},h(GuideSidebar,{children:nav()}),...sections());
 
-test('the original eighteen links are focus trapped and Escape/background restore focus and scrolling',()=>{
+test('the original seventeen links are focus trapped and Escape/background restore focus and scrolling',()=>{
  const view=render(harness());const btn=view.container.querySelector('#menuBtn')!;const links=view.container.querySelectorAll<HTMLAnchorElement>('nav a');expect(links).toHaveLength(17);
  fireEvent.click(btn);expect(btn).toHaveAttribute('aria-expanded','true');expect(document.body.style.overflow).toBe('hidden');expect(document.activeElement).toBe(links[0]);
  fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement).toBe(links[16]);fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement).toBe(links[0]);
