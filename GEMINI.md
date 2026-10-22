@@ -214,7 +214,7 @@ Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685
 
 <!-- iso15408-status -->
 
-ISO/IEC 15408-1:2026: 統合Red・専用48成功/ナビ検索2失敗・表hydration成功。npm test: 450 pass / 297 skip / 2 fail、122ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+ISO/IEC 15408-1:2026: 統合Green・専用50件成功・全体再検証中。npm test: 452 pass / 297 skip / 0 fail、122ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
 
 移行先: `/docs/iso-iec-15408-1-2026-guide`。原本はルートの `Iso-15408-1-2026-guide.html` / `.md` を保持。
 
