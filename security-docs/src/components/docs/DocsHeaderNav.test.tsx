@@ -30,7 +30,7 @@ test('shows a useful empty state and restores the entire menu after clearing',()
  render(<DocsHeaderNav/>);open();const input=screen.getByRole('searchbox');fireEvent.change(input,{target:{value:'no-such-guide'}});expect(screen.queryAllByRole('link')).toHaveLength(0);expect(screen.getByText('該当するガイドがありません')).toBeVisible();fireEvent.click(screen.getByRole('button',{name:'絞り込みを解除'}));expect(screen.getAllByRole('link')).toHaveLength(registeredCount);expect(document.activeElement).toBe(input);
 });
 test('new categories and eighty future pages are reflected from configuration without component edits',()=>{
- docsConfig.sidebarNav.push({title:'Future Guides',items:Array.from({length:80},(_,i)=>({title:`Future Guide ${i}`,href:`/docs/future-${i}`}))});
+ docsConfig.sidebarNav.push({id:'future',title:'Future Guides',label:'追加ガイド',description:'追加の学習領域',tone:'cyan',items:Array.from({length:80},(_,i)=>({title:`Future Guide ${i}`,href:`/docs/future-${i}`}))});
  try{render(<DocsHeaderNav/>);open();expect(screen.getAllByRole('link')).toHaveLength(registeredCount+80);expect(screen.getByRole('status')).toHaveTextContent(`${registeredCount+80}件`);fireEvent.change(screen.getByRole('searchbox'),{target:{value:'Future Guide 79'}});expect(screen.getAllByRole('link')).toHaveLength(1);expect(screen.getByRole('link',{name:'Future Guide 79'})).toHaveAttribute('href','/docs/future-79');fireEvent.change(screen.getByRole('searchbox'),{target:{value:'/docs/future-79'}});expect(screen.queryAllByRole('link')).toHaveLength(0);expect(screen.getByRole('status')).toHaveTextContent('0件');}
  finally{docsConfig.sidebarNav.pop();}
 });
@@ -48,4 +48,26 @@ test('phone header keeps search compact so the labelled guide button remains rea
  for(const width of [320,375]){const w=new Window();try{w.happyDOM.setWindowSize({width,height:900});w.document.head.innerHTML=`<style>${css}</style>`;w.document.body.innerHTML='<header class="docs-header"><div class="docs-header-inner"><div><a>Security Studies 2026</a></div><div class="docs-header-nav"><button class="docs-nav-toggle">ガイド</button></div><button id="global-search"><svg></svg><span>Search...</span></button></div></header>';
  const button=w.document.querySelector('#global-search')!,label=button.querySelector('span')!;expect(w.getComputedStyle(button).width).toBe('40px');expect(w.getComputedStyle(button).minWidth).toBe('40px');expect(w.getComputedStyle(label).position).toBe('absolute');expect(w.getComputedStyle(label).width).toBe('1px');expect(label.textContent).toBe('Search...');
  }finally{await w.happyDOM.close();}}
+});
+test('ISO has a dedicated trigger, switches scope, and returns Escape focus to its trigger',()=>{
+ render(<DocsHeaderNav/>);
+ const iso=screen.getByRole('button',{name:'ISO規格'});
+ fireEvent.click(iso);
+ expect(iso).toHaveAttribute('aria-expanded','true');
+ const entries=docsConfig.sidebarNav.find(section=>section.id==='iso')!.items;
+ expect(screen.getAllByRole('link').map(link=>link.getAttribute('href'))).toEqual(entries.map(item=>item.href));
+ fireEvent.change(screen.getByRole('searchbox'),{target:{value:'27001'}});
+ expect(screen.getAllByRole('link')).toHaveLength(1);
+ fireEvent.keyDown(document,{key:'Escape'});
+ expect(document.activeElement).toBe(iso);
+ open();
+ expect(screen.getAllByRole('link')).toHaveLength(registeredCount);
+ fireEvent.click(iso);
+ expect(screen.getByRole('searchbox')).toHaveValue('');
+ expect(screen.getAllByRole('link')).toHaveLength(entries.length);
+ expect(screen.getByRole('button',{name:'ガイド一覧'})).toHaveAttribute('aria-expanded','false');
+});
+test('Japanese domain names can filter the global menu',()=>{
+ render(<DocsHeaderNav/>);open();fireEvent.change(screen.getByRole('searchbox'),{target:{value:'クラウド・暗号'}});
+ expect(screen.getAllByRole('link')).toHaveLength(docsConfig.sidebarNav.find(section=>section.id==='platform')!.items.length);
 });
