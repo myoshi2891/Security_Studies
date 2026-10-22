@@ -3,11 +3,11 @@
   "route": "/docs/iso-iec-18045-2026-guide",
   "sources": [
     {
-      "path": "Iso-iec-18045-2026-guide.html",
+      "path": "archive/html/Iso-iec-18045-2026-guide.html",
       "sha256": "1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062"
     },
     {
-      "path": "Iso-iec-18045-2026-guide.md",
+      "path": "archive/md/Iso-iec-18045-2026-guide.md",
       "sha256": "e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269"
     }
   ],
@@ -118,7 +118,7 @@
     }
   ],
   "allowedDifferences": [
-    "Original HTML/Markdown will be archived after fidelity validation.",
+    "Original HTML/Markdown archived byte-for-byte in archive/html and archive/md; archive/ is intentionally ignored by Git.",
     "Native MDX elements retain all original structure, classes, IDs and content; inner main becomes div.main to avoid nested app main landmarks.",
     "Local lucide SVG icons replace external icon fonts.",
     "No source scripts or external icon fonts execute in the migrated page.",
@@ -136,6 +136,16 @@
     "testFiles": 10,
     "build": "prohibited, not run",
     "visual": "pending user review",
-    "phase": "archive Red: 52 pass / 2 skip / 2 fail"
+    "phase": "complete; user visual review pending",
+    "fullSuite": {
+      "passed": 568,
+      "skipped": 297,
+      "failed": 0,
+      "files": 146,
+      "total": 865,
+      "expects": 158174
+    },
+    "lint": "npm run lint passed",
+    "types": "npm run types:check passed"
   }
 }
