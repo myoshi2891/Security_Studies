@@ -67,7 +67,7 @@ export function fitDiagram(svg: SVGSVGElement): void {
 /** ラベル中の <br/> 等の HTML を読み上げ用のプレーンテキストに変換する */
 const plain = (text: string) => text.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
-/** 元ガイドの全9図から、ノードと接続のテキスト説明を生成する */
+/** 元ガイドの全17図から、ノードと接続のテキスト説明を生成する */
 export function describeDiagram(source: string): string[] {
   const lines = source.trim().split('\n').map(line => line.trim()).filter(Boolean);
   if (lines[0] === 'sequenceDiagram') return ['シーケンス図', ...lines.slice(1).map(plain)];
@@ -119,7 +119,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
 
-  // 表示域に近づくまで描画を遅らせ、9図の一斉描画で初期表示が重くなるのを防ぐ
+  // 表示域に近づくまで描画を遅らせ、17図の一斉描画で初期表示が重くなるのを防ぐ
   useEffect(() => {
     const figure = figureRef.current;
     if (!figure || nearView) return;

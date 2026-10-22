@@ -16,7 +16,7 @@ test('runtime and shipped static search include the registered page and all head
  const doc=await renderedPage();const headings=[...doc.querySelectorAll('h1,h2,h3,h4')].map(e=>e.textContent!.replace(/\s+/g,' ').trim());expect(entry!.headings).toEqual(headings);expect(entry!.title).toContain('15408-1:2026');
 });
 sourceTest('all diagrams retain exact definitions, parse successfully and use source colors and spacing',async()=>{
- const {diagrams}=await import('./diagrams');expect(Object.entries(diagrams)).toEqual([...definitions]);expect(definitions.size).toBe(17);
+ const {diagrams}=await import('./diagrams');expect([...definitions]).toEqual(Object.entries(diagrams));expect(definitions.size).toBe(17);
  const {default:mermaid}=await import('mermaid');for(const [id,def] of definitions)expect(await mermaid.parse(def),id).toBeTruthy();
  const {diagramConfig}=await import('./MermaidFigure');expect(diagramConfig.theme).toBe('base');expect(diagramConfig.securityLevel).toBe('strict');expect(diagramConfig.flowchart).toEqual({useMaxWidth:false,htmlLabels:true,nodeSpacing:45,rankSpacing:50,padding:12});
  const theme=sourceHtml.match(/themeVariables:\s*\{([\s\S]*?)\n\s*\},/)![1];for(const [,key,val] of theme.matchAll(/(\w+):\s*'([^']*)'/g))expect((diagramConfig.themeVariables as Record<string,unknown>)[key]).toBe(val);
