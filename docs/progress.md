@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（ISO18045移行・原本アーカイブ・専用56件成功。全体568成功/297 skip/0失敗。ビルド未実行・ユーザー目視待ち）
+> **最終更新**: 2026-10-22（Codecovパッチカバレッジ対応: fidelity-helpersをカバレッジ対象外化・ISO3ガイドの既定Mermaidレンダラーテスト追加。全体571成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,12 +12,12 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **568成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・146ファイル・865件・158,174 expect。原本不在の既存比較テストはskip |
+| テストケース総数 | **571成功 / 297 skip / 0失敗** | bun test実測（2026-10-22）・146ファイル・868件・158,183 expect。原本不在の既存比較テストはskip。CI条件（archive/なしworktree）: 481成功 / 387 skip / 0失敗 |
 | テストファイル数 | **146ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **64/64 (100%)** | 従来61 + ISO18045部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全146テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
-| カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。今回ローカルではnpm testのみ・coverage未計測 |
+| カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
 

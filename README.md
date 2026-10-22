@@ -151,7 +151,7 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 2. `bun run lint`
 3. `bun run types:check`
 4. `bun test --coverage`（パス除外なし。ISO 27000/27001 の `page.test.ts` も実行対象）
-5. Codecov へカバレッジをアップロード（`CODECOV_TOKEN` シークレット要）
+5. Codecov へカバレッジをアップロード（`CODECOV_TOKEN` シークレット要）。原本依存テスト基盤の `fidelity-helpers.ts` は `bunfig.toml` の `coveragePathIgnorePatterns` でカバレッジ対象外
 
 `archive/` の原本は意図的に Git 管理外です。原本 HTML に依存する移行テストは `fidelity-helpers.ts` の `sourceTest` を使い、CI・ローカル（`bun test` / `npm test`）を問わず原本がなければスキップされます。Markdown 原本のハッシュ検証と `archive.test.ts` のバイト一致テストは、ファイルごとの存在条件（`test.skipIf(!existsSync(path))`）で独立してスキップされます。原本非依存の表示・操作・統合テストは常に実行されます。新しいガイドで原本比較テストを追加する場合は、原本の遅延読み込みと `sourceTest` を使ってください。詳細は `CLAUDE.md` の「原本比較テストの CI 扱い」を参照してください。
 

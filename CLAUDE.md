@@ -184,7 +184,7 @@ ESLint v9 flat config（`eslint.config.mjs`）を採用。`bun run lint` は `es
 2. `bun run lint`
 3. `bun run types:check`
 4. `bun test --coverage`（パス除外なし。ISO 27000/27001 の `page.test.ts` も実行対象。移行ガイドの原本依存テストは `sourceTest` で自動スキップ、下記参照）
-5. Codecov へカバレッジ送信（`continue-on-error`、品質ゲートではない）
+5. Codecov へカバレッジ送信（`continue-on-error`、品質ゲートではない）。`bunfig.toml` の `coveragePathIgnorePatterns` で各ガイドの `fidelity-helpers.ts`（原本依存テスト基盤。archive/ のない CI では構造的に未実行）を対象外にしている。新ガイドの部品（例: `MermaidFigure` の既定レンダラー）は `sourceTest` ではなく原本非依存の `test` でカバーすること
 
 作業ディレクトリは `security-docs/` 固定。
 

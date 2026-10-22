@@ -60,7 +60,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on push and PRs to `main` / `de
 2. `bun run lint`
 3. `bun run types:check`
 4. `bun test --coverage` (no path exclusions; ISO 27000/27001 `page.test.ts` are included; archive-dependent guide tests self-skip via `sourceTest`, see below)
-5. Codecov upload (`continue-on-error`; not a quality gate)
+5. Codecov upload (`continue-on-error`; not a quality gate). `bunfig.toml` `coveragePathIgnorePatterns` excludes each guide's `fidelity-helpers.ts` (source-only test infrastructure that cannot run in CI without `archive/`); cover new guide components (e.g. the default `MermaidFigure` renderer) with source-independent `test`, not `sourceTest`
 
 All steps execute in the `security-docs/` working directory.
 
