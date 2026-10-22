@@ -405,7 +405,7 @@ flowchart TD
 | A.7.4 物理的セキュリティの監視 | 採用 | 事務所のサーバー室の保護 | 実施済み | 入退ログ、監視カメラ設置記録 |
 | A.8.30 外部委託による開発 | 除外 | 開発はすべて自社内で実施。委託先なし | (該当なし) | 開発体制図 |
 
-> **除外理由の注意:** 「コストがかかるから」のような理由は通りにくい一方、「オフィスを持たない(全員リモート)ため、物理的境界の管理は対象外」のように**事実に基づく理由**は成立します [S29](https://www.orbiqhq.com/templates/iso-27001-statement-of-applicability-template.md)。ただし、その場合でも自宅・リモートワーク環境のリスクは別の管理策(A.6.7など)で扱う必要があります。
+> **除外理由の注意:** 「コストがかかるから」のような理由は通りにくく、除外には**事実に基づく理由**が必要です [S29](https://www.orbiqhq.com/templates/iso-27001-statement-of-applicability-template.md)。ただし「オフィスを持たない(全員リモート)」だけでは、物理的セキュリティ(A.7)の管理策を除外する理由になりません。自宅などのリモートワーク環境、持ち出すPC・媒体などの可搬資産、コワーキングスペース、委託先やクラウド事業者の施設(そこから引き継ぐ管理策・共有する管理策を含む)について、該当するリスクや要求事項があるかを個別に評価します。SoAで除外とするのは、関連するリスクも要求事項もない場合に限られ、その根拠を記録します。また、A.6.7(リモートワーク)は、該当するA.7管理策の評価を置き換えるものではありません。
 
 ---
 
@@ -746,7 +746,7 @@ flowchart TD
 
 - AWSは、ISO/IEC 27001:2022の管理策とAWSサービスを対応づけた**公式ガイド**を公開しています。ISMSの箇条4〜10と一部の附属書A管理策を、責任共有モデルを踏まえてAWSサービスに結びつけています [S19](https://aws.amazon.com/blogs/security/new-compliance-guide-available-iso-iec-270012022-on-aws-compliance-guide)。
 - 認証証明書は、AWS ArtifactからAWS利用者が入手でき、自社の委託先管理(A.5.19〜A.5.23)の証拠として使えます [S21](https://aws.amazon.com/blogs/security/2023-iso-and-csa-star-certificates-now-available-with-iso-27001-transition-from-2013-to-2022-version)。
-- **注意点:** 「AWSがISO認証済みだから大丈夫」は審査では通りません。IAM設定、ログ、バックアップ、インシデント対応は、利用者側の責任として監査されます [S38](https://www.dqsglobal.com/en/explore/blog/aws-azure-iso-27001-certification-cloud-hong-kong)。
+- **注意点:** 「AWSがISO認証済みだから大丈夫」は審査では通りません。AWSの認証は、AWSが担う範囲(物理施設やインフラなど)を対象とし、利用者はそこから管理策を引き継ぎます。IAM設定、ログ、バックアップ、インシデント対応の責任の分担は、利用するAWSサービスと構成によって変わります。利用者が担う部分、AWSと共有する部分、AWSから引き継ぐ部分を区別し、利用者側の部分は自社の管理策として監査されます [S38](https://www.dqsglobal.com/en/explore/blog/aws-azure-iso-27001-certification-cloud-hong-kong)。
 
 ---
 
