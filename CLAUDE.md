@@ -341,7 +341,7 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 
 <!-- iso27017-status -->
 
-ISO/IEC 27017:2026: 6〜11節とコード表示Red・8件失敗（既存専用23件成功）。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+ISO/IEC 27017:2026: 6〜11節Green・専用31 pass / 0 fail（6ファイル）・12〜16節未移行。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
 
 対象: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・30表・10図・2コード・7チェック項目・7 Q&A・18参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
 
