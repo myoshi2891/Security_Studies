@@ -165,7 +165,7 @@ flowchart TD
 | **認定機関(AB)** | 認証機関が適切か審査して認定する機関。日本ではISMS-AC | 試験官を認定する機関 |
 
 > **「認証」と「認定」の違い(日本のISMS制度)**
-> 日本では、認定機関である**ISMS-AC**が認証機関を審査・認定し、認証機関が組織を審査・認証する二層構造です [S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)。国際的にはIAF(国際認定フォーラム)加盟の認定機関が認定した認証機関の証明書がより高い信頼を得やすい、とISOも説明しています [S1](https://www.iso.org/standard/27001)。
+> 日本では、認定機関である**ISMS-AC**が認証機関を審査・認定し、認証機関が組織を審査・認証する二層構造です [S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)。国際的には、国際的な相互承認の枠組みに参加する認定機関が認定した認証機関の証明書がより高い信頼を得やすい、とISOも説明しています [S1](https://www.iso.org/standard/27001)。この枠組みは2026年1月1日から**Global Accreditation Cooperation Incorporated(Global ACI)**が担っています。従来のIAF(国際認定フォーラム)とILACは同日に統合されました。IAF MLAの下で認定された認証は、移行期間中も引き続き有効です [S42](https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/)。
 
 ---
 
@@ -466,7 +466,7 @@ flowchart TD
 | リスク値 | 9(重大) |
 | 対応方法 | 低減 |
 | 管理策 | A.8.5 セキュアな認証(MFA)、A.8.2 特権アクセス管理、A.8.15 ロギング、A.8.16 監視活動 |
-| 残留リスク | 低〜中(3)。リスク所有者(CTO)が承認 |
+| 残留リスク | 中(3)。リスク所有者(CTO)が承認 |
 | 記録 | リスクアセスメント結果、リスク対応計画、SoA |
 
 ---
@@ -543,7 +543,7 @@ flowchart TD
 
 ### 10-1. 誰が何をするのか
 
-認証は**ISOではなく、独立した認証機関**が行います [S1](https://www.iso.org/standard/27001)[S4](https://www.iso.org/the-iso-survey.html)。認証機関は、各国・地域のIAF加盟の認定機関(日本ではISMS-AC)の認定を受けていることが望ましく、これが証明書の信頼性につながります [S1](https://www.iso.org/standard/27001)[S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)。
+認証は**ISOではなく、独立した認証機関**が行います [S1](https://www.iso.org/standard/27001)[S4](https://www.iso.org/the-iso-survey.html)。認証機関は、各国・地域の認定機関(日本ではISMS-AC)の認定を受けていることが望ましく、これが証明書の信頼性につながります。2026年以降、認定機関の国際的な相互承認はGlobal ACIが担っています(旧IAF MLAからの移行期間中) [S1](https://www.iso.org/standard/27001)[S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)[S42](https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/)。
 
 ```mermaid
 sequenceDiagram
@@ -893,6 +893,7 @@ ISO/IEC 27001は、英国規格BS 7799-2を起源とし、**2005年10月**にISO
 | S39 | 準一次 | LRQA Japan:ISO 27001:2022改訂版ウェビナー(改訂の要点) | https://www.lrqa.com/ja-jp/events/iso-27001-webinar-032023/ |
 | S40 | 二次 | Timewell:ISO/IEC 27001認証の全体ガイド(維持審査での記録) | https://timewell.jp/en/columns/iso-iec-27001-certification-complete-guide-2026 |
 | S41 | 二次 | ノジマ:2022年版への移行完了のプレスリリース(認証書の表記例) | https://www.nojima.co.jp/news/category/press/218441/ |
+| S42 | 一次 | IAF:Global Accreditation Cooperation Incorporatedの発足(IAF・ILACの統合、2026年1月1日) | https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/ |
 
 ### 16-1. 情報の確かさについての注意
 
