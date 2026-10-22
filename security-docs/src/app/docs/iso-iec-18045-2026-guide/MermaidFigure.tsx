@@ -24,7 +24,95 @@ export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> 
 }
 
 const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => mermaid));
-export const diagramConfig = {"startOnLoad":false,"theme":"base","securityLevel":"strict","fontFamily":"\"Hiragino Sans\",\"Hiragino Kaku Gothic ProN\",\"Noto Sans JP\",\"Yu Gothic UI\",\"Yu Gothic\",Meiryo,system-ui,sans-serif","fontSize":16,"flowchart":{"useMaxWidth":false,"htmlLabels":true,"nodeSpacing":45,"rankSpacing":45,"curve":"basis","padding":12},"sequence":{"useMaxWidth":false,"actorFontSize":16,"messageFontSize":16,"noteFontSize":16,"wrap":false,"width":190,"messageMargin":36},"pie":{"useMaxWidth":false},"themeVariables":{"fontSize":"16px","background":"#0d1b30","primaryColor":"#16294a","primaryTextColor":"#f3f5fa","primaryBorderColor":"#7c9eff","secondaryColor":"#13243f","secondaryTextColor":"#f3f5fa","secondaryBorderColor":"#3e5c8f","tertiaryColor":"#0d1b30","tertiaryTextColor":"#f3f5fa","tertiaryBorderColor":"#2d456e","mainBkg":"#16294a","nodeBorder":"#7c9eff","nodeTextColor":"#f3f5fa","textColor":"#f3f5fa","lineColor":"#93a1bd","edgeLabelBackground":"#0d1b30","clusterBkg":"#13243f","clusterBorder":"#3e5c8f","titleColor":"#f3f5fa","actorBkg":"#16294a","actorBorder":"#7c9eff","actorTextColor":"#f3f5fa","actorLineColor":"#93a1bd","signalColor":"#c6d0e3","signalTextColor":"#f3f5fa","labelBoxBkgColor":"#16294a","labelBoxBorderColor":"#7c9eff","labelTextColor":"#f3f5fa","loopTextColor":"#f3f5fa","noteBkgColor":"#2b2410","noteTextColor":"#f3f5fa","noteBorderColor":"#f2b45a","activationBkgColor":"#13243f","activationBorderColor":"#7c9eff","sequenceNumberColor":"#07111e","pie1":"#7c9eff","pie2":"#f2b45a","pie3":"#4fd1a5","pie4":"#f472b6","pie5":"#a78bfa","pie6":"#fb923c","pie7":"#86efac","pie8":"#fb7185","pie9":"#38bdf8","pie10":"#e9d5ff","pie11":"#facc15","pie12":"#5eead4","pieStrokeColor":"#0d1b30","pieOuterStrokeColor":"#0d1b30","pieStrokeWidth":"2px","pieOuterStrokeWidth":"2px","pieOpacity":"1","pieSectionTextColor":"#07111e","pieSectionTextSize":"16px","pieTitleTextColor":"#f3f5fa","pieTitleTextSize":"18px","pieLegendTextColor":"#f3f5fa","pieLegendTextSize":"16px","darkMode":true}} satisfies import('mermaid').MermaidConfig;
+export const diagramConfig = {
+  "startOnLoad": false,
+  "theme": "base",
+  "securityLevel": "strict",
+  "fontFamily": "\"Hiragino Sans\",\"Hiragino Kaku Gothic ProN\",\"Noto Sans JP\",\"Yu Gothic UI\",\"Yu Gothic\",Meiryo,system-ui,sans-serif",
+  "fontSize": 16,
+  "flowchart": {
+    "useMaxWidth": false,
+    "htmlLabels": true,
+    "nodeSpacing": 45,
+    "rankSpacing": 45,
+    "curve": "basis",
+    "padding": 12
+  },
+  "sequence": {
+    "useMaxWidth": false,
+    "actorFontSize": 16,
+    "messageFontSize": 16,
+    "noteFontSize": 16,
+    "wrap": false,
+    "width": 190,
+    "messageMargin": 36
+  },
+  "pie": {
+    "useMaxWidth": false
+  },
+  "themeVariables": {
+    "fontSize": "16px",
+    "background": "#0d1b30",
+    "primaryColor": "#16294a",
+    "primaryTextColor": "#f3f5fa",
+    "primaryBorderColor": "#7c9eff",
+    "secondaryColor": "#13243f",
+    "secondaryTextColor": "#f3f5fa",
+    "secondaryBorderColor": "#3e5c8f",
+    "tertiaryColor": "#0d1b30",
+    "tertiaryTextColor": "#f3f5fa",
+    "tertiaryBorderColor": "#2d456e",
+    "mainBkg": "#16294a",
+    "nodeBorder": "#7c9eff",
+    "nodeTextColor": "#f3f5fa",
+    "textColor": "#f3f5fa",
+    "lineColor": "#93a1bd",
+    "edgeLabelBackground": "#0d1b30",
+    "clusterBkg": "#13243f",
+    "clusterBorder": "#3e5c8f",
+    "titleColor": "#f3f5fa",
+    "actorBkg": "#16294a",
+    "actorBorder": "#7c9eff",
+    "actorTextColor": "#f3f5fa",
+    "actorLineColor": "#93a1bd",
+    "signalColor": "#c6d0e3",
+    "signalTextColor": "#f3f5fa",
+    "labelBoxBkgColor": "#16294a",
+    "labelBoxBorderColor": "#7c9eff",
+    "labelTextColor": "#f3f5fa",
+    "loopTextColor": "#f3f5fa",
+    "noteBkgColor": "#2b2410",
+    "noteTextColor": "#f3f5fa",
+    "noteBorderColor": "#f2b45a",
+    "activationBkgColor": "#13243f",
+    "activationBorderColor": "#7c9eff",
+    "sequenceNumberColor": "#07111e",
+    "pie1": "#7c9eff",
+    "pie2": "#f2b45a",
+    "pie3": "#4fd1a5",
+    "pie4": "#f472b6",
+    "pie5": "#a78bfa",
+    "pie6": "#fb923c",
+    "pie7": "#86efac",
+    "pie8": "#fb7185",
+    "pie9": "#38bdf8",
+    "pie10": "#e9d5ff",
+    "pie11": "#facc15",
+    "pie12": "#5eead4",
+    "pieStrokeColor": "#0d1b30",
+    "pieOuterStrokeColor": "#0d1b30",
+    "pieStrokeWidth": "2px",
+    "pieOuterStrokeWidth": "2px",
+    "pieOpacity": "1",
+    "pieSectionTextColor": "#07111e",
+    "pieSectionTextSize": "16px",
+    "pieTitleTextColor": "#f3f5fa",
+    "pieTitleTextSize": "18px",
+    "pieLegendTextColor": "#f3f5fa",
+    "pieLegendTextSize": "16px",
+    "darkMode": true
+  }
+} satisfies import('mermaid').MermaidConfig;
 
 /** Per-render configuration keeps this guide's theme out of other routes' shared engine. */
 export const renderDiagram: DiagramRenderer = async (id, source) => {
