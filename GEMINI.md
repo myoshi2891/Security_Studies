@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-10-22
+Updated 2026-10-23
 
 ## Project Overview
 
@@ -237,3 +237,10 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
 
 <!-- /iso18045-status -->
+
+
+## Bulletproof TLS and PKI 移行（2026-10-23）
+
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
+
+配置: `security-docs/src/app/docs/bulletproof-tls-pki-guide/page.mdx`。Cloud & Cryptography のナビ・ホーム一覧・静的検索（25ページ）に登録。原本の丸点・番号・チェックカウンター・疑似要素を含む全CSS宣言、5画面幅の適用結果、目次操作、図の再試行、表とページ全体のhydrationを検証。台帳: `docs/migration-inventory/bulletproof-tls-pki-guide.json`。目視確認表: `docs/migration-inventory/bulletproof-tls-pki-guide-review.md`。

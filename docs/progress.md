@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（Codecovパッチカバレッジ対応: fidelity-helpersをカバレッジ対象外化・ISO3ガイドの既定Mermaidレンダラーテスト追加。全体571成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（Bulletproof TLS and PKI移行・専用41件成功・全体615成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **571成功 / 297 skip / 0失敗** | bun test実測（2026-10-22）・146ファイル・868件・158,183 expect。原本不在の既存比較テストはskip。CI条件（archive/なしworktree）: 481成功 / 387 skip / 0失敗 |
-| テストファイル数 | **146ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **64/64 (100%)** | 従来61 + ISO18045部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全146テストファイルとは別集計 |
+| テストケース総数 | **615成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・152ファイル・912件・160,218 expect。297 skipは既存ガイド原本不在による。 |
+| テストファイル数 | **152ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **68/68 (100%)** | 従来64 + TLS/PKI部品4（GuideSidebar / MermaidFigure / GuideIcon / GuideCode）。純粋データ・MDXは分母外。全152テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,12 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/bulletproof-tls-pki-guide/migration.test.tsx` | 19 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/runtime.test.tsx` | 9 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/cascade.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/interactions.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/iso-iec-18045-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
 | `src/app/docs/iso-iec-18045-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
 | `src/app/docs/iso-iec-18045-2026-guide/runtime.test.tsx` | 9 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
@@ -853,3 +859,15 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 - 表示基盤・0〜6節・7〜13節・14〜20節・ナビ検索/見出し色・原本アーカイブごとにRed→テストコミット→Green→実装コミット→別の文書同期コミットを実施。
 - 次の対応: 専用目視確認表に沿ってユーザー確認。指摘があれば失敗テストから修正。ビルド・push・公開は未実施。
+
+
+## Bulletproof TLS and PKI 移行（2026-10-23）
+
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
+
+- Red `65cbdea`: 原本照合19件失敗 → Green `0ec3286`: 全15節・CSS・ナビ検索移行。
+- Red `a7ad9fd`: 図の配色・sequence設定欠落を再現 → Green `da37f69`: 原本設定復元、41件成功。
+- Refactor検証: npm run lint / npm run types:check成功。追加リファクタリング不要。
+- 24図のMermaid構文を実エンジンで解析成功。375/768/1024/1025/1440pxのリスト番号・余白・目次・図スクロール、操作とhydrationを自動検証。
+- 作業開始時の実測は574成功/297 skip/0失敗・146ファイル（871件）。旧トップ集計571件との差分も今回の最終実測で同期。過去の移行記録の数値は当時の実測として保持。
+- 仕様書7ファイル・台帳・目視確認表を同期。目視確認後の公開は未実施。
