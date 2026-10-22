@@ -56,6 +56,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
         { title: "Software Supply Chain", href: "/docs/supply-chain" },
+        { title: "Bulletproof TLS and PKI", href: "/docs/bulletproof-tls-pki-guide" },
         { title: "Applied Cryptography", href: "/docs/applied-cryptography-guide" },
         { title: "Post-Quantum Cryptography", href: "/docs/pqc" },
       ],

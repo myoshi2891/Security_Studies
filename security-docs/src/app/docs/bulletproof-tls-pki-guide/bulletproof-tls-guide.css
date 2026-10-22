@@ -1,0 +1,707 @@
+.bulletproof-tls-guide.bulletproof-tls-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dt,dd,table,thead,tbody,tr,th,td,figure,pre,code,summary) { margin:0; padding:0; border:0; font-size:inherit; font-family:inherit; letter-spacing:0px; line-height:inherit; color:inherit; background:transparent; }
+.bulletproof-tls-guide.bulletproof-tls-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.bulletproof-tls-guide.bulletproof-tls-guide code.hljs {
+  padding: 3px 5px
+}
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs {
+  color: #abb2bf;
+  background: #282c34
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-comment, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-quote {
+  color: #5c6370;
+  font-style: italic
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-doctag, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-keyword, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-formula {
+  color: #c678dd
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-section, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-name, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-selector-tag, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-deletion, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-subst {
+  color: #e06c75
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-literal {
+  color: #56b6c2
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-string, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-regexp, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-addition, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-attribute, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-meta .hljs-string {
+  color: #98c379
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-attr, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-variable, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-template-variable, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-type, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-selector-class, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-selector-attr, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-selector-pseudo, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-number {
+  color: #d19a66
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-symbol, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-bullet, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-link, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-meta, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-selector-id, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-title {
+  color: #61aeee
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-built_in, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-title.class_, .bulletproof-tls-guide.bulletproof-tls-guide .hljs-class .hljs-title {
+  color: #e6c07b
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-emphasis {
+  font-style: italic
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-strong {
+  font-weight: bold
+}
+.bulletproof-tls-guide.bulletproof-tls-guide .hljs-link {
+  text-decoration: underline
+}
+
+            .bulletproof-tls-guide.bulletproof-tls-guide {
+                --color-background-primary: #07111e;
+                --color-background-secondary: #0d1b30;
+                --color-background-tertiary: #13243e;
+                --color-background-info: #14284a;
+                --color-background-danger: #3a1a26;
+                --color-background-success: #10302c;
+                --color-background-warning: #3a2f14;
+                --color-text-primary: #f3f5fa;
+                --color-text-secondary: #c6d0e3;
+                --color-text-tertiary: #93a1bd;
+                --color-text-info: #9db8ff;
+                --color-text-danger: #ffb3a7;
+                --color-text-success: #7fe0c8;
+                --color-text-warning: #f0cf86;
+                --color-border-tertiary: #1e2f4d;
+                --color-border-secondary: #2d456e;
+                --color-border-primary: #3e5c8f;
+                --accent: #7c9eff;
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+                    'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans CJK JP', 'Noto Sans JP',
+                    sans-serif;
+                --font-mono:
+                    ui-monospace, 'SF Mono', Menlo, Consolas, 'Noto Sans Mono CJK JP', monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --sidebar-w: 300px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide * {
+                box-sizing: border-box;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide {
+                font-size: 16px;
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-secondary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.7;
+                font-weight: 400;
+                -webkit-text-size-adjust: 100%;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide a {
+                color: var(--color-text-info);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide a:hover {
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide a:focus-visible, .bulletproof-tls-guide.bulletproof-tls-guide button:focus-visible, .bulletproof-tls-guide.bulletproof-tls-guide summary:focus-visible, .bulletproof-tls-guide.bulletproof-tls-guide input:focus-visible + .cbox {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide strong {
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide em {
+                font-style: italic;
+            }
+
+            /* ---------- Sidebar ---------- */
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--color-background-secondary);
+                border-right: 1px solid var(--color-border-tertiary);
+                overflow-y: auto;
+                padding: 24px 16px;
+                z-index: 1000;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .brand {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                padding: 0 8px 20px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                margin-bottom: 16px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .brand i {
+                font-size: 1.5rem;
+                color: var(--accent);
+                line-height: 1.2;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .brand-title {
+                color: var(--color-text-primary);
+                font-weight: 500;
+                line-height: 1.4;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .brand-sub {
+                color: var(--color-text-tertiary);
+                line-height: 1.5;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav li::before {
+                content: none;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav a {
+                display: block;
+                padding: 8px 12px;
+                border-left: 2px solid transparent;
+                border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                line-height: 1.5;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav a:hover {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .sidebar nav a.active {
+                border-left-color: var(--accent);
+                background: var(--color-background-info);
+                color: var(--color-text-primary);
+                font-weight: 500;
+            }
+
+            /* ---------- Layout ---------- */
+            .bulletproof-tls-guide.bulletproof-tls-guide .layout {
+                display: block;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 40px 56px 96px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .hero {
+                padding-bottom: 32px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .hero h1 {
+                margin: 0 0 24px;
+                font-size: 2rem;
+                line-height: 1.35;
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .meta {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 12px;
+                margin: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .meta-row {
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                padding: 12px 16px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .meta-row dt {
+                color: var(--color-text-tertiary);
+                margin: 0 0 4px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .meta-row dd {
+                margin: 0;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide section {
+                padding-top: 24px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide h2 {
+                margin: 40px 0 20px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--color-border-secondary);
+                font-size: 1.5rem;
+                line-height: 1.4;
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide section:first-of-type h2 {
+                margin-top: 8px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide h3 {
+                margin: 32px 0 12px;
+                padding-left: 12px;
+                border-left: 3px solid var(--accent);
+                font-size: 1.2rem;
+                line-height: 1.5;
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide h4 {
+                margin: 24px 0 8px;
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide p {
+                margin: 0 0 16px;
+            }
+
+            /* lists */
+            .bulletproof-tls-guide.bulletproof-tls-guide ul, .bulletproof-tls-guide.bulletproof-tls-guide ol {
+                margin: 0 0 16px;
+                padding: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ul {
+                list-style: none;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ul li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin: 6px 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ul li::before {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 0.72em;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ol {
+                padding-left: 1.75rem;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ol li {
+                margin: 6px 0;
+                padding-left: 4px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide ol li::marker {
+                color: var(--color-text-info);
+            }
+
+            /* inline code */
+            .bulletproof-tls-guide.bulletproof-tls-guide code {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                background: var(--color-background-tertiary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: 6px;
+                padding: 1px 6px;
+                color: var(--color-text-primary);
+                word-break: break-word;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide pre {
+                margin: 16px 0 24px;
+                background: #0a1626;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                padding: 16px 20px;
+                overflow-x: auto;
+                line-height: 1.6;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide pre code {
+                background: transparent;
+                border: 0;
+                padding: 0;
+                word-break: normal;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                font-size: 1rem;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide pre code.hljs {
+                background: transparent;
+                padding: 0;
+            }
+
+            /* tables */
+            .bulletproof-tls-guide.bulletproof-tls-guide .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0 24px;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide th, .bulletproof-tls-guide.bulletproof-tls-guide td {
+                padding: 10px 14px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide th {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide tr:last-child td {
+                border-bottom: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide tbody tr:nth-child(even) td {
+                background: rgba(19, 36, 62, 0.35);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide td code {
+                white-space: normal;
+            }
+
+            /* callouts */
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout {
+                display: flex;
+                gap: 14px;
+                margin: 20px 0;
+                padding: 14px 18px;
+                border: 1px solid var(--color-border-secondary);
+                border-left-width: 4px;
+                border-radius: var(--border-radius-md);
+                background: var(--color-background-info);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout > i {
+                font-size: 1.4rem;
+                line-height: 1.5;
+                flex: none;
+                color: var(--color-text-info);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout-body {
+                min-width: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout-body p:last-child {
+                margin-bottom: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout.warn {
+                background: var(--color-background-warning);
+                border-color: #6b5a2a;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout.warn > i {
+                color: var(--color-text-warning);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout.source {
+                background: var(--color-background-success);
+                border-color: #2a6b5e;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .callout.source > i {
+                color: var(--color-text-success);
+            }
+
+            /* mermaid */
+            .bulletproof-tls-guide.bulletproof-tls-guide .mermaid-box {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                margin: 20px 0 28px;
+                padding: 20px 16px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .mermaid-box svg {
+                overflow: visible;
+                flex: none;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .mm-error {
+                white-space: pre-wrap;
+                color: var(--color-text-danger);
+            }
+
+            /* quiz details */
+            .bulletproof-tls-guide.bulletproof-tls-guide details {
+                margin: 16px 0 24px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 12px 18px;
+                color: var(--color-text-primary);
+                font-weight: 500;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide summary::-webkit-details-marker {
+                display: none;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide summary::before {
+                content: '+';
+                display: inline-block;
+                width: 1.5rem;
+                color: var(--accent);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide details[open] summary::before {
+                content: '\2212';
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide details[open] summary {
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide details > *:not(summary) {
+                margin-left: 18px;
+                margin-right: 18px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide details > ol, .bulletproof-tls-guide.bulletproof-tls-guide details > ul {
+                margin-top: 12px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide details > *:last-child {
+                margin-bottom: 16px;
+            }
+
+            /* checklist cards */
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist {
+                counter-reset: chk;
+                display: grid;
+                gap: 10px;
+                margin: 16px 0 24px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li {
+                counter-increment: chk;
+                padding: 0;
+                margin: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li::before {
+                content: none;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist label {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-md);
+                cursor: pointer;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist label:hover {
+                border-color: var(--color-border-primary);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist input {
+                position: absolute;
+                opacity: 0;
+                width: 1px;
+                height: 1px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .cbox {
+                flex: none;
+                width: 22px;
+                height: 22px;
+                border: 2px solid var(--color-border-primary);
+                border-radius: 6px;
+                background: var(--color-background-primary);
+                display: inline-block;
+                position: relative;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist .num {
+                flex: none;
+                min-width: 2rem;
+                height: 2rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: var(--color-background-tertiary);
+                color: var(--color-text-info);
+                font-weight: 500;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist .num::before {
+                content: counter(chk);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist .txt {
+                min-width: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li:has(input:checked) label {
+                background: var(--color-background-success);
+                border-color: #2a6b5e;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li:has(input:checked) .cbox {
+                background: var(--color-text-success);
+                border-color: var(--color-text-success);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li:has(input:checked) .cbox::after {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 1px;
+                width: 6px;
+                height: 11px;
+                border: solid var(--color-background-primary);
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .checklist li:has(input:checked) .txt {
+                text-decoration: line-through;
+                color: var(--color-text-tertiary);
+            }
+
+            /* reference cards */
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-list {
+                display: grid;
+                gap: 10px;
+                margin: 16px 0 28px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-card {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                padding: 14px 16px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-md);
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-num {
+                flex: none;
+                width: 2rem;
+                height: 2rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: var(--color-background-info);
+                color: var(--color-text-info);
+                font-weight: 500;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-body {
+                min-width: 0;
+                flex: 1;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-head {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px 12px;
+                align-items: baseline;
+                margin-bottom: 6px;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-kind {
+                flex: none;
+                padding: 0 10px;
+                border-radius: 999px;
+                border: 1px solid;
+                font-weight: 500;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-kind.primary {
+                color: var(--color-text-success);
+                background: var(--color-background-success);
+                border-color: #2a6b5e;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-kind.secondary {
+                color: var(--color-text-warning);
+                background: var(--color-background-warning);
+                border-color: #6b5a2a;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-desc {
+                color: var(--color-text-primary);
+                min-width: 0;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .ref-url {
+                display: block;
+                font-family: var(--font-mono);
+                word-break: break-all;
+                line-height: 1.5;
+            }
+
+            /* drawer button */
+            .bulletproof-tls-guide.bulletproof-tls-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 1100;
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+                border: 1px solid var(--color-border-primary);
+                background: var(--color-background-info);
+                color: var(--color-text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(2, 6, 12, 0.72);
+                z-index: 900;
+            }
+            .bulletproof-tls-guide.bulletproof-tls-guide .backdrop {
+                display: block;
+            }
+
+            @media (max-width: 1024px) {
+                .bulletproof-tls-guide.bulletproof-tls-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(86vw, 320px);
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide .sidebar {
+                    transform: none;
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide .guide-content {
+                    margin-left: 0;
+                    padding: 24px 16px 96px;
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide .menu-btn {
+                    display: inline-flex;
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide .hero h1 {
+                    font-size: 1.6rem;
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide th {
+                    white-space: normal;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .bulletproof-tls-guide.bulletproof-tls-guide {
+                    scroll-behavior: auto;
+                }
+                .bulletproof-tls-guide.bulletproof-tls-guide .sidebar {
+                    transition: none;
+                }
+            }
+        
+
+.docs-main:has(.bulletproof-tls-guide) { padding:0; }
+.bulletproof-tls-guide.bulletproof-tls-guide { min-height:100vh; min-width:0; }
+.bulletproof-tls-guide.bulletproof-tls-guide .sidebar { top:64px; z-index:40; visibility:visible; }
+.bulletproof-tls-guide.bulletproof-tls-guide .backdrop { top:64px; z-index:30; }
+.bulletproof-tls-guide.bulletproof-tls-guide .backdrop { display:none; }
+.bulletproof-tls-guide.bulletproof-tls-guide .backdrop.show { display:block; }
+.bulletproof-tls-guide.bulletproof-tls-guide .menu-btn { z-index:50; }
+.bulletproof-tls-guide.bulletproof-tls-guide :is(section[id],h2,h3) { scroll-margin-top:88px; }
+.bulletproof-tls-guide.bulletproof-tls-guide ol { list-style-type:decimal; }
+.bulletproof-tls-guide.bulletproof-tls-guide ul { list-style-type:none; }
+.bulletproof-tls-guide.bulletproof-tls-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.bulletproof-tls-guide.bulletproof-tls-guide .mermaid { display:block; }
+.bulletproof-tls-guide.bulletproof-tls-guide .diagram-viewport { display:block; overflow-x:auto; }
+.bulletproof-tls-guide.bulletproof-tls-guide .mermaid svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+html:has(.bulletproof-tls-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (max-width:1024px) { .bulletproof-tls-guide.bulletproof-tls-guide .sidebar { visibility:hidden; } .bulletproof-tls-guide.bulletproof-tls-guide .sidebar.open { visibility:visible; transform:none; } }
+@media (prefers-reduced-motion:reduce) { html:has(.bulletproof-tls-guide) { scroll-behavior:auto; } }
