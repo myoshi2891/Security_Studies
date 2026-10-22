@@ -1,5 +1,5 @@
 .iso15408-guide.iso15408-guide * { box-sizing:border-box; }
-.iso15408-guide.iso15408-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,table,thead,tbody,tr,th,td,figure,pre,code,summary) { margin:0; padding:0; border:0; font-size:inherit; font-family:inherit; letter-spacing:normal; line-height:inherit; color:inherit; background:transparent; }
+.iso15408-guide.iso15408-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,table,thead,tbody,tr,th,td,figure,pre,code,summary) { margin:0; padding:0; border:0; font-size:inherit; font-family:inherit; letter-spacing:0px; line-height:inherit; color:inherit; background:transparent; }
 .iso15408-guide.iso15408-guide table { border-collapse:collapse; width:100%; }
 .iso15408-guide.iso15408-guide { min-height:100vh; }
 
@@ -528,3 +528,5 @@
 .iso15408-guide.iso15408-guide .diagram svg { max-width:none; margin-left:auto; margin-right:auto; }
 .iso15408-guide.iso15408-guide .sidebar { visibility:visible; }
 @media (max-width: 1024px) { .iso15408-guide.iso15408-guide .sidebar { visibility:hidden; } .iso15408-guide.iso15408-guide .sidebar.open { visibility:visible; } }
+/* Prevent the landing page's generic brand selector from changing the TOC. */
+.iso15408-guide.iso15408-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; color:var(--color-text-primary); }
