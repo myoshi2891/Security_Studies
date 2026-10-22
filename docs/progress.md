@@ -12,8 +12,8 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **440成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・120ファイル。過去の全原本あり実測値とは環境が異なる |
-| テストファイル数 | **120ファイル** | 原本比較・ページ移行テストを含む |
+| テストケース総数 | **450成功 / 297 skip / 2失敗** | npm test実測（2026-10-22）・122ファイル。過去の全原本あり実測値とは環境が異なる |
+| テストファイル数 | **122ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存するテストは `sourceTest` で原本がないCIのみスキップ（CI条件実測 364 pass / 312 skip / 0 fail、112ファイル。2026-10-18）。パス除外は ISO 27000/27001 の `page.test.ts` のみ |
@@ -773,7 +773,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 <!-- iso15408-status -->
 
-ISO/IEC 15408-1:2026: 全21節Green・専用38件成功・ナビ検索統合は未対応。npm test: 440 pass / 297 skip / 0 fail、120ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+ISO/IEC 15408-1:2026: 統合Red・専用48成功/ナビ検索2失敗・表hydration成功。npm test: 450 pass / 297 skip / 2 fail、122ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
 
 移行先: `/docs/iso-iec-15408-1-2026-guide`。原本はルートの `Iso-15408-1-2026-guide.html` / `.md` を保持。
 
