@@ -683,7 +683,7 @@ timeline
 | 2024 | 96,709 |
 | **2025** | **125,622**(前年比 +29.9%) |
 
-(※)2023年の数値は、データ収集方式の変更や報告の不完全さの影響が指摘されており、単純な減少とは読めません。ISO Surveyは2024年調査からIAF CertSearchのデータを主に用いる方式になったため、**年をまたぐ比較には注意が必要**です [S4](https://www.iso.org/the-iso-survey.html)[S5](https://www.dqsglobal.com/es/acerca-de/sala-de-prensa/iso-survey-2025-las-certificaciones-iso-crecen-un-11-en-el-mundo-y-un-28-en-espana)。
+(※)2023年の数値は、データ収集方式の変更や報告の不完全さの影響が指摘されており、単純な減少とは読めません。ISO Surveyは2024年調査を移行期として、2025年調査からIAF CertSearchの匿名化・集計データを直接用いて作成する方式に変わったため、**集計方式が異なる年をまたぐ比較には注意が必要**です [S4](https://www.iso.org/the-iso-survey.html)[S5](https://www.dqsglobal.com/es/acerca-de/sala-de-prensa/iso-survey-2025-las-certificaciones-iso-crecen-un-11-en-el-mundo-y-un-28-en-espana)。
 
 - 2025年調査は、2025年12月31日時点の有効認証数です。DQSの2026年10月8日付の記事が結果を紹介しています [S5](https://www.dqsglobal.com/es/acerca-de/sala-de-prensa/iso-survey-2025-las-certificaciones-iso-crecen-un-11-en-el-mundo-y-un-28-en-espana)。
 - ISO公式ページには「2022年調査で70,000件超、150か国」という説明も掲載されています [S1](https://www.iso.org/standard/27001)。
