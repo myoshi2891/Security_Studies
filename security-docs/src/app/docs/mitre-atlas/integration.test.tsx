@@ -35,12 +35,12 @@ sourceTest('preserves all source TOC links and resolves every fragment to one un
   expect(page.querySelectorAll('main')).toHaveLength(0);
 });
 
-test('registers MITRE ATLAS exactly once under Advanced Topics and retains all existing links', () => {
+test('registers MITRE ATLAS exactly once under AI Security and retains all existing links', () => {
   const entry = { title: 'MITRE ATLAS', href: '/docs/mitre-atlas' };
-  expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual(entry);
+  expect(docsConfig.sidebarNav.find(group => group.id === 'ai')?.items).toContainEqual(entry);
   expect(docsConfig.sidebarNav.flatMap(group => group.items).filter(item => item.href === entry.href)).toEqual([entry]);
   expect(new Set(docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href)).size).toBe(docsConfig.sidebarNav.flatMap(group=>group.items).length);
-  expect(docsConfig.sidebarNav.find(group => group.title === 'Advanced Topics')?.items).toContainEqual({ title: 'OWASP Top 10 (2025/2026)', href: '/docs/owasp' });
+  expect(docsConfig.sidebarNav.find(group => group.id === 'threats')?.items).toContainEqual({ title: 'OWASP Top 10 (2025/2026)', href: '/docs/owasp' });
 });
 
 function expectedHeadings() {

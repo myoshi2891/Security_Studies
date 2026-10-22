@@ -681,15 +681,6 @@ hue-6-2: #e6c07b
                     transition: transform 0.25s ease;
                     width: min(320px, 86vw);
                 }
-                .applied-guide.applied-guide body.drawer-open .sidebar {
-                    transform: translateX(0);
-                }
-                .applied-guide.applied-guide body.drawer-open .backdrop {
-                    display: block;
-                }
-                .applied-guide.applied-guide body.drawer-open {
-                    overflow: hidden;
-                }
                 .applied-guide.applied-guide main {
                     margin-left: 0;
                 }

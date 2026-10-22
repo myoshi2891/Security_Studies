@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-22",
+  "route": "/docs/iso-iec-15408-1-2026-guide",
+  "sources": [
+    {
+      "path": "archive/html/Iso-15408-1-2026-guide.html",
+      "sha256": "d8f5e8f9e5dbda86cb87917d9dc3bf1a2c89ec35fcf7567a9f4303fa5cf6a172"
+    },
+    {
+      "path": "archive/md/Iso-15408-1-2026-guide.md",
+      "sha256": "b9a2fd23da47e1f745ab809966cc6d0ce303fb256a0c06c6022dce1f68092bc6"
+    }
+  ],
+  "counts": {
+    "section": 21,
+    "h1": 1,
+    "h2": 21,
+    "h3": 59,
+    "table": 31,
+    "th": 82,
+    "td": 427,
+    "ul": 16,
+    "ol": 4,
+    "li": 88,
+    ".diagram": 17,
+    ".quiz-card": 10,
+    "details": 10,
+    ".ref-card": 19,
+    "a": 40,
+    "strong": 276,
+    "em": 1,
+    "code": 0
+  },
+  "sections": [
+    {
+      "id": "sec-0",
+      "title": "0. このガイドの使い方と、先に伝えておく注意点"
+    },
+    {
+      "id": "sec-1",
+      "title": "1. Step 1: 規格の基本情報と位置づけ"
+    },
+    {
+      "id": "sec-2",
+      "title": "2. Step 2: 第5版(2026年版)で何が変わったか"
+    },
+    {
+      "id": "sec-3",
+      "title": "3. Step 3: ISO/IEC 15408 シリーズの全体像"
+    },
+    {
+      "id": "sec-4",
+      "title": "4. Step 4: なぜ CC が必要なのか(一般モデルの出発点)"
+    },
+    {
+      "id": "sec-5",
+      "title": "5. Step 5: TOE(評価対象)を理解する"
+    },
+    {
+      "id": "sec-6",
+      "title": "6. Step 6: セキュリティ課題定義(SPD)"
+    },
+    {
+      "id": "sec-7",
+      "title": "7. Step 7: セキュリティ対策目標(Security Objectives)"
+    },
+    {
+      "id": "sec-8",
+      "title": "8. Step 8: セキュリティ要件(SFR と SAR)"
+    },
+    {
+      "id": "sec-9",
+      "title": "9. Step 9: セキュリティコンポーネントの構造と操作"
+    },
+    {
+      "id": "sec-10",
+      "title": "10. Step 10: 5つの核となる構成物と適合の種類"
+    },
+    {
+      "id": "sec-11",
+      "title": "11. Step 11: 評価と評価結果"
+    },
+    {
+      "id": "sec-12",
+      "title": "12. Step 12: 保証の合成(Composition)"
+    },
+    {
+      "id": "sec-13",
+      "title": "13. Step 13: 読者別ロードマップ(どのパートを誰が使うか)"
+    },
+    {
+      "id": "sec-14",
+      "title": "14. Step 14: 実務での使われ方(制度・運用)"
+    },
+    {
+      "id": "sec-15",
+      "title": "15. Step 15: CC の範囲外にあるもの(重要)"
+    },
+    {
+      "id": "sec-16",
+      "title": "16. Step 16: よくある誤解と正しい理解"
+    },
+    {
+      "id": "sec-17",
+      "title": "17. 用語集(初学者向けの言い換え付き)"
+    },
+    {
+      "id": "sec-18",
+      "title": "18. 理解度チェック(10問)"
+    },
+    {
+      "id": "sec-19",
+      "title": "19. 次に学ぶ順序(学習ロードマップ)"
+    },
+    {
+      "id": "sec-20",
+      "title": "20. 参考文献・出典URL(2026年10月15日時点で確認)"
+    }
+  ],
+  "allowedDifferences": [
+    "Original HTML/Markdown moved byte-for-byte to archive/html and archive/md; archive/ is intentionally ignored by Git.",
+    "Local lucide SVGs replace external icon font.",
+    "React drawer replaces imperative scripts with focus trap, Escape, hash/scroll tracking and focus restoration.",
+    "Mermaid base theme applies original colors with strict security; preserves all 17 definitions.",
+    "Intrinsic SVG widths and block scroll containers keep wide diagrams reachable; smaller diagrams centered.",
+    "App header adds 64px sidebar clearance and 88px anchor offsets.",
+    "Page-local CSS restores original typography, pseudo bullets and decimal numbering after Tailwind resets.",
+    "Diagram loading/retry state, noscript note and textual descriptions added.",
+    "Inner main becomes div.guide-content to avoid nested app main landmarks.",
+    "Pure formatting whitespace omitted; table/tr structural whitespace removed for hydration."
+  ],
+  "validation": {
+    "dedicatedTests": 55,
+    "testFiles": 10,
+    "build": "prohibited, not run",
+    "visual": "pending user review"
+  }
+}

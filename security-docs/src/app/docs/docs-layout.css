@@ -52,3 +52,7 @@
     white-space: nowrap;
   }
 }
+@media (max-width: 640px) {
+  .docs-header-inner > div:first-child { min-width: 0; }
+  .docs-header-inner > div:first-child a { font-size: .75rem; line-height: 1.35; }
+}

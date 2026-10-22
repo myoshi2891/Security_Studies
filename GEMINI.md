@@ -1,6 +1,6 @@
 # Security Studies
 
-Updated 2026-10-20
+Updated 2026-10-22
 
 ## Project Overview
 
@@ -60,7 +60,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on push and PRs to `main` / `de
 2. `bun run lint`
 3. `bun run types:check`
 4. `bun test --coverage` (no path exclusions; ISO 27000/27001 `page.test.ts` are included; archive-dependent guide tests self-skip via `sourceTest`, see below)
-5. Codecov upload (`continue-on-error`; not a quality gate)
+5. Codecov upload (`continue-on-error`; not a quality gate). `bunfig.toml` `coveragePathIgnorePatterns` excludes each guide's `fidelity-helpers.ts` (source-only test infrastructure that cannot run in CI without `archive/`); cover new guide components (e.g. the default `MermaidFigure` renderer) with source-independent `test`, not `sourceTest`
 
 All steps execute in the `security-docs/` working directory.
 
@@ -188,7 +188,7 @@ CCIE Security migration (2026-10-10・当時の検証記録): ヘッダーナビ
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在24ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
@@ -211,3 +211,29 @@ Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685
 
 移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。最終全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。検索索引21ページ・原本89見出しを検証。目視確認表: `docs/migration-inventory/threat-modeling-guide-review.md`（ユーザー確認待ち）。push/公開未実施。Mermaidはbaseテーマ・strictモードで全定義/配色/間隔を保持し、実際の描画境界で高さを調整。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
 <!-- /threat-migration-status -->
+
+<!-- iso15408-status -->
+
+ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+
+移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
+
+全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
+
+<!-- /iso15408-status -->
+
+<!-- iso27017-status -->
+
+ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
+
+<!-- /iso27017-status -->
+
+<!-- iso18045-status -->
+
+ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
+
+<!-- /iso18045-status -->

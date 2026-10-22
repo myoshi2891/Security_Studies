@@ -80,4 +80,8 @@ sourceTest('detects lost round dots and checklist counters',()=>{
 });
 
 const priorRoutes=["/docs/approach","/docs/architecture","/docs/ai-coding-safety","/docs/llm-ai-security","/docs/secdev-guide","/docs/secure-by-design","/docs/hacking-kubernetes","/docs/supply-chain","/docs/pqc","/docs/owasp","/docs/threat-landscape","/docs/mitre-atlas","/docs/ccie-security","/docs/ccst-cybersecurity","/docs/certifications","/docs/archive/approach"];
-test('retains prior navigation order while allowing future pages',()=>{expect(docsConfig.sidebarNav.flatMap(group=>group.items).filter(item=>priorRoutes.includes(item.href)).map(item=>item.href)).toEqual(["/docs/approach", "/docs/architecture", "/docs/ai-coding-safety", "/docs/llm-ai-security", "/docs/secdev-guide", "/docs/secure-by-design", "/docs/hacking-kubernetes", "/docs/supply-chain", "/docs/pqc", "/docs/owasp", "/docs/threat-landscape", "/docs/mitre-atlas", "/docs/ccie-security", "/docs/ccst-cybersecurity", "/docs/certifications", "/docs/archive/approach"]);expect(new Set(docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href)).size).toBe(docsConfig.sidebarNav.flatMap(group=>group.items).length);});
+test('preserves every prior route exactly once after regrouping domains',()=>{
+ const routes=docsConfig.sidebarNav.flatMap(group=>group.items).map(item=>item.href);
+ expect(routes.filter(href=>priorRoutes.includes(href)).sort()).toEqual([...priorRoutes].sort());
+ expect(new Set(routes).size).toBe(routes.length);
+});

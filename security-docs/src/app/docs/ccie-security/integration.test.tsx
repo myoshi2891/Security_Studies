@@ -30,11 +30,10 @@ describe('CCIE complete migration', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  test('adds Security Certifications immediately before Resources with CCIE followed by CCST', () => {
+  test('groups certification guides and learning resources together', () => {
     const category = docsConfig.sidebarNav.find(section => section.title === 'Security Certifications');
-    expect(category?.items).toEqual([{ title: 'CCIE Security', href: '/docs/ccie-security' }, { title: 'CCST Cybersecurity', href: '/docs/ccst-cybersecurity' }]);
-    expect(docsConfig.sidebarNav.findIndex(section => section.title === 'Security Certifications') + 1).toBe(docsConfig.sidebarNav.findIndex(section => section.title === 'Resources'));
-    expect(docsConfig.sidebarNav.find(section => section.title === 'Resources')?.items).toContainEqual({ title: 'AppSec Certifications', href: '/docs/certifications' });
+    expect(category?.items).toEqual([{ title: 'CCIE Security', href: '/docs/ccie-security' }, { title: 'CCST Cybersecurity', href: '/docs/ccst-cybersecurity' }, { title: 'AppSec Certifications', href: '/docs/certifications' }]);
+    expect(docsConfig.sidebarNav.find(section => section.id === 'learning')?.items).toContainEqual({ title: 'AppSec Certifications', href: '/docs/certifications' });
   });
 
   sourceTest('publishes the original document title and a meaningful description as Next metadata', async () => {

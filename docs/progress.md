@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本依存テストはCIで条件付きスキップ・原本非依存テストはCIでも実行）
+> **最終更新**: 2026-10-22（Codecovパッチカバレッジ対応: fidelity-helpersをカバレッジ対象外化・ISO3ガイドの既定Mermaidレンダラーテスト追加。全体571成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,49 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **687件** | `bun test`: 687 pass / 0 fail、114ファイル、118,047 expect（2026-10-18レビュー対応後の全体実測）。Threat Modeling専用62件/13ファイル、Applied Cryptography専用61件/12ファイル。lint/型検査成功。ビルド禁止・未実行 |
-| テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
+| テストケース総数 | **571成功 / 297 skip / 0失敗** | bun test実測（2026-10-22）・146ファイル・868件・158,183 expect。原本不在の既存比較テストはskip。CI条件（archive/なしworktree）: 481成功 / 387 skip / 0失敗 |
+| テストファイル数 | **146ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **64/64 (100%)** | 従来61 + ISO18045部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全146テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存するテストは `sourceTest` で原本がないCIのみスキップ（CI条件実測 364 pass / 312 skip / 0 fail、112ファイル。2026-10-18）。パス除外は ISO 27000/27001 の `page.test.ts` のみ |
-| カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
+| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
+| カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計687件。レビュー対応後のbun testログと照合）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/iso-iec-18045-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/runtime.test.tsx` | 9 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/sections-00-06.test.tsx` | 7 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/sections-07-13.test.tsx` | 7 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/sections-14-20.test.tsx` | 7 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/integration.test.tsx` | 8 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/hydration.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/style-isolation.test.tsx` | 1 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-18045-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/runtime.test.tsx` | 8 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-00-05.test.tsx` | 6 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-06-11.test.tsx` | 6 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/GuideCode.test.tsx` | 2 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/sections-12-16.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/interactions.test.tsx` | 2 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/integration.test.tsx` | 8 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/hydration.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/style-isolation.test.tsx` | 1 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-27017-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本比較/装飾/操作/統合/アーカイブGreen |
+| `src/app/docs/iso-iec-15408-1-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本ハッシュ一致/ルート除去/比較参照を検証・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/runtime.test.tsx` | 8 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/sections-00-06.test.tsx` | 7 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/sections-07-13.test.tsx` | 7 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/sections-14-20.test.tsx` | 7 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/hydration.test.tsx` | 4 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/integration.test.tsx` | 8 | 2026-10-22追加・Green |
+| `src/app/docs/iso-iec-15408-1-2026-guide/style-isolation.test.tsx` | 1 | 2026-10-22追加・Green |
 | `src/app/docs/threat-modeling-guide/archive.test.ts` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/integration.test.tsx` | 9 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
 | `src/app/docs/threat-modeling-guide/sidebar.test.tsx` | 5 | 2026-10-18 追加・原本比較/装飾/操作/統合/アーカイブGreen |
@@ -215,10 +247,10 @@ form-action 'self'
 | 項目 | 状態 | 詳細 |
 |---|---|---|
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
-| 原本比較テストの CI 除外 | ✅ **適用中** | `archive/` は意図的に未追跡のため、移行済み8ガイド（ccie-security / ccst-cybersecurity / secure-by-design / mitre-atlas / hacking-kubernetes / web-application-hackers-handbook / applied-cryptography-guide / threat-modeling-guide）のテストディレクトリと ISO 27000/27001 `page.test.ts` をCIのみ除外。ローカルは全件実行。**今後の移行で原本を読むテストを追加したら `ci.yml` の除外パターンへ追記必須**（詳細: ルート `CLAUDE.md`「原本比較テストの CI 除外」） |
+| 原本比較テスト | ✅ **原本の存在で条件分岐** | ディレクトリ・パス単位のCI除外なし。sourceTestが原本不在時だけskip。ISO15408原本はarchive/へ移動済み（Git管理外） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
-| カバレッジ CI 連携 | ⚠️ **送信停止中** | `bun test --coverage` による lcov.info 生成は稼働中、Codecov へのアップロードは停止中。2026-10-05 時点で Codecov 側に接続不可（TLS ハンドシェイク拒否）。`codecov-action` v7.1.1 + `continue-on-error` で CI は通過させている（CLI の署名・ハッシュ検証を維持するため `use_pypi` は不使用）。CODECOV_TOKEN 未登録 → 次のアクション #11 |
+| カバレッジ CI 連携 | ✅ **設定済み** | bun test --coverageでlcov生成。codecov-actionの送信はcontinue-on-errorで非致命。今回リモート送信の到達確認は未実施 |
 | `bun audit` CI 組み込み | ✅ **稼働中** | `audit` job として並列実行（`--audit-level=high`、高・重大のみ failure 扱い） |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
 
@@ -626,9 +658,9 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## 共通ガイドナビゲーション（2026-10-15）
 
 - 表示問題の原因: ホーム上部はLibrary/Documentationだけの別ナビで、WAHHは一覧カードにのみ表示されていた。ホームとドキュメントヘッダーで `src/components/docs/DocsHeaderNav.tsx` を共有する構成へ修正（HEAD `81c6dc1`）。
-- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在21ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
+- 入口: デスクトップは「ガイド一覧」、スマートフォンは「ガイド」。現在24ページをカテゴリ別に表示し、ガイド名・カテゴリで絞り込める。絞り込み欄は固定し、増えた項目はメニュー内で縦スクロールする。
 - 拡張: `src/config/docs.ts` の `sidebarNav` がホーム一覧・共通メニュー・件数の共通設定。ページ追加時はMDX作成と設定登録を行い、検索インデックスを更新する。ナビコンポーネントにページごとの追記は不要。80ページ/新カテゴリを追加した97ページのテストと、設定に追従する件数・既存順序・重複検出テストで検証。
-- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の101ページ（21+80）はテスト値であり、実際のページ数（現在21ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
+- 補足: 拡張テストは「登録ページ数＋テスト用の仮ページ80件」を描画するため、97ページ（当時17+80）や現在の104ページ（24+80）はテスト値であり、実際のページ数（現在24ページ）とは異なる。17リンクは共通ナビ完了時点の実ページ数。
 - 操作: 開いたら絞り込み欄へフォーカス、Escapeで閉じて入口へ戻る。リンク選択・外側クリックで閉じる。表示名と読み上げ名を一致させ、320px/375pxではヘッダー検索をコンパクトにする。
 - 検証（共通ナビ完了時点の記録）: 共通ナビ8件・ホーム3件・docs layout12件。全538件/85ファイル/59,406 expect成功、`npm run lint`・`npm run types:check` 成功。localhost:3000が返すホームとdocsのHTMLで共通入口・絞り込み欄・17リンク・WAHHを確認。ユーザー目視は未完了。
 - npm使用・Next.jsビルド未実行（禁止）・push/公開未実施。目視確認表: `docs/migration-inventory/web-application-hackers-handbook-review.md`。
@@ -770,3 +802,54 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 仕様書: File Unit Coverage 内訳（46 + 4 + 4）、Applied Cryptography 記録の当時件数注記、ナビ拡張テスト値（登録ページ＋仮80件）の注記、ダッシュボードの移行状況セクションを履歴領域へ移動。
 - 全体: 687 pass / 0 fail、114ファイル、118,047 expect。lint/型検査成功。ビルド禁止・未実行。
 - 見送り: `archive/` の再追跡（ユーザー判断で意図的に未追跡、CI除外で対応済み）、Applied Cryptography CSS の `body.drawer-open` 3ルール削除（`foundation.test.tsx` が原本CSSの全ルール保持を契約として検証するため）、MermaidFigure/GuideSidebar の共通モジュール化（大規模リファクタリングのため要確認）。
+
+<!-- iso15408-status -->
+
+ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+
+移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
+
+全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
+
+<!-- /iso15408-status -->
+
+### ISO15408 完了・目視引継ぎ（2026-10-22）
+
+- Red/Greenは表示基盤・0〜6節・7〜13節・14〜20節・ナビ検索・装飾回帰の各段階で分離コミット済み。
+- 次の対応: 専用目視確認表に沿うユーザー確認。指摘は失敗テストから対応する。ビルド・push・公開は未実施。
+
+### ISO15408 原本アーカイブ Red（2026-10-22）
+
+専用テスト実測: 51 pass / 2 skip / 2 fail、10ファイル（55件）。ルート原本の残存と比較テスト参照先の未更新を再現。アーカイブ2件のバイト比較は移動前のためskip。全体の最新実測は移行完了時の453成功/297 skip/0失敗・123ファイル。アーカイブ後に全体を再検証する。
+
+### ISO15408 原本アーカイブ Green（2026-10-22）
+
+- HTML/MDをarchive/html・archive/mdへ移動。両SHA-256は移動前と一致。原本比較はarchiveだけを参照。
+- 専用55件/10ファイル成功。全体: 457 pass / 297 skip / 0 fail、124ファイル（754件、41,155 expect）。npm test・lint・型検査成功。ビルド禁止・未実行。
+- archive/は既存規約どおりGit管理外。目視はユーザー担当・未完了。push・公開未実施。
+
+<!-- iso27017-status -->
+
+ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
+
+<!-- /iso27017-status -->
+
+### ISO27017 完了・目視引継ぎ（2026-10-22）
+
+- 表示基盤・0〜5節・6〜11節・12〜16節・ナビ検索・原本アーカイブごとにRed→テストコミット→Green→実装コミット→別の文書同期コミットを実施。
+- 次の対応: 専用目視確認表に沿ってユーザー確認。指摘があれば失敗テストから修正。ビルド・push・公開は未実施。
+
+<!-- iso18045-status -->
+
+ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
+
+<!-- /iso18045-status -->
+
+### ISO18045 完了・目視引継ぎ（2026-10-22）
+
+- 表示基盤・0〜6節・7〜13節・14〜20節・ナビ検索/見出し色・原本アーカイブごとにRed→テストコミット→Green→実装コミット→別の文書同期コミットを実施。
+- 次の対応: 専用目視確認表に沿ってユーザー確認。指摘があれば失敗テストから修正。ビルド・push・公開は未実施。

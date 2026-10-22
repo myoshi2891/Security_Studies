@@ -1,5 +1,8 @@
 /* Shared home/document menu. Categories and counts come from docsConfig. */
-.docs-header-nav { margin-left: auto; }
+.docs-header-nav { margin-left: auto; display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
+.docs-nav-iso { color: #B8802A; }
+.docs-nav-toggle[aria-expanded="true"] { background: var(--border); }
+.docs-nav-category h4 small { display: block; margin-top: .25rem; font-size: .7rem; font-weight: 400; opacity: .7; }
 .docs-nav-toggle {
   display: flex;
   align-items: center;
@@ -66,6 +69,7 @@
 .docs-nav-empty { margin: 0; padding: 1rem .75rem; }
 @media (max-width: 640px) {
   .docs-nav-toggle { padding: .5rem; }
+  .docs-nav-iso > svg { display: none; }
   .docs-nav-label-full, .docs-nav-total, .docs-nav-chevron { display: none; }
   .docs-nav-label-short { display: inline; }
   .docs-global-navigation { padding: 1rem; }

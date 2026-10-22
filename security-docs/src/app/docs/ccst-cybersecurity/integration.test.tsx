@@ -19,7 +19,7 @@ sourceTest('preserves the immutable original and complete main content in source
 });
 test('registers CCST once immediately after CCIE in Security Certifications', () => {
   expect(docsConfig.sidebarNav.find(group => group.title === 'Security Certifications')?.items).toEqual([
-    { title: 'CCIE Security', href: '/docs/ccie-security' }, { title: 'CCST Cybersecurity', href: '/docs/ccst-cybersecurity' },
+    { title: 'CCIE Security', href: '/docs/ccie-security' }, { title: 'CCST Cybersecurity', href: '/docs/ccst-cybersecurity' }, { title: 'AppSec Certifications', href: '/docs/certifications' },
   ]);
   expect(docsConfig.sidebarNav.flatMap(group => group.items).filter(item => item.href === '/docs/ccst-cybersecurity')).toHaveLength(1);
 });

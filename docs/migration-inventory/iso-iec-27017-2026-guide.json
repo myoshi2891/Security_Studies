@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-22",
+  "route": "/docs/iso-iec-27017-2026-guide",
+  "sources": [
+    {
+      "path": "archive/html/Iso-27017-2026-guide.html",
+      "sha256": "febe0dab1f1796d0cd80a7700a0bade732f51266f45262193afcf0934c414c32"
+    },
+    {
+      "path": "archive/md/Iso-27017-2026-guide.md",
+      "sha256": "9e02a328e4cd257b6579761ab0d49a21f403ca3c040b1fc97352b7080440bcd6"
+    }
+  ],
+  "counts": {
+    "section": 17,
+    "h1": 1,
+    "h2": 17,
+    "h3": 39,
+    "table": 30,
+    "th": 76,
+    "td": 387,
+    "ul": 5,
+    "ol": 2,
+    "li": 44,
+    ".mermaid": 10,
+    "details.qa": 7,
+    ".check-item": 7,
+    ".ref": 18,
+    "a": 36,
+    "strong": 104,
+    "em": 0,
+    "pre code": 2
+  },
+  "sections": [
+    {
+      "id": "s0",
+      "title": "0. このガイドを読む前に（重要な前提）"
+    },
+    {
+      "id": "s1",
+      "title": "STEP 1. ISO/IEC 27017 とは何か"
+    },
+    {
+      "id": "s2",
+      "title": "STEP 2. 基本用語を押さえる"
+    },
+    {
+      "id": "s3",
+      "title": "STEP 3. 2026年版の基本情報"
+    },
+    {
+      "id": "s4",
+      "title": "STEP 4. 2015年版から何が変わったか"
+    },
+    {
+      "id": "s5",
+      "title": "STEP 5. 規格の構造と読み方"
+    },
+    {
+      "id": "s6",
+      "title": "STEP 6. 4つのCLD管理策を一つずつ理解する"
+    },
+    {
+      "id": "s7",
+      "title": "STEP 7. 2015年版の「7つのCLD管理策」はどうなったか"
+    },
+    {
+      "id": "s8",
+      "title": "STEP 8. 責任分担を実務に落とす"
+    },
+    {
+      "id": "s9",
+      "title": "STEP 9. 導入ステップ（CSC向け・CSP向け）"
+    },
+    {
+      "id": "s10",
+      "title": "STEP 10. 監査・証跡・認証"
+    },
+    {
+      "id": "s11",
+      "title": "STEP 11. 27017 と 27018 の使い分け"
+    },
+    {
+      "id": "s12",
+      "title": "STEP 12. よくある誤解"
+    },
+    {
+      "id": "s13",
+      "title": "STEP 13. 学習ロードマップとチェックリスト"
+    },
+    {
+      "id": "s14",
+      "title": "付録A. 用語集"
+    },
+    {
+      "id": "s15",
+      "title": "付録B. 情報の確度に関する注意（読者への正直な申告）"
+    },
+    {
+      "id": "s16",
+      "title": "参考文献・出典URL（2026年10月15日時点で参照）"
+    }
+  ],
+  "allowedDifferences": [
+    "Original HTML/Markdown archived byte-for-byte in archive/html and archive/md; archive/ is intentionally ignored by Git.",
+    "Native MDX elements retain all original structure, classes, IDs and content; inner main becomes div.guide-content to avoid nested app main landmarks.",
+    "Local lucide SVG icons replace external icon fonts.",
+    "Server-side highlight.js Python/YAML highlighting replaces CDN scripts; locally scoped atom-one-dark styles retain source token colors.",
+    "React drawer adds focus trap, Escape, hash/scroll tracking and focus restoration; original 1100px breakpoint retained.",
+    "Mermaid base theme applies original colors under strict security with per-render configuration; all 10 definitions retained verbatim.",
+    "Intrinsic SVG sizing with block scroll containers centers small diagrams and keeps wide diagrams reachable.",
+    "App header clearance adds 64px sidebar offset and 88px heading anchor margins.",
+    "Scoped reset restores source typography, pseudo bullets, decimal markers, checkbox counter and checked/focus styles after Tailwind.",
+    "Diagram loading, retry, accessible text descriptions and noscript notes added.",
+    "Formatting-only whitespace and whitespace inside table structural elements removed for hydration safety."
+  ],
+  "validation": {
+    "dedicatedTests": 55,
+    "testFiles": 12,
+    "build": "prohibited, not run",
+    "visual": "pending user review",
+    "phase": "complete; user visual review pending",
+    "fullSuite": {
+      "passed": 512,
+      "skipped": 297,
+      "failed": 0,
+      "files": 136,
+      "total": 809,
+      "expects": 84599
+    },
+    "lint": "npm run lint passed",
+    "types": "npm run types:check passed"
+  }
+}

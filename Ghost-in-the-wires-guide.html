@@ -1,0 +1,3250 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Ghost in the Wires 初学者向け入門ガイド</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"
+        />
+        <style>
+            :root {
+                color-scheme: dark;
+                --color-background-primary: #0b1118;
+                --color-background-secondary: #101923;
+                --color-background-tertiary: #16232f;
+                --color-text-primary: #eef5f5;
+                --color-text-secondary: #bdcbd3;
+                --color-text-tertiary: #91a6b2;
+                --color-border-tertiary: #21313d;
+                --color-border-secondary: #304653;
+                --color-border-primary: #4d6c7d;
+                --accent: #85e0c5;
+                --font-sans: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+                    'Yu Gothic', 'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 14px;
+                --sidebar-w: 296px;
+                --content-padding: clamp(24px, 2.5vw, 40px);
+            }
+            * { box-sizing: border-box; }
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: 28px;
+                -webkit-text-size-adjust: 100%;
+            }
+            body {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.95;
+                overflow-wrap: anywhere;
+                -webkit-font-smoothing: antialiased;
+            }
+            body.lock { overflow: hidden; }
+            ::selection { background: #85e0c53b; color: #fff; }
+            a { color: var(--accent); text-underline-offset: 4px; }
+            a, summary, button { -webkit-tap-highlight-color: #85e0c526; }
+            :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+            .layout { display: block; }
+
+            /* Quiet, persistent reading navigation. */
+            .sidebar {
+                position: fixed;
+                inset: 0 auto 0 0;
+                width: var(--sidebar-w);
+                padding: 36px 16px 32px;
+                background: #0e1720;
+                border-right: 1px solid var(--color-border-tertiary);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                scrollbar-width: thin;
+                scrollbar-color: var(--color-border-secondary) transparent;
+                z-index: 30;
+            }
+            .brand {
+                padding: 0 12px 28px;
+                margin-bottom: 22px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .brand a { display: block; color: var(--color-text-primary); text-decoration: none; }
+            .brand-title {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 1.05rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
+            .brand-title i {
+                display: grid;
+                place-items: center;
+                width: 38px;
+                height: 42px;
+                border: 1px solid #85e0c536;
+                border-radius: 11px;
+                background: #85e0c50a;
+                color: var(--accent);
+                font-size: 1.55rem;
+            }
+            .brand-sub {
+                display: block;
+                margin-top: 12px;
+                color: var(--color-text-tertiary);
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+            }
+            .sidebar nav ul { list-style: none; margin: 0; padding: 0; }
+            .sidebar nav li { margin: 4px 0; padding: 0; }
+            .sidebar nav li::before { content: none; }
+            .sidebar nav a {
+                display: block;
+                position: relative;
+                padding: 10px 12px;
+                border: 1px solid transparent;
+                border-radius: 7px;
+                color: var(--color-text-tertiary);
+                font-size: 0.79rem;
+                line-height: 1.7;
+                text-decoration: none;
+                transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
+            }
+            .sidebar nav a:hover { background: #ffffff05; color: var(--color-text-primary); }
+            .sidebar nav a.active {
+                color: var(--accent);
+                background: #85e0c50b;
+                border-color: #85e0c526;
+                font-weight: 600;
+            }
+            .sidebar nav a.active::before {
+                content: '';
+                position: absolute;
+                inset: 10px auto 10px -17px;
+                width: 3px;
+                border-radius: 0 3px 3px 0;
+                background: var(--accent);
+            }
+
+            /* Editorial opening with a subtle wire motif. */
+            main { margin-left: var(--sidebar-w); min-width: 0; }
+            .hero, .section, .footer {
+                padding-inline: var(--content-padding);
+            }
+            .hero {
+                position: relative;
+                isolation: isolate;
+                overflow: hidden;
+                padding-block: 84px 52px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                background: radial-gradient(ellipse at 95% 0%, #1b4b423d, transparent 60%),
+                    linear-gradient(135deg, #101d26, #0b1118 75%);
+            }
+            .hero::before {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                top: -190px;
+                right: -170px;
+                width: 600px;
+                height: 600px;
+                border: 1px solid #85e0c514;
+                border-radius: 50%;
+                box-shadow: 0 0 0 44px #85e0c507, 0 0 0 45px #85e0c50c,
+                    0 0 0 100px #85e0c504, 0 0 0 101px #85e0c50a;
+                pointer-events: none;
+            }
+            .hero::after {
+                content: '';
+                position: absolute;
+                top: 49px;
+                left: var(--content-padding);
+                width: 44px;
+                height: 3px;
+                border-radius: 2px;
+                background: var(--accent);
+                box-shadow: 54px 0 0 #85e0c52b;
+            }
+            .hero h1 {
+                margin: 0 0 24px;
+                font-size: clamp(2rem, 3.4vw, 3.4rem);
+                font-weight: 700;
+                line-height: 1.4;
+                letter-spacing: -0.04em;
+                text-wrap: balance;
+                word-break: keep-all;
+            }
+            .hero .lead {
+                margin: 0 0 36px;
+                font-size: 0.95rem;
+                line-height: 2;
+            }
+            .hero .table-wrap { background: #0b111880; margin-bottom: 0; }
+            .hero th { background: #85e0c509; }
+            .hero td:first-child { width: 25%; min-width: 140px; color: var(--color-text-tertiary); }
+            .hero table { font-size: 0.82rem; }
+            .hero th, .hero td { padding: 13px 20px; }
+            .section {
+                padding-block: 64px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            h2 {
+                position: relative;
+                margin: 0 0 32px;
+                padding: 0 0 22px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                font-size: clamp(1.35rem, 2vw, 1.8rem);
+                font-weight: 650;
+                line-height: 1.6;
+                letter-spacing: -0.025em;
+            }
+            h2::after {
+                content: '';
+                position: absolute;
+                inset: auto auto -1px 0;
+                width: 40px;
+                height: 2px;
+                background: var(--accent);
+            }
+            h3 {
+                margin: 40px 0 16px;
+                color: var(--accent);
+                font-size: 1.08rem;
+                font-weight: 600;
+                line-height: 1.7;
+            }
+            p { margin: 0 0 20px; color: var(--color-text-secondary); }
+            strong { font-weight: 650; color: var(--color-text-primary); }
+            em { color: var(--color-text-tertiary); }
+            a.ref { font-size: 0.84em; text-decoration: none; white-space: nowrap; }
+            a.ref:hover { text-decoration: underline; }
+            .section ul, .section ol { margin: 0 0 24px; padding: 0; }
+            .section ul { list-style: none; }
+            .section ul > li {
+                position: relative;
+                margin: 10px 0;
+                padding-left: 1.4em;
+                color: var(--color-text-secondary);
+            }
+            .section ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.2em;
+                top: 0.85em;
+                width: 5px;
+                height: 5px;
+                border-radius: 1px;
+                background: var(--accent);
+            }
+            .section ol { padding-left: 1.8em; }
+            .section ol > li { margin: 12px 0; padding-left: 0.4em; color: var(--color-text-secondary); }
+            .section ol > li::marker { color: var(--accent); font-weight: 600; }
+            blockquote {
+                margin: 28px 0;
+                padding: 22px 26px;
+                background: linear-gradient(110deg, #85e0c50b, #85e0c503);
+                border: 1px solid #85e0c51c;
+                border-left: 3px solid var(--accent);
+                border-radius: 0 10px 10px 0;
+            }
+            blockquote p { margin: 0; }
+
+            /* Tables and diagrams stay contained on small screens. */
+            .table-wrap {
+                margin: 24px 0;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: #10192380;
+            }
+            table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.85; }
+            th, td {
+                padding: 16px 20px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            th { background: #192832; color: #d6e8e7; font-weight: 600; white-space: nowrap; }
+            td { color: var(--color-text-secondary); min-width: 120px; }
+            tbody tr:last-child td { border-bottom: 0; }
+            tbody tr:nth-child(even) { background: #ffffff02; }
+            tbody tr:hover td { background: #85e0c508; }
+            td:first-child { color: var(--color-text-primary); }
+            code {
+                padding: 3px 7px;
+                border: 1px solid #85e0c51a;
+                border-radius: 5px;
+                background: #85e0c508;
+                color: #a7e6d6;
+                font-family: var(--font-mono);
+                font-size: 0.86em;
+            }
+            .diagram-wrap {
+                margin: 32px 0;
+                padding: 32px 24px;
+                background: radial-gradient(ellipse at top, #142a35, #0e1720 75%);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                overflow-x: auto;
+            }
+            .diagram { display: flex; justify-content: center; min-width: 0; }
+            .diagram svg { overflow: visible; flex-shrink: 0; }
+            .diagram .mm-fallback {
+                margin: 0;
+                color: var(--color-text-tertiary);
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 0.85rem;
+            }
+
+            details.qa {
+                margin: 14px 0;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                transition: border-color 160ms ease;
+            }
+            details.qa:hover, details.qa[open] { border-color: #85e0c55c; }
+            details.qa summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 22px 24px 22px 58px;
+                position: relative;
+                font-weight: 600;
+                line-height: 1.8;
+                color: var(--color-text-primary);
+            }
+            details.qa summary::-webkit-details-marker { display: none; }
+            details.qa summary::before {
+                content: '+';
+                position: absolute;
+                left: 22px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 22px;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 1.25rem;
+                text-align: center;
+            }
+            details.qa[open] summary::before { content: '\2212'; }
+            details.qa[open] summary { border-bottom: 1px solid var(--color-border-tertiary); }
+            .qa-body { padding: 22px 24px 4px; }
+            .src-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+                gap: 16px;
+                margin: 20px 0 32px;
+            }
+            .src-card {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr);
+                gap: 16px;
+                padding: 24px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                scroll-margin-top: 28px;
+                transition: border-color 160ms ease;
+            }
+            .src-card:hover { border-color: var(--color-border-primary); }
+            .src-card:target { border-color: var(--accent); background: #152c2a; }
+            .src-badge {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 42px;
+                height: 30px;
+                padding: 0 8px;
+                border-radius: 6px;
+                border: 1px solid #85e0c533;
+                background: #85e0c50a;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+            }
+            .src-type { color: var(--color-text-primary); font-weight: 600; margin-bottom: 8px; }
+            .src-desc { margin: 0 0 12px; font-size: 0.88rem; }
+            .src-url {
+                display: inline-flex;
+                align-items: flex-start;
+                gap: 6px;
+                max-width: 100%;
+                font-size: 0.75rem;
+                line-height: 1.8;
+                word-break: break-all;
+                text-decoration: none;
+            }
+            .src-url:hover { text-decoration: underline; }
+            .src-url i { margin-top: 0.3em; flex: none; }
+            .footer { padding-block: 32px 64px; font-size: 0.8rem; color: var(--color-text-tertiary); }
+            .footer em { font-style: normal; }
+
+            /* A chronological list keeps every date and event readable at any width. */
+            .life-timeline {
+                margin: 24px 0 28px;
+                padding: 28px 32px 12px;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: linear-gradient(120deg, #11232a, #101923 65%);
+            }
+            .life-timeline figcaption {
+                margin-bottom: 28px;
+                color: var(--color-text-primary);
+                font-size: 1rem;
+                font-weight: 600;
+            }
+            .life-timeline .timeline-events { margin: 0; padding: 0; list-style: none; }
+            .life-timeline .timeline-events > li {
+                position: relative;
+                display: grid;
+                grid-template-columns: 112px minmax(0, 1fr);
+                gap: 40px;
+                margin: 0;
+                padding: 0 0 24px;
+            }
+            .timeline-events > li::before {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 125px;
+                width: 9px;
+                height: 9px;
+                border: 2px solid var(--accent);
+                border-radius: 50%;
+                background: #11232a;
+                z-index: 1;
+            }
+            .timeline-events > li:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 19px;
+                bottom: -10px;
+                left: 129px;
+                width: 1px;
+                background: #85e0c535;
+            }
+            .timeline-year {
+                padding-top: 1px;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 0.9rem;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+            .timeline-events p { margin: 0; }
+            @media (max-width: 640px) {
+                .life-timeline { padding: 22px 16px 4px; }
+                .life-timeline .timeline-events > li {
+                    grid-template-columns: 88px minmax(0, 1fr);
+                    gap: 28px;
+                }
+                .timeline-events > li::before { left: 95px; }
+                .timeline-events > li:not(:last-child)::after { left: 99px; }
+                .timeline-year { font-size: 0.78rem; }
+            }
+
+            /* Responsive drawer and comfortable touch targets. */
+            .menu-btn, .backdrop { display: none; }
+            @media (max-width: 1024px) {
+                :root { --content-padding: 40px; }
+                .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 220ms ease;
+                    width: min(320px, 86vw);
+                    z-index: 50;
+                }
+                .sidebar.open { transform: translateX(0); }
+                .sidebar nav a { min-height: 44px; display: flex; align-items: center; }
+                main { margin-left: 0; }
+                .hero { padding-block: 80px 40px; }
+                .hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
+                .section { padding-block: 48px; }
+                .footer { padding-bottom: 110px; }
+                .menu-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: fixed;
+                    right: max(20px, env(safe-area-inset-right));
+                    bottom: max(20px, env(safe-area-inset-bottom));
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 18px;
+                    border: 1px solid #b1f4e1;
+                    background: var(--accent);
+                    color: #0b211c;
+                    box-shadow: 0 8px 28px #0006;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    z-index: 60;
+                    padding: 0;
+                }
+                .backdrop {
+                    display: block;
+                    position: fixed;
+                    inset: 0;
+                    background: #030810b8;
+                    backdrop-filter: blur(4px);
+                    z-index: 40;
+                    opacity: 0;
+                    visibility: hidden;
+                    pointer-events: none;
+                    transition: opacity 220ms ease, visibility 220ms ease;
+                }
+                .backdrop.show { opacity: 1; visibility: visible; pointer-events: auto; }
+            }
+            @media (max-width: 640px) {
+                :root { --content-padding: 22px; }
+                body { font-size: 0.9375rem; line-height: 1.95; }
+                .hero { padding-block: 64px 32px; }
+                .hero::after { top: 32px; }
+                .hero h1 { font-size: 1.95rem; line-height: 1.5; }
+                .hero .lead { font-size: 0.875rem; margin-bottom: 28px; }
+                .hero td:first-child { min-width: 112px; }
+                .hero th, .hero td { padding: 12px 14px; }
+                .section { padding-block: 38px; }
+                h2 { font-size: 1.3rem; padding-bottom: 18px; margin-bottom: 26px; }
+                h3 { font-size: 1.02rem; margin-top: 32px; }
+                th, td { padding: 14px; }
+                blockquote { padding: 18px; }
+                .diagram-wrap { padding: 22px 12px; }
+                .src-list { grid-template-columns: 1fr; }
+                .src-card { padding: 18px; gap: 12px; }
+                details.qa summary { padding: 18px 16px 18px 48px; }
+                details.qa summary::before { left: 16px; }
+                .qa-body { padding: 18px 16px 0; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                html { scroll-behavior: auto; }
+                *, *::before, *::after { transition: none !important; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar" aria-label="目次">
+                <div class="brand">
+                    <a href="#top"
+                        ><span class="brand-title"
+                            ><i class="ti ti-ghost-2" aria-hidden="true"></i
+                            ><span>Ghost in the Wires</span></span
+                        >
+                        <span class="brand-sub">初学者向け入門ガイド</span></a
+                    >
+                </div>
+                <nav aria-label="ステップ一覧">
+                    <ul>
+                        <li>
+                            <a href="#step-0" data-sec="step-0">Step 0 このガイドの読み方と注意</a>
+                        </li>
+                        <li><a href="#step-1" data-sec="step-1">Step 1 本書を一言でいうと</a></li>
+                        <li>
+                            <a href="#step-2" data-sec="step-2"
+                                >Step 2 著者ケビン・ミトニックとは</a
+                            >
+                        </li>
+                        <li><a href="#step-3" data-sec="step-3">Step 3 まず押さえる用語集</a></li>
+                        <li><a href="#step-4" data-sec="step-4">Step 4 本書の全体構成</a></li>
+                        <li><a href="#step-5" data-sec="step-5">Step 5 部ごとの読み解き</a></li>
+                        <li>
+                            <a href="#step-6" data-sec="step-6"
+                                >Step 6 ソーシャルエンジニアリング徹底解説</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#step-7" data-sec="step-7"
+                                >Step 7 追跡と逮捕を技術面から見る</a
+                            >
+                        </li>
+                        <li><a href="#step-8" data-sec="step-8">Step 8 裁判・量刑と論争点</a></li>
+                        <li><a href="#step-9" data-sec="step-9">Step 9 神話と現実</a></li>
+                        <li>
+                            <a href="#step-10" data-sec="step-10">Step 10 出所後の歩みと、その後</a>
+                        </li>
+                        <li>
+                            <a href="#step-11" data-sec="step-11">Step 11 現代の防御に活かす</a>
+                        </li>
+                        <li><a href="#step-12" data-sec="step-12">Step 12 批判的に読む</a></li>
+                        <li><a href="#step-13" data-sec="step-13">Step 13 学習ロードマップ</a></li>
+                        <li><a href="#step-14" data-sec="step-14">Step 14 理解度チェック</a></li>
+                        <li><a href="#step-15" data-sec="step-15">Step 15 出典一覧</a></li>
+                        <li><a href="#step-16" data-sec="step-16">Step 16 このガイドの限界</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            <div class="backdrop" id="backdrop"></div>
+            <button
+                class="menu-btn"
+                id="menuBtn"
+                type="button"
+                aria-label="目次を開く"
+                aria-expanded="false"
+                aria-controls="sidebar"
+            >
+                <i class="ti ti-menu-2" aria-hidden="true"></i>
+            </button>
+            <main>
+                <header class="hero" id="top">
+                    <h1>Ghost in the Wires 初学者向け入門ガイド</h1>
+                    <p class="lead">
+                        ケビン・ミトニック著『Ghost in the Wires: My Adventures as the World's Most
+                        Wanted Hacker』を、ステップバイステップで読み解く入門ガイド
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>作成日・情報基準日</td>
+                                    <td>2026年10月15日(ウェブ情報はこの日までに確認できたもの)</td>
+                                </tr>
+                                <tr>
+                                    <td>対象読者</td>
+                                    <td>セキュリティ初学者、エンジニア、本書をこれから読む人</td>
+                                </tr>
+                                <tr>
+                                    <td>前提知識</td>
+                                    <td>不要(専門用語は Step 3 で解説)</td>
+                                </tr>
+                                <tr>
+                                    <td>形式</td>
+                                    <td>
+                                        Markdown(図は Mermaid、表は Markdown。ASCII 図解は不使用)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出典表記</td>
+                                    <td>
+                                        本文中の <code>【S1】</code> などは、末尾「Step 15
+                                        出典一覧」の番号に対応
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </header>
+                <section class="section" id="step-0">
+                    <h2>Step 0 このガイドの読み方と注意</h2>
+                    <h3 id="step-0-1">0-1. このガイドの目的</h3>
+                    <p>
+                        『Ghost in the
+                        Wires』は、1990年代に「世界で最も追われたハッカー」と呼ばれた人物の回想録です。本ガイドは次の3つを目標にしています。
+                    </p>
+                    <ol>
+                        <li>本書のあらすじと構成を、予備知識なしで理解できるようにする</li>
+                        <li>
+                            本書に登場する「人をだます技術(ソーシャルエンジニアリング)」を、<strong>防御の視点</strong>で学べるようにする
+                        </li>
+                        <li>事件に関する賛否・誇張・神話を切り分け、批判的に読む力をつける</li>
+                    </ol>
+                    <h3 id="step-0-2">0-2. 取り扱い方針</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>方針</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>防御視点</td>
+                                    <td>
+                                        攻撃手順の再現ではなく、「なぜ成功したか」「どう防ぐか」を中心に解説します
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>引用の最小化</td>
+                                    <td>書籍・記事の文章は、短い言い換えにとどめています</td>
+                                </tr>
+                                <tr>
+                                    <td>出典の明示</td>
+                                    <td>
+                                        事実には <code>【S番号】</code> を付け、URL
+                                        を末尾にまとめています
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>立場の併記</td>
+                                    <td>
+                                        本書は本人の回想録です。検察側・支持者側・書評家の見解を併記します
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-0-3">0-3. 法律と倫理についての一言</h3>
+                    <p>
+                        日本では、他人の
+                        ID・パスワードを無断で使うなどしてアクセス制御を破る「不正アクセス行為」が不正アクセス禁止法第3条で禁止され、違反は第11条により3年以下の拘禁刑又は100万円以下の罰金の対象です
+                        <a class="ref" href="#S35">【S35】</a>。米国では、Computer Fraud and Abuse
+                        Act(18 U.S.C. §
+                        1030)の(a)(2)が、権限なく(または権限を超えて)コンピュータにアクセスして情報を得る行為を処罰します。ただし一律ではなく、金融機関の財務記録などの情報、米国政府の省庁の情報、「保護されたコンピュータ」(州際・国際の通商や通信に使われるものなど)の情報といった、同項が定める区分に当たる場合に限られます
+                        <a class="ref" href="#S36">【S36】</a
+                        >。それ以外の国の法制度は本ガイドでは確認していません。具体的な法的判断は専門家に確認してください。本書の登場人物が受けた結果(逮捕・長期の勾留・保護観察中の厳しい制限)は、その重さを示しています。
+                    </p>
+                </section>
+                <section class="section" id="step-1">
+                    <h2>Step 1 本書を一言でいうと</h2>
+                    <p>
+                        <strong
+                            >「好奇心から電話網と企業ネットワークに入り込んだ青年が、FBIに追われて逃亡し、やがて逮捕されるまでを本人が語った実話」</strong
+                        >です。動機を好奇心とする説明は本人の証言
+                        <a class="ref" href="#S14">【S14】</a>、電話網・企業ネットワークへの侵入は
+                        <a class="ref" href="#S13">【S13】</a
+                        ><a class="ref" href="#S14">【S14】</a>、FBIの追跡と逮捕は
+                        <a class="ref" href="#S1">【S1】</a
+                        ><a class="ref" href="#S6">【S6】</a>、「実話」という位置づけは出版社の紹介
+                        <a class="ref" href="#S1">【S1】</a> によります。
+                    </p>
+                    <h3 id="step-1-1">1-1. 書誌情報</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>原題</td>
+                                    <td>
+                                        Ghost in the Wires: My Adventures as the World's Most Wanted
+                                        Hacker <a class="ref" href="#S1">【S1】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>著者</td>
+                                    <td>
+                                        Kevin Mitnick（ケビン・ミトニック）<a class="ref" href="#S1"
+                                            >【S1】</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>共著者</td>
+                                    <td>William L. Simon <a class="ref" href="#S24">【S24】</a></td>
+                                </tr>
+                                <tr>
+                                    <td>序文</td>
+                                    <td>
+                                        Steve Wozniak（スティーブ・ウォズニアック）<a
+                                            class="ref"
+                                            href="#S1"
+                                            >【S1】</a
+                                        ><a class="ref" href="#S24">【S24】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出版社・刊行</td>
+                                    <td>
+                                        Little, Brown、2011年8月15日
+                                        <a class="ref" href="#S1">【S1】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ページ数</td>
+                                    <td>
+                                        432ページ(Google ブックス掲載版)。版により 400
+                                        ページ台後半〜 500 ページ台と記載が異なります
+                                        <a class="ref" href="#S1">【S1】</a
+                                        ><a class="ref" href="#S31">【S31】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ISBN</td>
+                                    <td>
+                                        0316134473 / 9780316134477
+                                        <a class="ref" href="#S1">【S1】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ペーパーバック</td>
+                                    <td>
+                                        Back Bay Books から 2012 年に刊行
+                                        <a class="ref" href="#S31">【S31】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ジャンル</td>
+                                    <td>ノンフィクションの回想録</td>
+                                </tr>
+                                <tr>
+                                    <td>邦訳</td>
+                                    <td>本調査では確認できませんでした(Step 16 を参照)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <blockquote>
+                        <p>
+                            補足:Google
+                            ブックスの紹介文には、推薦コメントとして「novel」という語が出てきますが、出版社の紹介では「true
+                            story(実話)」と説明されています
+                            <a class="ref" href="#S1">【S1】</a
+                            >。本書は小説ではなく、本人の回想録です。
+                        </p>
+                    </blockquote>
+                    <h3 id="step-1-2">1-2. 3行で要約</h3>
+                    <ol>
+                        <li>
+                            少年期の「好奇心」が、電話網への侵入や企業のソースコード取得につながっていく
+                            <a class="ref" href="#S13">【S13】</a
+                            ><a class="ref" href="#S14">【S14】</a>。
+                        </li>
+                        <li>
+                            保護観察中に姿を消し、偽名で各地を転々とする逃亡生活に入る
+                            <a class="ref" href="#S1">【S1】</a
+                            ><a class="ref" href="#S8">【S8】</a>。
+                        </li>
+                        <li>
+                            1995年にFBIに逮捕され、長い勾留と司法取引を経て、2000年に出所する
+                            <a class="ref" href="#S6">【S6】</a><a class="ref" href="#S8">【S8】</a
+                            ><a class="ref" href="#S12">【S12】</a>。
+                        </li>
+                    </ol>
+                    <h3 id="step-1-3">1-3. 本書の売りは「技術」より「人間」</h3>
+                    <p>
+                        書評では、本書の核心はコードそのものよりも、相手を説得して情報を引き出す<strong>ソーシャルエンジニアリング</strong>にあると繰り返し指摘されています
+                        <a class="ref" href="#S3">【S3】</a
+                        ><a class="ref" href="#S21">【S21】</a
+                        >。技術的な記述は、あえて非専門家にも読める水準に抑えられていると評する書評もあります
+                        <a class="ref" href="#S3">【S3】</a>。
+                    </p>
+                </section>
+                <section class="section" id="step-2">
+                    <h2>Step 2 著者ケビン・ミトニックとは</h2>
+                    <h3 id="step-2-1">2-1. プロフィール</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>生年月日</td>
+                                    <td>
+                                        1963年8月6日、ロサンゼルス近郊(ヴァンナイズ)生まれ
+                                        <a class="ref" href="#S18">【S18】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>没年月日</td>
+                                    <td>
+                                        2023年7月16日、59歳。膵臓がんの闘病後に死去
+                                        <a class="ref" href="#S12">【S12】</a
+                                        ><a class="ref" href="#S13">【S13】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>逮捕前の活動</td>
+                                    <td>
+                                        電話網・企業ネットワークへの侵入、ソースコードの取得
+                                        <a class="ref" href="#S13">【S13】</a
+                                        ><a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出所後</td>
+                                    <td>
+                                        講演者・著者・セキュリティコンサルタント。Mitnick Security
+                                        Consulting を設立 <a class="ref" href="#S12">【S12】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>企業での役職</td>
+                                    <td>
+                                        2011年にKnowBe4の Chief Hacking Officer に就任
+                                        <a class="ref" href="#S18">【S18】</a
+                                        ><a class="ref" href="#S20">【S20】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-2-2">2-2. 人生の年表</h3>
+                    <figure class="life-timeline" aria-labelledby="life-timeline-title">
+                        <figcaption id="life-timeline-title">ケビン・ミトニックの主な出来事</figcaption>
+                        <ol class="timeline-events">
+                            <li>
+                                <span class="timeline-year">1963年</span>
+                                <p>ロサンゼルス近郊で誕生</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">1988年</span>
+                                <p>ロサンゼルスで有罪となり1年の刑を受ける</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">1992年</span>
+                                <p>保護観察中に所在不明となり逃亡生活へ</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">1994年末</span>
+                                <p>サンディエゴのShimomura氏のコンピュータに侵入</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">1995年2月</span>
+                                <p>ノースカロライナ州ローリーでFBIに逮捕</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">1999年3月</span>
+                                <p>司法取引で有罪を認める</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">2000年1月</span>
+                                <p>出所</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">2000年3月</span>
+                                <p>米上院委員会で証言</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">2011年</span>
+                                <p>本書を刊行、KnowBe4の Chief Hacking Officer に</p>
+                            </li>
+                            <li>
+                                <span class="timeline-year">2023年7月</span>
+                                <p>死去</p>
+                            </li>
+                        </ol>
+                    </figure>
+                    <p>
+                        根拠:1988年の有罪と1年の刑は米司法省の発表
+                        <a class="ref" href="#S6">【S6】</a
+                        >、保護観察中の失踪と1994年末の侵入、逮捕、司法取引は
+                        <a class="ref" href="#S8">【S8】</a>、出所は
+                        <a class="ref" href="#S12">【S12】</a
+                        ><a class="ref" href="#S14">【S14】</a>、上院証言は
+                        <a class="ref" href="#S4">【S4】</a>、2011年の役職は
+                        <a class="ref" href="#S18">【S18】</a> です。
+                    </p>
+                    <h3 id="step-2-3">2-3. 「Free Kevin」運動</h3>
+                    <p>
+                        1990年代の中頃から後半にかけて、長期勾留を重すぎると考える支持者による「Free
+                        Kevin」運動が世界的に広がりました
+                        <a class="ref" href="#S12">【S12】</a
+                        >。この運動の存在は、ミトニックが単なる犯罪者ではなく、<strong>ハッカー文化の象徴</strong>として見られていたことを示します。
+                    </p>
+                </section>
+                <section class="section" id="step-3">
+                    <h2>Step 3 まず押さえる用語集</h2>
+                    <p>初学者が本書でつまずきやすい言葉をまとめます。</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用語</th>
+                                    <th>意味</th>
+                                    <th>本書との関係</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ハッカー</td>
+                                    <td>
+                                        本来は技術に精通し探究する人。報道では「不正侵入者」の意味で使われることも多い
+                                    </td>
+                                    <td>
+                                        ミトニックは、この語が報道で歪められたと証言しています
+                                        <a class="ref" href="#S4">【S4】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>フリーカー(phreaker)</td>
+                                    <td>電話網を探求・悪用する人</td>
+                                    <td>
+                                        書評は、本書を「ハッカーとフリーカーの回想録」と紹介しています
+                                        <a class="ref" href="#S28">【S28】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ソーシャルエンジニアリング</td>
+                                    <td>技術ではなく、人を信用させて情報や操作を引き出す手法</td>
+                                    <td>
+                                        本書の中心テーマ <a class="ref" href="#S3">【S3】</a
+                                        ><a class="ref" href="#S4">【S4】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>なりすまし</td>
+                                    <td>社員や関係者を装うこと</td>
+                                    <td>多くの事例の出発点</td>
+                                </tr>
+                                <tr>
+                                    <td>ソースコード</td>
+                                    <td>プログラムの設計図にあたる文章</td>
+                                    <td>
+                                        ミトニックが好んで狙った対象
+                                        <a class="ref" href="#S4">【S4】</a
+                                        ><a class="ref" href="#S11">【S11】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>保護観察</td>
+                                    <td>刑の一部を社会内で、条件付きで過ごす制度</td>
+                                    <td>
+                                        彼はこの期間中に姿を消した
+                                        <a class="ref" href="#S8">【S8】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>司法取引</td>
+                                    <td>罪を認める代わりに量刑などで合意する手続き</td>
+                                    <td>
+                                        1999年に成立 <a class="ref" href="#S8">【S8】</a
+                                        ><a class="ref" href="#S13">【S13】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>白帽ハッカー</td>
+                                    <td>許可を得て、防御のために侵入を試みる専門家</td>
+                                    <td>出所後の彼の立場 <a class="ref" href="#S13">【S13】</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ペネトレーションテスト</td>
+                                    <td>依頼を受けて行う、疑似的な侵入テスト</td>
+                                    <td>
+                                        Mitnick Security Consulting の主な事業
+                                        <a class="ref" href="#S27">【S27】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>盗聴(ワイヤタップ)</td>
+                                    <td>通信を傍受すること</td>
+                                    <td>
+                                        本書の第2部の章題に頻出 <a class="ref" href="#S2">【S2】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="step-4">
+                    <h2>Step 4 本書の全体構成</h2>
+                    <p>
+                        本書は4部構成です。章題は図書館目録の目次情報によります
+                        <a class="ref" href="#S2">【S2】</a>。
+                    </p>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg2"
+                            role="img"
+                            aria-label="Mermaid 図 2"
+                        ></div>
+                    </div>
+                    <h3 id="step-4-1">4-1. 各部の概要</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>部</th>
+                                    <th>原題</th>
+                                    <th>目次から読み取れる内容</th>
+                                    <th>代表的な章題</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>第1部</td>
+                                    <td>The Making of a Hacker</td>
+                                    <td>少年期から、第2部「Eric」が始まる直前まで</td>
+                                    <td>Rough Start、Original Sin、Escape Artist、Lex Luthor</td>
+                                </tr>
+                                <tr>
+                                    <td>第2部</td>
+                                    <td>Eric</td>
+                                    <td>盗聴・通信分析・摘発・失踪へ向かう緊迫した流れ</td>
+                                    <td>
+                                        The Wiretapper、Traffic Analysis、Reverse Sting、Vanishing
+                                        Act
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>第3部</td>
+                                    <td>On the Run</td>
+                                    <td>偽名での逃亡生活</td>
+                                    <td>Harry Houdini、Private Investigator、Trophy Hunter</td>
+                                </tr>
+                                <tr>
+                                    <td>第4部</td>
+                                    <td>An End and a Beginning</td>
+                                    <td>逮捕、裁判、出所後</td>
+                                    <td>Hacking the Samurai、An FBI Valentine、Aftermath</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <blockquote>
+                        <p>
+                            注意:上表の「読み取れる内容」は、目次の章題と、公式紹介文・書評で確認できる範囲での説明です。各章の詳細な筋書きは、原書で確認してください。
+                        </p>
+                    </blockquote>
+                </section>
+                <section class="section" id="step-5">
+                    <h2>Step 5 部ごとの読み解き</h2>
+                    <h3 id="step-5-1">5-1. 第1部「ハッカーの誕生」</h3>
+                    <p><strong>押さえる点</strong></p>
+                    <ol>
+                        <li>
+                            <strong>少年期の「ルールの穴探し」</strong><br />
+                            バスの乗車券システムの仕組みを覚え、無料で一日中バスに乗れるようにしたという逸話があります。運転手がのちに裁判で人柄を証言したとも伝えられています
+                            <a class="ref" href="#S22">【S22】</a>。
+                        </li>
+                        <li>
+                            <strong>興味の広がり</strong><br />
+                            書評によれば、マジック、アマチュア無線、ピッキングなど、「仕組みを解き明かす」遊びを好みました
+                            <a class="ref" href="#S28">【S28】</a>。
+                        </li>
+                        <li>
+                            <strong>電話会社への潜入</strong><br />
+                            書評では、電話会社の社員を装って建物に入り、技術マニュアルを持ち出した話が紹介されています
+                            <a class="ref" href="#S28">【S28】</a>。
+                        </li>
+                        <li>
+                            <strong>最初の大きな事件</strong><br />
+                            1988年、DEC(Digital Equipment
+                            Corporation)のソフトウェアを盗んだ件で有罪となり、1年の刑を受けました
+                            <a class="ref" href="#S6">【S6】</a
+                            ><a class="ref" href="#S13">【S13】</a>。損害額は、報道では約100万ドル
+                            <a class="ref" href="#S13">【S13】</a
+                            >、書評ではDEC側の主張として約400万ドル
+                            <a class="ref" href="#S28">【S28】</a> と、資料により異なります。
+                        </li>
+                        <li>
+                            <strong>友人との関係</strong><br />
+                            DEC侵入では友人の Lenny DiCicco も関わったと報じられています
+                            <a class="ref" href="#S25">【S25】</a>。
+                        </li>
+                    </ol>
+                    <p><strong>初学者向けの学び</strong></p>
+                    <ul>
+                        <li>
+                            「ルールの穴」は、技術的な欠陥だけでなく、<strong>手続きや運用の隙</strong>にもあります。
+                        </li>
+                        <li>
+                            未成年期の軽い遊びが、成人後の重大な犯罪に連続している点は、本書全体の重いテーマです。
+                        </li>
+                    </ul>
+                    <h3 id="step-5-2">5-2. 第2部「Eric」</h3>
+                    <p><strong>押さえる点</strong></p>
+                    <ol>
+                        <li>
+                            <strong>盗聴をめぐる攻防</strong><br />
+                            書評によれば、ミトニックは、保護観察官が自分を盗聴していないかを電話会社を通じて調べ、盗聴を止めさせようとしたとされます
+                            <a class="ref" href="#S28">【S28】</a>。章題にも "You Tap Me, I Tap You"
+                            などが並びます <a class="ref" href="#S2">【S2】</a>。
+                        </li>
+                        <li>
+                            <strong>追跡される側の視点</strong><br />
+                            "Traffic Analysis"(通信の分析)、"Reverse
+                            Sting"(逆おとり捜査)といった章題は、追う側と追われる側が互いの手の内を読み合う展開を示唆しています
+                            <a class="ref" href="#S2">【S2】</a>。
+                        </li>
+                        <li>
+                            <strong>失踪</strong><br />
+                            1992年、保護観察中に所在不明となり、約2年半の逃亡が始まります
+                            <a class="ref" href="#S8">【S8】</a
+                            ><a class="ref" href="#S30">【S30】</a>。
+                        </li>
+                    </ol>
+                    <p><strong>初学者向けの学び</strong></p>
+                    <ul>
+                        <li>
+                            通信の「中身」を読まれなくても、<strong>誰と・いつ・どれだけ通信したか</strong>というパターンだけで、行動は推測されます(トラフィック分析の考え方)。
+                        </li>
+                    </ul>
+                    <h3 id="step-5-3">5-3. 第3部「On the Run(逃亡)」</h3>
+                    <p><strong>押さえる点</strong></p>
+                    <ol>
+                        <li>
+                            <strong>偽名と各地の移動</strong><br />
+                            公式紹介文によれば、偽の身元と複数の都市を使い分けながらFBIとの追跡劇を続けました
+                            <a class="ref" href="#S1">【S1】</a>。
+                        </li>
+                        <li>
+                            <strong>Motorolaの事例(1992年)</strong><br />
+                            デンバーに偽名で暮らしていた時期、携帯電話 MicroTAC Ultralite
+                            のソースコードを狙いました。動機は、自分の位置を追跡されないようにするためだったと説明されています。のちに本人は、この判断を後悔していると語っています
+                            <a class="ref" href="#S10">【S10】</a>。
+                            本人の上院証言によれば、仕事帰りの
+                            15〜20分ほどの間に、電話一本でファームウェアのソースコードを自分が使うサーバに送らせたとのことです
+                            <a class="ref" href="#S4">【S4】</a>。
+                        </li>
+                        <li>
+                            <strong>盗んだコードの保管場所</strong><br />
+                            書評は、大学や企業のサーバにある<strong>使われていないアカウントの空き容量</strong>を保管場所に使った点に触れています
+                            <a class="ref" href="#S21">【S21】</a>。
+                        </li>
+                        <li>
+                            <strong>Novell の事例</strong><br />
+                            Novell 社の元社員 Shawn Nunley
+                            は、のちにミトニックの弁護団に協力し、友人になったと、遺族の訃報に記されています
+                            <a class="ref" href="#S12">【S12】</a>。詳細は Step 6 で扱います。
+                        </li>
+                    </ol>
+                    <p><strong>初学者向けの学び</strong></p>
+                    <ul>
+                        <li>
+                            大企業の機密が、<strong>電話一本の信頼</strong>で動いてしまう現実が、本書の最大の警告です。
+                        </li>
+                        <li>
+                            使われていないアカウントは、攻撃者に利用される温床になります(Step 11
+                            の対策に反映)。
+                        </li>
+                    </ul>
+                    <h3 id="step-5-4">5-4. 第4部「An End and a Beginning」</h3>
+                    <p><strong>押さえる点</strong></p>
+                    <ol>
+                        <li>
+                            <strong>Shimomura 氏との対決</strong><br />
+                            章題 "Hacking the Samurai" は、事件の経緯から、Tsutomu Shimomura
+                            氏への侵入を指すと読むのが自然です(筆者の推測)。1994年のクリスマスに、サンディエゴにある同氏のコンピュータへ侵入したことが、逮捕への流れを生みました
+                            <a class="ref" href="#S9">【S9】</a>。
+                        </li>
+                        <li>
+                            <strong>逮捕</strong><br />
+                            1995年2月15日午前1時30分、ノースカロライナ州ローリーの自宅でFBIに逮捕されました
+                            <a class="ref" href="#S6">【S6】</a>。
+                        </li>
+                        <li>
+                            <strong>本人の視点での総括</strong><br />
+                            章題 "Winning the Scapegoat Sweepstakes"
+                            は、ミトニック本人が「自分は見せしめにされた」と捉えていることを示唆します(あくまで本人側の見解として読む必要があります)。
+                        </li>
+                        <li>
+                            <strong>出所後</strong><br />
+                            終章 "Aftermath" で、出所後の再出発が語られます
+                            <a class="ref" href="#S2">【S2】</a>。
+                        </li>
+                    </ol>
+                </section>
+                <section class="section" id="step-6">
+                    <h2>Step 6 ソーシャルエンジニアリング徹底解説</h2>
+                    <h3 id="step-6-1">6-1. 定義</h3>
+                    <p>
+                        <strong>ソーシャルエンジニアリング</strong
+                        >とは、システムの欠陥ではなく、<strong>人の判断・善意・思い込み</strong>を突く攻撃手法です。ミトニック自身が上院の証言で、「ほとんど技術的な攻撃をする必要がなかった」ほど成功率が高かったと述べています
+                        <a class="ref" href="#S4">【S4】</a><a class="ref" href="#S5">【S5】</a>。
+                    </p>
+                    <h3 id="step-6-2">6-2. 人が動かされる心理</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>心理的な傾向</th>
+                                    <th>説明</th>
+                                    <th>防ぐ考え方</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>権威への服従</td>
+                                    <td>上司・管理部門を名乗る相手に従う</td>
+                                    <td>肩書きではなく、手続きで確認する</td>
+                                </tr>
+                                <tr>
+                                    <td>親切心</td>
+                                    <td>困っている相手を助けたくなる</td>
+                                    <td>助ける前に、本人確認の手順を挟む</td>
+                                </tr>
+                                <tr>
+                                    <td>緊急性</td>
+                                    <td>急かされると確認を省く</td>
+                                    <td>急ぎの依頼ほど、一度立ち止まる</td>
+                                </tr>
+                                <tr>
+                                    <td>親近感</td>
+                                    <td>同じ組織・同じ話題だと警戒が下がる</td>
+                                    <td>内部用語を知っていても本人証明にならない</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <blockquote>
+                        <p>
+                            注:この表は、社会心理学で一般に知られる傾向を整理した筆者の補足であり、本書や出典の記述そのものではありません。
+                        </p>
+                    </blockquote>
+                    <h3 id="step-6-3">6-3. ケーススタディ:Novell の本人確認が破られた構図</h3>
+                    <p>
+                        米ロイター通信の記事は、ミトニックと Nunley
+                        氏の再会を取り上げ、1992年のNovell への侵入の構図を説明しています
+                        <a class="ref" href="#S11">【S11】</a
+                        >。ここでは、<strong>「何が確認の仕組みの弱点だったか」</strong>に絞って整理します。
+                    </p>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg3"
+                            role="img"
+                            aria-label="Mermaid 図 3"
+                        ></div>
+                    </div>
+                    <p><strong>この事例の教訓</strong></p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>弱点</th>
+                                    <th>解説</th>
+                                    <th>対策</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>確認手段が攻撃者の影響下にあった</td>
+                                    <td>留守電の内容を攻撃者が書き換えられた</td>
+                                    <td>
+                                        本人確認は、<strong>攻撃者が触れない別経路</strong>(人事台帳の番号、直接対面など)で行う
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>複数部署が別々に「善意」で協力した</td>
+                                    <td>各担当者は自分の範囲では不自然さに気づかなかった</td>
+                                    <td>部署間で依頼内容を突き合わせる運用にする</td>
+                                </tr>
+                                <tr>
+                                    <td>管理情報を電話で教えた</td>
+                                    <td>管理用の情報が口頭で渡った</td>
+                                    <td>管理情報は、問い合わせだけでは開示しない</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        Nunley
+                        氏は、被害を受けた側として正義を求め、のちに弁護側へ連絡するという経緯をたどったと報じられています
+                        <a class="ref" href="#S11">【S11】</a
+                        ><a class="ref" href="#S12">【S12】</a>。
+                    </p>
+                    <h3 id="step-6-4">6-4. ケーススタディ:Motorola の事例</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>時期・場所</td>
+                                    <td>1992年、デンバー <a class="ref" href="#S10">【S10】</a></td>
+                                </tr>
+                                <tr>
+                                    <td>目的</td>
+                                    <td>
+                                        追跡を避けるため、携帯電話の識別情報を操作できないかと考えた
+                                        <a class="ref" href="#S10">【S10】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>手段</td>
+                                    <td>
+                                        電話での説得（ソーシャルエンジニアリング）<a
+                                            class="ref"
+                                            href="#S4"
+                                            >【S4】</a
+                                        ><a class="ref" href="#S10">【S10】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>結果</td>
+                                    <td>
+                                        短時間でファームウェアのソースコードを入手
+                                        <a class="ref" href="#S4">【S4】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>後日談</td>
+                                    <td>
+                                        本人は「愚かで悔やまれる判断」だったと語る
+                                        <a class="ref" href="#S10">【S10】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        <strong>教訓:</strong>
+                        この事例では、「内部の人間らしい話し方」と「それらしい依頼」だけで、短時間のうちにファームウェアのソースコードが外部のサーバへ送られました
+                        <a class="ref" href="#S4">【S4】</a><a class="ref" href="#S10">【S10】</a>。
+                    </p>
+                    <h3 id="step-6-5">6-5. 現代でも通用する実例</h3>
+                    <p>
+                        書評は、2012年8月に起きた、ジャーナリスト Mat Honan
+                        氏のアカウント乗っ取り事例を挙げています
+                        <a class="ref" href="#S21">【S21】</a>。Honan
+                        氏本人の報告によれば、攻撃は次の順序で進みました
+                        <a class="ref" href="#S40">【S40】</a
+                        ><a class="ref" href="#S41">【S41】</a>。
+                    </p>
+                    <ol>
+                        <li>
+                            <strong>Amazon</strong>:攻撃者が Amazon
+                            のカスタマーサポートに電話し、Honan
+                            氏のアカウントに自分で用意したカード番号を追加させた。続く別の電話で、そのカード番号を本人確認に使ってアカウントのメールアドレスを変更させ、アカウントに入り込んで、登録済みカード番号の下4桁を入手した。
+                        </li>
+                        <li>
+                            <strong>Apple</strong>:攻撃者が Apple
+                            のサポートに電話し、請求先住所と、Amazon
+                            で入手したカード番号の下4桁を示して、Apple
+                            ID(iCloud)のアカウント復旧を通過し、一時パスワードを発行させた。
+                        </li>
+                        <li>
+                            <strong>その後</strong>:iCloud
+                            を足がかりに、ほかのアカウントの乗っ取りや端末の遠隔消去へと被害が広がった。
+                        </li>
+                    </ol>
+                    <p>
+                        Amazon
+                        が画面上に表示しても問題ないとしていた情報(カード番号の下4桁)を、Apple
+                        は本人確認の根拠にしていた、という<strong>企業間の確認基準のずれ</strong>が突かれた事例です
+                        <a class="ref" href="#S40">【S40】</a
+                        ><a class="ref" href="#S41">【S41】</a
+                        >。ミトニックの時代の手法は、形を変えて今も有効です。
+                    </p>
+                </section>
+                <section class="section" id="step-7">
+                    <h2>Step 7 追跡と逮捕を技術面から見る</h2>
+                    <h3 id="step-7-1">7-1. 追跡の流れ</h3>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg4"
+                            role="img"
+                            aria-label="Mermaid 図 4"
+                        ></div>
+                    </div>
+                    <p>
+                        根拠:侵入の発端は <a class="ref" href="#S9">【S9】</a>、Shimomura
+                        氏が侵入者を絞り込みローリーの携帯電話網に行き着いたことは
+                        <a class="ref" href="#S30">【S30】</a>、携帯電話の探知機器による位置特定は
+                        <a class="ref" href="#S25">【S25】</a
+                        ><a class="ref" href="#S29">【S29】</a
+                        >、逮捕日時と「2週間の電子的追跡」は米司法省の発表
+                        <a class="ref" href="#S6">【S6】</a> によります。
+                    </p>
+                    <h3 id="step-7-2">7-2. 追う側の人物:Tsutomu Shimomura</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>立場</td>
+                                    <td>
+                                        サンディエゴ・スーパーコンピュータ・センター(SDSC)の上級研究員
+                                        <a class="ref" href="#S7">【S7】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>国籍・出自</td>
+                                    <td>
+                                        日本国籍、米国ニュージャージー州プリンストンで育った
+                                        <a class="ref" href="#S9">【S9】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>事件での役割</td>
+                                    <td>
+                                        追跡の分析と、FBIの捜査支援
+                                        <a class="ref" href="#S6">【S6】</a
+                                        ><a class="ref" href="#S7">【S7】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>著書</td>
+                                    <td>
+                                        John Markoff との共著『Takedown』（Hyperion）<a
+                                            class="ref"
+                                            href="#S7"
+                                            >【S7】</a
+                                        ><a class="ref" href="#S9">【S9】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        日本の読者にとっては、追跡側の中心人物が日本国籍だったという点も興味深い事実です。
+                    </p>
+                    <h3 id="step-7-3">7-3. 同じ事件を「別の視点」で描いた本</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>書籍</th>
+                                    <th>立場</th>
+                                    <th>内容の傾向</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>『Takedown』(Shimomura / Markoff)</td>
+                                    <td>追跡側</td>
+                                    <td>
+                                        追跡と逮捕の過程を詳細に描く
+                                        <a class="ref" href="#S7">【S7】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>『The Fugitive Game』(Jonathan Littman)</td>
+                                    <td>ミトニックに同情的</td>
+                                    <td>
+                                        ミトニックは社会の脅威ではなく「無害な変わり者」だと論じる
+                                        <a class="ref" href="#S7">【S7】</a
+                                        ><a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>『Ghost in the Wires』(Mitnick / Simon)</td>
+                                    <td>本人</td>
+                                    <td>
+                                        本人の視点で全体を語る <a class="ref" href="#S1">【S1】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        同じ事件でも、<strong>誰が語るか</strong>で描かれ方が大きく変わります。複数の本を読み比べることが、最良の学び方です。
+                    </p>
+                </section>
+                <section class="section" id="step-8">
+                    <h2>Step 8 裁判・量刑と論争点</h2>
+                    <h3 id="step-8-1">8-1. 事実関係の整理</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>時期</th>
+                                    <th>出来事</th>
+                                    <th>出典</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1988年</td>
+                                    <td>
+                                        ロサンゼルスで、コンピュータプログラムの窃盗と企業ネットワークへの侵入で有罪。1年の刑
+                                    </td>
+                                    <td><a class="ref" href="#S6">【S6】</a></td>
+                                </tr>
+                                <tr>
+                                    <td>1995年2月</td>
+                                    <td>
+                                        ローリーで逮捕。ノースカロライナで23件の不正アクセス装置関連の罪で起訴
+                                    </td>
+                                    <td>
+                                        <a class="ref" href="#S6">【S6】</a
+                                        ><a class="ref" href="#S8">【S8】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1999年3月16日</td>
+                                    <td>
+                                        司法取引の合意書に署名(takedown.com
+                                        はこの日を有罪答弁日とするが、同月18日の報道は「合意書に署名し、裁判官の承認待ち」と伝える)
+                                    </td>
+                                    <td>
+                                        <a class="ref" href="#S8">【S8】</a
+                                        ><a class="ref" href="#S39">【S39】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1999年3月26日</td>
+                                    <td>
+                                        法廷で有罪を認める(ノースカロライナの5件と、カリフォルニア北部地区の2件)
+                                    </td>
+                                    <td>
+                                        <a class="ref" href="#S8">【S8】</a
+                                        ><a class="ref" href="#S38">【S38】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>勾留期間</td>
+                                    <td>約4年を勾留として算入。報道では「ほぼ5年の収監」とも</td>
+                                    <td>
+                                        <a class="ref" href="#S5">【S5】</a
+                                        ><a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2000年1月</td>
+                                    <td>出所</td>
+                                    <td>
+                                        <a class="ref" href="#S12">【S12】</a
+                                        ><a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出所後の制限</td>
+                                    <td>
+                                        裁判所命令で、コンピュータや携帯電話などの利用を禁じられた(2000年3月時点)
+                                    </td>
+                                    <td><a class="ref" href="#S5">【S5】</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-8-2">8-2. 論点を整理する</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>論点</th>
+                                    <th>厳罰を支持する側の見方</th>
+                                    <th>刑が重すぎたとする側の見方</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>被害の大きさ</td>
+                                    <td>
+                                        企業は数百万ドル規模の損害を主張（例:DEC）<a
+                                            class="ref"
+                                            href="#S28"
+                                            >【S28】</a
+                                        >
+                                    </td>
+                                    <td>
+                                        報道では約100万ドルの被害額との記載もあり、資料により幅がある
+                                        <a class="ref" href="#S13">【S13】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>動機</td>
+                                    <td>不正侵入は、動機に関係なく犯罪</td>
+                                    <td>
+                                        検察側証人も、金銭を取ろうとしたことはないと述べたと、訃報に記載
+                                        <a class="ref" href="#S15">【S15】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>量刑</td>
+                                    <td>再犯・逃亡があった以上、重い処分は妥当</td>
+                                    <td>
+                                        司法側の過剰な熱意だったと見る人が多いと、AP通信は伝える
+                                        <a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>影響</td>
+                                    <td>抑止効果を重視</td>
+                                    <td>
+                                        重大な犯罪と、若者のいたずら的行為を区別する契機になったと、AP通信は評価
+                                        <a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <blockquote>
+                        <p>
+                            重要:ここでは<strong>どちらかが正しいと断定しません</strong>。事実(有罪・量刑・期間)と、評価(重い・妥当)を分けて読むことが、情報リテラシーの基本です。
+                        </p>
+                    </blockquote>
+                </section>
+                <section class="section" id="step-9">
+                    <h2>Step 9 神話と現実</h2>
+                    <p>
+                        ミトニックには、事実以上に誇張された物語がつきまといました。AP通信も、誇張された話が広まり、時に過剰な恐怖を生んだと伝えています
+                        <a class="ref" href="#S14">【S14】</a>。
+                    </p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>よくある誤解</th>
+                                    <th>確認できる事実</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>国家機密のシステムを自在に操れる超人</td>
+                                    <td>
+                                        本人の証言によれば、侵入の多くは電話を使った説得(ソーシャルエンジニアリング)が中心で、技術的な攻撃はほとんど不要だった
+                                        <a class="ref" href="#S4">【S4】</a
+                                        ><a class="ref" href="#S5">【S5】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>金銭目的の犯罪者</td>
+                                    <td>
+                                        訃報によれば、裁判の連邦検察官が「被害者から金銭を一切取ろうとしなかった」と証言したとされる
+                                        <a class="ref" href="#S15">【S15】</a
+                                        >。これは証言として伝えられた内容であり、本ガイドでは確定事実としては扱わない
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>無害な少年のいたずら</td>
+                                    <td>
+                                        企業側は損害を主張し、有罪を認めている。重大な不正アクセスであったことも事実
+                                        <a class="ref" href="#S8">【S8】</a
+                                        ><a class="ref" href="#S13">【S13】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出所後も犯罪者のまま</td>
+                                    <td>
+                                        出所後は、許可を得て行う侵入テストや、啓発活動に従事した
+                                        <a class="ref" href="#S12">【S12】</a
+                                        ><a class="ref" href="#S18">【S18】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        ミトニック本人も、「ハッカー」という言葉が報道で歪められたと、上院で述べています
+                        <a class="ref" href="#S4">【S4】</a
+                        >。<strong>「伝説」ではなく「一次情報」で語る</strong>ことが重要です。
+                    </p>
+                </section>
+                <section class="section" id="step-10">
+                    <h2>Step 10 出所後の歩みと、その後</h2>
+                    <h3 id="step-10-1">10-1. 上院での証言(2000年3月2日)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>場の性格</td>
+                                    <td>
+                                        米上院の政府問題委員会が、連邦政府の情報システムの安全性について開いた公聴会
+                                        <a class="ref" href="#S4">【S4】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ミトニックの主張</td>
+                                    <td>
+                                        技術的対策に巨額を投じても、電話一本で人を動かされれば無駄になる
+                                        <a class="ref" href="#S5">【S5】</a
+                                        ><a class="ref" href="#S33">【S33】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>提案</td>
+                                    <td>
+                                        連邦職員や企業の従業員に、ソーシャルエンジニアリングを見抜く訓練を行うべき
+                                        <a class="ref" href="#S5">【S5】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>動機について</td>
+                                    <td>
+                                        好奇心、知的挑戦、現実逃避だったと説明
+                                        <a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-10-2">10-2. 実業家・啓発者として</h3>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg5"
+                            role="img"
+                            aria-label="Mermaid 図 5"
+                        ></div>
+                    </div>
+                    <ul>
+                        <li>
+                            KnowBe4
+                            では、30年以上の実体験を、従業員向けのオンライン研修教材に落とし込みました
+                            <a class="ref" href="#S20">【S20】</a>。
+                        </li>
+                        <li>
+                            彼の死後も、Mitnick Security Consulting
+                            は、技術的手法とソーシャルエンジニアリングを組み合わせる「Global Ghost
+                            Team」を擁すると紹介されています
+                            <a class="ref" href="#S27">【S27】</a>。
+                        </li>
+                        <li>
+                            追悼記事は、彼が許可を得て組織に侵入する技能を、一般の人々や企業を教育する実演に活かしたと記しています
+                            <a class="ref" href="#S19">【S19】</a>。
+                        </li>
+                    </ul>
+                    <h3 id="step-10-3">10-3. 死去</h3>
+                    <p>
+                        2023年7月16日、膵臓がんとの1年以上の闘病の末に59歳で亡くなりました
+                        <a class="ref" href="#S12">【S12】</a
+                        ><a class="ref" href="#S13">【S13】</a>。
+                    </p>
+                </section>
+                <section class="section" id="step-11">
+                    <h2>Step 11 現代の防御に活かす</h2>
+                    <p>
+                        本書の最大の価値は、<strong>「攻撃者の視点を借りて、防御を設計する」</strong>ことにあります。以下は、本書の事例を踏まえた筆者の整理です(出典の記述そのものではありません)。
+                    </p>
+                    <h3 id="step-11-1">11-1. 組織向けチェックリスト</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>対策</th>
+                                    <th>具体例</th>
+                                    <th>本書の事例との対応</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>本人確認を別経路で行う</td>
+                                    <td>
+                                        折り返しは台帳に登録済みの番号へ。相手が提示した番号は使わない
+                                    </td>
+                                    <td>Novell:確認手段を攻撃者が支配していた</td>
+                                </tr>
+                                <tr>
+                                    <td>例外対応を作らない</td>
+                                    <td>急ぎ・役職者の依頼でも、承認手順を省かない</td>
+                                    <td>Motorola:内部者らしい依頼で機密が動いた</td>
+                                </tr>
+                                <tr>
+                                    <td>ソースコード・設計情報の持ち出し制御</td>
+                                    <td>依頼ベースの転送に承認と記録を必須にする</td>
+                                    <td>Motorola、Novell</td>
+                                </tr>
+                                <tr>
+                                    <td>休眠アカウントの棚卸し</td>
+                                    <td>使われていないアカウントを定期的に無効化</td>
+                                    <td>
+                                        空きアカウントが保管場所に使われた
+                                        <a class="ref" href="#S21">【S21】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>管理情報を口頭で開示しない</td>
+                                    <td>パスワード・留守電管理情報などを電話で伝えない</td>
+                                    <td>Novell:管理情報の入手</td>
+                                </tr>
+                                <tr>
+                                    <td>継続的な訓練</td>
+                                    <td>
+                                        ミトニック自身が提案した、従業員教育を実施
+                                        <a class="ref" href="#S5">【S5】</a>
+                                    </td>
+                                    <td>上院証言</td>
+                                </tr>
+                                <tr>
+                                    <td>通報しやすい文化</td>
+                                    <td>「怪しいと思った」で報告して責められない</td>
+                                    <td>全般</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-11-2">11-2. 個人向けチェックリスト</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>対策</th>
+                                    <th>具体例</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>急かされたら止まる</td>
+                                    <td>「今すぐ」「アカウントが止まる」は典型的な圧力</td>
+                                </tr>
+                                <tr>
+                                    <td>連絡先は自分で調べる</td>
+                                    <td>
+                                        受信した番号やリンクではなく、公式サイトや契約書の連絡先を使う
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>多要素認証を有効にする</td>
+                                    <td>パスワードが漏れても被害を抑える</td>
+                                </tr>
+                                <tr>
+                                    <td>サポート窓口の本人確認を強化する</td>
+                                    <td>可能なサービスでは、追加の認証設定を使う</td>
+                                </tr>
+                                <tr>
+                                    <td>情報を小出しにしない</td>
+                                    <td>一見無害な情報も、組み合わせで本人確認に使われる</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id="step-11-3">11-3. 不審な依頼への判断フロー</h3>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg6"
+                            role="img"
+                            aria-label="Mermaid 図 6"
+                        ></div>
+                    </div>
+                    <h3 id="step-11-4">11-4. 生成AI時代への接続(筆者の見解)</h3>
+                    <p>
+                        米連邦捜査局(FBI)は2024年12月3日の注意喚起で、犯罪者が生成AIで作った音声を使い、近親者や公人になりすまして送金を求めたり、口座名義人を装って銀行口座へアクセスしたりしていると警告しています。対策として、家族間で合言葉を決めることや、いったん電話を切って既知の番号へかけ直すことを勧めています
+                        <a class="ref" href="#S37">【S37】</a
+                        >。これは、本書が示した「声だけで相手を信用してしまう」リスクと同じ構図です。したがって、<strong>「声や文面が本物らしい」ことを本人確認の根拠にしない</strong>という原則が、一層重要になると筆者は考えます(この結論は筆者の見解です。被害件数などの統計は本ガイドでは確認していません)。
+                    </p>
+                </section>
+                <section class="section" id="step-12">
+                    <h2>Step 12 批判的に読む</h2>
+                    <h3 id="step-12-1">12-1. 評価の分かれ方</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>評者・情報源</th>
+                                    <th>立場</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Richard Bejtlich(Mandiant
+                                        最高セキュリティ責任者、TaoSecurity ブログ主宰)
+                                    </td>
+                                    <td>高評価</td>
+                                    <td>
+                                        過去2冊(2002年、2005年)を4つ星としたが、本書は5つ星とし、細部の詳しさを評価
+                                        <a class="ref" href="#S16">【S16】</a
+                                        ><a class="ref" href="#S26">【S26】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>J.D. Biersdorfer(New York Times Book Review)</td>
+                                    <td>好意的</td>
+                                    <td>
+                                        技術系のスリラーのように読め、悪意や金銭目的が強まる前の時代への郷愁を誘うと評価
+                                        <a class="ref" href="#S3">【S3】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>『Booklist』</td>
+                                    <td>好意的</td>
+                                    <td>
+                                        人間味ある出来事が物語を動かし、ソーシャルエンジニアリングが中核だと評価
+                                        <a class="ref" href="#S3">【S3】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>The Hacker News</td>
+                                    <td>好意的</td>
+                                    <td>
+                                        技術力とソーシャルエンジニアリングを称賛
+                                        <a class="ref" href="#S17">【S17】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Kevin Mitnick Security に掲載された書評</td>
+                                    <td>批判的な論点を含む</td>
+                                    <td>
+                                        反省の欠如を感じるという批判や、100ページほどで主な手口が出尽くすという感想
+                                        <a class="ref" href="#S23">【S23】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>一般読者のレビュー</td>
+                                    <td>賛否</td>
+                                    <td>
+                                        「本人に有利な語り口かもしれないが驚くべき実話」という声もある
+                                        <a class="ref" href="#S32">【S32】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CSO Online の記事</td>
+                                    <td>論争の紹介</td>
+                                    <td>
+                                        本書の発売時、ハッカーコミュニティの印象を良くする機会を逃したのではないかという議論を紹介
+                                        <a class="ref" href="#S16">【S16】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <blockquote>
+                        <p>
+                            補足:Bejtlich の書評は、元のブログページを直接取得できなかったため、CSO
+                            Online と書評集約サイトの引用を通じて確認しています(Step 16)。
+                        </p>
+                    </blockquote>
+                    <h3 id="step-12-2">12-2. 読むときの5つの注意点</h3>
+                    <ol>
+                        <li>
+                            <strong>本人の語りである</strong> ―― 自分に有利な省略や強調があり得ます
+                            <a class="ref" href="#S32">【S32】</a>。
+                        </li>
+                        <li>
+                            <strong>時代背景</strong> ――
+                            1980〜90年代の電話網と企業ネットワークは、現在とは構造が異なります。
+                        </li>
+                        <li>
+                            <strong>事実と評価を分ける</strong> ――
+                            「有罪になった」は事実、「重すぎた」は評価です。
+                        </li>
+                        <li>
+                            <strong>他の視点と比べる</strong> ―― 『Takedown』『The Fugitive
+                            Game』などと読み比べます(Step 7)。
+                        </li>
+                        <li>
+                            <strong>手口の再現を目的にしない</strong> ―― 学ぶのは「防ぐ設計」です。
+                        </li>
+                    </ol>
+                </section>
+                <section class="section" id="step-13">
+                    <h2>Step 13 学習ロードマップ</h2>
+                    <h3 id="step-13-1">13-1. 読む順番の例</h3>
+                    <div class="diagram-wrap">
+                        <div
+                            class="diagram"
+                            data-dg="dg7"
+                            role="img"
+                            aria-label="Mermaid 図 7"
+                        ></div>
+                    </div>
+                    <h3 id="step-13-2">13-2. 関連書籍</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>書名</th>
+                                    <th>著者</th>
+                                    <th>位置づけ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>The Art of Deception</td>
+                                    <td>Kevin Mitnick, William L. Simon</td>
+                                    <td>
+                                        ソーシャルエンジニアリングの解説書（Bejtlich
+                                        の過去の書評対象）<a class="ref" href="#S26">【S26】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>The Art of Intrusion</td>
+                                    <td>Kevin Mitnick, William L. Simon</td>
+                                    <td>
+                                        実際の侵入事例の紹介（同上）<a class="ref" href="#S26"
+                                            >【S26】</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>The Art of Invisibility</td>
+                                    <td>Kevin Mitnick, Robert Vamosi</td>
+                                    <td>
+                                        一般向けのプライバシー防衛策（著者紹介に記載）<a
+                                            class="ref"
+                                            href="#S1"
+                                            >【S1】</a
+                                        ><a class="ref" href="#S34">【S34】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Takedown</td>
+                                    <td>Tsutomu Shimomura, John Markoff</td>
+                                    <td>
+                                        追跡側から見た逮捕劇 <a class="ref" href="#S7">【S7】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>The Fugitive Game</td>
+                                    <td>Jonathan Littman</td>
+                                    <td>
+                                        ミトニックに同情的な視点 <a class="ref" href="#S7">【S7】</a
+                                        ><a class="ref" href="#S14">【S14】</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>The Cuckoo's Egg</td>
+                                    <td>Clifford Stoll</td>
+                                    <td>
+                                        Takedown が「現代版」と位置づけられた先行作
+                                        <a class="ref" href="#S7">【S7】</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="section" id="step-14">
+                    <h2>Step 14 理解度チェック</h2>
+                    <details class="qa">
+                        <summary>Q1. 本書の核心となる手法は何ですか</summary>
+                        <div class="qa-body">
+                            <p>
+                                ソーシャルエンジニアリングです。技術的な攻撃よりも、人を説得して情報や操作を引き出す手法が中心に語られます
+                                <a class="ref" href="#S3">【S3】</a
+                                ><a class="ref" href="#S4">【S4】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>Q2. ミトニックが逮捕されたのはいつ、どこですか</summary>
+                        <div class="qa-body">
+                            <p>
+                                1995年2月15日、ノースカロライナ州ローリーです
+                                <a class="ref" href="#S6">【S6】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>Q3. 追跡に協力した日本国籍のセキュリティ専門家は誰ですか</summary>
+                        <div class="qa-body">
+                            <p>
+                                Tsutomu Shimomura 氏です。SDSC の上級研究員でした
+                                <a class="ref" href="#S7">【S7】</a
+                                ><a class="ref" href="#S9">【S9】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            Q4. Novell の事例で、本人確認が成立してしまった理由は何ですか
+                        </summary>
+                        <div class="qa-body">
+                            <p>
+                                確認に使った留守番電話の応答を、攻撃者があらかじめ書き換えていたため、確認手段そのものが攻撃者の支配下にありました
+                                <a class="ref" href="#S11">【S11】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>Q5. 上院でミトニックが提案した対策は何ですか</summary>
+                        <div class="qa-body">
+                            <p>
+                                職員・従業員に、ソーシャルエンジニアリングを見抜く訓練を行うことです
+                                <a class="ref" href="#S5">【S5】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>
+                            Q6. 1999年の司法取引で、ミトニックは何件の罪を認めましたか
+                        </summary>
+                        <div class="qa-body">
+                            <p>
+                                ノースカロライナの5件と、カリフォルニア北部地区の2件で、合計7件です
+                                <a class="ref" href="#S8">【S8】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>Q7. 出所後、ミトニックが就いた企業での役職は何ですか</summary>
+                        <div class="qa-body">
+                            <p>
+                                KnowBe4 の Chief Hacking Officer です（2011年から）<a
+                                    class="ref"
+                                    href="#S18"
+                                    >【S18】</a
+                                ><a class="ref" href="#S20">【S20】</a>。
+                            </p>
+                        </div>
+                    </details>
+                    <details class="qa">
+                        <summary>Q8. 本書を読むときの最大の注意点を1つ挙げてください</summary>
+                        <div class="qa-body">
+                            <p>
+                                本書は本人の回想録であり、自分に有利な語りになっている可能性があるため、他の視点の資料と読み比べる必要があります
+                                <a class="ref" href="#S32">【S32】</a>。
+                            </p>
+                        </div>
+                    </details>
+                </section>
+                <section class="section" id="step-15">
+                    <h2>Step 15 出典一覧</h2>
+                    <blockquote>
+                        <p>取得日:2026年10月15日。URLは検索・取得時点のものです。</p>
+                    </blockquote>
+                    <h3 id="step-15-1">15-1. 書誌・公式情報</h3>
+                    <div class="src-list">
+                        <div class="src-card" id="S1">
+                            <span class="src-badge">S1</span>
+                            <div class="src-body">
+                                <div class="src-type">Google ブックス</div>
+                                <p class="src-desc">書誌情報、出版社紹介文、著者紹介</p>
+                                <a
+                                    class="src-url"
+                                    href="https://books.google.co.jp/books/about/Ghost_in_the_Wires.html?id=p-nRxITKc34C&amp;redir_esc=y"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://books.google.co.jp/books/about/Ghost_in_the_Wires.html?id=p-nRxITKc34C&amp;redir_esc=y</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S2">
+                            <span class="src-badge">S2</span>
+                            <div class="src-body">
+                                <div class="src-type">米国大学図書館目録(UNT)</div>
+                                <p class="src-desc">4部構成と章題の目次</p>
+                                <a
+                                    class="src-url"
+                                    href="https://discover.library.unt.edu/catalog/b7745289"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://discover.library.unt.edu/catalog/b7745289</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S3">
+                            <span class="src-badge">S3</span>
+                            <div class="src-body">
+                                <div class="src-type">Mitnick Security 公式</div>
+                                <p class="src-desc">公式紹介文と書評の抜粋</p>
+                                <a
+                                    class="src-url"
+                                    href="https://mitnicksecurity.com/ghost-in-the-wires"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://mitnicksecurity.com/ghost-in-the-wires</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S31">
+                            <span class="src-badge">S31</span>
+                            <div class="src-body">
+                                <div class="src-type">WorldCat</div>
+                                <p class="src-desc">Back Bay Books 版の書誌</p>
+                                <a
+                                    class="src-url"
+                                    href="https://search.worldcat.org/title/773175688"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://search.worldcat.org/title/773175688</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S24">
+                            <span class="src-badge">S24</span>
+                            <div class="src-body">
+                                <div class="src-type">Monoskop</div>
+                                <p class="src-desc">
+                                    共著者(William L. Simon)、序文(Wozniak)、NYT書評への参照
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://monoskop.org/log/?p=3096"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://monoskop.org/log/?p=3096</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S34">
+                            <span class="src-badge">S34</span>
+                            <div class="src-body">
+                                <div class="src-type">Hachette Book Group(出版社)</div>
+                                <p class="src-desc">
+                                    『The Art of Invisibility』の書誌(Kevin Mitnick、With Robert
+                                    Vamosi。Hachette Audio、2017年2月14日。2026年10月15日取得)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.hachettebookgroup.com/titles/kevin-mitnick/the-art-of-invisibility/9781478985846/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.hachettebookgroup.com/titles/kevin-mitnick/the-art-of-invisibility/9781478985846/</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="step-15-2">15-2. 事件・裁判に関する公的資料・当事者資料・報道</h3>
+                    <div class="src-list">
+                        <div class="src-card" id="S4">
+                            <span class="src-badge">S4</span>
+                            <div class="src-body">
+                                <div class="src-type">PBS Frontline</div>
+                                <p class="src-desc">2000年3月2日の上院証言(本人の発言記録)</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.pbs.org/wgbh/pages/frontline/shows/hackers/whoare/testimony.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.pbs.org/wgbh/pages/frontline/shows/hackers/whoare/testimony.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S5">
+                            <span class="src-badge">S5</span>
+                            <div class="src-body">
+                                <div class="src-type">Computerworld NZ</div>
+                                <p class="src-desc">上院公聴会の報道、司法取引、出所後の制限</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www2.computerworld.co.nz/article/95502/mitnick_schools_feds_hacking_101/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www2.computerworld.co.nz/article/95502/mitnick_schools_feds_hacking_101/</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S6">
+                            <span class="src-badge">S6</span>
+                            <div class="src-body">
+                                <div class="src-type">米司法省</div>
+                                <p class="src-desc">1995年2月15日の逮捕に関する発表</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.justice.gov/opa/pr/Pre_96/February95/89.txt.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.justice.gov/opa/pr/Pre_96/February95/89.txt.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S7">
+                            <span class="src-badge">S7</span>
+                            <div class="src-body">
+                                <div class="src-type">
+                                    SDSC(サンディエゴ・スーパーコンピュータ・センター)
+                                </div>
+                                <p class="src-desc">Shimomura 氏と『Takedown』に関する発表</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.sdsc.edu/news/1996/PR0115962.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://www.sdsc.edu/news/1996/PR0115962.html</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S8">
+                            <span class="src-badge">S8</span>
+                            <div class="src-body">
+                                <div class="src-type">takedown.com</div>
+                                <p class="src-desc">事件の概要(侵入、逮捕、司法取引)</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.takedown.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://www.takedown.com/</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S9">
+                            <span class="src-badge">S9</span>
+                            <div class="src-body">
+                                <div class="src-type">takedown.com(経歴ページ)</div>
+                                <p class="src-desc">Shimomura 氏とミトニックの経歴</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.takedown.com/bio/index.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://www.takedown.com/bio/index.html</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S30">
+                            <span class="src-badge">S30</span>
+                            <div class="src-body">
+                                <div class="src-type">CuD アーカイブ(NYT 記事の転載)</div>
+                                <p class="src-desc">追跡の経緯</p>
+                                <a
+                                    class="src-url"
+                                    href="https://wiretapped.mirrorservice.org/info/textfiles/CuD/cud713"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://wiretapped.mirrorservice.org/info/textfiles/CuD/cud713</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S33">
+                            <span class="src-badge">S33</span>
+                            <div class="src-body">
+                                <div class="src-type">PLUG メーリングリスト(豪州紙記事の転載)</div>
+                                <p class="src-desc">
+                                    上院公聴会での、技術対策よりも人への対策が重要という趣旨の発言
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://lists.plug.org.au/pipermail/plug/2000-March/011463.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://lists.plug.org.au/pipermail/plug/2000-March/011463.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S38">
+                            <span class="src-badge">S38</span>
+                            <div class="src-body">
+                                <div class="src-type">CNN</div>
+                                <p class="src-desc">1999年3月26日の有罪答弁の報道</p>
+                                <a
+                                    class="src-url"
+                                    href="https://us.cnn.com/US/9903/26/mitnick.plea/index.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://us.cnn.com/US/9903/26/mitnick.plea/index.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S39">
+                            <span class="src-badge">S39</span>
+                            <div class="src-body">
+                                <div class="src-type">NPR</div>
+                                <p class="src-desc">
+                                    1999年3月18日の報道(司法取引の合意書への署名、裁判官の承認待ち)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.npr.org/1999/03/18/1047114/hacker-deal"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.npr.org/1999/03/18/1047114/hacker-deal</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S29">
+                            <span class="src-badge">S29</span>
+                            <div class="src-body">
+                                <div class="src-type">Living Internet</div>
+                                <p class="src-desc">逮捕時の携帯電話追跡機器の使用、勾留期間</p>
+                                <a
+                                    class="src-url"
+                                    href="https://livinginternet.com/i/ia_hackers_mitnick.htm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://livinginternet.com/i/ia_hackers_mitnick.htm</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="step-15-3">15-2a. 法令・公的機関の注意喚起</h3>
+                    <div class="src-list">
+                        <div class="src-card" id="S35">
+                            <span class="src-badge">S35</span>
+                            <div class="src-body">
+                                <div class="src-type">e-Gov 法令検索(デジタル庁)</div>
+                                <p class="src-desc">
+                                    不正アクセス行為の禁止等に関する法律(平成11年法律第128号)第3条・第11条
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://laws.e-gov.go.jp/law/411AC0000000128"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://laws.e-gov.go.jp/law/411AC0000000128</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S36">
+                            <span class="src-badge">S36</span>
+                            <div class="src-body">
+                                <div class="src-type">Cornell Law School LII</div>
+                                <p class="src-desc">
+                                    18 U.S.C. § 1030(Computer Fraud and Abuse Act)の条文
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.law.cornell.edu/uscode/text/18/1030"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://www.law.cornell.edu/uscode/text/18/1030</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S37">
+                            <span class="src-badge">S37</span>
+                            <div class="src-body">
+                                <div class="src-type">FBI IC3</div>
+                                <p class="src-desc">
+                                    2024年12月3日の注意喚起(I-120324-PSA)。生成AIによる音声なりすましと対策
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.ic3.gov/PSA/2024/PSA241203"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://www.ic3.gov/PSA/2024/PSA241203</span></a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="step-15-4">15-3. 事例・報道・インタビュー</h3>
+                    <div class="src-list">
+                        <div class="src-card" id="S10">
+                            <span class="src-badge">S10</span>
+                            <div class="src-body">
+                                <div class="src-type">VICE Motherboard</div>
+                                <p class="src-desc">Motorola のソースコード入手の経緯</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.vice.com/en/article/kevin-mitnick-hack-motorola-source-code"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.vice.com/en/article/kevin-mitnick-hack-motorola-source-code</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S11">
+                            <span class="src-badge">S11</span>
+                            <div class="src-body">
+                                <div class="src-type">ロイター(InfoSec News 転載)</div>
+                                <p class="src-desc">Novell の事例と Nunley 氏との再会</p>
+                                <a
+                                    class="src-url"
+                                    href="https://seclists.org/isn/2002/Feb/112"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://seclists.org/isn/2002/Feb/112</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S12">
+                            <span class="src-badge">S12</span>
+                            <div class="src-body">
+                                <div class="src-type">訃報(Dignity Memorial)</div>
+                                <p class="src-desc">死去の事実、出所時期、Nunley 氏のエピソード</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.dignitymemorial.com/obituaries/las-vegas-nv/kevin-mitnick-11371668"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.dignitymemorial.com/obituaries/las-vegas-nv/kevin-mitnick-11371668</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S13">
+                            <span class="src-badge">S13</span>
+                            <div class="src-body">
+                                <div class="src-type">CNN(KEYT 転載)</div>
+                                <p class="src-desc">訃報、1988年のDEC事件、1999年の司法取引</p>
+                                <a
+                                    class="src-url"
+                                    href="https://keyt.com/news/2023/07/20/legendary-computer-hacker-kevin-mitnick-dies-at-59/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://keyt.com/news/2023/07/20/legendary-computer-hacker-kevin-mitnick-dies-at-59/</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S14">
+                            <span class="src-badge">S14</span>
+                            <div class="src-body">
+                                <div class="src-type">AP通信(ClickOnDetroit 掲載)</div>
+                                <p class="src-desc">訃報、誇張された逸話、量刑への評価</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.clickondetroit.com/tech/2023/07/20/pioneering-hacker-kevin-mitnick-fbi-wanted-felon-turned-security-guru-dead-at-59/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.clickondetroit.com/tech/2023/07/20/pioneering-hacker-kevin-mitnick-fbi-wanted-felon-turned-security-guru-dead-at-59/</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S15">
+                            <span class="src-badge">S15</span>
+                            <div class="src-body">
+                                <div class="src-type">Fortune</div>
+                                <p class="src-desc">訃報、検察側証人の証言への言及</p>
+                                <a
+                                    class="src-url"
+                                    href="https://fortune.com/2023/07/20/kevin-mitnick-dead-at-59-worlds-most-wanted-famous-hacker-cybersecurity"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://fortune.com/2023/07/20/kevin-mitnick-dead-at-59-worlds-most-wanted-famous-hacker-cybersecurity</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S18">
+                            <span class="src-badge">S18</span>
+                            <div class="src-body">
+                                <div class="src-type">The New Stack</div>
+                                <p class="src-desc">生年月日、2011年の KnowBe4 での役職</p>
+                                <a
+                                    class="src-url"
+                                    href="https://thenewstack.io/?p=22713781"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://thenewstack.io/?p=22713781</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S19">
+                            <span class="src-badge">S19</span>
+                            <div class="src-body">
+                                <div class="src-type">Boing Boing</div>
+                                <p class="src-desc">Mitnick Security による追悼文の紹介</p>
+                                <a
+                                    class="src-url"
+                                    href="https://boingboing.net/2023/07/19/kevin-mitnick-1963-2023.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://boingboing.net/2023/07/19/kevin-mitnick-1963-2023.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S20">
+                            <span class="src-badge">S20</span>
+                            <div class="src-body">
+                                <div class="src-type">KnowBe4 公式</div>
+                                <p class="src-desc">
+                                    Kevin Mitnick Security Awareness Training の説明
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://knowbe4.com/products/who-is-kevin-mitnick"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://knowbe4.com/products/who-is-kevin-mitnick</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S22">
+                            <span class="src-badge">S22</span>
+                            <div class="src-body">
+                                <div class="src-type">mjtsai.com</div>
+                                <p class="src-desc">訃報の抜粋(バスの逸話など)</p>
+                                <a
+                                    class="src-url"
+                                    href="https://mjtsai.com/blog/2023/07/24/kevin-mitnick-rip"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://mjtsai.com/blog/2023/07/24/kevin-mitnick-rip</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S25">
+                            <span class="src-badge">S25</span>
+                            <div class="src-body">
+                                <div class="src-type">FrenchWeb</div>
+                                <p class="src-desc">DEC事件の友人、携帯電話追跡の概要</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.frenchweb.fr/kevin-mitnick-le-pirate-le-plus-recherche-du-monde-est-decede/444341"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.frenchweb.fr/kevin-mitnick-le-pirate-le-plus-recherche-du-monde-est-decede/444341</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S27">
+                            <span class="src-badge">S27</span>
+                            <div class="src-body">
+                                <div class="src-type">Mitnick Security 公式ブログ</div>
+                                <p class="src-desc">追悼記事、Global Ghost Team の紹介</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.mitnicksecurity.com/blog/remembering-the-worlds-greatest-hacker-kevin-mitnick"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.mitnicksecurity.com/blog/remembering-the-worlds-greatest-hacker-kevin-mitnick</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S40">
+                            <span class="src-badge">S40</span>
+                            <div class="src-body">
+                                <div class="src-type">WIRED(当事者報告)</div>
+                                <p class="src-desc">
+                                    Mat Honan「How Apple and Amazon Security Flaws Led to My Epic
+                                    Hacking」(2012年8月6日)。本文は直接取得できず、内容は S41
+                                    などの報道で照合(Step 16)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.wired.com/2012/08/apple-amazon-mat-honan-hacking/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.wired.com/2012/08/apple-amazon-mat-honan-hacking/</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S41">
+                            <span class="src-badge">S41</span>
+                            <div class="src-body">
+                                <div class="src-type">Engadget</div>
+                                <p class="src-desc">
+                                    S40 の内容を要約した報道(Amazon
+                                    への2回の電話、カード番号下4桁による Apple の復旧)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.engadget.com/2012-08-06-mat-honan-details-the-amazon-and-apple-security-flaws-that-let-h.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.engadget.com/2012-08-06-mat-honan-details-the-amazon-and-apple-security-flaws-that-let-h.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="step-15-5">15-4. 書評・専門家の見解</h3>
+                    <div class="src-list">
+                        <div class="src-card" id="S16">
+                            <span class="src-badge">S16</span>
+                            <div class="src-body">
+                                <div class="src-type">CSO Online</div>
+                                <p class="src-desc">Bejtlich の書評の引用と、発売時の論争の紹介</p>
+                                <a
+                                    class="src-url"
+                                    href="https://www.csoonline.com/article/541224/data-protection-did-kevin-mitnick-do-a-disservice-to-the-security-community.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://www.csoonline.com/article/541224/data-protection-did-kevin-mitnick-do-a-disservice-to-the-security-community.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S26">
+                            <span class="src-badge">S26</span>
+                            <div class="src-body">
+                                <div class="src-type">Shortform</div>
+                                <p class="src-desc">Bejtlich の書評(5つ星評価)の抜粋</p>
+                                <a
+                                    class="src-url"
+                                    href="https://shortform.com/best-books/book/ghost-in-the-wires-book-reviews-kevin-mitnick-steve-wozniak-william-l-simon"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://shortform.com/best-books/book/ghost-in-the-wires-book-reviews-kevin-mitnick-steve-wozniak-william-l-simon</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S17">
+                            <span class="src-badge">S17</span>
+                            <div class="src-body">
+                                <div class="src-type">The Hacker News</div>
+                                <p class="src-desc">2011年の書評</p>
+                                <a
+                                    class="src-url"
+                                    href="https://thehackernews.com/2011/07/thn-review-ghost-in-wires-kevin-mitnick.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://thehackernews.com/2011/07/thn-review-ghost-in-wires-kevin-mitnick.html</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S21">
+                            <span class="src-badge">S21</span>
+                            <div class="src-body">
+                                <div class="src-type">Kara Reviews</div>
+                                <p class="src-desc">
+                                    書評(休眠アカウントの利用、近年の実例への言及)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://kara.reviews/ghost-in-the-wires/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://kara.reviews/ghost-in-the-wires/</span></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S23">
+                            <span class="src-badge">S23</span>
+                            <div class="src-body">
+                                <div class="src-type">Mitnick Security(掲載の書評)</div>
+                                <p class="src-desc">批判的な論点を含む書評</p>
+                                <a
+                                    class="src-url"
+                                    href="https://mitnicksecurity.com/in-the-news/review-ghost-in-the-wires"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://mitnicksecurity.com/in-the-news/review-ghost-in-the-wires</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S28">
+                            <span class="src-badge">S28</span>
+                            <div class="src-body">
+                                <div class="src-type">New York Journal of Books</div>
+                                <p class="src-desc">
+                                    書評(電話会社への潜入、保護観察官の盗聴確認、DEC)
+                                </p>
+                                <a
+                                    class="src-url"
+                                    href="https://nyjournalofbooks.com/book-review/ghost-wires-my-adventures-worlds-most-wanted-hacker"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span
+                                        >https://nyjournalofbooks.com/book-review/ghost-wires-my-adventures-worlds-most-wanted-hacker</span
+                                    ></a
+                                >
+                            </div>
+                        </div>
+                        <div class="src-card" id="S32">
+                            <span class="src-badge">S32</span>
+                            <div class="src-body">
+                                <div class="src-type">Bookrastinating</div>
+                                <p class="src-desc">一般読者のレビュー</p>
+                                <a
+                                    class="src-url"
+                                    href="https://bookrastinating.com/book/60485"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    ><i class="ti ti-external-link" aria-hidden="true"></i
+                                    ><span>https://bookrastinating.com/book/60485</span></a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <blockquote>
+                        <p>
+                            注:S1 の Google ブックスの人物紹介によれば、Wozniak は寄与者、Frank W.
+                            Abagnale は推薦コメントの提供者として記載されています。
+                        </p>
+                    </blockquote>
+                </section>
+                <section class="section" id="step-16">
+                    <h2>Step 16 このガイドの限界</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>内容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>本文の通読</td>
+                                    <td>
+                                        書籍の全文は読んでいません。構成は図書館目録の目次(S2)と、出版社紹介・書評・報道で確認できる範囲です
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>章ごとの詳細</td>
+                                    <td>各章の筋書きの詳細は、原書で確認してください</td>
+                                </tr>
+                                <tr>
+                                    <td>Bejtlich の書評</td>
+                                    <td>
+                                        元のブログページは直接取得できず、CSO Online
+                                        と書評集約サイト経由で確認しました
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Honan 氏の報告</td>
+                                    <td>
+                                        WIRED
+                                        の当事者報告(S40)は本文を直接取得できず、Engadget(S41)などの報道で内容を照合しました
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>邦訳の有無</td>
+                                    <td>
+                                        検索では確認できませんでした。出版社や書店の最新情報を直接ご確認ください
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>損害額・刑期</td>
+                                    <td>資料により数値や表現が異なります(Step 5、Step 8 に併記)</td>
+                                </tr>
+                                <tr>
+                                    <td>二次資料</td>
+                                    <td>
+                                        一部は報道や書評、個人サイトに基づきます。重要な判断には一次資料を確認してください
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>筆者の補足</td>
+                                    <td>
+                                        Step 6-2、Step 11
+                                        は筆者の整理・見解で、出典の記述そのものではありません(11-4
+                                        の FBI 注意喚起の内容は S37 に基づきます)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>法律</td>
+                                    <td>
+                                        日本(S35)と米国(S36)の条文のみ確認しました。その他の国の法制度や改正の動向は扱っていません
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>検索で確認した矛盾する情報</td>
+                                    <td>
+                                        死因について「自然死」とする未確認の記述を見つけましたが、遺族による訃報(S12)と大手報道(S13、S14、S15)は膵臓がんと一致しているため、後者を採用しました
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <footer class="footer">
+                    <em
+                        >本ガイドは学習目的で作成されたものです。攻撃手順の再現を目的とせず、防御と批判的読解を目的としています。</em
+                    >
+                </footer>
+            </main>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.min.js"></script>
+        <script>
+            window.DIAGRAMS = {
+                dg2: `flowchart LR
+P1["第1部<br/>The Making of a Hacker<br/>ハッカーの誕生"] --> P2["第2部<br/>Eric<br/>追う側との攻防"]
+P2 --> P3["第3部<br/>On the Run<br/>逃亡"]
+P3 --> P4["第4部<br/>An End and a Beginning<br/>終わりと始まり"]`,
+                dg3: `sequenceDiagram
+autonumber
+participant A as 攻撃者
+participant T as 電話担当部署
+participant E as 開発エンジニア
+participant V as 留守番電話
+participant N as アカウント発行担当
+A->>T: 担当者を説得し留守電の管理情報を入手
+A->>V: 休暇中の社員の応答メッセージを自分の声に差し替え
+A->>E: ソースコードの圧縮ファイルを別サーバへ移すよう依頼
+A->>N: 休暇中の社員を名乗りアカウントを要求
+N->>V: 本人確認のため本人の留守電に連絡
+V-->>N: 攻撃者が用意した応答が流れる
+N->>A: 本人と信じてアカウントを作成
+Note over A,N: 確認手段そのものを攻撃者が支配していたため、確認が成立してしまった`,
+                dg4: `flowchart TD
+A["1994年末<br/>Shimomura氏のコンピュータに侵入される"] --> B["Shimomura氏が侵入の痕跡を分析<br/>FBIの捜査に協力"]
+B --> C["侵入元は携帯電話網経由で<br/>ローリーにあると特定"]
+C --> D["通信事業者の技術者と連携し<br/>回線の接続先を絞り込む"]
+D --> E["電波探知機器で<br/>発信場所を地上から特定"]
+E --> F["1995年2月15日<br/>ローリーの自宅で逮捕"]`,
+                dg5: `flowchart LR
+A["出所<br/>2000年1月"] --> B["講演・執筆活動"]
+B --> C["Mitnick Security Consulting<br/>を設立"]
+C --> D["2011年<br/>KnowBe4でChief Hacking Officerに"]
+D --> E["Kevin Mitnick Security<br/>Awareness Trainingを開発"]
+E --> F["2023年7月16日<br/>死去"]`,
+                dg6: `flowchart TD
+A["不審な依頼を受け取る<br/>電話・メール・チャット"] --> B{"依頼者の身元を<br/>独立した手段で確認できるか"}
+B -- "できない" --> C["依頼を保留し<br/>自分から公式窓口へ連絡する"]
+B -- "できる" --> D{"機密情報の提供や<br/>権限の付与を伴うか"}
+D -- "はい" --> E["規定の承認手順を取る<br/>例外は作らない"]
+D -- "いいえ" --> F["通常どおり対応する"]
+C --> G["記録を残し<br/>セキュリティ担当へ報告する"]
+E --> G`,
+                dg7: `flowchart TD
+S["このガイドを読む"] --> A["Ghost in the Wires<br/>を原書で通読"]
+A --> B{"次に何を深めたいか"}
+B -- "別視点で事件を知る" --> C["Takedown<br/>The Fugitive Game"]
+B -- "手口と対策を体系的に" --> D["The Art of Deception<br/>The Art of Intrusion"]
+B -- "個人のプライバシー" --> E["The Art of Invisibility"]
+C --> F["複数視点の比較メモを作る"]
+D --> G["自組織の確認手順を点検する"]
+E --> G`,
+            };
+        </script>
+        <script>
+            (function () {
+                /* drawer */
+                var sb = document.getElementById('sidebar'),
+                    bd = document.getElementById('backdrop'),
+                    btn = document.getElementById('menuBtn');
+                function setOpen(o) {
+                    sb.classList.toggle('open', o);
+                    bd.classList.toggle('show', o);
+                    document.body.classList.toggle('lock', o);
+                    btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+                    btn.setAttribute('aria-label', o ? '目次を閉じる' : '目次を開く');
+                }
+                btn.addEventListener('click', function () {
+                    setOpen(!sb.classList.contains('open'));
+                });
+                bd.addEventListener('click', function () {
+                    setOpen(false);
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') setOpen(false);
+                });
+                sb.querySelectorAll('a').forEach(function (a) {
+                    a.addEventListener('click', function () {
+                        setOpen(false);
+                    });
+                });
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth > 1024) setOpen(false);
+                });
+
+                /* active nav */
+                var links = {};
+                sb.querySelectorAll('nav a[data-sec]').forEach(function (a) {
+                    links[a.getAttribute('data-sec')] = a;
+                });
+                var io = new IntersectionObserver(
+                    function (es) {
+                        es.forEach(function (e) {
+                            if (!e.isIntersecting) return;
+                            Object.keys(links).forEach(function (k) {
+                                links[k].classList.remove('active');
+                            });
+                            var a = links[e.target.id];
+                            if (a) {
+                                a.classList.add('active');
+                                var r = a.getBoundingClientRect(),
+                                    sr = sb.getBoundingClientRect();
+                                if (r.top < sr.top + 60 || r.bottom > sr.bottom - 20) {
+                                    sb.scrollTop += r.top - sr.top - sr.height / 2;
+                                }
+                            }
+                        });
+                    },
+                    { rootMargin: '-20% 0px -70% 0px' },
+                );
+                document.querySelectorAll('section[id]').forEach(function (s) {
+                    io.observe(s);
+                });
+            })();
+        </script>
+        <script>
+            (function () {
+                function fallback(el, src) {
+                    var p = document.createElement('pre');
+                    p.className = 'mm-fallback';
+                    p.textContent =
+                        '図を表示できません(Mermaid の読み込みに失敗しました)。図のソース:\n' + src;
+                    el.innerHTML = '';
+                    el.appendChild(p);
+                }
+                async function run() {
+                    var els = document.querySelectorAll('.diagram[data-dg]');
+                    if (!window.mermaid) {
+                        els.forEach(function (el) {
+                            fallback(el, window.DIAGRAMS[el.getAttribute('data-dg')] || '');
+                        });
+                        return;
+                    }
+                    try {
+                        await document.fonts.ready;
+                    } catch (e) {}
+                    var tv = {
+                        background: '#0d1b2e',
+                        fontSize: '16px',
+                        primaryColor: '#1b2b4a',
+                        primaryTextColor: '#f3f5fa',
+                        primaryBorderColor: '#7c9eff',
+                        secondaryColor: '#13243d',
+                        secondaryTextColor: '#f3f5fa',
+                        secondaryBorderColor: '#3e5c8f',
+                        tertiaryColor: '#0d1b2e',
+                        tertiaryTextColor: '#f3f5fa',
+                        tertiaryBorderColor: '#3e5c8f',
+                        lineColor: '#93a1bd',
+                        textColor: '#f3f5fa',
+                        mainBkg: '#1b2b4a',
+                        nodeBorder: '#7c9eff',
+                        nodeTextColor: '#f3f5fa',
+                        clusterBkg: '#13243d',
+                        clusterBorder: '#3e5c8f',
+                        titleColor: '#f3f5fa',
+                        edgeLabelBackground: '#0d1b2e',
+                        actorBkg: '#1b2b4a',
+                        actorBorder: '#7c9eff',
+                        actorTextColor: '#f3f5fa',
+                        actorLineColor: '#93a1bd',
+                        signalColor: '#c6d0e3',
+                        signalTextColor: '#f3f5fa',
+                        labelBoxBkgColor: '#13243d',
+                        labelBoxBorderColor: '#7c9eff',
+                        labelTextColor: '#f3f5fa',
+                        loopTextColor: '#f3f5fa',
+                        sequenceNumberColor: '#07111e',
+                        noteBkgColor: '#2b2250',
+                        noteBorderColor: '#a78bfa',
+                        noteTextColor: '#f3f5fa',
+                        activationBkgColor: '#13243d',
+                        activationBorderColor: '#7c9eff',
+                        cScale0: '#2d4f8f',
+                        cScale1: '#1f6f6b',
+                        cScale2: '#6b3f8f',
+                        cScale3: '#8f4a3a',
+                        cScale4: '#3b5fae',
+                        cScale5: '#2a7f78',
+                        cScale6: '#7a4aa0',
+                        cScale7: '#a05a45',
+                        cScale8: '#2d4f8f',
+                        cScale9: '#1f6f6b',
+                        cScale10: '#6b3f8f',
+                        cScale11: '#8f4a3a',
+                        cScaleLabel0: '#f3f5fa',
+                        cScaleLabel1: '#f3f5fa',
+                        cScaleLabel2: '#f3f5fa',
+                        cScaleLabel3: '#f3f5fa',
+                        cScaleLabel4: '#f3f5fa',
+                        cScaleLabel5: '#f3f5fa',
+                        cScaleLabel6: '#f3f5fa',
+                        cScaleLabel7: '#f3f5fa',
+                        cScaleLabel8: '#f3f5fa',
+                        cScaleLabel9: '#f3f5fa',
+                        cScaleLabel10: '#f3f5fa',
+                        cScaleLabel11: '#f3f5fa',
+                    };
+                    mermaid.initialize({
+                        startOnLoad: false,
+                        theme: 'dark',
+                        securityLevel: 'loose',
+                        fontFamily:
+                            '"Hiragino Sans","Noto Sans JP","Yu Gothic","Meiryo",system-ui,sans-serif',
+                        themeVariables: tv,
+                        flowchart: {
+                            useMaxWidth: false,
+                            htmlLabels: true,
+                            nodeSpacing: 45,
+                            rankSpacing: 45,
+                            curve: 'basis',
+                        },
+                        sequence: { useMaxWidth: false, wrap: false },
+                        timeline: { useMaxWidth: false },
+                    });
+                    for (var i = 0; i < els.length; i++) {
+                        var el = els[i],
+                            key = el.getAttribute('data-dg'),
+                            src = window.DIAGRAMS[key];
+                        if (!src) continue;
+                        try {
+                            var res = await mermaid.render('mm-' + key, src);
+                            el.innerHTML = res.svg;
+                            var svg = el.querySelector('svg');
+                            if (svg) {
+                                var vb = svg.viewBox && svg.viewBox.baseVal;
+                                svg.removeAttribute('width');
+                                svg.removeAttribute('height');
+                                if (vb && vb.width) {
+                                    var extra = /^(sequenceDiagram|stateDiagram)/.test(src.trim())
+                                        ? 110
+                                        : 15;
+                                    svg.setAttribute(
+                                        'viewBox',
+                                        vb.x +
+                                            ' ' +
+                                            vb.y +
+                                            ' ' +
+                                            vb.width +
+                                            ' ' +
+                                            (vb.height + extra),
+                                    );
+                                    svg.style.width = vb.width + 'px';
+                                }
+                                svg.style.maxWidth = '100%';
+                                svg.style.height = 'auto';
+                                svg.style.overflow = 'visible';
+                            }
+                        } catch (err) {
+                            console.error('mermaid', key, err);
+                            fallback(el, src);
+                        }
+                    }
+                }
+                if (document.readyState === 'loading')
+                    document.addEventListener('DOMContentLoaded', run);
+                else run();
+            })();
+        </script>
+    </body>
+</html>
