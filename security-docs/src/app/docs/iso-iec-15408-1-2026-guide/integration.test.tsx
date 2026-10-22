@@ -8,7 +8,7 @@ import { extractHeadings, getSearchIndex } from '../../../lib/search';
 import { sourceTest, sourceDocument, sourceHtml, definitions, canonical, renderedPage } from './fidelity-helpers';
 const href='/docs/iso-iec-15408-1-2026-guide';
 test('navigation exposes the new guide exactly once in Security Guides',()=>{
- const entries=docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>i.href===href);expect(entries).toHaveLength(1);expect(docsConfig.sidebarNav.find(g=>g.title==='Security Guides')!.items).toContainEqual(entries[0]);
+ const entries=docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>i.href===href);expect(entries).toHaveLength(1);expect(docsConfig.sidebarNav.find(g=>g.id==='iso')!.items).toContainEqual(entries[0]);
 });
 test('runtime and shipped static search include the registered page and all headings',async()=>{
  const entry=(await getSearchIndex()).find(e=>e.href===href);expect(entry).toBeDefined();

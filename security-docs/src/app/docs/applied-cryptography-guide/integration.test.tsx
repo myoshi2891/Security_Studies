@@ -48,7 +48,7 @@ sourceTest('Next metadata and dynamic search preserve every original heading inc
  const index=(await getSearchIndex()).filter(item=>item.href===route);expect(index).toHaveLength(1);expect(index[0].title).toBe(metadata.title);expect(index[0].headings).toEqual(headings);expect(headings).toHaveLength(65);
 });
 test('registers exactly once in Security Guides and exposes the original title',()=>{
- const group=docsConfig.sidebarNav.find(group=>group.title==='Security Guides')!;expect(group.items).toContainEqual({title:'Applied Cryptography',href:route});expect(docsConfig.sidebarNav.flatMap(g=>g.items).filter(item=>item.href===route)).toHaveLength(1);
+ const group=docsConfig.sidebarNav.find(group=>group.id==='platform')!;expect(group.items).toContainEqual({title:'Applied Cryptography',href:route});expect(docsConfig.sidebarNav.flatMap(g=>g.items).filter(item=>item.href===route)).toHaveLength(1);
 });
 test('home library and global header navigation both expose the migrated route',()=>{
  const home=render(createElement(HomePage));expect(home.container.querySelectorAll(`#library a[href="${route}"]`)).toHaveLength(1);home.unmount();

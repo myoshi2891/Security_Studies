@@ -25,7 +25,7 @@ sourceTest('keeps the original HTML byte-for-byte unchanged and every source cha
  }
 });
 test('registers the page exactly once in Security Guides without changing existing items',()=>{
- expect(docsConfig.sidebarNav.find(group=>group.title==='Security Guides')!.items).toContainEqual({title:'Hacking Kubernetes',href:'/docs/hacking-kubernetes'});
+ expect(docsConfig.sidebarNav.find(group=>group.id==='platform')!.items).toContainEqual({title:'Hacking Kubernetes',href:'/docs/hacking-kubernetes'});
  expect(docsConfig.sidebarNav.flatMap(group=>group.items).filter(item=>item.href==='/docs/hacking-kubernetes')).toHaveLength(1);
 });
 sourceTest('indexes all 103 original headings including inline-code headings with the original title and metadata',async()=>{
