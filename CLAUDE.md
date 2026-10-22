@@ -338,3 +338,11 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
 
 <!-- /iso15408-status -->
+
+<!-- iso27017-status -->
+
+ISO/IEC 27017:2026: 開始時監査・全体457 pass / 297 skip / 0 fail、124ファイル・原本未移行。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+
+対象: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・30表・10図・2コード・7チェック項目・7 Q&A・18参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
+
+<!-- /iso27017-status -->

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（ISO15408原本アーカイブ・専用55件成功。全体457成功/297 skip/0失敗。ビルド未実行・ユーザー目視待ち）
+> **最終更新**: 2026-10-22（ISO27017: 開始時監査・全体457 pass / 297 skip / 0 fail、124ファイル・原本未移行。全体の前回実測は下表、専用テストの最新状態は末尾）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -805,3 +805,11 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 - HTML/MDをarchive/html・archive/mdへ移動。両SHA-256は移動前と一致。原本比較はarchiveだけを参照。
 - 専用55件/10ファイル成功。全体: 457 pass / 297 skip / 0 fail、124ファイル（754件、41,155 expect）。npm test・lint・型検査成功。ビルド禁止・未実行。
 - archive/は既存規約どおりGit管理外。目視はユーザー担当・未完了。push・公開未実施。
+
+<!-- iso27017-status -->
+
+ISO/IEC 27017:2026: 開始時監査・全体457 pass / 297 skip / 0 fail、124ファイル・原本未移行。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+
+対象: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・30表・10図・2コード・7チェック項目・7 Q&A・18参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
+
+<!-- /iso27017-status -->
