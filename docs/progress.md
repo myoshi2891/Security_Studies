@@ -874,5 +874,5 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 
 
 <!-- zero-trust-stage -->
-Zero Trust本文全節Green（2026-10-23）: 専用28成功/0失敗・3ファイル。全25節・83表1344セル・17図・3コード・90STEP・36解答・20出典を原本と構造比較。次に操作・適用スタイル・hydration・ナビ検索を統合検証。全体の最終Greenは615成功/297 skip/0失敗・152ファイル。ビルド未実行。
+Zero Trust統合Red（2026-10-23）: 専用51成功/10失敗・9ファイル。表フォントへの共通CSS混入、図のsequence余白とLR→TB再配置欠落、ナビ・静的検索未登録を検出。全体の最終Greenは615成功/297 skip/0失敗・152ファイル。ビルド未実行。
 <!-- /zero-trust-stage -->
