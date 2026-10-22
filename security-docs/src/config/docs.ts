@@ -22,6 +22,7 @@ export const docsConfig = {
         { title: "ISO/IEC 27001:2022 初学者向けガイド", href: "/docs/iso-iec-27001-2022-guide" },
         { title: "ISO/IEC 27017:2026 初学者向けガイド", href: "/docs/iso-iec-27017-2026-guide" },
         { title: "ISO/IEC 15408-1:2026 初学者向けガイド", href: "/docs/iso-iec-15408-1-2026-guide" },
+        { title: "ISO/IEC 18045:2026 初学者向け解説ガイド", href: "/docs/iso-iec-18045-2026-guide" },
       ],
     },
     {

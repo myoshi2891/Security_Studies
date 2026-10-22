@@ -520,3 +520,6 @@
 html:has(.iso18045-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (prefers-reduced-motion: reduce) { html:has(.iso18045-guide) { scroll-behavior:auto; } }
 @media (max-width: 1100px) { .iso18045-guide.iso18045-guide .sidebar { visibility:hidden; } .iso18045-guide.iso18045-guide .sidebar.open { visibility:visible; } }
+
+/* Retain source heading colors under the app dark scheme. */
+.iso18045-guide.iso18045-guide .hero h1, .iso18045-guide.iso18045-guide .sec > h2, .iso18045-guide.iso18045-guide .sec h3 { color:var(--color-text-primary); }
