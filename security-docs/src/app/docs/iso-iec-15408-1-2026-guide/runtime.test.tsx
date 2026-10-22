@@ -79,3 +79,9 @@ test('live SVG sizing extends the viewBox only to the measured drawing bounds',a
  Object.defineProperty(svg,'getBBox',{configurable:true,value:()=>({x:0,y:0,width:900,height:200})});fitDiagram(svg);expect(svg.getAttribute('viewBox')).toBe('0 0 900 366');
  Object.defineProperty(svg,'getBBox',{configurable:true,value:()=>{throw new Error('unavailable');}});expect(()=>fitDiagram(svg)).not.toThrow();
 });
+test('the default renderer passes this guide configuration per render without re-initializing the shared engine',async()=>{
+ const {default:mermaid}=await import('mermaid');const {renderDiagram,diagramConfig}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const draw=spyOn(mermaid,'render').mockImplementation(async()=>({svg:'<svg></svg>',diagramType:'flowchart-v2'}));const init=spyOn(mermaid,'initialize');
+ try{expect(await renderDiagram('iso15408-d1','flowchart LR\nA-->B')).toEqual({svg:'<svg></svg>',diagramType:'flowchart-v2'});expect(init).not.toHaveBeenCalled();expect(draw).toHaveBeenCalledWith('iso15408-d1',`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart LR\nA-->B`);
+ }finally{draw.mockRestore();init.mockRestore();}
+},20000);

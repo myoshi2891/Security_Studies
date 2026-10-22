@@ -2,3 +2,5 @@
 preload = ["./test-setup.ts"]
 coverageReporter = ["lcov", "text"]
 coverageDir = "coverage"
+# fidelity-helpers.ts は原本比較テスト用の基盤。原本(archive/)のないCIでは構造的に実行されないためカバレッジ対象外とする
+coveragePathIgnorePatterns = ["**/fidelity-helpers.ts"]

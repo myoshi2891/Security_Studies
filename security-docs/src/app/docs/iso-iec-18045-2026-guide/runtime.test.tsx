@@ -84,3 +84,9 @@ test('pie text descriptions retain the title, all labels and values',async()=>{
  const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  expect(describeDiagram('pie showData\ntitle 章構成\n"総論" : 18\n"開発 ADV" : 88')).toEqual(['円グラフ','章構成','総論: 18','開発 ADV: 88']);
 });
+test('the default renderer passes this guide configuration per render without re-initializing the shared engine',async()=>{
+ const {default:mermaid}=await import('mermaid');const {renderDiagram,diagramConfig}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const draw=spyOn(mermaid,'render').mockImplementation(async()=>({svg:'<svg></svg>',diagramType:'flowchart-v2'}));const init=spyOn(mermaid,'initialize');
+ try{expect(await renderDiagram('iso18045-d1','flowchart LR\nA-->B')).toEqual({svg:'<svg></svg>',diagramType:'flowchart-v2'});expect(init).not.toHaveBeenCalled();expect(draw).toHaveBeenCalledWith('iso18045-d1',`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart LR\nA-->B`);
+ }finally{draw.mockRestore();init.mockRestore();}
+},20000);
