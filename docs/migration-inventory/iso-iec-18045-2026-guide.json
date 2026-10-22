@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-22",
+  "route": "/docs/iso-iec-18045-2026-guide",
+  "sources": [
+    {
+      "path": "Iso-iec-18045-2026-guide.html",
+      "sha256": "1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062"
+    },
+    {
+      "path": "Iso-iec-18045-2026-guide.md",
+      "sha256": "e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269"
+    }
+  ],
+  "counts": {
+    "section": 21,
+    "h1": 1,
+    "h2": 21,
+    "h3": 55,
+    "table": 40,
+    "th": 118,
+    "td": 712,
+    "ul": 1,
+    "ol": 0,
+    "li": 21,
+    ".mermaid": 18,
+    "figure": 18,
+    ".tag": 98,
+    ".ref": 28,
+    "a": 50,
+    "strong": 81,
+    "em": 1,
+    "pre code": 0
+  },
+  "sections": [
+    {
+      "id": "s0",
+      "title": "0. このガイドの読み方"
+    },
+    {
+      "id": "s1",
+      "title": "STEP 1. ISO/IEC 18045:2026 を一言でいうと"
+    },
+    {
+      "id": "s2",
+      "title": "STEP 2. なぜ「評価方法の規格」が必要なのか"
+    },
+    {
+      "id": "s3",
+      "title": "STEP 3. Common Criteria(ISO/IEC 15408)との関係"
+    },
+    {
+      "id": "s4",
+      "title": "STEP 4. 登場人物と役割"
+    },
+    {
+      "id": "s5",
+      "title": "STEP 5. 評価の全体の流れと「判定」"
+    },
+    {
+      "id": "s6",
+      "title": "STEP 6. 規格の章構成を読む"
+    },
+    {
+      "id": "s7",
+      "title": "STEP 7. 評価の対象は4種類 — PP、PP-Module、PP-Configuration、ST"
+    },
+    {
+      "id": "s8",
+      "title": "STEP 8. クラス別の評価ポイント(ADV・AGD・ALC・ATE・AVA・ACO)"
+    },
+    {
+      "id": "s9",
+      "title": "STEP 9. work unit と action element の読み方"
+    },
+    {
+      "id": "s10",
+      "title": "STEP 10. 脆弱性評価(AVA)と攻撃能力(Attack potential)"
+    },
+    {
+      "id": "s11",
+      "title": "STEP 11. EAL と評価の深さ"
+    },
+    {
+      "id": "s12",
+      "title": "STEP 12. 2022年版から何が変わったか"
+    },
+    {
+      "id": "s13",
+      "title": "STEP 13. 認証制度での使われ方(CCRA、EUCC、日本)"
+    },
+    {
+      "id": "s14",
+      "title": "STEP 14. 開発者・セキュリティエンジニア向けの実務ロードマップ"
+    },
+    {
+      "id": "s15",
+      "title": "STEP 15. 最近の動向(2026年秋時点)"
+    },
+    {
+      "id": "s16",
+      "title": "STEP 16. 用語集"
+    },
+    {
+      "id": "s17",
+      "title": "STEP 17. よくある質問と誤解"
+    },
+    {
+      "id": "s18",
+      "title": "STEP 18. 学習ロードマップ"
+    },
+    {
+      "id": "s19",
+      "title": "STEP 19. 出典URL一覧(2026年10月14日時点で参照)"
+    },
+    {
+      "id": "s20",
+      "title": "STEP 20. 確認できなかった点と注意事項"
+    }
+  ],
+  "allowedDifferences": [
+    "Original HTML/Markdown will be archived after fidelity validation.",
+    "Native MDX elements retain all original structure, classes, IDs and content; inner main becomes div.main to avoid nested app main landmarks.",
+    "Local lucide SVG icons replace external icon fonts.",
+    "No source scripts or external icon fonts execute in the migrated page.",
+    "React drawer adds focus trap, Escape, hash/scroll tracking and focus restoration; original 1100px breakpoint retained.",
+    "Mermaid base theme applies original colors under strict security with per-render configuration; all 18 definitions retained verbatim.",
+    "Intrinsic SVG sizing with block scroll containers centers small diagrams and keeps wide diagrams reachable.",
+    "App header clearance adds 64px sidebar offset and 88px heading anchor margins.",
+    "Scoped reset restores source typography, pseudo bullets, decimal markers, source confidence tags and focus styles after Tailwind.",
+    "Diagram loading, retry, accessible text descriptions and noscript notes added.",
+    "Formatting-only whitespace and whitespace inside table structural elements removed for hydration safety.",
+    "Wide left-to-right definitions retain their original orientation and use horizontal scrolling instead of the original automatic top-down rerendering."
+  ],
+  "validation": {
+    "dedicatedTests": 56,
+    "testFiles": 10,
+    "build": "prohibited, not run",
+    "visual": "pending user review",
+    "phase": "archive Red: 52 pass / 2 skip / 2 fail"
+  }
+}
