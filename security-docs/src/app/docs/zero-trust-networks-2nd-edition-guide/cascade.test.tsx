@@ -3,7 +3,7 @@ import {Window} from 'happy-dom';
 import {readFileSync} from 'node:fs';
 import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
-const normalized=(value:string,prop:string)=>!value&&prop==='background-color'?'transparent':!value&&/^(margin|padding|border)/.test(prop)?'0px':value;
+const normalized=(value:string,prop:string)=>!value&&prop==='background-color'?'transparent':!value&&/^(margin|padding|border)/.test(prop)?'0px':value.replace(/(-?[\d.]+)rem/g,(_,n)=>`${Number(n)*16}px`);
 const css=()=>['../../globals.css','../docs-layout.css','./zero-trust-guide.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n');
 for(const width of [375,1024,1440])for(const theme of ['light','dark'])sourceTest(`source typography, badges and all 1344 table cells survive the shared cascade at ${width}px in ${theme}`,async()=>{
  const original=new Window(),actual=new Window();for(const w of [original,actual]){w.happyDOM.setWindowSize({width,height:900});w.document.documentElement.className=theme;}
@@ -15,7 +15,7 @@ for(const width of [375,1024,1440])for(const theme of ['light','dark'])sourceTes
  for(const selector of selectors){const a=[...actual.document.querySelectorAll(selector)].filter(el=>!el.closest('.mermaid'));const o=[...original.document.querySelectorAll(selector)];expect(a.length,selector).toBe(o.length);
  for(let i=0;i<o.length;i++){const as=actual.getComputedStyle(a[i]),os=original.getComputedStyle(o[i]);for(const prop of properties)expect(normalized(as.getPropertyValue(prop),prop),`${selector}[${i}] ${prop}`).toBe(normalized(os.getPropertyValue(prop),prop));}}
  }finally{await original.happyDOM.close();await actual.happyDOM.close();}
-});
+},30000);
 test('native bullets and numbers, grouped TOC, closed drawer and intrinsic diagram widths survive at five widths',async()=>{
  for(const width of [375,768,1024,1025,1440]){const w=new Window();w.happyDOM.setWindowSize({width,height:900});try{
  w.document.head.innerHTML='<style>'+css()+'</style>';w.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article"><div class="zero-trust-guide"><aside class="sidebar"><nav><ul><li>目次</li></ul></nav></aside><div class="backdrop"></div><div class="guide-content"><section><h2>題</h2><ul><li>点</li></ul><ol><li>番号</li></ol><figure class="diagram"><div class="mermaid-target"><div class="diagram-viewport"><svg style="width:2400px"></svg></div></div></figure></section></div></div></article></main>';

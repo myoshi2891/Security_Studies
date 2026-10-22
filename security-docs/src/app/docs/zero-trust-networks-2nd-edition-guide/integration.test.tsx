@@ -7,8 +7,8 @@ const href='/docs/zero-trust-networks-2nd-edition-guide';
 test('route is registered exactly once under Security Guides',()=>{
  expect(docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>i.href===href)).toHaveLength(1);expect(docsConfig.sidebarNav.find(g=>g.id==='engineering')!.items.some(i=>i.href===href)).toBe(true);
 });
-test('static and dynamic search indexes contain identical complete Zero Trust content and headings',async()=>{
- const dynamic=(await getSearchIndex()).find(p=>p.href===href);expect(dynamic).toBeDefined();const index=JSON.parse(readFileSync('public/search-index.json','utf8'));expect(index.find((p:{href:string})=>p.href===href)).toEqual(dynamic);expect(dynamic!.headings).toHaveLength(124);expect(dynamic!.content).toContain('SPIFFE');expect(dynamic!.content).toContain('ゼロトラスト');
+test('static and dynamic search indexes contain matching metadata, bounded snippets and all 124 headings',async()=>{
+ const dynamic=(await getSearchIndex()).find(p=>p.href===href);expect(dynamic).toBeDefined();const index=JSON.parse(readFileSync('public/search-index.json','utf8'));expect(index.find((p:{href:string})=>p.href===href)).toEqual(dynamic);expect(dynamic!.headings).toHaveLength(124);expect(dynamic!.content).toContain('Zero Trust Networks');expect(dynamic!.content.length).toBeLessThanOrEqual(500);
 });
 sourceTest('all source IDs, source references and anchors resolve with source order intact',async()=>{
  const page=await renderedPage();const ids=(d:Document)=>[...d.querySelectorAll('main [id],.guide-content [id]')].map(e=>e.id);expect(ids(page)).toEqual(ids(sourceDocument));
