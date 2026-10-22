@@ -206,7 +206,7 @@ ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 <!-- iso18045-status -->
 
-ISO/IEC 18045:2026: 14〜20節Red・7件失敗（既存専用32件成功）。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
+ISO/IEC 18045:2026: 全21節Green・専用39 pass / 0 fail（6ファイル）・ナビ検索統合は未対応。npm使用・Next.jsビルド禁止/未実行・目視はユーザー担当/未完了。
 
 対象: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・40表830セル・18図・28参考文献。最終段階で原本HTML/MDをarchiveへ保存する。
 
