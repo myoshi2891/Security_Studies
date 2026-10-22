@@ -1,6 +1,6 @@
 # Security Studies
 
-最終更新日: 2026-10-18
+最終更新日: 2026-10-22
 
 [![CI](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml/badge.svg)](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/myoshi2891/Security_Studies/graph/badge.svg)](https://codecov.io/gh/myoshi2891/Security_Studies)
@@ -292,3 +292,11 @@ Threat Modeling: 最終自動検証完了・原本アーカイブ済み・全685
 
 移行先: `security-docs/src/app/docs/threat-modeling-guide/page.mdx`、URL `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック項目・5解答・41参考文献を原本と比較。原本: `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md`（SHA-256一致）。Shostack版は対象外。最終全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。検索索引21ページ・原本89見出しを検証。目視確認表: `docs/migration-inventory/threat-modeling-guide-review.md`（ユーザー確認待ち）。push/公開未実施。Mermaidはbaseテーマ・strictモードで全定義/配色/間隔を保持し、実際の描画境界で高さを調整。台帳: `docs/migration-inventory/threat-modeling-guide.json`。
 <!-- /threat-migration-status -->
+
+<!-- iso15408-status -->
+
+ISO/IEC 15408-1:2026: 開始時監査・原本未移行。npm test: 402 pass / 297 skip / 0 fail、114ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+
+移行先: `/docs/iso-iec-15408-1-2026-guide`。原本はルートの `Iso-15408-1-2026-guide.html` / `.md` を保持。
+
+<!-- /iso15408-status -->

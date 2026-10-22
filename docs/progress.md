@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-18（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本依存テストはCIで条件付きスキップ・原本非依存テストはCIでも実行）
+> **最終更新**: 2026-10-22（レビュー対応: 図のテキスト説明の解析修正・ガイド本文訂正・仕様書の集計注記。全687件成功。原本依存テストはCIで条件付きスキップ・原本非依存テストはCIでも実行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,14 +12,14 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **687件** | `bun test`: 687 pass / 0 fail、114ファイル、118,047 expect（2026-10-18レビュー対応後の全体実測）。Threat Modeling専用62件/13ファイル、Applied Cryptography専用61件/12ファイル。lint/型検査成功。ビルド禁止・未実行 |
+| テストケース総数 | **402成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・114ファイル。過去の全原本あり実測値とは環境が異なる |
 | テストファイル数 | **114ファイル** | 原本比較・ページ移行テストを含む |
 | File Unit Coverage | **54/54 (100%)** | 既存46 + Applied Cryptography部品4 + Threat Modeling部品4 = 54（ダッシュボードの内訳: 基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 = 46）。MDX/純粋データ・レイアウトは分母から除外。全テスト114ファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。未追跡 `archive/` 原本に依存するテストは `sourceTest` で原本がないCIのみスキップ（CI条件実測 364 pass / 312 skip / 0 fail、112ファイル。2026-10-18）。パス除外は ISO 27000/27001 の `page.test.ts` のみ |
 | カバレッジレポート | ⚠️ **送信停止中** | `bun test --coverage` による lcov 生成は稼働中。Codecov へのアップロードは停止中（下記「カバレッジ CI 連携」参照） |
 
-#### ファイル別テスト数（2026-10-18 実測: 114ファイル・合計687件。レビュー対応後のbun testログと照合）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO15408欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
@@ -770,3 +770,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 仕様書: File Unit Coverage 内訳（46 + 4 + 4）、Applied Cryptography 記録の当時件数注記、ナビ拡張テスト値（登録ページ＋仮80件）の注記、ダッシュボードの移行状況セクションを履歴領域へ移動。
 - 全体: 687 pass / 0 fail、114ファイル、118,047 expect。lint/型検査成功。ビルド禁止・未実行。
 - 見送り: `archive/` の再追跡（ユーザー判断で意図的に未追跡、CI除外で対応済み）、Applied Cryptography CSS の `body.drawer-open` 3ルール削除（`foundation.test.tsx` が原本CSSの全ルール保持を契約として検証するため）、MermaidFigure/GuideSidebar の共通モジュール化（大規模リファクタリングのため要確認）。
+
+<!-- iso15408-status -->
+
+ISO/IEC 15408-1:2026: 開始時監査・原本未移行。npm test: 402 pass / 297 skip / 0 fail、114ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+
+移行先: `/docs/iso-iec-15408-1-2026-guide`。原本はルートの `Iso-15408-1-2026-guide.html` / `.md` を保持。
+
+<!-- /iso15408-status -->
