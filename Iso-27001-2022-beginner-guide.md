@@ -165,7 +165,7 @@ flowchart TD
 | **認定機関(AB)** | 認証機関が適切か審査して認定する機関。日本ではISMS-AC | 試験官を認定する機関 |
 
 > **「認証」と「認定」の違い(日本のISMS制度)**
-> 日本では、認定機関である**ISMS-AC**が認証機関を審査・認定し、認証機関が組織を審査・認証する二層構造です [S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)。国際的には、国際的な相互承認の枠組みに参加する認定機関が認定した認証機関の証明書がより高い信頼を得やすい、とISOも説明しています [S1](https://www.iso.org/standard/27001)。この枠組みは2026年1月1日から**Global Accreditation Cooperation Incorporated(Global ACI)**が担っています。従来のIAF(国際認定フォーラム)とILACは同日に統合されました。IAF MLAの下で認定された認証は、移行期間中も引き続き有効です [S42](https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/)。
+> 日本では、認定機関である**ISMS-AC**が認証機関を審査・認定し、認証機関が組織を審査・認証する二層構造です [S17](https://www.jipdec.or.jp/library/report/h3taia0000001qn3-att/20230703-r01.pdf)。国際的には、国際的な相互承認の枠組みに参加する認定機関が認定した認証機関の証明書がより高い信頼を得やすい、とISOも説明しています [S1](https://www.iso.org/standard/27001)。この枠組みは2026年1月1日から**Global Accreditation Cooperation Incorporated(Global ACI)**が担っています。従来のIAF(国際認定フォーラム)とILACは同日に統合されました。Global ACIは旧IAF・ILACの相互承認からの移行措置を設けていますが、これは認定と、認定された認証機関の国際的な承認に関する枠組みです。個々の認証書が有効かどうかは、発行した認証機関に確認してください [S42](https://iaf.nu/en/news/global-accreditation-cooperation-incorporated-launch-unifies-international-accreditation-organisations-and-strengthens-worldwide-trust/)。
 
 ---
 
@@ -248,7 +248,7 @@ flowchart LR
 |---|---|
 | 7.1 資源 | ISMSに必要な人・予算・設備を用意する |
 | 7.2 力量 | 担当者に必要な知識・スキルがあることを確認し、証拠を残す |
-| 7.3 認識 | 全従業員が方針、自分の貢献、違反した場合の影響を理解している |
+| 7.3 認識 | 組織の管理下で働く人(従業員に加え、派遣社員・委託先・下請負者の要員を含む)が方針、自分の貢献、違反した場合の影響を理解している |
 | 7.4 コミュニケーション | 誰に・何を・いつ・どう伝えるかを決める(2022年版で「どのように」が明確化された) |
 | 7.5 文書化した情報 | 文書・記録の作成、更新、管理(版管理、アクセス制御、保管) |
 
@@ -515,7 +515,7 @@ flowchart TD
 | 6 | 対応方法を決め、管理策を選び、SoAを作る。残留リスクの承認を得る | リスク対応計画、**SoA** | 6.1.3 |
 | 7 | 情報セキュリティ方針と、必要な規程・手順を作る | 方針、規程類 | 5.2, 7.5 |
 | 8 | 管理策を実際に導入する(技術・人・物理・組織) | 設定、ツール、運用ルール | 8.3 |
-| 9 | 全員教育と周知、力量の確認 | 教育計画・受講記録 | 7.2, 7.3, A.6.3 |
+| 9 | 組織の管理下で働く人(従業員・委託先・下請負者の要員を含む)への教育と周知、力量の確認 | 教育計画・受講記録 | 7.2, 7.3, A.6.3 |
 | 10 | ルールどおりに運用し、記録を残す。インシデント対応も実際に回す | 運用記録、ログ、チケット | 8.1, 9.1 |
 | 11 | 内部監査を実施し、経営層がマネジメントレビューを行う。不適合は是正する | 内部監査報告書、マネジメントレビュー議事録 | 9.2, 9.3, 10.2 |
 | 12 | 認証機関によるStage 1(文書・準備状況)→ Stage 2(実施状況・有効性) | 認証書 | — |
