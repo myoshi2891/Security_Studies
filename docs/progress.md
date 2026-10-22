@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（ISO15408移行・専用51件成功。全体453成功/297 skip/0失敗。ビルド未実行・ユーザー目視待ち）
+> **最終更新**: 2026-10-22（ISO15408原本アーカイブ・専用55件成功。全体457成功/297 skip/0失敗。ビルド未実行・ユーザー目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **453成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・123ファイル。過去の全原本あり実測値とは環境が異なる |
-| テストファイル数 | **123ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **57/57 (100%)** | 既存54 + ISO15408部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全123テストファイルとは別集計 |
+| テストケース総数 | **457成功 / 297 skip / 0失敗** | npm test実測（2026-10-22）・124ファイル・754件・41,155 expect。原本不在の既存比較テストはskip |
+| テストファイル数 | **124ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **57/57 (100%)** | 既存54 + ISO15408部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全124テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。今回ローカルではnpm testのみ・coverage未計測 |
@@ -23,6 +23,7 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/iso-iec-15408-1-2026-guide/archive.test.ts` | 4 | 2026-10-22追加・原本ハッシュ一致/ルート除去/比較参照を検証・Green |
 | `src/app/docs/iso-iec-15408-1-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・Green |
 | `src/app/docs/iso-iec-15408-1-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・Green |
 | `src/app/docs/iso-iec-15408-1-2026-guide/runtime.test.tsx` | 8 | 2026-10-22追加・Green |
@@ -224,7 +225,7 @@ form-action 'self'
 | 項目 | 状態 | 詳細 |
 |---|---|---|
 | GitHub Actions CI | ✅ **稼働中** | lint / types / test（PR・push トリガー） |
-| 原本比較テスト | ✅ **原本の存在で条件分岐** | ディレクトリ・パス単位のCI除外なし。sourceTestが原本不在時だけskip。ISO15408原本はルートで追跡済み |
+| 原本比較テスト | ✅ **原本の存在で条件分岐** | ディレクトリ・パス単位のCI除外なし。sourceTestが原本不在時だけskip。ISO15408原本はarchive/へ移動済み（Git管理外） |
 | Netlify 自動デプロイ | ✅ **稼働中** | `main` push でビルド・デプロイ |
 | Docker 本番ビルド | ✅ **稼働中** | 3ステージ Dockerfile |
 | カバレッジ CI 連携 | ✅ **設定済み** | bun test --coverageでlcov生成。codecov-actionの送信はcontinue-on-errorで非致命。今回リモート送信の到達確認は未実施 |
@@ -782,11 +783,11 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 <!-- iso15408-status -->
 
-ISO/IEC 15408-1:2026: 移行と最終自動検証完了・専用51件成功・lint/型検査成功・目視待ち。npm test: 453 pass / 297 skip / 0 fail、123ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
+ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
 
-移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本はルートの `Iso-15408-1-2026-guide.html` / `.md` を保持。
+移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
 
-全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDは変更せず保持。専用51件/9ファイル、全体453 pass / 297 skip / 0 fail（750件/123ファイル、41,148 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
+全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
 
 <!-- /iso15408-status -->
 
@@ -798,3 +799,9 @@ ISO/IEC 15408-1:2026: 移行と最終自動検証完了・専用51件成功・li
 ### ISO15408 原本アーカイブ Red（2026-10-22）
 
 専用テスト実測: 51 pass / 2 skip / 2 fail、10ファイル（55件）。ルート原本の残存と比較テスト参照先の未更新を再現。アーカイブ2件のバイト比較は移動前のためskip。全体の最新実測は移行完了時の453成功/297 skip/0失敗・123ファイル。アーカイブ後に全体を再検証する。
+
+### ISO15408 原本アーカイブ Green（2026-10-22）
+
+- HTML/MDをarchive/html・archive/mdへ移動。両SHA-256は移動前と一致。原本比較はarchiveだけを参照。
+- 専用55件/10ファイル成功。全体: 457 pass / 297 skip / 0 fail、124ファイル（754件、41,155 expect）。npm test・lint・型検査成功。ビルド禁止・未実行。
+- archive/は既存規約どおりGit管理外。目視はユーザー担当・未完了。push・公開未実施。

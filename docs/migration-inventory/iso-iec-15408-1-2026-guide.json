@@ -3,11 +3,11 @@
   "route": "/docs/iso-iec-15408-1-2026-guide",
   "sources": [
     {
-      "path": "Iso-15408-1-2026-guide.html",
+      "path": "archive/html/Iso-15408-1-2026-guide.html",
       "sha256": "d8f5e8f9e5dbda86cb87917d9dc3bf1a2c89ec35fcf7567a9f4303fa5cf6a172"
     },
     {
-      "path": "Iso-15408-1-2026-guide.md",
+      "path": "archive/md/Iso-15408-1-2026-guide.md",
       "sha256": "b9a2fd23da47e1f745ab809966cc6d0ce303fb256a0c06c6022dce1f68092bc6"
     }
   ],
@@ -118,7 +118,7 @@
     }
   ],
   "allowedDifferences": [
-    "Source retained in repository root; no archive move.",
+    "Original HTML/Markdown moved byte-for-byte to archive/html and archive/md; archive/ is intentionally ignored by Git.",
     "Local lucide SVGs replace external icon font.",
     "React drawer replaces imperative scripts with focus trap, Escape, hash/scroll tracking and focus restoration.",
     "Mermaid base theme applies original colors with strict security; preserves all 17 definitions.",
@@ -129,8 +129,8 @@
     "Pure formatting whitespace omitted; table/tr structural whitespace removed for hydration."
   ],
   "validation": {
-    "dedicatedTests": 51,
-    "testFiles": 9,
+    "dedicatedTests": 55,
+    "testFiles": 10,
     "build": "prohibited, not run",
     "visual": "pending user review"
   }
