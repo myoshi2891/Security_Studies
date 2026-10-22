@@ -1,0 +1,718 @@
+.iso27017-guide.iso27017-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,table,thead,tbody,tr,th,td,figure,pre,code,summary) { margin:0; padding:0; border:0; font-size:inherit; font-family:inherit; letter-spacing:0px; line-height:inherit; color:inherit; background:transparent; }
+.iso27017-guide.iso27017-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.iso27017-guide.iso27017-guide code.hljs {
+  padding: 3px 5px
+}
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.iso27017-guide.iso27017-guide .hljs {
+  color: #abb2bf;
+  background: #282c34
+}
+.iso27017-guide.iso27017-guide .hljs-comment, .iso27017-guide.iso27017-guide .hljs-quote {
+  color: #5c6370;
+  font-style: italic
+}
+.iso27017-guide.iso27017-guide .hljs-doctag, .iso27017-guide.iso27017-guide .hljs-keyword, .iso27017-guide.iso27017-guide .hljs-formula {
+  color: #c678dd
+}
+.iso27017-guide.iso27017-guide .hljs-section, .iso27017-guide.iso27017-guide .hljs-name, .iso27017-guide.iso27017-guide .hljs-selector-tag, .iso27017-guide.iso27017-guide .hljs-deletion, .iso27017-guide.iso27017-guide .hljs-subst {
+  color: #e06c75
+}
+.iso27017-guide.iso27017-guide .hljs-literal {
+  color: #56b6c2
+}
+.iso27017-guide.iso27017-guide .hljs-string, .iso27017-guide.iso27017-guide .hljs-regexp, .iso27017-guide.iso27017-guide .hljs-addition, .iso27017-guide.iso27017-guide .hljs-attribute, .iso27017-guide.iso27017-guide .hljs-meta .hljs-string {
+  color: #98c379
+}
+.iso27017-guide.iso27017-guide .hljs-attr, .iso27017-guide.iso27017-guide .hljs-variable, .iso27017-guide.iso27017-guide .hljs-template-variable, .iso27017-guide.iso27017-guide .hljs-type, .iso27017-guide.iso27017-guide .hljs-selector-class, .iso27017-guide.iso27017-guide .hljs-selector-attr, .iso27017-guide.iso27017-guide .hljs-selector-pseudo, .iso27017-guide.iso27017-guide .hljs-number {
+  color: #d19a66
+}
+.iso27017-guide.iso27017-guide .hljs-symbol, .iso27017-guide.iso27017-guide .hljs-bullet, .iso27017-guide.iso27017-guide .hljs-link, .iso27017-guide.iso27017-guide .hljs-meta, .iso27017-guide.iso27017-guide .hljs-selector-id, .iso27017-guide.iso27017-guide .hljs-title {
+  color: #61aeee
+}
+.iso27017-guide.iso27017-guide .hljs-built_in, .iso27017-guide.iso27017-guide .hljs-title.class_, .iso27017-guide.iso27017-guide .hljs-class .hljs-title {
+  color: #e6c07b
+}
+.iso27017-guide.iso27017-guide .hljs-emphasis {
+  font-style: italic
+}
+.iso27017-guide.iso27017-guide .hljs-strong {
+  font-weight: bold
+}
+.iso27017-guide.iso27017-guide .hljs-link {
+  text-decoration: underline
+}
+
+            .iso27017-guide.iso27017-guide {
+                --bg-primary: #07111e;
+                --bg-secondary: #0c1a2d;
+                --bg-tertiary: #122339;
+                --text-primary: #f3f5fa;
+                --text-secondary: #c6d0e3;
+                --text-tertiary: #93a1bd;
+                --border-tertiary: #1e2f4d;
+                --border-secondary: #2d456e;
+                --border-primary: #3e5c8f;
+                --accent: #7c9eff;
+                --accent-bg: #14233f;
+                --info-text: #7c9eff;
+                --info-bg: #101f3a;
+                --success-text: #5fd3b3;
+                --success-bg: #0d2a2a;
+                --warning-text: #f2b95c;
+                --warning-bg: #2a2210;
+                --danger-text: #ff8a8a;
+                --danger-bg: #2f1518;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+                    'Noto Sans JP', 'Yu Gothic UI', Meiryo, 'Segoe UI', Roboto, sans-serif;
+                --font-mono:
+                    ui-monospace, 'SF Mono', Menlo, Consolas, 'Noto Sans Mono CJK JP', monospace;
+                --sidebar-w: 300px;
+            }
+            .iso27017-guide.iso27017-guide * {
+                box-sizing: border-box;
+            }
+            .iso27017-guide.iso27017-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 16px;
+            }
+            .iso27017-guide.iso27017-guide {
+                margin: 0;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                font-family: var(--font-sans);
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.7;
+                -webkit-text-size-adjust: 100%;
+            }
+            .iso27017-guide.iso27017-guide body.lock {
+                overflow: hidden;
+            }
+            .iso27017-guide.iso27017-guide .layout {
+                display: block;
+            }
+
+            .iso27017-guide.iso27017-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--bg-secondary);
+                border-right: 1px solid var(--border-tertiary);
+                overflow-y: auto;
+                padding: 24px 16px 48px;
+                z-index: 60;
+            }
+            .iso27017-guide.iso27017-guide .brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 0 8px 18px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .iso27017-guide.iso27017-guide .brand i {
+                font-size: 32px;
+                line-height: 1;
+                color: var(--accent);
+                flex: none;
+            }
+            .iso27017-guide.iso27017-guide .brand .bt {
+                display: block;
+                font-weight: 500;
+                color: var(--text-primary);
+                line-height: 1.4;
+            }
+            .iso27017-guide.iso27017-guide .brand .bs {
+                display: block;
+                color: var(--text-tertiary);
+                line-height: 1.4;
+            }
+            .iso27017-guide.iso27017-guide .toc {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .iso27017-guide.iso27017-guide .sidebar .toc li {
+                padding-left: 0;
+                margin: 2px 0;
+            }
+            .iso27017-guide.iso27017-guide .sidebar .toc li::before {
+                content: none;
+            }
+            .iso27017-guide.iso27017-guide .toc a {
+                display: block;
+                padding: 8px 12px;
+                border-radius: var(--border-radius-md);
+                border-left: 3px solid transparent;
+                color: var(--text-secondary);
+                text-decoration: none;
+                line-height: 1.5;
+                word-break: normal;
+            }
+            .iso27017-guide.iso27017-guide .toc a:hover {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide .toc a.active {
+                background: var(--accent-bg);
+                border-left-color: var(--accent);
+                color: var(--text-primary);
+            }
+
+            .iso27017-guide.iso27017-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 0 48px 96px;
+            }
+            .iso27017-guide.iso27017-guide .hero {
+                padding: 56px 0 32px;
+                border-bottom: 1px solid var(--border-secondary);
+            }
+            .iso27017-guide.iso27017-guide .hero h1 {
+                font-size: 22px;
+                font-weight: 500;
+                line-height: 1.45;
+                margin: 0 0 16px;
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide .hero .lead {
+                margin: 0 0 24px;
+                color: var(--accent);
+                font-weight: 500;
+            }
+            .iso27017-guide.iso27017-guide .section {
+                padding: 48px 0 8px;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .iso27017-guide.iso27017-guide .section:last-of-type {
+                border-bottom: none;
+            }
+            .iso27017-guide.iso27017-guide h2 {
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 1.5;
+                margin: 0 0 24px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--border-secondary);
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide h3 {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 1.6;
+                margin: 36px 0 12px;
+                color: var(--accent);
+            }
+            .iso27017-guide.iso27017-guide p {
+                margin: 0 0 16px;
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide strong {
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide em {
+                font-style: italic;
+            }
+            .iso27017-guide.iso27017-guide a {
+                color: var(--accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            .iso27017-guide.iso27017-guide a:hover {
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide .cite {
+                color: var(--text-tertiary);
+            }
+
+            .iso27017-guide.iso27017-guide ul, .iso27017-guide.iso27017-guide ol {
+                margin: 0 0 20px;
+                padding: 0;
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide ul {
+                list-style: none;
+            }
+            .iso27017-guide.iso27017-guide ul > li {
+                position: relative;
+                padding-left: 24px;
+                margin: 8px 0;
+            }
+            .iso27017-guide.iso27017-guide ul > li::before {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 0.78em;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            .iso27017-guide.iso27017-guide ol {
+                padding-left: 28px;
+            }
+            .iso27017-guide.iso27017-guide ol > li {
+                margin: 8px 0;
+                padding-left: 4px;
+            }
+            .iso27017-guide.iso27017-guide ol > li::marker {
+                color: var(--accent);
+                font-weight: 500;
+            }
+
+            .iso27017-guide.iso27017-guide code {
+                font-family: var(--font-mono);
+                font-size: 16px;
+                background: var(--bg-tertiary);
+                color: #d7e0ff;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+            .iso27017-guide.iso27017-guide pre {
+                margin: 20px 0;
+                padding: 16px 20px;
+                background: #0a1424;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--border-radius-lg);
+                overflow-x: auto;
+                line-height: 1.6;
+            }
+            .iso27017-guide.iso27017-guide pre code, .iso27017-guide.iso27017-guide pre code.hljs {
+                display: block;
+                padding: 0;
+                background: transparent;
+                font-size: 16px;
+                color: inherit;
+            }
+
+            .iso27017-guide.iso27017-guide .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0 28px;
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-md);
+            }
+            .iso27017-guide.iso27017-guide table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .iso27017-guide.iso27017-guide th, .iso27017-guide.iso27017-guide td {
+                padding: 10px 14px;
+                text-align: left;
+                vertical-align: top;
+                font-size: 16px;
+                line-height: 1.6;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .iso27017-guide.iso27017-guide th {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .iso27017-guide.iso27017-guide td {
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide tbody tr:last-child td {
+                border-bottom: none;
+            }
+            .iso27017-guide.iso27017-guide tbody tr:nth-child(even) td {
+                background: #0a1727;
+            }
+            .iso27017-guide.iso27017-guide td strong {
+                color: var(--text-primary);
+            }
+
+            .iso27017-guide.iso27017-guide .callout {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                margin: 20px 0;
+                padding: 14px 18px;
+                background: var(--info-bg);
+                border: 1px solid var(--border-secondary);
+                border-left: 3px solid var(--info-text);
+                border-radius: var(--border-radius-md);
+            }
+            .iso27017-guide.iso27017-guide .callout > i {
+                flex: none;
+                font-size: 22px;
+                line-height: 1.5;
+                color: var(--info-text);
+            }
+            .iso27017-guide.iso27017-guide .callout .cbody {
+                flex: 1;
+                min-width: 0;
+            }
+            .iso27017-guide.iso27017-guide .callout .cbody > *:last-child {
+                margin-bottom: 0;
+            }
+            .iso27017-guide.iso27017-guide .callout .cbody p {
+                margin: 0 0 10px;
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide .callout.warn {
+                background: var(--warning-bg);
+                border-left-color: var(--warning-text);
+            }
+            .iso27017-guide.iso27017-guide .callout.warn > i {
+                color: var(--warning-text);
+            }
+            .iso27017-guide.iso27017-guide .callout.source {
+                background: var(--success-bg);
+                border-left-color: var(--success-text);
+            }
+            .iso27017-guide.iso27017-guide .callout.source > i {
+                color: var(--success-text);
+            }
+
+            .iso27017-guide.iso27017-guide .mermaid {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                margin: 24px 0;
+                padding: 24px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso27017-guide.iso27017-guide .mermaid svg {
+                flex: none;
+                overflow: visible;
+            }
+            .iso27017-guide.iso27017-guide .mermaid pre {
+                margin: 0;
+                border: none;
+                background: transparent;
+            }
+
+            .iso27017-guide.iso27017-guide .qa {
+                margin: 12px 0;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso27017-guide.iso27017-guide .qa[open] {
+                border-color: var(--border-secondary);
+            }
+            .iso27017-guide.iso27017-guide .qa summary {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 18px;
+                cursor: pointer;
+                list-style: none;
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide .qa summary::-webkit-details-marker {
+                display: none;
+            }
+            .iso27017-guide.iso27017-guide .qa summary .chev {
+                flex: none;
+                color: var(--accent);
+                transition: transform 0.2s;
+            }
+            .iso27017-guide.iso27017-guide .qa[open] summary .chev {
+                transform: rotate(180deg);
+            }
+            .iso27017-guide.iso27017-guide .qa .qbody {
+                padding: 0 18px 16px;
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide .qa .qbody p {
+                margin: 0;
+            }
+
+            .iso27017-guide.iso27017-guide .checklist {
+                display: grid;
+                gap: 10px;
+                margin: 16px 0 28px;
+                counter-reset: chk;
+            }
+            .iso27017-guide.iso27017-guide .checklist > li {
+                padding: 0;
+                margin: 0;
+            }
+            .iso27017-guide.iso27017-guide .checklist > li::before {
+                content: none;
+            }
+            .iso27017-guide.iso27017-guide .check-item {
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 12px 16px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+                cursor: pointer;
+                counter-increment: chk;
+            }
+            .iso27017-guide.iso27017-guide .check-item:hover {
+                border-color: var(--border-primary);
+            }
+            .iso27017-guide.iso27017-guide .check-item input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .iso27017-guide.iso27017-guide .check-item .num {
+                flex: none;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--accent-bg);
+                border: 1px solid var(--border-secondary);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .iso27017-guide.iso27017-guide .check-item .num::before {
+                content: counter(chk);
+            }
+            .iso27017-guide.iso27017-guide .check-item .box {
+                flex: none;
+                position: relative;
+                width: 24px;
+                height: 24px;
+                margin-top: 2px;
+                border: 2px solid var(--border-primary);
+                border-radius: 6px;
+                background: var(--bg-primary);
+            }
+            .iso27017-guide.iso27017-guide .check-item .box::after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 1px;
+                width: 7px;
+                height: 13px;
+                border: solid var(--bg-primary);
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+                opacity: 0;
+            }
+            .iso27017-guide.iso27017-guide .check-item input:checked ~ .box {
+                background: var(--accent);
+                border-color: var(--accent);
+            }
+            .iso27017-guide.iso27017-guide .check-item input:checked ~ .box::after {
+                opacity: 1;
+            }
+            .iso27017-guide.iso27017-guide .check-item input:focus-visible ~ .box {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .iso27017-guide.iso27017-guide .check-item .txt {
+                flex: 1;
+                min-width: 0;
+                color: var(--text-secondary);
+            }
+            .iso27017-guide.iso27017-guide .check-item:has(input:checked) {
+                border-color: var(--success-text);
+                background: var(--success-bg);
+            }
+            .iso27017-guide.iso27017-guide .check-item:has(input:checked) .txt {
+                text-decoration: line-through;
+                color: var(--text-tertiary);
+            }
+
+            .iso27017-guide.iso27017-guide .ref-group {
+                margin: 32px 0 8px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .iso27017-guide.iso27017-guide .ref-group h3 {
+                margin: 0;
+            }
+            .iso27017-guide.iso27017-guide .tier {
+                display: inline-block;
+                padding: 2px 12px;
+                border: 1px solid var(--border-primary);
+                border-radius: 999px;
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            .iso27017-guide.iso27017-guide .tier.t3 {
+                border-color: var(--success-text);
+                color: var(--success-text);
+            }
+            .iso27017-guide.iso27017-guide .tier.t2 {
+                border-color: var(--info-text);
+                color: var(--info-text);
+            }
+            .iso27017-guide.iso27017-guide .ref {
+                display: flex;
+                align-items: flex-start;
+                gap: 14px;
+                margin: 10px 0;
+                padding: 14px 18px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso27017-guide.iso27017-guide .ref:hover {
+                border-color: var(--border-primary);
+            }
+            .iso27017-guide.iso27017-guide .ref-n {
+                flex: none;
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background: var(--accent-bg);
+                border: 1px solid var(--border-secondary);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .iso27017-guide.iso27017-guide .ref-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .iso27017-guide.iso27017-guide .ref-title {
+                margin: 0 0 4px;
+                color: var(--text-primary);
+            }
+            .iso27017-guide.iso27017-guide .ref-url {
+                display: flex;
+                align-items: flex-start;
+                gap: 6px;
+                word-break: break-all;
+                line-height: 1.5;
+            }
+            .iso27017-guide.iso27017-guide .ref-url i {
+                flex: none;
+                line-height: 1.5;
+            }
+
+            .iso27017-guide.iso27017-guide .footer {
+                margin-top: 64px;
+                padding-top: 24px;
+                border-top: 1px solid var(--border-tertiary);
+                color: var(--text-tertiary);
+            }
+            .iso27017-guide.iso27017-guide .footer p {
+                color: var(--text-tertiary);
+                margin: 0;
+            }
+
+            .iso27017-guide.iso27017-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                width: 54px;
+                height: 54px;
+                border: none;
+                border-radius: 50%;
+                background: var(--accent);
+                color: var(--bg-primary);
+                font-size: 26px;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 80;
+            }
+            .iso27017-guide.iso27017-guide .backdrop {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(2, 6, 12, 0.72);
+                z-index: 50;
+            }
+            .iso27017-guide.iso27017-guide .backdrop.show {
+                display: block;
+            }
+
+            @media (max-width: 1100px) {
+                .iso27017-guide.iso27017-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                }
+                .iso27017-guide.iso27017-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .iso27017-guide.iso27017-guide .guide-content {
+                    margin-left: 0;
+                    padding: 0 20px 96px;
+                }
+                .iso27017-guide.iso27017-guide .menu-btn {
+                    display: flex;
+                }
+                .iso27017-guide.iso27017-guide .hero {
+                    padding-top: 40px;
+                }
+            }
+            @media (max-width: 640px) {
+                .iso27017-guide.iso27017-guide .callout {
+                    padding: 12px 14px;
+                }
+                .iso27017-guide.iso27017-guide .ref {
+                    padding: 12px 14px;
+                }
+                .iso27017-guide.iso27017-guide pre {
+                    padding: 14px;
+                }
+                .iso27017-guide.iso27017-guide .mermaid {
+                    padding: 16px;
+                }
+            }
+        
+/* Scope repairs for Tailwind defaults and shared app chrome. */
+.docs-main:has(.iso27017-guide) { padding:0; }
+.iso27017-guide.iso27017-guide { min-height:100vh; min-width:0; }
+.iso27017-guide.iso27017-guide .brand { font-size:16px; font-weight:400; letter-spacing:0px; color:var(--text-primary); }
+.iso27017-guide.iso27017-guide .sidebar { top:64px; visibility:visible; z-index:40; }
+.iso27017-guide.iso27017-guide .backdrop { top:64px; z-index:30; }
+.iso27017-guide.iso27017-guide .menu-btn { z-index:50; }
+.iso27017-guide.iso27017-guide :is(section[id],h2,h3) { scroll-margin-top:88px; }
+.iso27017-guide.iso27017-guide ul { list-style-type:none; }
+.iso27017-guide.iso27017-guide ol { list-style-type:decimal; }
+.iso27017-guide.iso27017-guide ol > li::before { content:none; }
+.iso27017-guide.iso27017-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.iso27017-guide.iso27017-guide .mermaid { display:block; }
+.iso27017-guide.iso27017-guide .diagram-viewport { display:block; overflow-x:auto; }
+.iso27017-guide.iso27017-guide .mermaid svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+html:has(.iso27017-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (prefers-reduced-motion: reduce) { html:has(.iso27017-guide) { scroll-behavior:auto; } }
+@media (max-width: 1100px) { .iso27017-guide.iso27017-guide .sidebar { visibility:hidden; } .iso27017-guide.iso27017-guide .sidebar.open { visibility:visible; } }

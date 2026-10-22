@@ -1,0 +1,21 @@
+---
+title: "ISO/IEC 27017:2026 初学者向けステップバイステップガイド"
+description: "ISO/IEC 27017:2026のクラウドセキュリティ管理策を、CSC・CSPの責任分担、CLD管理策、導入手順、監査・証跡とチェックリストで学ぶガイド。"
+---
+
+import './iso27017-guide.css';
+import { E } from './GuideElements';
+import { GuideSidebar } from './GuideSidebar';
+import { GuideIcon } from './GuideIcon';
+import { MermaidFigure } from './MermaidFigure';
+import { diagrams } from './diagrams';
+
+export const metadata = {"title":"ISO/IEC 27017:2026 初学者向けステップバイステップガイド","description":"ISO/IEC 27017:2026のクラウドセキュリティ管理策を、CSC・CSPの責任分担、CLD管理策、導入手順、監査・証跡とチェックリストで学ぶガイド。"};
+
+<E.div className="iso27017-guide">
+<GuideSidebar><E.div className={"brand"}><GuideIcon name="ti-shield-check" className="ti ti-shield-check" /><E.div><E.span className={"bt"}>{"ISO/IEC 27017:2026"}</E.span><E.span className={"bs"}>{"初学者向けガイド"}</E.span></E.div></E.div><E.nav><E.ul className={"toc"}><E.li><E.a href={"#s0"}>{"0. このガイドを読む前に（重要な前提）"}</E.a></E.li><E.li><E.a href={"#s1"}>{"STEP 1. ISO/IEC 27017 とは何か"}</E.a></E.li><E.li><E.a href={"#s2"}>{"STEP 2. 基本用語を押さえる"}</E.a></E.li><E.li><E.a href={"#s3"}>{"STEP 3. 2026年版の基本情報"}</E.a></E.li><E.li><E.a href={"#s4"}>{"STEP 4. 2015年版から何が変わったか"}</E.a></E.li><E.li><E.a href={"#s5"}>{"STEP 5. 規格の構造と読み方"}</E.a></E.li><E.li><E.a href={"#s6"}>{"STEP 6. 4つのCLD管理策を一つずつ理解する"}</E.a></E.li><E.li><E.a href={"#s7"}>{"STEP 7. 2015年版の「7つのCLD管理策」はどうなったか"}</E.a></E.li><E.li><E.a href={"#s8"}>{"STEP 8. 責任分担を実務に落とす"}</E.a></E.li><E.li><E.a href={"#s9"}>{"STEP 9. 導入ステップ（CSC向け・CSP向け）"}</E.a></E.li><E.li><E.a href={"#s10"}>{"STEP 10. 監査・証跡・認証"}</E.a></E.li><E.li><E.a href={"#s11"}>{"STEP 11. 27017 と 27018 の使い分け"}</E.a></E.li><E.li><E.a href={"#s12"}>{"STEP 12. よくある誤解"}</E.a></E.li><E.li><E.a href={"#s13"}>{"STEP 13. 学習ロードマップとチェックリスト"}</E.a></E.li><E.li><E.a href={"#s14"}>{"付録A. 用語集"}</E.a></E.li><E.li><E.a href={"#s15"}>{"付録B. 情報の確度に関する注意（読者への正直な申告）"}</E.a></E.li><E.li><E.a href={"#s16"}>{"参考文献・出典URL（2026年10月15日時点で参照）"}</E.a></E.li></E.ul></E.nav></GuideSidebar>
+<E.div className="guide-content"><E.header className={"hero"} id={"top"}><E.h1>{"ISO/IEC 27017:2026 初学者向けステップバイステップガイド"}</E.h1><E.p className={"lead"}>{"\n                        クラウドサービスの情報セキュリティ管理策（ISO/IEC\n                        27002に基づく）を、責任分担の視点で理解する\n                    "}</E.p><E.div className={"table-wrap"}><E.table><E.thead><E.tr><E.th>{"項目"}</E.th><E.th>{"内容"}</E.th></E.tr></E.thead><E.tbody><E.tr><E.td>{"対象規格"}</E.td><E.td>{"ISO/IEC 27017:2026 第2版（2026年7月発行）"}</E.td></E.tr><E.tr><E.td>{"正式名称"}</E.td><E.td>{"\n                                        Information security, cybersecurity and privacy protection —\n                                        Information security controls based on ISO/IEC 27002 for\n                                        cloud services\n                                    "}</E.td></E.tr><E.tr><E.td>{"本ガイドの情報時点"}</E.td><E.td>{"2026年10月15日"}</E.td></E.tr><E.tr><E.td>{"想定読者"}</E.td><E.td>{"\n                                        クラウドを「使う側」「提供する側」の両方の初学者（エンジニア、情シス、品質・監査担当）\n                                    "}</E.td></E.tr><E.tr><E.td>{"一次情報"}</E.td><E.td><E.a target={"_blank"} rel={"noopener noreferrer"} href={"https://www.iso.org/standard/27017"}>{"https://www.iso.org/standard/27017"}</E.a></E.td></E.tr></E.tbody></E.table></E.div></E.header>
+<E.footer className={"footer"}><E.p>{"\n                        本ガイドは学習用の解説であり、法務・監査上の助言ではありません。実務への適用は、規格本文と所属組織の認証機関・監査人に確認してください。\n                    "}</E.p></E.footer>
+</E.div>
+
+</E.div>
