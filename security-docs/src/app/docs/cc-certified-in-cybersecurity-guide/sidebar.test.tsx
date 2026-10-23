@@ -8,7 +8,7 @@ afterEach(()=>{cleanup();(window as unknown as Window).happyDOM.setURL('http://l
 const ids=Array.from({length:11},(_,i)=>'s'+i);
 const nav=()=>h('nav',{},ids.map((id,i)=>h('a',{href:`#${id}`,key:i},`章${i+1}`)));
 const sections=()=>ids.map((id,i)=>h('h2',{id,key:i},`章${i+1}`));
-const harness=()=>h('div',{className:'cc-guide'},h(GuideSidebar,{children:nav()}),...sections());
+const harness=()=>h('div',{className:'cc-guide'},h(GuideSidebar,{children:nav()}),h('div',{className:'guide-content'},...sections()));
 
 test('the original eleven links are focus trapped and Escape/background restore focus and scrolling',()=>{
  const view=render(harness());const btn=view.container.querySelector('#navToggle')!;const links=view.container.querySelectorAll<HTMLAnchorElement>('nav a');expect(links).toHaveLength(11);
