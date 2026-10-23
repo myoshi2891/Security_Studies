@@ -28,7 +28,7 @@ test('all page rules are scoped and reduced motion is supported',()=>{const tree
 
 test('headings and brand use the installed serif family rather than an unloaded CDN family',async()=>{
  const w=new Window();try{w.document.head.innerHTML='<style>'+css()+'</style>';w.document.body.innerHTML=(await renderedPage()).body.innerHTML;
- for(const selector of ['h1','h2','h3','h4','.brand b'])expect(w.getComputedStyle(w.document.querySelector(selector)!).fontFamily,selector).toStartWith("'Source Serif 4 Variable'");
+ for(const selector of ['h1','h2','h3','h4','.brand b'])expect(w.getComputedStyle(w.document.querySelector(selector)!).fontFamily,selector).toMatch(/^["']Source Serif 4 Variable["']/);
  const mdx=readFileSync(new URL('./page.mdx',import.meta.url),'utf8');expect(mdx).toContain("import '@fontsource-variable/source-serif-4'");
  }finally{await w.happyDOM.close();}
 });
