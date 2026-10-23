@@ -1,5 +1,5 @@
 import {expect,test} from 'bun:test';
-import {Window} from 'happy-dom';
+import {Window,type HTMLInputElement as HappyInput} from 'happy-dom';
 import {readFileSync} from 'node:fs';
 import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
@@ -24,7 +24,7 @@ test('native numbers, custom exercise counters, bullets and intrinsic diagrams s
  }finally{await w.happyDOM.close();}}
 });
 test('checkbox selection preserves source success background, strike-through and counter while retaining keyboard focus styling',async()=>{
- const w=new Window();try{w.document.head.innerHTML='<style>'+css()+'</style>';w.document.body.innerHTML=(await renderedPage()).body.innerHTML;const input=w.document.querySelector<HTMLInputElement>('.checklist input')!;input.checked=true;
+ const w=new Window();try{w.document.head.innerHTML='<style>'+css()+'</style>';w.document.body.innerHTML=(await renderedPage()).body.innerHTML;const input=w.document.querySelector<HappyInput>('.checklist input')!;input.checked=true;
  const style=(q:string)=>w.getComputedStyle(w.document.querySelector(q)!);expect(style('.checklist label').backgroundColor).toBe('#10301f');expect(style('.chk-txt').textDecoration).toBe('line-through');expect(style('.checklist').counterReset).toBe('chk');expect(style('.checklist li').counterIncrement).toBe('chk');
  }finally{await w.happyDOM.close();}
 });
