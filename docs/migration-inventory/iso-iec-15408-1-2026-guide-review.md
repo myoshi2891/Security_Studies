@@ -2,7 +2,7 @@
 
 最終更新: 2026-10-22。ユーザー確認待ち。
 
-対象URL: `/docs/iso-iec-15408-1-2026-guide`。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md`（既存規約どおりGit管理外）。HTML/MDの内容は変更なし。
+対象URL: `/docs/iso-iec-15408-1-2026-guide`。原本は `archive/standards/Iso-15408-1-2026-guide.html` / `archive/standards/Iso-15408-1-2026-guide.md`（既存規約どおりGit管理外）。HTML/MDの内容は変更なし。
 
 - [ ] 1440px: 共通ヘッダー下の300px目次、本文全幅、見出し・表・配色を原本と比較。
 - [ ] 900px / 375px: 目次ボタン、背景・Escapeで閉じる操作、リンク移動と見出しへのフォーカス、背景スクロール復帰。

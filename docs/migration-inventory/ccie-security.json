@@ -1,5 +1,5 @@
 {
-  "source": "archive/html/Ccie-security-guide.html",
+  "source": "archive/security-certifications/Ccie-security-guide.html",
   "sha256": "807782fea60dfd5e0707868448e25809a932ceea36c205d7289264f13825c26b",
   "counts": {
     "chapters": 13,
@@ -81,6 +81,6 @@
   "category": "Security Certifications",
   "implementationCommit": "ba26742",
   "updated": "2026-10-13",
-  "markdownSource": "archive/md/Ccie-security-guide.md",
+  "markdownSource": "archive/security-certifications/Ccie-security-guide.md",
   "markdownSha256": "dc0930effc4e32cd8af34b2d439b37949f9fd35a1d25e70e42f177886d6d8036"
 }

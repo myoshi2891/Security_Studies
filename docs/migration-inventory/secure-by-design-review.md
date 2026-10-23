@@ -2,7 +2,7 @@
 
 最終更新日: 2026-10-12
 
-確認URL: `/docs/secure-by-design`。元資料: `archive/html/Secure-by-design-guide.html`。Markdown原本: `archive/md/Secure-by-design-guide.md`。
+確認URL: `/docs/secure-by-design`。元資料: `archive/security-guides/Secure-by-design-guide.html`。Markdown原本: `archive/security-guides/Secure-by-design-guide.md`。
 
 自動検証: 全231件成功（移行・表示45件）、36テストファイル、9,070 expect。lint・型検査成功。35表のReact描画・hydration、15図の実Mermaid構文、77見出しの検索登録、本文階層・リンク・コード全文・元CSS宣言を検証済み。
 

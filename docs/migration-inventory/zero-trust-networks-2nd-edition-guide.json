@@ -2,8 +2,8 @@
   "date": "2026-10-23",
   "route": "/docs/zero-trust-networks-2nd-edition-guide",
   "sources": {
-    "html": "archive/html/Zero-trust-networks-2nd-edition-guide.html",
-    "md": "archive/md/Zero-trust-networks-2nd-edition-guide.md",
+    "html": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.html",
+    "md": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.md",
     "gitPolicy": "archive/ is ignored by existing repository policy",
     "sha256": {
       "html": "cce81fd5082ade340d7f45d73e1ae1450f4f3cc3434f038dbc63d15c3d4bdee1",

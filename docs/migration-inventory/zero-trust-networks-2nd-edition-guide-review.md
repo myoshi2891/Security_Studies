@@ -16,11 +16,11 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 - [ ] 全36解答の開閉、20出典への参照リンク、出典の確度バッジを確認
 - [ ] ホームSecurity Guidesと検索に表示されることを確認
 
-原本HTML: archive/html/Zero-trust-networks-2nd-edition-guide.html
+原本HTML: archive/security-guides/Zero-trust-networks-2nd-edition-guide.html
 
 SHA-256: cce81fd5082ade340d7f45d73e1ae1450f4f3cc3434f038dbc63d15c3d4bdee1
 
-原本Markdown: archive/md/Zero-trust-networks-2nd-edition-guide.md
+原本Markdown: archive/security-guides/Zero-trust-networks-2nd-edition-guide.md
 
 SHA-256: bf6465894a2167faa9339a86f60e05d09c7e56762dd56769ee298c8fd3867127
 

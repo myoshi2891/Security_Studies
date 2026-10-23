@@ -16,11 +16,11 @@ Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ
 - [ ] 21出典カードと本文内の参照リンク、注意書き、アイコンを確認
 - [ ] ホームSecurity Guidesと検索に表示されることを確認
 
-原本HTML: archive/html/Secrets-and-lies-guide.html
+原本HTML: archive/security-guides/Secrets-and-lies-guide.html
 
 SHA-256: 8f0c4769761cda8724df25eeb5cb38940173e2b80e17235b9ae43f1b5506a7fa
 
-原本Markdown: archive/md/Secrets-and-lies-guide.md
+原本Markdown: archive/security-guides/Secrets-and-lies-guide.md
 
 SHA-256: 454a0cfd4dc2af047790fbfb496aafac1189907696acb709238c74abaea65799
 

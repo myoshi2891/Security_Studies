@@ -3,7 +3,7 @@
 最終更新日: 2026-10-14
 
 確認URL: `/docs/ccie-security`。新カテゴリー: **Security Certifications**（Resourcesの直前）。
-元資料の作成基準日は2026-10-04のまま保持しています。HTMLとMarkdown原稿は内容を変更せず、それぞれ `archive/html/Ccie-security-guide.html` と `archive/md/Ccie-security-guide.md` に移動しました。
+元資料の作成基準日は2026-10-04のまま保持しています。HTMLとMarkdown原稿は内容を変更せず、それぞれ `archive/security-certifications/Ccie-security-guide.html` と `archive/security-certifications/Ccie-security-guide.md` に移動しました。
 
 ## 自動検証結果
 

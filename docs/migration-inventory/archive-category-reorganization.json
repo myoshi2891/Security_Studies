@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-23",
+  "moves": [
+    {
+      "from": "archive/html/Iso-15408-1-2026-guide.html",
+      "to": "archive/standards/Iso-15408-1-2026-guide.html",
+      "sha256": "d8f5e8f9e5dbda86cb87917d9dc3bf1a2c89ec35fcf7567a9f4303fa5cf6a172"
+    },
+    {
+      "from": "archive/html/Iso-27017-2026-guide.html",
+      "to": "archive/standards/Iso-27017-2026-guide.html",
+      "sha256": "febe0dab1f1796d0cd80a7700a0bade732f51266f45262193afcf0934c414c32"
+    },
+    {
+      "from": "archive/html/Iso-iec-18045-2026-guide.html",
+      "to": "archive/standards/Iso-iec-18045-2026-guide.html",
+      "sha256": "1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062"
+    },
+    {
+      "from": "archive/html/Secrets-and-lies-guide.html",
+      "to": "archive/security-guides/Secrets-and-lies-guide.html",
+      "sha256": "8f0c4769761cda8724df25eeb5cb38940173e2b80e17235b9ae43f1b5506a7fa"
+    },
+    {
+      "from": "archive/html/Zero-trust-networks-2nd-edition-guide.html",
+      "to": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.html",
+      "sha256": "cce81fd5082ade340d7f45d73e1ae1450f4f3cc3434f038dbc63d15c3d4bdee1"
+    },
+    {
+      "from": "archive/md/Iso-15408-1-2026-guide.md",
+      "to": "archive/standards/Iso-15408-1-2026-guide.md",
+      "sha256": "b9a2fd23da47e1f745ab809966cc6d0ce303fb256a0c06c6022dce1f68092bc6"
+    },
+    {
+      "from": "archive/md/Iso-27017-2026-guide.md",
+      "to": "archive/standards/Iso-27017-2026-guide.md",
+      "sha256": "9e02a328e4cd257b6579761ab0d49a21f403ca3c040b1fc97352b7080440bcd6"
+    },
+    {
+      "from": "archive/md/Iso-iec-18045-2026-guide.md",
+      "to": "archive/standards/Iso-iec-18045-2026-guide.md",
+      "sha256": "e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269"
+    },
+    {
+      "from": "archive/md/Secrets-and-lies-guide.md",
+      "to": "archive/security-guides/Secrets-and-lies-guide.md",
+      "sha256": "454a0cfd4dc2af047790fbfb496aafac1189907696acb709238c74abaea65799"
+    },
+    {
+      "from": "archive/md/Zero-trust-networks-2nd-edition-guide.md",
+      "to": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.md",
+      "sha256": "bf6465894a2167faa9339a86f60e05d09c7e56762dd56769ee298c8fd3867127"
+    }
+  ],
+  "references": "All page tests, fidelity helpers and existing inventories now use category paths.",
+  "verification": {
+    "archiveContracts": "67 pass / 0 fail across 13 files",
+    "full": "pending",
+    "build": "禁止・未実行"
+  },
+  "policy": "HTML and Markdown originals live together in the existing content category; archive/ remains ignored by Git."
+}

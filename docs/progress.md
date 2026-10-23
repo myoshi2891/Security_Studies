@@ -440,7 +440,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ## Secure by Design 移行（2026-10-12）
 
-原本は `archive/html/Secure-by-design-guide.html` と `archive/md/Secure-by-design-guide.md` に内容変更なしで保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
+原本は `archive/security-guides/Secure-by-design-guide.html` と `archive/security-guides/Secure-by-design-guide.md` に内容変更なしで保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
 
 ### 実行履歴
 - 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `0be26b2`）。186 pass / 0 fail、30ファイル、6,304 expect。ビルド未実行。
@@ -473,7 +473,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 本文全幅補正: 元の本文には変更なし。共通 `.prose` の800px制限と左右auto余白を解除し、17節をデスクトップ・タブレット・スマートフォンで全幅にする計算済みCSSテストを追加（Red `572f97e` / Green `12c926d`）。
 - 2026-10-12: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功（直前HEAD `0ee9b6d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
 
-原本保存先: `archive/html/Secure-by-design-guide.html` / `archive/md/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。
+原本保存先: `archive/security-guides/Secure-by-design-guide.html` / `archive/security-guides/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。
 
 ## MITRE ATLAS 移行（2026-10-12）
 
@@ -507,7 +507,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ### 最終状態・目視確認の再開
 
 - 実装HEAD: `f7feeb0`（リスト項目余白）。統合実装 `0553651`、原本アーカイブ `201ae15`。全274件成功・0失敗、42ファイル、10,581 expect。lint・型検査成功。
-- HTML/MD原本は `archive/html/Mitre-atlas.html` / `archive/md/Mitre-atlas.md`。SHA-256一致、本文・情報基準日変更なし。新規6テストファイルに39件、既存searchテストに4件追加。
+- HTML/MD原本は `archive/advanced-topics/Mitre-atlas.html` / `archive/advanced-topics/Mitre-atlas.md`。SHA-256一致、本文・情報基準日変更なし。新規6テストファイルに39件、既存searchテストに4件追加。
 - ナビ14ページ、ATLAS検索見出し34件、ロジック単位32/32。戦略セル7/40=17.5%は増減なし。
 - 元CSS実効値の追加監査は14セレクタ×11プロパティ×2画面サイズの308項目。DOM実装が省略するブラウザ既定値（リストの点・番号・40px字下げ・1em余白・0px項目余白）を明示して照合した。実ブラウザの描画はユーザー目視待ち。
 - TDD復旧: 早すぎた `9c42449` と誤った `dddf9c4` の記録は、ユーザー承認により履歴を残して訂正（`0170b4c` / `c57579d`）。`4603722` で元アイコンのti装飾用クラスを厳密に保持する比較へ訂正し、`2d54f7f` で244件成功を記録。それ以降のRed→実装→docsは分離済み。
@@ -543,7 +543,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ### CCIE Security 原本アーカイブ完了（2026-10-13）
 
 既存Next.js移行を再検証し、未対応だった原本保存を完了。公開ルート `/docs/ccie-security` は変更なし。
-原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
+原本: `archive/security-certifications/Ccie-security-guide.html` / `archive/security-certifications/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
 事前仕様書補正 `547774b` → Red `d4f11e6`（286成功・5失敗）→ Red記録 `f76e3ef` → Green `7782eb1`（291成功・0失敗）。
 46テストファイル・12,618 expect、npm run lint / types:check成功。ビルド・今回の目視確認・push・公開は未実施。
 全13章・85表・61図・34コード・49リスト/196項目・7チェック・59参考文献とマーカーCSSをアーカイブ原本と継続比較。
@@ -644,7 +644,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 元HTMLの全18章・82小節・103見出し・52表・24コード・12図・24チェック項目・35出典・全140 IDを保持。目次100項目、本文リスト15項目、引用・外部リンク・全コードの改行/空白を照合。
 - 共通blockquoteの灰色と斜体が補足/注意の可読性を落としていたため、ページ専用CSSで明示的に修正。本文9.04〜9.76:1、補助ラベル等4.5:1以上。light/dark・desktop/phoneで検証。
 - テスト用DOMが:has()を子要素削除後もキャッシュするため、要素の削除と独立文書のセレクタ・計算済みスタイルでスクロールのページ限定適用を検証。ブラウザーでの見え方は未確認。
-- HTML/Markdown原本は `archive/html/Hacking-kubernetes-guide.html` / `archive/md/Hacking-kubernetes-guide.md` に移動し、ハッシュ不変を検証。原本アーカイブHEAD: `25a5ea1`。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
+- HTML/Markdown原本は `archive/security-guides/Hacking-kubernetes-guide.html` / `archive/security-guides/Hacking-kubernetes-guide.md` に移動し、ハッシュ不変を検証。原本アーカイブHEAD: `25a5ea1`。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
 - 次のアクション: ユーザーが `docs/migration-inventory/hacking-kubernetes-review.md` に沿って目視確認。Next.jsビルドは禁止、push・公開は未実施。
 - 2026-10-15: Hacking Kubernetes: 原本アーカイブRed・5件の期待どおりの失敗。447 pass / 5 fail、69ファイル、30,581 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
@@ -680,7 +680,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - 全文の原本比較、53表とページ全体のhydration、127見出しの検索、55ID/リンク、注意文字のコントラスト検証完了。ホームとグローバルナビに登録済み。
 - 実装HEAD: `81c6dc1`。アーカイブHEAD: `56faff0`（HTML/MDとも100% rename）。専用74件/14ファイル、全体538 pass / 0 fail、85ファイル、59,406 expect。
-- 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
+- 原本: `archive/security-guides/Web-application-hackers-handbook-guide.html` / `archive/security-guides/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
 - 残り: ユーザーが `docs/migration-inventory/web-application-hackers-handbook-review.md` に沿って目視確認。指摘があれば失敗テスト→testコミット→修正→成功確認→実装コミット→文書同期を継続。npm使用・Next.jsビルド禁止・push/公開未実施。
 
 <!-- shared-guide-navigation-status -->
@@ -758,8 +758,8 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ## Applied Cryptography 原本アーカイブ（2026-10-18）
 
-- HTML: `archive/html/Applied-cryptography-guide.html`
-- MD: `archive/md/Applied-cryptography-guide.md`
+- HTML: `archive/security-guides/Applied-cryptography-guide.html`
+- MD: `archive/security-guides/Applied-cryptography-guide.md`
 - 原本のSHA-256とバイト一致を維持。ルート原本なし。原本比較テストはアーカイブを直接参照。
 - 最終全体: 624 pass / 0 fail、101ファイル、77,750 expect。専用60件/12ファイル。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。ビルド禁止・未実行。目視はユーザー担当・未完了。
@@ -813,7 +813,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## Threat Modeling 最終確認・再開情報（2026-10-18）
 
 - 最終コード/テストHEAD: `09993be`。全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。
-- 原本HTML/MDは `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
+- 原本HTML/MDは `archive/security-guides/Threat-modeling-guide.html`・`archive/security-guides/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。静的検索21ページ・原本89見出しを検証。ビルド禁止・未実行。push・公開未実施。
 - 残る確認はユーザーの目視: `docs/migration-inventory/threat-modeling-guide-review.md`。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
 
@@ -837,7 +837,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
 
-移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
+移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/standards/Iso-15408-1-2026-guide.html` / `archive/standards/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
 
 全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
 
@@ -862,7 +862,7 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 
 ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
-移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
+移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/standards/Iso-27017-2026-guide.html` / `archive/standards/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
 
 <!-- /iso27017-status -->
 
@@ -875,7 +875,7 @@ ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
-移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
+移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/standards/Iso-iec-18045-2026-guide.html` / `archive/standards/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
 
 <!-- /iso18045-status -->
 
@@ -954,5 +954,5 @@ Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletpr
 
 
 <!-- archive-categories-stage -->
-内容別アーカイブ統一Red（2026-10-23）: 残り10原本のカテゴリー別保存・ハッシュ・旧フォルダー空・全比較参照の整合を検証。対象アーカイブ検証は27成功/10 skip/30失敗・13ファイル（67件）。直前の全体Greenは742成功/297 skip/0失敗・176ファイル。npm使用・ビルド未実行。
+内容別アーカイブ統一Green（2026-10-23）: 残り10原本をstandards（ISO3組）/security-guides（書籍2組）へ移動、全10ハッシュ一致。空のhtml/mdフォルダーを除去。既存のカテゴリー別原本を含む12比較ヘルパー・関連テスト・台帳の旧参照を修正。対象アーカイブ契約67成功/0失敗・13ファイル。全体回帰・lint・型チェックを実行中。ビルド未実行。
 <!-- /archive-categories-stage -->
