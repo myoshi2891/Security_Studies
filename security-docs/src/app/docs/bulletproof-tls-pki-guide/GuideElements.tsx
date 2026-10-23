@@ -1,0 +1,2 @@
+/** Native tags retain source semantics without global MDX substitutions. */
+export const E = {"a":"a","code":"code","dd":"dd","details":"details","div":"div","dl":"dl","dt":"dt","em":"em","h1":"h1","h2":"h2","h3":"h3","h4":"h4","header":"header","i":"i","input":"input","label":"label","li":"li","nav":"nav","ol":"ol","p":"p","pre":"pre","section":"section","span":"span","strong":"strong","summary":"summary","table":"table","tbody":"tbody","td":"td","th":"th","thead":"thead","tr":"tr","ul":"ul"} as const;

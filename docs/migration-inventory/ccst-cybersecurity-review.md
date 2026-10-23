@@ -51,9 +51,9 @@
 
 ## 原本と保守
 
-原HTML: `archive/html/Ccst-cybersecurity-guide.html`。
+原HTML: `archive/security-certifications/Ccst-cybersecurity-guide.html`。
 SHA-256: `cc8abf8ebc61e443018ce43196b93e55a3f20cfbb4791333cd34c4ab67d8ac4e`。
-原MD: `archive/md/Ccst-cybersecurity-guide.md`。
+原MD: `archive/security-certifications/Ccst-cybersecurity-guide.md`。
 SHA-256: `c407e02339596075ba888292cfec00028c197e482cc4ceae66296b651d832502`。
 
 移動前後のバイト一致を検証。比較テストはarchiveのHTMLを直接参照し、旧パスへフォールバックしません。

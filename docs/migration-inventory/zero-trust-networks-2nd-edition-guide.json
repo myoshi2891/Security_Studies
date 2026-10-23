@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-23",
+  "route": "/docs/zero-trust-networks-2nd-edition-guide",
+  "sources": {
+    "html": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.html",
+    "md": "archive/security-guides/Zero-trust-networks-2nd-edition-guide.md",
+    "gitPolicy": "archive/ is ignored by existing repository policy",
+    "sha256": {
+      "html": "cce81fd5082ade340d7f45d73e1ae1450f4f3cc3434f038dbc63d15c3d4bdee1",
+      "md": "bf6465894a2167faa9339a86f60e05d09c7e56762dd56769ee298c8fd3867127"
+    }
+  },
+  "counts": {
+    "sections": 25,
+    "headings": 124,
+    "tables": 83,
+    "cells": 1344,
+    "mainListItems": 99,
+    "diagrams": 17,
+    "codeBlocks": 3,
+    "steps": 90,
+    "answers": 36,
+    "references": 20
+  },
+  "sections": [
+    {
+      "id": "intro-0",
+      "title": "0. このガイドの使い方",
+      "tables": 2,
+      "cells": 22,
+      "lists": 1,
+      "items": 7,
+      "diagrams": []
+    },
+    {
+      "id": "intro-1",
+      "title": "1. 書籍の概要",
+      "tables": 2,
+      "cells": 83,
+      "lists": 1,
+      "items": 3,
+      "diagrams": []
+    },
+    {
+      "id": "intro-2",
+      "title": "2. 学習ロードマップ",
+      "tables": 0,
+      "cells": 0,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d1"
+      ]
+    },
+    {
+      "id": "intro-3",
+      "title": "3. 先に押さえる前提知識",
+      "tables": 1,
+      "cells": 48,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    },
+    {
+      "id": "intro-4",
+      "title": "4. ゼロトラストを3分で理解する",
+      "tables": 3,
+      "cells": 46,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d2"
+      ]
+    },
+    {
+      "id": "ch1",
+      "title": "第1章Zero Trust Fundamentals（ゼロトラストの基礎）",
+      "tables": 2,
+      "cells": 21,
+      "lists": 4,
+      "items": 13,
+      "diagrams": [
+        "d3"
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "第2章Managing Trust（信頼の管理）",
+      "tables": 3,
+      "cells": 38,
+      "lists": 3,
+      "items": 7,
+      "diagrams": [
+        "d4"
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "第3章Context-Aware Agents（コンテキスト認識エージェント）",
+      "tables": 4,
+      "cells": 42,
+      "lists": 4,
+      "items": 9,
+      "diagrams": [
+        "d5"
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "第4章Making Authorization Decisions（認可の意思決定）",
+      "tables": 5,
+      "cells": 81,
+      "lists": 5,
+      "items": 12,
+      "diagrams": [
+        "d6"
+      ]
+    },
+    {
+      "id": "ch5",
+      "title": "第5章Trusting Devices（デバイスを信頼する）",
+      "tables": 7,
+      "cells": 94,
+      "lists": 2,
+      "items": 5,
+      "diagrams": [
+        "d7"
+      ]
+    },
+    {
+      "id": "ch6",
+      "title": "第6章Trusting Identities（ID を信頼する）",
+      "tables": 6,
+      "cells": 84,
+      "lists": 3,
+      "items": 7,
+      "diagrams": [
+        "d8",
+        "d9"
+      ]
+    },
+    {
+      "id": "ch7",
+      "title": "第7章Trusting Applications（アプリケーションを信頼する）",
+      "tables": 7,
+      "cells": 64,
+      "lists": 3,
+      "items": 9,
+      "diagrams": [
+        "d10",
+        "d11"
+      ]
+    },
+    {
+      "id": "ch8",
+      "title": "第8章Trusting the Traffic（トラフィックを信頼する）",
+      "tables": 9,
+      "cells": 94,
+      "lists": 2,
+      "items": 5,
+      "diagrams": [
+        "d12"
+      ]
+    },
+    {
+      "id": "ch9",
+      "title": "第9章Realizing a Zero Trust Network（ゼロトラストネットワークの実現）",
+      "tables": 8,
+      "cells": 107,
+      "lists": 2,
+      "items": 5,
+      "diagrams": [
+        "d13"
+      ]
+    },
+    {
+      "id": "ch10",
+      "title": "第10章The Adversarial View（攻撃者の視点）",
+      "tables": 3,
+      "cells": 53,
+      "lists": 2,
+      "items": 4,
+      "diagrams": [
+        "d14"
+      ]
+    },
+    {
+      "id": "ch11",
+      "title": "第11章Standards, Frameworks, and Guidelines（標準・フレームワーク・ガイドライン）",
+      "tables": 6,
+      "cells": 115,
+      "lists": 2,
+      "items": 4,
+      "diagrams": [
+        "d15"
+      ]
+    },
+    {
+      "id": "ch12",
+      "title": "第12章Challenges and the Road Ahead（課題と今後）",
+      "tables": 6,
+      "cells": 72,
+      "lists": 3,
+      "items": 7,
+      "diagrams": []
+    },
+    {
+      "id": "appendix",
+      "title": "付録 ネットワークモデル入門",
+      "tables": 2,
+      "cells": 50,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    },
+    {
+      "id": "cross-a",
+      "title": "横断編A: 1つのリクエストが許可されるまで",
+      "tables": 1,
+      "cells": 18,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d16"
+      ]
+    },
+    {
+      "id": "cross-b",
+      "title": "横断編B: 導入ステップ（10ステップ）",
+      "tables": 1,
+      "cells": 44,
+      "lists": 0,
+      "items": 0,
+      "diagrams": [
+        "d17"
+      ]
+    },
+    {
+      "id": "cross-c",
+      "title": "横断編C: 2024〜2026年の最新動向",
+      "tables": 1,
+      "cells": 68,
+      "lists": 1,
+      "items": 2,
+      "diagrams": []
+    },
+    {
+      "id": "glossary",
+      "title": "用語集",
+      "tables": 1,
+      "cells": 58,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    },
+    {
+      "id": "quiz",
+      "title": "理解度チェック（総合）",
+      "tables": 0,
+      "cells": 0,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    },
+    {
+      "id": "plan",
+      "title": "4週間学習プラン",
+      "tables": 1,
+      "cells": 20,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    },
+    {
+      "id": "sources",
+      "title": "出典一覧（URL）",
+      "tables": 2,
+      "cells": 22,
+      "lists": 0,
+      "items": 0,
+      "diagrams": []
+    }
+  ],
+  "validation": {
+    "dedicated": "68 cases, 12 files; all verified in final full run",
+    "full": "683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）",
+    "lint": "pass",
+    "types": "pass",
+    "mermaidParse": "17/17 pass",
+    "css": "All source declarations/media + computed text/badges/1344 cells/code/lists/answers at 375/1024/1440px in light/dark; five-width list/drawer/SVG layout",
+    "archive": "HTML/MD SHA-256 matches pre-move values",
+    "build": "禁止・未実行",
+    "visual": "ユーザー担当・未完了"
+  }
+}

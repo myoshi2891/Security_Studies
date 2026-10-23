@@ -4,7 +4,7 @@
 
 確認URL: `/docs/hacking-kubernetes`。Security Guidesに登録。
 原本の情報基準日2026年10月9日と本文は保持。今回の移行は技術情報の再検証を意味しません。
-HTML・Markdown原本は `archive/html/Hacking-kubernetes-guide.html` / `archive/md/Hacking-kubernetes-guide.md` に移動済み。SHA-256でバイト一致と、旧ルートパスの除去を検証しています。
+HTML・Markdown原本は `archive/security-guides/Hacking-kubernetes-guide.html` / `archive/security-guides/Hacking-kubernetes-guide.md` に移動済み。SHA-256でバイト一致と、旧ルートパスの除去を検証しています。
 
 ## 自動検証
 

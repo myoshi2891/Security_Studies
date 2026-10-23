@@ -10,7 +10,7 @@ import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
 export const here = import.meta.dir;
-const sourcePath = resolve(here, '../../../../../archive/html/Secure-by-design-guide.html');
+const sourcePath = resolve(here, '../../../../../archive/security-guides/Secure-by-design-guide.html');
 // 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';

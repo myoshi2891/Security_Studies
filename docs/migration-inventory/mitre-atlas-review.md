@@ -2,7 +2,7 @@
 
 最終更新日: 2026-10-12
 
-確認URL: `/docs/mitre-atlas`。元資料: `archive/html/Mitre-atlas.html`、Markdown原本: `archive/md/Mitre-atlas.md`。
+確認URL: `/docs/mitre-atlas`。元資料: `archive/advanced-topics/Mitre-atlas.html`、Markdown原本: `archive/advanced-topics/Mitre-atlas.md`。
 
 全277テスト成功（ATLAS42件・検索追加4件）、42ファイル、10,627 expect。lint・型検査成功。ビルドはユーザー指定で未実行。実ブラウザの表示・SVG描画はユーザーの目視確認待ち。
 

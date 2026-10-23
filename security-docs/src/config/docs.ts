@@ -31,6 +31,8 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Secure SDLC Guide", href: "/docs/secdev-guide" },
         { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
+        { title: "Secrets and Lies", href: "/docs/secrets-and-lies-guide" },
+        { title: "Zero Trust Networks, 2nd Edition", href: "/docs/zero-trust-networks-2nd-edition-guide" },
         { title: "Threat Modeling 入門ガイド", href: "/docs/threat-modeling-guide" },
         { title: "Web Application Hacker's Handbook", href: "/docs/web-application-hackers-handbook" },
       ],
@@ -56,6 +58,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Hacking Kubernetes", href: "/docs/hacking-kubernetes" },
         { title: "Software Supply Chain", href: "/docs/supply-chain" },
+        { title: "Bulletproof TLS and PKI", href: "/docs/bulletproof-tls-pki-guide" },
         { title: "Applied Cryptography", href: "/docs/applied-cryptography-guide" },
         { title: "Post-Quantum Cryptography", href: "/docs/pqc" },
       ],

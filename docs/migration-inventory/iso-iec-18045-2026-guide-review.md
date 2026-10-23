@@ -2,7 +2,7 @@
 
 最終更新: 2026-10-22。ユーザー確認待ち。
 
-対象URL: `/docs/iso-iec-18045-2026-guide`。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（既存規約によりGit管理外）。両ファイルのSHA-256は移動前後で一致。
+対象URL: `/docs/iso-iec-18045-2026-guide`。原本: `archive/standards/Iso-iec-18045-2026-guide.html` / `archive/standards/Iso-iec-18045-2026-guide.md`（既存規約によりGit管理外）。両ファイルのSHA-256は移動前後で一致。
 
 - [ ] 1440px: 共通ヘッダー下の300px目次、本文全幅、元の見出し・メタ情報・表・配色を比較。
 - [ ] 1100px / 375px: 目次ボタン、背景・Escapeで閉じる動作、リンク移動とフォーカス、背景スクロール復帰。1101pxでデスクトップ目次に戻る。

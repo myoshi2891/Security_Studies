@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-22（Codecovパッチカバレッジ対応: fidelity-helpersをカバレッジ対象外化・ISO3ガイドの既定Mermaidレンダラーテスト追加。全体571成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（レビュー対応: 図のテキスト説明をサーバー描画に含める・Mermaid自動起動の停止。全体1055成功/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,48 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **571成功 / 297 skip / 0失敗** | bun test実測（2026-10-22）・146ファイル・868件・158,183 expect。原本不在の既存比較テストはskip。CI条件（archive/なしworktree）: 481成功 / 387 skip / 0失敗 |
-| テストファイル数 | **146ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **64/64 (100%)** | 従来61 + ISO18045部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全146テストファイルとは別集計 |
+| テストケース総数 | **1052成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・177ファイル・1052件・489,759 expect。全原本が存在し、旧参照による297 skipを解消。 |
+| テストファイル数 | **177ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全177テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
+| CI | ✅ **稼働中** | 原本なしのクリーンworktreeで576成功/476 skip/0失敗を実測。npm test -- --coverage。原本非依存の検証は実行し、存在しない原本の比較のみskip。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/lib/archive-categories.test.ts` | 13 | 2026-10-23追加・10ハッシュ/旧フォルダー/参照先整合Green |
+| `src/app/docs/secrets-and-lies-guide/foundation.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sections-0-4.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sections-5-sources.test.tsx` | 6 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/GuideIcon.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/cascade.test.tsx` | 9 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/runtime.test.tsx` | 10 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/interactions.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/integration.test.tsx` | 6 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/archive.test.ts` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/presentation.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/GuideIcon.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/foundation.test.tsx` | 3 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sections-intro-ch6.test.tsx` | 11 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sections-ch7-sources.test.tsx` | 14 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/cascade.test.tsx` | 8 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/runtime.test.tsx` | 11 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/interactions.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/integration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/archive.test.ts` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/archive.test.ts` | 4 | 2026-10-23追加・カテゴリー別アーカイブGreen |
+| `src/app/docs/bulletproof-tls-pki-guide/migration.test.tsx` | 19 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/runtime.test.tsx` | 9 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/cascade.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/interactions.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/iso-iec-18045-2026-guide/foundation.test.tsx` | 4 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
 | `src/app/docs/iso-iec-18045-2026-guide/sidebar.test.tsx` | 5 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
 | `src/app/docs/iso-iec-18045-2026-guide/runtime.test.tsx` | 9 | 2026-10-22追加・原本比較/装飾/図/操作/統合/アーカイブGreen |
@@ -183,6 +214,9 @@
 | 入力サニタイズ | ❌ **未テスト** | SearchModal XSS 耐性テストなし |
 | 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行。加えて `bun audit --prod --audit-level=high`（除外指定なし）で本番依存を監査 |
 | next RCE（GHSA-vcvr-r3jv-pc5j） | ✅ **解消** | 2026-10-05: `next` / `eslint-config-next` を 16.3.5 → 16.3.8 へ更新 |
+| next RCE/DoS（GHSA-2464-fhr4-w9xw・GHSA-673q-mjm6-r5xr・GHSA-p3m5-59mp-jv5r） | ✅ **解消** | 2026-10-23: `next` / `@next/mdx` / `eslint-config-next` を 16.4.2 へ更新（`62a4951`）。同梱の `eslint-plugin-react-hooks` 7.1.1 の新ルールに合わせ `Checklist` の effect 内 setState を描画中の同期へ変更（`5c85320`） |
+| dompurify（GHSA-cg2g-xh64-v4q7・GHSA-mrv2-3pqr-j5jr） | ✅ **解消** | 2026-10-23: mermaid 経由の推移依存を overrides で 3.4.17 に固定（mermaid の `^3.2.5` 範囲内） |
+| toml DoS（GHSA-4qx8-w7c3-pj3p・GHSA-9j65-hcg3-gc64・GHSA-9qmh-m7c6-f92p） | ✅ **解消** | 2026-10-23: remark-mdx-frontmatter 経由。overrides の固定値を 4.3.0 → 5.0.1 へ更新し、`parse` の名前付き import が動作することを確認 |
 | braces DoS（GHSA-vfj7-8cjw-p6xm） | ⚠️ **一時除外** | パッチ未提供（<=3.0.3 全版が対象）。`eslint-config-next` 経由の dev 依存のみで、本番バンドル・ユーザー入力経路に含まれない。CI で `--ignore` 指定、**期限 2026-11-05** までに修正版の有無を再確認 |
 
 #### CSP 現行構成（2026-05-20）
@@ -262,6 +296,11 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CI-K8S-CONTRAST-TIMEOUT | **CI失敗対応** — PR CI（run 39939392410）で `hacking-kubernetes/contrast.test.tsx` の「supporting labels…4.5:1 contrast」が5080msでBun既定の5秒タイムアウトを超過（アサーション失敗ではない。同一コミットのpush CIは成功）。ローカル実測2.8〜3.8秒と余裕がないため、重い2テストに既存慣例どおり `20000` msのテスト別タイムアウトを設定（`5844027`）。WAHH版は最大1.5秒のため変更せず。全1057件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
+| REVIEW-HLJS-CORE | **レビュー指摘対応** — Bulletproofの `GuideCode` を `highlight.js` 全言語バンドルから `highlight.js/lib/core` へ切替え、page.mdxで使う python・http・nginx・bash の4言語のみ静的登録（他ガイドの既存方式に統一、ハイライト出力は不変）。リファクタリングのため既存テストで検証: Bulletproof 48件/7ファイル成功、lint/型検査成功（`0f5d81b`）。ビルド禁止・未実行 | 2026-10-23 |
+| REVIEW-MERMAID-SSR | **レビュー指摘対応** — Bulletproofの図のテキスト説明（折りたたみ）を描画結果に関わらずサーバー描画にも含め、JavaScript無効時も読めるようにした。Secrets and Liesの遅延読み込みで `mermaid.startOnLoad=false` を設定し、load時の自動描画（`mermaid.run`）が `.mermaid` コンテナを書き換えないようにした（`initialize` は呼ばない）。Zero Trustの統合テストは静的索引を `import.meta.url` 基準、Secrets and Liesの統合テストは `import.meta.dir` 基準で読む（`f603c39`）。BulletproofとZero Trustの遅延読み込みでも `mermaid.startOnLoad=false` を設定（Red `75cfd6f` → Green `63a813f`、全1057件/177ファイル成功）。Zero Trust d12の `F-->>C: 6 時間経過で穴は閉じる` は原本どおりのため変更せず。`getSearchIndex()` の `process.cwd()` は本番の `/api/search` でバンドル後に `import.meta.url` が `.next/server` を指すため変更せず。Red `334280b` → テスト調整 `b75007e`・`b385159` → Green `3e86aff`。全1055件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
+| AUDIT-2026-10-23 | **依存関係の脆弱性解消** — CIの `bun audit --audit-level=high` が critical 3件・high 5件で失敗。next系3パッケージを 16.4.2、overrides で dompurify 3.4.17・toml 5.0.1 に更新。lint の新ルール対応で `Checklist` をリファクタリング（`5c85320` → `62a4951`）。両 audit ステップが exit 0（残りは既存の一時除外 braces のみ）。全1053件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
+| REVIEW-MERMAID-ARCHIVE | **レビュー指摘対応** — Bulletproofの図説明が引用符なしパイプラベル（`-->|通信|`）の接続を落としていた不具合を修正。Secrets and Liesの図設定から、frontmatterでは無視される `startOnLoad`・`securityLevel` を削除。archive移動検証は `archive/` がない場合だけスキップし、移動先の欠落を失敗として検出。Red `b444fa6`・テスト `8d15148` → Green `6d322a3`。全1053件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
 | THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
 | APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功（移行完了時点の件数。現在の実測値は冒頭のテスト表を参照）、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
@@ -410,7 +449,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ## Secure by Design 移行（2026-10-12）
 
-原本は `archive/html/Secure-by-design-guide.html` と `archive/md/Secure-by-design-guide.md` に内容変更なしで保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
+原本は `archive/security-guides/Secure-by-design-guide.html` と `archive/security-guides/Secure-by-design-guide.md` に内容変更なしで保存。npm経由でBunを実行。ビルド禁止。目視確認はユーザー担当。
 
 ### 実行履歴
 - 2026-10-12: 棚卸し完了・表示基盤着手前（直前HEAD `0be26b2`）。186 pass / 0 fail、30ファイル、6,304 expect。ビルド未実行。
@@ -443,7 +482,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 本文全幅補正: 元の本文には変更なし。共通 `.prose` の800px制限と左右auto余白を解除し、17節をデスクトップ・タブレット・スマートフォンで全幅にする計算済みCSSテストを追加（Red `572f97e` / Green `12c926d`）。
 - 2026-10-12: 元HTML・MDをarchiveへ移動・原本バイト一致・全231件とlint/型検査成功（直前HEAD `0ee9b6d`）。231 pass / 0 fail、36ファイル、9,070 expect。ビルド未実行。
 
-原本保存先: `archive/html/Secure-by-design-guide.html` / `archive/md/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。
+原本保存先: `archive/security-guides/Secure-by-design-guide.html` / `archive/security-guides/Secure-by-design-guide.md`。Next.js本文・検索アセットは変更なし。今後の移行比較はarchiveのHTMLを正本として実行する。配置換えのためTDD規約のリファクタリング手順を適用し、移動前後に既存全テストを実行した。
 
 ## MITRE ATLAS 移行（2026-10-12）
 
@@ -477,7 +516,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ### 最終状態・目視確認の再開
 
 - 実装HEAD: `f7feeb0`（リスト項目余白）。統合実装 `0553651`、原本アーカイブ `201ae15`。全274件成功・0失敗、42ファイル、10,581 expect。lint・型検査成功。
-- HTML/MD原本は `archive/html/Mitre-atlas.html` / `archive/md/Mitre-atlas.md`。SHA-256一致、本文・情報基準日変更なし。新規6テストファイルに39件、既存searchテストに4件追加。
+- HTML/MD原本は `archive/advanced-topics/Mitre-atlas.html` / `archive/advanced-topics/Mitre-atlas.md`。SHA-256一致、本文・情報基準日変更なし。新規6テストファイルに39件、既存searchテストに4件追加。
 - ナビ14ページ、ATLAS検索見出し34件、ロジック単位32/32。戦略セル7/40=17.5%は増減なし。
 - 元CSS実効値の追加監査は14セレクタ×11プロパティ×2画面サイズの308項目。DOM実装が省略するブラウザ既定値（リストの点・番号・40px字下げ・1em余白・0px項目余白）を明示して照合した。実ブラウザの描画はユーザー目視待ち。
 - TDD復旧: 早すぎた `9c42449` と誤った `dddf9c4` の記録は、ユーザー承認により履歴を残して訂正（`0170b4c` / `c57579d`）。`4603722` で元アイコンのti装飾用クラスを厳密に保持する比較へ訂正し、`2d54f7f` で244件成功を記録。それ以降のRed→実装→docsは分離済み。
@@ -513,7 +552,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ### CCIE Security 原本アーカイブ完了（2026-10-13）
 
 既存Next.js移行を再検証し、未対応だった原本保存を完了。公開ルート `/docs/ccie-security` は変更なし。
-原本: `archive/html/Ccie-security-guide.html` / `archive/md/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
+原本: `archive/security-certifications/Ccie-security-guide.html` / `archive/security-certifications/Ccie-security-guide.md`。HTML・MD双方のSHA-256が移動前後で一致。
 事前仕様書補正 `547774b` → Red `d4f11e6`（286成功・5失敗）→ Red記録 `f76e3ef` → Green `7782eb1`（291成功・0失敗）。
 46テストファイル・12,618 expect、npm run lint / types:check成功。ビルド・今回の目視確認・push・公開は未実施。
 全13章・85表・61図・34コード・49リスト/196項目・7チェック・59参考文献とマーカーCSSをアーカイブ原本と継続比較。
@@ -614,7 +653,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 - 元HTMLの全18章・82小節・103見出し・52表・24コード・12図・24チェック項目・35出典・全140 IDを保持。目次100項目、本文リスト15項目、引用・外部リンク・全コードの改行/空白を照合。
 - 共通blockquoteの灰色と斜体が補足/注意の可読性を落としていたため、ページ専用CSSで明示的に修正。本文9.04〜9.76:1、補助ラベル等4.5:1以上。light/dark・desktop/phoneで検証。
 - テスト用DOMが:has()を子要素削除後もキャッシュするため、要素の削除と独立文書のセレクタ・計算済みスタイルでスクロールのページ限定適用を検証。ブラウザーでの見え方は未確認。
-- HTML/Markdown原本は `archive/html/Hacking-kubernetes-guide.html` / `archive/md/Hacking-kubernetes-guide.md` に移動し、ハッシュ不変を検証。原本アーカイブHEAD: `25a5ea1`。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
+- HTML/Markdown原本は `archive/security-guides/Hacking-kubernetes-guide.html` / `archive/security-guides/Hacking-kubernetes-guide.md` に移動し、ハッシュ不変を検証。原本アーカイブHEAD: `25a5ea1`。棚卸し: `docs/migration-inventory/hacking-kubernetes.json`。
 - 次のアクション: ユーザーが `docs/migration-inventory/hacking-kubernetes-review.md` に沿って目視確認。Next.jsビルドは禁止、push・公開は未実施。
 - 2026-10-15: Hacking Kubernetes: 原本アーカイブRed・5件の期待どおりの失敗。447 pass / 5 fail、69ファイル、30,581 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
 - 2026-10-15: Hacking Kubernetes: 原本アーカイブGreen・全452件成功・lint/型検査成功。452 pass / 0 fail、69ファイル、30,591 expect。npm経由・ビルド未実行（禁止）・目視確認はユーザー担当／未完了。
@@ -650,7 +689,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 - 全文の原本比較、53表とページ全体のhydration、127見出しの検索、55ID/リンク、注意文字のコントラスト検証完了。ホームとグローバルナビに登録済み。
 - 実装HEAD: `81c6dc1`。アーカイブHEAD: `56faff0`（HTML/MDとも100% rename）。専用74件/14ファイル、全体538 pass / 0 fail、85ファイル、59,406 expect。
-- 原本: `archive/html/Web-application-hackers-handbook-guide.html` / `archive/md/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
+- 原本: `archive/security-guides/Web-application-hackers-handbook-guide.html` / `archive/security-guides/Web-application-hackers-handbook-guide.md`。インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
 - 残り: ユーザーが `docs/migration-inventory/web-application-hackers-handbook-review.md` に沿って目視確認。指摘があれば失敗テスト→testコミット→修正→成功確認→実装コミット→文書同期を継続。npm使用・Next.jsビルド禁止・push/公開未実施。
 
 <!-- shared-guide-navigation-status -->
@@ -728,8 +767,8 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ## Applied Cryptography 原本アーカイブ（2026-10-18）
 
-- HTML: `archive/html/Applied-cryptography-guide.html`
-- MD: `archive/md/Applied-cryptography-guide.md`
+- HTML: `archive/security-guides/Applied-cryptography-guide.html`
+- MD: `archive/security-guides/Applied-cryptography-guide.md`
 - 原本のSHA-256とバイト一致を維持。ルート原本なし。原本比較テストはアーカイブを直接参照。
 - 最終全体: 624 pass / 0 fail、101ファイル、77,750 expect。専用60件/12ファイル。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。ビルド禁止・未実行。目視はユーザー担当・未完了。
@@ -783,7 +822,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 ## Threat Modeling 最終確認・再開情報（2026-10-18）
 
 - 最終コード/テストHEAD: `09993be`。全体685 pass / 0 fail、114ファイル、118,043 expect。専用61件/13ファイル。
-- 原本HTML/MDは `archive/html/Threat-modeling-guide.html`・`archive/md/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
+- 原本HTML/MDは `archive/security-guides/Threat-modeling-guide.html`・`archive/security-guides/Threat-modeling-guide.md` にバイト一致で移動。比較テストはアーカイブを直接参照。Shostack版は変更しない。
 - `npm test`・`npm run lint`・`npm run types:check` 成功。静的検索21ページ・原本89見出しを検証。ビルド禁止・未実行。push・公開未実施。
 - 残る確認はユーザーの目視: `docs/migration-inventory/threat-modeling-guide-review.md`。指摘時は失敗テスト→testコミット→修正→成功確認→実装コミット→仕様書同期を継続。
 
@@ -807,7 +846,7 @@ security-docs/ に Playwright E2E テストを導入し、主要ユーザーシ�
 
 ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。
 
-移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/html/Iso-15408-1-2026-guide.html` / `archive/md/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
+移行先: `security-docs/src/app/docs/iso-iec-15408-1-2026-guide/page.mdx`（URL `/docs/iso-iec-15408-1-2026-guide`）。原本は `archive/standards/Iso-15408-1-2026-guide.html` / `archive/standards/Iso-15408-1-2026-guide.md` にバイト一致で移動済み。`archive/` は既存規約どおりGit管理外。
 
 全21節・81見出し・31表（509セル）・17図・88リスト項目・10解答・19参考文献を原本と比較。点の疑似要素、番号、全CSS宣言、375/900/1440pxの計算済みスタイル、両配色、目次操作、図の再試行、表・全ページhydrationを検証。ナビ・ホーム一覧・静的検索22ページに登録。原本HTML/MDはSHA-256一致でアーカイブ済み。専用55件/10ファイル、全体457 pass / 297 skip / 0 fail（754件/124ファイル、41,155 expect）。npm test・npm run lint・npm run types:check成功。push・公開未実施。台帳: `docs/migration-inventory/iso-iec-15408-1-2026-guide.json`、目視確認表: `docs/migration-inventory/iso-iec-15408-1-2026-guide-review.md`。
 
@@ -832,7 +871,7 @@ ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用5
 
 ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
-移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/html/Iso-27017-2026-guide.html` / `archive/md/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
+移行先: `security-docs/src/app/docs/iso-iec-27017-2026-guide/page.mdx`（URL `/docs/iso-iec-27017-2026-guide`）。全17節・57見出し・30表（463セル）・10図・2コード・44リスト項目・7チェック項目・7 Q&A・18参考文献を原本と照合。全CSS宣言と375/1100/1440px・両配色の本文/表/リスト等の計算済みスタイルを比較。箇条書きの点、番号、チェックカウンター、選択/フォーカス表示、コード文字列とローカルハイライト、目次操作、図の描画/再試行、表・全ページhydrationを検証。原本: `archive/standards/Iso-27017-2026-guide.html` / `archive/standards/Iso-27017-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索23ページに登録。台帳: `docs/migration-inventory/iso-iec-27017-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27017-2026-guide-review.md`。
 
 <!-- /iso27017-status -->
 
@@ -845,7 +884,7 @@ ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
-移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/html/Iso-iec-18045-2026-guide.html` / `archive/md/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
+移行先: `security-docs/src/app/docs/iso-iec-18045-2026-guide/page.mdx`（URL `/docs/iso-iec-18045-2026-guide`）。全21節・77見出し・40表（830セル）・18図・98信頼度タグ・28参考文献を原本と照合。全CSS宣言、375/1100/1440px・両配色の本文/全表セル/タグ等の計算済みスタイル、リストの点・番号の定義を検証。18図の定義・配色・sequence/pie設定・円グラフ全11値、目次操作、図の描画/再試行、表・全ページhydrationを検証。共通CSSによるダーク配色の見出し色混入を修正。原本: `archive/standards/Iso-iec-18045-2026-guide.html` / `archive/standards/Iso-iec-18045-2026-guide.md`（SHA-256一致・既存規約どおりGit管理外）。ナビと検索24ページに登録。台帳: `docs/migration-inventory/iso-iec-18045-2026-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-18045-2026-guide-review.md`。
 
 <!-- /iso18045-status -->
 
@@ -853,3 +892,88 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 - 表示基盤・0〜6節・7〜13節・14〜20節・ナビ検索/見出し色・原本アーカイブごとにRed→テストコミット→Green→実装コミット→別の文書同期コミットを実施。
 - 次の対応: 専用目視確認表に沿ってユーザー確認。指摘があれば失敗テストから修正。ビルド・push・公開は未実施。
+
+
+## Bulletproof TLS and PKI 移行（2026-10-23）
+
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDは `archive/security-guides/` にカテゴリー別で保存（両SHA-256一致）。
+
+- Red `65cbdea`: 原本照合19件失敗 → Green `0ec3286`: 全15節・CSS・ナビ検索移行。
+- Red `a7ad9fd`: 図の配色・sequence設定欠落を再現 → Green `da37f69`: 原本設定復元、41件成功。
+- Refactor検証: npm run lint / npm run types:check成功。追加リファクタリング不要。
+- レビュー対応（2026-10-23）: CSS照合テストをセレクター＋@media祖先一致に強化（`590cb69`、media除去の変異で失敗を確認）。台帳のlistItems 72を節57＋サイドバー15に分解（`3972202`）。d6「Main Secret」（原本がRFC 8446bis名と明記）、d16の定義、theme 'dark'（原本設定・cascadeテストで固定）は原本忠実のため変更なし。専用41件成功・lint/型検査成功。ビルド未実行（禁止）。
+- 24図のMermaid構文を実エンジンで解析成功。375/768/1024/1025/1440pxのリスト番号・余白・目次・図スクロール、操作とhydrationを自動検証。
+- 作業開始時の実測は574成功/297 skip/0失敗・146ファイル（871件）。旧トップ集計571件との差分も今回の最終実測で同期。過去の移行記録の数値は当時の実測として保持。
+- 仕様書7ファイル・台帳・目視確認表を同期。目視確認後の公開は未実施。
+
+
+<!-- zero-trust-stage -->
+Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+<!-- /zero-trust-stage -->
+
+
+## Zero Trust Networks 第2版 移行（2026-10-23）
+
+Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+- 表示基盤: Red `5faf664` → Green `11656ef`。
+- 導入〜第6章: Red `8acf2ea` → Green `7438ab6`。原本リンク間の空白欠落も検出・修正。
+- 第7章〜出典: Red `92b4b29` → Green `79688b8`。全25節を照合。
+- 操作・スタイル・統合: Red `eff62f3` → Green `54f684a`。表文字サイズの混入、図のsequence余白・LR→TB再配置、ナビ/検索未登録を検出・修正。CSSの等価単位、原本ハイライト適用状態、500文字スニペットの既存仕様をテストに反映。
+- 原本アーカイブ: Red `d1e6468` → Green `5d116d6`。HTML/MDのSHA-256一致・ルート除去・比較参照切替を検証。archive/は既存規約どおりGit管理外。
+- アイコン最終照合: Red `82c3e58` → Green `197a8fa`。盾＋錠前をローカルSVGで保持し、7種類の意味を検証。
+- 動的表示最終照合: Red `b8936cc` → Green `c2c6314`。原本headのcolor-schemeと動的スクロール案内を保持。
+- Refactor検証: npm lint / types:check成功。追加リファクタリング不要。
+- 仕様書7ファイル・移行台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
+
+台帳: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json`。目視確認表: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide-review.md`。
+
+
+<!-- secrets-stage -->
+Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+<!-- /secrets-stage -->
+
+
+## Secrets and Lies 移行（2026-10-23）
+
+Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+- 表示基盤: Red `6e6de4c` → Green `ded38af`。
+- Step 0〜4: Red `d4240da` → Green `eab2ee4`。
+- Step 5〜出典: Red `58268e8` → Green `3c6742b`。
+- 操作・スタイル・ナビ検索: Red `8b4f89a` → Green `9f0f675`。リスト種別を明示し、点/演習番号とネイティブ番号の重複を防止。全59見出しの索引一致、CIでも残る固定件数の検査と欠落検出のmutation probesを追加。
+- 原本アーカイブ: Red `2337f91` → Green `80fc1f8`。両原本SHA-256一致・ルート除去・参照切替を検証。archive/は既存規約でGit管理外。
+- Refactor `e59fc2d`: Happy DOMの入力要素に対応するテスト型へ整理。最終lint・型検査成功。
+- 開始時監査: 683成功/297 skip/0失敗・164ファイル（980件）で仕様書と一致。
+- 仕様書7ファイル・台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
+
+台帳: `docs/migration-inventory/secrets-and-lies-guide.json`。目視確認表: `docs/migration-inventory/secrets-and-lies-guide-review.md`。
+
+
+<!-- bulletproof-archive-stage -->
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
+<!-- /bulletproof-archive-stage -->
+
+
+### Bulletproof内容別アーカイブ（2026-10-23）
+
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
+
+Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletproof-tls-pki-guide.html` / `archive/security-guides/Bulletproof-tls-pki-guide.md`。形式別ではなく内容別の既存カテゴリーへ両原本をまとめる。
+
+
+<!-- archive-categories-stage -->
+アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
+<!-- /archive-categories-stage -->
+
+
+## 内容別アーカイブ統一（2026-10-23）
+
+アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
+
+- Red `20a3093`: カテゴリー別保存、全10ハッシュ、旧フォルダー空、全参照整合の失敗を確認。
+- Green `91f2fcc`: 10原本を移動し12個の比較ヘルパーの参照先を修正。関連テスト16ファイルと台帳・文書も同期。
+- 文書同期 `6f69b37`: 原本の保存先と移動前ハッシュを追跡可能に記録。
+- 全体検証: 1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。原本不在CI条件: 576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。npm lint・types:check成功。
+- ロジックファイルの分母75は変更なし。追加13件はアーカイブ保全とパス整合の契約。
+- 台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は引き続きGit管理外。

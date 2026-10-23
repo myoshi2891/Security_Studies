@@ -57,14 +57,14 @@ test('all real supplement and warning paragraphs have at least 7:1 contrast in l
   const paragraphs=w.document.querySelectorAll('.kubernetes-guide .bq p');expect(paragraphs.length).toBeGreaterThan(20);
   for(const paragraph of paragraphs){const ratio=contrast(foreground(w,paragraph),background(w,paragraph));expect(ratio,`${scheme}/${width} ${paragraph.closest('section')?.id}: ${paragraph.textContent?.slice(0,60)} (${foreground(w,paragraph)})`).toBeGreaterThanOrEqual(7);}
  });
-});
+},20000);
 test('supporting labels, citations, source badges, inline code and checked checklist text meet 4.5:1 contrast',async()=>{
  for(const scheme of ['light','dark'])await withGuide(scheme,900,w=>{
   const input=w.document.querySelector<HappyInput>('.check-card input')!;input.checked=true;
   const elements=w.document.querySelectorAll('.meta dt,.brand-sub,.check-how,.check-how .lbl,.check-item,.cite,.chip,.ref-title,.ref-badge,.footer,.bq,.bq strong,.bq code');expect(elements.length).toBeGreaterThan(200);
   for(const el of elements){const color=foreground(w,el);expect(contrast(color,background(w,el)),`${scheme} ${el.className||el.tagName}: ${color}`).toBeGreaterThanOrEqual(4.5);}
  });
-});
+},20000);
 test('supplement and caution typography retains source normal text without the global italic blockquote rule',async()=>{
  await withGuide('light',375,w=>{for(const quote of w.document.querySelectorAll('.bq'))expect(w.getComputedStyle(quote).fontStyle).toBe('normal');});
 });

@@ -6,8 +6,8 @@
 
 自動検証は全538件/85ファイル成功（専用74件/14ファイル）。lint・型検査成功。Next.jsビルドは未実行です。
 
-原本HTML: `archive/html/Web-application-hackers-handbook-guide.html`（SHA-256 `7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16`）。
-原本Markdown: `archive/md/Web-application-hackers-handbook-guide.md`（SHA-256 `9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6`）。
+原本HTML: `archive/security-guides/Web-application-hackers-handbook-guide.html`（SHA-256 `7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16`）。
+原本Markdown: `archive/security-guides/Web-application-hackers-handbook-guide.md`（SHA-256 `9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6`）。
 インベントリ: `docs/migration-inventory/web-application-hackers-handbook.json`。
 
 ## 導線と表示

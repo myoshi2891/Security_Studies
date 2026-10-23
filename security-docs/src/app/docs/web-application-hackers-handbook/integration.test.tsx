@@ -10,7 +10,7 @@ const main=() => sourceDocument.querySelector('main')!;
 const bodyElements=(el:Element,selector:string)=>[...el.querySelectorAll(selector)].filter(node=>node.matches('.mermaid-target')||!node.closest('.mermaid-target'));
 
 // MD 原本は HTML 原本と独立に存在判定する
-const markdownSource=new URL('../../../../../archive/md/Web-application-hackers-handbook-guide.md',import.meta.url);
+const markdownSource=new URL('../../../../../archive/security-guides/Web-application-hackers-handbook-guide.md',import.meta.url);
 test.skipIf(!existsSync(markdownSource))('keeps the archived Markdown original byte-for-byte unchanged',()=>{
  expect(createHash('sha256').update(readFileSync(markdownSource)).digest('hex')).toBe(inventory.markdownSha256);
 });

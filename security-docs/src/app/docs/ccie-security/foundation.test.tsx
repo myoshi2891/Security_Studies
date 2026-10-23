@@ -19,7 +19,7 @@ beforeEach(() => { globalThis.IntersectionObserver = ImmediateObserver as unknow
 afterEach(() => { globalThis.IntersectionObserver = originalObserver; });
 afterEach(cleanup);
 const here = import.meta.dir;
-const source = () => readFileSync(resolve(here, '../../../../../archive/html/Ccie-security-guide.html'), 'utf8');
+const source = () => readFileSync(resolve(here, '../../../../../archive/security-certifications/Ccie-security-guide.html'), 'utf8');
 
 describe('CCIE faithful display foundation', () => {
   sourceTest('preserves every original Mermaid theme variable, including pie labels and borders', () => {

@@ -1,0 +1,2 @@
+/** Native elements preserve source semantics and bypass global MDX substitutions. */
+export const E = {"a":"a","aside":"aside","code":"code","div":"div","em":"em","figure":"figure","footer":"footer","h1":"h1","h2":"h2","h3":"h3","header":"header","i":"i","input":"input","label":"label","li":"li","nav":"nav","ol":"ol","p":"p","section":"section","span":"span","strong":"strong","table":"table","tbody":"tbody","td":"td","th":"th","thead":"thead","tr":"tr","ul":"ul"} as const;

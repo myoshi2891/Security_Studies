@@ -1,6 +1,6 @@
 {
-  "source": "archive/html/Threat-modeling-guide.html",
-  "markdownSource": "archive/md/Threat-modeling-guide.md",
+  "source": "archive/security-guides/Threat-modeling-guide.html",
+  "markdownSource": "archive/security-guides/Threat-modeling-guide.md",
   "htmlSha256": "f68d807a87617cfc32db27ff1adfcab63536141f3c45efbac9bbd100c652823c",
   "markdownSha256": "8be9ece4e84da057547b6c1f6ab9e800575a41f8b262ee7345d144175d695148",
   "route": "/docs/threat-modeling-guide",

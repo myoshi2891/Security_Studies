@@ -17,8 +17,11 @@ export interface ChecklistProps {
 
 export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
   const [checkedItems, setCheckedItems] = React.useState<boolean[]>(new Array(items.length).fill(false));
+  const [prevItems, setPrevItems] = React.useState(items);
 
-  React.useEffect(() => {
+  // items が変わったら描画中に長さを合わせる（effect 内の setState による再描画の連鎖を避ける）
+  if (items !== prevItems) {
+    setPrevItems(items);
     setCheckedItems(prev => {
       const newArray = new Array(items.length).fill(false);
       for (let i = 0; i < Math.min(prev.length, items.length); i++) {
@@ -26,7 +29,7 @@ export const Checklist: React.FC<ChecklistProps> = ({ items, className }) => {
       }
       return newArray;
     });
-  }, [items]);
+  }
 
   const toggleItem = (index: number) => {
     const newChecked = [...checkedItems];

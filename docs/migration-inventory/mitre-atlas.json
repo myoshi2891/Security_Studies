@@ -1,7 +1,7 @@
 {
-  "source": "archive/html/Mitre-atlas.html",
+  "source": "archive/advanced-topics/Mitre-atlas.html",
   "sha256": "734a60f77a6b53a3e13c6c39d4c3ded54b5d5d2e0aedf5a8ef770cb5e8ae29f0",
-  "markdownSource": "archive/md/Mitre-atlas.md",
+  "markdownSource": "archive/advanced-topics/Mitre-atlas.md",
   "markdownSha256": "816b4d8d63ad2a2b49448409c465d41f79cc1a99ae8dca7eeddb8818f740b655",
   "route": "/docs/mitre-atlas",
   "informationDate": "2026-07",

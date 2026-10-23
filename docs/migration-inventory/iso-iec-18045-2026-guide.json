@@ -3,11 +3,11 @@
   "route": "/docs/iso-iec-18045-2026-guide",
   "sources": [
     {
-      "path": "archive/html/Iso-iec-18045-2026-guide.html",
+      "path": "archive/standards/Iso-iec-18045-2026-guide.html",
       "sha256": "1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062"
     },
     {
-      "path": "archive/md/Iso-iec-18045-2026-guide.md",
+      "path": "archive/standards/Iso-iec-18045-2026-guide.md",
       "sha256": "e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269"
     }
   ],

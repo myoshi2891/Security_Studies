@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Ccst-cybersecurity-guide.html', sha256: 'cc8abf8ebc61e443018ce43196b93e55a3f20cfbb4791333cd34c4ab67d8ac4e' },
-  { path: 'archive/md/Ccst-cybersecurity-guide.md', sha256: 'c407e02339596075ba888292cfec00028c197e482cc4ceae66296b651d832502' },
+  { path: 'archive/security-certifications/Ccst-cybersecurity-guide.html', sha256: 'cc8abf8ebc61e443018ce43196b93e55a3f20cfbb4791333cd34c4ab67d8ac4e' },
+  { path: 'archive/security-certifications/Ccst-cybersecurity-guide.md', sha256: 'c407e02339596075ba888292cfec00028c197e482cc4ceae66296b651d832502' },
 ];
 
 describe('CCST immutable source archive', () => {
@@ -36,7 +36,7 @@ describe('CCST immutable source archive', () => {
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const name of ['fidelity-helpers.ts']) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
-      expect(implementation).toContain('../../../../../archive/html/Ccst-cybersecurity-guide.html');
+      expect(implementation).toContain('../../../../../archive/security-certifications/Ccst-cybersecurity-guide.html');
       expect(implementation).not.toContain("'../../../../../Ccst-cybersecurity-guide.html'");
     }
   });

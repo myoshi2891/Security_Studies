@@ -1,5 +1,5 @@
 {
-  "source": "archive/html/Secure-by-design-guide.html",
+  "source": "archive/security-guides/Secure-by-design-guide.html",
   "sha256": "8e61b6905c9ff179cda8cfdb645268ef813c15a8474c4b7f16e0dd13acd47339",
   "route": "/docs/secure-by-design",
   "informationDate": "2026-10-08",
@@ -453,6 +453,6 @@
     "scoped styles and existing docs header offsets replace document-wide styles",
     "guide content container is div to avoid nested main landmarks"
   ],
-  "markdownSource": "archive/md/Secure-by-design-guide.md",
+  "markdownSource": "archive/security-guides/Secure-by-design-guide.md",
   "markdownSha256": "f9b093d575780b4dd669d397774d1d463b5df47ed1ba241cffbf547debfd9f73"
 }

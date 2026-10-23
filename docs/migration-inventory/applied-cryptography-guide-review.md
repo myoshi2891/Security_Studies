@@ -2,7 +2,7 @@
 
 最終更新: 2026-10-18
 
-移行先: /docs/applied-cryptography-guide。原本: `archive/html/Applied-cryptography-guide.html`・`archive/md/Applied-cryptography-guide.md`。
+移行先: /docs/applied-cryptography-guide。原本: `archive/security-guides/Applied-cryptography-guide.html`・`archive/security-guides/Applied-cryptography-guide.md`。
 自動検証: 全16節・28表・475表セル・10コード・14図・26参考文献・65見出し・8問の解答を照合。専用60件（原本アーカイブ5件を含む）。
 目視確認はユーザー担当・未完了。Next.jsビルドは実行していません。
 
