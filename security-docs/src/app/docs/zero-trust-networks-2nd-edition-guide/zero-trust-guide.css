@@ -235,3 +235,7 @@ hue-6-2: #e6c07b
 html:has(.zero-trust-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (max-width:1024px) { .zero-trust-guide.zero-trust-guide .sidebar { visibility:hidden; } .zero-trust-guide.zero-trust-guide .sidebar.open { visibility:visible; } }
 @media (prefers-reduced-motion:reduce) { html:has(.zero-trust-guide) { scroll-behavior:auto; } .zero-trust-guide.zero-trust-guide .sidebar, .zero-trust-guide.zero-trust-guide .chev { transition:none; } }
+
+/* Explicit table metrics prevent inherited shared article styles. */
+.zero-trust-guide.zero-trust-guide table { font-size:1rem; margin:0; }
+.zero-trust-guide.zero-trust-guide td { border-bottom:0; }

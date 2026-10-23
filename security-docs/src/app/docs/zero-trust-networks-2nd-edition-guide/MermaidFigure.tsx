@@ -33,13 +33,14 @@ export const renderDiagram: DiagramRenderer = async (id, source) => {
   return (await getEngine()).render(id, `---\nconfig: ${JSON.stringify(config)}\n---\n${source}`);
 };
 
-function sizeSvg(svgMarkup: string) {
+function sizeSvg(svgMarkup: string, source: string) {
   const holder = document.createElement('div');
   holder.innerHTML = svgMarkup;
   const svg = holder.querySelector('svg');
   if (!svg) throw new Error('Mermaid returned no SVG');
   const box = (svg.getAttribute('viewBox') ?? '').trim().split(/[\s,]+/).map(Number);
   if (box.length === 4 && box.every(Number.isFinite)) {
+    box[3] += /^\s*sequenceDiagram/.test(source) ? 110 : 15;
     svg.setAttribute('viewBox', box.join(' '));
     svg.style.width = `${box[2]}px`;
   }
@@ -136,9 +137,21 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
     if (!nearView) return;
     let active = true;
     // 古い描画の結果・失敗ログは破棄する（定義変更やアンマウント後に完了した場合）
-    renderer(svgId, source).then(({ svg }) => {
+    const draw = async () => {
+      let definition = source;
+      let result = await renderer(svgId, definition);
+      const width = figureRef.current?.clientWidth ?? 0;
+      const holder = document.createElement('div'); holder.innerHTML = result.svg;
+      const bounds = holder.querySelector('svg')?.getAttribute('viewBox')?.trim().split(/[\s,]+/).map(Number);
+      if (width > 0 && bounds?.length === 4 && bounds[2] > width * 1.1 && /^\s*flowchart LR/.test(source)) {
+        definition = source.replace(/^(\s*flowchart )LR/, '$1TB');
+        result = await renderer(`${svgId}-tb`, definition);
+      }
+      return { svg: result.svg, definition };
+    };
+    draw().then(({ svg, definition }) => {
       if (!active) return;
-      setResult({ source, svg: sizeSvg(svg) });
+      setResult({ source, svg: sizeSvg(svg, definition) });
     }).catch((error: unknown) => {
       if (!active) return;
       console.error(`Mermaid figure ${id} failed to render`, error);
