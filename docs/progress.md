@@ -909,5 +909,5 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 
 
 <!-- secrets-stage -->
-Secrets and Lies 表示基盤Red（2026-10-23）: 専用0成功/4失敗・1ファイル。MDX/CSS/図部品の不在を再現。開始時監査は全体683成功/297 skip/0失敗・164ファイル（980件、327505 expect）で仕様書と一致。npm使用・ビルド禁止・未実行。
+Secrets and Lies 表示基盤Green（2026-10-23）: 専用4成功/0失敗・1ファイル。ヒーロー/11リンク/日付/フッター、全CSS宣言・media条件、12図の設定と1始まりの表示番号を検証。本文11節は未移行。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
 <!-- /secrets-stage -->
