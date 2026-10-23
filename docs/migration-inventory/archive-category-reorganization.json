@@ -55,8 +55,33 @@
   "references": "All page tests, fidelity helpers and existing inventories now use category paths.",
   "verification": {
     "archiveContracts": "67 pass / 0 fail across 13 files",
-    "full": "pending",
-    "build": "禁止・未実行"
+    "full": {
+      "pass": 1052,
+      "skip": 0,
+      "fail": 0,
+      "assertions": 489759,
+      "total": 1052,
+      "files": 177
+    },
+    "ciWithoutArchive": {
+      "pass": 576,
+      "skip": 476,
+      "fail": 0,
+      "assertions": 52560,
+      "total": 1052,
+      "files": 177
+    },
+    "ciCommand": "npm test -- --coverage",
+    "lint": "pass",
+    "types": "pass",
+    "build": "禁止・未実行",
+    "oldDirectoriesRemoved": true,
+    "restoredSourceTests": 297
   },
-  "policy": "HTML and Markdown originals live together in the existing content category; archive/ remains ignored by Git."
+  "policy": "HTML and Markdown originals live together in the existing content category; archive/ remains ignored by Git.",
+  "commits": {
+    "red": "20a3093",
+    "implementation": "91f2fcc",
+    "referenceDocs": "6f69b37"
+  }
 }

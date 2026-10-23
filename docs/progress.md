@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（Bulletproof TLS/PKI原本を内容別security-guidesへアーカイブ。全体742成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（全アーカイブを内容別に統一。原本比較297件復帰。全体1052成功/0 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **742成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・176ファイル・1039件・410,418 expect。297 skipは既存ガイド原本不在による。 |
-| テストファイル数 | **176ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全176テストファイルとは別集計 |
+| テストケース総数 | **1052成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・177ファイル・1052件・489,759 expect。全原本が存在し、旧参照による297 skipを解消。 |
+| テストファイル数 | **177ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全177テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
+| CI | ✅ **稼働中** | 原本なしのクリーンworktreeで576成功/476 skip/0失敗を実測。npm test -- --coverage。原本非依存の検証は実行し、存在しない原本の比較のみskip。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/lib/archive-categories.test.ts` | 13 | 2026-10-23追加・10ハッシュ/旧フォルダー/参照先整合Green |
 | `src/app/docs/secrets-and-lies-guide/foundation.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/secrets-and-lies-guide/sections-0-4.test.tsx` | 5 | 2026-10-23追加・Green |
 | `src/app/docs/secrets-and-lies-guide/sections-5-sources.test.tsx` | 6 | 2026-10-23追加・Green |
@@ -954,5 +955,17 @@ Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletpr
 
 
 <!-- archive-categories-stage -->
-内容別アーカイブ統一Green（2026-10-23）: 残り10原本をstandards（ISO3組）/security-guides（書籍2組）へ移動、全10ハッシュ一致。空のhtml/mdフォルダーを除去。既存のカテゴリー別原本を含む12比較ヘルパー・関連テスト・台帳の旧参照を修正。対象アーカイブ契約67成功/0失敗・13ファイル。全体回帰・lint・型チェックを実行中。ビルド未実行。
+アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
 <!-- /archive-categories-stage -->
+
+
+## 内容別アーカイブ統一（2026-10-23）
+
+アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
+
+- Red `20a3093`: カテゴリー別保存、全10ハッシュ、旧フォルダー空、全参照整合の失敗を確認。
+- Green `91f2fcc`: 10原本を移動し12個の比較ヘルパーの参照先を修正。関連テスト16ファイルと台帳・文書も同期。
+- 文書同期 `6f69b37`: 原本の保存先と移動前ハッシュを追跡可能に記録。
+- 全体検証: 1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。原本不在CI条件: 576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。npm lint・types:check成功。
+- ロジックファイルの分母75は変更なし。追加13件はアーカイブ保全とパス整合の契約。
+- 台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は引き続きGit管理外。

@@ -346,3 +346,10 @@ Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ
 Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
 
 移動先: `archive/security-guides/Bulletproof-tls-pki-guide.html` / `archive/security-guides/Bulletproof-tls-pki-guide.md`。アーカイブは形式別の `html/`・`md/` ではなく、既存の内容別カテゴリーへHTML・Markdownをまとめる。
+
+
+## 内容別アーカイブ統一（2026-10-23）
+
+アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
+
+新規保存も既存の内容別カテゴリー（技術ガイド: `archive/security-guides/`、国際規格: `archive/standards/`、資格: `archive/security-certifications/`、専門トピック: `archive/advanced-topics/`、概要・設計: `archive/getting-started/`）を使い、HTMLとMarkdownを同じカテゴリーへ置く。移動台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は既存設定どおりGit管理外。原本がある場合は比較を実行し、ないCIでは原本依存の比較だけをスキップする。
