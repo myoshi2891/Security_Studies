@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（レビュー対応: 図のテキスト説明をサーバー描画に含める・Mermaid自動起動の停止。全体1055成功/0失敗）
+> **最終更新**: 2026-10-23（レビュー対応: Bulletproof d16・ZTN d12 の図定義を技術訂正し原本照合に許容訂正を導入。全体1061成功/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -296,6 +296,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-DIAGRAM-CORRECTIONS | **レビュー指摘対応** — 原本の図定義から意図して変える箇所を各ガイドの `fidelity-helpers.ts` の `diagramCorrections` に登録し、原本照合は訂正後の定義と比較する方式を導入。Bulletproof d16: チケット鍵漏えいで復号される範囲を新たな (EC)DHE を伴わない再開（TLS 1.2 の再開と発行元セッション、TLS 1.3 の psk_ke）に限定し、psk_dhe_ke は前方秘匿性を保つ分岐（0-RTT 除く）を追加。ZTN d12: 手順6をクライアント宛てメッセージから `Note over F` へ変更（日本語の手順文は保持）。スキップ: d6「Main Secret」（原本本文が RFC 8446bis の名称と明記）、theme dark→base（Mermaid 11 の dark も themeVariables を反映、原本も dark）。Red `1f69909` → Green `f747cf1` → 台帳 `640556b`（両台帳に `diagramCorrections` を記録）。全1061件/179ファイル成功、24図の Mermaid 構文解析成功、lint/型検査成功。ビルド禁止・未実行、目視はユーザー担当 | 2026-10-23 |
 | CI-K8S-CONTRAST-TIMEOUT | **CI失敗対応** — PR CI（run 39939392410）で `hacking-kubernetes/contrast.test.tsx` の「supporting labels…4.5:1 contrast」が5080msでBun既定の5秒タイムアウトを超過（アサーション失敗ではない。同一コミットのpush CIは成功）。ローカル実測2.8〜3.8秒と余裕がないため、重い2テストに既存慣例どおり `20000` msのテスト別タイムアウトを設定（`5844027`）。WAHH版は最大1.5秒のため変更せず。全1057件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-HLJS-CORE | **レビュー指摘対応** — Bulletproofの `GuideCode` を `highlight.js` 全言語バンドルから `highlight.js/lib/core` へ切替え、page.mdxで使う python・http・nginx・bash の4言語のみ静的登録（他ガイドの既存方式に統一、ハイライト出力は不変）。リファクタリングのため既存テストで検証: Bulletproof 48件/7ファイル成功、lint/型検査成功（`0f5d81b`）。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-MERMAID-SSR | **レビュー指摘対応** — Bulletproofの図のテキスト説明（折りたたみ）を描画結果に関わらずサーバー描画にも含め、JavaScript無効時も読めるようにした。Secrets and Liesの遅延読み込みで `mermaid.startOnLoad=false` を設定し、load時の自動描画（`mermaid.run`）が `.mermaid` コンテナを書き換えないようにした（`initialize` は呼ばない）。Zero Trustの統合テストは静的索引を `import.meta.url` 基準、Secrets and Liesの統合テストは `import.meta.dir` 基準で読む（`f603c39`）。BulletproofとZero Trustの遅延読み込みでも `mermaid.startOnLoad=false` を設定（Red `75cfd6f` → Green `63a813f`、全1057件/177ファイル成功）。Zero Trust d12の `F-->>C: 6 時間経過で穴は閉じる` は原本どおりのため変更せず。`getSearchIndex()` の `process.cwd()` は本番の `/api/search` でバンドル後に `import.meta.url` が `.next/server` を指すため変更せず。Red `334280b` → テスト調整 `b75007e`・`b385159` → Green `3e86aff`。全1055件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
