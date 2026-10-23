@@ -59,7 +59,8 @@ function sourceFiles(dir=resolve(root,'security-docs/src/app/docs')):string[]{re
 test('legacy format directories contain no remaining archive files',()=>{
  for(const dir of ['archive/html','archive/md'])expect(existsSync(resolve(root,dir))?readdirSync(resolve(root,dir)):[]).toEqual([]);
 });
-for(const item of moves)test.skipIf(!existsSync(resolve(root,item.from))&&!existsSync(resolve(root,item.to)))(`preserves source bytes in correct category: ${item.to}`,()=>{
+// archive/ 自体がない CI だけスキップし、ローカルでは移動先の欠落を失敗として検出する
+for(const item of moves)test.skipIf(!existsSync(resolve(root,'archive')))(`preserves source bytes in correct category: ${item.to}`,()=>{
  expect(existsSync(resolve(root,item.to))).toBe(true);expect(existsSync(resolve(root,item.from))).toBe(false);expect(createHash('sha256').update(readFileSync(resolve(root,item.to))).digest('hex')).toBe(item.sha256);
 });
 test('all page tests and fidelity helpers use category archive paths',()=>{
