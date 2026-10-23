@@ -530,3 +530,6 @@
 @media (max-width: 1024px) { .iso15408-guide.iso15408-guide .sidebar { visibility:hidden; } .iso15408-guide.iso15408-guide .sidebar.open { visibility:visible; } }
 /* Prevent the landing page's generic brand selector from changing the TOC. */
 .iso15408-guide.iso15408-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; color:var(--color-text-primary); }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.iso15408-guide.iso15408-guide tr:hover td { background-color:transparent; }

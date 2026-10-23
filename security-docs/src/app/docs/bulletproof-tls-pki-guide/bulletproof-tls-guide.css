@@ -705,3 +705,6 @@ hue-6-2: #e6c07b
 html:has(.bulletproof-tls-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (max-width:1024px) { .bulletproof-tls-guide.bulletproof-tls-guide .sidebar { visibility:hidden; } .bulletproof-tls-guide.bulletproof-tls-guide .sidebar.open { visibility:visible; transform:none; } }
 @media (prefers-reduced-motion:reduce) { html:has(.bulletproof-tls-guide) { scroll-behavior:auto; } }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.bulletproof-tls-guide.bulletproof-tls-guide tr:hover td { background-color:transparent; }

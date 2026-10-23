@@ -460,3 +460,8 @@ html:has(.cc-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
   font-family:'Source Serif 4 Variable', 'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
 }
 .cc-guide.cc-guide .brand b { font-family:'Source Serif 4 Variable', 'Source Serif 4', serif; }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.cc-guide.cc-guide tr:hover td { background-color:transparent; }
+/* Source inline tokens inherit their surrounding ink, including table citations. */
+.cc-guide.cc-guide code { color:inherit; }

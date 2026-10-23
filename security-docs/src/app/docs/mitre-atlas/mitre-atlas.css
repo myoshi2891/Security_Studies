@@ -375,3 +375,6 @@
 @media (prefers-reduced-motion: reduce) {
   .atlas-guide.atlas-guide .sidebar { transition: none; }
 }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.atlas-guide.atlas-guide tr:hover td { background-color:transparent; }

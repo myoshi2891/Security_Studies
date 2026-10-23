@@ -109,3 +109,6 @@
 }.secure-by-design-guide.secure-by-design-guide .hljs-link{
   text-decoration: underline
 }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.secure-by-design-guide.secure-by-design-guide tr:hover td { background-color:transparent; }

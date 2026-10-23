@@ -765,3 +765,6 @@ html:has(.applied-guide) { scroll-behavior: smooth; scroll-padding-top: 0; }
 .applied-guide.applied-guide tr:hover td { background: transparent; }
 .applied-guide.applied-guide .brand { font-size: 16px; font-weight: 400; color: var(--color-text-primary); }
 .applied-guide.applied-guide pre { font-family: var(--font-sans); }
+
+/* Source reference tokens are unboxed inline text; preformatted code keeps its own theme. */
+.applied-guide.applied-guide code { color:inherit; background:transparent; }
