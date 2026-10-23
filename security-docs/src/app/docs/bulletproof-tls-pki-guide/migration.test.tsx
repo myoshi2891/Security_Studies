@@ -11,8 +11,12 @@ sourceTest('hero and complete numbered navigation retain all original structure'
 });
 sourceTest('every source CSS rule including bullets, counters, checkbox states and responsive rules survives scoping',()=>{
  const actual=postcss.parse(readFileSync(new URL('./bulletproof-tls-guide.css',import.meta.url),'utf8'));
+ // セレクターに加えて @media 等の祖先も一致させ、レスポンシブ規則が別条件の宣言と照合されないようにする
+ const ancestry=(node:postcss.Rule)=>{const chain:string[]=[];for(let p=node.parent;p&&p.type==='atrule';p=p.parent){const at=p as postcss.AtRule;chain.unshift(`@${at.name} ${at.params}`);}return chain.join(' > ');};
+ const declarationsIn=(css:postcss.Root,selector:string,context:string)=>{const values:string[]=[];css.walkRules(selector,r=>{if(ancestry(r)===context) r.walkDecls(d=>{values.push(`${d.prop}:${d.value}`);});});return values;};
  sourceCss.walkRules(rule=>{const sel=rule.selector.split(',').map(s=>{s=s.trim();return [':root','html','body'].includes(s)?scope:scope+' '+s.replace(/body\.menu-open /g,'').replace(/^main$/,'.guide-content');}).join(', ');
- for(const declaration of declarations(postcss.root().append(rule.clone()),rule.selector)) expect(declarations(actual,sel),rule.selector).toContain(declaration);
+ const context=ancestry(rule);
+ for(const declaration of declarations(postcss.root().append(rule.clone()),rule.selector)) expect(declarationsIn(actual,sel,context),`${context} ${rule.selector}`).toContain(declaration);
  });
 });
 test('route registered once in cloud and cryptography',()=>{
