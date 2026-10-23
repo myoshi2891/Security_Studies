@@ -8,7 +8,10 @@ const css=()=>['../../globals.css','../docs-layout.css','./zero-trust-guide.css'
 for(const width of [375,1024,1440])for(const theme of ['light','dark'])sourceTest(`source typography, badges and all 1344 table cells survive the shared cascade at ${width}px in ${theme}`,async()=>{
  const original=new Window(),actual=new Window();for(const w of [original,actual]){w.happyDOM.setWindowSize({width,height:900});w.document.documentElement.className=theme;}
  try{
- original.document.head.innerHTML='<style>'+sourceCss.toString()+'</style>';original.document.body.innerHTML=sourceDocument.body.innerHTML;
+ // The original CDN highlighter adds hljs after load; compare that runtime state with the bundled server highlighter.
+ const syntax=readFileSync(new URL('../../../../node_modules/highlight.js/styles/atom-one-dark.css',import.meta.url),'utf8');
+ original.document.head.innerHTML='<style>'+syntax+'\n'+sourceCss.toString()+'</style>';original.document.body.innerHTML=sourceDocument.body.innerHTML;
+ for(const code of original.document.querySelectorAll('pre code'))code.classList.add('hljs');
  actual.document.head.innerHTML='<style>'+css()+'</style>';actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
  const selectors=['h1,h2,h3','.step-no,.chap-no','.src,.src-no,.rel','th,td','pre,pre code','section p,section ul,section ol,section li','details,details summary'];
  const properties=['font-size','font-weight','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-right','padding-bottom','padding-left','border-top-width','border-bottom-width'];
