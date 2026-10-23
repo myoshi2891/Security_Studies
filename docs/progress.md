@@ -1063,3 +1063,9 @@ CCSP: 表示基盤Green・本文未移植。ヒーロー・ブランドSVG・12�
 
 配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
 <!-- /ccsp-migration-status -->
+
+## CCSP移行（2026-10-23・Step 0〜6 Red）
+
+Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。
+
+直前コミット `9d71130`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
