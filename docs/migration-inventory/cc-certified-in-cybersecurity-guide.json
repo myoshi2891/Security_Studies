@@ -1,5 +1,5 @@
 {
-  "source": "Cc-certified-in-cybersecurity-guide.html",
+  "source": "archive/security-certifications/Cc-certified-in-cybersecurity-guide.html",
   "sha256": "6f4dda98c1b49fa1710a3a66849247e6717f7640e23782af4f14d211f094d399",
   "route": "/docs/cc-certified-in-cybersecurity-guide",
   "counts": {
@@ -601,7 +601,7 @@
       "sha256": "355b2ecbb66644bdc621636e042dc1eae16629c795b2040eab4c7f24ca393c59"
     }
   ],
-  "originals": "HTML・Markdownを変更せずルートに保持",
+  "originals": "HTML・Markdownをarchive/security-certifications/へバイト一致で移動",
   "visualReview": "ユーザー確認待ち",
   "adaptations": [
     "本文mainをdiv.guide-contentへ変更（共通mainとの入れ子回避）",
@@ -615,15 +615,26 @@
   "verification": {
     "date": "2026-10-23",
     "implementationCommit": "58e8b43",
-    "dedicatedTests": 55,
-    "dedicatedTestFiles": 5,
-    "allTests": 1116,
-    "allTestFiles": 184,
+    "dedicatedTests": 59,
+    "dedicatedTestFiles": 6,
+    "allTests": 1120,
+    "allTestFiles": 185,
     "failures": 0,
-    "expectations": 494567,
+    "expectations": 494572,
     "lint": "pass",
     "typesCheck": "pass",
     "build": "禁止・未実行",
-    "originalsChanged": false
+    "originalsChanged": false,
+    "archiveCommit": "c1e0da3",
+    "archiveMissingDedicated": {
+      "pass": 30,
+      "skip": 29,
+      "fail": 0
+    },
+    "originalsArchived": true
+  },
+  "originalChecksums": {
+    "html": "6f4dda98c1b49fa1710a3a66849247e6717f7640e23782af4f14d211f094d399",
+    "md": "07d32f20279db4775a4a36905e217b8c5ef2c384617e635bd6ec1837612f4406"
   }
 }

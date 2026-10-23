@@ -2,8 +2,8 @@
 
 最終更新日: 2026-10-23
 
-移行先: `/docs/cc-certified-in-cybersecurity-guide`  
-原本: `Cc-certified-in-cybersecurity-guide.html`（変更せず保持）  
+移行先: `/docs/cc-certified-in-cybersecurity-guide`
+原本: `archive/security-certifications/Cc-certified-in-cybersecurity-guide.html` / `archive/security-certifications/Cc-certified-in-cybersecurity-guide.md`（バイト一致でアーカイブ済み）
 台帳: [cc-certified-in-cybersecurity-guide.json](cc-certified-in-cybersecurity-guide.json)
 
 自動検証と目視確認は別扱いです。目視はユーザー担当で、以下は未確認です。ビルドは実行していません。

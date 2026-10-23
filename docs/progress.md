@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（ISC2 CC移行・専用55件/全1116件成功、lint/型検査成功、ユーザー目視待ち）
+> **最終更新**: 2026-10-23（ISC2 CC原本アーカイブ・専用59件/全1120件成功、原本なし環境30成功/29skip、移行手順へ必須化）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1116成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・184ファイル・1116件・494,567 expect。ISC2 CC専用55件を含む。 |
-| テストファイル数 | **184ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **78/78 (100%)** | 従来75 + ISC2 CC部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全184テストファイルとは別集計 |
+| テストケース総数 | **1120成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・185ファイル・1120件・494,572 expect。ISC2 CC専用59件を含む。 |
+| テストファイル数 | **185ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **78/78 (100%)** | 従来75 + ISC2 CC部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全185テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CC原本はGit管理下のためCIでも原本比較を実行。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cc-certified-in-cybersecurity-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・ルート残存/比較パス/HTML・MDハッシュGreen |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/migration.test.tsx` | 20 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/cascade.test.tsx` | 13 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
@@ -1016,9 +1017,9 @@ Happy DOMの`list-style`略記未展開を補い、ブラウザー既定の丸�
 
 ## ISC2 CC 移行（2026-10-23・自動検証完了）
 
-ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用55件/5ファイル成功。全体1116成功/0失敗（184ファイル、494,567 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
+ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用59件/6ファイル成功。全体1120成功/0失敗（185ファイル、494,572 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
 
-配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本はルートで変更せず保持。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
+配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本は `archive/security-certifications/` へバイト一致でアーカイブ済み。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
 
 ### ISC2 CC 再開時のアクション
 
@@ -1030,3 +1031,10 @@ ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120�
 ## ISC2 CC 原本アーカイブ（2026-10-23・Red）
 
 ユーザー指示により移行後は元HTML/Markdownを必ず内容別アーカイブへ移す。資格原本は`archive/security-certifications/`。新規4件のテストで、ルート残存・比較パスの2失敗と未移動原本の2skipを確認。次にバイト一致で移動し比較パスを更新する。全体1116件成功の記載は移動前の実測。npm使用・ビルド禁止を継続。
+
+
+## ISC2 CC 原本アーカイブ（2026-10-23・Green）
+
+ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカイブ（両SHA-256一致、ルート残存なし）。原本比較はアーカイブ参照へ変更。専用59件/6ファイル・全1120件/185ファイル成功、494,572 expect。原本のない隔離環境は専用30成功/29skip/0失敗で、原本非依存の検証は継続。npm test・lint・型チェック成功。ビルド未実行、目視はユーザー担当。実装コミット `c1e0da3`。
+
+再開時: 移行完了後は、元HTMLと対応するMarkdownを必ず同じ内容別カテゴリーのarchiveへ移動する。資格は`archive/security-certifications/`。移動前後のSHA-256一致・ルート残存なし・比較パス更新を検証し、原本を上書き・消失させない。 ビルド禁止・npm使用を継続し、目視指摘があれば失敗テストから対応する。

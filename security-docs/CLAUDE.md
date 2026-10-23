@@ -228,6 +228,11 @@ Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archi
 
 ## ISC2 CC 移行（2026-10-23・自動検証完了）
 
-ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用55件/5ファイル成功。全体1116成功/0失敗（184ファイル、494,567 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
+ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用59件/6ファイル成功。全体1120成功/0失敗（185ファイル、494,572 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
 
-配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本はルートで変更せず保持。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
+配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本は `archive/security-certifications/` へバイト一致でアーカイブ済み。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
+
+
+## ISC2 CC 原本アーカイブ（2026-10-23・Green）
+
+ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカイブ（両SHA-256一致、ルート残存なし）。原本比較はアーカイブ参照へ変更。専用59件/6ファイル・全1120件/185ファイル成功、494,572 expect。原本のない隔離環境は専用30成功/29skip/0失敗で、原本非依存の検証は継続。npm test・lint・型チェック成功。ビルド未実行、目視はユーザー担当。実装コミット `c1e0da3`。

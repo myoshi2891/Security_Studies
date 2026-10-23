@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1116</div>
-                        <div class="summary-sub">全体1116 pass / 0 skip / 0 fail（1116件・184ファイル・494,567 expect）。ISC2 CC専用55件を追加。原本なしCIの再実行は今回未実施。</div>
+                        <div class="summary-value">1120</div>
+                        <div class="summary-sub">全体1120 pass / 0 skip / 0 fail（1120件・185ファイル・494,572 expect）。ISC2 CC専用59件。原本なし隔離環境: 専用30 pass / 29 skip / 0 fail。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,7 +337,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">969 page/guide + 11 shared navigation tests · 56/57 logic files（全体1116件の実測から集計）</span>
+                                            <span class="cell-count">973 page/guide + 11 shared navigation tests · 56/57 logic files（全体1120件の実測から集計）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -364,9 +364,9 @@
 <li>✓ Zero Trust Networks第2版: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（71件/12ファイル。25節・83表1344セル・17図・90STEP・36解答・20出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ Secrets and Lies: GuideSidebar / MermaidFigure / GuideIcon（56件/11ファイル。11節・24表627セル・12図・31演習・8チェック・21出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ archive-categories.test.ts（13件: 10原本のカテゴリーとSHA-256・形式別フォルダー残存なし・全比較パス解決。全体1052成功/0 skip、原本なしCIも検証）</li>
-<li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（55件/5ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
+<li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（59件/6ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
 <li>✗ src/app/layout.tsx</li>
-                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 55。原本比較を含む。</li>
+                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 59。原本比較を含む。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1188,7 +1188,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 184 files · 1116 pass / 0 skip / 0 fail（1116 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 185 files · 1120 pass / 0 skip / 0 fail（1120 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1240,7 +1240,7 @@
                 });
             }
         </script>
-    <section class="container" id="cc-migration"><p>ISC2 CC: 移行・自動検証完了。専用55件/5ファイル・全体1116成功/0失敗。11章・85表1520セル・23図・54目次・リストの点と番号を原本比較。npm test / lint / types:check成功。ビルド未実行・目視はユーザー担当。<a href="migration-inventory/cc-certified-in-cybersecurity-guide-review.md">目視確認表</a></p></section>
-<section class="container" id="cc-archive"><p>ISC2 CC原本アーカイブ: Red。追加4件は2失敗/2skip。HTML/Markdownを資格アーカイブへ移動予定。1116件成功は移動前の実測。</p></section>
+    <section class="container" id="cc-migration"><p>ISC2 CC: 移行・自動検証完了。専用59件/6ファイル・全体1120成功/0失敗。11章・85表1520セル・23図・54目次・リストの点と番号を原本比較。npm test / lint / types:check成功。ビルド未実行・目視はユーザー担当。<a href="migration-inventory/cc-certified-in-cybersecurity-guide-review.md">目視確認表</a></p></section>
+<section class="container" id="cc-archive"><p>ISC2 CC原本アーカイブ: Green。HTML/Markdownをarchive/security-certificationsへバイト一致で移動。専用59件・全1120件成功。原本なし隔離環境30成功/29skip/0失敗。移行後の原本アーカイブを手順に必須化。ビルド未実行。</p></section>
 </body>
 </html>
