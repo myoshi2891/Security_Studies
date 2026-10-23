@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-const sourcePath = resolve(import.meta.dir, '../../../../../archive/html/Zero-trust-networks-2nd-edition-guide.html');
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-guides/Zero-trust-networks-2nd-edition-guide.html');
 // 原本archive/は既存規約でGit管理外。読み込みは原本依存テストの実行時まで遅延する。
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';

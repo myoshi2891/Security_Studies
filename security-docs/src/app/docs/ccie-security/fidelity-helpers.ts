@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import postcss, { type Root } from 'postcss';
 import { expect, test } from 'bun:test';
 
-const sourcePath = resolve(import.meta.dir, '../../../../../archive/html/Ccie-security-guide.html');
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Ccie-security-guide.html');
 // 原本(archive/)は意図的に未追跡でCIには存在しない。読み込みは原本依存テストの実行時まで遅延する
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
