@@ -361,3 +361,10 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
 
 配置: `security-docs/src/app/docs/bulletproof-tls-pki-guide/page.mdx`。Cloud & Cryptography のナビ・ホーム一覧・静的検索（25ページ）に登録。原本の丸点・番号・チェックカウンター・疑似要素を含む全CSS宣言、5画面幅の適用結果、目次操作、図の再試行、表とページ全体のhydrationを検証。台帳: `docs/migration-inventory/bulletproof-tls-pki-guide.json`。目視確認表: `docs/migration-inventory/bulletproof-tls-pki-guide-review.md`。
+
+
+## Zero Trust Networks 第2版 移行（2026-10-23）
+
+Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+配置: `security-docs/src/app/docs/zero-trust-networks-2nd-edition-guide/page.mdx`。Security Guidesのナビ・ホーム一覧・静的検索（26ページ、全124見出し）へ登録。リストの点・番号・章/STEP/出典バッジ、全CSS宣言とmedia条件、全1344セルの適用スタイル、図のLR→TB再配置・余白・左右スクロール、36解答・25目次・hydrationを検証。原本は `archive/html/Zero-trust-networks-2nd-edition-guide.html` / `archive/md/Zero-trust-networks-2nd-edition-guide.md`（両SHA-256一致、archive/は既存規約どおりGit管理外）。台帳: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json`。目視確認表: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide-review.md`。

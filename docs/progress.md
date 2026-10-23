@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（Bulletproof TLS and PKI移行・専用41件成功・全体615成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（Zero Trust Networks第2版移行・アーカイブ完了。専用68件成功、全体683成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **615成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・152ファイル・912件・160,218 expect。297 skipは既存ガイド原本不在による。 |
-| テストファイル数 | **152ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **68/68 (100%)** | 従来64 + TLS/PKI部品4（GuideSidebar / MermaidFigure / GuideIcon / GuideCode）。純粋データ・MDXは分母外。全152テストファイルとは別集計 |
+| テストケース総数 | **683成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・164ファイル・980件・327,505 expect。297 skipは既存ガイド原本不在による。 |
+| テストファイル数 | **164ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **72/72 (100%)** | 従来68 + Zero Trust部品4（GuideSidebar / MermaidFigure / GuideIcon / GuideCode）。純粋データ・MDXは分母外。全164テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,18 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/presentation.test.tsx` | 2 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/GuideIcon.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/foundation.test.tsx` | 3 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sections-intro-ch6.test.tsx` | 11 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sections-ch7-sources.test.tsx` | 14 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/cascade.test.tsx` | 8 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/runtime.test.tsx` | 11 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/interactions.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/integration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/zero-trust-networks-2nd-edition-guide/archive.test.ts` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/bulletproof-tls-pki-guide/migration.test.tsx` | 19 | 2026-10-23追加・Green |
 | `src/app/docs/bulletproof-tls-pki-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
 | `src/app/docs/bulletproof-tls-pki-guide/runtime.test.tsx` | 9 | 2026-10-23追加・Green |
@@ -874,5 +886,22 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 
 
 <!-- zero-trust-stage -->
-Zero Trust動的表示Green（2026-10-23）: 追加2件成功。原本headのdark color-schemeと図のスクロール案内・矢印を復元。アイコン修正時点の全体回帰681成功/297 skip/0失敗・163ファイル。最終状態の全体テスト・lint・型チェックを検証中。HTML/MD両原本はSHA-256一致でアーカイブ済み。ビルド禁止・未実行。目視はユーザー担当・未完了。
+Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 <!-- /zero-trust-stage -->
+
+
+## Zero Trust Networks 第2版 移行（2026-10-23）
+
+Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+- 表示基盤: Red `5faf664` → Green `11656ef`。
+- 導入〜第6章: Red `8acf2ea` → Green `7438ab6`。原本リンク間の空白欠落も検出・修正。
+- 第7章〜出典: Red `92b4b29` → Green `79688b8`。全25節を照合。
+- 操作・スタイル・統合: Red `eff62f3` → Green `54f684a`。表文字サイズの混入、図のsequence余白・LR→TB再配置、ナビ/検索未登録を検出・修正。CSSの等価単位、原本ハイライト適用状態、500文字スニペットの既存仕様をテストに反映。
+- 原本アーカイブ: Red `d1e6468` → Green `5d116d6`。HTML/MDのSHA-256一致・ルート除去・比較参照切替を検証。archive/は既存規約どおりGit管理外。
+- アイコン最終照合: Red `82c3e58` → Green `197a8fa`。盾＋錠前をローカルSVGで保持し、7種類の意味を検証。
+- 動的表示最終照合: Red `b8936cc` → Green `c2c6314`。原本headのcolor-schemeと動的スクロール案内を保持。
+- Refactor検証: npm lint / types:check成功。追加リファクタリング不要。
+- 仕様書7ファイル・移行台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
+
+台帳: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json`。目視確認表: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide-review.md`。

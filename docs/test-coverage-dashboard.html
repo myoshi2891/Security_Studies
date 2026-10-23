@@ -56,7 +56,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            68 ロジックファイル中 68 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            72 ロジックファイル中 72 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">912</div>
-                        <div class="summary-sub">全体615 pass / 297 skip / 0 fail、152ファイル（912件、160,218 expect）。2026-10-23: TLS/PKI移行41件成功。</div>
+                        <div class="summary-value">980</div>
+                        <div class="summary-sub">全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。2026-10-23: Zero Trust第2版移行・原本アーカイブ、専用68件成功。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -228,7 +228,7 @@
                 </div>
             </div>
         </section>
-        <!-- zero-trust-stage --><section class="container"><p>Zero Trust動的表示Green（2026-10-23）: 追加2件成功。原本headのdark color-schemeと図のスクロール案内・矢印を復元。アイコン修正時点の全体回帰681成功/297 skip/0失敗・163ファイル。最終状態の全体テスト・lint・型チェックを検証中。HTML/MD両原本はSHA-256一致でアーカイブ済み。ビルド禁止・未実行。目視はユーザー担当・未完了。</p></section><!-- /zero-trust-stage -->
+        <!-- zero-trust-stage --><section class="container"><p>Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 <a href="migration-inventory/zero-trust-networks-2nd-edition-guide-review.md">目視確認表</a></p></section><!-- /zero-trust-stage -->
 <!-- MATRIX -->
         <section class="matrix-section">
             <div class="container">
@@ -249,7 +249,7 @@
                                     UI Components<small>disclaimer-modal, search-modal</small>
                                 </th>
                                 <th scope="col" data-dom="d3">
-                                    App / Pages<small>app/page.tsx, layouts, 25×mdx</small>
+                                    App / Pages<small>app/page.tsx, layouts, 26×mdx</small>
                                 </th>
                                 <th scope="col" data-dom="d4">
                                     Search &amp; API<small>src/lib/search.ts, api/search/</small>
@@ -334,7 +334,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 62 Threat Modeling + 61 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 + 55 ISO15408 + 55 ISO27017 + 56 ISO18045 + 41 TLS/PKI tests · 46/47 logic files</span>
+                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 62 Threat Modeling + 61 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 + 55 ISO15408 + 55 ISO27017 + 56 ISO18045 + 41 TLS/PKI + 68 Zero Trust tests · 50/51 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -345,7 +345,7 @@
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (3 tests): ホーム一覧/統計/共通メニューと登録件数</li>
-<li>✓ DocsHeaderNav.test.tsx (9 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在25+80=105ページ、テスト値）・開閉/フォーカス・320/375px</li>
+<li>✓ DocsHeaderNav.test.tsx (9 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在26+80=106ページ、テスト値）・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（48移行時点テストで検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（43移行・表示テストで検証）</li>
@@ -358,6 +358,7 @@
 <li>✓ ISO27017: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（55件/12ファイル・原本全17節・30表463セル・10図・コード2件・チェック/Q&amp;A各7件・18参考文献を検証）</li>
 <li>✓ ISO18045: GuideSidebar / MermaidFigure / GuideIcon（56件/10ファイル・全21節・40表830セル・18図・98タグ・28参考文献・原本アーカイブを検証）</li>
 <li>✓ TLS/PKI: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（41件/6ファイル・全15節・57表868セル・24図・12コード・10チェック・4解答・全CSS宣言・5画面幅・hydration）</li>
+<li>✓ Zero Trust Networks第2版: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（68件/12ファイル。25節・83表1344セル・17図・90STEP・36解答・20出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✗ src/app/layout.tsx</li>
                                                 <li>✓ CCIE Security: 67 fidelity / lifecycle / archive tests（Secure by Designは48件、MITRE ATLASは43件、CCSTは104件、Kubernetesは61件、WAHHは83件、Applied Cryptographyは61件、Threat Modelingは62件、ISO 27000は5件、ISO 27001は6件。その他MDXは個別移行テスト対象外）</li>
                                             </ul>
@@ -1181,7 +1182,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 152 files · 615 pass / 297 skip / 0 fail（912 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 164 files · 683 pass / 297 skip / 0 fail（980 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
