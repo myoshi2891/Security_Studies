@@ -1,5 +1,6 @@
 import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
+import {join} from 'node:path';
 import {docsConfig} from '../../../config/docs';
 import {getSearchIndex} from '../../../lib/search';
 import {renderedPage,evaluatedPage,sourceTest,sourceDocument,canonical} from './fidelity-helpers';
@@ -8,7 +9,7 @@ test('route is registered exactly once under Security Guides',()=>{
  expect(docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>i.href===href)).toHaveLength(1);expect(docsConfig.sidebarNav.find(g=>g.id==='engineering')!.items.some(i=>i.href===href)).toBe(true);
 });
 test('static and dynamic search indexes agree and retain all 59 headings',async()=>{
- const dynamic=(await getSearchIndex()).find(p=>p.href===href);expect(dynamic).toBeDefined();const index=JSON.parse(readFileSync('public/search-index.json','utf8'));expect(index.find((p:{href:string})=>p.href===href)).toEqual(dynamic);expect(dynamic!.headings).toHaveLength(59);expect(dynamic!.content).toContain('Secrets and Lies');
+ const dynamic=(await getSearchIndex()).find(p=>p.href===href);expect(dynamic).toBeDefined();const index=JSON.parse(readFileSync(join(import.meta.dir,'../../../../public/search-index.json'),'utf8'));expect(index.find((p:{href:string})=>p.href===href)).toEqual(dynamic);expect(dynamic!.headings).toHaveLength(59);expect(dynamic!.content).toContain('Secrets and Lies');
 });
 sourceTest('all source IDs and local anchors resolve and metadata retains the original heading',async()=>{
  const page=await renderedPage();const ids=(d:Document)=>[...d.querySelectorAll('[id]')].map(e=>e.id);expect(ids(page)).toEqual(ids(sourceDocument));
