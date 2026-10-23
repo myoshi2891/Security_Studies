@@ -1250,5 +1250,6 @@
 <section class="container"><p>CCSP履歴（残り5節・全体照合Red）: 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container"><p>CCSP履歴（原本アーカイブRed）: 原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container" id="guide-readability"><p>配色レビュー対応: Red。ISC2 CCの表ホバーと[S番号]等6コードの配色問題をChromeで再現。17ガイドの実描画HTMLを比較し、他6ガイドの表ホバーとApplied Cryptographyの[S1]にも共通prose CSSの干渉を確認。通常/ホバー・明暗・375/1440px・全85表1520セル・同種ガイドを検証する新規22件は全件Red。次に各ガイドのスコープ内で原本の背景と継承文字色を保持する。前回の全体実測は1189件成功。npm使用・ビルド禁止。</p></section>
+<section class="container"><p>配色テスト補正: ChromeとHappy DOMのinherit・背景ショートハンド・透明色の評価差をテスト基盤で補い、23件成功。修正ルールを除去すると元の2症状が戻る変異検証と、Appliedの既存インライン/コードブロック配色を維持する確認を追加。実画面は375/1440px×明暗の4条件で全85表と全6コードが成功。描画HTMLの比較対象は16ガイド（初期の17という記載を訂正）。次に全体回帰テストを実行する。</p></section>
 </body>
 </html>
