@@ -339,5 +339,29 @@
     "pie": {
       "useMaxWidth": false
     }
-  }
+  },
+  "verification": {
+    "date": "2026-10-23",
+    "implementationCommit": "36d85f9",
+    "dedicatedTests": 65,
+    "dedicatedTestFiles": 9,
+    "allTests": 1185,
+    "allTestFiles": 194,
+    "expectations": 499082,
+    "failures": 0,
+    "lint": "pass",
+    "typesCheck": "pass",
+    "build": "禁止・未実行",
+    "archive": "次のステップで移動",
+    "visualReview": "ユーザー確認待ち"
+  },
+  "adaptations": [
+    "本文mainをdiv.guide-contentへ変更しtop IDは保持",
+    "CDNフォント・アイコン・Mermaidをローカル依存へ変更",
+    "Source Serif 4 Variableの登録family名を優先",
+    "全CSSを専用スコープ化し丸点・通常番号・チェックカウンターを保持",
+    "共有ヘッダー64pxとアンカー88pxの余白",
+    "図の固有幅を維持し狭い図は中央・幅広図は左右スクロール",
+    "目次のReact移行・内側navスクロール・フォーカス・Escape/背景/リサイズ対応"
+  ]
 }

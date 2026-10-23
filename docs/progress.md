@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（CCSP: Step 0〜6 Green・残り5節未移植・専用37件/全1157件成功。ビルド未実行）
+> **最終更新**: 2026-10-23（CCSP: 全12節Green・原本アーカイブ前・専用65件/全1185件成功。ビルド未実行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1157成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・190ファイル・1157件・496,997 expect。CCSP専用37件を含む。 |
-| テストファイル数 | **190ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全190テストファイルとは別集計 |
+| テストケース総数 | **1185成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・194ファイル・1185件・499,082 expect。CCSP専用65件を含む。 |
+| テストファイル数 | **194ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全194テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -24,10 +24,14 @@
 | ファイル | テスト数 | 備考 |
 |---|---|---|
 | `src/app/docs/ccsp-study-guide/foundation.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/integration.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/interactions.test.tsx` | 3 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/runtime.test.tsx` | 11 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/sections-0-6.test.tsx` | 7 | ✅ 2026-10-23追加・Green |
-| `src/app/docs/ccsp-study-guide/sidebar.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
-| `src/app/docs/ccsp-study-guide/styles.test.tsx` | 8 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/sections-7-sources.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/styles.test.tsx` | 18 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・ルート残存/比較パス/HTML・MDハッシュGreen |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/migration.test.tsx` | 20 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/cascade.test.tsx` | 13 | ✅ 2026-10-23追加・Green |
@@ -1060,7 +1064,7 @@ ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカ�
 <!-- ccsp-migration-status -->
 ## CCSP移行（2026-10-23）
 
-CCSP: Step 0〜6 Green・残り5節未移植。Step 0〜6の全文、表セル、リスト階層、強調、出典リンク、図定義の原本比較7件が成功。次にStep 7〜10と参考ソース一覧を移植し、全体の件数・装飾・操作・hydrationを検証する。 専用37件/5ファイル・全体1157成功/0skip/0失敗（190ファイル、496,997 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `cb9c089`。
+CCSP: 全12節Green・原本アーカイブ前。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを移植。原本構造と全CSS宣言、5画面幅×両OS配色、丸点/番号/チェックの状態、全表とページのhydration、内側nav追従と操作を検証。次にHTML/Markdown原本を資格アーカイブへ移動する。 専用65件/9ファイル・全体1185成功/0skip/0失敗（194ファイル、499,082 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `36d85f9`。
 
 配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
 <!-- /ccsp-migration-status -->
