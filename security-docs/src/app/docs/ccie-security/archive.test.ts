@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Ccie-security-guide.html', sha256: '807782fea60dfd5e0707868448e25809a932ceea36c205d7289264f13825c26b' },
-  { path: 'archive/md/Ccie-security-guide.md', sha256: 'dc0930effc4e32cd8af34b2d439b37949f9fd35a1d25e70e42f177886d6d8036' },
+  { path: 'archive/security-certifications/Ccie-security-guide.html', sha256: '807782fea60dfd5e0707868448e25809a932ceea36c205d7289264f13825c26b' },
+  { path: 'archive/security-certifications/Ccie-security-guide.md', sha256: 'dc0930effc4e32cd8af34b2d439b37949f9fd35a1d25e70e42f177886d6d8036' },
 ];
 
 describe('CCIE immutable source archive', () => {
@@ -34,7 +34,7 @@ describe('CCIE immutable source archive', () => {
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const name of ['fidelity-helpers.ts', 'foundation.test.tsx']) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
-      expect(implementation).toContain('../../../../../archive/html/Ccie-security-guide.html');
+      expect(implementation).toContain('../../../../../archive/security-certifications/Ccie-security-guide.html');
       expect(implementation).not.toContain("'../../../../../Ccie-security-guide.html'");
     }
   });

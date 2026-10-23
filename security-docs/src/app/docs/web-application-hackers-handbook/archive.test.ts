@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Web-application-hackers-handbook-guide.html', sha256: '7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16' },
-  { path: 'archive/md/Web-application-hackers-handbook-guide.md', sha256: '9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6' },
+  { path: 'archive/security-guides/Web-application-hackers-handbook-guide.html', sha256: '7dae405ae0f8c7dee69bed94938246d549164fa250fd03665255360321992c16' },
+  { path: 'archive/security-guides/Web-application-hackers-handbook-guide.md', sha256: '9db5c33ec671c2f04fc12d070a3d7751902d53ccabe44ac4fa848e3462e459f6' },
 ];
 
 describe('WAHH immutable source archive', () => {
@@ -35,8 +35,8 @@ describe('WAHH immutable source archive', () => {
 
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const [name, original, archived] of [
-      ['fidelity-helpers.ts', '../../../../../Web-application-hackers-handbook-guide.html', '../../../../../archive/html/Web-application-hackers-handbook-guide.html'],
-      ['integration.test.tsx', '../../../../../Web-application-hackers-handbook-guide.md', '../../../../../archive/md/Web-application-hackers-handbook-guide.md'],
+      ['fidelity-helpers.ts', '../../../../../Web-application-hackers-handbook-guide.html', '../../../../../archive/security-guides/Web-application-hackers-handbook-guide.html'],
+      ['integration.test.tsx', '../../../../../Web-application-hackers-handbook-guide.md', '../../../../../archive/security-guides/Web-application-hackers-handbook-guide.md'],
     ]) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
       expect(implementation).toContain(archived);

@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Applied-cryptography-guide.html', sha256: '34681c8dc351e2940e337af70e7a4016078f3d0fb2410f557b8087ca351add47' },
-  { path: 'archive/md/Applied-cryptography-guide.md', sha256: '78eba4a5300e25287f79b8afc7b43b6a8169d736fba717255474e4f5a75579ad' },
+  { path: 'archive/security-guides/Applied-cryptography-guide.html', sha256: '34681c8dc351e2940e337af70e7a4016078f3d0fb2410f557b8087ca351add47' },
+  { path: 'archive/security-guides/Applied-cryptography-guide.md', sha256: '78eba4a5300e25287f79b8afc7b43b6a8169d736fba717255474e4f5a75579ad' },
 ];
 
 describe('Applied Cryptography immutable source archive', () => {
@@ -33,8 +33,8 @@ describe('Applied Cryptography immutable source archive', () => {
 
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const [name, original, archived] of [
-      ['fidelity-helpers.ts', '../../../../../Applied-cryptography-guide.html', '../../../../../archive/html/Applied-cryptography-guide.html'],
-      ['integration.test.tsx', '../../../../../Applied-cryptography-guide.md', '../../../../../archive/md/Applied-cryptography-guide.md'],
+      ['fidelity-helpers.ts', '../../../../../Applied-cryptography-guide.html', '../../../../../archive/security-guides/Applied-cryptography-guide.html'],
+      ['integration.test.tsx', '../../../../../Applied-cryptography-guide.md', '../../../../../archive/security-guides/Applied-cryptography-guide.md'],
     ]) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
       expect(implementation).toContain(archived);

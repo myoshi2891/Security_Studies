@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Iso-iec-18045-2026-guide.html', sha256: '1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062' },
-  { path: 'archive/md/Iso-iec-18045-2026-guide.md', sha256: 'e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269' },
+  { path: 'archive/standards/Iso-iec-18045-2026-guide.html', sha256: '1ea7a3a4aac88d5bc70e5f568385ce1ee7967095655c91c43f2c282b622b4062' },
+  { path: 'archive/standards/Iso-iec-18045-2026-guide.md', sha256: 'e06ac5e84a7bcd889a13d28d54bf2e04de4e428fdb11a315db3397808713f269' },
 ];
 
 for (const original of originals) {
@@ -23,7 +23,7 @@ test('archival removes both original root paths', () => {
 
 test('fidelity comparisons use only archived HTML and retain source-absent CI support', () => {
   const helper = readFileSync(new URL('./fidelity-helpers.ts', import.meta.url), 'utf8');
-  expect(helper).toContain('../../../../../archive/html/Iso-iec-18045-2026-guide.html');
+  expect(helper).toContain('../../../../../archive/standards/Iso-iec-18045-2026-guide.html');
   expect(helper).not.toContain("'../../../../../Iso-iec-18045-2026-guide.html'");
   expect(helper).toContain('test.skipIf(!hasSource)');
 });

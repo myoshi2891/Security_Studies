@@ -11,7 +11,7 @@ import {canonical,evaluatedPage,renderedPage,sourceDocument,sourceHtml,definitio
 afterEach(cleanup);
 const route='/docs/applied-cryptography-guide';
 const inventory=JSON.parse(readFileSync(new URL('../../../../../docs/migration-inventory/applied-cryptography-guide.json',import.meta.url),'utf8'));
-const markdownUrl=new URL('../../../../../archive/md/Applied-cryptography-guide.md',import.meta.url);
+const markdownUrl=new URL('../../../../../archive/security-guides/Applied-cryptography-guide.md',import.meta.url);
 
 test.skipIf(!existsSync(markdownUrl))('the archived Markdown original retains its immutable hash',()=>{
  expect(createHash('sha256').update(readFileSync(markdownUrl)).digest('hex')).toBe(inventory.markdownSha256);

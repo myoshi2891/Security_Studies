@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Threat-modeling-guide.html', sha256: 'f68d807a87617cfc32db27ff1adfcab63536141f3c45efbac9bbd100c652823c' },
-  { path: 'archive/md/Threat-modeling-guide.md', sha256: '8be9ece4e84da057547b6c1f6ab9e800575a41f8b262ee7345d144175d695148' },
+  { path: 'archive/security-guides/Threat-modeling-guide.html', sha256: 'f68d807a87617cfc32db27ff1adfcab63536141f3c45efbac9bbd100c652823c' },
+  { path: 'archive/security-guides/Threat-modeling-guide.md', sha256: '8be9ece4e84da057547b6c1f6ab9e800575a41f8b262ee7345d144175d695148' },
 ];
 
 describe('Threat Modeling immutable source archive', () => {
@@ -33,8 +33,8 @@ describe('Threat Modeling immutable source archive', () => {
 
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const [name, original, archived] of [
-      ['fidelity-helpers.ts', '../../../../../Threat-modeling-guide.html', '../../../../../archive/html/Threat-modeling-guide.html'],
-      ['integration.test.tsx', '../../../../../Threat-modeling-guide.md', '../../../../../archive/md/Threat-modeling-guide.md'],
+      ['fidelity-helpers.ts', '../../../../../Threat-modeling-guide.html', '../../../../../archive/security-guides/Threat-modeling-guide.html'],
+      ['integration.test.tsx', '../../../../../Threat-modeling-guide.md', '../../../../../archive/security-guides/Threat-modeling-guide.md'],
     ]) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
       expect(implementation).toContain(archived);

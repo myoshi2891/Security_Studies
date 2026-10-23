@@ -5,8 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '../../../../..');
 const originals = [
-  { path: 'archive/html/Hacking-kubernetes-guide.html', sha256: '29d514f6228d43b9cde506f066c8109a9e1fc004efce7dbc5dfc0bc9410a8e6c' },
-  { path: 'archive/md/Hacking-kubernetes-guide.md', sha256: '25c0808439fb346fdf3d08d594df1c93e2881e98998ee8aaa72cd7efe9f4284f' },
+  { path: 'archive/security-guides/Hacking-kubernetes-guide.html', sha256: '29d514f6228d43b9cde506f066c8109a9e1fc004efce7dbc5dfc0bc9410a8e6c' },
+  { path: 'archive/security-guides/Hacking-kubernetes-guide.md', sha256: '25c0808439fb346fdf3d08d594df1c93e2881e98998ee8aaa72cd7efe9f4284f' },
 ];
 
 describe('Hacking Kubernetes immutable source archive', () => {
@@ -35,8 +35,8 @@ describe('Hacking Kubernetes immutable source archive', () => {
 
   test('keeps all original fidelity comparisons bound to the archived HTML without root fallback', () => {
     for (const [name, original, archived] of [
-      ['fidelity-helpers.ts', '../../../../../Hacking-kubernetes-guide.html', '../../../../../archive/html/Hacking-kubernetes-guide.html'],
-      ['integration.test.tsx', '../../../../../Hacking-kubernetes-guide.md', '../../../../../archive/md/Hacking-kubernetes-guide.md'],
+      ['fidelity-helpers.ts', '../../../../../Hacking-kubernetes-guide.html', '../../../../../archive/security-guides/Hacking-kubernetes-guide.html'],
+      ['integration.test.tsx', '../../../../../Hacking-kubernetes-guide.md', '../../../../../archive/security-guides/Hacking-kubernetes-guide.md'],
     ]) {
       const implementation = readFileSync(resolve(import.meta.dir, name), 'utf8');
       expect(implementation).toContain(archived);
