@@ -909,5 +909,5 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 
 
 <!-- secrets-stage -->
-Secrets and Lies全本文Green（2026-10-23）: 専用15成功/0失敗・3ファイル。全11節・24表627セル・12図・31演習・8チェック・21出典を原本照合。次に適用スタイル・操作・hydration・ナビ検索を統合検証。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
+Secrets and Lies統合Red（2026-10-23）: 専用48成功/3失敗・10ファイル。ナビ/静的検索未登録とリスト種別の明示不足を検出。全627セル・本文・出典/注意/チェックカードのスタイル6条件、目次/チェック操作・hydration・12図構文は成功。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
 <!-- /secrets-stage -->
