@@ -909,5 +909,5 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 
 
 <!-- secrets-stage -->
-Secrets and Lies原本アーカイブRed（2026-10-23）: アーカイブ専用0成功/2 skip/2失敗。ルート原本の残存と比較参照先の未更新を再現。直前の専用51件は成功。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
+Secrets and Lies原本アーカイブGreen（2026-10-23）: 専用55成功/0失敗・11ファイル（82776 expect）。HTML/MDをarchive/html・archive/mdへ移動しSHA-256一致。archive/は既存規約でGit管理外。比較テスト参照先をarchiveへ変更。型チェックで見つかったHappy DOMと標準DOMのテスト型指定の差を修正し再検証中。全体回帰を実行中。ビルド未実行。
 <!-- /secrets-stage -->
