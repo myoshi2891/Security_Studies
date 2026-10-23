@@ -182,6 +182,11 @@
     "tables": 57,
     "cells": 868,
     "listItems": 72,
+    "listItemsBreakdown": {
+      "sectionItems": 57,
+      "sidebarNavLinks": 15,
+      "note": "listItems = sectionItems（sections[].items の合計）+ sidebarNavLinks（サイドバー目次の li）"
+    },
     "diagrams": 24,
     "codeBlocks": 12,
     "checkboxes": 10,
