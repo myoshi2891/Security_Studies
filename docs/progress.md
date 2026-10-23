@@ -978,3 +978,7 @@ Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletpr
 - 全体検証: 1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。原本不在CI条件: 576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。npm lint・types:check成功。
 - ロジックファイルの分母75は変更なし。追加13件はアーカイブ保全とパス整合の契約。
 - 台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は引き続きGit管理外。
+
+## ISC2 CC 移行（2026-10-23・Red）
+
+原本台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。11章・120見出し・85表1520セル・239リスト項目・23図・53出典カード・75注意欄。原本は保持。Red `1 pass / 46 fail / 1 import error`（5ファイル、sidebar import errorで未登録の5件は別途Greenで実行）。実装前テストコミット `562a0ad`。全体の成功件数1061は移行前の実測であり、現在は移行中。npm使用・ビルド禁止・目視はユーザー担当。
