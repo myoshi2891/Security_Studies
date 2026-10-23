@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（Zero Trust Networks第2版移行・アーカイブ完了。専用68件成功、全体683成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（Secrets and Lies移行・アーカイブ完了。専用55件成功、全体738成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **683成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・164ファイル・980件・327,505 expect。297 skipは既存ガイド原本不在による。 |
-| テストファイル数 | **164ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **72/72 (100%)** | 従来68 + Zero Trust部品4（GuideSidebar / MermaidFigure / GuideIcon / GuideCode）。純粋データ・MDXは分母外。全164テストファイルとは別集計 |
+| テストケース総数 | **738成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・175ファイル・1035件・410,413 expect。297 skipは既存ガイド原本不在による。 |
+| テストファイル数 | **175ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全175テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,17 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/secrets-and-lies-guide/foundation.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sections-0-4.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sections-5-sources.test.tsx` | 6 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/GuideIcon.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/cascade.test.tsx` | 9 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/runtime.test.tsx` | 10 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/interactions.test.tsx` | 1 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/integration.test.tsx` | 6 | 2026-10-23追加・Green |
+| `src/app/docs/secrets-and-lies-guide/archive.test.ts` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/presentation.test.tsx` | 2 | 2026-10-23追加・Green |
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/GuideIcon.test.tsx` | 1 | 2026-10-23追加・Green |
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/foundation.test.tsx` | 3 | 2026-10-23追加・Green |
@@ -909,5 +920,21 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 
 
 <!-- secrets-stage -->
-Secrets and Lies原本アーカイブGreen（2026-10-23）: 専用55成功/0失敗・11ファイル（82776 expect）。HTML/MDをarchive/html・archive/mdへ移動しSHA-256一致。archive/は既存規約でGit管理外。比較テスト参照先をarchiveへ変更。型チェックで見つかったHappy DOMと標準DOMのテスト型指定の差を修正し再検証中。全体回帰を実行中。ビルド未実行。
+Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 <!-- /secrets-stage -->
+
+
+## Secrets and Lies 移行（2026-10-23）
+
+Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+- 表示基盤: Red `6e6de4c` → Green `ded38af`。
+- Step 0〜4: Red `d4240da` → Green `eab2ee4`。
+- Step 5〜出典: Red `58268e8` → Green `3c6742b`。
+- 操作・スタイル・ナビ検索: Red `8b4f89a` → Green `9f0f675`。リスト種別を明示し、点/演習番号とネイティブ番号の重複を防止。全59見出しの索引一致、CIでも残る固定件数の検査と欠落検出のmutation probesを追加。
+- 原本アーカイブ: Red `2337f91` → Green `80fc1f8`。両原本SHA-256一致・ルート除去・参照切替を検証。archive/は既存規約でGit管理外。
+- Refactor `e59fc2d`: Happy DOMの入力要素に対応するテスト型へ整理。最終lint・型検査成功。
+- 開始時監査: 683成功/297 skip/0失敗・164ファイル（980件）で仕様書と一致。
+- 仕様書7ファイル・台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
+
+台帳: `docs/migration-inventory/secrets-and-lies-guide.json`。目視確認表: `docs/migration-inventory/secrets-and-lies-guide-review.md`。

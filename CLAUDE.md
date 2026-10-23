@@ -368,3 +368,10 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
 配置: `security-docs/src/app/docs/zero-trust-networks-2nd-edition-guide/page.mdx`。Security Guidesのナビ・ホーム一覧・静的検索（26ページ、全124見出し）へ登録。リストの点・番号・章/STEP/出典バッジ、全CSS宣言とmedia条件、全1344セルの適用スタイル、図のLR→TB再配置・余白・左右スクロール、36解答・25目次・hydrationを検証。原本は `archive/html/Zero-trust-networks-2nd-edition-guide.html` / `archive/md/Zero-trust-networks-2nd-edition-guide.md`（両SHA-256一致、archive/は既存規約どおりGit管理外）。台帳: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json`。目視確認表: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide-review.md`。
+
+
+## Secrets and Lies 移行（2026-10-23）
+
+Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
+
+配置: `security-docs/src/app/docs/secrets-and-lies-guide/page.mdx`。Security Guidesのナビ・ホーム一覧・静的検索（27ページ、全59見出し）へ登録。丸い箇条書きの点、通常番号と31演習の丸番号、8チェックのカウンター/選択/フォーカス、全CSS/mediaと627セルの適用スタイル、12図の配色・構文・1始まりの表示番号、目次操作、表・ページ全体hydrationを検証。原本: `archive/html/Secrets-and-lies-guide.html` / `archive/md/Secrets-and-lies-guide.md`（両SHA-256一致、archive/は既存規約でGit管理外）。台帳: `docs/migration-inventory/secrets-and-lies-guide.json`。目視確認表: `docs/migration-inventory/secrets-and-lies-guide-review.md`。
