@@ -1080,3 +1080,9 @@ Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出し
 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。
 
 直前コミット `538ba63`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+## CCSP移行（2026-10-23・原本アーカイブRed）
+
+原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。
+
+直前コミット `9dcbdfe`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
