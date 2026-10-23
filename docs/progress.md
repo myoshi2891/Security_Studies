@@ -909,5 +909,5 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 
 
 <!-- secrets-stage -->
-Secrets and Lies前半Green（2026-10-23）: 専用9成功/0失敗・2ファイル。step-0〜step-4の段落・強調・リンク・表セル・演習リスト階層・図定義を原本照合。残る6節は未移行。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
+Secrets and Lies後半Red（2026-10-23）: 専用9成功/6失敗・3ファイル。step-5〜step-7・用語集・ロードマップ・出典の不在を再現。全体の最終Greenは683成功/297 skip/0失敗・164ファイル。ビルド未実行。
 <!-- /secrets-stage -->
