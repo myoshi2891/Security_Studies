@@ -25,3 +25,10 @@ test('native bullet dots and decimal numbers survive Tailwind reset without addi
  }finally{await w.happyDOM.close();}}
 });
 test('all page rules are scoped and reduced motion is supported',()=>{const tree=postcss.parse(readFileSync(new URL('./cc-guide.css',import.meta.url),'utf8'));tree.walkRules(r=>{if(r.selector.includes(':is('))return;for(const s of r.selector.split(','))expect(s.trim().startsWith(scope)||s.includes(':has(.cc-guide)')).toBe(true);});expect(tree.toString()).toContain('prefers-reduced-motion');});
+
+test('headings and brand use the installed serif family rather than an unloaded CDN family',async()=>{
+ const w=new Window();try{w.document.head.innerHTML='<style>'+css()+'</style>';w.document.body.innerHTML=(await renderedPage()).body.innerHTML;
+ for(const selector of ['h1','h2','h3','h4','.brand b'])expect(w.getComputedStyle(w.document.querySelector(selector)!).fontFamily,selector).toStartWith("'Source Serif 4 Variable'");
+ const mdx=readFileSync(new URL('./page.mdx',import.meta.url),'utf8');expect(mdx).toContain("import '@fontsource-variable/source-serif-4'");
+ }finally{await w.happyDOM.close();}
+});
