@@ -874,5 +874,5 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 
 
 <!-- zero-trust-stage -->
-Zero Trust動的表示の最終Red（2026-10-23）: 追加2件失敗。原本headのdark color-scheme設定とスクリプトが追加する横スクロール案内の欠落を再現。本文・原本アーカイブ・アイコンは検証済み。ビルド禁止・未実行。
+Zero Trust動的表示Green（2026-10-23）: 追加2件成功。原本headのdark color-schemeと図のスクロール案内・矢印を復元。アイコン修正時点の全体回帰681成功/297 skip/0失敗・163ファイル。最終状態の全体テスト・lint・型チェックを検証中。HTML/MD両原本はSHA-256一致でアーカイブ済み。ビルド禁止・未実行。目視はユーザー担当・未完了。
 <!-- /zero-trust-stage -->
