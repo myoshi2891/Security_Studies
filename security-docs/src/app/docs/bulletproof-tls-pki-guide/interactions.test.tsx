@@ -16,7 +16,7 @@ test('all ten native checkboxes have labels and toggle independently without los
  boxes[0].focus();expect(document.activeElement).toBe(boxes[0]);
 });
 test('all ten Q&A answers open and close independently through their native summary controls',async()=>{
- const view=await renderGuide();const answers=[...view.container.querySelectorAll<HTMLDetailsElement>('section details')];expect(answers).toHaveLength(4);
+ const view=await renderGuide();const answers=[...view.container.querySelectorAll<HTMLDetailsElement>('section details:not(.diagram-description)')];expect(answers).toHaveLength(4);
  for(const [index,answer] of answers.entries()){expect(answer.open).toBe(false);fireEvent.click(answer.querySelector('summary')!);expect(answer.open).toBe(true);expect(answers.filter(a=>a.open)).toHaveLength(index+1);expect(answer.textContent!.trim().length).toBeGreaterThan(0);}
  fireEvent.click(answers[0].querySelector('summary')!);expect(answers[0].open).toBe(false);expect(answers.slice(1).every(a=>a.open)).toBe(true);
 });

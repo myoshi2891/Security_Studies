@@ -72,7 +72,7 @@ test('hydrates the complete guide without recoverable errors or nesting warnings
   const {default:Page}=await evaluatedPage();const tree=createElement(Page,{});
   container.innerHTML=renderToString(tree);document.body.appendChild(container);const recoverable:unknown[]=[];
   await act(async()=>{root=hydrateRoot(container,tree,{onRecoverableError:err=>{recoverable.push(err);}});});
-  expect(container.querySelectorAll('table')).toHaveLength(57);expect(container.querySelectorAll('section details')).toHaveLength(4);
+  expect(container.querySelectorAll('table')).toHaveLength(57);expect(container.querySelectorAll('section details:not(.diagram-description)')).toHaveLength(4);
   expect(recoverable).toEqual([]);expect(messages.filter(m=>/hydration|whitespace|cannot be a child|validateDOMNesting/i.test(m))).toEqual([]);
  }finally{await act(async()=>root?.unmount());container.remove();error.mockRestore();globalThis.IntersectionObserver=saved;}
 });
