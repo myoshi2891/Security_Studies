@@ -16,11 +16,17 @@ export let sourceHtml = '';
 export let sourceDocument: Document;
 export let definitions: Map<string, string>;
 export let sourceCss: postcss.Root;
+/** 原本の図定義に対する許容訂正（台帳 docs/migration-inventory/bulletproof-tls-pki-guide.json の diagramCorrections と一致させる） */
+export const diagramCorrections: Readonly<Record<string, { from: string; to: string }>> = {
+  // チケット鍵漏えいの影響を、新たな (EC)DHE を伴わない再開に限定する技術的訂正
+  d16: { from: "B --> C[\"鍵が漏れると過去のセッションも復号される\"]", to: "B --> C[\"鍵が漏れると、記録したチケットから過去のセッションが復号される: TLS 1.2 の再開と発行元のセッション、TLS 1.3 の psk_ke 再開\"]\nB --> FS[\"新たな (EC)DHE を伴う TLS 1.3 の再開 (psk_dhe_ke) は前方秘匿性を保つ (0-RTT の early data は除く)\"]" },
+};
 function loadSource() {
   if (sourceHtml) return;
   sourceHtml = readFileSync(sourcePath, 'utf8');
   sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
   definitions = new Map([...sourceHtml.matchAll(/(d\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1],m[2]]));
+  for (const [id, { from, to }] of Object.entries(diagramCorrections)) definitions.set(id, definitions.get(id)?.replace(from, to) ?? '');
   sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
 }
 /** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */

@@ -16,11 +16,17 @@ export let sourceHtml = '';
 export let sourceDocument: Document;
 export let definitions: Map<string, string>;
 export let sourceCss: postcss.Root;
+/** 原本の図定義に対する許容訂正（台帳 docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json の diagramCorrections と一致させる） */
+export const diagramCorrections: Readonly<Record<string, { from: string; to: string }>> = {
+  // ファイアウォールはクライアントへ通知しないため、閉鎖をメッセージではなく F の注記で表す技術的訂正
+  d12: { from: "F-->>C: 6 時間経過で穴は閉じる", to: "Note over F: 6 時間経過で穴は閉じる" },
+};
 function loadSource() {
   if (sourceHtml) return;
   sourceHtml = readFileSync(sourcePath, 'utf8');
   sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
   definitions = new Map([...sourceHtml.matchAll(/(d\d+):\s*`([\s\S]*?)`/g)].map(m => [m[1],m[2]]));
+  for (const [id, { from, to }] of Object.entries(diagramCorrections)) definitions.set(id, definitions.get(id)?.replace(from, to) ?? '');
   sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
 }
 /** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
