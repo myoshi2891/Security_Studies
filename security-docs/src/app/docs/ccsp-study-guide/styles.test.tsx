@@ -5,12 +5,14 @@ import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
 const css=()=>['../../globals.css','../docs-layout.css','./ccsp-guide.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n');
 const norm=(v:string,p:string)=>p==='font-weight'?({normal:'400',bold:'700'}[v]??v):p==='letter-spacing'&&(!v||v==='normal')?'0px':!v&&p==='background-color'?'transparent':!v&&/^(margin|padding|border)/.test(p)?'0px':v.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px').replace(/["']/g,'').replace(/Source Serif 4 Variable,\s*/,'');
+// Happy DOM does not resolve CSS clamp(); resolve the same source expression on both sides.
+const resolveClamps=(css:string,width:number)=>css.replace(/clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)vw\s*,\s*([\d.]+)(rem|px)\s*\)/g,(_,lo,lu,mid,hi,hu)=>Math.min(Number(hi)*(hu==='rem'?16:1),Math.max(Number(lo)*(lu==='rem'?16:1),Number(mid)*width/100))+'px');
 const sourceStyle=()=>{const tree=sourceCss.clone();tree.walkDecls('list-style',d=>{if(['none','disc','decimal'].includes(d.value))d.cloneAfter({prop:'list-style-type'});});return tree.toString();};
 export async function compareCascade(width:number,theme:string,selectors:string[]){
  const actual=new Window({settings:{device:{prefersColorScheme:theme}}}),original=new Window({settings:{device:{prefersColorScheme:theme}}});
  try{for(const w of [actual,original]){w.happyDOM.setWindowSize({width,height:900});w.document.documentElement.className=theme;expect(w.matchMedia('(prefers-color-scheme: dark)').matches).toBe(theme==='dark');}
- original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ol{list-style-type:decimal}'+sourceStyle()+'</style>';original.document.body.innerHTML=sourceDocument.body.innerHTML;
- actual.document.head.innerHTML='<style>'+css()+'</style>';actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
+ original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ol{list-style-type:decimal}'+resolveClamps(sourceStyle(),width)+'</style>';original.document.body.innerHTML=sourceDocument.body.innerHTML;
+ actual.document.head.innerHTML='<style>'+resolveClamps(css(),width)+'</style>';actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
  const errors=new Set<string>();
  for(const selector of selectors){const a=[...actual.document.querySelectorAll(selector)].filter(e=>!e.closest('.mermaid')),o=[...original.document.querySelectorAll(selector.replaceAll('.guide-content','main'))];expect(a.length,selector).toBe(o.length);
  for(let i=0;i<a.length;i++){const as=actual.getComputedStyle(a[i]),os=original.getComputedStyle(o[i]);for(const p of ['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','list-style-type']){const av=norm(as.getPropertyValue(p),p),ov=norm(os.getPropertyValue(p),p);if(av!==ov)errors.add(`${selector} ${p} expected ${ov} received ${av}`);}}}
