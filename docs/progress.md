@@ -951,3 +951,8 @@ Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archi
 Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
 
 Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletproof-tls-pki-guide.html` / `archive/security-guides/Bulletproof-tls-pki-guide.md`。形式別ではなく内容別の既存カテゴリーへ両原本をまとめる。
+
+
+<!-- archive-categories-stage -->
+内容別アーカイブ統一Red（2026-10-23）: 残り10原本のカテゴリー別保存・ハッシュ・旧フォルダー空・全比較参照の整合を検証。対象アーカイブ検証は27成功/10 skip/30失敗・13ファイル（67件）。直前の全体Greenは742成功/297 skip/0失敗・176ファイル。npm使用・ビルド未実行。
+<!-- /archive-categories-stage -->
