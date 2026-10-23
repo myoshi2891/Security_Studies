@@ -15,7 +15,7 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-10-23</span>
+                            <span><span class="live-dot"></span>Scanned 2026-10-24</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1189</div>
-                        <div class="summary-sub">全体1189 pass / 0 skip / 0 fail（1189件・195ファイル・499,087 expect）。CCSP: 全12節移行・原本アーカイブGreen・目視待ち、専用69件。</div>
+                        <div class="summary-value">1212</div>
+                        <div class="summary-sub">全体1212 pass / 0 skip / 0 fail（1212件・196ファイル・499,187 expect）。配色回帰23件を追加。Chrome4条件/16ガイド比較も成功。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,7 +337,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1042 page/guide + 11 shared navigation tests · 59/60 logic files（全体1189件の実測から集計）</span>
+                                            <span class="cell-count">1065 page/guide + 11 shared navigation tests · 59/60 logic files（全体1212件の実測から集計）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -364,10 +364,10 @@
 <li>✓ Zero Trust Networks第2版: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（71件/12ファイル。25節・83表1344セル・17図・90STEP・36解答・20出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ Secrets and Lies: GuideSidebar / MermaidFigure / GuideIcon（56件/11ファイル。11節・24表627セル・12図・31演習・8チェック・21出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ archive-categories.test.ts（13件: 10原本のカテゴリーとSHA-256・形式別フォルダー残存なし・全比較パス解決。全体1052成功/0 skip、原本なしCIも検証）</li>
-<li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（59件/6ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
+<li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（82件/7ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
 <li>✓ CCSP部品: GuideSidebar / MermaidFigure / GuideIcon（最新結果はCCSP状態欄を参照）</li>
 <li>✗ src/app/layout.tsx</li>
-                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 59、CCSP 69。原本比較を含む。</li>
+                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 82（配色回帰23件を含む）、CCSP 69。原本比較を含む。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1187,9 +1187,9 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-24</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 195 files · 1189 pass / 0 skip / 0 fail（1189 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 196 files · 1212 pass / 0 skip / 0 fail（1212 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1249,7 +1249,7 @@
 <section class="container"><p>CCSP履歴（Step 0〜6 Red）: Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container"><p>CCSP履歴（残り5節・全体照合Red）: 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container"><p>CCSP履歴（原本アーカイブRed）: 原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container" id="guide-readability"><p>配色レビュー対応: Red。ISC2 CCの表ホバーと[S番号]等6コードの配色問題をChromeで再現。17ガイドの実描画HTMLを比較し、他6ガイドの表ホバーとApplied Cryptographyの[S1]にも共通prose CSSの干渉を確認。通常/ホバー・明暗・375/1440px・全85表1520セル・同種ガイドを検証する新規22件は全件Red。次に各ガイドのスコープ内で原本の背景と継承文字色を保持する。前回の全体実測は1189件成功。npm使用・ビルド禁止。</p></section>
+<section class="container" id="guide-readability"><p>配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット 6399898。</p></section>
 <section class="container"><p>配色テスト補正: ChromeとHappy DOMのinherit・背景ショートハンド・透明色の評価差をテスト基盤で補い、23件成功。修正ルールを除去すると元の2症状が戻る変異検証と、Appliedの既存インライン/コードブロック配色を維持する確認を追加。実画面は375/1440px×明暗の4条件で全85表と全6コードが成功。描画HTMLの比較対象は16ガイド（初期の17という記載を訂正）。次に全体回帰テストを実行する。</p></section>
 </body>
 </html>

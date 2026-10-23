@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-10-23
+Updated 2026-10-24
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -414,3 +414,12 @@ CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・11
 
 配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（バイト一致でアーカイブ済み）。目視確認表: `docs/migration-inventory/ccsp-study-guide-review.md`。
 <!-- /ccsp-migration-status -->
+
+
+## ガイドの表ホバー・参照コード配色修正（2026-10-24）
+
+配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット `6399898`。
+
+調査記録: `docs/migration-inventory/guide-readability-review.json`。
+
+固定配色の移行ページでは通常表示だけでなく、実際のOS配色と表ホバー、インラインcodeの前景/背景を確認する。原本のcodeにcolor指定がなくても、共通proseの明示色が侵入するため継承を明示する。行の背景リセットは元の縞模様を優先させる。Happy DOMはhover・backgroundショートハンド・勝ったinheritの解決がChromeと異なるため、同じ詳細度で状態/継承をモデル化し、修正を外す負の対照でも元症状を検出する。

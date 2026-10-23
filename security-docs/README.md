@@ -1,6 +1,6 @@
 # Security Studies 2026
 
-最終更新日: 2026-10-23
+最終更新日: 2026-10-24
 
 Next.js-based documentation application focused on security studies, leveraging MDX for high-fidelity content authoring.
 
@@ -267,3 +267,10 @@ CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・11
 
 配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（バイト一致でアーカイブ済み）。目視確認表: `docs/migration-inventory/ccsp-study-guide-review.md`。
 <!-- /ccsp-migration-status -->
+
+
+## ガイドの表ホバー・参照コード配色修正（2026-10-24）
+
+配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット `6399898`。
+
+調査記録: `docs/migration-inventory/guide-readability-review.json`。

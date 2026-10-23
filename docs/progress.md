@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（CCSP: 全12節移行・原本アーカイブGreen・目視待ち・専用69件/全1189件成功。ビルド未実行）
+> **最終更新**: 2026-10-24（ガイド配色レビュー修正・新規23件/全1212件成功・Chrome実画面検証済み）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1189成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・195ファイル・1189件・499,087 expect。CCSP専用69件を含む。 |
-| テストファイル数 | **195ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全195テストファイルとは別集計 |
+| テストケース総数 | **1212成功 / 0 skip / 0失敗** | npm test実測（2026-10-23〜24）・196ファイル・1212件・499,187 expect。新規配色回帰23件を含む。 |
+| テストファイル数 | **196ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全196テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,7 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cc-certified-in-cybersecurity-guide/readability.test.tsx` | 23 | ✅ 2026-10-24最終検証・実ホバー相当/明暗/全セル/他ガイド/変異検証 |
 | `src/app/docs/ccsp-study-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/foundation.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
@@ -280,13 +281,13 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `GEMINI.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `README.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
-| `docs/progress.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `GEMINI.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `security-docs/README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `docs/progress.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -316,6 +317,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| GUIDE-READABILITY | **ISC2 CC表ホバー・参照コード配色と同種の7ガイドを修正** — 新規23件/全1212件成功。Chrome4条件と16ガイド比較。ビルド未実行。 | 2026-10-24 |
 | CCSP | **CCSP全12節移行・原本アーカイブ** — 115見出し・78表1216セル・16図・219リスト項目を原本照合。専用69件・全1189件成功。lint/型検査成功・ビルド未実行・目視待ち。 | 2026-10-23 |
 | ISC2-CC | **ISC2 CC全11章移行** — 専用55件/全1116件成功。リストの点・番号、85表1520セル、23図、54目次リンクを検証。目視待ち。 | 2026-10-23 |
 | REVIEW-DIAGRAM-CORRECTIONS | **レビュー指摘対応** — 原本の図定義から意図して変える箇所を各ガイドの `fidelity-helpers.ts` の `diagramCorrections` に登録し、原本照合は訂正後の定義と比較する方式を導入。Bulletproof d16: チケット鍵漏えいで復号される範囲を新たな (EC)DHE を伴わない再開（TLS 1.2 の再開と発行元セッション、TLS 1.3 の psk_ke）に限定し、psk_dhe_ke は前方秘匿性を保つ分岐（0-RTT 除く）を追加。ZTN d12: 手順6をクライアント宛てメッセージから `Note over F` へ変更（日本語の手順文は保持）。スキップ: d6「Main Secret」（原本本文が RFC 8446bis の名称と明記）、theme dark→base（Mermaid 11 の dark も themeVariables を反映、原本も dark）。Red `1f69909` → Green `f747cf1` → 台帳 `640556b`（両台帳に `diagramCorrections` を記録）。全1061件/179ファイル成功、24図の Mermaid 構文解析成功、lint/型検査成功。ビルド禁止・未実行、目視はユーザー担当 | 2026-10-23 |
@@ -1107,3 +1109,12 @@ ISC2 CCの表ホバーと[S番号]等6コードの配色問題をChromeで再現
 ### 配色回帰テストのブラウザー整合（2026-10-23）
 
 ChromeとHappy DOMのinherit・背景ショートハンド・透明色の評価差をテスト基盤で補い、23件成功。修正ルールを除去すると元の2症状が戻る変異検証と、Appliedの既存インライン/コードブロック配色を維持する確認を追加。実画面は375/1440px×明暗の4条件で全85表と全6コードが成功。描画HTMLの比較対象は16ガイド（初期の17という記載を訂正）。次に全体回帰テストを実行する。
+
+
+## ガイドの表ホバー・参照コード配色修正（2026-10-24）
+
+配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット `6399898`。
+
+調査記録: `docs/migration-inventory/guide-readability-review.json`。
+
+再開時: ユーザーの実画面で残る指摘があれば再現テストを先に追加。npm使用・ビルド禁止を継続する。

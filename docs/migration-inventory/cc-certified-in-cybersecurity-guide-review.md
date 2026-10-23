@@ -1,6 +1,6 @@
 # ISC2 CC 移行・目視確認表
 
-最終更新日: 2026-10-23
+最終更新日: 2026-10-24
 
 移行先: `/docs/cc-certified-in-cybersecurity-guide`
 原本: `archive/security-certifications/Cc-certified-in-cybersecurity-guide.html` / `archive/security-certifications/Cc-certified-in-cybersecurity-guide.md`（バイト一致でアーカイブ済み）
@@ -26,3 +26,7 @@
 | 画面幅 | 375 / 768 / 1024 / 1025 / 1440px。明暗両配色で共通CSSが混入しない | 未確認 |
 
 移植に伴う変更: CDNのフォント・アイコン・Mermaidをローカル依存へ置換。共有ヘッダー64pxを避けて目次を配置。本文の`main`は共通レイアウトとの入れ子を防ぐ`div.guide-content`へ置換。元のflex中央寄せ図コンテナーはblockスクロールへ変更し、幅広図の左端を保持。目次の`nav-open`操作はReactの状態管理へ移行。原本にある情報の日付や注意書きはそのまま保持。
+
+## 配色指摘の自動再検証（2026-10-24）
+
+0.3の[S番号]を含む全6コードと、全85表のホバーをChromeで375/1440px×明暗4条件で確認済み。表背景の黒化とコード文字の白化は解消。新規23件・全1212件成功。原本の内容とアーカイブは変更していない。

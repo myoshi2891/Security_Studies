@@ -636,5 +636,17 @@
   "originalChecksums": {
     "html": "6f4dda98c1b49fa1710a3a66849247e6717f7640e23782af4f14d211f094d399",
     "md": "07d32f20279db4775a4a36905e217b8c5ef2c384617e635bd6ec1837612f4406"
+  },
+  "readabilityReview": {
+    "date": "2026-10-24",
+    "report": "docs/migration-inventory/guide-readability-review.json",
+    "fixCommit": "6399898",
+    "dedicatedTests": 82,
+    "dedicatedTestFiles": 7,
+    "allTests": 1212,
+    "allTestFiles": 196,
+    "chromeLiveCases": 4,
+    "allTablesHovered": 85,
+    "allInlineCodesChecked": 6
   }
 }
