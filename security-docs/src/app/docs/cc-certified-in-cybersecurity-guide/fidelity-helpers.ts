@@ -9,8 +9,8 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-const sourcePath = resolve(import.meta.dir, '../../../../../Cc-certified-in-cybersecurity-guide.html');
-// Git管理されている移行元を読み込む。原本は変更・削除しない。
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Cc-certified-in-cybersecurity-guide.html');
+// アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
 export let sourceDocument: Document;
