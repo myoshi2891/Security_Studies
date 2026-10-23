@@ -71,6 +71,10 @@ test('diagram text descriptions read labels from stadium and cylinder nodes inst
  expect(describeDiagram('flowchart LR\nAPI(["APIサーバー"]) --> DB[("顧客DB")]')).toEqual(['フローチャート','APIサーバー → 顧客DB']);
  expect(describeDiagram('flowchart LR\nDB[("顧客DB")]\nAPI(["APIサーバー"]) -->|"読み取り"| DB')).toEqual(['フローチャート','APIサーバー → 顧客DB: 読み取り']);
 });
+test('diagram text descriptions keep unquoted pipe labels on decision edges',async()=>{
+ const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ expect(describeDiagram('flowchart TD\nQ{"証明書は有効?"} -->|はい| OK["接続"]\nQ -->|いいえ| NG["拒否"]')).toEqual(['フローチャート','証明書は有効? → 接続: はい','証明書は有効? → 拒否: いいえ']);
+});
 
 test('live SVG sizing extends the viewBox only to the measured drawing bounds',async()=>{
  const {fitDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);

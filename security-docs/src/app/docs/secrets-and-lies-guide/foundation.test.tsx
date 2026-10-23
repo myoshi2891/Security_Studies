@@ -15,7 +15,7 @@ sourceTest('every source CSS declaration and media condition survives including 
  });
 });
 test('diagram configuration retains original dark theme, flow spacing and attack-tree gate palette',async()=>{
- const {diagramConfig}=await import('./MermaidFigure');const {diagrams}=await import('./diagrams');expect(diagramConfig).toMatchObject({theme:'dark',securityLevel:'strict',flowchart:{useMaxWidth:false,htmlLabels:true,nodeSpacing:44,rankSpacing:48,curve:'basis'},themeVariables:{background:'#07111e',primaryColor:'#1c2f55',lineColor:'#9fb4e6',fontSize:'16px'}});expect(Object.keys(diagrams)).toHaveLength(12);expect(diagrams.d7).toContain('class A1,B1,O1 gate');
+ const {diagramConfig}=await import('./MermaidFigure');const {diagrams}=await import('./diagrams');expect(diagramConfig).not.toHaveProperty('securityLevel');expect(diagramConfig).not.toHaveProperty('startOnLoad');expect(diagramConfig).toMatchObject({theme:'dark',flowchart:{useMaxWidth:false,htmlLabels:true,nodeSpacing:44,rankSpacing:48,curve:'basis'},themeVariables:{background:'#07111e',primaryColor:'#1c2f55',lineColor:'#9fb4e6',fontSize:'16px'}});expect(Object.keys(diagrams)).toHaveLength(12);expect(diagrams.d7).toContain('class A1,B1,O1 gate');
 });
 test('zero-based source diagram IDs retain one-based accessible figure labels',async()=>{
  const {MermaidFigure}=await import('./MermaidFigure');const {diagrams}=await import('./diagrams');for(const [index,id] of Object.keys(diagrams).entries()){const html=renderToStaticMarkup(createElement(MermaidFigure,{id,source:diagrams[id as keyof typeof diagrams]}));expect(html).toContain(`図 ${index+1}`);expect(html).toContain(`data-id="${id}"`);}
