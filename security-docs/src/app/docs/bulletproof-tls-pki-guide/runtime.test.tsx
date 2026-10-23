@@ -89,3 +89,10 @@ test('the default renderer passes this guide configuration per render without re
  try{expect(await renderDiagram('iso27017-d1','flowchart LR\nA-->B')).toEqual({svg:'<svg></svg>',diagramType:'flowchart-v2'});expect(init).not.toHaveBeenCalled();expect(draw).toHaveBeenCalledWith('iso27017-d1',`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart LR\nA-->B`);
  }finally{draw.mockRestore();init.mockRestore();}
 },20000);
+test('server-rendered markup includes the collapsed text description so it is readable without JavaScript',async()=>{
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const {renderToString}=await import('react-dom/server');
+ const holder=document.createElement('div');holder.innerHTML=renderToString(createElement(MermaidFigure,{id:'d5',source:'flowchart LR\nA["入力"] --> B["出力"]',renderer:()=>new Promise<{svg:string}>(()=>{})}));
+ const description=holder.querySelector('details.diagram-description');expect(description).not.toBeNull();expect(description!.hasAttribute('open')).toBe(false);
+ expect([...description!.querySelectorAll('li')].map(li=>li.textContent)).toEqual(['フローチャート','入力 → 出力']);expect(holder.querySelector('[role="status"]')).not.toBeNull();
+});

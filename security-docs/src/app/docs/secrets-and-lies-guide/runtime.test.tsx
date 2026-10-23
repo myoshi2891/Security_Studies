@@ -89,3 +89,9 @@ test('the default renderer passes this guide configuration per render without re
 test('all twelve exact definitions parse including the AND/OR attack tree',async()=>{
  const {diagrams}=await import('./diagrams');const {default:mermaid}=await import('mermaid');expect(Object.keys(diagrams)).toHaveLength(12);for(const definition of Object.values(diagrams))expect(await mermaid.parse(definition)).toBeTruthy();
 },20000);
+test('lazy engine loader disables Mermaid auto-start on the shared instance without initializing it',async()=>{
+ const {default:mermaid}=await import('mermaid');const {renderDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const initialize=spyOn(mermaid,'initialize');const render=spyOn(mermaid,'render').mockResolvedValue({svg:'<svg></svg>',diagramType:'flowchart'});
+ try{mermaid.startOnLoad=true;await renderDiagram('sl-auto-start','flowchart LR\nA-->B');expect(mermaid.startOnLoad).toBe(false);expect(initialize).not.toHaveBeenCalled();expect(render).toHaveBeenCalledTimes(1);}
+ finally{initialize.mockRestore();render.mockRestore();}
+});
