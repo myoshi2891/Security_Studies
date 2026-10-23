@@ -692,7 +692,7 @@
 .ccsp-guide.ccsp-guide ol { list-style-type:decimal; }
 .ccsp-guide.ccsp-guide ul { list-style-type:none; }
 .ccsp-guide.ccsp-guide table { margin:0; }
-.ccsp-guide.ccsp-guide code { font-size:1rem; font-weight:400; color:var(--color-ink); }
+.ccsp-guide.ccsp-guide code { font-size:1rem; color:var(--color-ink); }
 .ccsp-guide.ccsp-guide .sidebar { top:64px; z-index:40; visibility:visible; }
 .ccsp-guide.ccsp-guide .backdrop { top:64px; border:0; padding:0; }
 .ccsp-guide.ccsp-guide .menu-btn { z-index:50; }
@@ -706,3 +706,6 @@
 html:has(.ccsp-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (max-width:1024px) { .ccsp-guide.ccsp-guide .sidebar { visibility:hidden; } .ccsp-guide.ccsp-guide .sidebar.open { visibility:visible; } }
 @media (prefers-reduced-motion:reduce) { html:has(.ccsp-guide) { scroll-behavior:auto; } }
+
+/* Explicit equivalent of the source shorthand keeps native summary markers hidden. */
+.ccsp-guide.ccsp-guide details.qa summary { list-style-type:none; }

@@ -17,7 +17,15 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (!selected) return;
     for (const a of links) { a.classList.remove('active'); a.removeAttribute('aria-current'); }
     selected.classList.add('active'); selected.setAttribute('aria-current', 'location');
-    if (nav && (selected.offsetTop < nav.scrollTop || selected.offsetTop + selected.offsetHeight > nav.scrollTop + nav.clientHeight)) nav.scrollTop = Math.max(0, selected.offsetTop - nav.clientHeight / 2);
+    // In the source flex sidebar the inner nav owns scrolling, not the aside.
+    const viewport = nav?.querySelector<HTMLElement>('nav');
+    if (viewport) {
+      const linkBounds = selected.getBoundingClientRect();
+      const bounds = viewport.getBoundingClientRect();
+      if (linkBounds.top < bounds.top + 8 || linkBounds.bottom > bounds.bottom - 8) {
+        viewport.scrollTop += linkBounds.top - bounds.top - viewport.clientHeight / 3;
+      }
+    }
   }, []);
   useEffect(() => {
     const guide = panel.current?.closest('.ccsp-guide');
