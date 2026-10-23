@@ -1038,3 +1038,9 @@ ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120�
 ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカイブ（両SHA-256一致、ルート残存なし）。原本比較はアーカイブ参照へ変更。専用59件/6ファイル・全1120件/185ファイル成功、494,572 expect。原本のない隔離環境は専用30成功/29skip/0失敗で、原本非依存の検証は継続。npm test・lint・型チェック成功。ビルド未実行、目視はユーザー担当。実装コミット `c1e0da3`。
 
 再開時: 移行完了後は、元HTMLと対応するMarkdownを必ず同じ内容別カテゴリーのarchiveへ移動する。資格は`archive/security-certifications/`。移動前後のSHA-256一致・ルート残存なし・比較パス更新を検証し、原本を上書き・消失させない。 ビルド禁止・npm使用を継続し、目視指摘があれば失敗テストから対応する。
+
+## CCSP移行（2026-10-23・基盤Red）
+
+移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。
+
+直前コミット `dbba5cc`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
