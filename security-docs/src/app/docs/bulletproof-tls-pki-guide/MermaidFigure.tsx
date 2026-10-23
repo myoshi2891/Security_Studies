@@ -169,11 +169,11 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
           <details><summary>図の定義</summary><pre>{source}</pre></details>
         </div>
       ) : <p role="status">図 {Number(id.slice(1))} を描画中…</p>}
-      {/* 描画結果が確定したら成否に関わらず図の内容をテキストで読めるようにする（描画中は原本どおり出さない） */}
-      {current && <details className="diagram-description">
+      {/* 描画の成否や JavaScript の有無に関わらず、図の内容を折りたたみのテキストで読めるようにする（サーバー描画にも含める） */}
+      <details className="diagram-description">
         <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
         <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>
-      </details>}
+      </details>
       <noscript>図の表示にはJavaScriptが必要です。</noscript>
     </div>
   );
