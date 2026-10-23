@@ -8,7 +8,7 @@ const css=()=>['../../globals.css','../docs-layout.css','./cc-guide.css'].map(f=
 const sourceStyle=()=>{const tree=sourceCss.clone();tree.walkDecls('list-style',d=>{if(['none','disc','decimal'].includes(d.value))d.cloneAfter({prop:'list-style-type'});});return tree.toString();};
 const normalize=(s:string,p:string)=>p==='font-weight'?({normal:'400',bold:'700'}[s]??s):p==='letter-spacing'&&(!s||s==='normal')?'0px':!s&&p==='background-color'?'transparent':!s&&/^(margin|padding|border)/.test(p)?'0px':s.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px');
 for(const width of [375,768,1024,1025,1440])for(const theme of ['light','dark'])sourceTest('full shared cascade retains original text, lists and all 1520 cells at '+width+'px in '+theme,async()=>{
- const a=new Window(),o=new Window();for(const w of [a,o]){w.happyDOM.setWindowSize({width,height:900});w.document.documentElement.className=theme;}
+ const a=new Window({settings:{device:{prefersColorScheme:theme}}}),o=new Window({settings:{device:{prefersColorScheme:theme}}});for(const w of [a,o]){w.happyDOM.setWindowSize({width,height:900});w.document.documentElement.className=theme;expect(w.matchMedia('(prefers-color-scheme: dark)').matches).toBe(theme==='dark');}
  try{o.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}'+sourceStyle()+'</style>';o.document.body.innerHTML=sourceDocument.body.innerHTML;
  a.document.head.innerHTML='<style>'+css()+'</style>';a.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
  const mismatches=new Set<string>();
