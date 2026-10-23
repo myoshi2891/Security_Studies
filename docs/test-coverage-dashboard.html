@@ -1247,5 +1247,6 @@
 <section class="container"><p>CCSP移行（基盤テスト補正）: 目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container" id="ccsp-state"><p>CCSP: Step 0〜6 Green・残り5節未移植。Step 0〜6の全文、表セル、リスト階層、強調、出典リンク、図定義の原本比較7件が成功。次にStep 7〜10と参考ソース一覧を移植し、全体の件数・装飾・操作・hydrationを検証する。 専用37件/5ファイル・全体1157成功/0skip/0失敗（190ファイル、496,997 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット cb9c089。</p></section>
 <section class="container"><p>CCSP移行（Step 0〜6 Red）: Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container"><p>CCSP移行（残り5節・全体照合Red）: 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 </body>
 </html>
