@@ -53,3 +53,13 @@ test('shared header interaction closes the drawer and resize restores desktop sc
   if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
  }
 });
+
+test('scroll tracking moves the source inner nav viewport rather than the fixed flex sidebar',()=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;const targets:Element[]=[];
+ globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(e:Element){targets.push(e);}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{const view=render(harness());const nav=view.container.querySelector('nav')!,aside=view.container.querySelector('aside')!,link=nav.querySelector('[href="#ch10"]')!;
+ Object.defineProperty(nav,'clientHeight',{configurable:true,value:120});nav.getBoundingClientRect=()=>({top:80,bottom:200} as DOMRect);link.getBoundingClientRect=()=>({top:500,bottom:520} as DOMRect);
+ act(()=>notify!([{target:targets.find(t=>t.id==='ch10')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+ expect(nav.scrollTop).toBeCloseTo(380);expect(aside.scrollTop).toBe(0);
+ }finally{globalThis.IntersectionObserver=saved;}
+});

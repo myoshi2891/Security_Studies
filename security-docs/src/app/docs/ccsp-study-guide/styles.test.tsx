@@ -30,3 +30,5 @@ test('native numbers, custom round dots, checklist counters and wide SVG scrolli
  }finally{await w.happyDOM.close();}}
 });
 test('page rules stay scoped and retain reduced motion and print support',()=>{const tree=postcss.parse(readFileSync(new URL('./ccsp-guide.css',import.meta.url),'utf8'));tree.walkRules(r=>{if(r.selector.includes(':is('))return;for(const s of r.selector.split(','))expect(s.trim().startsWith(scope)||s.includes(':has(.ccsp-guide)')).toBe(true);});expect(tree.toString()).toContain('prefers-reduced-motion');expect(tree.toString()).toContain('@media print');});
+
+for(const width of [375,768,1024,1025,1440])for(const theme of ['light','dark'])sourceTest('complete source typography, all 1216 cells, list/quiz/check/reference styles at '+width+'px in '+theme,()=>compareCascade(width,theme,['h1,h2,h3,h4','th,td','.section p,.section ul,.section ol,.section li','.callout,.callout-title,.callout-body','.refcard,.ref-title,.ref-status','.checklist label,.checklist .num,.checklist .box,.checklist .txt','.qcard,details.qa,details.qa summary,.qcard .opts','code']),30000);
