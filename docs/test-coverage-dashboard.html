@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1150</div>
-                        <div class="summary-sub">全体1150 pass / 0 skip / 0 fail（1150件・189ファイル・495,652 expect）。CCSP: 表示基盤Green・本文未移植、専用30件。</div>
+                        <div class="summary-value">1157</div>
+                        <div class="summary-sub">全体1157 pass / 0 skip / 0 fail（1157件・190ファイル・496,997 expect）。CCSP: Step 0〜6 Green・残り5節未移植、専用37件。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,7 +337,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1003 page/guide + 11 shared navigation tests · 59/60 logic files（全体1150件の実測から集計）</span>
+                                            <span class="cell-count">1010 page/guide + 11 shared navigation tests · 59/60 logic files（全体1157件の実測から集計）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -1189,7 +1189,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 189 files · 1150 pass / 0 skip / 0 fail（1150 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 190 files · 1157 pass / 0 skip / 0 fail（1157 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1245,7 +1245,7 @@
 <section class="container" id="cc-archive"><p>ISC2 CC原本アーカイブ: Green。HTML/Markdownをarchive/security-certificationsへバイト一致で移動。専用59件・全1120件成功。原本なし隔離環境30成功/29skip/0失敗。移行後の原本アーカイブを手順に必須化。ビルド未実行。</p></section>
 <section class="container"><p>CCSP移行（基盤Red）: 移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container"><p>CCSP移行（基盤テスト補正）: 目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container" id="ccsp-state"><p>CCSP: 表示基盤Green・本文未移植。ヒーロー・ブランドSVG・12節の目次と見出し・フッター、全CSS宣言、16図の定義/設定/遅延描画、キーボード操作を検証。本文は見出しのみで次にStep 0〜6を移植する。 専用30件/4ファイル・全体1150成功/0skip/0失敗（189ファイル、495,652 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット 076a11a。</p></section>
+<section class="container" id="ccsp-state"><p>CCSP: Step 0〜6 Green・残り5節未移植。Step 0〜6の全文、表セル、リスト階層、強調、出典リンク、図定義の原本比較7件が成功。次にStep 7〜10と参考ソース一覧を移植し、全体の件数・装飾・操作・hydrationを検証する。 専用37件/5ファイル・全体1157成功/0skip/0失敗（190ファイル、496,997 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット cb9c089。</p></section>
 <section class="container"><p>CCSP移行（Step 0〜6 Red）: Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 </body>
 </html>
