@@ -56,7 +56,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            78 ロジックファイル中 78 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            81 ロジックファイル中 81 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1120</div>
-                        <div class="summary-sub">全体1120 pass / 0 skip / 0 fail（1120件・185ファイル・494,572 expect）。ISC2 CC専用59件。原本なし隔離環境: 専用30 pass / 29 skip / 0 fail。</div>
+                        <div class="summary-value">1150</div>
+                        <div class="summary-sub">全体1150 pass / 0 skip / 0 fail（1150件・189ファイル・495,652 expect）。CCSP: 表示基盤Green・本文未移植、専用30件。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,18 +337,18 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">973 page/guide + 11 shared navigation tests · 56/57 logic files（全体1120件の実測から集計）</span>
+                                            <span class="cell-count">1003 page/guide + 11 shared navigation tests · 59/60 logic files（全体1150件の実測から集計）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 56/57 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 59/60 ロジックファイル</div>
                                             docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modelingの描画・コード・本文をテスト済み。root layout は未カバー（HomePageは4件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (4 tests): ホーム一覧/統計/共通メニューと登録件数</li>
-<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在28+80=108ページ、テスト値）・開閉/フォーカス・320/375px</li>
+<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在29+80=109ページ、テスト値）・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（50件、移行・回帰検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（46件、移行・表示・回帰検証）</li>
@@ -365,6 +365,7 @@
 <li>✓ Secrets and Lies: GuideSidebar / MermaidFigure / GuideIcon（56件/11ファイル。11節・24表627セル・12図・31演習・8チェック・21出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ archive-categories.test.ts（13件: 10原本のカテゴリーとSHA-256・形式別フォルダー残存なし・全比較パス解決。全体1052成功/0 skip、原本なしCIも検証）</li>
 <li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（59件/6ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
+<li>✓ CCSP部品: GuideSidebar / MermaidFigure / GuideIcon（最新結果はCCSP状態欄を参照）</li>
 <li>✗ src/app/layout.tsx</li>
                                                 <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 59。原本比較を含む。</li>
                                             </ul>
@@ -405,15 +406,15 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">28 registered routes · 1/1 files</span>
+                                            <span class="cell-count">29 registered routes · 1/1 files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 100%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 共通ナビ28ルート・資格4件・各移行ガイドの登録契約</div>
+                                            <div class="tt-title">⚠️ Partial — 共通ナビ29ルート・資格4件・各移行ガイドの登録契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: 共通ナビ28ルートを検証。資格カテゴリーはCCIE・CCST・ISC2 CC・AppSecの4件をタイトル・URL・順序で完全一致検証。ホーム一覧と、DocsHeaderNavの28+80=108ページへの拡張も検証。</li>
+                                                <li>✓ src/config/docs.ts: 共通ナビ29ルートを検証。資格カテゴリーはCCIE・CCST・ISC2 CC・AppSecの4件をタイトル・URL・順序で完全一致検証。ホーム一覧と、DocsHeaderNavの29+80=109ページへの拡張も検証。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1188,7 +1189,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 185 files · 1120 pass / 0 skip / 0 fail（1120 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 189 files · 1150 pass / 0 skip / 0 fail（1150 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1244,5 +1245,6 @@
 <section class="container" id="cc-archive"><p>ISC2 CC原本アーカイブ: Green。HTML/Markdownをarchive/security-certificationsへバイト一致で移動。専用59件・全1120件成功。原本なし隔離環境30成功/29skip/0失敗。移行後の原本アーカイブを手順に必須化。ビルド未実行。</p></section>
 <section class="container"><p>CCSP移行（基盤Red）: 移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 <section class="container"><p>CCSP移行（基盤テスト補正）: 目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container" id="ccsp-state"><p>CCSP: 表示基盤Green・本文未移植。ヒーロー・ブランドSVG・12節の目次と見出し・フッター、全CSS宣言、16図の定義/設定/遅延描画、キーボード操作を検証。本文は見出しのみで次にStep 0〜6を移植する。 専用30件/4ファイル・全体1150成功/0skip/0失敗（189ファイル、495,652 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット 076a11a。</p></section>
 </body>
 </html>

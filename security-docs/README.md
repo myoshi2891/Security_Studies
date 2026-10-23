@@ -258,3 +258,12 @@ ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120�
 ## ISC2 CC 原本アーカイブ（2026-10-23・Green）
 
 ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカイブ（両SHA-256一致、ルート残存なし）。原本比較はアーカイブ参照へ変更。専用59件/6ファイル・全1120件/185ファイル成功、494,572 expect。原本のない隔離環境は専用30成功/29skip/0失敗で、原本非依存の検証は継続。npm test・lint・型チェック成功。ビルド未実行、目視はユーザー担当。実装コミット `c1e0da3`。
+
+
+<!-- ccsp-migration-status -->
+## CCSP移行（2026-10-23）
+
+CCSP: 表示基盤Green・本文未移植。ヒーロー・ブランドSVG・12節の目次と見出し・フッター、全CSS宣言、16図の定義/設定/遅延描画、キーボード操作を検証。本文は見出しのみで次にStep 0〜6を移植する。 専用30件/4ファイル・全体1150成功/0skip/0失敗（189ファイル、495,652 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `076a11a`。
+
+配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
+<!-- /ccsp-migration-status -->

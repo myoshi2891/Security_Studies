@@ -405,3 +405,12 @@ ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカ�
 ### 移行完了の必須条件
 
 移行完了後は、元HTMLと対応するMarkdownを必ず同じ内容別カテゴリーのarchiveへ移動する。資格は`archive/security-certifications/`。移動前後のSHA-256一致・ルート残存なし・比較パス更新を検証し、原本を上書き・消失させない。
+
+
+<!-- ccsp-migration-status -->
+## CCSP移行（2026-10-23）
+
+CCSP: 表示基盤Green・本文未移植。ヒーロー・ブランドSVG・12節の目次と見出し・フッター、全CSS宣言、16図の定義/設定/遅延描画、キーボード操作を検証。本文は見出しのみで次にStep 0〜6を移植する。 専用30件/4ファイル・全体1150成功/0skip/0失敗（189ファイル、495,652 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `076a11a`。
+
+配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
+<!-- /ccsp-migration-status -->
