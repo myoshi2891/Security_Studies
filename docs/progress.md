@@ -938,3 +938,8 @@ Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ
 - 仕様書7ファイル・台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
 
 台帳: `docs/migration-inventory/secrets-and-lies-guide.json`。目視確認表: `docs/migration-inventory/secrets-and-lies-guide-review.md`。
+
+
+<!-- bulletproof-archive-stage -->
+Bulletproof原本カテゴリー別アーカイブRed（2026-10-23）: archive/security-guides/へのHTML・MD移動を要求。専用0成功/2 skip/2失敗でルート原本の残存と参照先の未更新を再現。直前の全体Greenは738成功/297 skip/0失敗・175ファイル。npm使用・ビルド未実行。
+<!-- /bulletproof-archive-stage -->
