@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1052成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・177ファイル・1052件・489,759 expect。全原本が存在し、旧参照による297 skipを解消。 |
-| テストファイル数 | **177ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全177テストファイルとは別集計 |
+| テストケース総数 | **1061成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・179ファイル・1061件・489,829 expect。全原本が存在し、旧参照による297 skipを解消。 |
+| テストファイル数 | **179ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全179テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | 原本なしのクリーンworktreeで576成功/476 skip/0失敗を実測。npm test -- --coverage。原本非依存の検証は実行し、存在しない原本の比較のみskip。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
