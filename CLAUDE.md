@@ -389,3 +389,10 @@ Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archi
 アーカイブを内容別カテゴリーへ統一。archive/html・archive/mdに残っていた10原本を移動し、全10件のSHA-256一致を確認。ISO3組はarchive/standards、Secrets and Lies・Zero Trust Networksの2組はarchive/security-guides。空の形式別フォルダーを除去し、すでに分類済みの原本を含む比較テスト・台帳の旧パスも修正。ローカル全体1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。旧パスでスキップされていた297件の原本比較が復帰。CI相当576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。lint・型チェック成功。ビルド禁止・未実行。
 
 新規保存も既存の内容別カテゴリー（技術ガイド: `archive/security-guides/`、国際規格: `archive/standards/`、資格: `archive/security-certifications/`、専門トピック: `archive/advanced-topics/`、概要・設計: `archive/getting-started/`）を使い、HTMLとMarkdownを同じカテゴリーへ置く。移動台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は既存設定どおりGit管理外。原本がある場合は比較を実行し、ないCIでは原本依存の比較だけをスキップする。
+
+
+## ISC2 CC 移行（2026-10-23・自動検証完了）
+
+ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用55件/5ファイル成功。全体1116成功/0失敗（184ファイル、494,567 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
+
+配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本はルートで変更せず保持。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。

@@ -16,7 +16,8 @@
     "details summary": 1,
     ".src-card": 53,
     "main a": 209,
-    ".callout": 75
+    ".callout": 75,
+    ".sidebar nav a": 54
   },
   "headings": [
     {
@@ -599,5 +600,30 @@
       "id": 22,
       "sha256": "355b2ecbb66644bdc621636e042dc1eae16629c795b2040eab4c7f24ca393c59"
     }
-  ]
+  ],
+  "originals": "HTML・Markdownを変更せずルートに保持",
+  "visualReview": "ユーザー確認待ち",
+  "adaptations": [
+    "本文mainをdiv.guide-contentへ変更（共通mainとの入れ子回避）",
+    "専用cc-guide CSSスコープ・Tailwindリセット後のdisc/decimal復元",
+    "CDNアイコン・フォント・Mermaidをローカル依存へ変更",
+    "見出しとブランドはSource Serif 4 Variableのローカルfamilyを優先",
+    "共有ヘッダー64pxとアンカー88pxの余白",
+    "図コンテナーはblock・intrinsic幅を保持し左右スクロール",
+    "目次をReactへ移行・54リンク・Escape/背景/フォーカス/スクロール追従"
+  ],
+  "verification": {
+    "date": "2026-10-23",
+    "implementationCommit": "58e8b43",
+    "dedicatedTests": 55,
+    "dedicatedTestFiles": 5,
+    "allTests": 1116,
+    "allTestFiles": 184,
+    "failures": 0,
+    "expectations": 494567,
+    "lint": "pass",
+    "typesCheck": "pass",
+    "build": "禁止・未実行",
+    "originalsChanged": false
+  }
 }

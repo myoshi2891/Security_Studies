@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（レビュー対応: Bulletproof d16・ZTN d12 の図定義を技術訂正し原本照合に許容訂正を導入。全体1061成功/0失敗）
+> **最終更新**: 2026-10-23（ISC2 CC移行・専用55件/全1116件成功、lint/型検査成功、ユーザー目視待ち）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,22 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1061成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・179ファイル・1061件・489,829 expect。全原本が存在し、旧参照による297 skipを解消。 |
-| テストファイル数 | **179ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全179テストファイルとは別集計 |
+| テストケース総数 | **1116成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・184ファイル・1116件・494,567 expect。ISC2 CC専用55件を含む。 |
+| テストファイル数 | **184ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **78/78 (100%)** | 従来75 + ISC2 CC部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全184テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | 原本なしのクリーンworktreeで576成功/476 skip/0失敗を実測。npm test -- --coverage。原本非依存の検証は実行し、存在しない原本の比較のみskip。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CC原本はGit管理下のためCIでも原本比較を実行。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cc-certified-in-cybersecurity-guide/migration.test.tsx` | 20 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/cascade.test.tsx` | 13 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/runtime.test.tsx` | 12 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
 | `src/lib/archive-categories.test.ts` | 13 | 2026-10-23追加・10ハッシュ/旧フォルダー/参照先整合Green |
 | `src/app/docs/secrets-and-lies-guide/foundation.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/secrets-and-lies-guide/sections-0-4.test.tsx` | 5 | 2026-10-23追加・Green |
@@ -296,6 +301,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| ISC2-CC | **ISC2 CC全11章移行** — 専用55件/全1116件成功。リストの点・番号、85表1520セル、23図、54目次リンクを検証。目視待ち。 | 2026-10-23 |
 | REVIEW-DIAGRAM-CORRECTIONS | **レビュー指摘対応** — 原本の図定義から意図して変える箇所を各ガイドの `fidelity-helpers.ts` の `diagramCorrections` に登録し、原本照合は訂正後の定義と比較する方式を導入。Bulletproof d16: チケット鍵漏えいで復号される範囲を新たな (EC)DHE を伴わない再開（TLS 1.2 の再開と発行元セッション、TLS 1.3 の psk_ke）に限定し、psk_dhe_ke は前方秘匿性を保つ分岐（0-RTT 除く）を追加。ZTN d12: 手順6をクライアント宛てメッセージから `Note over F` へ変更（日本語の手順文は保持）。スキップ: d6「Main Secret」（原本本文が RFC 8446bis の名称と明記）、theme dark→base（Mermaid 11 の dark も themeVariables を反映、原本も dark）。Red `1f69909` → Green `f747cf1` → 台帳 `640556b`（両台帳に `diagramCorrections` を記録）。全1061件/179ファイル成功、24図の Mermaid 構文解析成功、lint/型検査成功。ビルド禁止・未実行、目視はユーザー担当 | 2026-10-23 |
 | CI-K8S-CONTRAST-TIMEOUT | **CI失敗対応** — PR CI（run 39939392410）で `hacking-kubernetes/contrast.test.tsx` の「supporting labels…4.5:1 contrast」が5080msでBun既定の5秒タイムアウトを超過（アサーション失敗ではない。同一コミットのpush CIは成功）。ローカル実測2.8〜3.8秒と余裕がないため、重い2テストに既存慣例どおり `20000` msのテスト別タイムアウトを設定（`5844027`）。WAHH版は最大1.5秒のため変更せず。全1057件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-HLJS-CORE | **レビュー指摘対応** — Bulletproofの `GuideCode` を `highlight.js` 全言語バンドルから `highlight.js/lib/core` へ切替え、page.mdxで使う python・http・nginx・bash の4言語のみ静的登録（他ガイドの既存方式に統一、ハイライト出力は不変）。リファクタリングのため既存テストで検証: Bulletproof 48件/7ファイル成功、lint/型検査成功（`0f5d81b`）。ビルド禁止・未実行 | 2026-10-23 |
@@ -1006,3 +1012,17 @@ Happy DOMの`list-style`略記未展開を補い、ブラウザー既定の丸�
 ### ISC2 CC OS配色監査（2026-10-23）
 
 全体1116件/184ファイル成功を確認後、明暗比較でHTMLクラスだけでなくHappy DOMのOS配色設定も変更し、`prefers-color-scheme`の実際の切替を検証。5画面幅×両配色を含むcascade13件成功。テスト数は55件のまま。全体の最終再実行中。lint/型検査成功・ビルド未実行。
+
+
+## ISC2 CC 移行（2026-10-23・自動検証完了）
+
+ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用55件/5ファイル成功。全体1116成功/0失敗（184ファイル、494,567 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
+
+配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本はルートで変更せず保持。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
+
+### ISC2 CC 再開時のアクション
+
+1. ユーザーが目視確認表で表示を確認する。
+2. 指摘があれば失敗テストのコミットから修正する。
+
+再開プロンプト: 「ISC2 CCの目視指摘に対応。実装コミット `58e8b43`、専用55件・全1116件成功。原本を保持し、TDDのテスト/実装/仕様書コミットを分割。npm使用・ビルド禁止を継続。」
