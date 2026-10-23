@@ -113,7 +113,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const svgId = `zero-trust-mermaid-${id}-${unique}`;
   const descriptionId = `${svgId}-description`;
-  const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
+  const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean; scrollable?: boolean }>();
   // 再試行ボタンで増やし、描画 effect を再実行させる
   const [attempt, setAttempt] = useState(0);
   const figureRef = useRef<HTMLDivElement>(null);
@@ -147,11 +147,14 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
         definition = source.replace(/^(\s*flowchart )LR/, '$1TB');
         result = await renderer(`${svgId}-tb`, definition);
       }
-      return { svg: result.svg, definition };
+      holder.innerHTML = result.svg;
+      const finalBox = holder.querySelector('svg')?.getAttribute('viewBox')?.trim().split(/[\s,]+/).map(Number);
+      const scrollable = width > 0 && finalBox?.length === 4 && width / finalBox[2] < 0.75;
+      return { svg: result.svg, definition, scrollable };
     };
-    draw().then(({ svg, definition }) => {
+    draw().then(({ svg, definition, scrollable }) => {
       if (!active) return;
-      setResult({ source, svg: sizeSvg(svg, definition) });
+      setResult({ source, svg: sizeSvg(svg, definition), scrollable });
     }).catch((error: unknown) => {
       if (!active) return;
       console.error(`Mermaid figure ${id} failed to render`, error);
@@ -183,6 +186,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
         </div>
       ) : <p role="status">図 {Number(id.slice(1))} を描画中…</p>}
       {/* 描画結果が確定したら成否に関わらず図の内容をテキストで読めるようにする（描画中は原本どおり出さない） */}
+      {current?.scrollable && <p className="scroll-hint"><i className="ti ti-arrows-horizontal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4" /></svg></i><span>この図は横にスクロールできます</span></p>}
       {current && <details className="diagram-description">
         <summary>図 {Number(id.slice(1))} のテキスト説明</summary>
         <ul id={descriptionId}>{describeDiagram(source).map((line, index) => <li key={index}>{line}</li>)}</ul>

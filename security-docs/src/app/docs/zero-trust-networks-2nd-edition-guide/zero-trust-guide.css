@@ -239,3 +239,6 @@ html:has(.zero-trust-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 /* Explicit table metrics prevent inherited shared article styles. */
 .zero-trust-guide.zero-trust-guide table { font-size:1rem; margin:0; }
 .zero-trust-guide.zero-trust-guide td { border-bottom:0; }
+
+/* Preserve the original head color-scheme metadata within this route. */
+.zero-trust-guide.zero-trust-guide { color-scheme:dark; }
