@@ -18,7 +18,7 @@ The following directive is used to include agent-specific rules and context. Thi
 
 ## Technical Standards
 
-- **Next.js**: 16.3.8, App Router, TypeScript (strict).
+- **Next.js**: 16.4.2, App Router, TypeScript (strict).
 - **Content**: MDX via `@next/mdx`. All pages live in `src/app/docs/<slug>/page.mdx`. Register new slugs in `src/config/docs.ts`.
 - **Components**: Custom docs components in `src/components/docs/` (e.g. `HeroSection`, `ThreatCard`, `DataTable`).
 - **Styling**: Tailwind CSS v4 — `@import 'tailwindcss';` in `globals.css`. Utility classes by default; the CCIE Security, CCST Cybersecurity, Secure by Design, MITRE ATLAS, Hacking Kubernetes, WAHH, Applied Cryptography and Threat Modeling migrations use page-scoped CSS to preserve the original styling.

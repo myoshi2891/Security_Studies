@@ -8,7 +8,7 @@ This is a Next.js-based documentation application focused on security studies. I
 
 ### Key Technologies
 
-- **Framework:** Next.js 16.3.8 (App Router)
+- **Framework:** Next.js 16.4.2 (App Router)
 - **UI Library:** React 19
 - **Language:** TypeScript (strict)
 - **Styling:** Tailwind CSS v4 with PostCSS

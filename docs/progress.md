@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（レビュー対応: 引用符なしパイプラベル・Mermaid secureキー・archive移動検証のスキップ条件。全体1053成功/0 skip/0失敗）
+> **最終更新**: 2026-10-23（CI監査の high/critical 8件を解消: next 16.4.2・dompurify 3.4.17・toml 5.0.1。全体1053成功/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -214,6 +214,9 @@
 | 入力サニタイズ | ❌ **未テスト** | SearchModal XSS 耐性テストなし |
 | 依存関係監査 | ✅ **稼働中** | `bun audit --audit-level=high` を独立 job として CI 実行。加えて `bun audit --prod --audit-level=high`（除外指定なし）で本番依存を監査 |
 | next RCE（GHSA-vcvr-r3jv-pc5j） | ✅ **解消** | 2026-10-05: `next` / `eslint-config-next` を 16.3.5 → 16.3.8 へ更新 |
+| next RCE/DoS（GHSA-2464-fhr4-w9xw・GHSA-673q-mjm6-r5xr・GHSA-p3m5-59mp-jv5r） | ✅ **解消** | 2026-10-23: `next` / `@next/mdx` / `eslint-config-next` を 16.4.2 へ更新（`62a4951`）。同梱の `eslint-plugin-react-hooks` 7.1.1 の新ルールに合わせ `Checklist` の effect 内 setState を描画中の同期へ変更（`5c85320`） |
+| dompurify（GHSA-cg2g-xh64-v4q7・GHSA-mrv2-3pqr-j5jr） | ✅ **解消** | 2026-10-23: mermaid 経由の推移依存を overrides で 3.4.17 に固定（mermaid の `^3.2.5` 範囲内） |
+| toml DoS（GHSA-4qx8-w7c3-pj3p・GHSA-9j65-hcg3-gc64・GHSA-9qmh-m7c6-f92p） | ✅ **解消** | 2026-10-23: remark-mdx-frontmatter 経由。overrides の固定値を 4.3.0 → 5.0.1 へ更新し、`parse` の名前付き import が動作することを確認 |
 | braces DoS（GHSA-vfj7-8cjw-p6xm） | ⚠️ **一時除外** | パッチ未提供（<=3.0.3 全版が対象）。`eslint-config-next` 経由の dev 依存のみで、本番バンドル・ユーザー入力経路に含まれない。CI で `--ignore` 指定、**期限 2026-11-05** までに修正版の有無を再確認 |
 
 #### CSP 現行構成（2026-05-20）
@@ -293,6 +296,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| AUDIT-2026-10-23 | **依存関係の脆弱性解消** — CIの `bun audit --audit-level=high` が critical 3件・high 5件で失敗。next系3パッケージを 16.4.2、overrides で dompurify 3.4.17・toml 5.0.1 に更新。lint の新ルール対応で `Checklist` をリファクタリング（`5c85320` → `62a4951`）。両 audit ステップが exit 0（残りは既存の一時除外 braces のみ）。全1053件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-MERMAID-ARCHIVE | **レビュー指摘対応** — Bulletproofの図説明が引用符なしパイプラベル（`-->|通信|`）の接続を落としていた不具合を修正。Secrets and Liesの図設定から、frontmatterでは無視される `startOnLoad`・`securityLevel` を削除。archive移動検証は `archive/` がない場合だけスキップし、移動先の欠落を失敗として検出。Red `b444fa6`・テスト `8d15148` → Green `6d322a3`。全1053件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
 | THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
