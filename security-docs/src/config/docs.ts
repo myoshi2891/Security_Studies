@@ -98,6 +98,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
         { title: "CCIE Security", href: "/docs/ccie-security" },
         { title: "CCST Cybersecurity", href: "/docs/ccst-cybersecurity" },
         { title: "ISC2 CC (Certified in Cybersecurity)", href: "/docs/cc-certified-in-cybersecurity-guide" },
+        { title: "CCSP (Certified Cloud Security Professional)", href: "/docs/ccsp-study-guide" },
         { title: "AppSec Certifications", href: "/docs/certifications" },
       ],
     },

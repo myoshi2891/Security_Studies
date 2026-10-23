@@ -1,0 +1,708 @@
+
+            .ccsp-guide.ccsp-guide {
+                --color-paper: #f6f7f9;
+                --color-ink: #161b26;
+                --color-indigo: #2e3f72;
+                --color-gold: #b8802a;
+                --color-forest: #1b6e6a;
+                --color-plum: #8c3a5c;
+                --surface: #ffffff;
+                --line: #dce1eb;
+                --line-strong: #c3cbda;
+                --ink-2: #434c61;
+                --ink-3: #586277;
+                --indigo-tint: #eef1f8;
+                --gold-tint: #faf1df;
+                --forest-tint: #e6f2f1;
+                --plum-tint: #f7ecf1;
+                --done-tint: #eaf4ec;
+                --radius: 12px;
+                --sidebar-w: 288px;
+                --font-sans:
+                    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic',
+                    Meiryo, system-ui, sans-serif;
+                --font-serif:
+                    'Source Serif 4', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', Georgia,
+                    serif;
+            }
+            .ccsp-guide.ccsp-guide * {
+                box-sizing: border-box;
+            }
+            .ccsp-guide.ccsp-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .ccsp-guide.ccsp-guide {
+                margin: 0;
+                background: var(--color-paper);
+                color: var(--color-ink);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.75;
+                overflow-wrap: break-word;
+            }
+            .ccsp-guide.ccsp-guide.drawer-open {
+                overflow: hidden;
+            }
+            .ccsp-guide.ccsp-guide a {
+                color: var(--color-indigo);
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+            .ccsp-guide.ccsp-guide a:hover {
+                color: var(--color-gold);
+            }
+            .ccsp-guide.ccsp-guide strong {
+                font-weight: 600;
+            }
+            .ccsp-guide.ccsp-guide em {
+                font-style: italic;
+            }
+
+            /* layout: block + fixed sidebar */
+            .ccsp-guide.ccsp-guide .layout {
+                display: block;
+            }
+            .ccsp-guide.ccsp-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--surface);
+                border-right: 1px solid var(--line);
+                display: flex;
+                flex-direction: column;
+                z-index: 40;
+            }
+            .ccsp-guide.ccsp-guide .brand {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 22px 20px 18px;
+                border-bottom: 1px solid var(--line);
+                text-decoration: none;
+                color: var(--color-ink);
+            }
+            .ccsp-guide.ccsp-guide .brand svg {
+                flex: none;
+            }
+            .ccsp-guide.ccsp-guide .brand-title {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.125rem;
+                line-height: 1.3;
+                color: var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide .brand-sub {
+                font-size: 1rem;
+                color: var(--ink-3);
+                line-height: 1.4;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav {
+                flex: 1;
+                overflow-y: auto;
+                padding: 12px 12px 28px;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 2px 0;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav li::before {
+                content: none;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav a {
+                display: flex;
+                gap: 10px;
+                align-items: baseline;
+                padding: 7px 12px;
+                border-radius: 8px;
+                color: var(--ink-2);
+                text-decoration: none;
+                font-size: 1rem;
+                line-height: 1.45;
+                border-left: 3px solid transparent;
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav a:hover {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide .sidebar nav a.active {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+                border-left-color: var(--color-gold);
+            }
+            .ccsp-guide.ccsp-guide .nav-num {
+                flex: none;
+                min-width: 1.7em;
+                text-align: right;
+                color: var(--color-gold);
+                font-weight: 600;
+                font-variant-numeric: tabular-nums;
+            }
+
+            .ccsp-guide.ccsp-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 0 clamp(24px, 4vw, 72px) 96px;
+            }
+
+            /* hero */
+            .ccsp-guide.ccsp-guide .hero {
+                padding: 64px 0 40px;
+                border-bottom: 1px solid var(--line-strong);
+            }
+            .ccsp-guide.ccsp-guide .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--color-gold);
+                font-weight: 600;
+                letter-spacing: 0.04em;
+            }
+            .ccsp-guide.ccsp-guide .hero h1 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: clamp(2rem, 4vw, 2.875rem);
+                line-height: 1.25;
+                margin: 12px 0 24px;
+                color: var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide .meta {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 12px;
+                margin: 0;
+            }
+            .ccsp-guide.ccsp-guide .meta div {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+            }
+            .ccsp-guide.ccsp-guide .meta dt {
+                color: var(--ink-3);
+                font-weight: 500;
+                margin: 0;
+            }
+            .ccsp-guide.ccsp-guide .meta dd {
+                margin: 2px 0 0;
+                font-weight: 500;
+                color: var(--color-ink);
+            }
+            .ccsp-guide.ccsp-guide .meta dd a {
+                overflow-wrap: anywhere;
+            }
+
+            /* sections & headings */
+            .ccsp-guide.ccsp-guide .section {
+                padding-top: 56px;
+            }
+            .ccsp-guide.ccsp-guide .section > h2 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.875rem;
+                line-height: 1.35;
+                color: var(--color-indigo);
+                margin: 0 0 20px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide h3 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.375rem;
+                line-height: 1.4;
+                margin: 44px 0 14px;
+                color: var(--color-ink);
+                padding-left: 14px;
+                border-left: 4px solid var(--color-gold);
+            }
+            .ccsp-guide.ccsp-guide h4 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.1875rem;
+                line-height: 1.4;
+                margin: 32px 0 10px;
+                color: var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide p {
+                margin: 0 0 1rem;
+            }
+            .ccsp-guide.ccsp-guide ul, .ccsp-guide.ccsp-guide ol {
+                margin: 0 0 1.1rem;
+                padding: 0;
+            }
+            .ccsp-guide.ccsp-guide ul {
+                list-style: none;
+            }
+            .ccsp-guide.ccsp-guide ul > li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin: 0.4rem 0;
+            }
+            .ccsp-guide.ccsp-guide ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.35rem;
+                top: 0.78em;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--color-gold);
+            }
+            .ccsp-guide.ccsp-guide ol {
+                padding-left: 1.7rem;
+            }
+            .ccsp-guide.ccsp-guide ol > li {
+                margin: 0.4rem 0;
+                padding-left: 0.2rem;
+            }
+            .ccsp-guide.ccsp-guide ol > li::marker {
+                color: var(--color-indigo);
+                font-weight: 600;
+            }
+            .ccsp-guide.ccsp-guide li > ul, .ccsp-guide.ccsp-guide li > ol {
+                margin: 0.3rem 0 0.3rem;
+            }
+
+            .ccsp-guide.ccsp-guide p.oneliner {
+                background: var(--indigo-tint);
+                border-left: 4px solid var(--color-indigo);
+                border-radius: 0 var(--radius) var(--radius) 0;
+                padding: 12px 18px;
+                margin: 0 0 1.25rem;
+            }
+
+            /* tables */
+            .ccsp-guide.ccsp-guide .table-wrap {
+                overflow-x: auto;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                margin: 1.1rem 0 1.6rem;
+            }
+            .ccsp-guide.ccsp-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+            }
+            .ccsp-guide.ccsp-guide th, .ccsp-guide.ccsp-guide td {
+                padding: 10px 16px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--line);
+            }
+            .ccsp-guide.ccsp-guide thead th {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+                white-space: nowrap;
+                border-bottom: 2px solid var(--line-strong);
+            }
+            .ccsp-guide.ccsp-guide tbody tr:nth-child(even) td {
+                background: #fafbfd;
+            }
+            .ccsp-guide.ccsp-guide tbody tr:hover td {
+                background: var(--gold-tint);
+            }
+            .ccsp-guide.ccsp-guide tbody tr:last-child td {
+                border-bottom: none;
+            }
+            .ccsp-guide.ccsp-guide td:first-child {
+                font-weight: 500;
+            }
+            .ccsp-guide.ccsp-guide td a {
+                overflow-wrap: anywhere;
+            }
+
+            /* callouts: exactly three types */
+            .ccsp-guide.ccsp-guide .callout {
+                border: 1px solid var(--line);
+                border-left-width: 5px;
+                border-radius: var(--radius);
+                padding: 14px 20px 8px;
+                margin: 1.25rem 0 1.5rem;
+                background: var(--surface);
+            }
+            .ccsp-guide.ccsp-guide .callout-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                margin-bottom: 6px;
+            }
+            .ccsp-guide.ccsp-guide .callout-title i {
+                font-size: 1.25rem;
+            }
+            .ccsp-guide.ccsp-guide .callout-body > :last-child {
+                margin-bottom: 0.6rem;
+            }
+            .ccsp-guide.ccsp-guide .callout.practice {
+                background: var(--gold-tint);
+                border-color: #e6d3a8;
+                border-left-color: var(--color-gold);
+            }
+            .ccsp-guide.ccsp-guide .callout.practice .callout-title {
+                color: #8a5e17;
+            }
+            .ccsp-guide.ccsp-guide .callout.source {
+                background: var(--forest-tint);
+                border-color: #bbd9d6;
+                border-left-color: var(--color-forest);
+            }
+            .ccsp-guide.ccsp-guide .callout.source .callout-title {
+                color: var(--color-forest);
+            }
+            .ccsp-guide.ccsp-guide .callout.note {
+                background: var(--plum-tint);
+                border-color: #e3c5d2;
+                border-left-color: var(--color-plum);
+            }
+            .ccsp-guide.ccsp-guide .callout.note .callout-title {
+                color: var(--color-plum);
+            }
+            .ccsp-guide.ccsp-guide .callout ul > li::before {
+                background: currentColor;
+                opacity: 0.55;
+            }
+            .ccsp-guide.ccsp-guide .callout .table-wrap {
+                margin: 0.6rem 0 1rem;
+            }
+
+            /* mermaid */
+            .ccsp-guide.ccsp-guide .mermaid {
+                display: flex;
+                justify-content: center;
+                margin: 1.25rem 0 1.75rem;
+                padding: 20px 16px;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                overflow: visible;
+                min-height: 64px;
+            }
+            .ccsp-guide.ccsp-guide .mermaid svg {
+                display: block;
+                overflow: visible;
+            }
+            .ccsp-guide.ccsp-guide .mermaid.failed {
+                color: var(--color-plum);
+                justify-content: flex-start;
+            }
+
+            /* quiz */
+            .ccsp-guide.ccsp-guide .qcard {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 16px 20px 14px;
+                margin: 0 0 16px;
+            }
+            .ccsp-guide.ccsp-guide .qcard > p {
+                margin: 0 0 12px;
+            }
+            .ccsp-guide.ccsp-guide .qcard > p > strong:first-child {
+                display: inline-block;
+                background: var(--color-indigo);
+                color: #fff;
+                border-radius: 8px;
+                padding: 0 12px;
+                margin-right: 10px;
+                font-weight: 600;
+            }
+            .ccsp-guide.ccsp-guide .qcard > p.opts {
+                color: var(--ink-2);
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 22px;
+            }
+            .ccsp-guide.ccsp-guide details.qa {
+                border: 1px solid var(--line-strong);
+                border-radius: 10px;
+                background: var(--color-paper);
+            }
+            .ccsp-guide.ccsp-guide details.qa summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 9px 16px;
+                font-weight: 600;
+                color: var(--color-indigo);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .ccsp-guide.ccsp-guide details.qa summary::-webkit-details-marker {
+                display: none;
+            }
+            .ccsp-guide.ccsp-guide details.qa summary i {
+                font-size: 1.1rem;
+                transition: transform 0.15s;
+            }
+            .ccsp-guide.ccsp-guide details.qa[open] summary i {
+                transform: rotate(90deg);
+            }
+            .ccsp-guide.ccsp-guide details.qa[open] summary {
+                border-bottom: 1px solid var(--line-strong);
+            }
+            .ccsp-guide.ccsp-guide details.qa > *:not(summary) {
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+            .ccsp-guide.ccsp-guide details.qa > p:first-of-type {
+                margin-top: 12px;
+            }
+            .ccsp-guide.ccsp-guide details.qa > p:last-child {
+                margin-bottom: 14px;
+            }
+
+            /* checklist cards */
+            .ccsp-guide.ccsp-guide .checklist {
+                counter-reset: chk;
+                margin: 1rem 0 1.5rem;
+            }
+            .ccsp-guide.ccsp-guide .checklist > li {
+                padding-left: 0;
+                margin: 0 0 10px;
+                counter-increment: chk;
+            }
+            .ccsp-guide.ccsp-guide .checklist > li::before {
+                content: none;
+            }
+            .ccsp-guide.ccsp-guide .checklist label {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                cursor: pointer;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+                transition:
+                    background 0.15s,
+                    border-color 0.15s;
+            }
+            .ccsp-guide.ccsp-guide .checklist label:hover {
+                border-color: var(--color-indigo);
+            }
+            .ccsp-guide.ccsp-guide .checklist .num {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+            }
+            .ccsp-guide.ccsp-guide .checklist .num::before {
+                content: counter(chk);
+            }
+            .ccsp-guide.ccsp-guide .checklist input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .ccsp-guide.ccsp-guide .checklist .box {
+                flex: none;
+                width: 1.4rem;
+                height: 1.4rem;
+                border: 2px solid var(--line-strong);
+                border-radius: 6px;
+                background: var(--surface);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: transparent;
+            }
+            .ccsp-guide.ccsp-guide .checklist .box i {
+                font-size: 1rem;
+                line-height: 1;
+            }
+            .ccsp-guide.ccsp-guide .checklist input:focus-visible + .box {
+                outline: 2px solid var(--color-gold);
+                outline-offset: 2px;
+            }
+            .ccsp-guide.ccsp-guide .checklist li:has(input:checked) label {
+                background: var(--done-tint);
+                border-color: #bbd7c0;
+            }
+            .ccsp-guide.ccsp-guide .checklist li:has(input:checked) .box {
+                background: var(--color-forest);
+                border-color: var(--color-forest);
+                color: #fff;
+            }
+            .ccsp-guide.ccsp-guide .checklist li:has(input:checked) .txt {
+                text-decoration: line-through;
+                color: var(--ink-3);
+            }
+            .ccsp-guide.ccsp-guide .checklist .txt {
+                flex: 1;
+            }
+
+            /* reference cards */
+            .ccsp-guide.ccsp-guide .reflist {
+                display: grid;
+                gap: 10px;
+                margin: 1rem 0 1.6rem;
+            }
+            .ccsp-guide.ccsp-guide .refcard {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+            }
+            .ccsp-guide.ccsp-guide .refcard .badge {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--color-forest);
+                color: #fff;
+                font-weight: 600;
+            }
+            .ccsp-guide.ccsp-guide .refcard .ref-title {
+                font-weight: 500;
+                margin-bottom: 2px;
+            }
+            .ccsp-guide.ccsp-guide .refcard .ref-url {
+                overflow-wrap: anywhere;
+            }
+            .ccsp-guide.ccsp-guide .refcard .ref-status {
+                color: var(--ink-3);
+            }
+
+            /* footer */
+            .ccsp-guide.ccsp-guide .footer {
+                margin-top: 72px;
+                padding-top: 24px;
+                border-top: 1px solid var(--line-strong);
+                color: var(--ink-3);
+            }
+            .ccsp-guide.ccsp-guide .footer p {
+                margin: 0 0 0.5rem;
+            }
+
+            /* mobile drawer */
+            .ccsp-guide.ccsp-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 60;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: none;
+                background: var(--color-indigo);
+                color: #fff;
+                font-size: 1.6rem;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(22, 27, 38, 0.28);
+            }
+            .ccsp-guide.ccsp-guide .menu-btn:focus-visible {
+                outline: 3px solid var(--color-gold);
+                outline-offset: 3px;
+            }
+            .ccsp-guide.ccsp-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(22, 27, 38, 0.45);
+                z-index: 30;
+            }
+            @media (max-width: 1024px) {
+                .ccsp-guide.ccsp-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                }
+                .ccsp-guide.ccsp-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .ccsp-guide.ccsp-guide .guide-content {
+                    margin-left: 0;
+                    padding: 0 20px 96px;
+                }
+                .ccsp-guide.ccsp-guide .menu-btn {
+                    display: inline-flex;
+                }
+                .ccsp-guide.ccsp-guide .backdrop.show {
+                    display: block;
+                }
+                .ccsp-guide.ccsp-guide .section > h2 {
+                    font-size: 1.625rem;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .ccsp-guide.ccsp-guide {
+                    scroll-behavior: auto;
+                }
+                .ccsp-guide.ccsp-guide .sidebar, .ccsp-guide.ccsp-guide details.qa summary i {
+                    transition: none;
+                }
+            }
+            @media print {
+                .ccsp-guide.ccsp-guide .sidebar, .ccsp-guide.ccsp-guide .menu-btn, .ccsp-guide.ccsp-guide .backdrop {
+                    display: none;
+                }
+                .ccsp-guide.ccsp-guide .guide-content {
+                    margin-left: 0;
+                }
+                .ccsp-guide.ccsp-guide details.qa {
+                    display: block;
+                }
+            }
+
+            .ccsp-guide.ccsp-guide h1 .nb {
+                display: inline-block;
+            }
+            .ccsp-guide.ccsp-guide code {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                background: var(--indigo-tint);
+                padding: 0 6px;
+                border-radius: 6px;
+            }
+
+/* Restore source defaults after shared prose styles and Tailwind reset. */
+.ccsp-guide.ccsp-guide { min-width:0; min-height:100vh; --font-serif:'Source Serif 4 Variable', 'Source Serif 4', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', Georgia,
+                    serif; }
+.docs-main:has(.ccsp-guide) { padding:0; }
+.ccsp-guide.ccsp-guide h1, .ccsp-guide.ccsp-guide h2, .ccsp-guide.ccsp-guide h3, .ccsp-guide.ccsp-guide h4 { letter-spacing:0px; }
+.ccsp-guide.ccsp-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; }
+.ccsp-guide.ccsp-guide .eyebrow { font-family:var(--font-sans); font-size:1rem; margin-bottom:0; letter-spacing:0.04em; }
+.ccsp-guide.ccsp-guide .eyebrow svg { color:currentColor; }
+.ccsp-guide.ccsp-guide ol { list-style-type:decimal; }
+.ccsp-guide.ccsp-guide ul { list-style-type:none; }
+.ccsp-guide.ccsp-guide table { margin:0; }
+.ccsp-guide.ccsp-guide code { font-size:1rem; font-weight:400; color:var(--color-ink); }
+.ccsp-guide.ccsp-guide .sidebar { top:64px; z-index:40; visibility:visible; }
+.ccsp-guide.ccsp-guide .backdrop { top:64px; border:0; padding:0; }
+.ccsp-guide.ccsp-guide .menu-btn { z-index:50; }
+.ccsp-guide.ccsp-guide :is(section[id],h1,h2,h3,h4,.refcard,#top) { scroll-margin-top:88px; }
+.ccsp-guide.ccsp-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.ccsp-guide.ccsp-guide .menu-btn svg { display:block; width:1em; height:1em; }
+.ccsp-guide.ccsp-guide .mermaid { display:block; justify-content:normal; min-width:0; }
+.ccsp-guide.ccsp-guide .diagram-viewport { display:block; overflow-x:auto; }
+.ccsp-guide.ccsp-guide .mermaid svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+.ccsp-guide.ccsp-guide :is(a,summary):focus-visible { outline:2px solid var(--color-gold); outline-offset:2px; }
+html:has(.ccsp-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (max-width:1024px) { .ccsp-guide.ccsp-guide .sidebar { visibility:hidden; } .ccsp-guide.ccsp-guide .sidebar.open { visibility:visible; } }
+@media (prefers-reduced-motion:reduce) { html:has(.ccsp-guide) { scroll-behavior:auto; } }
