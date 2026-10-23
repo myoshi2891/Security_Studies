@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（全アーカイブを内容別に統一。原本比較297件復帰。全体1052成功/0 skip/0失敗）
+> **最終更新**: 2026-10-23（レビュー対応: 引用符なしパイプラベル・Mermaid secureキー・archive移動検証のスキップ条件。全体1053成功/0 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -293,6 +293,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-MERMAID-ARCHIVE | **レビュー指摘対応** — Bulletproofの図説明が引用符なしパイプラベル（`-->|通信|`）の接続を落としていた不具合を修正。Secrets and Liesの図設定から、frontmatterでは無視される `startOnLoad`・`securityLevel` を削除。archive移動検証は `archive/` がない場合だけスキップし、移動先の欠落を失敗として検出。Red `b444fa6`・テスト `8d15148` → Green `6d322a3`。全1053件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | CI-ARCHIVE | **原本比較テストのCI除外** — `archive/` 未追跡化（`2930942`）後にCIが ENOENT で92件失敗。`ci.yml` の Test ステップに `--path-ignore-patterns` を追加し、原本依存の8ガイド＋ISO 2件をCIのみ除外（`1ce9728`）。`archive/` なしのクリーン worktree で 147 pass / 0 fail を確認 | 2026-10-18 |
 | THREAT-MODELING | **Threat Modeling忠実移行** — `/docs/threat-modeling-guide`。全18章・42表・839表セル・9図・2コード・17チェック・5解答・41参考文献・89見出しを保持。専用61件/13ファイル、全685件成功、lint/型検査成功。原本HTML/MDアーカイブ済み・ユーザー目視待ち | 2026-10-18 |
 | APPLIED-CRYPTO | **Applied Cryptography忠実移行** — `/docs/applied-cryptography-guide`。全16節・28表・475表セル・10コード・14図・26参考文献・8問の解答・丸点/連番を保持。専用60件、全624件成功（移行完了時点の件数。現在の実測値は冒頭のテスト表を参照）、lint/型検査成功。原本をarchive/html・archive/mdに移動済み。ユーザー目視待ち | 2026-10-18 |
