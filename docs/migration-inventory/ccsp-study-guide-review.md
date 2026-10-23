@@ -4,7 +4,7 @@
 
 移行先: `/docs/ccsp-study-guide`
 
-原本: `Ccsp-study-guide.html` / `Ccsp-study-guide.md`（最終段階で `archive/security-certifications/` へ移動）
+原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（両SHA-256一致でアーカイブ済み）
 
 台帳: [ccsp-study-guide.json](ccsp-study-guide.json)
 

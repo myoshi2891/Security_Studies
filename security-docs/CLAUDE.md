@@ -241,7 +241,7 @@ ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカ�
 <!-- ccsp-migration-status -->
 ## CCSP移行（2026-10-23）
 
-CCSP: 全12節Green・原本アーカイブ前。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを移植。原本構造と全CSS宣言、5画面幅×両OS配色、丸点/番号/チェックの状態、全表とページのhydration、内側nav追従と操作を検証。次にHTML/Markdown原本を資格アーカイブへ移動する。 専用65件/9ファイル・全体1185成功/0skip/0失敗（194ファイル、499,082 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `36d85f9`。
+CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを原本と照合。丸点/番号/カウンター、全CSS/media、5画面幅×両OS配色、図・目次・チェック/解答操作、全表と全ページのhydrationを検証。HTML/Markdownは両SHA-256一致でarchive/security-certificationsへ移動済み。原本なし隔離環境は専用33成功/36skip/0失敗。 専用69件/10ファイル・全体1189成功/0skip/0失敗（195ファイル、499,087 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `bac8c7a`。
 
-配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
+配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（バイト一致でアーカイブ済み）。目視確認表: `docs/migration-inventory/ccsp-study-guide-review.md`。
 <!-- /ccsp-migration-status -->

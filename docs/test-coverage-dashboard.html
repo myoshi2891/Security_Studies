@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1185</div>
-                        <div class="summary-sub">全体1185 pass / 0 skip / 0 fail（1185件・194ファイル・499,082 expect）。CCSP: 全12節Green・原本アーカイブ前、専用65件。</div>
+                        <div class="summary-value">1189</div>
+                        <div class="summary-sub">全体1189 pass / 0 skip / 0 fail（1189件・195ファイル・499,087 expect）。CCSP: 全12節移行・原本アーカイブGreen・目視待ち、専用69件。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,7 +337,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1038 page/guide + 11 shared navigation tests · 59/60 logic files（全体1185件の実測から集計）</span>
+                                            <span class="cell-count">1042 page/guide + 11 shared navigation tests · 59/60 logic files（全体1189件の実測から集計）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -367,7 +367,7 @@
 <li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（59件/6ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
 <li>✓ CCSP部品: GuideSidebar / MermaidFigure / GuideIcon（最新結果はCCSP状態欄を参照）</li>
 <li>✗ src/app/layout.tsx</li>
-                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 59。原本比較を含む。</li>
+                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 59、CCSP 69。原本比較を含む。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -412,9 +412,9 @@
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 共通ナビ29ルート・資格4件・各移行ガイドの登録契約</div>
+                                            <div class="tt-title">⚠️ Partial — 共通ナビ29ルート・資格5件・各移行ガイドの登録契約</div>
                                             <ul class="tt-files">
-                                                <li>✓ src/config/docs.ts: 共通ナビ29ルートを検証。資格カテゴリーはCCIE・CCST・ISC2 CC・AppSecの4件をタイトル・URL・順序で完全一致検証。ホーム一覧と、DocsHeaderNavの29+80=109ページへの拡張も検証。</li>
+                                                <li>✓ src/config/docs.ts: 共通ナビ29ルートを検証。資格カテゴリーはCCIE・CCST・ISC2 CC・CCSP・AppSecの5件をタイトル・URL・順序で完全一致検証。ホーム一覧と、DocsHeaderNavの29+80=109ページへの拡張も検証。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1189,7 +1189,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 194 files · 1185 pass / 0 skip / 0 fail（1185 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 195 files · 1189 pass / 0 skip / 0 fail（1189 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1243,11 +1243,11 @@
         </script>
     <section class="container" id="cc-migration"><p>ISC2 CC: 移行・自動検証完了。専用59件/6ファイル・全体1120成功/0失敗。11章・85表1520セル・23図・54目次・リストの点と番号を原本比較。npm test / lint / types:check成功。ビルド未実行・目視はユーザー担当。<a href="migration-inventory/cc-certified-in-cybersecurity-guide-review.md">目視確認表</a></p></section>
 <section class="container" id="cc-archive"><p>ISC2 CC原本アーカイブ: Green。HTML/Markdownをarchive/security-certificationsへバイト一致で移動。専用59件・全1120件成功。原本なし隔離環境30成功/29skip/0失敗。移行後の原本アーカイブを手順に必須化。ビルド未実行。</p></section>
-<section class="container"><p>CCSP移行（基盤Red）: 移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container"><p>CCSP移行（基盤テスト補正）: 目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container" id="ccsp-state"><p>CCSP: 全12節Green・原本アーカイブ前。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを移植。原本構造と全CSS宣言、5画面幅×両OS配色、丸点/番号/チェックの状態、全表とページのhydration、内側nav追従と操作を検証。次にHTML/Markdown原本を資格アーカイブへ移動する。 専用65件/9ファイル・全体1185成功/0skip/0失敗（194ファイル、499,082 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット 36d85f9。</p></section>
-<section class="container"><p>CCSP移行（Step 0〜6 Red）: Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container"><p>CCSP移行（残り5節・全体照合Red）: 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
-<section class="container"><p>CCSP移行（原本アーカイブRed）: 原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container"><p>CCSP履歴（基盤Red）: 移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container"><p>CCSP履歴（基盤テスト補正）: 目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container" id="ccsp-state"><p>CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを原本と照合。丸点/番号/カウンター、全CSS/media、5画面幅×両OS配色、図・目次・チェック/解答操作、全表と全ページのhydrationを検証。HTML/Markdownは両SHA-256一致でarchive/security-certificationsへ移動済み。原本なし隔離環境は専用33成功/36skip/0失敗。 専用69件/10ファイル・全体1189成功/0skip/0失敗（195ファイル、499,087 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット bac8c7a。</p></section>
+<section class="container"><p>CCSP履歴（Step 0〜6 Red）: Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container"><p>CCSP履歴（残り5節・全体照合Red）: 専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
+<section class="container"><p>CCSP履歴（原本アーカイブRed）: 原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。 npm使用・ビルド未実行・目視はユーザー担当。</p></section>
 </body>
 </html>

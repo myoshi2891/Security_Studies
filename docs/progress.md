@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（CCSP: 全12節Green・原本アーカイブ前・専用65件/全1185件成功。ビルド未実行）
+> **最終更新**: 2026-10-23（CCSP: 全12節移行・原本アーカイブGreen・目視待ち・専用69件/全1189件成功。ビルド未実行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1185成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・194ファイル・1185件・499,082 expect。CCSP専用65件を含む。 |
-| テストファイル数 | **194ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全194テストファイルとは別集計 |
+| テストケース総数 | **1189成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・195ファイル・1189件・499,087 expect。CCSP専用69件を含む。 |
+| テストファイル数 | **195ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全195テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,7 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/ccsp-study-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/foundation.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/integration.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
@@ -275,13 +276,17 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `GEMINI.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `security-docs/README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `docs/progress.md` (本ファイル) | 2026-10-15 | WAHH完了、WAHH完了時点の538件・全85ファイルの実測件数と目視待ちを同期 |
+| ファイル | 最終更新 | 内容 |
+|---|---|---|
+| `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
+| `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
+| `CLAUDE.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `GEMINI.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `README.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `security-docs/README.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
+| `docs/progress.md` | 2026-10-23 | CCSP全12節・原本アーカイブ・専用69件/全1189件・目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -311,6 +316,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CCSP | **CCSP全12節移行・原本アーカイブ** — 115見出し・78表1216セル・16図・219リスト項目を原本照合。専用69件・全1189件成功。lint/型検査成功・ビルド未実行・目視待ち。 | 2026-10-23 |
 | ISC2-CC | **ISC2 CC全11章移行** — 専用55件/全1116件成功。リストの点・番号、85表1520セル、23図、54目次リンクを検証。目視待ち。 | 2026-10-23 |
 | REVIEW-DIAGRAM-CORRECTIONS | **レビュー指摘対応** — 原本の図定義から意図して変える箇所を各ガイドの `fidelity-helpers.ts` の `diagramCorrections` に登録し、原本照合は訂正後の定義と比較する方式を導入。Bulletproof d16: チケット鍵漏えいで復号される範囲を新たな (EC)DHE を伴わない再開（TLS 1.2 の再開と発行元セッション、TLS 1.3 の psk_ke）に限定し、psk_dhe_ke は前方秘匿性を保つ分岐（0-RTT 除く）を追加。ZTN d12: 手順6をクライアント宛てメッセージから `Note over F` へ変更（日本語の手順文は保持）。スキップ: d6「Main Secret」（原本本文が RFC 8446bis の名称と明記）、theme dark→base（Mermaid 11 の dark も themeVariables を反映、原本も dark）。Red `1f69909` → Green `f747cf1` → 台帳 `640556b`（両台帳に `diagramCorrections` を記録）。全1061件/179ファイル成功、24図の Mermaid 構文解析成功、lint/型検査成功。ビルド禁止・未実行、目視はユーザー担当 | 2026-10-23 |
 | CI-K8S-CONTRAST-TIMEOUT | **CI失敗対応** — PR CI（run 39939392410）で `hacking-kubernetes/contrast.test.tsx` の「supporting labels…4.5:1 contrast」が5080msでBun既定の5秒タイムアウトを超過（アサーション失敗ではない。同一コミットのpush CIは成功）。ローカル実測2.8〜3.8秒と余裕がないため、重い2テストに既存慣例どおり `20000` msのテスト別タイムアウトを設定（`5844027`）。WAHH版は最大1.5秒のため変更せず。全1057件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
@@ -1064,9 +1070,9 @@ ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカ�
 <!-- ccsp-migration-status -->
 ## CCSP移行（2026-10-23）
 
-CCSP: 全12節Green・原本アーカイブ前。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを移植。原本構造と全CSS宣言、5画面幅×両OS配色、丸点/番号/チェックの状態、全表とページのhydration、内側nav追従と操作を検証。次にHTML/Markdown原本を資格アーカイブへ移動する。 専用65件/9ファイル・全体1185成功/0skip/0失敗（194ファイル、499,082 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `36d85f9`。
+CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを原本と照合。丸点/番号/カウンター、全CSS/media、5画面幅×両OS配色、図・目次・チェック/解答操作、全表と全ページのhydrationを検証。HTML/Markdownは両SHA-256一致でarchive/security-certificationsへ移動済み。原本なし隔離環境は専用33成功/36skip/0失敗。 専用69件/10ファイル・全体1189成功/0skip/0失敗（195ファイル、499,087 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `bac8c7a`。
 
-配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本は移行完了後にHTML/Markdownを同じ資格アーカイブへ移動する。
+配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（バイト一致でアーカイブ済み）。目視確認表: `docs/migration-inventory/ccsp-study-guide-review.md`。
 <!-- /ccsp-migration-status -->
 
 ## CCSP移行（2026-10-23・Step 0〜6 Red）
@@ -1086,3 +1092,10 @@ Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出し
 原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。
 
 直前コミット `9dcbdfe`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+### CCSP 再開時のアクション
+
+1. ユーザーが目視確認表に沿って表示を確認する。
+2. 指摘があれば失敗テストを先にコミットして修正する。
+
+再開プロンプト: 「CCSPの目視指摘に対応。全12節・原本アーカイブ済み。専用69件・全1189件成功。npm使用・ビルド禁止、テスト/実装/仕様書コミットの分割を継続。原本比較はarchive/security-certifications/Ccsp-study-guide.htmlを参照する。」

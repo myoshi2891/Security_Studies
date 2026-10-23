@@ -1,5 +1,5 @@
 {
-  "source": "Ccsp-study-guide.html",
+  "source": "archive/security-certifications/Ccsp-study-guide.html",
   "sha256": "a5f3879d83cf8096347cdb44fffd93dd2e6d1e8eab21c5ec1da4e9fe0420b979",
   "markdownSha256": "e092328c9671e0100e7ae74911c36f04b3e75c6d43b31a374fc1b00f3ebe9505",
   "route": "/docs/ccsp-study-guide",
@@ -343,17 +343,24 @@
   "verification": {
     "date": "2026-10-23",
     "implementationCommit": "36d85f9",
-    "dedicatedTests": 65,
-    "dedicatedTestFiles": 9,
-    "allTests": 1185,
-    "allTestFiles": 194,
-    "expectations": 499082,
+    "dedicatedTests": 69,
+    "dedicatedTestFiles": 10,
+    "allTests": 1189,
+    "allTestFiles": 195,
+    "expectations": 499087,
     "failures": 0,
     "lint": "pass",
     "typesCheck": "pass",
     "build": "禁止・未実行",
-    "archive": "次のステップで移動",
-    "visualReview": "ユーザー確認待ち"
+    "archive": "両原本をバイト一致でアーカイブ済み",
+    "visualReview": "ユーザー確認待ち",
+    "archiveCommit": "bac8c7a",
+    "originalsUnmodified": true,
+    "archiveMissingDedicated": {
+      "pass": 33,
+      "skip": 36,
+      "fail": 0
+    }
   },
   "adaptations": [
     "本文mainをdiv.guide-contentへ変更しtop IDは保持",
@@ -363,5 +370,9 @@
     "共有ヘッダー64pxとアンカー88pxの余白",
     "図の固有幅を維持し狭い図は中央・幅広図は左右スクロール",
     "目次のReact移行・内側navスクロール・フォーカス・Escape/背景/リサイズ対応"
+  ],
+  "originals": [
+    "archive/security-certifications/Ccsp-study-guide.html",
+    "archive/security-certifications/Ccsp-study-guide.md"
   ]
 }
