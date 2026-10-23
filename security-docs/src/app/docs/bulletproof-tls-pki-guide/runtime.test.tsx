@@ -96,3 +96,9 @@ test('server-rendered markup includes the collapsed text description so it is re
  const description=holder.querySelector('details.diagram-description');expect(description).not.toBeNull();expect(description!.hasAttribute('open')).toBe(false);
  expect([...description!.querySelectorAll('li')].map(li=>li.textContent)).toEqual(['フローチャート','入力 → 出力']);expect(holder.querySelector('[role="status"]')).not.toBeNull();
 });
+test('lazy engine loader disables Mermaid auto-start on the shared instance without initializing it',async()=>{
+ const {default:mermaid}=await import('mermaid');const {renderDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const initialize=spyOn(mermaid,'initialize');const render=spyOn(mermaid,'render').mockResolvedValue({svg:'<svg></svg>',diagramType:'flowchart'});
+ try{await renderDiagram('tls-auto-start','flowchart LR\nA-->B');expect(mermaid.startOnLoad).toBe(false);expect(initialize).not.toHaveBeenCalled();expect(render).toHaveBeenCalledTimes(1);}
+ finally{initialize.mockRestore();render.mockRestore();}
+});
