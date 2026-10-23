@@ -23,7 +23,11 @@ export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> 
   };
 }
 
-const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => mermaid));
+// load イベントでの自動描画（mermaid.run）が .mermaid コンテナを書き換えないよう止める。initialize は呼ばず共有設定は変えない
+const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => {
+  mermaid.startOnLoad = false;
+  return mermaid;
+}));
 export const diagramConfig = {"startOnLoad":false,"theme":"dark","securityLevel":"strict","flowchart":{"useMaxWidth":false,"htmlLabels":true,"nodeSpacing":70,"rankSpacing":75,"padding":12},"sequence":{"useMaxWidth":false,"width":130,"actorMargin":30,"messageMargin":32,"boxMargin":6,"noteMargin":6},"fontFamily":"-apple-system,BlinkMacSystemFont,\"Hiragino Sans\",\"Yu Gothic UI\",\"Yu Gothic\",Meiryo,\"Noto Sans CJK JP\",\"Segoe UI\",Roboto,sans-serif","themeVariables":{"background":"#0d1b30","primaryColor":"#16294a","primaryTextColor":"#f3f5fa","primaryBorderColor":"#7c9eff","secondaryColor":"#1a2b52","secondaryTextColor":"#f3f5fa","secondaryBorderColor":"#3e5c8f","tertiaryColor":"#0d1b30","tertiaryTextColor":"#f3f5fa","tertiaryBorderColor":"#3e5c8f","lineColor":"#8fa6d6","textColor":"#f3f5fa","mainBkg":"#16294a","nodeBorder":"#7c9eff","clusterBkg":"#0d1b30","clusterBorder":"#3e5c8f","titleColor":"#f3f5fa","edgeLabelBackground":"#0d1b30","actorBkg":"#16294a","actorBorder":"#7c9eff","actorTextColor":"#f3f5fa","actorLineColor":"#3e5c8f","signalColor":"#c6d0e3","signalTextColor":"#f3f5fa","labelBoxBkgColor":"#13243f","labelBoxBorderColor":"#3e5c8f","labelTextColor":"#f3f5fa","loopTextColor":"#f3f5fa","noteBkgColor":"#2a2150","noteTextColor":"#f3f5fa","noteBorderColor":"#b8a2ff","activationBkgColor":"#1a2b52","activationBorderColor":"#7c9eff","sequenceNumberColor":"#07111e","fontSize":"16px","fontFamily":"-apple-system,BlinkMacSystemFont,\"Hiragino Sans\",\"Yu Gothic UI\",\"Yu Gothic\",Meiryo,\"Noto Sans CJK JP\",\"Segoe UI\",Roboto,sans-serif"}} satisfies import('mermaid').MermaidConfig;
 
 /** Per-render configuration keeps this guide's theme out of other routes' shared engine. */

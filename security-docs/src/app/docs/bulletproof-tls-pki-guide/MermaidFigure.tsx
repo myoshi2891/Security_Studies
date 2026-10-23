@@ -23,7 +23,11 @@ export function createEngineLoader<T>(load: () => Promise<T>): () => Promise<T> 
   };
 }
 
-const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => mermaid));
+// load イベントでの自動描画（mermaid.run）が .mermaid コンテナを書き換えないよう止める。initialize は呼ばず共有設定は変えない
+const getEngine = createEngineLoader(() => import('mermaid').then(({ default: mermaid }) => {
+  mermaid.startOnLoad = false;
+  return mermaid;
+}));
 export const diagramConfig = {"startOnLoad":false,"theme":"dark","securityLevel":"strict","fontFamily":"-apple-system,BlinkMacSystemFont,\"Hiragino Sans\",\"Noto Sans JP\",\"Yu Gothic UI\",Meiryo,sans-serif","flowchart":{"useMaxWidth":false,"htmlLabels":true,"nodeSpacing":45,"rankSpacing":50,"curve":"basis"},"sequence":{"useMaxWidth":false,"mirrorActors":true,"messageFontSize":16,"noteFontSize":16,"actorFontSize":16},"themeVariables":{"fontSize":"16px","darkMode":true,"background":"#0d1b30","primaryColor":"#1b2f55","primaryBorderColor":"#7c9eff","primaryTextColor":"#f3f5fa","secondaryColor":"#13243e","secondaryBorderColor":"#3e5c8f","secondaryTextColor":"#f3f5fa","tertiaryColor":"#0d1b30","tertiaryBorderColor":"#2d456e","tertiaryTextColor":"#f3f5fa","lineColor":"#93a1bd","textColor":"#f3f5fa","mainBkg":"#1b2f55","nodeBorder":"#7c9eff","clusterBkg":"#0a1626","clusterBorder":"#3e5c8f","titleColor":"#f3f5fa","edgeLabelBackground":"#0d1b30","actorBkg":"#1b2f55","actorBorder":"#7c9eff","actorTextColor":"#f3f5fa","actorLineColor":"#3e5c8f","signalColor":"#c6d0e3","signalTextColor":"#f3f5fa","labelBoxBkgColor":"#13243e","labelBoxBorderColor":"#3e5c8f","labelTextColor":"#f3f5fa","loopTextColor":"#f3f5fa","noteBkgColor":"#3a2a5c","noteBorderColor":"#b794f6","noteTextColor":"#f3f5fa","activationBkgColor":"#13243e","activationBorderColor":"#7c9eff","sequenceNumberColor":"#07111e"}} satisfies import('mermaid').MermaidConfig;
 
 /** Per-render configuration keeps this guide's theme out of other routes' shared engine. */
