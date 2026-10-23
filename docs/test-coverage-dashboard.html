@@ -33,7 +33,7 @@
         <!-- iso15408-status --><section class="container" aria-label="ISO15408 migration status"><p>ISO/IEC 15408-1:2026: 原本アーカイブと最終自動検証完了・専用55件成功・lint/型検査成功・目視待ち。npm test: 457 pass / 297 skip / 0 fail、124ファイル。原本の有無でskip件数は変動。ビルド禁止・未実行、目視はユーザー担当・未完了。 専用55件/10ファイル。全21節・31表509セル・17図・10解答・19参考文献。ナビ/検索22ページ。lint・型検査成功。GuideSidebar / MermaidFigure / GuideIconをテスト済み。<a href="migration-inventory/iso-iec-15408-1-2026-guide-review.md">目視確認表</a></p></section><!-- /iso15408-status -->
 <section class="container" aria-label="ISO15408 archive status"><p>2026-10-22: 原本アーカイブGreen。専用55件/10ファイル成功。457 pass / 297 skip / 0 fail、124ファイル（754件、41,155 expect）。HTML/MDのSHA-256一致。archive/はGit管理外。</p></section>
 <!-- iso27017-status --><section class="container" aria-label="ISO27017 migration status"><p>ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 全17節・30表463セル・10図・2コード・7チェック・7 Q&amp;A・18参考文献。<a href="migration-inventory/iso-iec-27017-2026-guide-review.md">目視確認表</a></p></section><!-- /iso27017-status -->
-<section class="container" aria-label="TLS PKI migration status"><p>Bulletproof TLS and PKI: /docs/bulletproof-tls-pki-guide へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。 <a href="migration-inventory/bulletproof-tls-pki-guide-review.md">目視確認表</a></p></section>
+<section class="container" aria-label="TLS PKI migration status"><p>Bulletproof TLS and PKI: /docs/bulletproof-tls-pki-guide へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはarchive/security-guides/にカテゴリー別で保存（両SHA-256一致）。 <a href="migration-inventory/bulletproof-tls-pki-guide-review.md">目視確認表</a></p></section>
 <!-- iso18045-status --><section class="container" aria-label="ISO18045 migration status"><p>ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 全21節・40表830セル・18図・98タグ・28参考文献。<a href="migration-inventory/iso-iec-18045-2026-guide-review.md">目視確認表</a></p></section><!-- /iso18045-status -->
 <!-- SUMMARY -->
         <section class="summary-section">
@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1035</div>
-                        <div class="summary-sub">全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。2026-10-23: Secrets and Lies移行・原本アーカイブ、専用55件成功。</div>
+                        <div class="summary-value">1039</div>
+                        <div class="summary-sub">全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。2026-10-23: Bulletproof TLS/PKIをsecurity-guidesへカテゴリー別アーカイブ、4件追加。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -230,7 +230,7 @@
         </section>
         <!-- zero-trust-stage --><section class="container"><p>Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide へ移行・原本アーカイブ完了。全25節・83表（1344セル）・17図・3コード・90 STEP・36解答・20出典を原本と照合。専用68件/12ファイル成功。全体683 pass / 297 skip / 0 fail（980件・164ファイル・327,505 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 <a href="migration-inventory/zero-trust-networks-2nd-edition-guide-review.md">目視確認表</a></p></section><!-- /zero-trust-stage -->
 <!-- secrets-stage --><section class="container"><p>Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 <a href="migration-inventory/secrets-and-lies-guide-review.md">目視確認表</a></p></section><!-- /secrets-stage -->
-<!-- bulletproof-archive-stage --><section class="container"><p>Bulletproof原本カテゴリー別アーカイブRed（2026-10-23）: archive/security-guides/へのHTML・MD移動を要求。専用0成功/2 skip/2失敗でルート原本の残存と参照先の未更新を再現。直前の全体Greenは738成功/297 skip/0失敗・175ファイル。npm使用・ビルド未実行。</p></section><!-- /bulletproof-archive-stage -->
+<!-- bulletproof-archive-stage --><section class="container"><p>Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。</p></section><!-- /bulletproof-archive-stage -->
 <!-- MATRIX -->
         <section class="matrix-section">
             <div class="container">
@@ -336,7 +336,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 62 Threat Modeling + 61 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 + 55 ISO15408 + 55 ISO27017 + 56 ISO18045 + 41 TLS/PKI + 68 Zero Trust + 55 Secrets and Lies tests · 53/54 logic files</span>
+                                            <span class="cell-count">12 layout + 3 home + 9 shared navigation + 67 CCIE + 48 Secure by Design + 43 ATLAS + 104 CCST + 61 Kubernetes + 83 WAHH + 62 Threat Modeling + 61 Applied Cryptography + 5 ISO 27000 + 6 ISO 27001 + 55 ISO15408 + 55 ISO27017 + 56 ISO18045 + 45 TLS/PKI + 68 Zero Trust + 55 Secrets and Lies tests · 53/54 logic files</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
@@ -359,7 +359,7 @@
                                                 <li>✓ ISO15408: GuideSidebar / MermaidFigure / GuideIcon（55件/10ファイル・原本アーカイブ済み）</li>
 <li>✓ ISO27017: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（55件/12ファイル・原本全17節・30表463セル・10図・コード2件・チェック/Q&amp;A各7件・18参考文献を検証）</li>
 <li>✓ ISO18045: GuideSidebar / MermaidFigure / GuideIcon（56件/10ファイル・全21節・40表830セル・18図・98タグ・28参考文献・原本アーカイブを検証）</li>
-<li>✓ TLS/PKI: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（41件/6ファイル・全15節・57表868セル・24図・12コード・10チェック・4解答・全CSS宣言・5画面幅・hydration）</li>
+<li>✓ TLS/PKI: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（45件/7ファイル・全15節・57表868セル・24図・12コード・10チェック・4解答・全CSS宣言・5画面幅・hydration）</li>
 <li>✓ Zero Trust Networks第2版: GuideSidebar / MermaidFigure / GuideIcon / GuideCode（68件/12ファイル。25節・83表1344セル・17図・90STEP・36解答・20出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✓ Secrets and Lies: GuideSidebar / MermaidFigure / GuideIcon（55件/11ファイル。11節・24表627セル・12図・31演習・8チェック・21出典・全CSS/media・明暗6条件・原本アーカイブを検証）</li>
 <li>✗ src/app/layout.tsx</li>
@@ -1185,7 +1185,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-23</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 175 files · 738 pass / 297 skip / 0 fail（1035 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 176 files · 742 pass / 297 skip / 0 fail（1039 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>

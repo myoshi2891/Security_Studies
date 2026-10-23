@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "source": "Bulletproof-tls-pki-guide.html",
+  "source": "archive/security-guides/Bulletproof-tls-pki-guide.html",
   "sha256": "c4e4b78c5afd7a034a496125f728cbcbc5d95855cd7ba017601c68cd6086e5c2",
   "route": "/docs/bulletproof-tls-pki-guide",
   "sections": [
@@ -200,5 +200,21 @@
     "mermaidParse": "24/24 pass",
     "build": "禁止・未実行",
     "visual": "ユーザー担当・未完了"
+  },
+  "markdownSource": "archive/security-guides/Bulletproof-tls-pki-guide.md",
+  "markdownSha256": "b41995bc83a7b7939530f178a421184149652811e8d470f436b097282c021172",
+  "archival": {
+    "date": "2026-10-23",
+    "category": "security-guides",
+    "html": "archive/security-guides/Bulletproof-tls-pki-guide.html",
+    "md": "archive/security-guides/Bulletproof-tls-pki-guide.md",
+    "sha256": {
+      "html": "c4e4b78c5afd7a034a496125f728cbcbc5d95855cd7ba017601c68cd6086e5c2",
+      "md": "b41995bc83a7b7939530f178a421184149652811e8d470f436b097282c021172"
+    },
+    "rootSourcesRemoved": true,
+    "tests": "45 pass / 0 fail, 7 files",
+    "full": "742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）",
+    "gitPolicy": "archive/ ignored by existing repository settings"
   }
 }

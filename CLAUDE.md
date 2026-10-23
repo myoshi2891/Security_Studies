@@ -358,7 +358,7 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 ## Bulletproof TLS and PKI 移行（2026-10-23）
 
-Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDは `archive/security-guides/` にカテゴリー別で保存（両SHA-256一致）。
 
 配置: `security-docs/src/app/docs/bulletproof-tls-pki-guide/page.mdx`。Cloud & Cryptography のナビ・ホーム一覧・静的検索（25ページ）に登録。原本の丸点・番号・チェックカウンター・疑似要素を含む全CSS宣言、5画面幅の適用結果、目次操作、図の再試行、表とページ全体のhydrationを検証。台帳: `docs/migration-inventory/bulletproof-tls-pki-guide.json`。目視確認表: `docs/migration-inventory/bulletproof-tls-pki-guide-review.md`。
 
@@ -375,3 +375,10 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ完了。全11節・24表627セル・12図・31演習・8チェック項目・21出典を原本照合。専用55件/11ファイル成功。全体738 pass / 297 skip / 0 fail（1035件・175ファイル・410,413 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。
 
 配置: `security-docs/src/app/docs/secrets-and-lies-guide/page.mdx`。Security Guidesのナビ・ホーム一覧・静的検索（27ページ、全59見出し）へ登録。丸い箇条書きの点、通常番号と31演習の丸番号、8チェックのカウンター/選択/フォーカス、全CSS/mediaと627セルの適用スタイル、12図の配色・構文・1始まりの表示番号、目次操作、表・ページ全体hydrationを検証。原本: `archive/html/Secrets-and-lies-guide.html` / `archive/md/Secrets-and-lies-guide.md`（両SHA-256一致、archive/は既存規約でGit管理外）。台帳: `docs/migration-inventory/secrets-and-lies-guide.json`。目視確認表: `docs/migration-inventory/secrets-and-lies-guide-review.md`。
+
+
+## Bulletproof原本のカテゴリー別アーカイブ（2026-10-23）
+
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
+
+移動先: `archive/security-guides/Bulletproof-tls-pki-guide.html` / `archive/security-guides/Bulletproof-tls-pki-guide.md`。アーカイブは形式別の `html/`・`md/` ではなく、既存の内容別カテゴリーへHTML・Markdownをまとめる。

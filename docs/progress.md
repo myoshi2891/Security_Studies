@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（Secrets and Lies移行・アーカイブ完了。専用55件成功、全体738成功/297 skip/0失敗）
+> **最終更新**: 2026-10-23（Bulletproof TLS/PKI原本を内容別security-guidesへアーカイブ。全体742成功/297 skip/0失敗）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **738成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・175ファイル・1035件・410,413 expect。297 skipは既存ガイド原本不在による。 |
-| テストファイル数 | **175ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全175テストファイルとは別集計 |
+| テストケース総数 | **742成功 / 297 skip / 0失敗** | npm test実測（2026-10-23）・176ファイル・1039件・410,418 expect。297 skipは既存ガイド原本不在による。 |
+| テストファイル数 | **176ファイル** | 原本比較・ページ移行テストを含む |
+| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全176テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | GitHub Actions（lint / types / test --coverage）。パス除外なし。原本がない場合のみsourceTestがskip。今回の297 skipは既存ガイド原本不在による |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -46,6 +46,7 @@
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/hydration.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/integration.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/zero-trust-networks-2nd-edition-guide/archive.test.ts` | 4 | 2026-10-23追加・Green |
+| `src/app/docs/bulletproof-tls-pki-guide/archive.test.ts` | 4 | 2026-10-23追加・カテゴリー別アーカイブGreen |
 | `src/app/docs/bulletproof-tls-pki-guide/migration.test.tsx` | 19 | 2026-10-23追加・Green |
 | `src/app/docs/bulletproof-tls-pki-guide/sidebar.test.tsx` | 5 | 2026-10-23追加・Green |
 | `src/app/docs/bulletproof-tls-pki-guide/runtime.test.tsx` | 9 | 2026-10-23追加・Green |
@@ -886,7 +887,7 @@ ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。
 
 ## Bulletproof TLS and PKI 移行（2026-10-23）
 
-Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDは `archive/security-guides/` にカテゴリー別で保存（両SHA-256一致）。
 
 - Red `65cbdea`: 原本照合19件失敗 → Green `0ec3286`: 全15節・CSS・ナビ検索移行。
 - Red `a7ad9fd`: 図の配色・sequence設定欠落を再現 → Green `da37f69`: 原本設定復元、41件成功。
@@ -941,5 +942,12 @@ Secrets and Lies: /docs/secrets-and-lies-guide へ移行・原本アーカイブ
 
 
 <!-- bulletproof-archive-stage -->
-Bulletproof原本カテゴリー別アーカイブRed（2026-10-23）: archive/security-guides/へのHTML・MD移動を要求。専用0成功/2 skip/2失敗でルート原本の残存と参照先の未更新を再現。直前の全体Greenは738成功/297 skip/0失敗・175ファイル。npm使用・ビルド未実行。
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
 <!-- /bulletproof-archive-stage -->
+
+
+### Bulletproof内容別アーカイブ（2026-10-23）
+
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
+
+Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletproof-tls-pki-guide.html` / `archive/security-guides/Bulletproof-tls-pki-guide.md`。形式別ではなく内容別の既存カテゴリーへ両原本をまとめる。

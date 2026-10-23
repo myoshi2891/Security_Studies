@@ -4,7 +4,7 @@
 
 確認URL: /docs/bulletproof-tls-pki-guide
 
-Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはルートに保持。
+Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDは `archive/security-guides/` にカテゴリー別で保存（両SHA-256一致）。
 
 - [ ] PCとスマートフォンでタイトル・書籍情報・全15節を確認
 - [ ] 箇条書きの丸点、ネストした番号、チェックリストの1〜10の番号を確認
@@ -36,3 +36,13 @@ Bulletproof TLS and PKI: `/docs/bulletproof-tls-pki-guide` へ移行。全15節�
 | s12 | 12. ハンズオン：Python で TLS の状態を確認する | 1 | 15 |  |
 | s13 | 13. 学習ロードマップ・用語集・総合クイズ | 2 | 57 | d24 |
 | s14 | 14. 参考文献・出典 URL | 2 | 27 |  |
+
+
+## 原本のカテゴリー別保存（2026-10-23）
+
+Bulletproof TLS and PKIのHTML・Markdown原本を内容別カテゴリー archive/security-guides/ にアーカイブ。両SHA-256一致、ルート原本を除去、比較テストの参照先を更新。専用45件/7ファイル成功。全体742 pass / 297 skip / 0 fail（1039件・176ファイル・410,418 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止・未実行。archive/は既存設定でGit管理外。
+
+- HTML: `archive/security-guides/Bulletproof-tls-pki-guide.html`
+- Markdown: `archive/security-guides/Bulletproof-tls-pki-guide.md`
+- HTML SHA-256: `c4e4b78c5afd7a034a496125f728cbcbc5d95855cd7ba017601c68cd6086e5c2`
+- Markdown SHA-256: `b41995bc83a7b7939530f178a421184149652811e8d470f436b097282c021172`
