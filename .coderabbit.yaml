@@ -5,3 +5,4 @@ reviews:
         - '!archive/**'
         - '!.coderabbit.yaml'
         - '!.gitignore'
+        - '!docs/**'
