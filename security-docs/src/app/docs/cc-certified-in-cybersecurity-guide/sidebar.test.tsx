@@ -53,3 +53,8 @@ test('shared header interaction closes the drawer and resize restores desktop sc
   if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
  }
 });
+
+test('all 54 original chapter and subsection links close the drawer and focus the exact destination',async()=>{
+ const saved=globalThis.IntersectionObserver;globalThis.IntersectionObserver=class{observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{const {evaluatedPage}=await import('./fidelity-helpers');const {default:Page}=await evaluatedPage();const view=render(h(Page,{}));const button=view.container.querySelector('#navToggle')!;const links=[...view.container.querySelectorAll<HTMLAnchorElement>('.sidebar nav a')];expect(links).toHaveLength(54);for(const link of links){fireEvent.click(button);fireEvent.click(link);expect(button).toHaveAttribute('aria-expanded','false');expect(link).toHaveAttribute('aria-current','location');expect(document.activeElement).toBe(view.container.querySelector(link.hash));}view.unmount();expect(document.body.style.overflow).toBe('');}finally{globalThis.IntersectionObserver=saved;}
+});

@@ -95,3 +95,5 @@ test('lazy engine loader disables Mermaid auto-start on the shared instance with
  try{await renderDiagram('sl-auto-start','flowchart LR\nA-->B');expect(mermaid.startOnLoad).toBe(false);expect(initialize).not.toHaveBeenCalled();expect(render).toHaveBeenCalledTimes(1);}
  finally{initialize.mockRestore();render.mockRestore();}
 });
+
+test('pie text description includes every domain label and weighting',async()=>{const {describeDiagram}=await import('./MermaidFigure');const {diagrams}=await import('./diagrams');const lines=describeDiagram(diagrams.d1);expect(lines[0]).toBe('円グラフ');for(const value of ['24','21.3','20','17.3'])expect(lines.join(' ')).toContain(value);expect(lines.join(' ')).toContain('D5 SecOps and IR');});
