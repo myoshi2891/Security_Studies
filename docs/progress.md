@@ -982,3 +982,7 @@ Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletpr
 ## ISC2 CC 移行（2026-10-23・Red）
 
 原本台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。11章・120見出し・85表1520セル・239リスト項目・23図・53出典カード・75注意欄。原本は保持。Red `1 pass / 46 fail / 1 import error`（5ファイル、sidebar import errorで未登録の5件は別途Greenで実行）。実装前テストコミット `562a0ad`。全体の成功件数1061は移行前の実測であり、現在は移行中。npm使用・ビルド禁止・目視はユーザー担当。
+
+### ISC2 CC テスト補正（2026-10-23）
+
+Happy DOMの`list-style`略記未展開を補い、ブラウザー既定の丸点/番号を比較。目次fixtureを原本どおりのh2構造へ変更。図の全設定比較を追加（専用52件）。共通CSSによる`.brand`色混入を375pxで検出しRed維持。本文11章の構造比較・全85表のhydration・23図の構文は通過。次にブランド色を補正し全体を再検証。
