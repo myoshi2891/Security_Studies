@@ -1044,3 +1044,9 @@ ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカ�
 移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。
 
 直前コミット `dbba5cc`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+## CCSP移行（2026-10-23・基盤テスト補正）
+
+目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。
+
+直前コミット `75e8d93`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
