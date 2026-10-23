@@ -906,3 +906,8 @@ Zero Trust Networks, 2nd Edition: /docs/zero-trust-networks-2nd-edition-guide �
 - 仕様書7ファイル・移行台帳・目視確認表を同期。次の対応: ユーザーによる目視確認。
 
 台帳: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide.json`。目視確認表: `docs/migration-inventory/zero-trust-networks-2nd-edition-guide-review.md`。
+
+
+<!-- secrets-stage -->
+Secrets and Lies 表示基盤Red（2026-10-23）: 専用0成功/4失敗・1ファイル。MDX/CSS/図部品の不在を再現。開始時監査は全体683成功/297 skip/0失敗・164ファイル（980件、327505 expect）で仕様書と一致。npm使用・ビルド禁止・未実行。
+<!-- /secrets-stage -->
