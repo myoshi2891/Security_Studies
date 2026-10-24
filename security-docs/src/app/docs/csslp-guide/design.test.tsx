@@ -39,3 +39,10 @@ test('the restyled answer disclosure remains native, keyboard-focusable and open
  try{const {default:Page}=await evaluatedPage();const view=render(createElement(Page,{}));const disclosure=view.container.querySelector<HTMLDetailsElement>('#s13 details')!;expect(disclosure.open).toBe(false);const summary=disclosure.querySelector('summary')!;summary.focus();expect(document.activeElement).toBe(summary);fireEvent.click(summary);expect(disclosure.open).toBe(true);expect(disclosure.querySelectorAll('tbody tr')).toHaveLength(10);fireEvent.click(summary);expect(disclosure.open).toBe(false);}
  finally{globalThis.IntersectionObserver=saved;}
 });
+
+test('small diagram captions, type labels and loading text retain at least 4.5:1 contrast',async()=>{
+ const w=new Window();try{w.document.head.innerHTML='<style>'+sheet()+'</style>';w.document.body.innerHTML='<div class="csslp-guide"><div class="mmd"><div class="diagram-heading"><span class="diagram-kicker">FIGURE 01</span><span class="diagram-kind">フロー図</span></div><p role="status">描画中</p><details class="diagram-description"><summary>テキスト説明</summary></details></div></div>';
+ const luminance=(hex:string)=>{const c=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return c[0]*.2126+c[1]*.7152+c[2]*.0722;};
+ for(const [fg,bg] of [['.diagram-kicker','.diagram-heading'],['.diagram-kind','.diagram-heading'],['p[role="status"]','p[role="status"]'],['summary','.diagram-description']]){const a=luminance(w.getComputedStyle(w.document.querySelector(fg)!).color),b=luminance(w.getComputedStyle(w.document.querySelector(bg)!).backgroundColor);expect((Math.max(a,b)+.05)/(Math.min(a,b)+.05),fg).toBeGreaterThanOrEqual(4.5);}
+ }finally{await w.happyDOM.close();}
+});
