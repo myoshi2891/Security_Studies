@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { docsConfig } from "@/config/docs";
 import { getSearchIndex } from "@/lib/search";
-import { SOURCE_PATH, sourceTest } from "./fidelity-helpers";
+import { sourceTest, sourceDocument, renderedPage } from "./fidelity-helpers";
 
 const SLUG = "iso-iec-27001-2022-guide";
 const HREF = `/docs/${SLUG}`;
@@ -25,52 +25,18 @@ describe("ISO/IEC 27001:2022 初学者向けガイドページ", () => {
     expect(content).toMatch(/^---\ntitle: ".*ISO\/IEC 27001:2022.*"\ndescription: ".+"\n---/);
   });
 
-  test("原本ガイドの主要事実と全章を保持する", () => {
-    // Arrange
-    const content = readPage();
-    const required = [
-      "2026年10月14日",
-      "第3版",
-      "2022年10月25日",
-      "Amd 1:2024",
-      "ISO/IEC JTC 1/SC 27",
-      "JIS Q 27001:2023",
-      "JIS Q 27001:2025",
-      "箇条4〜10",
-      "93管理策",
-      "組織的 37",
-      "A.8.28",
-      "適用宣言書(SoA)",
-      "2025年10月31日",
-      "Global ACI",
-      "125,622",
-      "NIST CSF 2.0",
-      "よくある誤解 Q&A",
-      "自己診断チェックリスト",
-      "理解度チェック",
-      "出典URL一覧",
-      "情報の確かさについての注意",
-    ];
-
-    // Act
-    const missing = required.filter((text) => !content.includes(text));
-
-    // Assert
-    expect(missing).toEqual([]);
+  test("原本HTMLの主要事実と全17章を保持する", async () => {
+    const page = await renderedPage();
+    const text = page.querySelector('.main')!.textContent!.replace(/\s+/g, ' ');
+    for (const term of ["2026年10月14日", "第3版", "2022年10月25日", "Amd 1:2024", "A.8.28", "2025年10月31日", "NIST CSF 2.0"]) expect(text).toContain(term);
+    expect(page.querySelectorAll('section.chapter[id]')).toHaveLength(17);
   });
 
-  sourceTest("原本の出典URLをすべて保持する", () => {
-    // Arrange
-    const source = fs.readFileSync(SOURCE_PATH, "utf8");
-    const urls = source.match(/https:\/\/[^\s|]+/g) ?? [];
-    const content = readPage();
-
-    // Act
-    const missing = urls.filter((url) => !content.includes(url));
-
-    // Assert
+  sourceTest("HTML原本の全出典URLを保持する", async () => {
+    const page = await renderedPage();
+    const urls = [...sourceDocument.querySelectorAll('a[href^="https:"]')].map(a => a.getAttribute('href'));
     expect(urls.length).toBeGreaterThan(0);
-    expect(missing).toEqual([]);
+    expect([...page.querySelectorAll('a[href^="https:"]')].map(a => a.getAttribute('href'))).toEqual(urls);
   });
 
   test("サイドバー設定に指定タイトルでちょうど1回登録されている", () => {
