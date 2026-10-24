@@ -61,7 +61,7 @@ export function declarations(css: postcss.Root, selector: string) {
 export function sectionContracts(ids:string[]) {
  for(const id of ids)sourceTest(id+': complete source structure, cells, list hierarchy, references, emphasis and diagram definitions',async()=>{
   const original=sourceDocument.getElementById(id),actual=(await renderedPage()).getElementById(id);expect(original).not.toBeNull();expect(actual).not.toBeNull();expect(canonical(actual!)).toEqual(canonical(original!));
-  for(const selector of ['th','td','li','a','strong','h3','h4','p','code'])expect([...actual!.querySelectorAll(selector)].filter(e=>!e.closest('.mermaid')).map(e=>e.textContent?.replace(/\s+/g,' ').trim()),selector).toEqual([...original!.querySelectorAll(selector)].map(e=>e.textContent?.replace(/\s+/g,' ').trim()));
+  for(const selector of ['th','td','li','a','strong','h3','h4','p','code'])expect([...actual!.querySelectorAll(selector)].filter(e=>!e.closest('.mmd')).map(e=>e.textContent?.replace(/\s+/g,' ').trim()),selector).toEqual([...original!.querySelectorAll(selector)].map(e=>e.textContent?.replace(/\s+/g,' ').trim()));
   for(const figure of actual!.querySelectorAll('.mmd[data-diagram]'))expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!)??null);
  });
 }
