@@ -79,6 +79,6 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   return <>
     <aside className={`sidebar${open ? ' open' : ''}`} id="sidebar" aria-label="目次" ref={panel}>{children}</aside>
     <button type="button" className={`backdrop${open ? ' show' : ''}`} id="backdrop" aria-label="目次を閉じる背景" tabIndex={-1} hidden={!open} onClick={close} />
-    <button className="menuBtn" id="menuBtn" type="button" aria-label={open ? '目次を閉じる' : '目次を開く'} aria-expanded={open} aria-controls="sidebar" ref={toggle} onClick={() => setOpen(value => !value)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
+    <button className="menu-btn" id="menuBtn" type="button" aria-label={open ? '目次を閉じる' : '目次を開く'} aria-expanded={open} aria-controls="sidebar" ref={toggle} onClick={() => setOpen(value => !value)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
   </>;
 }
