@@ -1298,7 +1298,7 @@
       "本ガイドの根拠と限界について"
     ]
   ],
-  "stage": "archived/full-validation-running",
+  "stage": "complete-visual-review-pending",
   "updated": "2026-10-25",
   "source": "archive/security-certifications/Cyberops-professional-guide.html",
   "archive": "archive/security-certifications/",
@@ -1332,10 +1332,36 @@
   "foundationGreen": "2fc814b",
   "rearGreen": "676fba2",
   "archiveGreen": "c97a37d",
-  "targetedTests": "324 pass / 0 fail plus 4 archive pass",
+  "targetedTests": "328 pass / 0 fail, 12 files",
   "registeredTests": 328,
   "testFiles": 12,
-  "withoutOriginals": "173 pass / 155 skip / 0 fail, 12 files, 4699 assertions",
+  "withoutOriginals": "173 pass / 155 skip / 0 fail, 12 files, 4700 assertions",
   "browser": "375/1440px × light/dark: all 122 tables, 2051 cells, 190 list items; hover changed cells 0; round gold bullets and 14 counter resets confirmed",
-  "http": "200: all 16 counts, 137 structure hashes and 20 code hashes match"
+  "http": "200: all 16 counts, 137 structure hashes and 20 code hashes match",
+  "fullValidation": {
+    "pass": 1913,
+    "skip": 0,
+    "fail": 0,
+    "tests": 1913,
+    "files": 252,
+    "assertions": 526507
+  },
+  "routeCount": 33,
+  "logicFileCoverage": "101/101",
+  "lint": "npm run lint: success",
+  "types": "npm run types:check: success",
+  "browserConditions": 4,
+  "browserCellConditions": 8204,
+  "browserChangedCells": 0,
+  "pointerChecks": 12,
+  "testIsolationFix": "e3f00b4: restore the full window.innerWidth descriptor; 17 combined tests pass",
+  "initialFullRun": "1912 pass / 1 fail: new test cleanup made innerWidth readonly; fixed before final rerun",
+  "allowedDifferences": [
+    "Source main is rendered as div.guide-content inside the app main landmark",
+    "Source CSS is scoped and offset for the shared app header",
+    "Remote icon font and highlighting are replaced with local SVGs and highlight.js",
+    "Mermaid keeps exact definitions and per-render source theme, with natural-width scrolling and accessible descriptions",
+    "Nested TOC opens all ancestors and adds keyboard focus handling"
+  ],
+  "archiveTracked": false
 }

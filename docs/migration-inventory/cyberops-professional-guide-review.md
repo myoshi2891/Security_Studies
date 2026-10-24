@@ -33,3 +33,14 @@
 - [ ] ホーム・資格ナビ・検索から新ページへ移動できることを確認
 
 原本は `archive/security-certifications/Cyberops-professional-guide.html` / 同名Markdownへバイト不変で移動済み（Git管理外）。両SHA-256は台帳に記録。原本なし環境でも137構造ハッシュ・全20コードハッシュ・操作等の173件が成功し、原本依存155件のみスキップする。
+
+最終自動検証: 専用328件成功。全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし173成功/155skip/0失敗。npm経由のlint・型チェック成功。
+
+再実行（security-docs内、既存の開発サーバーと利用可能なChrome/Playwrightが必要）:
+
+```sh
+npm test -- --timeout 30000 src/app/docs/cyberops-professional-guide
+npm exec --package=playwright --call "node src/app/docs/cyberops-professional-guide/hover.browser.mjs"
+```
+
+`DOCS_BASE_URL`・`CHROME_PATH`・`PLAYWRIGHT_MODULE_PATH`で検証環境を指定できます。ビルドは実行しません。

@@ -12,17 +12,29 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1585成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・240ファイル・1585件。520,277 expect。CyberOps専用83件を含む。 |
-| テストファイル数 | **240ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **96/96 (100%)** | 従来91 + CyberOps部品5。純粋データ・MDXは分母外。全240テストファイルとは別集計 |
+| テストケース総数 | **1913成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・252ファイル・1913件。526,507 expect。CyberOps Professional専用328件を含む。 |
+| テストファイル数 | **252ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **101/101 (100%)** | 従来96 + CyberOps Professional部品5。純粋データ・MDXは分母外。全252テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cyberops-professional-guide/archive.test.ts` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/foundation.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/front.test.tsx` | 156 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/rear.test.tsx` | 112 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/static.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/quiz.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/styles.test.tsx` | 12 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/archive.test.ts` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/foundation.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/chapters.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
@@ -1255,7 +1267,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Professional移行（2026-10-25）
 
-移行・アーカイブ完了。初回全体1912成功/1失敗（1913件/252ファイル）の1件は、新規リサイズテストがwindow.innerWidthを読み取り専用で残すテスト間干渉。元のプロパティ定義を完全復元するよう補正し、該当目次と既存Secure by Designの同時実行で成功を確認。全体を再実行中。製品側の専用324件＋アーカイブ4件、Chrome4条件の全表/丸点/番号、HTTP16件数/137構造ハッシュ/20コードハッシュ照合は成功済み。HTML/Markdownを両SHA一致でアーカイブ済み。
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 

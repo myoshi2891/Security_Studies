@@ -309,7 +309,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Professional移行（2026-10-25）
 
-移行・アーカイブ完了。初回全体1912成功/1失敗（1913件/252ファイル）の1件は、新規リサイズテストがwindow.innerWidthを読み取り専用で残すテスト間干渉。元のプロパティ定義を完全復元するよう補正し、該当目次と既存Secure by Designの同時実行で成功を確認。全体を再実行中。製品側の専用324件＋アーカイブ4件、Chrome4条件の全表/丸点/番号、HTTP16件数/137構造ハッシュ/20コードハッシュ照合は成功済み。HTML/Markdownを両SHA一致でアーカイブ済み。
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
