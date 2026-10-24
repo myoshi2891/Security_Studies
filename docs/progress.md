@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-24（依存監査修正・CISSP図説明/ISO27001目次ボタンのレビュー対応Green・全1502件成功）
+> **最終更新**: 2026-10-24（CyberOps Associate移行・段階別TDD）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1220,3 +1220,13 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 - ISO27001統合テスト: 検索インデックス全体の件数（31件）とCSSLP依存の件数検証を削除し、当該ルートの項目一致のみ検証（`628fe12`）。
 - ISO27001図: 外側 `.mmd` の `role="img"` が内部のテキスト説明 `<details>` と描画状態を読み上げから隠していた。外側を常に `role="group"`＋aria-label、描画済みSVGの表示領域に `role="img"`＋aria-label。原本は13図とも `role="img"` のため、台帳 `allowedDifferences` に意図的なa11y差分として記録し、比較処理は原本側の img のみ group へ読み替え。固定構造ハッシュ10章（ch0/1/3/5/7〜12）を再計算し、group→img の逆変換で旧ハッシュ22件すべてと一致（変化はroleのみ）を確認。原本なし隔離環境61成功/41skip/0失敗。Red `b997359` → Green `dd0edee`。
 - 全体1502成功/0失敗（230ファイル、511,077 expect）。lint・型チェック成功。ビルド禁止・未実行。push未実施。
+
+<!-- cyberops-migration-status -->
+
+## CyberOps Associate移行（2026-10-24）
+
+表示基盤Red: 4件が未実装により失敗（1ファイル）。原本棚卸し12章・153見出し・135表2706セル・42図・6コード・36チェック・25問100選択肢。登録1506件/231ファイル。全体の直前確定値1502成功/230ファイルを確認し、ダッシュボードの古い1499件表記を同期。原本アーカイブ・本文移行は未実施。
+
+配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-migration-status -->
