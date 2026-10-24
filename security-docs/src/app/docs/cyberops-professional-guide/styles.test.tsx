@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
 const css=()=>['../../globals.css','../docs-layout.css','./cyberops-professional-guide.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n').replace(/@import[^;]+;/g,'');
-const norm=(v:string,p:string)=>p==='font-weight'?({normal:'400',bold:'700'}[v]??v):p==='letter-spacing'&&(!v||v==='normal')?'0px':!v&&p==='background-color'?'transparent':!v&&/^(margin|padding|border)/.test(p)?'0px':v.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px').replace(/["']/g,'').replace(/Source Serif 4 Variable,\s*/,'');
+const norm=(v:string,p:string)=>p==='font-weight'?({normal:'400',bold:'700'}[v]??v):p==='letter-spacing'&&(!v||v==='normal')?'0px':!v&&p==='box-shadow'?'none':!v&&p==='background-color'?'transparent':!v&&/^(margin|padding|border)/.test(p)?'0px':v.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px').replace(/["']/g,'').replace(/Source Serif 4 Variable,\s*/,'');
 // Happy DOM does not resolve CSS clamp(); resolve the same source expression on both sides.
 const resolveClamps=(css:string,width:number)=>css.replace(/clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)vw\s*,\s*([\d.]+)(rem|px)\s*\)/g,(_,lo,lu,mid,hi,hu)=>Math.min(Number(hi)*(hu==='rem'?16:1),Math.max(Number(lo)*(lu==='rem'?16:1),Number(mid)*width/100))+'px');
 const sourceStyle=()=>{const tree=sourceCss.clone();tree.walkDecls('list-style',d=>{if(['none','disc','decimal'].includes(d.value))d.cloneAfter({prop:'list-style-type'});});return tree.toString();};
