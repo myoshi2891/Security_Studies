@@ -15,7 +15,9 @@ test('all 10 question cards separate complete original stems and all 40 lettered
  expect([...page.querySelectorAll('#s13 details tbody tr td:nth-child(2)')].map(e=>e.textContent)).toEqual(['B','B','B','C','B','C','B','B','B','C']);
 });
 for(const width of [375,768,1440])test('question cards and all 16 diagram frames have deliberate responsive styling at '+width+'px',async()=>{
- const w=new Window({width,height:900});try{w.document.head.innerHTML='<style>'+sheet()+'</style>';w.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';const style=(s:string)=>w.getComputedStyle(w.document.querySelector(s)!);
+ const w=new Window({width,height:900});try{w.document.head.innerHTML='<style>'+sheet()+'</style>';w.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';// SSR intentionally shows loading text. Add the same drawing surface the renderer creates after loading.
+ for(const figure of w.document.querySelectorAll('.mmd')){const viewport=w.document.createElement('div');viewport.className='diagram-viewport';figure.append(viewport);}
+ const style=(s:string)=>w.getComputedStyle(w.document.querySelector(s)!);
  expect(style('#s13 > p').display).toBe('grid');expect(style('#s13 > p').borderRadius).toBe('16px');expect(style('#s13 > p').backgroundColor).toBe('#ffffff');expect(style('#s13 .practice-options').display).toBe('grid');expect(style('#s13 .practice-options').gridTemplateColumns).toBe(width>=768?'repeat(2, minmax(0, 1fr))':'minmax(0, 1fr)');expect(style('#s13 .practice-option').borderRadius).toBe('10px');expect(style('#s13 > p > strong').backgroundColor).toBe('#2e3f72');expect(style('#s13 details summary').minHeight).toBe('56px');
  expect(style('.mmd').borderRadius).toBe('18px');expect(style('.diagram-heading').display).toBe('flex');expect(style('.diagram-viewport').overflowX).toBe('auto');expect(style('.diagram-viewport').paddingTop).toBe(width<768?'16px':'24px');
  }finally{await w.happyDOM.close();}
