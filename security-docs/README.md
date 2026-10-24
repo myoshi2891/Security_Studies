@@ -292,3 +292,11 @@ ISO27001 HTML更新: 既存 `/docs/iso-iec-27001-2022-guide` を元HTMLの全17�
 
 配置: `security-docs/src/app/docs/iso-iec-27001-2022-guide/page.mdx`。原本のdark配色を専用CSSで保持。台帳: `docs/migration-inventory/iso-iec-27001-2022-guide.json`。目視確認表: `docs/migration-inventory/iso-iec-27001-2022-guide-review.md`。
 <!-- /iso27001-html-status -->
+
+<!-- csslp-migration-status -->
+## CSSLP移行（2026-10-24）
+
+CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行。専用79件/9ファイル・既存ナビ17件成功。5幅×明暗のCSS、丸点/番号、全CSS/media、全章構造ハッシュ、目次/図操作、全表とページのhydrationを検証。npm経由テスト・lint・型チェック成功。移行Green `d53c0ed`。原本アーカイブは次工程、目視はユーザー担当・未確認、ビルド禁止・未実行。全体直近確定値は1403成功/0失敗・218ファイル（移行前の事前検証）。
+
+配置: `security-docs/src/app/docs/csslp-guide/page.mdx`。資格ナビ・ホーム・静的/動的検索31ページに登録。台帳: `docs/migration-inventory/csslp-guide.json`。目視確認表: `docs/migration-inventory/csslp-guide-review.md`。
+<!-- /csslp-migration-status -->

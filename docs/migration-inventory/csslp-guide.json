@@ -192,12 +192,15 @@
   ],
   "updated": "2026-10-24",
   "slug": "csslp-guide",
-  "stage": "migration-red",
+  "stage": "migration-green",
   "source": "Csslp-guide.html",
   "markdown": "Csslp-guide.md",
   "target": "security-docs/src/app/docs/csslp-guide/page.mdx",
   "archive": "archive/security-certifications/",
   "visualReview": "user-pending",
   "build": "prohibited-not-run",
-  "red": "26841dc: 1 pass / 72 fail / 1 module error; 73 tests, 9 executed files (sidebar import prevents collection)"
+  "red": "26841dc: 1 pass / 72 fail / 1 module error; 73 tests, 9 executed files (sidebar import prevents collection)",
+  "migrationGreen": "d53c0ed",
+  "targetedTests": "79 pass / 0 fail, 9 files, 2390 assertions",
+  "navigationTests": "17 pass / 0 fail"
 }
