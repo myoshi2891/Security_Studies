@@ -2,7 +2,7 @@ import {expect,test} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import postcss from 'postcss';
 import {docsConfig} from '../../../config/docs';
-import {sourceTest,sourceDocument,sourceHtml,sourceCss,definitions,scope,canonical,renderedPage,evaluatedPage} from './fidelity-helpers';
+import {sourceTest,sourceDocument,sourceCss,definitions,scope,canonical,renderedPage,evaluatedPage} from './fidelity-helpers';
 sourceTest('hero, brand SVG and entire original numbered sidebar retain all content',async()=>{const page=await renderedPage();for(const selector of ['.hero','.brand','.sidebar nav'])expect(canonical(page.querySelector(selector)!)).toEqual(canonical(sourceDocument.querySelector(selector)!));});
 sourceTest('every original CSS declaration and media ancestry survives including marker colors',()=>{
  const actual=postcss.parse(readFileSync(new URL('./cyberops-associate-guide.css',import.meta.url),'utf8'));
