@@ -1298,12 +1298,12 @@
       "本ガイドの根拠と限界について"
     ]
   ],
-  "stage": "front-green/rear-red",
+  "stage": "archived/full-validation-running",
   "updated": "2026-10-25",
-  "source": "Cyberops-professional-guide.html",
+  "source": "archive/security-certifications/Cyberops-professional-guide.html",
   "archive": "archive/security-certifications/",
   "visualReview": "user pending",
-  "build": "prohibited",
+  "build": "prohibited, not run",
   "codeHashes": [
     "20e76721264074d89dcf60ca179614cb63e3a4209aed6007b60efb70da4d2bd7",
     "61e3997b3573e579fbde796c097c9738360ba91817fe2b9d08f777542979fe6c",
@@ -1326,5 +1326,16 @@
     "d5475e7fb0f06a764b20377a1e4bc21d63cef42e0b055963f47689112836041e",
     "0e53a32efec40a49619625a78cdd21fe306a64c36b8e7e4da9c111cab0d3b001"
   ],
-  "frontGreen": "a3c179f"
+  "frontGreen": "a3c179f",
+  "originalSource": "Cyberops-professional-guide.html",
+  "markdownSource": "archive/security-certifications/Cyberops-professional-guide.md",
+  "foundationGreen": "2fc814b",
+  "rearGreen": "676fba2",
+  "archiveGreen": "c97a37d",
+  "targetedTests": "324 pass / 0 fail plus 4 archive pass",
+  "registeredTests": 328,
+  "testFiles": 12,
+  "withoutOriginals": "173 pass / 155 skip / 0 fail, 12 files, 4699 assertions",
+  "browser": "375/1440px × light/dark: all 122 tables, 2051 cells, 190 list items; hover changed cells 0; round gold bullets and 14 counter resets confirmed",
+  "http": "200: all 16 counts, 137 structure hashes and 20 code hashes match"
 }
