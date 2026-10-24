@@ -1,0 +1,18 @@
+import {expect,test} from 'bun:test';
+import {readFileSync} from 'node:fs';
+import postcss from 'postcss';
+import {docsConfig} from '../../../config/docs';
+import {sourceTest,sourceDocument,sourceHtml,sourceCss,scope,canonical,renderedPage,evaluatedPage,definitions} from './fidelity-helpers';
+sourceTest('hero, brand, all 17 original grouped TOC links, side foot and footer survive exactly',async()=>{const page=await renderedPage();for(const s of ['.hero','.brand','.sidebar nav','.side-foot','.footer'])expect(canonical(page.querySelector(s)!)).toEqual(canonical(sourceDocument.querySelector(s)!));expect(page.querySelectorAll('.sidebar nav a')).toHaveLength(17);expect((await evaluatedPage()).metadata).toMatchObject({title:'ISO/IEC 27001:2022 初学者向け ステップバイステップ解説ガイド'});});
+sourceTest('every original CSS declaration retains its selector and complete media ancestry',()=>{
+ const actual=postcss.parse(readFileSync(new URL('./iso27001-guide.css',import.meta.url),'utf8'));
+ const ancestry=(r:postcss.Rule)=>{const a:string[]=[];for(let p=r.parent;p&&p.type==='atrule';p=p.parent)a.unshift((p as postcss.AtRule).name+' '+(p as postcss.AtRule).params);return a.join('/');};
+ sourceCss.walkRules(rule=>{const selector=rule.selector.split(',').map(s=>{s=s.trim();if([':root','html','body'].includes(s))return scope;if(s==='body.menu-open')return scope+'.menu-open';return scope+' '+s;}).join(', ');const found:string[]=[];actual.walkRules(selector,r=>{if(ancestry(r)===ancestry(rule))r.walkDecls(d=>{found.push(d.prop+':'+d.value);});});rule.walkDecls(d=>expect(found,selector).toContain(d.prop+':'+d.value));});
+});
+sourceTest('all 13 diagrams preserve the original definition, dark palette and per-diagram layout configuration',async()=>{
+ const {diagrams}=await import('./diagrams');expect(Object.entries(diagrams)).toEqual([...definitions]);const {diagramConfig}=await import('./MermaidFigure');
+ const engine={config:{} as Record<string,unknown>,initialize(value:Record<string,unknown>){this.config=value;}};
+ Function('mermaid',sourceHtml.match(/var cs = [\s\S]*?mermaid\.initialize\([\s\S]*?\);/)![0])(engine);delete engine.config.startOnLoad;delete engine.config.securityLevel;expect(diagramConfig as Record<string,unknown>).toEqual(engine.config);
+});
+test('updates the existing ISO route while retaining its exact registration and all thirty route identities',()=>{const items=docsConfig.sidebarNav.flatMap(g=>g.items);const matching=items.filter(i=>i.href==='/docs/iso-iec-27001-2022-guide');expect(matching).toEqual([{title:'ISO/IEC 27001:2022 初学者向けガイド',href:'/docs/iso-iec-27001-2022-guide'}]);expect(items).toHaveLength(30);expect(new Set(items.map(i=>i.href)).size).toBe(30);expect(items.some(i=>i.href==='/docs/iso-iec-27000-2026-guide')).toBe(true);});
+test('the new scaffold has all 17 unique chapter destinations and no unsafe legacy executable markup',async()=>{const page=await renderedPage();expect([...page.querySelectorAll('section.chapter[id]')].map(e=>e.id)).toEqual(Array.from({length:17},(_,i)=>'ch'+i));const ids=[...page.querySelectorAll('[id]')].map(e=>e.id);expect(new Set(ids).size).toBe(ids.length);expect(page.querySelector('script,style,iframe,form,link')).toBeNull();for(const e of page.querySelectorAll('*'))for(const a of e.attributes){expect(a.name).not.toMatch(/^on/i);if(['href','src'].includes(a.name))expect(a.value).not.toMatch(/^(javascript:|data:text\/html)/i);}});
