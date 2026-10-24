@@ -343,3 +343,6 @@ html:has(.cyberops-associate-guide) { scroll-behavior:smooth; scroll-padding-top
 
 /* Preserve source table cells through shared prose border and hover rules. */
 .cyberops-associate-guide.cyberops-associate-guide td { border-bottom:0; background-color:transparent; }
+
+/* Override shared row-hover colors while retaining the stronger even-row zebra rule. */
+.cyberops-associate-guide.cyberops-associate-guide tr:hover td { background-color:transparent; }
