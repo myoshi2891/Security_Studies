@@ -89,6 +89,8 @@ const NODE_PATTERN = /(\w+)\s*(?:\(\[|\[\(|\[\[?|\(\(?|\{\{?)"([^"]*)"(?:\]\)|\)
  * 1: 始点 / 2: `<`（双方向） / 3: 中間ラベル（`-- "x" -->`） / 4: 終端（`>` は有向、`-` は無向、`.-` で閉じたラベル直後は空の無向） / 5: パイプラベル / 6: 終点
  */
 const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==))?(-?>|-|(?<=\.-))\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
+/** 引用符なしの中間ラベル `G -- はい --> C` を `G -- "はい" --> C` に揃える（`\w` は ASCII のみのため日本語ラベルを読めない） */
+const BARE_MID_LABEL = /(--|-\.|==)\s+([^"\s][^"]*?)\s+(?=(?:--|\.-|==)[->]?)/g;
 
 /** フローチャートの接続を「始点 → 終点: ラベル」形式で列挙し、接続のないノードはラベルのみ残す */
 function describeFlowchart(body: string[]): string[] {
@@ -98,7 +100,7 @@ function describeFlowchart(body: string[]): string[] {
     const stripped = line.replace(NODE_PATTERN, (_match, id: string, label: string) => {
       if (!labels.has(id)) labels.set(id, plain(label));
       return id;
-    });
+    }).replace(BARE_MID_LABEL, '$1 "$2" ');
     for (const [, from, back, midLabel, head, pipeLabel, to] of stripped.matchAll(EDGE_PATTERN)) {
       const arrow = head.endsWith('>') ? (back ? '↔' : '→') : '—';
       edges.push({ from, to, arrow, label: plain(midLabel ?? pipeLabel ?? '') });
