@@ -165,10 +165,12 @@ export function MermaidFigure({ id, source, ariaLabel, renderer = renderDiagram 
   };
 
   const current = result?.source === source ? result : undefined;
+  const label = ariaLabel ?? `図 ${Number(id.slice(1)) + 1}`;
+  // role="img" は子孫を読み上げから隠すため、外側は group にしてテキスト説明・状態表示を読めるようにし、画像の役割は SVG の表示領域だけに付ける
   return (
-    <div ref={figureRef} className="mmd" role={current?.failed ? "group" : "img"} aria-label={ariaLabel ?? `図 ${Number(id.slice(1)) + 1}`} data-id={id} data-diagram={id} data-definition={source}>
+    <div ref={figureRef} className="mmd" role="group" aria-label={label} data-id={id} data-diagram={id} data-definition={source}>
       {current?.svg ? (
-        <div className="diagram-viewport" tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
+        <div className="diagram-viewport" role="img" aria-label={label} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
       ) : current?.failed ? (
         <div className="diagram-error">
           <p role="alert">図 {Number(id.slice(1)) + 1} を描画できませんでした。</p>

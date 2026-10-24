@@ -36,7 +36,8 @@ export function canonical(node: Node): unknown {
  if(node.nodeType!==Node.ELEMENT_NODE)return null;
  const el=node as Element;
  if(el.tagName==='NOSCRIPT')return null;
- if(el.matches('.mmd[data-diagram]'))return ['diagram',el.getAttribute('data-diagram'),el.getAttribute('role'),el.getAttribute('aria-label')];
+ // 許容差分（台帳 allowedDifferences）: 原本の図コンテナ role="img" は、テキスト説明を読み上げ可能にするため group へ変更した。原本側だけを読み替え、移行側は実際の role を比較する
+ if(el.matches('.mmd[data-diagram]'))return ['diagram',el.getAttribute('data-diagram'),el.ownerDocument===sourceDocument&&el.getAttribute('role')==='img'?'group':el.getAttribute('role'),el.getAttribute('aria-label')];
  if(el.tagName==='I')return ['icon',el.getAttribute('class')];
  const attrs=[...el.attributes].filter(a=>a.name!=='style').map(a=>[a.name,a.value]).sort((a,b)=>a[0].localeCompare(b[0]));
  const style=(el.getAttribute('style')||'').split(';').map(s=>s.trim().replace(/\s+/g,'')).filter(Boolean).sort();

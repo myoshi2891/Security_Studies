@@ -110,6 +110,6 @@ test('the figure is a labelled group so its text description stays readable, wit
  expect(viewport).toHaveAttribute('role','img');expect(viewport).toHaveAttribute('aria-label','入出力の図');
  const description=view.container.querySelector('.diagram-description')!;
  expect(description.closest('[role="img"]')).toBeNull();
- expect(description.querySelector('li')).toHaveTextContent('入力 → 出力');
+ expect([...description.querySelectorAll('li')].map(li=>li.textContent)).toEqual(['フローチャート','入力 → 出力']);
  }finally{globalThis.IntersectionObserver=original;}
 });
