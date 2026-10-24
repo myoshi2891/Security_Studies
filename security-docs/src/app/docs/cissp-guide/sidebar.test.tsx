@@ -4,7 +4,7 @@ import {createElement as h} from 'react';
 import {act,cleanup,fireEvent,render} from '@testing-library/react';
 import {GuideSidebar} from './GuideSidebar';
 afterEach(()=>{cleanup();(window as unknown as Window).happyDOM.setURL('http://localhost/');});
-// 原本に依存しない11節の目次。原本との一致は integration.test.tsx で検証する
+// 原本に依存しない18節の目次。原本との一致は integration.test.tsx で検証する
 const ids=["ch0","ch1","ch2","ch3","ch4","ch5","ch6","ch7","ch8","ch9","ch10","ch11","ch12","ch13","ch14","ch15","ch16","appendix"];
 const nav=()=>h('nav',{},ids.map((id,i)=>h('a',{href:`#${id}`,key:i},`章${i+1}`)));
 const sections=()=>ids.map((id,i)=>h('section',{id,key:i},h('h2',{},`章${i+1}`)));

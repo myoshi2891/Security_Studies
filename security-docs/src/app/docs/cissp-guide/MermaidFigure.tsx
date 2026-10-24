@@ -125,7 +125,7 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
 
-  // 表示域に近づくまで描画を遅らせ、16図の一斉描画で初期表示が重くなるのを防ぐ
+  // 表示域に近づくまで描画を遅らせ、42図の一斉描画で初期表示が重くなるのを防ぐ
   useEffect(() => {
     const figure = figureRef.current;
     if (!figure || nearView) return;
