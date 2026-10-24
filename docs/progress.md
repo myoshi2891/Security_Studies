@@ -12,11 +12,11 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1582成功 / 0 skip / 0失敗** | npm test実測（2026-10-24）・240ファイル・1582件。534,027 expect。CyberOps専用80件を含む。 |
+| テストケース総数 | **1585成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・240ファイル・1585件。520,277 expect。CyberOps専用83件を含む。 |
 | テストファイル数 | **240ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **96/96 (100%)** | 従来91 + CyberOps部品5。純粋データ・MDXは分母外。全240テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | CyberOps原本なし隔離環境は48成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
@@ -30,7 +30,7 @@
 | `src/app/docs/cyberops-associate-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 7 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
-| `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 未解決importを除去・共通CSS読込ガード・375/1440px×明暗の全2706セル |
 | `src/app/docs/cyberops-associate-guide/snapshot.test.tsx` | 16 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/styles.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/csslp-guide/design.test.tsx` | 9 | ✅ 2026-10-24 10問40選択肢・16図・3幅・コントラスト・開閉を検証 |
@@ -1245,7 +1245,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps表ホバー修正（2026-10-25）
 
-ホバーGreen: Red 17a2859で単体4条件失敗とChrome4条件×各1253セルの背景変化を記録。専用tr:hover tdの背景を透明へ固定し、強化した単体7件成功。実Chromeは375/1440px×明暗の全4条件・全135表2706セルで背景/文字/罫線変化0セル、実ポインターの奇数/偶数行も保持。lint・型チェック成功。全体テストと原本なし隔離検証を実行中。専用登録83件/10ファイル、全体登録1585件/240ファイル。
+ホバー修正完了。Red 17a2859 → Green 38f4aba（専用CSSのみ）。強化した単体7件成功、CyberOps専用83件/10ファイルを含む全体1585成功/0skip/0失敗（240ファイル、520,277 expect）。原本なし隔離環境51成功/32skip/0失敗。実Chromeは375/1440px×明暗4条件・全135表2706セル（合計10824セル条件）の背景/文字/罫線変化0セル、実ポインターの奇数/偶数行12チェックも成功。修正前は全4条件で各1253セルの背景変化を検出。未解決Tailwind importをテスト用CSSから除去し、共通ホバールールの読込ガードを追加。製品CSSのimportや共通ホバーは変更せず、他ガイドへの適用もない。HTML/Markdown原本・本文・構造ハッシュは不変。npm test・lint・型チェック成功。ビルド未実行。
 
 共通 `.prose tr:hover td` が専用 `td` より高い詳細度を持つため、OSダーク設定で背景 #18181b / 文字 #161B26 となっていた。Happy DOM用CSSに未解決のTailwind importを残すと共通ルールを評価できないため、テスト用にimportだけを除去する。実ブラウザー検証: Playwrightが利用可能な環境で `npm exec --package=playwright --call "node src/app/docs/cyberops-associate-guide/hover.browser.mjs"`（security-docs内、起動済み開発サーバーを使用）。`PLAYWRIGHT_MODULE_PATH` / `CHROME_PATH` / `DOCS_BASE_URL` も指定可。npm使用・ビルド禁止/未実行・目視はユーザー担当。
 

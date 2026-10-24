@@ -215,13 +215,13 @@
   "visualReview": "user pending",
   "build": "prohibited",
   "contentGreen": "451d28d",
-  "targetedTests": "80 pass / 0 fail, 10 files",
+  "targetedTests": "83 pass / 0 fail, 10 files",
   "httpVerification": "200: all 16 counts and 16 structure hashes match",
   "archiveRed": "0 pass / 4 fail",
   "archiveGreen": "8980a07",
   "archiveVerification": "4 pass / 0 fail; HTML and Markdown SHA-256 match before/after; archives ignored by Git",
   "testFiles": 10,
-  "registeredTests": 80,
+  "registeredTests": 83,
   "routeCount": 32,
   "components": [
     "GuideSidebar",
@@ -239,6 +239,19 @@
   "originalSource": "Cyberops-associate-guide.html",
   "markdownSource": "archive/security-certifications/Cyberops-associate-guide.md",
   "fullValidation": {
+    "pass": 1585,
+    "skip": 0,
+    "fail": 0,
+    "tests": 1585,
+    "files": 240,
+    "assertions": 520277
+  },
+  "withoutOriginals": "51 pass / 32 skip / 0 fail, 10 files, 7498 assertions",
+  "lint": "npm run lint: success",
+  "types": "npm run types:check: success",
+  "initialFullValidation": "1581 pass / 1 fail: existing ISO baseline route-count contract; corrected separately",
+  "isoNavigationRegression": "1d4603f: preserve original 30 routes while distinguishing CSSLP and CyberOps additions; targeted 5 pass / 0 fail",
+  "migrationValidation": {
     "pass": 1582,
     "skip": 0,
     "fail": 0,
@@ -246,9 +259,25 @@
     "files": 240,
     "assertions": 534027
   },
-  "withoutOriginals": "48 pass / 32 skip / 0 fail, 10 files, 21248 assertions",
-  "lint": "npm run lint: success",
-  "types": "npm run types:check: success",
-  "initialFullValidation": "1581 pass / 1 fail: existing ISO baseline route-count contract; corrected separately",
-  "isoNavigationRegression": "1d4603f: preserve original 30 routes while distinguishing CSSLP and CyberOps additions; targeted 5 pass / 0 fail"
+  "updated": "2026-10-25",
+  "hoverRegression": {
+    "red": "17a2859",
+    "green": "38f4aba",
+    "unitTests": "7 pass / 0 fail",
+    "browser": "Chrome via Playwright, real CSS.forcePseudoState hover plus pointer movement",
+    "conditions": [
+      "375 light",
+      "375 dark",
+      "1440 light",
+      "1440 dark"
+    ],
+    "tables": 135,
+    "cells": 2706,
+    "cellConditions": 10824,
+    "changedCellsAfterFix": 0,
+    "changedCellsBeforeFixPerCondition": 1253,
+    "pointerChecks": 12,
+    "harnessFix": "Strip unresolved @import from raw test CSS so shared hover rules are evaluated; assert both shared palettes load",
+    "scope": "CyberOps row-hover CSS only; shared CSS and source archives unchanged"
+  }
 }
