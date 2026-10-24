@@ -6,7 +6,12 @@ import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity
 const guideCss=()=>readFileSync(new URL('./iso27001-guide.css',import.meta.url),'utf8');
 const sharedCss=()=>['../../globals.css','../docs-layout.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n');
 function comparable(css:string,width:number){
- const tree=postcss.parse(css);tree.walkAtRules('import',r=>{r.remove();});
+ const resolved=css.replace(/clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)vw\s*,\s*([\d.]+)(rem|px)\s*\)/g,(_,lo,lu,mid,hi,hu)=>Math.min(Number(hi)*(hu==='rem'?16:1),Math.max(Number(lo)*(lu==='rem'?16:1),Number(mid)*width/100))+'px');
+ const tree=postcss.parse(resolved);
+ // Happy DOM resolves em spacing while visiting earlier matching font rules. Expand
+ // relative spacing using each source rule's final explicit font size on both sides.
+ tree.walkRules(rule=>{const font=rule.nodes.find(d=>d.type==='decl'&&d.prop==='font-size') as postcss.Declaration|undefined;const match=font?.value.match(/^([\d.]+)(rem|px)$/);const pixels=match?Number(match[1])*(match[2]==='rem'?16:1):16;rule.walkDecls(d=>{if(/^(margin|padding|gap|min-width|width|height|top|left)/.test(d.prop))d.value=d.value.replace(/(-?[\d.]+)em/g,(_,n)=>Number(n)*pixels+'px');});});
+ tree.walkAtRules('import',r=>{r.remove();});
  tree.walkRules(r=>{r.selector=r.selector.replace(/:hover\b/g,'.fidelity-hover');});
  tree.walkDecls(d=>{
   if(d.prop==='list-style'&&['none','disc','decimal'].includes(d.value))d.cloneAfter({prop:'list-style-type'});
@@ -15,7 +20,7 @@ function comparable(css:string,width:number){
  // Happy DOM does not resolve clamp(); both documents use the same viewport arithmetic.
  return tree.toString().replace(/clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)vw\s*,\s*([\d.]+)(rem|px)\s*\)/g,(_,lo,lu,mid,hi,hu)=>Math.min(Number(hi)*(hu==='rem'?16:1),Math.max(Number(lo)*(lu==='rem'?16:1),Number(mid)*width/100))+'px');
 }
-function norm(value:string,prop:string){return prop==='font-weight'?({normal:'400',bold:'700'}[value]??value):prop==='letter-spacing'&&(!value||value==='normal')?'0px':!value&&prop==='background-color'?'transparent':!value&&/^(margin|padding|border)/.test(prop)?'0px':value.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px').replace(/["']/g,'');}
+function norm(value:string,prop:string){return prop==='box-shadow'&&!value?'none':prop==='font-weight'?({normal:'400',bold:'700'}[value]??value):prop==='letter-spacing'&&(!value||value==='normal')?'0px':!value&&prop==='background-color'?'transparent':!value&&/^(margin|padding|border)/.test(prop)?'0px':value.replace(/(-?[\d.]+)rem/g,(_,n)=>Number(n)*16+'px').replace(/["']/g,'');}
 async function compareCascade(width:number,theme:string,hover=false){
  const actual=new Window({settings:{device:{prefersColorScheme:theme}}}),original=new Window({settings:{device:{prefersColorScheme:theme}}});
  try{
@@ -25,10 +30,10 @@ async function compareCascade(width:number,theme:string,hover=false){
   actual.document.head.innerHTML='<style>ul,ol{list-style:none;margin:0;padding:0}'+comparable(sharedCss()+'\n'+guideCss(),width)+'</style>';
   actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
   if(hover)for(const w of [actual,original])for(const row of w.document.querySelectorAll('tr'))row.classList.add('fidelity-hover');
-  const selectors=hover?['th,td']:['.hero h1,.h1-sub','.hero-lead,.hero-meta dt,.hero-meta dd','.chapter h2,.chapter h3,.chapter h4','.chapter p,.chapter ul,.chapter ol,.chapter li','th,td','.callout,.callout-body p','.chk,.chk-no,.chk-text,.chk-box','.src-card,.src-badge,.chip,.src-title,.src-url','.sidebar nav a,.nav-no,.nav-group-title,.brand-name,.brand-sub,.side-foot','.diagram figcaption','.footer'];
+  const selectors=hover?['th,td']:['.layout,.main,.hero,.chapter,.brand,.brand-mark','.hero h1,.h1-sub','.hero-lead,.hero-meta dt,.hero-meta dd','.chapter h2,.chapter h3,.chapter h4','.chapter p,.chapter ul,.chapter ol,.chapter li','th,td','.callout,.callout-body p','.chk,.chk-no,.chk-text,.chk-box','.src-card,.src-badge,.chip,.src-title,.src-url','.sidebar nav a,.nav-no,.nav-group-title,.brand-name,.brand-sub,.side-foot','.diagram figcaption','.footer'];
   const errors=new Set<string>();
   for(const selector of selectors){const a=[...actual.document.querySelectorAll('.iso27001-guide '+selector.split(',').join(', .iso27001-guide '))].filter(e=>!e.closest('.mmd')),o=[...original.document.querySelectorAll(selector)];expect(a.length,selector).toBe(o.length);
-   for(let i=0;i<a.length;i++){const av=actual.getComputedStyle(a[i]),ov=original.getComputedStyle(o[i]);for(const p of ['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','list-style-type','counter-reset','counter-increment']){const act=norm(av.getPropertyValue(p),p),src=norm(ov.getPropertyValue(p),p);if(act!==src)errors.add(`${selector} ${p}: expected ${src}; received ${act}`);}}
+   for(let i=0;i<a.length;i++){const av=actual.getComputedStyle(a[i]),ov=original.getComputedStyle(o[i]);for(const p of ['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','list-style-type','counter-reset','counter-increment','box-shadow','display','position']){const act=norm(av.getPropertyValue(p),p),src=norm(ov.getPropertyValue(p),p);if(act!==src)errors.add(`${selector} ${p}: expected ${src}; received ${act}`);}}
   }expect([...errors]).toEqual([]);
  }finally{await actual.happyDOM.close();await original.happyDOM.close();}
 }
