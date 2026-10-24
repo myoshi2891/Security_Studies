@@ -671,3 +671,12 @@
 html:has(.iso27001-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (max-width:1024px) { .iso27001-guide.iso27001-guide .sidebar { visibility:hidden; } .iso27001-guide.iso27001-guide .sidebar.open { visibility:visible; } }
 @media (prefers-reduced-motion:reduce) { html:has(.iso27001-guide) { scroll-behavior:auto; } }
+
+/* Preserve the fixed source palette and defaults against shared prose/landing styles. */
+.iso27001-guide.iso27001-guide .hero h1 { color:var(--text-primary); }
+.iso27001-guide.iso27001-guide .chapter h2 { color:var(--text-primary); padding-bottom:0; border-bottom:0; }
+.iso27001-guide.iso27001-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; color:var(--text-primary); }
+.iso27001-guide.iso27001-guide .brand-mark { box-shadow:none; }
+.iso27001-guide.iso27001-guide table { margin:0; }
+.iso27001-guide.iso27001-guide td { border-bottom:0; }
+.iso27001-guide.iso27001-guide tr:hover td { background:transparent; }
