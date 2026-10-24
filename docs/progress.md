@@ -1245,7 +1245,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps表ホバー修正（2026-10-25）
 
-ホバーRed: readabilityを4画面/テーマ条件＋共通CSS読込ガードへ強化し、3成功/4失敗（7件）を確認。実Chromeも375/1440px×明暗4条件で各1253/2706セルの背景変化を検出。全135表対象。専用登録83件/10ファイル、全体登録1585件/240ファイル。直前全体Greenは1582成功。テストハーネスの未解決@importを除去して実際の共通CSS競合を検出。製品CSS未変更。
+ホバーGreen: Red 17a2859で単体4条件失敗とChrome4条件×各1253セルの背景変化を記録。専用tr:hover tdの背景を透明へ固定し、強化した単体7件成功。実Chromeは375/1440px×明暗の全4条件・全135表2706セルで背景/文字/罫線変化0セル、実ポインターの奇数/偶数行も保持。lint・型チェック成功。全体テストと原本なし隔離検証を実行中。専用登録83件/10ファイル、全体登録1585件/240ファイル。
 
 共通 `.prose tr:hover td` が専用 `td` より高い詳細度を持つため、OSダーク設定で背景 #18181b / 文字 #161B26 となっていた。Happy DOM用CSSに未解決のTailwind importを残すと共通ルールを評価できないため、テスト用にimportだけを除去する。実ブラウザー検証: Playwrightが利用可能な環境で `npm exec --package=playwright --call "node src/app/docs/cyberops-associate-guide/hover.browser.mjs"`（security-docs内、起動済み開発サーバーを使用）。`PLAYWRIGHT_MODULE_PATH` / `CHROME_PATH` / `DOCS_BASE_URL` も指定可。npm使用・ビルド禁止/未実行・目視はユーザー担当。
 
