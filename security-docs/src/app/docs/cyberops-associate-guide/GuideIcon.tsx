@@ -1,0 +1,4 @@
+import {Award,Lightbulb,Check,CircleCheck,ExternalLink,Eye,Info,ListChecks,Menu,RotateCcw,Settings,ShieldCheck,Sparkles,Goal,X,type LucideIcon} from 'lucide-react';
+const icons:Record<string,LucideIcon>={'ti-award':Award,'ti-bulb':Lightbulb,'ti-check':Check,'ti-circle-check':CircleCheck,'ti-external-link':ExternalLink,'ti-eye':Eye,'ti-info-circle':Info,'ti-list-check':ListChecks,'ti-menu-2':Menu,'ti-refresh':RotateCcw,'ti-settings':Settings,'ti-shield-check':ShieldCheck,'ti-sparkles':Sparkles,'ti-target-arrow':Goal,'ti-x':X};
+/** Bundle semantic icons locally rather than relying on a remote icon font. */
+export function GuideIcon({name,className}:{name:string;className:string}){const Icon=icons[name];return <i className={className} aria-hidden="true">{Icon&&<Icon aria-hidden="true" />}</i>;}

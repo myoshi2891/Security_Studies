@@ -324,6 +324,10 @@
 .cyberops-associate-guide.cyberops-associate-guide .menu-btn { z-index:50; }
 .cyberops-associate-guide.cyberops-associate-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; box-shadow:none; }
 .cyberops-associate-guide.cyberops-associate-guide table { margin:0; }
+.cyberops-associate-guide.cyberops-associate-guide .eyebrow { font-family:var(--font-sans); font-size:1rem; letter-spacing:0; text-transform:none; }
+.cyberops-associate-guide.cyberops-associate-guide .content ul, .cyberops-associate-guide.cyberops-associate-guide .content ol, .cyberops-associate-guide.cyberops-associate-guide .sidebar nav ul, .cyberops-associate-guide.cyberops-associate-guide .answers > summary { list-style-type:none; }
+.cyberops-associate-guide.cyberops-associate-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.cyberops-associate-guide.cyberops-associate-guide .menu-btn svg { width:24px; height:24px; }
 .cyberops-associate-guide.cyberops-associate-guide .diagram { display:block; justify-content:normal; min-width:0; }
 .cyberops-associate-guide.cyberops-associate-guide .diagram-viewport { display:block; overflow-x:auto; }
 .cyberops-associate-guide.cyberops-associate-guide .diagram svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
@@ -336,3 +340,6 @@ html:has(.cyberops-associate-guide) { scroll-behavior:smooth; scroll-padding-top
 }
 @media (prefers-reduced-motion:reduce) { html:has(.cyberops-associate-guide) { scroll-behavior:auto; } }
 @media print { .cyberops-associate-guide.cyberops-associate-guide .sidebar, .cyberops-associate-guide.cyberops-associate-guide .menu-btn, .cyberops-associate-guide.cyberops-associate-guide .backdrop { display:none; } .cyberops-associate-guide.cyberops-associate-guide .content { margin-left:0; } }
+
+/* Preserve source table cells through shared prose border and hover rules. */
+.cyberops-associate-guide.cyberops-associate-guide td { border-bottom:0; background-color:transparent; }
