@@ -442,12 +442,14 @@
     "Tailwind resetと共通prose装飾をページ内で打ち消す"
   ],
   "updated": "2026-10-24",
-  "status": "chapters 0-5 and foundation Green; chapters 6-16 pending",
+  "status": "all 17 chapters and styling Green; archive and full-suite verification pending",
   "validation": {
     "phase1Pass": 28,
     "lint": "pass",
     "types": "pass",
     "build": "not run (user prohibited)",
-    "visualReview": "pending (user)"
+    "visualReview": "pending (user)",
+    "guideTests": 95,
+    "guideTestFiles": 11
   }
 }
