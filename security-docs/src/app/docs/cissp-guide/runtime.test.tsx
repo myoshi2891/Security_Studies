@@ -71,6 +71,15 @@ test('diagram text descriptions read labels from stadium and cylinder nodes inst
  expect(describeDiagram('flowchart LR\nAPI(["APIサーバー"]) --> DB[("顧客DB")]')).toEqual(['フローチャート','APIサーバー → 顧客DB']);
  expect(describeDiagram('flowchart LR\nDB[("顧客DB")]\nAPI(["APIサーバー"]) -->|"読み取り"| DB')).toEqual(['フローチャート','APIサーバー → 顧客DB: 読み取り']);
 });
+test('diagram text descriptions keep both unquoted non-ASCII mid-edge branches of the original first diagram',async()=>{
+ const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const {diagrams}=await import(new URL('./diagrams.ts',import.meta.url).href);
+ const description:string[]=describeDiagram(diagrams.d0);
+ expect(description).toContain('弱点ドメインはあるか → Step 3: 第4章〜第11章 ドメイン1から8を順番に学ぶ: はい');
+ expect(description).toContain('弱点ドメインはあるか → 公式模擬問題や実務経験で仕上げる: いいえ');
+ // 終点 H が接続として読まれ、孤立ノード扱いの重複行が残らない
+ expect(description.at(-1)).toBe('弱点ドメインはあるか → 公式模擬問題や実務経験で仕上げる: いいえ');
+});
 
 test('live SVG sizing extends the viewBox only to the measured drawing bounds',async()=>{
  const {fitDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
