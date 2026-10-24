@@ -19,7 +19,7 @@ try {
     try {
       const page = await context.newPage();
       await page.goto(new URL('/docs/cyberops-professional-guide', process.env.DOCS_BASE_URL ?? 'http://localhost:3000').href, { waitUntil: 'domcontentloaded', timeout: 50000 });
-      await page.waitForFunction(() => {const root=document.querySelector('.cyberops-professional-guide');return root && getComputedStyle(root).getPropertyValue('--color-ink').trim()==='#161B26' && getComputedStyle(document.documentElement).getPropertyValue('--zinc-900').trim()==='#18181b';});
+      await page.waitForFunction(() => {const root=document.querySelector('.cyberops-professional-guide');return root && getComputedStyle(root).getPropertyValue('--color-ink').trim().toLowerCase()==='#161b26' && getComputedStyle(document.documentElement).getPropertyValue('--zinc-900').trim()==='#18181b';});
       assert.equal(await page.locator('.cyberops-professional-guide table').count(), 122);
       const values = () => page.locator('.cyberops-professional-guide th,.cyberops-professional-guide td').evaluateAll(cells => cells.map(e => {
         const s = getComputedStyle(e); return { color: s.color, background: s.backgroundColor, border: s.borderBottomWidth };
