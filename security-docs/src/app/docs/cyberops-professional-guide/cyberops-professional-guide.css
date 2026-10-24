@@ -234,8 +234,8 @@
 .cyberops-professional-guide.cyberops-professional-guide .sidebar { top:64px; z-index:40; }
 .cyberops-professional-guide.cyberops-professional-guide .backdrop { top:64px; z-index:30; border:0; padding:0; }
 .cyberops-professional-guide.cyberops-professional-guide .menu-btn { z-index:50; }
-.cyberops-professional-guide.cyberops-professional-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0; box-shadow:none; }
-.cyberops-professional-guide.cyberops-professional-guide .eyebrow { font-family:var(--font-sans); font-size:1rem; }
+.cyberops-professional-guide.cyberops-professional-guide .brand { color:var(--color-ink); font-size:1rem; font-weight:400; letter-spacing:0; box-shadow:none; }
+.cyberops-professional-guide.cyberops-professional-guide .eyebrow { display:block; font-family:var(--font-sans); font-size:1rem; letter-spacing:.06em; }
 .cyberops-professional-guide.cyberops-professional-guide table { margin:0; }
 .cyberops-professional-guide.cyberops-professional-guide .guide-content ul, .cyberops-professional-guide.cyberops-professional-guide .guide-content ol, .cyberops-professional-guide.cyberops-professional-guide .sidebar ul, .cyberops-professional-guide.cyberops-professional-guide details.ans summary { list-style-type:none; }
 .cyberops-professional-guide.cyberops-professional-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
