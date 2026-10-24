@@ -1,5 +1,5 @@
 {
-  "source": "Iso-27001-2022-beginner-guide.html",
+  "source": "archive/standards/iso-iec-27001-2022-guide-2026-10-24/Iso-27001-2022-beginner-guide.html",
   "sha256": "e6f812fc2ea6f9d04a072bd6d61c2585466e447b76901a6dfee946da15d14d12",
   "markdownSha256": "ff7a24e8763624cca1ed3c2ebcc5fca1004d85a70911352ee64cbed911907bf2",
   "previousMarkdownSource": "archive/standards/Iso-27001-2022-beginner-guide.md",
@@ -442,14 +442,22 @@
     "Tailwind resetと共通prose装飾をページ内で打ち消す"
   ],
   "updated": "2026-10-24",
-  "status": "all 17 chapters and styling Green; archive and full-suite verification pending",
+  "status": "archive Green; full suite verification pending",
   "validation": {
-    "phase1Pass": 28,
+    "runner": "npm test -- --timeout 30000",
+    "guideTests": 100,
+    "guideTestFiles": 12,
+    "isolatedWithoutOriginal": {
+      "pass": 59,
+      "skip": 41,
+      "fail": 0
+    },
+    "http": 200,
+    "httpCanonicalHashes": 22,
     "lint": "pass",
     "types": "pass",
     "build": "not run (user prohibited)",
-    "visualReview": "pending (user)",
-    "guideTests": 95,
-    "guideTestFiles": 11
-  }
+    "visualReview": "pending (user)"
+  },
+  "markdownSource": "archive/standards/iso-iec-27001-2022-guide-2026-10-24/Iso-27001-2022-beginner-guide.md"
 }

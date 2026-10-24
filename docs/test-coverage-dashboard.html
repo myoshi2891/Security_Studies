@@ -56,7 +56,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            84 ロジックファイル中 84 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            87 ロジックファイル中 87 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -67,8 +67,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1309</div>
-                        <div class="summary-sub">全体1309成功/0skip/0失敗（207ファイル、503,825 expect）。CISSP97件追加、原本なし環境55成功/42skip/0失敗。</div>
+                        <div class="summary-value">1403</div>
+                        <div class="summary-sub">全体1403件/218ファイルの最終検証中。ISO27001は専用100件。原本なし環境59成功/41skip/0失敗。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -337,13 +337,13 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1162 page/guide + 11 shared navigation tests · 62/63 logic files（全体1309件）</span>
+                                            <span class="cell-count">1256 page/guide + 11 shared navigation tests · 65/66 logic files（全体1403件）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 98%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 62/63 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 65/66 ロジックファイル</div>
                                             docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modelingの描画・コード・本文をテスト済み。root layout は未カバー（HomePageは4件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
@@ -352,6 +352,7 @@
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（50件、移行・回帰検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（46件、移行・表示・回帰検証）</li>
+                                                <li>✓ ISO27001 HTML: GuideSidebar / GuideIcon / MermaidFigure（100件/12ファイル、全17章・36表845セル・13図・43出典・リスト装飾・全22構造ハッシュ）</li>
                                                 <li>✓ CISSP: GuideSidebar / GuideIcon / MermaidFigure（97件/11ファイル、143表・42図・リスト装飾・全18節固定構造ハッシュ）</li>
                                                 <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（105件、移行・回帰検証）</li>
                                                 <li>✓ WAHH: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（85テスト）</li>
@@ -368,7 +369,7 @@
 <li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（82件/7ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
 <li>✓ CCSP部品: GuideSidebar / MermaidFigure / GuideIcon（最新結果はCCSP状態欄を参照）</li>
 <li>✗ src/app/layout.tsx</li>
-                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 6、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 82（配色回帰23件を含む）、CCSP 69。原本比較を含む。</li>
+                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 100、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 82（配色回帰23件を含む）、CCSP 69。原本比較を含む。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1190,7 +1191,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-24</span>
                     <span
-                        >Runner: bun test --coverage · DOM: happy-dom · 207 files · 1309 pass / 0 skip / 0 fail（1309 total） · CI:
+                        >Runner: bun test --coverage · DOM: happy-dom · 218 files · 1403 total · 最終検証中 · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1256,8 +1257,9 @@
 <section class="container"><p>CISSPの追加検証（2026-10-24）: 原本のないCIでも移行漏れを検出できるよう、全18節とヒーロー・ブランド・目次・フッターの構造SHA-256を固定した22テストを追加。専用テストは合計93件/10ファイル。追加22件成功。</p></section>
 <section class="container"><p>CISSP原本アーカイブRed（2026-10-24）: 移動前に4テストを追加し、ルート残存と比較パスの2失敗・原本移動待ちの独立ハッシュ2skipを確認。専用登録97件/11ファイル。次にHTML・Markdownを内容不変でarchive/security-certificationsへ移動する。</p></section>
 <section class="container"><p>Local CISSP validation: npm test -- --timeout 30000 / npm run lint / npm run types:check。CI runner設定は変更なし。開発サーバーHTTP確認のみ実施、ビルド・ユーザー目視は未実施。</p></section>
-<section class="container" id="iso27001-html-status"><p>ISO27001 HTML更新・全文Green（2026-10-24）: 既存 /docs/iso-iec-27001-2022-guide を元HTMLの全17章・66見出し・36表845セル・13図・40リスト項目・16チェック・43出典カードで更新。独自の丸点/丸囲み番号、グループ別チェック番号、全CSS宣言とmedia条件、5幅×明暗のCSS、全セルの表ホバー、全表とページのhydrationを検証。全章と目次/ヒーロー/フッター等の固定構造SHA-256は原本なしでも検証。専用95件/11ファイル成功、lint・型チェック成功。既存30ルートとナビ表示名を維持し、静的/動的検索の66見出しを同期。原本アーカイブと全体テストは次段階。npm使用・ビルド禁止・未実行、目視はユーザー担当。</p></section>
+<section class="container" id="iso27001-html-status"><p>ISO27001 HTML更新: 既存 /docs/iso-iec-27001-2022-guide を元HTMLの全17章・66見出し・36表845セル・13図・40リスト項目・16チェック項目・43出典カードで更新。独自の丸点・丸囲み番号とグループ別チェック番号、全CSS/media、5幅×明暗のCSS、全845セルのホバー、全表とページのhydration、目次・図・チェック操作を検証。全17章とヒーロー/目次/フッター等22構造SHA-256は原本なしでも検証する。専用100件/12ファイル成功。原本なし隔離環境59成功/41skip/0失敗。全体1403件/218ファイルの最終検証中。既存30ルートとナビ表示名を維持し、静的/動的検索の66見出しを同期。原本は archive/standards/iso-iec-27001-2022-guide-2026-10-24/ 内へHTML/Markdownを両SHA-256一致でアーカイブ済み。内容の異なる以前のMarkdown（archive/standards/Iso-27001-2022-beginner-guide.md）もハッシュ不変で保持。npm経由のテスト・lint・型チェック成功。既存開発サーバーのHTTP 200で全件数と22構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。前半Green 05756c9、後半Green db5f859、アーカイブGreen a213e46。</p></section>
 <section class="container"><p>ISO27001 HTML更新・後半Red（2026-10-24）: 後半6〜16章、全章構造の固定SHA-256、全36表845セル、出典/引用/強調/リンク、16チェック操作、全ページhydration、5画面幅×明暗CSSと表ホバーの新規61件を追加。既存Markdown用の2テストもHTML正本の主要事実・URL検証へ更新。専用95件/11ファイルは49成功/46失敗。全体登録1398件/217ファイル、未移行の後半・共有CSS混入・検索索引未更新を検出。次に後半全文とCSS隔離を実装。</p></section>
 <section class="container"><p>ISO27001 HTML更新・アーカイブRed（2026-10-24）: 原本アーカイブ5件を追加。ルート残存・比較パス2失敗、移動先のHTML/Markdownハッシュ2skip、既存Markdown非上書き1成功。専用100件/12ファイル登録、全体1403件/218ファイル登録。新しい版別フォルダーへ今回のHTML/Markdownを移し、内容の異なる既存Markdownを保持する。</p></section>
+<section class="container"><p>Local ISO27001 validation: npm test -- --timeout 30000 / npm run lint / npm run types:check。CI runner設定は変更なし。Next.jsビルドと目視確認は未実施。</p></section>
 </body>
 </html>
