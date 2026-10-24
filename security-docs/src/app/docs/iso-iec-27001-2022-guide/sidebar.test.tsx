@@ -1,4 +1,5 @@
 import {afterEach,expect,test} from 'bun:test';
+import {readFileSync} from 'node:fs';
 import {Window} from 'happy-dom';
 import {createElement as h} from 'react';
 import {act,cleanup,fireEvent,render} from '@testing-library/react';
@@ -62,4 +63,10 @@ test('scroll tracking scrolls the original aside viewport instead of the inner n
  act(()=>notify!([{target:targets.find(t=>t.id==='ch10')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
  expect(aside.scrollTop).toBeCloseTo(380);expect(nav.scrollTop).toBe(0);
  }finally{globalThis.IntersectionObserver=saved;}
+});
+test('the drawer toggle carries the original menu-btn class targeted by the guide stylesheet',()=>{
+ const css=readFileSync(new URL('./iso27001-guide.css',import.meta.url),'utf8');
+ expect(css).toContain('.iso27001-guide.iso27001-guide .menu-btn');
+ const view=render(harness());
+ expect(view.container.querySelector('#menuBtn')).toHaveClass('menu-btn');
 });
