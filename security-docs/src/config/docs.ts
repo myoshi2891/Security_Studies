@@ -102,6 +102,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
         { title: "CISSP (Certified Information Systems Security Professional)", href: "/docs/cissp-guide" },
         { title: "CSSLP (Certified Secure Software Lifecycle Professional)", href: "/docs/csslp-guide" },
         { title: "CyberOps Associate (200-201 CBROPS)", href: "/docs/cyberops-associate-guide" },
+        { title: "CyberOps Professional (350-201 CBRCOR / 300-215 CBRFIR)", href: "/docs/cyberops-professional-guide" },
         { title: "AppSec Certifications", href: "/docs/certifications" },
       ],
     },

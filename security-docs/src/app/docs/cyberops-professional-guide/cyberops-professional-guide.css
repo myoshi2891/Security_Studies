@@ -1,0 +1,254 @@
+
+.cyberops-professional-guide.cyberops-professional-guide{
+--color-paper:#F6F7F9;--color-ink:#161B26;--color-indigo:#2E3F72;--color-gold:#B8802A;--color-forest:#1B6E6A;--color-plum:#8C3A5C;
+--surface:#FFFFFF;--line:#D5DAE5;--line-strong:#B7C0D4;--muted:#4B5878;--faint:#6B7690;
+--tint-indigo:#EEF1F8;--tint-gold:#FAF1DF;--tint-forest:#E6F2F0;--tint-plum:#F6E9EF;
+--font-sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,sans-serif;
+--font-serif:"Source Serif 4","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+--font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--sidebar:288px;
+}
+.cyberops-professional-guide.cyberops-professional-guide *{box-sizing:border-box}
+.cyberops-professional-guide.cyberops-professional-guide{scroll-behavior:smooth}
+.cyberops-professional-guide.cyberops-professional-guide{margin:0;background:var(--color-paper);color:var(--color-ink);font-family:var(--font-sans);font-size:1rem;line-height:1.75;font-weight:400;-webkit-text-size-adjust:100%}
+.cyberops-professional-guide.cyberops-professional-guide [id]{scroll-margin-top:24px}
+.cyberops-professional-guide.cyberops-professional-guide strong, .cyberops-professional-guide.cyberops-professional-guide b{font-weight:500;color:var(--color-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide a{color:var(--color-indigo);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.cyberops-professional-guide.cyberops-professional-guide a:hover{color:var(--color-gold)}
+.cyberops-professional-guide.cyberops-professional-guide .layout{display:block}
+
+/* sidebar */
+.cyberops-professional-guide.cyberops-professional-guide .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);z-index:50;padding:20px 0 40px}
+.cyberops-professional-guide.cyberops-professional-guide .brand{display:flex;align-items:center;gap:12px;padding:0 20px 18px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.cyberops-professional-guide.cyberops-professional-guide .brand .seal{flex:none}
+.cyberops-professional-guide.cyberops-professional-guide .brand .seal .a{fill:none;stroke:var(--color-indigo);stroke-width:1.5}
+.cyberops-professional-guide.cyberops-professional-guide .brand .seal .b{fill:none;stroke:var(--color-gold);stroke-width:1}
+.cyberops-professional-guide.cyberops-professional-guide .brand .seal .c{fill:none;stroke:var(--color-forest);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cyberops-professional-guide.cyberops-professional-guide .brand-t{font-family:var(--font-serif);font-weight:500;line-height:1.3;color:var(--color-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide .brand-s{color:var(--faint);line-height:1.3}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar ul{list-style:none;margin:0;padding:0}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar li{padding-left:0}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar li::before{content:none}
+.cyberops-professional-guide.cyberops-professional-guide .navgroup{padding:6px 0}
+.cyberops-professional-guide.cyberops-professional-guide .n1{display:block;padding:8px 20px;font-family:var(--font-serif);font-weight:500;color:var(--color-ink);text-decoration:none;line-height:1.4}
+.cyberops-professional-guide.cyberops-professional-guide span.n1{color:var(--muted)}
+.cyberops-professional-guide.cyberops-professional-guide .n2, .cyberops-professional-guide.cyberops-professional-guide .n3{display:block;text-decoration:none;color:var(--muted);line-height:1.45;border-left:3px solid transparent}
+.cyberops-professional-guide.cyberops-professional-guide .n2{padding:6px 20px 6px 28px}
+.cyberops-professional-guide.cyberops-professional-guide .n3{padding:5px 20px 5px 44px;color:var(--faint)}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar a:hover{background:var(--tint-indigo);color:var(--color-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar a.active{background:var(--tint-indigo);color:var(--color-indigo);border-left-color:var(--color-gold);font-weight:500}
+.cyberops-professional-guide.cyberops-professional-guide .sub{display:none}
+.cyberops-professional-guide.cyberops-professional-guide li.open>.sub{display:block}
+.cyberops-professional-guide.cyberops-professional-guide .backdrop{display:none;position:fixed;inset:0;background:var(--color-ink);opacity:.4;z-index:40}
+.cyberops-professional-guide.cyberops-professional-guide .menu-btn{display:none;position:fixed;right:20px;bottom:20px;z-index:60;width:52px;height:52px;border-radius:50%;border:1px solid var(--color-indigo);background:var(--color-indigo);color:var(--color-paper);align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer}
+
+/* main: full width, no max-width cap */
+.cyberops-professional-guide.cyberops-professional-guide .guide-content{margin-left:var(--sidebar);padding:0 56px 80px}
+.cyberops-professional-guide.cyberops-professional-guide .hero{padding:56px 0 32px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.cyberops-professional-guide.cyberops-professional-guide .eyebrow{color:var(--color-gold);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.cyberops-professional-guide.cyberops-professional-guide .hero h1{font-family:var(--font-serif);font-weight:500;font-size:2.1rem;line-height:1.35;margin:0 0 24px;color:var(--color-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.cyberops-professional-guide.cyberops-professional-guide .metacard{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--color-indigo);border-radius:8px;padding:12px 16px}
+.cyberops-professional-guide.cyberops-professional-guide .metalabel{color:var(--faint)}
+.cyberops-professional-guide.cyberops-professional-guide .metaval{margin-top:2px}
+.cyberops-professional-guide.cyberops-professional-guide h1.part{font-family:var(--font-serif);font-weight:500;font-size:1.9rem;line-height:1.35;color:var(--color-indigo);margin:64px 0 16px;padding:14px 0 14px 20px;border-left:6px solid var(--color-gold);background:var(--tint-indigo);border-radius:0 8px 8px 0}
+.cyberops-professional-guide.cyberops-professional-guide h2{font-family:var(--font-serif);font-weight:500;font-size:1.5rem;line-height:1.4;margin:48px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--line-strong);color:var(--color-ink)}
+.cyberops-professional-guide.cyberops-professional-guide h3{font-family:var(--font-serif);font-weight:500;font-size:1.25rem;line-height:1.45;margin:40px 0 12px;color:var(--color-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide h3::before{content:"";display:inline-block;width:10px;height:10px;background:var(--color-gold);margin-right:10px;border-radius:2px}
+.cyberops-professional-guide.cyberops-professional-guide h4{font-weight:500;font-size:1rem;margin:24px 0 8px;color:var(--color-forest)}
+.cyberops-professional-guide.cyberops-professional-guide p{margin:0 0 1rem}
+.cyberops-professional-guide.cyberops-professional-guide p.lead{background:var(--tint-indigo);border:1px solid var(--line);border-left:4px solid var(--color-indigo);border-radius:8px;padding:12px 18px;font-family:var(--font-serif)}
+.cyberops-professional-guide.cyberops-professional-guide p.sublabel{margin:1.6rem 0 .5rem;color:var(--color-forest);padding-left:12px;border-left:3px solid var(--color-forest)}
+.cyberops-professional-guide.cyberops-professional-guide p.sublabel strong{color:var(--color-forest)}
+
+/* lists */
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ul, .cyberops-professional-guide.cyberops-professional-guide .guide-content ol{list-style:none;margin:0 0 1rem;padding:0}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content li{position:relative;padding-left:1.7rem;margin:.35rem 0}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ul>li::before{content:"";position:absolute;left:.45rem;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--color-gold)}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ol{counter-reset:n}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ol>li{counter-increment:n}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ol>li::before{content:counter(n);position:absolute;left:0;top:.2em;width:1.3rem;height:1.3rem;line-height:1.3rem;text-align:center;border-radius:50%;background:var(--color-indigo);color:var(--color-paper);font-weight:500;font-size:1rem}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ol>li{padding-left:2rem}
+
+/* tables */
+.cyberops-professional-guide.cyberops-professional-guide .table-wrap{overflow-x:auto;margin:1rem 0 1.4rem;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.cyberops-professional-guide.cyberops-professional-guide table{border-collapse:collapse;width:100%;font-size:1rem}
+.cyberops-professional-guide.cyberops-professional-guide th, .cyberops-professional-guide.cyberops-professional-guide td{padding:10px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.cyberops-professional-guide.cyberops-professional-guide th{background:var(--tint-indigo);color:var(--color-indigo);font-weight:500;white-space:nowrap}
+.cyberops-professional-guide.cyberops-professional-guide tr:last-child td{border-bottom:none}
+.cyberops-professional-guide.cyberops-professional-guide td code{overflow-wrap:anywhere}
+
+/* code */
+.cyberops-professional-guide.cyberops-professional-guide code{font-family:var(--font-mono);font-size:1rem;background:var(--tint-indigo);color:var(--color-ink);padding:1px 6px;border-radius:4px}
+.cyberops-professional-guide.cyberops-professional-guide .codeblock{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:1rem 0 1.4rem;background:var(--surface)}
+.cyberops-professional-guide.cyberops-professional-guide .codehead{background:var(--tint-indigo);color:var(--faint);padding:6px 14px;border-bottom:1px solid var(--line);font-family:var(--font-mono)}
+.cyberops-professional-guide.cyberops-professional-guide .codeblock pre{margin:0;padding:14px 16px;overflow-x:auto;line-height:1.6}
+.cyberops-professional-guide.cyberops-professional-guide .codeblock pre code, .cyberops-professional-guide.cyberops-professional-guide pre code.hljs{background:transparent;padding:0;border-radius:0;color:var(--color-ink)}
+.cyberops-professional-guide.cyberops-professional-guide .hljs{background:transparent}
+
+/* callouts: practice / source / note */
+.cyberops-professional-guide.cyberops-professional-guide .callout{border:1px solid var(--line);border-left-width:4px;border-radius:8px;padding:14px 18px 6px;margin:1.3rem 0}
+.cyberops-professional-guide.cyberops-professional-guide .callout-title{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:8px}
+.cyberops-professional-guide.cyberops-professional-guide .callout-title i{font-size:1.25rem}
+.cyberops-professional-guide.cyberops-professional-guide .callout>*:last-child{margin-bottom:.6rem}
+.cyberops-professional-guide.cyberops-professional-guide .callout.practice{background:var(--tint-gold);border-color:var(--color-gold)}
+.cyberops-professional-guide.cyberops-professional-guide .callout.practice .callout-title{color:var(--color-gold)}
+.cyberops-professional-guide.cyberops-professional-guide .callout.source{background:var(--tint-forest);border-color:var(--color-forest)}
+.cyberops-professional-guide.cyberops-professional-guide .callout.source .callout-title{color:var(--color-forest)}
+.cyberops-professional-guide.cyberops-professional-guide .callout.note{background:var(--tint-plum);border-color:var(--color-plum)}
+.cyberops-professional-guide.cyberops-professional-guide .callout.note .callout-title{color:var(--color-plum)}
+
+/* diagrams */
+.cyberops-professional-guide.cyberops-professional-guide .diagram{display:flex;justify-content:center;overflow-x:auto;margin:1.2rem 0 1.6rem;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.cyberops-professional-guide.cyberops-professional-guide .diagram svg{overflow:visible}
+
+/* reference cards */
+.cyberops-professional-guide.cyberops-professional-guide .refgroup{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px;margin:1rem 0 1.6rem}
+.cyberops-professional-guide.cyberops-professional-guide .refcard{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px}
+.cyberops-professional-guide.cyberops-professional-guide .refnum{flex:none;width:2rem;height:2rem;line-height:2rem;text-align:center;border-radius:50%;background:var(--color-forest);color:var(--color-paper);font-weight:500}
+.cyberops-professional-guide.cyberops-professional-guide .refbody{min-width:0}
+.cyberops-professional-guide.cyberops-professional-guide .reftitle{font-weight:500;color:var(--color-ink);line-height:1.5}
+.cyberops-professional-guide.cyberops-professional-guide .refbody a{display:block;margin-top:2px}
+
+/* quiz */
+.cyberops-professional-guide.cyberops-professional-guide .quiz-ctl{display:flex;gap:10px;flex-wrap:wrap;margin:1rem 0}
+.cyberops-professional-guide.cyberops-professional-guide .quiz-ctl button{font:inherit;cursor:pointer;background:var(--surface);color:var(--color-indigo);border:1px solid var(--color-indigo);border-radius:8px;padding:8px 16px}
+.cyberops-professional-guide.cyberops-professional-guide .quiz-ctl button:hover{background:var(--tint-indigo)}
+.cyberops-professional-guide.cyberops-professional-guide .quiz{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px;margin-bottom:1.6rem}
+.cyberops-professional-guide.cyberops-professional-guide .qcard{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--color-indigo);border-radius:12px;padding:16px 18px}
+.cyberops-professional-guide.cyberops-professional-guide .qnum{flex:none;width:2.4rem;height:2.4rem;line-height:2.4rem;text-align:center;border-radius:50%;background:var(--color-indigo);color:var(--color-paper);font-weight:500}
+.cyberops-professional-guide.cyberops-professional-guide .qbody{min-width:0;flex:1}
+.cyberops-professional-guide.cyberops-professional-guide .qtext{margin:0 0 .8rem}
+.cyberops-professional-guide.cyberops-professional-guide details.ans summary{cursor:pointer;color:var(--color-forest);font-weight:500;list-style:none;display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid var(--color-forest);border-radius:8px}
+.cyberops-professional-guide.cyberops-professional-guide details.ans summary::-webkit-details-marker{display:none}
+.cyberops-professional-guide.cyberops-professional-guide details.ans summary:hover{background:var(--tint-forest)}
+.cyberops-professional-guide.cyberops-professional-guide details.ans[open] summary{background:var(--tint-forest)}
+.cyberops-professional-guide.cyberops-professional-guide .anstext{margin-top:10px;padding:10px 14px;background:var(--tint-forest);border-left:4px solid var(--color-forest);border-radius:0 8px 8px 0}
+
+/* tablet and below: drawer */
+@media (max-width:1024px){
+.cyberops-professional-guide.cyberops-professional-guide .sidebar{transform:translateX(-100%);transition:transform .25s ease;width:min(320px,86vw)}
+.cyberops-professional-guide.cyberops-professional-guide .sidebar.open{transform:none}
+.cyberops-professional-guide.cyberops-professional-guide .backdrop.show{display:block}
+.cyberops-professional-guide.cyberops-professional-guide .menu-btn{display:flex}
+.cyberops-professional-guide.cyberops-professional-guide .guide-content{margin-left:0;padding:0 20px 96px}
+.cyberops-professional-guide.cyberops-professional-guide .hero{padding-top:32px}
+.cyberops-professional-guide.cyberops-professional-guide .hero h1{font-size:1.6rem}
+.cyberops-professional-guide.cyberops-professional-guide h1.part{font-size:1.5rem}
+.cyberops-professional-guide.cyberops-professional-guide .refgroup, .cyberops-professional-guide.cyberops-professional-guide .quiz{grid-template-columns:1fr}
+}
+
+/* Local syntax palette replaces the source CDN. */
+.cyberops-professional-guide.cyberops-professional-guide pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+.cyberops-professional-guide.cyberops-professional-guide code.hljs {
+  padding: 3px 5px
+}
+/*!
+  Theme: GitHub
+  Description: Light theme as seen on github.com
+  Author: github.com
+  Maintainer: @Hirse
+  Updated: 2021-05-15
+
+  Outdated base version: https://github.com/primer/github-syntax-light
+  Current colors taken from GitHub's CSS
+*/
+.cyberops-professional-guide.cyberops-professional-guide .hljs {
+  color: #24292e;
+  background: #ffffff
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-doctag, .cyberops-professional-guide.cyberops-professional-guide .hljs-keyword, .cyberops-professional-guide.cyberops-professional-guide .hljs-meta .hljs-keyword, .cyberops-professional-guide.cyberops-professional-guide .hljs-template-tag, .cyberops-professional-guide.cyberops-professional-guide .hljs-template-variable, .cyberops-professional-guide.cyberops-professional-guide .hljs-type, .cyberops-professional-guide.cyberops-professional-guide .hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #d73a49
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-title, .cyberops-professional-guide.cyberops-professional-guide .hljs-title.class_, .cyberops-professional-guide.cyberops-professional-guide .hljs-title.class_.inherited__, .cyberops-professional-guide.cyberops-professional-guide .hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #6f42c1
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-attr, .cyberops-professional-guide.cyberops-professional-guide .hljs-attribute, .cyberops-professional-guide.cyberops-professional-guide .hljs-literal, .cyberops-professional-guide.cyberops-professional-guide .hljs-meta, .cyberops-professional-guide.cyberops-professional-guide .hljs-number, .cyberops-professional-guide.cyberops-professional-guide .hljs-operator, .cyberops-professional-guide.cyberops-professional-guide .hljs-variable, .cyberops-professional-guide.cyberops-professional-guide .hljs-selector-attr, .cyberops-professional-guide.cyberops-professional-guide .hljs-selector-class, .cyberops-professional-guide.cyberops-professional-guide .hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #005cc5
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-regexp, .cyberops-professional-guide.cyberops-professional-guide .hljs-string, .cyberops-professional-guide.cyberops-professional-guide .hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #032f62
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-built_in, .cyberops-professional-guide.cyberops-professional-guide .hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #e36209
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-comment, .cyberops-professional-guide.cyberops-professional-guide .hljs-code, .cyberops-professional-guide.cyberops-professional-guide .hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #6a737d
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-name, .cyberops-professional-guide.cyberops-professional-guide .hljs-quote, .cyberops-professional-guide.cyberops-professional-guide .hljs-selector-tag, .cyberops-professional-guide.cyberops-professional-guide .hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #22863a
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #24292e
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #005cc5;
+  font-weight: bold
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #735c0f
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #24292e;
+  font-style: italic
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #24292e;
+  font-weight: bold
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #22863a;
+  background-color: #f0fff4
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #b31d28;
+  background-color: #ffeef0
+}
+.cyberops-professional-guide.cyberops-professional-guide .hljs-char.escape_, .cyberops-professional-guide.cyberops-professional-guide .hljs-link, .cyberops-professional-guide.cyberops-professional-guide .hljs-params, .cyberops-professional-guide.cyberops-professional-guide .hljs-property, .cyberops-professional-guide.cyberops-professional-guide .hljs-punctuation, .cyberops-professional-guide.cyberops-professional-guide .hljs-tag {
+  /* purposely ignored */
+  
+}
+/* Preserve source defaults through shared prose, and account for the app header. */
+.docs-main:has(.cyberops-professional-guide) { padding:0; }
+.cyberops-professional-guide.cyberops-professional-guide { min-width:0; min-height:100vh; }
+.cyberops-professional-guide.cyberops-professional-guide .guide-content { min-width:0; }
+.cyberops-professional-guide.cyberops-professional-guide .hero h1, .cyberops-professional-guide.cyberops-professional-guide h1.part, .cyberops-professional-guide.cyberops-professional-guide h2, .cyberops-professional-guide.cyberops-professional-guide h3, .cyberops-professional-guide.cyberops-professional-guide .brand-t, .cyberops-professional-guide.cyberops-professional-guide p.lead { font-family:'Source Serif 4 Variable',var(--font-serif); letter-spacing:0; }
+.cyberops-professional-guide.cyberops-professional-guide .sidebar { top:64px; z-index:40; }
+.cyberops-professional-guide.cyberops-professional-guide .backdrop { top:64px; z-index:30; border:0; padding:0; }
+.cyberops-professional-guide.cyberops-professional-guide .menu-btn { z-index:50; }
+.cyberops-professional-guide.cyberops-professional-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0; box-shadow:none; }
+.cyberops-professional-guide.cyberops-professional-guide .eyebrow { font-family:var(--font-sans); font-size:1rem; }
+.cyberops-professional-guide.cyberops-professional-guide table { margin:0; }
+.cyberops-professional-guide.cyberops-professional-guide .guide-content ul, .cyberops-professional-guide.cyberops-professional-guide .guide-content ol, .cyberops-professional-guide.cyberops-professional-guide .sidebar ul, .cyberops-professional-guide.cyberops-professional-guide details.ans summary { list-style-type:none; }
+.cyberops-professional-guide.cyberops-professional-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.cyberops-professional-guide.cyberops-professional-guide .menu-btn svg { width:24px; height:24px; }
+.cyberops-professional-guide.cyberops-professional-guide .diagram { display:block; justify-content:normal; min-width:0; }
+.cyberops-professional-guide.cyberops-professional-guide .diagram-viewport { display:block; overflow-x:auto; }
+.cyberops-professional-guide.cyberops-professional-guide .diagram svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+.cyberops-professional-guide.cyberops-professional-guide .diagram-description { margin-top:12px; }
+.cyberops-professional-guide.cyberops-professional-guide .guide-content [id] { scroll-margin-top:88px; }
+.cyberops-professional-guide.cyberops-professional-guide .sidebar a { scroll-margin-top:0; }
+.cyberops-professional-guide.cyberops-professional-guide tr:hover td { background-color:transparent; }
+.cyberops-professional-guide.cyberops-professional-guide .codeblock pre { background:transparent; border:0; border-radius:0; color:var(--color-ink); }
+html:has(.cyberops-professional-guide) { scroll-behavior:smooth; }
+@media (max-width:1024px) { .cyberops-professional-guide.cyberops-professional-guide .sidebar { visibility:hidden; } .cyberops-professional-guide.cyberops-professional-guide .sidebar.open { visibility:visible; } }
+@media (prefers-reduced-motion:reduce) { html:has(.cyberops-professional-guide) { scroll-behavior:auto; } .cyberops-professional-guide.cyberops-professional-guide .sidebar { transition:none; } }
+@media print { .cyberops-professional-guide.cyberops-professional-guide .sidebar, .cyberops-professional-guide.cyberops-professional-guide .menu-btn, .cyberops-professional-guide.cyberops-professional-guide .backdrop { display:none; } .cyberops-professional-guide.cyberops-professional-guide .guide-content { margin-left:0; } }
