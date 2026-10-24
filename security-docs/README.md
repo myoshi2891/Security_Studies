@@ -274,3 +274,12 @@ CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・11
 配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット `6399898`。
 
 調査記録: `docs/migration-inventory/guide-readability-review.json`。
+
+
+<!-- cissp-migration-status -->
+## CISSP移行（2026-10-24）
+
+CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行。専用93件/10ファイル成功（71件の原本比較・操作・CSS・hydration検証と、原本なしでも実行する構造ハッシュ22件）。全CSS宣言とmedia条件、5画面幅×明暗の計算済みCSS、丸点・番号・カウンター・自然幅図の横スクロールを検証。共通ナビ・ホーム・静的検索30ページへ登録。npm test・lint・型チェック成功。全体再検証と原本アーカイブは次の段階。ビルド禁止・未実行、目視はユーザー担当・未確認。実装コミット `4c9fbee`。
+
+配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。
+<!-- /cissp-migration-status -->

@@ -306,3 +306,12 @@ CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・11
 調査記録: `docs/migration-inventory/guide-readability-review.json`。
 
 固定配色の移行ページでは通常表示だけでなく、実際のOS配色と表ホバー、インラインcodeの前景/背景を確認する。原本のcodeにcolor指定がなくても、共通proseの明示色が侵入するため継承を明示する。行の背景リセットは元の縞模様を優先させる。Happy DOMはhover・backgroundショートハンド・勝ったinheritの解決がChromeと異なるため、同じ詳細度で状態/継承をモデル化し、修正を外す負の対照でも元症状を検出する。
+
+
+<!-- cissp-migration-status -->
+## CISSP移行（2026-10-24）
+
+CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行。専用93件/10ファイル成功（71件の原本比較・操作・CSS・hydration検証と、原本なしでも実行する構造ハッシュ22件）。全CSS宣言とmedia条件、5画面幅×明暗の計算済みCSS、丸点・番号・カウンター・自然幅図の横スクロールを検証。共通ナビ・ホーム・静的検索30ページへ登録。npm test・lint・型チェック成功。全体再検証と原本アーカイブは次の段階。ビルド禁止・未実行、目視はユーザー担当・未確認。実装コミット `4c9fbee`。
+
+配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。
+<!-- /cissp-migration-status -->
