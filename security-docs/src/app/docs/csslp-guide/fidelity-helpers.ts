@@ -42,7 +42,7 @@ export function canonical(node: Node): unknown {
  if(el.tagName==='I')return ['icon',el.getAttribute('class')];
  const attrs=[...el.attributes].filter(a=>a.name!=='style').map(a=>[a.name,a.value]).sort((a,b)=>a[0].localeCompare(b[0]));
  const style=(el.getAttribute('style')||'').split(';').map(s=>s.trim().replace(/\s+/g,'')).filter(Boolean).sort();
- return [el.tagName,attrs,style,[...el.childNodes].map(canonical).filter(v=>v!==null)];
+ return [el.tagName,attrs,style,el.matches('code.language-python') ? [el.textContent?.replace(/\s+/g,' ').trim()] : [...el.childNodes].map(canonical).filter(v=>v!==null)];
 }
 let evaluated: ReturnType<typeof evaluate> | undefined;
 export function evaluatedPage() {
