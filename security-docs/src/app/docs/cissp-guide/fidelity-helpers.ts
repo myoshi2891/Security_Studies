@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-const sourcePath = resolve(import.meta.dir, '../../../../../Cissp-guide.html');
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Cissp-guide.html');
 // アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
