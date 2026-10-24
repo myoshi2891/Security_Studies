@@ -442,7 +442,7 @@
     "Tailwind resetと共通prose装飾をページ内で打ち消す"
   ],
   "updated": "2026-10-24",
-  "status": "archive Green; full suite verification pending",
+  "status": "automated verification complete; visual review pending",
   "validation": {
     "runner": "npm test -- --timeout 30000",
     "guideTests": 100,
@@ -457,7 +457,14 @@
     "lint": "pass",
     "types": "pass",
     "build": "not run (user prohibited)",
-    "visualReview": "pending (user)"
+    "visualReview": "pending (user)",
+    "fullSuite": {
+      "pass": 1403,
+      "skip": 0,
+      "fail": 0,
+      "files": 218,
+      "expects": 507982
+    }
   },
   "markdownSource": "archive/standards/iso-iec-27001-2022-guide-2026-10-24/Iso-27001-2022-beginner-guide.md"
 }
