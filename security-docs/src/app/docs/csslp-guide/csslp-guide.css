@@ -416,3 +416,6 @@ html:has(.csslp-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media print { .csslp-guide.csslp-guide .sidebar, .csslp-guide.csslp-guide .fab, .csslp-guide.csslp-guide .bd { display:none; } .csslp-guide.csslp-guide .main { margin-left:0; } }
 
 .csslp-guide.csslp-guide .brand { color:var(--ink); }
+
+/* The source has transparent cells over white tables, including on hover. */
+.csslp-guide.csslp-guide tr:hover td { background-color:transparent; }
