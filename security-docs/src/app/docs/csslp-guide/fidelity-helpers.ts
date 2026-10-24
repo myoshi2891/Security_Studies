@@ -36,6 +36,8 @@ export function canonical(node: Node): unknown {
  if(node.nodeType===Node.TEXT_NODE)return node.textContent?.replace(/\s+/g,' ').trim()||null;
  if(node.nodeType!==Node.ELEMENT_NODE)return null;
  const el=node as Element;
+ // Design-only spans in chapter 13 may regroup text; unwrap them before the immutable source comparison.
+ if(el.id==='s13' && el.querySelector('.practice-stem')){const copy=el.cloneNode(true) as Element;for(const span of copy.querySelectorAll('.practice-stem,.practice-options,.practice-option,.practice-option-label'))span.replaceWith(...span.childNodes);for(const p of copy.querySelectorAll(':scope > p'))p.normalize();return canonical(copy);}
  if(el.tagName==='NOSCRIPT')return null;
  if(el.matches('.mmd[id]'))return ['diagram',el.id];
  if(el.tagName==='I')return ['icon',el.getAttribute('class')];
