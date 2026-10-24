@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-24（CISSP移行Red・原本棚卸しと失敗テスト追加）
+> **最終更新**: 2026-10-24（CISSP移行・原本アーカイブGreen・全体最終検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,28 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1212成功 / 0 skip / 0失敗** | npm test実測（2026-10-23〜24）・196ファイル・1212件・499,187 expect。新規配色回帰23件を含む。 |
-| テストファイル数 | **196ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全196テストファイルとは別集計 |
+| テストケース総数 | **1309件登録・全体最終検証中** | npm test -- --timeout 30000実測（2026-10-24）・207ファイル・1309件。CISSP専用97件を含む。 |
+| テストファイル数 | **207ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **84/84 (100%)** | 従来81 + CISSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全207テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cissp-guide/archive.test.ts` | 4 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/foundation.test.tsx` | 6 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/integration.test.tsx` | 5 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/interactions.test.tsx` | 3 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/sections-0-8.test.tsx` | 9 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/sections-9-appendix.test.tsx` | 9 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/snapshot.test.tsx` | 22 | ✅ 2026-10-24追加・原本アーカイブ後Green |
+| `src/app/docs/cissp-guide/styles.test.tsx` | 18 | ✅ 2026-10-24追加・原本アーカイブ後Green |
 | `src/app/docs/cc-certified-in-cybersecurity-guide/readability.test.tsx` | 23 | ✅ 2026-10-24最終検証・実ホバー相当/明暗/全セル/他ガイド/変異検証 |
 | `src/app/docs/ccsp-study-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・Green |
 | `src/app/docs/ccsp-study-guide/foundation.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
@@ -281,13 +292,13 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `GEMINI.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `security-docs/README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
-| `docs/progress.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `CLAUDE.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `GEMINI.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `README.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `security-docs/README.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
+| `docs/progress.md` | 2026-10-24 | CISSP移行・アーカイブ・検証結果・目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -317,6 +328,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CISSP | **CISSP全18節移行・原本アーカイブ** — 専用97件成功。5幅×明暗・丸点/番号/カウンター・42図・143表・検索/操作/hydration検証。目視待ち。 | 2026-10-24 |
 | GUIDE-READABILITY | **ISC2 CC表ホバー・参照コード配色と同種の7ガイドを修正** — 新規23件/全1212件成功。Chrome4条件と16ガイド比較。ビルド未実行。 | 2026-10-24 |
 | CCSP | **CCSP全12節移行・原本アーカイブ** — 115見出し・78表1216セル・16図・219リスト項目を原本照合。専用69件・全1189件成功。lint/型検査成功・ビルド未実行・目視待ち。 | 2026-10-23 |
 | ISC2-CC | **ISC2 CC全11章移行** — 専用55件/全1116件成功。リストの点・番号、85表1520セル、23図、54目次リンクを検証。目視待ち。 | 2026-10-23 |
@@ -1130,7 +1142,9 @@ CISSPの追加検証（2026-10-24）: 原本のないCIでも移行漏れを検�
 <!-- cissp-migration-status -->
 ## CISSP移行（2026-10-24）
 
-CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行。専用93件/10ファイル成功（71件の原本比較・操作・CSS・hydration検証と、原本なしでも実行する構造ハッシュ22件）。全CSS宣言とmedia条件、5画面幅×明暗の計算済みCSS、丸点・番号・カウンター・自然幅図の横スクロールを検証。共通ナビ・ホーム・静的検索30ページへ登録。npm test・lint・型チェック成功。全体再検証と原本アーカイブは次の段階。ビルド禁止・未実行、目視はユーザー担当・未確認。実装コミット `4c9fbee`。
+CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用97件/11ファイル成功。原本なし隔離環境でも55成功/42skip/0失敗（全18節とヒーロー・目次等の構造ハッシュ22件を含む）。全CSS宣言とmedia条件、5幅×明暗の計算済みCSS、丸点・番号・カウンター・図の自然幅と横スクロール、全143表と全ページのhydration、目次・図・確認問題・チェック操作を検証。全体1309件/207ファイルの最終検証を実行中。共通ナビ・ホーム・静的検索は30ページ。既存CCIE/CCSTの資格ナビ期待値もCISSP登録に同期。npm経由のテスト・lint・型チェック成功。Next.js開発サーバーでHTTP 200と配信本文の件数一致を確認。Next.jsビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `4c9fbee`、アーカイブGreen `2e279ff`。
+
+配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。原本: `archive/security-certifications/Cissp-guide.html` / `archive/security-certifications/Cissp-guide.md`（Git管理外）。
 <!-- /cissp-migration-status -->
 
 CISSP原本アーカイブRed（2026-10-24）: 移動前に4テストを追加し、ルート残存と比較パスの2失敗・原本移動待ちの独立ハッシュ2skipを確認。専用登録97件/11ファイル。次にHTML・Markdownを内容不変でarchive/security-certificationsへ移動する。

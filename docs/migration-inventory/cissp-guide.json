@@ -1,5 +1,5 @@
 {
-  "source": "Cissp-guide.html",
+  "source": "archive/security-certifications/Cissp-guide.html",
   "sha256": "31fd243bc181fa3b276bb89d3a7e8d2ed618559a5a1ff2c85365c3f994405155",
   "markdownSha256": "26ace31c4f8257fa6b306e6cd64c96e048beaa7ace66161520c0de66083ba94b",
   "route": "/docs/cissp-guide",
@@ -426,5 +426,23 @@
     "図は自然幅で中央配置し、幅広図は左端から横スクロール可能",
     "目次のフォーカス制御・キーボード操作、図の遅延描画・再試行・テキスト説明を追加",
     "共有MDX装飾とTailwind resetをページスコープで打ち消す"
-  ]
+  ],
+  "markdownSource": "archive/security-certifications/Cissp-guide.md",
+  "updated": "2026-10-24",
+  "status": "archive Green; full-suite verification pending",
+  "validation": {
+    "runner": "npm test -- --timeout 30000",
+    "guideTests": 97,
+    "guideTestFiles": 11,
+    "isolatedWithoutOriginal": {
+      "pass": 55,
+      "skip": 42,
+      "fail": 0
+    },
+    "http": 200,
+    "lint": "pass",
+    "types": "pass",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)"
+  }
 }
