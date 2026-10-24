@@ -289,7 +289,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Associate移行（2026-10-24）
 
-移行と原本アーカイブ完了。専用80件成功、原本なし48成功/32skip/0失敗。全体検証で既存ISO27001ナビの固定30ページ契約が新規CyberOps追加で1件失敗。既存30ページの検証を維持するよう追加分の区別を同期し、該当5件成功を確認。全体を再実行して最終実測を確定する。HTML/Markdownは両SHA-256一致で archive/security-certifications/ へ移動済み。本文Green 451d28d、アーカイブGreen 8980a07。HTTP 200・16件数/16構造ハッシュ一致、lint/型チェック成功。
+移行・アーカイブ完了: `/docs/cyberops-associate-guide`。全12章・76小節（section計88）・153見出し・135表2706セル・42図・6コード・本文26リスト118項目・36チェック・25問100選択肢を保持。全CSS/media・丸点/番号カウンター・5幅×明暗・全セルホバー・全表/ページhydration・採点3評価帯/解答表示/両リセット・目次/チェック/図操作を検証。専用80件/10ファイル、原本なし隔離環境48成功/32skip/0失敗。全体1582成功/0skip/0失敗（240ファイル、534,027 expect）。資格ナビ・ホーム・静的/動的検索は32ページ（全153見出しを収録）。ロジック単位96/96（従来91＋GuideSidebar/GuideRuntime/MermaidFigure/GuideIcon/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。HTTP 200配信HTMLも16件数/16構造ハッシュ一致。表示基盤Red e694e3e→Green a8caf1e、本文Red b407224・ホバーRed d17d525→Green 451d28d、アーカイブRed 9b206d1→Green 8980a07。目視確認表: `docs/migration-inventory/cyberops-associate-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 

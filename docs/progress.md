@@ -12,17 +12,27 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1502成功 / 0 skip / 0失敗** | bun test実測（2026-10-24）・230ファイル・1502件。511,077 expect。CSSLP専用96件を含む。 |
-| テストファイル数 | **230ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **91/91 (100%)** | 従来87 + CSSLP部品4（GuideSidebar / MermaidFigure / GuideIcon / CodeSample）。純粋データ・MDXは分母外。全230テストファイルとは別集計 |
+| テストケース総数 | **1582成功 / 0 skip / 0失敗** | npm test実測（2026-10-24）・240ファイル・1582件。534,027 expect。CyberOps専用80件を含む。 |
+| テストファイル数 | **240ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **96/96 (100%)** | 従来91 + CyberOps部品5。純粋データ・MDXは分母外。全240テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | CyberOps原本なし隔離環境は48成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cyberops-associate-guide/archive.test.ts` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/foundation.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/chapters.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 7 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/snapshot.test.tsx` | 16 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/styles.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/csslp-guide/design.test.tsx` | 9 | ✅ 2026-10-24 10問40選択肢・16図・3幅・コントラスト・開閉を検証 |
 | `src/app/docs/csslp-guide/archive.test.ts` | 4 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
 | `src/app/docs/csslp-guide/foundation.test.tsx` | 5 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
@@ -1225,7 +1235,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Associate移行（2026-10-24）
 
-移行と原本アーカイブ完了。専用80件成功、原本なし48成功/32skip/0失敗。全体検証で既存ISO27001ナビの固定30ページ契約が新規CyberOps追加で1件失敗。既存30ページの検証を維持するよう追加分の区別を同期し、該当5件成功を確認。全体を再実行して最終実測を確定する。HTML/Markdownは両SHA-256一致で archive/security-certifications/ へ移動済み。本文Green 451d28d、アーカイブGreen 8980a07。HTTP 200・16件数/16構造ハッシュ一致、lint/型チェック成功。
+移行・アーカイブ完了: `/docs/cyberops-associate-guide`。全12章・76小節（section計88）・153見出し・135表2706セル・42図・6コード・本文26リスト118項目・36チェック・25問100選択肢を保持。全CSS/media・丸点/番号カウンター・5幅×明暗・全セルホバー・全表/ページhydration・採点3評価帯/解答表示/両リセット・目次/チェック/図操作を検証。専用80件/10ファイル、原本なし隔離環境48成功/32skip/0失敗。全体1582成功/0skip/0失敗（240ファイル、534,027 expect）。資格ナビ・ホーム・静的/動的検索は32ページ（全153見出しを収録）。ロジック単位96/96（従来91＋GuideSidebar/GuideRuntime/MermaidFigure/GuideIcon/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。HTTP 200配信HTMLも16件数/16構造ハッシュ一致。表示基盤Red e694e3e→Green a8caf1e、本文Red b407224・ホバーRed d17d525→Green 451d28d、アーカイブRed 9b206d1→Green 8980a07。目視確認表: `docs/migration-inventory/cyberops-associate-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
