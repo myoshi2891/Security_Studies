@@ -49,7 +49,11 @@ export function evaluatedPage() {
   });
   return evaluated;
 }
-export async function renderedPage() {
+let rendered: Promise<Document> | undefined;
+export function renderedPage() {
+ rendered ??= renderDocument(); return rendered;
+}
+async function renderDocument() {
   const { default: Page } = await evaluatedPage();
   return new DOMParser().parseFromString(renderToStaticMarkup(runtime.jsx(Page, {})), 'text/html');
 }
