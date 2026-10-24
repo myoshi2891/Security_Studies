@@ -433,3 +433,13 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 共通 `.prose tr:hover td` が専用 `td` より高い詳細度を持つため、OSダーク設定で背景 #18181b / 文字 #161B26 となっていた。Happy DOM用CSSに未解決のTailwind importを残すと共通ルールを評価できないため、テスト用にimportだけを除去する。実ブラウザー検証: Playwrightが利用可能な環境で `npm exec --package=playwright --call "node src/app/docs/cyberops-associate-guide/hover.browser.mjs"`（security-docs内、起動済み開発サーバーを使用）。`PLAYWRIGHT_MODULE_PATH` / `CHROME_PATH` / `DOCS_BASE_URL` も指定可。npm使用・ビルド禁止/未実行・目視はユーザー担当。
 
 <!-- /cyberops-hover-status -->
+
+<!-- cyberops-professional-status -->
+
+## CyberOps Professional移行（2026-10-25）
+
+事前監査: 直前全体Greenは1585成功/240ファイル（b203594）。既存32ルートを維持。原本棚卸し135見出し/134本文ブロック・122表2051セル・42図・20コード（8言語）・15確認問題/全解答開閉・61参考文献・57ul/14ol/190項目。表示基盤Red4件を未実装で失敗確認。専用4件/1ファイル、全体登録1589件/241ファイル。本文・アーカイブ未実装。
+
+配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-professional-status -->
