@@ -419,3 +419,221 @@ html:has(.csslp-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 
 /* The source has transparent cells over white tables, including on hover. */
 .csslp-guide.csslp-guide tr:hover td { background-color:transparent; }
+
+/* Practice workbook: original question text is regrouped into stem and choices. */
+.csslp-guide.csslp-guide #s13 > .callout.note {
+    background:#edf2f9;
+    border-color:#b8c5dd;
+    border-left-color:var(--indigo);
+}
+.csslp-guide.csslp-guide #s13 > .callout.note .lb { color:var(--indigo); }
+.csslp-guide.csslp-guide #s13 > p {
+    display:grid;
+    grid-template-columns:40px minmax(0,1fr);
+    column-gap:16px;
+    row-gap:18px;
+    margin:0 0 18px;
+    padding:24px;
+    background:#ffffff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 3px 12px rgba(46,63,114,0.035);
+}
+.csslp-guide.csslp-guide #s13 > p > strong:first-of-type {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    align-self:start;
+    grid-column:1;
+    grid-row:1;
+    width:40px;
+    min-height:36px;
+    padding:4px;
+    border-radius:10px;
+    background:#2e3f72;
+    color:#ffffff;
+    font-size:0.875rem;
+    font-weight:600;
+    line-height:1.5;
+    font-variant-numeric:tabular-nums;
+}
+.csslp-guide.csslp-guide #s13 .practice-stem {
+    display:block;
+    grid-column:2;
+    align-self:center;
+    color:var(--ink);
+    line-height:1.9;
+    overflow-wrap:anywhere;
+}
+.csslp-guide.csslp-guide #s13 .practice-options {
+    display:grid;
+    grid-column:1 / -1;
+    grid-template-columns:minmax(0, 1fr);
+    gap:10px;
+}
+.csslp-guide.csslp-guide #s13 .practice-option {
+    display:block;
+    min-width:0;
+    padding:12px 14px;
+    border:1px solid #e3e8f1;
+    border-radius:10px;
+    background:#f7f9fc;
+    color:#34415c;
+    line-height:1.75;
+    overflow-wrap:anywhere;
+}
+.csslp-guide.csslp-guide #s13 .practice-option-label {
+    display:inline-block;
+    min-width:1.5em;
+    color:var(--indigo);
+    font-weight:600;
+    font-variant-numeric:tabular-nums;
+}
+.csslp-guide.csslp-guide #s13 > details {
+    margin:28px 0 12px;
+    padding:0;
+    border:1px solid #cbd7d6;
+    border-radius:16px;
+    overflow:hidden;
+    background:#ffffff;
+}
+.csslp-guide.csslp-guide #s13 > details > summary {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    min-height:56px;
+    padding:16px 20px;
+    list-style:none;
+    color:#245950;
+    background:#eef5f3;
+}
+.csslp-guide.csslp-guide #s13 > details > summary::-webkit-details-marker { display:none; }
+.csslp-guide.csslp-guide #s13 > details > summary::after {
+    content:'+';
+    flex:none;
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    border:1px solid #cbd7d6;
+    border-radius:50%;
+    font-size:1.25rem;
+    line-height:1;
+}
+.csslp-guide.csslp-guide #s13 > details[open] > summary::after { content:'−'; }
+.csslp-guide.csslp-guide #s13 > details > .tw { margin:0; padding:16px; }
+.csslp-guide.csslp-guide #s13 details table { min-width:480px; }
+.csslp-guide.csslp-guide #s13 details th { background:#f2f6f5; color:#245950; }
+.csslp-guide.csslp-guide #s13 details td:nth-child(1) { white-space:nowrap; font-weight:500; }
+.csslp-guide.csslp-guide #s13 details td:nth-child(2) { text-align:center; width:70px; }
+.csslp-guide.csslp-guide #s13 details td:nth-child(2) strong {
+    display:inline-grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    background:#e6f1ec;
+    color:#245950;
+}
+
+/* Diagram plates share a restrained frame, readable drawing surface and captions. */
+.csslp-guide.csslp-guide .mmd {
+    margin:24px 0;
+    border:1px solid #d5deed;
+    border-radius:18px;
+    background:#ffffff;
+    overflow:hidden;
+    box-shadow:0 4px 18px rgba(46,63,114,0.04);
+}
+.csslp-guide.csslp-guide .diagram-heading {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px 14px;
+    padding:16px 20px;
+    border-bottom:1px solid #e1e7f1;
+    background:#f5f7fb;
+}
+.csslp-guide.csslp-guide .diagram-kicker {
+    color:#667694;
+    font-size:0.6875rem;
+    font-weight:600;
+    letter-spacing:0.1em;
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+}
+.csslp-guide.csslp-guide .diagram-title { color:#2e3f72; font-weight:600; line-height:1.6; }
+.csslp-guide.csslp-guide .diagram-kind {
+    margin-left:auto;
+    padding:2px 8px;
+    border:1px solid #d7e1ef;
+    border-radius:6px;
+    color:#647392;
+    font-size:0.6875rem;
+    white-space:nowrap;
+}
+.csslp-guide.csslp-guide .diagram-viewport {
+    padding:16px;
+    background-color:#ffffff;
+    background-image:radial-gradient(#dce3ef 0.7px,transparent 0.7px);
+    background-size:16px 16px;
+    scrollbar-color:#bac7de #f5f7fb;
+    scrollbar-width:thin;
+}
+.csslp-guide.csslp-guide .mmd > p[role='status'] {
+    display:grid;
+    place-items:center;
+    min-height:120px;
+    margin:0;
+    padding:24px;
+    color:#667694;
+    font-size:0.875rem;
+    background:#fbfcfe;
+}
+.csslp-guide.csslp-guide .diagram-description {
+    margin:0;
+    padding:0;
+    border:0;
+    border-top:1px solid #e1e7f1;
+    border-radius:0;
+    background:#fbfcfe;
+}
+.csslp-guide.csslp-guide .diagram-description > summary {
+    padding:12px 20px;
+    color:#667694;
+    font-size:0.8125rem;
+}
+.csslp-guide.csslp-guide .diagram-description > ul { margin:0; padding:0 24px 18px 40px; }
+.csslp-guide.csslp-guide .diagram-description li { color:#4a5368; font-size:0.875rem; }
+.csslp-guide.csslp-guide .diagram-error { padding:20px; background:#fff8f5; }
+.csslp-guide.csslp-guide .diagram-error > p { color:#9a4238; }
+.csslp-guide.csslp-guide .diagram-retry {
+    min-height:44px;
+    padding:8px 16px;
+    border:1px solid #c7d2e5;
+    border-radius:8px;
+    background:#ffffff;
+    color:var(--indigo);
+    cursor:pointer;
+}
+@media (min-width:768px) {
+    .csslp-guide.csslp-guide #s13 .practice-options { grid-column:2; grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    .csslp-guide.csslp-guide .diagram-viewport { padding:24px; }
+}
+@media (max-width:767px) {
+    .csslp-guide.csslp-guide #s13 > p { padding:18px; column-gap:12px; }
+    .csslp-guide.csslp-guide .diagram-heading { padding:14px 16px; gap:6px 10px; }
+    .csslp-guide.csslp-guide .diagram-title { flex-basis:calc(100% - 94px); font-size:0.9375rem; }
+    .csslp-guide.csslp-guide .diagram-kind { display:none; }
+}
+@media print {
+    .csslp-guide.csslp-guide #s13 > p { break-inside:avoid; box-shadow:none; }
+    .csslp-guide.csslp-guide .mmd { box-shadow:none; }
+    .csslp-guide.csslp-guide .diagram-viewport { background-image:none; }
+}
+.csslp-guide.csslp-guide #s13 > details > summary:focus-visible,
+.csslp-guide.csslp-guide .diagram-viewport:focus-visible {
+    outline:2px solid var(--indigo);
+    outline-offset:-4px;
+}

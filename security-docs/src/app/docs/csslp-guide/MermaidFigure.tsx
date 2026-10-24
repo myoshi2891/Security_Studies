@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
+import { diagramTitles } from './diagrams';
 
 
 export type DiagramRenderer = (id: string, source: string) => Promise<{ svg: string }>;
@@ -28,7 +29,28 @@ const getEngine = createEngineLoader(() => import('mermaid').then(({ default: me
   mermaid.startOnLoad = false;
   return mermaid;
 }));
-export const diagramConfig = {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#EEF1F8","primaryBorderColor":"#2E3F72","primaryTextColor":"#161B26","lineColor":"#2E3F72","secondaryColor":"#FAF1DF","tertiaryColor":"#EAF4EC","textColor":"#161B26","edgeLabelBackground":"#F6F7F9","clusterBkg":"#FAF1DF","clusterBorder":"#B8802A","nodeBorder":"#2E3F72","mainBkg":"#EEF1F8","pie1":"#C9D3EA","pie2":"#F1DDAE","pie3":"#BFE0DB","pie4":"#E8C7D6","pie5":"#DCE6C8","pie6":"#F3D2C3","pie7":"#D4CFE8","pie8":"#CFE3EE","pieStrokeColor":"#F6F7F9","pieStrokeWidth":"2px","pieOpacity":"1","pieSectionTextColor":"#161B26","pieLegendTextColor":"#161B26","pieTitleTextColor":"#161B26"},"flowchart":{"useMaxWidth":false,"nodeSpacing":45,"rankSpacing":45,"htmlLabels":true},"pie":{"useMaxWidth":false}} satisfies import('mermaid').MermaidConfig;
+export const sourceDiagramConfig = {"theme":"base","themeVariables":{"fontSize":"16px","primaryColor":"#EEF1F8","primaryBorderColor":"#2E3F72","primaryTextColor":"#161B26","lineColor":"#2E3F72","secondaryColor":"#FAF1DF","tertiaryColor":"#EAF4EC","textColor":"#161B26","edgeLabelBackground":"#F6F7F9","clusterBkg":"#FAF1DF","clusterBorder":"#B8802A","nodeBorder":"#2E3F72","mainBkg":"#EEF1F8","pie1":"#C9D3EA","pie2":"#F1DDAE","pie3":"#BFE0DB","pie4":"#E8C7D6","pie5":"#DCE6C8","pie6":"#F3D2C3","pie7":"#D4CFE8","pie8":"#CFE3EE","pieStrokeColor":"#F6F7F9","pieStrokeWidth":"2px","pieOpacity":"1","pieSectionTextColor":"#161B26","pieLegendTextColor":"#161B26","pieTitleTextColor":"#161B26"},"flowchart":{"useMaxWidth":false,"nodeSpacing":45,"rankSpacing":45,"htmlLabels":true},"pie":{"useMaxWidth":false}} satisfies import('mermaid').MermaidConfig;
+
+/** A page-local theme improves legibility without changing any node, edge or label. */
+export const diagramConfig = {
+  ...sourceDiagramConfig,
+  fontFamily: '"Hiragino Sans", "Yu Gothic", Meiryo, system-ui, sans-serif',
+  themeVariables: {
+    ...sourceDiagramConfig.themeVariables,
+    fontFamily: '"Hiragino Sans", "Yu Gothic", Meiryo, system-ui, sans-serif',
+    primaryColor: '#ffffff', primaryBorderColor: '#8294bf', primaryTextColor: '#243455',
+    mainBkg: '#ffffff', nodeBorder: '#8294bf', textColor: '#243455',
+    secondaryBorderColor: '#8fb8ae', tertiaryBorderColor: '#cfb276',
+    lineColor: '#64779e', secondaryColor: '#edf5f4', tertiaryColor: '#fbf3e4',
+    clusterBkg: '#f1f4f9', clusterBorder: '#c4cede', edgeLabelBackground: '#ffffff',
+    pie1: '#8fa7d3', pie2: '#dac28e', pie3: '#9fc9c0', pie4: '#c7a7bb',
+    pie5: '#b5c79d', pie6: '#dfb49d', pie7: '#b7aed4', pie8: '#a5c5db',
+    pieStrokeColor: '#ffffff', pieStrokeWidth: '3px',
+  },
+  flowchart: { ...sourceDiagramConfig.flowchart, curve: 'basis', nodeSpacing: 40, rankSpacing: 56, padding: 18 },
+  themeCSS: '.node rect { rx: 12px; ry: 12px; stroke-width: 1.25px; } .node polygon { fill: #fbf3e4; stroke: #b8802a; stroke-width: 1.25px; } .cluster rect { rx: 16px; ry: 16px; } .flowchart-link { stroke-width: 1.5px; }',
+} satisfies import('mermaid').MermaidConfig;
+
 
 /** Per-render configuration keeps this guide's theme out of other routes' shared engine. */
 export const renderDiagram: DiagramRenderer = async (id, source) => {
@@ -164,10 +186,18 @@ export function MermaidFigure({ id, source, renderer = renderDiagram }: MermaidF
   };
 
   const current = result?.source === source ? result : undefined;
+  const number = Number(id.slice(1)) + 1;
+  const title = diagramTitles[id] ?? '処理と判断の流れ';
+  const kind = source.trimStart().startsWith('pie') ? 'ドメイン構成' : 'フロー図';
   return (
     <div ref={figureRef} className="mmd" id={id} data-diagram={id} data-definition={source}>
+      <div className="diagram-heading">
+        <span className="diagram-kicker">FIGURE {String(number).padStart(2, '0')}</span>
+        <span className="diagram-title">{title}</span>
+        <span className="diagram-kind">{kind}</span>
+      </div>
       {current?.svg ? (
-        <div className="diagram-viewport" role="img" aria-label={`図 ${Number(id.slice(1)) + 1}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
+        <div className="diagram-viewport" role="img" aria-label={`図 ${number}: ${title}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
       ) : current?.failed ? (
         <div className="diagram-error">
           <p role="alert">図 {Number(id.slice(1)) + 1} を描画できませんでした。</p>
