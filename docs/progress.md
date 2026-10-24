@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-24（CISSP移行・原本アーカイブGreen・全体最終検証中）
+> **最終更新**: 2026-10-24（CISSP移行・原本アーカイブGreen・全1309件成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,11 +12,11 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1309件登録・全体最終検証中** | npm test -- --timeout 30000実測（2026-10-24）・207ファイル・1309件。CISSP専用97件を含む。 |
+| テストケース総数 | **1309成功 / 0 skip / 0失敗** | npm test -- --timeout 30000実測（2026-10-24）・207ファイル・1309件。503,825 expect。CISSP専用97件を含む。 |
 | テストファイル数 | **207ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **84/84 (100%)** | 従来81 + CISSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全207テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
@@ -1142,9 +1142,11 @@ CISSPの追加検証（2026-10-24）: 原本のないCIでも移行漏れを検�
 <!-- cissp-migration-status -->
 ## CISSP移行（2026-10-24）
 
-CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用97件/11ファイル成功。原本なし隔離環境でも55成功/42skip/0失敗（全18節とヒーロー・目次等の構造ハッシュ22件を含む）。全CSS宣言とmedia条件、5幅×明暗の計算済みCSS、丸点・番号・カウンター・図の自然幅と横スクロール、全143表と全ページのhydration、目次・図・確認問題・チェック操作を検証。全体1309件/207ファイルの最終検証を実行中。共通ナビ・ホーム・静的検索は30ページ。既存CCIE/CCSTの資格ナビ期待値もCISSP登録に同期。npm経由のテスト・lint・型チェック成功。Next.js開発サーバーでHTTP 200と配信本文の件数一致を確認。Next.jsビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `4c9fbee`、アーカイブGreen `2e279ff`。
+CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用97件/11ファイル成功。原本なし隔離環境でも55成功/42skip/0失敗（全18節とヒーロー・目次等の構造ハッシュ22件を含む）。全CSS宣言とmedia条件、5幅×明暗の計算済みCSS、丸点・番号・カウンター・図の自然幅と横スクロール、全143表と全ページのhydration、目次・図・確認問題・チェック操作を検証。全体1309成功/0skip/0失敗（207ファイル、503,825 expect）。共通ナビ・ホーム・静的検索は30ページ。既存CCIE/CCSTの資格ナビ期待値もCISSP登録に同期。npm経由のテスト・lint・型チェック成功。Next.js開発サーバーでHTTP 200と配信本文の件数一致を確認。Next.jsビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `4c9fbee`、アーカイブGreen `2e279ff`。
 
 配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。原本: `archive/security-certifications/Cissp-guide.html` / `archive/security-certifications/Cissp-guide.md`（Git管理外）。
 <!-- /cissp-migration-status -->
 
 CISSP原本アーカイブRed（2026-10-24）: 移動前に4テストを追加し、ルート残存と比較パスの2失敗・原本移動待ちの独立ハッシュ2skipを確認。専用登録97件/11ファイル。次にHTML・Markdownを内容不変でarchive/security-certificationsへ移動する。
+
+CISSP全体検証の履歴（2026-10-24）: 初回1306成功/3失敗の内訳は、既存CCIE/CCSTナビの固定期待値2件と、並行負荷時の既存Applied Cryptography CSSテストの5秒タイムアウト1件。ナビは既存項目の順序・内容を維持してCISSPを追加し、独立テスト13件＋8件で成功を確認。最終実行はアサーションを変更せず `npm test -- --timeout 30000` で全1309件/207ファイル成功・0skip・0失敗、503,825 expect。lint・型チェック成功。ビルド未実行。

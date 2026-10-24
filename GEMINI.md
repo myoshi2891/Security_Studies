@@ -311,7 +311,7 @@ CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・11
 <!-- cissp-migration-status -->
 ## CISSP移行（2026-10-24）
 
-CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用97件/11ファイル成功。原本なし隔離環境でも55成功/42skip/0失敗（全18節とヒーロー・目次等の構造ハッシュ22件を含む）。全CSS宣言とmedia条件、5幅×明暗の計算済みCSS、丸点・番号・カウンター・図の自然幅と横スクロール、全143表と全ページのhydration、目次・図・確認問題・チェック操作を検証。全体1309件/207ファイルの最終検証を実行中。共通ナビ・ホーム・静的検索は30ページ。既存CCIE/CCSTの資格ナビ期待値もCISSP登録に同期。npm経由のテスト・lint・型チェック成功。Next.js開発サーバーでHTTP 200と配信本文の件数一致を確認。Next.jsビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `4c9fbee`、アーカイブGreen `2e279ff`。
+CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図・108リスト項目・15解答・11チェック項目・25参考文献を移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用97件/11ファイル成功。原本なし隔離環境でも55成功/42skip/0失敗（全18節とヒーロー・目次等の構造ハッシュ22件を含む）。全CSS宣言とmedia条件、5幅×明暗の計算済みCSS、丸点・番号・カウンター・図の自然幅と横スクロール、全143表と全ページのhydration、目次・図・確認問題・チェック操作を検証。全体1309成功/0skip/0失敗（207ファイル、503,825 expect）。共通ナビ・ホーム・静的検索は30ページ。既存CCIE/CCSTの資格ナビ期待値もCISSP登録に同期。npm経由のテスト・lint・型チェック成功。Next.js開発サーバーでHTTP 200と配信本文の件数一致を確認。Next.jsビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `4c9fbee`、アーカイブGreen `2e279ff`。
 
 配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。原本: `archive/security-certifications/Cissp-guide.html` / `archive/security-certifications/Cissp-guide.md`（Git管理外）。
 <!-- /cissp-migration-status -->

@@ -429,7 +429,7 @@
   ],
   "markdownSource": "archive/security-certifications/Cissp-guide.md",
   "updated": "2026-10-24",
-  "status": "archive Green; full-suite verification pending",
+  "status": "automated verification complete; visual review pending",
   "validation": {
     "runner": "npm test -- --timeout 30000",
     "guideTests": 97,
@@ -443,6 +443,13 @@
     "lint": "pass",
     "types": "pass",
     "build": "not run (user prohibited)",
-    "visualReview": "pending (user)"
+    "visualReview": "pending (user)",
+    "fullSuite": {
+      "pass": 1309,
+      "skip": 0,
+      "fail": 0,
+      "files": 207,
+      "expects": 503825
+    }
   }
 }
