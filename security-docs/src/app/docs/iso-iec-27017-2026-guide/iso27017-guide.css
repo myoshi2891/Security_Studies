@@ -716,3 +716,6 @@ hue-6-2: #e6c07b
 html:has(.iso27017-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
 @media (prefers-reduced-motion: reduce) { html:has(.iso27017-guide) { scroll-behavior:auto; } }
 @media (max-width: 1100px) { .iso27017-guide.iso27017-guide .sidebar { visibility:hidden; } .iso27017-guide.iso27017-guide .sidebar.open { visibility:visible; } }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.iso27017-guide.iso27017-guide tr:hover td { background-color:transparent; }

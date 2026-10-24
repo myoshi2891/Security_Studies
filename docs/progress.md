@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-23（レビュー対応: 図のテキスト説明をサーバー描画に含める・Mermaid自動起動の停止。全体1055成功/0失敗）
+> **最終更新**: 2026-10-24（ガイド配色レビュー修正・新規23件/全1212件成功・Chrome実画面検証済み）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,34 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1052成功 / 0 skip / 0失敗** | npm test実測（2026-10-23）・177ファイル・1052件・489,759 expect。全原本が存在し、旧参照による297 skipを解消。 |
-| テストファイル数 | **177ファイル** | 原本比較・ページ移行テストを含む |
-| File Unit Coverage | **75/75 (100%)** | 従来72 + Secrets and Lies部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全177テストファイルとは別集計 |
+| テストケース総数 | **1212成功 / 0 skip / 0失敗** | npm test実測（2026-10-23〜24）・196ファイル・1212件・499,187 expect。新規配色回帰23件を含む。 |
+| テストファイル数 | **196ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **81/81 (100%)** | 従来78 + CCSP部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全196テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | 原本なしのクリーンworktreeで576成功/476 skip/0失敗を実測。npm test -- --coverage。原本非依存の検証は実行し、存在しない原本の比較のみskip。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記およびISO18045欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cc-certified-in-cybersecurity-guide/readability.test.tsx` | 23 | ✅ 2026-10-24最終検証・実ホバー相当/明暗/全セル/他ガイド/変異検証 |
+| `src/app/docs/ccsp-study-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/foundation.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/integration.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/interactions.test.tsx` | 3 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/runtime.test.tsx` | 11 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/sections-0-6.test.tsx` | 7 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/sections-7-sources.test.tsx` | 5 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/ccsp-study-guide/styles.test.tsx` | 18 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/archive.test.ts` | 4 | ✅ 2026-10-23追加・ルート残存/比較パス/HTML・MDハッシュGreen |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/migration.test.tsx` | 20 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/cascade.test.tsx` | 13 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/runtime.test.tsx` | 12 | ✅ 2026-10-23追加・Green |
+| `src/app/docs/cc-certified-in-cybersecurity-guide/hydration.test.tsx` | 4 | ✅ 2026-10-23追加・Green |
 | `src/lib/archive-categories.test.ts` | 13 | 2026-10-23追加・10ハッシュ/旧フォルダー/参照先整合Green |
 | `src/app/docs/secrets-and-lies-guide/foundation.test.tsx` | 4 | 2026-10-23追加・Green |
 | `src/app/docs/secrets-and-lies-guide/sections-0-4.test.tsx` | 5 | 2026-10-23追加・Green |
@@ -260,13 +277,17 @@ form-action 'self'
 
 ### 📄 仕様書 / ドキュメント更新
 
-| `CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `GEMINI.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `security-docs/CLAUDE.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `security-docs/README.md` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-15 | WAHH全節・ホーム/ナビ/検索・原本アーカイブ・WAHH完了時点の538件/専用74件を同期 |
-| `docs/progress.md` (本ファイル) | 2026-10-15 | WAHH完了、WAHH完了時点の538件・全85ファイルの実測件数と目視待ちを同期 |
+| ファイル | 最終更新 | 内容 |
+|---|---|---|
+| `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
+| `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
+| `CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `GEMINI.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `security-docs/README.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
+| `docs/progress.md` | 2026-10-24 | 配色レビュー修正と全1212件の実測・Chrome検証を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -296,6 +317,10 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| GUIDE-READABILITY | **ISC2 CC表ホバー・参照コード配色と同種の7ガイドを修正** — 新規23件/全1212件成功。Chrome4条件と16ガイド比較。ビルド未実行。 | 2026-10-24 |
+| CCSP | **CCSP全12節移行・原本アーカイブ** — 115見出し・78表1216セル・16図・219リスト項目を原本照合。専用69件・全1189件成功。lint/型検査成功・ビルド未実行・目視待ち。 | 2026-10-23 |
+| ISC2-CC | **ISC2 CC全11章移行** — 専用55件/全1116件成功。リストの点・番号、85表1520セル、23図、54目次リンクを検証。目視待ち。 | 2026-10-23 |
+| REVIEW-DIAGRAM-CORRECTIONS | **レビュー指摘対応** — 原本の図定義から意図して変える箇所を各ガイドの `fidelity-helpers.ts` の `diagramCorrections` に登録し、原本照合は訂正後の定義と比較する方式を導入。Bulletproof d16: チケット鍵漏えいで復号される範囲を新たな (EC)DHE を伴わない再開（TLS 1.2 の再開と発行元セッション、TLS 1.3 の psk_ke）に限定し、psk_dhe_ke は前方秘匿性を保つ分岐（0-RTT 除く）を追加。ZTN d12: 手順6をクライアント宛てメッセージから `Note over F` へ変更（日本語の手順文は保持）。スキップ: d6「Main Secret」（原本本文が RFC 8446bis の名称と明記）、theme dark→base（Mermaid 11 の dark も themeVariables を反映、原本も dark）。Red `1f69909` → Green `f747cf1` → 台帳 `640556b`（両台帳に `diagramCorrections` を記録）。全1061件/179ファイル成功、24図の Mermaid 構文解析成功、lint/型検査成功。ビルド禁止・未実行、目視はユーザー担当 | 2026-10-23 |
 | CI-K8S-CONTRAST-TIMEOUT | **CI失敗対応** — PR CI（run 39939392410）で `hacking-kubernetes/contrast.test.tsx` の「supporting labels…4.5:1 contrast」が5080msでBun既定の5秒タイムアウトを超過（アサーション失敗ではない。同一コミットのpush CIは成功）。ローカル実測2.8〜3.8秒と余裕がないため、重い2テストに既存慣例どおり `20000` msのテスト別タイムアウトを設定（`5844027`）。WAHH版は最大1.5秒のため変更せず。全1057件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-HLJS-CORE | **レビュー指摘対応** — Bulletproofの `GuideCode` を `highlight.js` 全言語バンドルから `highlight.js/lib/core` へ切替え、page.mdxで使う python・http・nginx・bash の4言語のみ静的登録（他ガイドの既存方式に統一、ハイライト出力は不変）。リファクタリングのため既存テストで検証: Bulletproof 48件/7ファイル成功、lint/型検査成功（`0f5d81b`）。ビルド禁止・未実行 | 2026-10-23 |
 | REVIEW-MERMAID-SSR | **レビュー指摘対応** — Bulletproofの図のテキスト説明（折りたたみ）を描画結果に関わらずサーバー描画にも含め、JavaScript無効時も読めるようにした。Secrets and Liesの遅延読み込みで `mermaid.startOnLoad=false` を設定し、load時の自動描画（`mermaid.run`）が `.mermaid` コンテナを書き換えないようにした（`initialize` は呼ばない）。Zero Trustの統合テストは静的索引を `import.meta.url` 基準、Secrets and Liesの統合テストは `import.meta.dir` 基準で読む（`f603c39`）。BulletproofとZero Trustの遅延読み込みでも `mermaid.startOnLoad=false` を設定（Red `75cfd6f` → Green `63a813f`、全1057件/177ファイル成功）。Zero Trust d12の `F-->>C: 6 時間経過で穴は閉じる` は原本どおりのため変更せず。`getSearchIndex()` の `process.cwd()` は本番の `/api/search` でバンドル後に `import.meta.url` が `.next/server` を指すため変更せず。Red `334280b` → テスト調整 `b75007e`・`b385159` → Green `3e86aff`。全1055件/177ファイル成功、lint/型検査成功。ビルド禁止・未実行 | 2026-10-23 |
@@ -977,3 +1002,119 @@ Red `a9bf4d7` → Green `a31d97d`。移動先: `archive/security-guides/Bulletpr
 - 全体検証: 1052 pass / 0 skip / 0 fail（1052件・177ファイル・489,759 expect）。原本不在CI条件: 576 pass / 476 skip / 0 fail（1052件・177ファイル、archive/なし・npm test -- --coverage）。npm lint・types:check成功。
 - ロジックファイルの分母75は変更なし。追加13件はアーカイブ保全とパス整合の契約。
 - 台帳: `docs/migration-inventory/archive-category-reorganization.json`。archive/は引き続きGit管理外。
+
+## ISC2 CC 移行（2026-10-23・Red）
+
+原本台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。11章・120見出し・85表1520セル・239リスト項目・23図・53出典カード・75注意欄。原本は保持。Red `1 pass / 46 fail / 1 import error`（5ファイル、sidebar import errorで未登録の5件は別途Greenで実行）。実装前テストコミット `562a0ad`。全体の成功件数1061は移行前の実測であり、現在は移行中。npm使用・ビルド禁止・目視はユーザー担当。
+
+### ISC2 CC テスト補正（2026-10-23）
+
+Happy DOMの`list-style`略記未展開を補い、ブラウザー既定の丸点/番号を比較。目次fixtureを原本どおりのh2構造へ変更。図の全設定比較を追加（専用52件）。共通CSSによる`.brand`色混入を375pxで検出しRed維持。本文11章の構造比較・全85表のhydration・23図の構文は通過。次にブランド色を補正し全体を再検証。
+
+### ISC2 CC 図配置Red（2026-10-23）
+
+5画面幅×両配色で本文・リスト・全1520表セルの比較を通過。54目次リンクと円グラフ説明を追加（専用54件）。幅広図の左端を保持するblock配置の追加テストで原本由来のflexを検出して失敗。次に図コンテナーをblock化する。
+
+### ISC2 CC フォントRed（2026-10-23）
+
+図配置を補正し専用54件成功。追加監査で、ローカルSource Serif 4パッケージのfamily名が`Source Serif 4 Variable`であることを確認。元CDN名のみの見出し・ブランド指定を検出する失敗テストを追加（専用55件）。次にローカルfamilyを優先指定する。
+
+### ISC2 CC 最終検証準備（2026-10-23）
+
+フォントfamilyのCSSOM引用符正規化をテストに反映し、フォント専用検証は成功。専用55件と全体の最終再実行へ進む。ビルド禁止・未実行。
+
+### ISC2 CC 全体回帰・資格ナビ期待値（2026-10-23）
+
+専用55件/5ファイルは成功。全体初回は1114成功/2失敗（1116件/184ファイル）。CCIE・CCSTの資格ナビ完全一致が従来3件固定のため失敗したので、新規ISC2 CCを含む4件のタイトル・URL・順序を完全一致で検証するよう更新。該当2件は再検証成功。全体再実行へ進む。
+
+### ISC2 CC OS配色監査（2026-10-23）
+
+全体1116件/184ファイル成功を確認後、明暗比較でHTMLクラスだけでなくHappy DOMのOS配色設定も変更し、`prefers-color-scheme`の実際の切替を検証。5画面幅×両配色を含むcascade13件成功。テスト数は55件のまま。全体の最終再実行中。lint/型検査成功・ビルド未実行。
+
+
+## ISC2 CC 移行（2026-10-23・自動検証完了）
+
+ISC2 CCを `/docs/cc-certified-in-cybersecurity-guide` へ移行。11章・120見出し・85表1520セル・239リスト項目・23図・54目次リンク・53出典カード・75注意欄を原本と照合。丸点・番号・全CSS宣言とmedia条件、5画面幅×明暗両配色、目次操作、図の再試行・説明・配色、全表とページのhydrationを検証。専用59件/6ファイル成功。全体1120成功/0失敗（185ファイル、494,572 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルドは禁止・未実行。目視はユーザー担当・未確認。
+
+配置: `security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/page.mdx`。Security Certifications（資格・学習）の共通ナビ・ホーム・静的検索28件に登録。HTML・Markdown原本は `archive/security-certifications/` へバイト一致でアーカイブ済み。ローカルSource Serif 4 Variableとアイコン・Mermaidを使用。共有ヘッダーを避けた目次配置と幅広図の左右スクロールに対応。台帳: `docs/migration-inventory/cc-certified-in-cybersecurity-guide.json`。目視確認表: `docs/migration-inventory/cc-certified-in-cybersecurity-guide-review.md`。実装コミット `58e8b43`。
+
+### ISC2 CC 再開時のアクション
+
+1. ユーザーが目視確認表で表示を確認する。
+2. 指摘があれば失敗テストのコミットから修正する。
+
+再開プロンプト: 「ISC2 CCの目視指摘に対応。実装コミット `58e8b43`、専用55件・全1116件成功。原本を保持し、TDDのテスト/実装/仕様書コミットを分割。npm使用・ビルド禁止を継続。」
+
+## ISC2 CC 原本アーカイブ（2026-10-23・Red）
+
+ユーザー指示により移行後は元HTML/Markdownを必ず内容別アーカイブへ移す。資格原本は`archive/security-certifications/`。新規4件のテストで、ルート残存・比較パスの2失敗と未移動原本の2skipを確認。次にバイト一致で移動し比較パスを更新する。全体1116件成功の記載は移動前の実測。npm使用・ビルド禁止を継続。
+
+
+## ISC2 CC 原本アーカイブ（2026-10-23・Green）
+
+ISC2 CCの元HTMLとMarkdownを `archive/security-certifications/` へアーカイブ（両SHA-256一致、ルート残存なし）。原本比較はアーカイブ参照へ変更。専用59件/6ファイル・全1120件/185ファイル成功、494,572 expect。原本のない隔離環境は専用30成功/29skip/0失敗で、原本非依存の検証は継続。npm test・lint・型チェック成功。ビルド未実行、目視はユーザー担当。実装コミット `c1e0da3`。
+
+再開時: 移行完了後は、元HTMLと対応するMarkdownを必ず同じ内容別カテゴリーのarchiveへ移動する。資格は`archive/security-certifications/`。移動前後のSHA-256一致・ルート残存なし・比較パス更新を検証し、原本を上書き・消失させない。 ビルド禁止・npm使用を継続し、目視指摘があれば失敗テストから対応する。
+
+## CCSP移行（2026-10-23・基盤Red）
+
+移行前の全体1120件/185ファイル成功を実測。原本は12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カード。基盤の新規4テストファイルは26失敗/1 import error（sidebar未登録5件）を確認。台帳: docs/migration-inventory/ccsp-study-guide.json。次にヒーロー・目次・ローカル描画・全CSSを実装する。
+
+直前コミット `dbba5cc`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+## CCSP移行（2026-10-23・基盤テスト補正）
+
+目次IDを原本のmenu-btnへ合わせ、clamp式を原本と移行先で同一評価する比較を追加。基盤30件は24成功/6失敗で、残る失敗は共通CSS下のeyebrowの字間。型注釈も補正。次に字間を明示し基盤をGreenにする。
+
+直前コミット `75e8d93`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+
+<!-- ccsp-migration-status -->
+## CCSP移行（2026-10-23）
+
+CCSP: 全12節移行・原本アーカイブGreen・目視待ち。全12節・115見出し・78表1216セル・16図・219リスト項目・10解答・6チェック・38出典カードを原本と照合。丸点/番号/カウンター、全CSS/media、5画面幅×両OS配色、図・目次・チェック/解答操作、全表と全ページのhydrationを検証。HTML/Markdownは両SHA-256一致でarchive/security-certificationsへ移動済み。原本なし隔離環境は専用33成功/36skip/0失敗。 専用69件/10ファイル・全体1189成功/0skip/0失敗（195ファイル、499,087 expect）。npm test・lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。直前実装コミット `bac8c7a`。
+
+配置: `security-docs/src/app/docs/ccsp-study-guide/page.mdx`、URL `/docs/ccsp-study-guide`。Security Certifications（資格・学習）へ登録。台帳: `docs/migration-inventory/ccsp-study-guide.json`。原本: `archive/security-certifications/Ccsp-study-guide.html` / `archive/security-certifications/Ccsp-study-guide.md`（バイト一致でアーカイブ済み）。目視確認表: `docs/migration-inventory/ccsp-study-guide-review.md`。
+<!-- /ccsp-migration-status -->
+
+## CCSP移行（2026-10-23・Step 0〜6 Red）
+
+Step 0〜6の7件の原本構造比較がすべて失敗し、現在は見出しのみであることを検出。次に7節の全文、表、リスト、注記、図、リンクを移植する。直前の全体1150件は基盤Green時の実測。
+
+直前コミット `9d71130`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+## CCSP移行（2026-10-23・残り5節・全体照合Red）
+
+専用65件/9ファイルは41成功/24失敗。後半5節と全件数・115見出し・全78表のhydration・5画面幅×両OS配色・10解答/6チェックの操作を厳格化。目次追従で固定asideではなく実際の内側navをスクロールする契約も失敗を検出。次に後半全文とnav追従を実装する。
+
+直前コミット `538ba63`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+## CCSP移行（2026-10-23・原本アーカイブRed）
+
+原本のルート残存と比較パスの2件が失敗、未移動のHTML/Markdownハッシュ2件はskip。次に両原本をarchive/security-certificationsへバイト一致で移し、比較参照を更新する。本文検証は専用65件・全1185件成功済み。
+
+直前コミット `9dcbdfe`。npm使用・ビルド禁止・目視はユーザー担当。最終段階でHTML/Markdownを`archive/security-certifications/`へバイト一致で移動する。
+
+### CCSP 再開時のアクション
+
+1. ユーザーが目視確認表に沿って表示を確認する。
+2. 指摘があれば失敗テストを先にコミットして修正する。
+
+再開プロンプト: 「CCSPの目視指摘に対応。全12節・原本アーカイブ済み。専用69件・全1189件成功。npm使用・ビルド禁止、テスト/実装/仕様書コミットの分割を継続。原本比較はarchive/security-certifications/Ccsp-study-guide.htmlを参照する。」
+
+## ガイド配色レビュー対応（2026-10-23・Red）
+
+ISC2 CCの表ホバーと[S番号]等6コードの配色問題をChromeで再現。17ガイドの実描画HTMLを比較し、他6ガイドの表ホバーとApplied Cryptographyの[S1]にも共通prose CSSの干渉を確認。通常/ホバー・明暗・375/1440px・全85表1520セル・同種ガイドを検証する新規22件は全件Red。次に各ガイドのスコープ内で原本の背景と継承文字色を保持する。前回の全体実測は1189件成功。npm使用・ビルド禁止。
+
+### 配色回帰テストのブラウザー整合（2026-10-23）
+
+ChromeとHappy DOMのinherit・背景ショートハンド・透明色の評価差をテスト基盤で補い、23件成功。修正ルールを除去すると元の2症状が戻る変異検証と、Appliedの既存インライン/コードブロック配色を維持する確認を追加。実画面は375/1440px×明暗の4条件で全85表と全6コードが成功。描画HTMLの比較対象は16ガイド（初期の17という記載を訂正）。次に全体回帰テストを実行する。
+
+
+## ガイドの表ホバー・参照コード配色修正（2026-10-24）
+
+配色レビュー修正完了。共通proseのOSダーク配色が固定配色のガイドへ混入することが原因。ISC2 CCの全85表ホバーと[S番号]・プライベートIP・CIDR・マスク記号の6コード、他6ガイドの表ホバー、Applied Cryptographyの[S1]を修正。各ガイドのスコープ内のみ変更し、原本の縞模様と既存コードテーマを保持。新規回帰23件と全1212件/196ファイル成功（499,187 expect）、lint・型チェック成功。原本なし環境でも新規23件成功。Chrome実画面375/1440px×明暗4条件で全85表と6コードを確認。16ガイド×明暗の共通CSS比較は差分0。さらに修正7ガイドの全表セルを明暗14条件（8146セル評価）で検証し、固有の背景・縞模様の変化なし。ビルド未実行。修正コミット `6399898`。
+
+調査記録: `docs/migration-inventory/guide-readability-review.json`。
+
+再開時: ユーザーの実画面で残る指摘があれば再現テストを先に追加。npm使用・ビルド禁止を継続する。

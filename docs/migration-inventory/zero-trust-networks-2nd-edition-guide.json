@@ -291,5 +291,13 @@
     "archive": "HTML/MD SHA-256 matches pre-move values",
     "build": "禁止・未実行",
     "visual": "ユーザー担当・未完了"
-  }
+  },
+  "diagramCorrections": [
+    {
+      "diagram": "d12",
+      "date": "2026-10-23",
+      "reason": "ファイアウォールはクライアントへ通知しないため、手順6をクライアント宛てメッセージから F の注記へ変更（日本語の手順文は保持）",
+      "test": "security-docs/src/app/docs/zero-trust-networks-2nd-edition-guide/diagram-corrections.test.ts"
+    }
+  ]
 }

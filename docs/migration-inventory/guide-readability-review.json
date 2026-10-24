@@ -1,0 +1,105 @@
+{
+  "date": "2026-10-24",
+  "fixCommit": "6399898",
+  "rootCause": "共通proseのOS配色とhoverが原本由来の固定配色へ漏れる。通常時のDOM/CSS比較だけでは動的状態とinherit解決差を捕捉できなかった。",
+  "changes": [
+    {
+      "css": "security-docs/src/app/docs/cc-certified-in-cybersecurity-guide/cc-guide.css",
+      "effect": "全85表のホバーと全6インラインコードの文字色"
+    },
+    {
+      "css": "security-docs/src/app/docs/bulletproof-tls-pki-guide/bulletproof-tls-guide.css",
+      "effect": "原本の奇数行・偶数行背景をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/iso-iec-15408-1-2026-guide/iso15408-guide.css",
+      "effect": "原本の表背景・縞模様をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/iso-iec-27017-2026-guide/iso27017-guide.css",
+      "effect": "原本の表背景・縞模様をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/mitre-atlas/mitre-atlas.css",
+      "effect": "原本の表背景をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/secrets-and-lies-guide/secrets-lies-guide.css",
+      "effect": "原本の表背景をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/secure-by-design/secure-by-design.css",
+      "effect": "原本の表背景をホバー中も保持"
+    },
+    {
+      "css": "security-docs/src/app/docs/applied-cryptography-guide/applied-cryptography-guide.css",
+      "effect": "素の[S1]参照の文字色と透明背景を復元。他のインライン/コードブロック配色は保持"
+    }
+  ],
+  "regressionTests": 23,
+  "allTests": 1212,
+  "allTestFiles": 196,
+  "expectations": 499187,
+  "failures": 0,
+  "lint": "pass",
+  "typesCheck": "pass",
+  "build": "禁止・未実行",
+  "archiveAbsentRegression": {
+    "pass": 23,
+    "skip": 0,
+    "fail": 0
+  },
+  "chromeLivePage": {
+    "route": "/docs/cc-certified-in-cybersecurity-guide",
+    "checks": [
+      {
+        "width": 375,
+        "scheme": "light",
+        "codes": 6,
+        "tables": 85,
+        "status": "pass"
+      },
+      {
+        "width": 375,
+        "scheme": "dark",
+        "codes": 6,
+        "tables": 85,
+        "status": "pass"
+      },
+      {
+        "width": 1440,
+        "scheme": "light",
+        "codes": 6,
+        "tables": 85,
+        "status": "pass"
+      },
+      {
+        "width": 1440,
+        "scheme": "dark",
+        "codes": 6,
+        "tables": 85,
+        "status": "pass"
+      }
+    ],
+    "foreground": "rgb(22, 27, 38)",
+    "tokenBackground": "rgb(238, 241, 248)",
+    "unitHoverCellCount": 1520
+  },
+  "chromeGuideComparison": {
+    "guides": 16,
+    "colorSchemes": [
+      "light",
+      "dark"
+    ],
+    "method": "描画HTMLに専用CSSのみ/共通CSS併用を適用し、hover行とinlineコードの色・背景を比較",
+    "remainingDifferences": 0
+  },
+  "originalContentChanged": false,
+  "chromeAllTableCells": {
+    "guides": 7,
+    "conditions": 14,
+    "cellEvaluations": 8146,
+    "differences": 0,
+    "method": "Chromeで描画HTMLの全TDを評価。hoverは同一詳細度のクラスへ置換して全行を同時に検証。"
+  }
+}

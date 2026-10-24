@@ -1,0 +1,378 @@
+{
+  "source": "archive/security-certifications/Ccsp-study-guide.html",
+  "sha256": "a5f3879d83cf8096347cdb44fffd93dd2e6d1e8eab21c5ec1da4e9fe0420b979",
+  "markdownSha256": "e092328c9671e0100e7ae74911c36f04b3e75c6d43b31a374fc1b00f3ebe9505",
+  "route": "/docs/ccsp-study-guide",
+  "title": "CCSP 完全ガイド（初学者向け）",
+  "counts": {
+    "section[id]": 12,
+    "h1,h2,h3,h4,h5,h6": 115,
+    "table": 78,
+    "th,td": 1216,
+    "main li": 219,
+    "main ul": 78,
+    "main ol": 4,
+    ".mermaid[data-diagram]": 16,
+    "input[type=\"checkbox\"]": 6,
+    "details.qa": 10,
+    ".qcard": 10,
+    ".refcard": 38,
+    ".callout": 94,
+    "main code": 1,
+    ".sidebar nav a": 12
+  },
+  "sections": [
+    {
+      "id": "ch0",
+      "title": "Step 0. このガイドの使い方"
+    },
+    {
+      "id": "ch1",
+      "title": "Step 1. CCSP とは何か(試験概要)"
+    },
+    {
+      "id": "ch2",
+      "title": "Step 2. 学習ロードマップ"
+    },
+    {
+      "id": "ch3",
+      "title": "Step 3. 最初に押さえる基礎用語と責任共有モデル"
+    },
+    {
+      "id": "ch4",
+      "title": "Step 4. Domain 1 クラウドの概念・アーキテクチャ・設計 (17%)"
+    },
+    {
+      "id": "ch5",
+      "title": "Step 5. Domain 2 クラウドデータセキュリティ (20%)"
+    },
+    {
+      "id": "ch6",
+      "title": "Step 6. Domain 3 クラウドプラットフォーム・インフラセキュリティ (17%)"
+    },
+    {
+      "id": "ch7",
+      "title": "Step 7. Domain 4 クラウドアプリケーションセキュリティ (16%)"
+    },
+    {
+      "id": "ch8",
+      "title": "Step 8. Domain 5 クラウドセキュリティオペレーション (17%)"
+    },
+    {
+      "id": "ch9",
+      "title": "Step 9. Domain 6 法務・リスク・コンプライアンス (13%)"
+    },
+    {
+      "id": "ch10",
+      "title": "Step 10. 試験対策(CAT・解き方・学習計画・確認問題)"
+    },
+    {
+      "id": "chsrc",
+      "title": "参考ソース一覧"
+    }
+  ],
+  "headings": [
+    "CCSP (Certified Cloud Security Professional) 初学者向け完全ガイド",
+    "Step 0. このガイドの使い方",
+    "0-1. 各項目の書き方",
+    "0-2. 重要な前提(最初に読んでください)",
+    "Step 1. CCSP とは何か(試験概要)",
+    "1-1. 試験の基本情報(公式アウトラインより)",
+    "1-2. 受験資格(実務経験)",
+    "1-3. 認定の位置づけ",
+    "1-4. 6ドメインと出題比率",
+    "Step 2. 学習ロードマップ",
+    "2-1. 全体の学習順序",
+    "2-2. 4週間・8週間の目安",
+    "Step 3. 最初に押さえる基礎用語と責任共有モデル",
+    "3-1. 最初に覚える用語",
+    "3-2. 責任共有モデル(最重要)",
+    "Step 4. Domain 1 クラウドの概念・アーキテクチャ・設計 (17%)",
+    "4-1. 1.1 クラウドコンピューティングの概念を理解する",
+    "詳細解説",
+    "4-2. 1.2 クラウドリファレンスアーキテクチャを説明する",
+    "詳細解説",
+    "4-3. 1.3 クラウドに関連するセキュリティ概念を理解する",
+    "詳細解説",
+    "4-4. 1.4 安全なクラウドコンピューティングの設計原則を理解する",
+    "詳細解説",
+    "4-5. 1.5 クラウドサービスプロバイダー(CSP)を評価する",
+    "詳細解説",
+    "4-6. 1.6 AI/ML を理解する",
+    "詳細解説",
+    "Step 5. Domain 2 クラウドデータセキュリティ (20%)",
+    "5-1. 2.1 クラウドデータの概念を説明する",
+    "詳細解説",
+    "5-2. 2.2 クラウドデータストレージのアーキテクチャを設計・実装する",
+    "詳細解説",
+    "5-3. 2.3 データセキュリティの技術と戦略を設計・適用する",
+    "(1) 暗号化と鍵管理",
+    "(2) ハッシュ",
+    "(3) データ難読化",
+    "(4) トークン化",
+    "(5) DLP(データ損失防止)",
+    "(6) 鍵・シークレット・証明書の管理",
+    "主要クラウドの関連サービス例(理解を助ける例)",
+    "5-4. 2.4 データ発見を実装する",
+    "詳細解説",
+    "5-5. 2.5 データ分類を計画・実装する",
+    "詳細解説",
+    "5-6. 2.6 情報権利管理(IRM)を設計・実装する",
+    "詳細解説",
+    "5-7. 2.7 データ保持・削除・アーカイブのポリシーを計画・実装する",
+    "詳細解説",
+    "5-8. 2.8 データイベントの監査可能性・追跡可能性・説明責任を設計・実装する",
+    "詳細解説",
+    "5-9. 2.9 AI/ML データの保護を理解する",
+    "詳細解説",
+    "Step 6. Domain 3 クラウドプラットフォーム・インフラセキュリティ (17%)",
+    "6-1. 3.1 クラウドインフラの構成要素を理解する",
+    "詳細解説",
+    "6-2. 3.2 安全なデータセンターを設計する",
+    "詳細解説",
+    "6-3. 3.3 クラウドインフラ・プラットフォームのリスクを分析する",
+    "詳細解説",
+    "6-4. 3.4 セキュリティ統制を計画・実装する",
+    "詳細解説",
+    "6-5. 3.5 事業継続(BC)・災害復旧(DR)を計画する",
+    "詳細解説",
+    "Step 7. Domain 4 クラウドアプリケーションセキュリティ (16%)",
+    "7-1. 4.1 アプリケーションセキュリティの教育・啓発を推進する",
+    "詳細解説",
+    "7-2. 4.2 セキュアなソフトウェア開発ライフサイクル(SDLC)プロセスを説明する",
+    "詳細解説",
+    "7-3. 4.3 セキュアな SDLC を適用する",
+    "詳細解説",
+    "7-4. 4.4 クラウドソフトウェアの保証と検証を適用する",
+    "詳細解説",
+    "7-5. 4.5 検証済みの安全なソフトウェアを使う",
+    "詳細解説",
+    "7-6. 4.6 クラウドアプリケーションアーキテクチャの特性を理解・適用する",
+    "詳細解説",
+    "7-7. 4.7 適切な ID・アクセス管理(IAM)ソリューションを設計する",
+    "詳細解説",
+    "Step 8. Domain 5 クラウドセキュリティオペレーション (17%)",
+    "8-1. 5.1 クラウド環境の物理・論理インフラを構築・実装する",
+    "詳細解説",
+    "8-2. 5.2 クラウド環境の物理・論理インフラを運用・保守する",
+    "詳細解説",
+    "8-3. 5.3 運用統制と標準を実装する",
+    "詳細解説",
+    "8-4. 5.4 デジタルフォレンジックを支援する",
+    "詳細解説",
+    "8-5. 5.5 関係者とのコミュニケーションを管理する",
+    "詳細解説",
+    "8-6. 5.6 セキュリティオペレーションを管理する",
+    "詳細解説",
+    "主要クラウドの関連サービス例(理解を助ける例)",
+    "Step 9. Domain 6 法務・リスク・コンプライアンス (13%)",
+    "9-1. 6.1 クラウド環境の法的要件と固有のリスクを説明する",
+    "詳細解説",
+    "9-2. 6.2 プライバシーの要件を理解する",
+    "詳細解説",
+    "9-3. 6.3 クラウド環境における監査プロセス・方法論・必要な調整を理解する",
+    "詳細解説",
+    "9-4. 6.4 クラウドが企業のリスク管理に与える影響を理解する",
+    "詳細解説",
+    "9-5. 6.5 アウトソーシングとクラウド契約の設計を理解する",
+    "詳細解説",
+    "Step 10. 試験対策(CAT・解き方・学習計画・確認問題)",
+    "10-1. CAT(適応型試験)の特徴",
+    "10-2. 問題の解き方(思考法)",
+    "10-3. 混同しやすい用語の整理(試験直前チェック)",
+    "10-4. ドメイン別・重点チェックリスト",
+    "10-5. 確認問題(10問)",
+    "10-6. 試験当日までのチェックリスト",
+    "参考ソース一覧",
+    "A. ISC2 公式(最優先の根拠)",
+    "B. 標準・フレームワーク・業界団体",
+    "C. 本ガイドの根拠の扱いについて"
+  ],
+  "icons": [
+    "ti ti-menu-2",
+    "ti ti-shield-check",
+    "ti ti-info-circle",
+    "ti ti-bulb",
+    "ti ti-chevron-right",
+    "ti ti-check",
+    "ti ti-external-link"
+  ],
+  "diagrams": [
+    {
+      "id": "d0",
+      "sha256": "ccec12d92b5fc53e22c982775e333cd8e557d2a56489fe5604010fa95cc6c52b"
+    },
+    {
+      "id": "d1",
+      "sha256": "1635a9fd29bd7a81bc2848658a8e9fc74ef2c0e3554d9a3c13cb8f62c7edc183"
+    },
+    {
+      "id": "d2",
+      "sha256": "969a2d2bf630ed85e3894c40fe4ad42c523d9ac4ec519dae10d674e91adc7c64"
+    },
+    {
+      "id": "d3",
+      "sha256": "30a4be1b038d612b880fd4000cf7459d3399dc0a5ebb289b71a914a59609db2e"
+    },
+    {
+      "id": "d4",
+      "sha256": "174234faa12293b7901733fed2337a8ce4fc7863d46ca1a1c6dd7a33f3d11b8f"
+    },
+    {
+      "id": "d5",
+      "sha256": "4902b84cb789cc771b858b6a97553a799ec8560a48716936278be3487547bd71"
+    },
+    {
+      "id": "d6",
+      "sha256": "b4e1dafba73dad51812a49ed3928404312a1f0bab2f23f94d66c81eaaa1e9c79"
+    },
+    {
+      "id": "d7",
+      "sha256": "f9cd568eb101e1149c8f4dff01cc5023b23d783ffebe3ad385f16779b6570ba0"
+    },
+    {
+      "id": "d8",
+      "sha256": "7c7e9f81e0efec810c324f5844c70dfa922b6175023b7f32582b4502129b8b09"
+    },
+    {
+      "id": "d9",
+      "sha256": "321e9bf937a424c2dccc8326643e275930900525f3106f68303883aa75ec4836"
+    },
+    {
+      "id": "d10",
+      "sha256": "752bd6f192baba3d167d2b64a01c3df62ff70d05e68e87157a0f6c250c13b7cb"
+    },
+    {
+      "id": "d11",
+      "sha256": "e6d07e33a0019bec4342b895a6743f076365ae0a5589833a27a1d9935ede7810"
+    },
+    {
+      "id": "d12",
+      "sha256": "60f0f4ab606a20d4185c378981b7d24c56efd3b9cc48f1edf7a0337b3d082993"
+    },
+    {
+      "id": "d13",
+      "sha256": "ac6eab0a3039b773623f955c410419d7bd0c59a4854c77590de18bc5f2c771fd"
+    },
+    {
+      "id": "d14",
+      "sha256": "0684f86827ac0d365300db27df9457e2e23f22c0c2ef5dfa203a65edd524d40f"
+    },
+    {
+      "id": "d15",
+      "sha256": "51c344b38a2e944574de319befb047f12a85b0e5dda97338269df8dab365aad2"
+    }
+  ],
+  "diagramConfig": {
+    "theme": "base",
+    "fontFamily": "\"Hiragino Sans\",\"Noto Sans JP\",\"Yu Gothic\",Meiryo,system-ui,sans-serif",
+    "themeVariables": {
+      "fontFamily": "\"Hiragino Sans\",\"Noto Sans JP\",\"Yu Gothic\",Meiryo,system-ui,sans-serif",
+      "fontSize": "16px",
+      "primaryColor": "#EEF1F8",
+      "primaryBorderColor": "#2E3F72",
+      "primaryTextColor": "#161B26",
+      "secondaryColor": "#FAF1DF",
+      "secondaryBorderColor": "#B8802A",
+      "secondaryTextColor": "#161B26",
+      "tertiaryColor": "#EAF4EC",
+      "tertiaryBorderColor": "#2F6B3D",
+      "tertiaryTextColor": "#161B26",
+      "lineColor": "#2E3F72",
+      "textColor": "#161B26",
+      "mainBkg": "#EEF1F8",
+      "nodeBorder": "#2E3F72",
+      "clusterBkg": "#F6F7F9",
+      "clusterBorder": "#C3CBDA",
+      "titleColor": "#161B26",
+      "edgeLabelBackground": "#F6F7F9",
+      "actorBkg": "#EEF1F8",
+      "actorBorder": "#2E3F72",
+      "actorTextColor": "#161B26",
+      "actorLineColor": "#7C88A6",
+      "signalColor": "#2E3F72",
+      "signalTextColor": "#161B26",
+      "labelBoxBkgColor": "#EEF1F8",
+      "labelBoxBorderColor": "#2E3F72",
+      "labelTextColor": "#161B26",
+      "loopTextColor": "#161B26",
+      "noteBkgColor": "#FAF1DF",
+      "noteBorderColor": "#B8802A",
+      "noteTextColor": "#161B26",
+      "activationBkgColor": "#EAF4EC",
+      "activationBorderColor": "#2F6B3D",
+      "sequenceNumberColor": "#FFFFFF",
+      "pie1": "#C9D3EA",
+      "pie2": "#F1DDAE",
+      "pie3": "#BFE0DB",
+      "pie4": "#E8C7D6",
+      "pie5": "#A9B8DC",
+      "pie6": "#E6C77F",
+      "pie7": "#98CFC8",
+      "pie8": "#D9A9BE",
+      "pieStrokeColor": "#F6F7F9",
+      "pieStrokeWidth": "2px",
+      "pieOuterStrokeWidth": "0px",
+      "pieSectionTextColor": "#161B26",
+      "pieLegendTextColor": "#161B26",
+      "pieTitleTextColor": "#161B26",
+      "pieTitleTextSize": "16px",
+      "pieSectionTextSize": "16px",
+      "pieLegendTextSize": "16px"
+    },
+    "flowchart": {
+      "useMaxWidth": false,
+      "htmlLabels": true,
+      "nodeSpacing": 40,
+      "rankSpacing": 46,
+      "curve": "basis",
+      "padding": 12,
+      "wrappingWidth": 460
+    },
+    "sequence": {
+      "useMaxWidth": false,
+      "diagramMarginX": 20,
+      "diagramMarginY": 12,
+      "actorMargin": 60,
+      "messageMargin": 36
+    },
+    "pie": {
+      "useMaxWidth": false
+    }
+  },
+  "verification": {
+    "date": "2026-10-23",
+    "implementationCommit": "36d85f9",
+    "dedicatedTests": 69,
+    "dedicatedTestFiles": 10,
+    "allTests": 1189,
+    "allTestFiles": 195,
+    "expectations": 499087,
+    "failures": 0,
+    "lint": "pass",
+    "typesCheck": "pass",
+    "build": "禁止・未実行",
+    "archive": "両原本をバイト一致でアーカイブ済み",
+    "visualReview": "ユーザー確認待ち",
+    "archiveCommit": "bac8c7a",
+    "originalsUnmodified": true,
+    "archiveMissingDedicated": {
+      "pass": 33,
+      "skip": 36,
+      "fail": 0
+    }
+  },
+  "adaptations": [
+    "本文mainをdiv.guide-contentへ変更しtop IDは保持",
+    "CDNフォント・アイコン・Mermaidをローカル依存へ変更",
+    "Source Serif 4 Variableの登録family名を優先",
+    "全CSSを専用スコープ化し丸点・通常番号・チェックカウンターを保持",
+    "共有ヘッダー64pxとアンカー88pxの余白",
+    "図の固有幅を維持し狭い図は中央・幅広図は左右スクロール",
+    "目次のReact移行・内側navスクロール・フォーカス・Escape/背景/リサイズ対応"
+  ],
+  "originals": [
+    "archive/security-certifications/Ccsp-study-guide.html",
+    "archive/security-certifications/Ccsp-study-guide.md"
+  ]
+}

@@ -1,0 +1,652 @@
+{
+  "source": "archive/security-certifications/Cc-certified-in-cybersecurity-guide.html",
+  "sha256": "6f4dda98c1b49fa1710a3a66849247e6717f7640e23782af4f14d211f094d399",
+  "route": "/docs/cc-certified-in-cybersecurity-guide",
+  "counts": {
+    "h1,h2,h3,h4": 120,
+    "h2": 11,
+    "h3": 43,
+    "table": 85,
+    "th,td": 1520,
+    "main li": 239,
+    "main ul": 60,
+    "main ol": 15,
+    ".diagram[data-i]": 23,
+    "details": 1,
+    "details summary": 1,
+    ".src-card": 53,
+    "main a": 209,
+    ".callout": 75,
+    ".sidebar nav a": 54
+  },
+  "headings": [
+    {
+      "id": "h1",
+      "text": "ISC2 CC（Certified in Cybersecurity）初学者向けステップバイステップ完全ガイド"
+    },
+    {
+      "id": "s0",
+      "text": "0. はじめに"
+    },
+    {
+      "id": "s0-1",
+      "text": "0.1 最初に必ず読んでください（アウトライン改定について）"
+    },
+    {
+      "id": "s0-2",
+      "text": "0.2 学習ロードマップ"
+    },
+    {
+      "id": "s0-3",
+      "text": "0.3 各節の読み方"
+    },
+    {
+      "id": "s1",
+      "text": "1. CC 試験の全体像"
+    },
+    {
+      "id": "s1-1",
+      "text": "1.1 CC とは"
+    },
+    {
+      "id": "s1-2",
+      "text": "1.2 試験形式・費用（第三者情報を含む）"
+    },
+    {
+      "id": "s1-3",
+      "text": "1.3 購入パッケージと有効期限（ISC2 公式）"
+    },
+    {
+      "id": "s1-4",
+      "text": "1.4 ドメイン配点（2026/9/1 発効）"
+    },
+    {
+      "id": "s1-5",
+      "text": "1.5 受験から認定までの流れ"
+    },
+    {
+      "id": "s1-6",
+      "text": "1.6 試験で問われる 19 項目の全体マップ"
+    },
+    {
+      "id": "s1-7",
+      "text": "1.7 学習のコツ（初学者向け）"
+    },
+    {
+      "id": "s2",
+      "text": "2. Domain 1: Security Principles（セキュリティの原則）— 配点 24%"
+    },
+    {
+      "id": "s2-1",
+      "text": "2.1 〔1.1〕サイバーセキュリティの基本概念"
+    },
+    {
+      "id": "s2-1-1",
+      "text": "2.1.1 CIA トライアド（機密性・完全性・可用性）"
+    },
+    {
+      "id": "s2-1-2",
+      "text": "2.1.2 AAA（認証・認可・アカウンティング）"
+    },
+    {
+      "id": "s2-1-3",
+      "text": "2.1.3 Non-repudiation（否認防止）"
+    },
+    {
+      "id": "s2-1-4",
+      "text": "2.1.4 Privacy（プライバシー）"
+    },
+    {
+      "id": "s2-2",
+      "text": "2.2 〔1.2〕リスク管理の概念"
+    },
+    {
+      "id": "s2-2-1",
+      "text": "2.2.1 まず用語を押さえる"
+    },
+    {
+      "id": "s2-2-2",
+      "text": "2.2.2 リスク管理ライフサイクル"
+    },
+    {
+      "id": "s2-2-3",
+      "text": "2.2.3 リスク対応（Risk treatment）の 4 つの選択肢"
+    },
+    {
+      "id": "s2-2-4",
+      "text": "2.2.4 定性的評価と定量的評価"
+    },
+    {
+      "id": "s2-3",
+      "text": "2.3 〔1.3〕ガバナンスの概念"
+    },
+    {
+      "id": "s2-3-1",
+      "text": "2.3.1 規制・法令（Regulations and laws）"
+    },
+    {
+      "id": "s2-3-2",
+      "text": "2.3.2 フレームワークとガイドライン"
+    },
+    {
+      "id": "s2-4",
+      "text": "2.4 〔1.4〕サイバーセキュリティのコントロール"
+    },
+    {
+      "id": "s2-4-1",
+      "text": "2.4.1 種別（Type）: 技術的・管理的・物理的"
+    },
+    {
+      "id": "s2-4-2",
+      "text": "2.4.2 機能（Function）"
+    },
+    {
+      "id": "s2-4-3",
+      "text": "2.4.3 マトリクスで覚える"
+    },
+    {
+      "id": "s2-4-4",
+      "text": "2.4.4 多層防御（Defense in Depth）"
+    },
+    {
+      "id": "s2-5",
+      "text": "2.5 〔1.5〕専門家としての倫理・行動規範"
+    },
+    {
+      "id": "s2-5-1",
+      "text": "2.5.1 Due care と Due diligence"
+    },
+    {
+      "id": "s2-5-2",
+      "text": "2.5.2 ISC2 Code of Ethics"
+    },
+    {
+      "id": "s2-6",
+      "text": "2.6 第 2 章 のまとめ"
+    },
+    {
+      "id": "s3",
+      "text": "3. Domain 2: Security Governance（セキュリティガバナンス）— 配点 17.3%"
+    },
+    {
+      "id": "s3-1",
+      "text": "3.1 〔2.1〕GRC（Governance, Risk, Compliance）の計画"
+    },
+    {
+      "id": "s3-1-1",
+      "text": "3.1.1 目的と重要性"
+    },
+    {
+      "id": "s3-1-2",
+      "text": "3.1.2 フレームワークとツール"
+    },
+    {
+      "id": "s3-2",
+      "text": "3.2 〔2.2〕冗長性の理解（BC と DR）"
+    },
+    {
+      "id": "s3-2-1",
+      "text": "3.2.1 BC・DR・BIA の関係"
+    },
+    {
+      "id": "s3-2-2",
+      "text": "3.2.2 重要指標: RTO / RPO / MTD"
+    },
+    {
+      "id": "s3-2-3",
+      "text": "3.2.3 冗長性（Redundancy）の実現手段"
+    },
+    {
+      "id": "s3-3",
+      "text": "3.3 〔2.3〕セキュリティ意識（Security Awareness）"
+    },
+    {
+      "id": "s3-3-1",
+      "text": "3.3.1 組織文化とリーダーシップ"
+    },
+    {
+      "id": "s3-3-2",
+      "text": "3.3.2 ソーシャルエンジニアリングの種類"
+    },
+    {
+      "id": "s3-3-3",
+      "text": "3.3.3 パスワード保護の実践"
+    },
+    {
+      "id": "s3-4",
+      "text": "3.4 〔2.4〕サイバーセキュリティの有効性の測定"
+    },
+    {
+      "id": "s3-4-1",
+      "text": "3.4.1 KPI・KRI・KGI"
+    },
+    {
+      "id": "s3-4-2",
+      "text": "3.4.2 ダッシュボード・スコアカード・レポート"
+    },
+    {
+      "id": "s3-5",
+      "text": "3.5 第 3 章 のまとめ"
+    },
+    {
+      "id": "s4",
+      "text": "4. Domain 3: Identity and Access Management (IAM) Concepts — 配点 20%"
+    },
+    {
+      "id": "s4-1",
+      "text": "4.1 〔3.1〕アイデンティティ・ライフサイクル管理"
+    },
+    {
+      "id": "s4-1-1",
+      "text": "4.1.1 何か・なぜ重要か"
+    },
+    {
+      "id": "s4-1-2",
+      "text": "4.1.2 ライフサイクルの 4 ステップ"
+    },
+    {
+      "id": "s4-1-3",
+      "text": "4.1.3 フレームワークとツール（サービス/機能の種類）"
+    },
+    {
+      "id": "s4-1-4",
+      "text": "4.1.4 人以外の ID（Non-human identity）と AI"
+    },
+    {
+      "id": "s4-2",
+      "text": "4.2 〔3.2〕論理アクセス制御"
+    },
+    {
+      "id": "s4-2-1",
+      "text": "4.2.1 基本原則"
+    },
+    {
+      "id": "s4-2-2",
+      "text": "4.2.2 アクセス制御モデル"
+    },
+    {
+      "id": "s4-2-3",
+      "text": "4.2.3 物理アクセスとの関係（補足）"
+    },
+    {
+      "id": "s4-3",
+      "text": "4.3 第 4 章 のまとめ"
+    },
+    {
+      "id": "s5",
+      "text": "5. Domain 4: Networking and Cloud Security Concepts — 配点 21.3%"
+    },
+    {
+      "id": "s5-1",
+      "text": "5.1 〔4.1〕ネットワークセキュリティ"
+    },
+    {
+      "id": "s5-1-1",
+      "text": "5.1.1 OSI 参照モデルと TCP/IP モデル"
+    },
+    {
+      "id": "s5-1-2",
+      "text": "5.1.2 TCP と UDP"
+    },
+    {
+      "id": "s5-1-3",
+      "text": "5.1.3 IP アドレス: IPv4 と IPv6"
+    },
+    {
+      "id": "s5-1-4",
+      "text": "5.1.4 主なポート番号（安全でないものと代替）"
+    },
+    {
+      "id": "s5-1-5",
+      "text": "5.1.5 VPN（Virtual Private Network）"
+    },
+    {
+      "id": "s5-1-6",
+      "text": "5.1.6 ファイアウォールと IDS/IPS"
+    },
+    {
+      "id": "s5-1-7",
+      "text": "5.1.7 無線（Wi-Fi・Bluetooth）"
+    },
+    {
+      "id": "s5-1-8",
+      "text": "5.1.8 組込み・ICS・IoT"
+    },
+    {
+      "id": "s5-1-9",
+      "text": "5.1.9 主なネットワーク攻撃"
+    },
+    {
+      "id": "s5-2",
+      "text": "5.2 〔4.2〕ネットワークセキュリティアーキテクチャ"
+    },
+    {
+      "id": "s5-2-1",
+      "text": "5.2.1 セグメンテーション（分割）"
+    },
+    {
+      "id": "s5-2-2",
+      "text": "5.2.2 多層防御（Defense in Depth）"
+    },
+    {
+      "id": "s5-2-3",
+      "text": "5.2.3 ゼロトラスト（Zero Trust, ZT）"
+    },
+    {
+      "id": "s5-3",
+      "text": "5.3 〔4.3〕クラウドセキュリティ"
+    },
+    {
+      "id": "s5-3-1",
+      "text": "5.3.1 クラウドの 5 つの特性（NIST SP 800-145）"
+    },
+    {
+      "id": "s5-3-2",
+      "text": "5.3.2 サービスモデルと展開モデル"
+    },
+    {
+      "id": "s5-3-3",
+      "text": "5.3.3 共有責任モデル（Shared Responsibility Model）"
+    },
+    {
+      "id": "s5-4",
+      "text": "5.4 第 5 章 のまとめ"
+    },
+    {
+      "id": "s6",
+      "text": "6. Domain 5: Security Operations and Incident Response — 配点 17.3%"
+    },
+    {
+      "id": "s6-1",
+      "text": "6.1 〔5.1〕データセキュリティ"
+    },
+    {
+      "id": "s6-1-1",
+      "text": "6.1.1 データのライフサイクル"
+    },
+    {
+      "id": "s6-1-2",
+      "text": "6.1.2 データハンドリング: 分類・ラベル付け・マスキング・サニタイズ"
+    },
+    {
+      "id": "s6-1-3",
+      "text": "6.1.3 暗号（Encryption）"
+    },
+    {
+      "id": "s6-2",
+      "text": "6.2 〔5.2〕セキュリティ運用"
+    },
+    {
+      "id": "s6-2-1",
+      "text": "6.2.1 ログとモニタリング"
+    },
+    {
+      "id": "s6-2-2",
+      "text": "6.2.2 セキュリティイベントのトリアージ"
+    },
+    {
+      "id": "s6-2-3",
+      "text": "6.2.3 脅威アクターと動機"
+    },
+    {
+      "id": "s6-2-4",
+      "text": "6.2.4 サイバー脅威インテリジェンス（CTI）と脅威フレームワーク"
+    },
+    {
+      "id": "s6-3",
+      "text": "6.3 〔5.3〕インシデント対応（Incident Response, IR）"
+    },
+    {
+      "id": "s6-3-1",
+      "text": "6.3.1 インシデント対応計画（IRP）"
+    },
+    {
+      "id": "s6-3-2",
+      "text": "6.3.2 データ取扱いポリシーと IRP の連携"
+    },
+    {
+      "id": "s6-3-3",
+      "text": "6.3.3 インシデント対応のライフサイクル"
+    },
+    {
+      "id": "s6-3-4",
+      "text": "6.3.4 IR 訓練（Exercises）"
+    },
+    {
+      "id": "s6-4",
+      "text": "6.4 〔5.4〕資産保護"
+    },
+    {
+      "id": "s6-4-1",
+      "text": "6.4.1 資産ライフサイクル管理（EOL を含む）"
+    },
+    {
+      "id": "s6-4-2",
+      "text": "6.4.2 構成管理（Configuration management）"
+    },
+    {
+      "id": "s6-4-3",
+      "text": "6.4.3 変更管理（Change management）"
+    },
+    {
+      "id": "s6-5",
+      "text": "6.5 〔5.5〕セキュリティテスト"
+    },
+    {
+      "id": "s6-5-1",
+      "text": "6.5.1 セキュリティ即応力テスト（Readiness testing）: レッド/ブルー/パープルチーム"
+    },
+    {
+      "id": "s6-5-2",
+      "text": "6.5.2 アプリケーションテスト"
+    },
+    {
+      "id": "s6-5-3",
+      "text": "6.5.3 物理的ペネトレーションテスト"
+    },
+    {
+      "id": "s6-6",
+      "text": "6.6 第 6 章 のまとめ"
+    },
+    {
+      "id": "s7",
+      "text": "7. AI セキュリティの横断整理（2026 年版アウトラインの新要素）"
+    },
+    {
+      "id": "s8",
+      "text": "8. 試験対策"
+    },
+    {
+      "id": "s8-1",
+      "text": "8.1 4 週間の学習計画（目安）"
+    },
+    {
+      "id": "s8-2",
+      "text": "8.2 ひっかけポイント比較表（暗記より\"違い\"の理解）"
+    },
+    {
+      "id": "s8-3",
+      "text": "8.3 確認問題（本ガイドのオリジナル。公式の過去問ではありません）"
+    },
+    {
+      "id": "s8-4",
+      "text": "8.4 試験当日の戦術（CAT 形式）"
+    },
+    {
+      "id": "s9",
+      "text": "9. 用語集（Glossary）"
+    },
+    {
+      "id": "s10",
+      "text": "10. 出典・参考 URL"
+    },
+    {
+      "id": "s10-1",
+      "text": "10.1 確認状況の凡例"
+    },
+    {
+      "id": "s10-2",
+      "text": "10.2 ISC2 公式"
+    },
+    {
+      "id": "s10-3",
+      "text": "10.3 標準・ガイドライン（NIST / CISA / 他）"
+    },
+    {
+      "id": "s10-4",
+      "text": "10.4 第三者情報（試験運用・価格・形式の確認に使用、公式で再確認のこと）"
+    },
+    {
+      "id": "s10-5",
+      "text": "10.5 本ガイドの更新・利用上の注意"
+    }
+  ],
+  "icons": [
+    "ti ti-info-circle",
+    "ti ti-external-link",
+    "ti ti-bulb",
+    "ti ti-menu-2"
+  ],
+  "diagrams": [
+    {
+      "id": 0,
+      "sha256": "595d0fecd2eaa20be40a779f0c509f203ca40e709782534289bbcb37eb8acc47"
+    },
+    {
+      "id": 1,
+      "sha256": "4a6dd97ecc3acd3322d4433e113e3a1ed7173d07c5f2d3a7e3aafd15a1e753f4"
+    },
+    {
+      "id": 2,
+      "sha256": "59f86eaf359fc1644711a4f697fcbafbc5766d8784715ded626850cce99a69f0"
+    },
+    {
+      "id": 3,
+      "sha256": "9bda900a9d542b63bb9ff9c2ba6da162c0fb7b9e6ca014228f711c94c979203e"
+    },
+    {
+      "id": 4,
+      "sha256": "c30827be011556a8a3b02728d15119eb0359577f9ceca02638205d47e760d440"
+    },
+    {
+      "id": 5,
+      "sha256": "26df1cfa5e621559cce270a1f3c8c2d4e07a740b100323b76ea31412c4c1f3fb"
+    },
+    {
+      "id": 6,
+      "sha256": "81c3145fb1d7eb8ad8c644abfe91c5dcb8c62e840c23606384d759c8259a3bef"
+    },
+    {
+      "id": 7,
+      "sha256": "e2fdf85d6c36b719b11d0e41a2674c9b32736652f4311658fa8179d3ddf52991"
+    },
+    {
+      "id": 8,
+      "sha256": "bb1287ceb7d84ea7f0ccfe28626eef1a70ed3a5f0fcdfae798a130a7cf6c4f73"
+    },
+    {
+      "id": 9,
+      "sha256": "ce9290a44f88f74ba596d6d3c3198ceedd2277cf267dd5063d2ae8744c53cc38"
+    },
+    {
+      "id": 10,
+      "sha256": "364d6e9dee2dbcc6b49de2c6522593be6b78a2394b77b17e62e8894af4131a5a"
+    },
+    {
+      "id": 11,
+      "sha256": "69976a7d24e1dce44ac5a94c19e8d4f4a2a8a86573431fd029bd60e09471638f"
+    },
+    {
+      "id": 12,
+      "sha256": "6b0e15e89562d7d236f8632d7d459be113ff9ac078b080872a46c023f92e3fbe"
+    },
+    {
+      "id": 13,
+      "sha256": "973f7844f835a19bdbde81442c550cfeb584d7241d73e5e7c5a4de68cf6a2137"
+    },
+    {
+      "id": 14,
+      "sha256": "517438e0b7d6c1cf61e551ef31d3d8057ec684e5078e285cb9b61c8da62f677b"
+    },
+    {
+      "id": 15,
+      "sha256": "cd0add8e735dc345d4f7b55ecd6603da58aedfab33399e2ff39bdac11f6eddb6"
+    },
+    {
+      "id": 16,
+      "sha256": "4349648b590e1cda70eb439bcb3e9b01506b65f3b391dcbe66f0d70c8437dc5b"
+    },
+    {
+      "id": 17,
+      "sha256": "9264a24699197fb9f9c3a8727e99f9a160e77e923f401ce010a587ed92d462af"
+    },
+    {
+      "id": 18,
+      "sha256": "0d354f93acf8983525db87f2ee451f13783044ab4614bb6af244b2a524121de1"
+    },
+    {
+      "id": 19,
+      "sha256": "9515c31d462cdc8dbfb8f6c166aa3bbc787a52388fa67fac242c45283ad7cc8b"
+    },
+    {
+      "id": 20,
+      "sha256": "21f8d52f83a002bdc724f54614faa9d1c111c3bfc9e50ca3f8d5bc4bd08867f3"
+    },
+    {
+      "id": 21,
+      "sha256": "a5349ddf3f93d8301299c89517403d583a6076fd95da19edb967ddd08e47cabc"
+    },
+    {
+      "id": 22,
+      "sha256": "355b2ecbb66644bdc621636e042dc1eae16629c795b2040eab4c7f24ca393c59"
+    }
+  ],
+  "originals": "HTML・Markdownをarchive/security-certifications/へバイト一致で移動",
+  "visualReview": "ユーザー確認待ち",
+  "adaptations": [
+    "本文mainをdiv.guide-contentへ変更（共通mainとの入れ子回避）",
+    "専用cc-guide CSSスコープ・Tailwindリセット後のdisc/decimal復元",
+    "CDNアイコン・フォント・Mermaidをローカル依存へ変更",
+    "見出しとブランドはSource Serif 4 Variableのローカルfamilyを優先",
+    "共有ヘッダー64pxとアンカー88pxの余白",
+    "図コンテナーはblock・intrinsic幅を保持し左右スクロール",
+    "目次をReactへ移行・54リンク・Escape/背景/フォーカス/スクロール追従"
+  ],
+  "verification": {
+    "date": "2026-10-23",
+    "implementationCommit": "58e8b43",
+    "dedicatedTests": 59,
+    "dedicatedTestFiles": 6,
+    "allTests": 1120,
+    "allTestFiles": 185,
+    "failures": 0,
+    "expectations": 494572,
+    "lint": "pass",
+    "typesCheck": "pass",
+    "build": "禁止・未実行",
+    "originalsChanged": false,
+    "archiveCommit": "c1e0da3",
+    "archiveMissingDedicated": {
+      "pass": 30,
+      "skip": 29,
+      "fail": 0
+    },
+    "originalsArchived": true
+  },
+  "originalChecksums": {
+    "html": "6f4dda98c1b49fa1710a3a66849247e6717f7640e23782af4f14d211f094d399",
+    "md": "07d32f20279db4775a4a36905e217b8c5ef2c384617e635bd6ec1837612f4406"
+  },
+  "readabilityReview": {
+    "date": "2026-10-24",
+    "report": "docs/migration-inventory/guide-readability-review.json",
+    "fixCommit": "6399898",
+    "dedicatedTests": 82,
+    "dedicatedTestFiles": 7,
+    "allTests": 1212,
+    "allTestFiles": 196,
+    "chromeLiveCases": 4,
+    "allTablesHovered": 85,
+    "allInlineCodesChecked": 6
+  }
+}

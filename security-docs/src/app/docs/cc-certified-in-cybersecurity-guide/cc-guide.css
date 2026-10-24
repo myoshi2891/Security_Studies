@@ -1,0 +1,467 @@
+
+            .cc-guide.cc-guide {
+                --paper: #f6f7f9;
+                --ink: #161b26;
+                --indigo: #2e3f72;
+                --gold: #b8802a;
+                --forest: #1b6e6a;
+                --plum: #8c3a5c;
+                --surface: #fff;
+                --line: #d9dde6;
+                --muted: #4a5468;
+                --tint: #eef1f8;
+                --sb: 288px;
+            }
+            .cc-guide.cc-guide * {
+                box-sizing: border-box;
+            }
+            .cc-guide.cc-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+            }
+            .cc-guide.cc-guide {
+                margin: 0;
+                background: var(--paper);
+                color: var(--ink);
+                font:
+                    16px/1.7 'Noto Sans JP',
+                    'Hiragino Kaku Gothic ProN',
+                    'Yu Gothic',
+                    system-ui,
+                    sans-serif;
+                overflow-wrap: anywhere;
+            }
+            .cc-guide.cc-guide h1, .cc-guide.cc-guide h2, .cc-guide.cc-guide h3, .cc-guide.cc-guide h4 {
+                font-family: 'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+                line-height: 1.35;
+            }
+            .cc-guide.cc-guide .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: var(--sb);
+                background: var(--surface);
+                border-right: 1px solid var(--line);
+                overflow-y: auto;
+                padding: 20px 14px 48px;
+                z-index: 30;
+            }
+            .cc-guide.cc-guide .brand {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--line);
+                margin-bottom: 8px;
+            }
+            .cc-guide.cc-guide .brand svg {
+                flex: none;
+            }
+            .cc-guide.cc-guide .brand b {
+                display: block;
+                font-family: 'Source Serif 4', serif;
+                font-size: 1rem;
+                color: var(--indigo);
+                line-height: 1.3;
+            }
+            .cc-guide.cc-guide .brand span {
+                display: block;
+                color: var(--muted);
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+            .cc-guide.cc-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .cc-guide.cc-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .cc-guide.cc-guide .sidebar nav li::before {
+                content: none;
+            }
+            .cc-guide.cc-guide .sidebar nav a {
+                display: block;
+                padding: 4px 10px;
+                border-left: 3px solid transparent;
+                border-radius: 0 6px 6px 0;
+                color: var(--muted);
+                text-decoration: none;
+                line-height: 1.45;
+            }
+            .cc-guide.cc-guide .sidebar nav a.l2 {
+                font-weight: 700;
+                color: var(--ink);
+                margin-top: 12px;
+            }
+            .cc-guide.cc-guide .sidebar nav a.l3 {
+                padding-left: 22px;
+            }
+            .cc-guide.cc-guide .sidebar nav a:hover {
+                background: var(--tint);
+            }
+            .cc-guide.cc-guide .sidebar nav a.active {
+                background: var(--tint);
+                color: var(--indigo);
+                border-left-color: var(--gold);
+            }
+            .cc-guide.cc-guide .layout {
+                display: block;
+            }
+            .cc-guide.cc-guide .guide-content {
+                margin-left: var(--sb);
+                padding: 40px 56px 96px;
+            }
+            .cc-guide.cc-guide .hero {
+                border-bottom: 2px solid var(--indigo);
+                padding-bottom: 20px;
+                margin-bottom: 28px;
+            }
+            .cc-guide.cc-guide h1 {
+                font-size: 2.1rem;
+                color: var(--indigo);
+                margin: 0 0 14px;
+            }
+            .cc-guide.cc-guide .hero-meta {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .cc-guide.cc-guide .hero-meta li {
+                padding: 3px 0;
+            }
+            .cc-guide.cc-guide h2 {
+                font-size: 1.7rem;
+                color: var(--indigo);
+                border-bottom: 2px solid var(--indigo);
+                padding-bottom: 8px;
+                margin: 64px 0 20px;
+            }
+            .cc-guide.cc-guide h3 {
+                font-size: 1.3rem;
+                margin: 40px 0 14px;
+                color: var(--ink);
+                border-left: 5px solid var(--gold);
+                padding-left: 12px;
+            }
+            .cc-guide.cc-guide h4 {
+                font-size: 1.1rem;
+                color: var(--forest);
+                margin: 28px 0 10px;
+            }
+            .cc-guide.cc-guide p {
+                margin: 12px 0;
+            }
+            .cc-guide.cc-guide ul, .cc-guide.cc-guide ol {
+                padding-left: 1.5em;
+                margin: 10px 0;
+            }
+            .cc-guide.cc-guide li {
+                margin: 4px 0;
+            }
+            .cc-guide.cc-guide a {
+                color: var(--indigo);
+            }
+            .cc-guide.cc-guide a.cite {
+                display: inline-block;
+                padding: 0 6px;
+                border: 1px solid var(--forest);
+                border-radius: 6px;
+                color: var(--forest);
+                text-decoration: none;
+                line-height: 1.5;
+                margin: 0 1px;
+            }
+            .cc-guide.cc-guide a.cite:hover {
+                background: var(--forest);
+                color: #fff;
+            }
+            .cc-guide.cc-guide code {
+                font-family: ui-monospace, Menlo, Consolas, monospace;
+                font-size: 1rem;
+                background: var(--tint);
+                padding: 1px 6px;
+                border-radius: 4px;
+            }
+            .cc-guide.cc-guide hr {
+                border: 0;
+                border-top: 1px solid var(--line);
+                margin: 40px 0;
+            }
+            .cc-guide.cc-guide strong {
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--surface);
+            }
+            .cc-guide.cc-guide table {
+                border-collapse: collapse;
+                width: 100%;
+                font-size: 1rem;
+            }
+            .cc-guide.cc-guide th, .cc-guide.cc-guide td {
+                padding: 8px 12px;
+                border-bottom: 1px solid var(--line);
+                border-right: 1px solid var(--line);
+                text-align: left;
+                vertical-align: top;
+            }
+            .cc-guide.cc-guide th {
+                background: var(--tint);
+                color: var(--indigo);
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide tr:last-child td {
+                border-bottom: 0;
+            }
+            .cc-guide.cc-guide th:last-child, .cc-guide.cc-guide td:last-child {
+                border-right: 0;
+            }
+            .cc-guide.cc-guide .callout {
+                --c: var(--plum);
+                border: 1px solid var(--line);
+                border-left: 4px solid var(--c);
+                border-radius: 8px;
+                background: var(--surface);
+                padding: 12px 18px;
+                margin: 18px 0;
+            }
+            .cc-guide.cc-guide .callout.practice {
+                --c: var(--gold);
+            }
+            .cc-guide.cc-guide .callout.source {
+                --c: var(--forest);
+            }
+            .cc-guide.cc-guide .callout.note {
+                --c: var(--plum);
+            }
+            .cc-guide.cc-guide .callout-title {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                font-weight: 700;
+                color: var(--c);
+            }
+            .cc-guide.cc-guide .callout p {
+                margin: 6px 0;
+            }
+            .cc-guide.cc-guide .callout ul, .cc-guide.cc-guide .callout ol {
+                margin: 6px 0 2px;
+            }
+            .cc-guide.cc-guide .diagram {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                padding: 20px 12px;
+                margin: 20px 0;
+            }
+            .cc-guide.cc-guide .diagram svg {
+                overflow: visible;
+            }
+            .cc-guide.cc-guide .diagram pre {
+                margin: 0;
+                white-space: pre-wrap;
+            }
+            .cc-guide.cc-guide .src-list {
+                display: grid;
+                gap: 10px;
+                margin: 14px 0;
+            }
+            .cc-guide.cc-guide .src-card {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                padding: 12px 16px;
+            }
+            .cc-guide.cc-guide .src-card:target {
+                border-color: var(--gold);
+                background: #faf1df;
+            }
+            .cc-guide.cc-guide .src-badge {
+                flex: none;
+                min-width: 44px;
+                height: 44px;
+                padding: 0 8px;
+                border-radius: 22px;
+                background: var(--indigo);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide .src-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .cc-guide.cc-guide .src-name {
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide .src-url {
+                color: var(--forest);
+                word-break: break-all;
+            }
+            .cc-guide.cc-guide .src-status {
+                flex: none;
+                max-width: 12em;
+                color: var(--muted);
+                text-align: right;
+            }
+            .cc-guide.cc-guide .q-card {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+                padding: 16px 18px;
+                margin: 16px 0;
+            }
+            .cc-guide.cc-guide .q-head {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide .q-num {
+                flex: none;
+                background: var(--indigo);
+                color: #fff;
+                border-radius: 8px;
+                padding: 0 10px;
+                line-height: 1.9;
+            }
+            .cc-guide.cc-guide .q-opts {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 8px;
+                margin-top: 12px;
+            }
+            .cc-guide.cc-guide .q-opt {
+                display: flex;
+                gap: 10px;
+                align-items: flex-start;
+                border: 1px solid var(--line);
+                background: var(--paper);
+                border-radius: 8px;
+                padding: 8px 12px;
+            }
+            .cc-guide.cc-guide .q-let {
+                flex: none;
+                width: 28px;
+                height: 28px;
+                border-radius: 14px;
+                background: var(--tint);
+                color: var(--indigo);
+                display: grid;
+                place-items: center;
+                font-weight: 700;
+            }
+            .cc-guide.cc-guide details {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                padding: 10px 16px;
+                margin: 20px 0;
+            }
+            .cc-guide.cc-guide summary {
+                cursor: pointer;
+                font-weight: 700;
+                color: var(--indigo);
+            }
+            .cc-guide.cc-guide .menu-btn, .cc-guide.cc-guide .backdrop {
+                display: none;
+            }
+            @media (max-width: 1024px) {
+                .cc-guide.cc-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                }
+                .cc-guide.cc-guide .sidebar.open {
+                    transform: none;
+                }
+                .cc-guide.cc-guide .guide-content {
+                    margin-left: 0;
+                    padding: 24px 18px 104px;
+                }
+                .cc-guide.cc-guide h1 {
+                    font-size: 1.7rem;
+                }
+                .cc-guide.cc-guide .menu-btn {
+                    display: grid;
+                    place-items: center;
+                    position: fixed;
+                    right: 16px;
+                    bottom: 16px;
+                    width: 52px;
+                    height: 52px;
+                    border-radius: 26px;
+                    border: 0;
+                    background: var(--indigo);
+                    color: #fff;
+                    font-size: 1.4rem;
+                    z-index: 50;
+                    cursor: pointer;
+                }
+                .cc-guide.cc-guide .backdrop {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background: rgba(22, 27, 38, 0.45);
+                    z-index: 20;
+                }
+                .cc-guide.cc-guide .backdrop.show {
+                    display: block;
+                }
+                .cc-guide.cc-guide .src-card {
+                    flex-wrap: wrap;
+                }
+                .cc-guide.cc-guide .src-status {
+                    text-align: left;
+                    max-width: none;
+                }
+            }
+
+/* Restore source browser defaults removed by Tailwind and shared prose styles. */
+.cc-guide.cc-guide { min-width:0; min-height:100vh; }
+.docs-main:has(.cc-guide) { padding:0; }
+.cc-guide.cc-guide h1, .cc-guide.cc-guide h2, .cc-guide.cc-guide h3, .cc-guide.cc-guide h4 { font-weight:bold; letter-spacing:0px; }
+.cc-guide.cc-guide .brand { font-size:16px; font-weight:400; letter-spacing:0px; color:var(--ink); }
+.cc-guide.cc-guide ul { list-style-type:disc; }
+.cc-guide.cc-guide ol { list-style-type:decimal; }
+.cc-guide.cc-guide .sidebar nav ul, .cc-guide.cc-guide .hero-meta { list-style-type:none; }
+.cc-guide.cc-guide table { margin:0; }
+.cc-guide.cc-guide .sidebar { top:64px; z-index:40; visibility:visible; }
+.cc-guide.cc-guide .backdrop { top:64px; z-index:30; }
+.cc-guide.cc-guide :is(h1,h2,h3,h4,.src-card) { scroll-margin-top:88px; }
+.cc-guide.cc-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.cc-guide.cc-guide .mermaid-target { display:block; min-width:0; }
+.cc-guide.cc-guide .diagram-viewport { display:block; overflow-x:auto; }
+.cc-guide.cc-guide .mermaid-target svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+.cc-guide.cc-guide :is(a,button,summary):focus-visible { outline:2px solid var(--indigo); outline-offset:2px; }
+html:has(.cc-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (max-width:1024px) { .cc-guide.cc-guide .sidebar { visibility:hidden; } .cc-guide.cc-guide .sidebar.open { visibility:visible; } }
+@media (prefers-reduced-motion:reduce) { html:has(.cc-guide) { scroll-behavior:auto; } .cc-guide.cc-guide .sidebar { transition:none; } }
+/* A block viewport keeps oversized drawings reachable from their left edge. */
+.cc-guide.cc-guide .diagram { display:block; justify-content:normal; }
+/* @fontsource-variable registers its own family name; retain original fallbacks. */
+.cc-guide.cc-guide h1, .cc-guide.cc-guide h2, .cc-guide.cc-guide h3, .cc-guide.cc-guide h4 {
+  font-family:'Source Serif 4 Variable', 'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+}
+.cc-guide.cc-guide .brand b { font-family:'Source Serif 4 Variable', 'Source Serif 4', serif; }
+
+/* Keep source row surfaces and striping when shared prose hover rules are active. */
+.cc-guide.cc-guide tr:hover td { background-color:transparent; }
+/* Source inline tokens inherit their surrounding ink, including table citations. */
+.cc-guide.cc-guide code { color:inherit; }
