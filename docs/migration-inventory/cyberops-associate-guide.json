@@ -208,7 +208,7 @@
     "区分 B：一般に知られた一次情報（内容の再確認は未実施）",
     "参照時の注意（このガイドの限界）"
   ],
-  "stage": "content-green/archive-red",
+  "stage": "archived/full-validation-running",
   "route": "/docs/cyberops-associate-guide",
   "source": "Cyberops-associate-guide.html",
   "archive": "archive/security-certifications/",
@@ -217,5 +217,23 @@
   "contentGreen": "451d28d",
   "targetedTests": "76 pass / 0 fail, 9 files, 22620 assertions",
   "httpVerification": "200: all 16 counts and 16 structure hashes match",
-  "archiveRed": "0 pass / 4 fail"
+  "archiveRed": "0 pass / 4 fail",
+  "archiveGreen": "8980a07",
+  "archiveVerification": "4 pass / 0 fail; HTML and Markdown SHA-256 match before/after; archives ignored by Git",
+  "testFiles": 10,
+  "registeredTests": 80,
+  "routeCount": 32,
+  "components": [
+    "GuideSidebar",
+    "GuideRuntime",
+    "MermaidFigure",
+    "GuideIcon",
+    "CodeSample"
+  ],
+  "verificationCommands": [
+    "npm test -- --timeout 30000",
+    "npm run lint",
+    "npm run types:check"
+  ],
+  "sourceComparison": "archive-only, lazy; independent source tests skip without original files"
 }

@@ -343,7 +343,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Associate移行（2026-10-24）
 
-本文Green 451d28d: 専用76件/9ファイル成功（22,620 expect）。全12章・153見出し・135表2706セル・42図・6コード・36チェック・25問100選択肢を保持。全CSS/media・5幅×明暗・全セルホバー・全表とページのhydration・採点3評価帯/解答表示/両リセット・目次/チェック/図操作を検証。HTTP 200配信HTMLも16件数/16構造ハッシュ一致。lint・型チェック成功。アーカイブRed4件失敗を確認、専用登録80件/10ファイル、全体登録1582件/240ファイル。
+移行と原本アーカイブ完了。専用80件成功、原本なし48成功/32skip/0失敗。全体検証で既存ISO27001ナビの固定30ページ契約が新規CyberOps追加で1件失敗。既存30ページの検証を維持するよう追加分の区別を同期し、該当5件成功を確認。全体を再実行して最終実測を確定する。HTML/Markdownは両SHA-256一致で archive/security-certifications/ へ移動済み。本文Green 451d28d、アーカイブGreen 8980a07。HTTP 200・16件数/16構造ハッシュ一致、lint/型チェック成功。
 
 配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
