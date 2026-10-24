@@ -11,15 +11,14 @@ import { expect, test } from 'bun:test';
 
 const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Cyberops-associate-guide.html');
 // アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
-const originalPath = existsSync(sourcePath) ? sourcePath : resolve(import.meta.dir, '../../../../../Cyberops-associate-guide.html');
-export const hasSource = existsSync(originalPath);
+export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
 export let sourceDocument: Document;
 export let definitions: Map<string, string>;
 export let sourceCss: postcss.Root;
 function loadSource() {
   if (sourceHtml) return;
-  sourceHtml = readFileSync(originalPath, 'utf8');
+  sourceHtml = readFileSync(sourcePath, 'utf8');
   sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
   definitions = new Map(Object.entries(Function('window', sourceHtml.match(/<script>\s*(window\.DIAGRAMS[\s\S]*?)<\/script>/)![1] + 'return window.DIAGRAMS;')({}) as Record<string,string>));
   sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
