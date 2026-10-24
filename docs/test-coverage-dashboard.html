@@ -35,8 +35,8 @@
 <!-- iso27017-status --><section class="container" aria-label="ISO27017 migration status"><p>ISO/IEC 27017:2026: 移行・原本アーカイブ・最終自動検証完了。専用55件/12ファイル成功。全体512 pass / 297 skip / 0 fail、136ファイル（809件、84,599 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 全17節・30表463セル・10図・2コード・7チェック・7 Q&amp;A・18参考文献。<a href="migration-inventory/iso-iec-27017-2026-guide-review.md">目視確認表</a></p></section><!-- /iso27017-status -->
 <section class="container" aria-label="TLS PKI migration status"><p>Bulletproof TLS and PKI: /docs/bulletproof-tls-pki-guide へ移行。全15節・57表868セル・24図・12コード・10チェック項目・4解答を原本照合。専用41件/6ファイル成功。全体615 pass / 297 skip / 0 fail（912件・152ファイル・160,218 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。原本HTML/MDはarchive/security-guides/にカテゴリー別で保存（両SHA-256一致）。 <a href="migration-inventory/bulletproof-tls-pki-guide-review.md">目視確認表</a></p></section>
 <!-- iso18045-status --><section class="container" aria-label="ISO18045 migration status"><p>ISO/IEC 18045:2026: 移行・原本アーカイブ・最終自動検証完了。専用56件/10ファイル成功。全体568 pass / 297 skip / 0 fail、146ファイル（865件、158,174 expect）。npm test・npm run lint・npm run types:check成功。Next.jsビルド禁止・未実行。目視はユーザー担当・未完了。push・公開未実施。 全21節・40表830セル・18図・98タグ・28参考文献。<a href="migration-inventory/iso-iec-18045-2026-guide-review.md">目視確認表</a></p></section><!-- /iso18045-status -->
-<section class="container" aria-label="CSSLP migration status"><p id="csslp-status">2026-10-24 CSSLP: /docs/csslp-guide へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行し、HTML/Markdown原本を archive/security-certifications/ へ両SHA-256一致でアーカイブ済み。専用87件/11ファイル成功。原本なし隔離環境53成功/34skip/0失敗（全16章とブランド/ヒーロー/目次の19構造ハッシュは原本なしでも検証）。全CSS宣言/media、5幅×明暗のCSS、丸点・番号・参考番号、全97表のホバー、目次/図操作、全表とページのhydrationを検証。全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。資格ナビ・ホーム・静的/動的検索は31ページ・CSSLPの130見出しを収録。npm経由テスト・lint・型チェック成功。Next.js開発サーバーのHTTP 200で全15件数項目と19構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。移行Green d53c0ed、アーカイブGreen db89d6e、ホバー修正Green 4565411。</p></section>
-<section class="container"><p id="csslp-design-status">2026-10-24 CSSLPデザインRed 047a0b7: 新規8件・1成功/7失敗。10問40選択肢・16図のデザインを改善予定。原文・解答・図定義を保持。全体直近確定値は上部カードを参照。npm使用・ビルド禁止・目視はユーザー担当。</p></section>
+<section class="container" aria-label="CSSLP migration status"><p id="csslp-status">CSSLP移行完了時の記録（最新デザイン・実測は次のステータスと上部カード）: 2026-10-24 CSSLP: /docs/csslp-guide へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行し、HTML/Markdown原本を archive/security-certifications/ へ両SHA-256一致でアーカイブ済み。専用87件/11ファイル成功。原本なし隔離環境53成功/34skip/0失敗（全16章とブランド/ヒーロー/目次の19構造ハッシュは原本なしでも検証）。全CSS宣言/media、5幅×明暗のCSS、丸点・番号・参考番号、全97表のホバー、目次/図操作、全表とページのhydrationを検証。全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。資格ナビ・ホーム・静的/動的検索は31ページ・CSSLPの130見出しを収録。npm経由テスト・lint・型チェック成功。Next.js開発サーバーのHTTP 200で全15件数項目と19構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。移行Green d53c0ed、アーカイブGreen db89d6e、ホバー修正Green 4565411。</p></section>
+<section class="container"><p id="csslp-design-status">2026-10-24 CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に分けたカードへ整理。スマートフォンは1列、768px以上は2列の選択肢。解答欄はネイティブdetailsの開閉を保持し、正解バッジと内部フォーカスリングを整備。全16図へ図番号・内容別タイトル・種類表示を追加し、描画面・角丸ノード・曲線の矢印・サンセリフ体・配色を統一。小さい補助文字のコントラスト比4.5以上を検証。図の自然幅・中央寄せ・左端からの横スクロール・遅延描画・再試行・テキスト説明を保持。原文・正解・図定義・両原本のSHA-256は不変。第13章の装飾spanのみ透過した全19構造ハッシュ、問題文10件の固定ハッシュ、全40選択肢、3幅のデザインを検証。他章は5幅×明暗の原本CSS比較を継続。専用96件/12ファイル成功、原本なし隔離環境62成功/34skip/0失敗。全体1499成功/0skip/0失敗（230ファイル、511,065 expect）。npm test・lint・型チェック成功。HTTP 200の配信HTMLで40選択肢・16図見出しと全件数・19構造ハッシュの一致を確認。Red 047a0b7 → Green 173382a、文字コントラストRed 395d578 → Green 6c2ef93。ビルド禁止・未実行、目視はユーザー担当・未確認。</p></section>
 <!-- SUMMARY -->
         <section class="summary-section">
             <div class="container">
@@ -69,8 +69,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">1490</div>
-                        <div class="summary-sub">全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。CSSLP専用87件。原本なし環境53成功/34skip/0失敗。</div>
+                        <div class="summary-value">1499</div>
+                        <div class="summary-sub">全体1499成功/0skip/0失敗（230ファイル、511,065 expect）。CSSLP専用96件。原本なし環境62成功/34skip/0失敗。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -339,7 +339,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1343 page/guide + 11 shared navigation tests · 69/70 logic files（全体1490件）</span>
+                                            <span class="cell-count">1352 page/guide + 11 shared navigation tests · 69/70 logic files（全体1499件）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 99%"></div>
                                             </div>
@@ -354,7 +354,7 @@
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（50件、移行・回帰検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（46件、移行・表示・回帰検証）</li>
-                                                <li>✓ CSSLP: GuideSidebar / GuideIcon / MermaidFigure / CodeSample（87件/11ファイル、16章・97表1566セル・16図・3コード・19構造ハッシュ・全表ホバー）</li>
+                                                <li>✓ CSSLP: GuideSidebar / GuideIcon / MermaidFigure / CodeSample（96件/12ファイル、16章・97表1566セル・16図・10問40選択肢・コントラスト4.5以上・19構造ハッシュ・全表ホバー）</li>
                                                 <li>✓ ISO27001 HTML: GuideSidebar / GuideIcon / MermaidFigure（100件/12ファイル、全17章・36表845セル・13図・43出典・リスト装飾・全22構造ハッシュ）</li>
                                                 <li>✓ CISSP: GuideSidebar / GuideIcon / MermaidFigure（97件/11ファイル、143表・42図・リスト装飾・全18節固定構造ハッシュ）</li>
                                                 <li>✓ CCST: GuideSidebar / GuideIcon / GuideCode / MermaidFigure（105件、移行・回帰検証）</li>
@@ -372,7 +372,7 @@
 <li>✓ ISC2 CC: GuideSidebar / MermaidFigure / GuideIcon（82件/7ファイル。11章・120見出し・85表1520セル・23図・54目次・53出典・リスト点/番号・全CSS/media・5幅×両配色・hydration・ローカルフォント）</li>
 <li>✓ CCSP部品: GuideSidebar / MermaidFigure / GuideIcon（最新結果はCCSP状態欄を参照）</li>
 <li>✗ src/app/layout.tsx</li>
-                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 100、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 82（配色回帰23件を含む）、CCSP 69、CSSLP 87。原本比較を含む。</li>
+                                                <li>ガイド別の最新実測: CCIE 67、Secure by Design 50、MITRE ATLAS 46、CCST 105、Kubernetes 62、WAHH 85、Applied Cryptography 63、Threat Modeling 63、ISO27000 5、ISO27001 100、ISO15408 56、ISO27017 56、ISO18045 57、TLS/PKI 50、Zero Trust 71、Secrets and Lies 56、ISC2 CC 82（配色回帰23件を含む）、CCSP 69、CSSLP 96。原本比較を含む。</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1194,7 +1194,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-24</span>
                     <span
-                        >Runner: npm test -- --timeout 30000 · DOM: happy-dom · 229 files · 1490 pass / 0 skip / 0 fail（1490 total） · CI:
+                        >Runner: npm test -- --timeout 30000 · DOM: happy-dom · 230 files · 1499 pass / 0 skip / 0 fail（1499 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>

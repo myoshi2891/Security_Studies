@@ -201,7 +201,7 @@
   "build": "prohibited-not-run",
   "red": "26841dc: 1 pass / 72 fail / 1 module error; 73 tests, 9 executed files (sidebar import prevents collection)",
   "migrationGreen": "d53c0ed",
-  "targetedTests": "87 pass / 0 fail, 11 files, 2410 assertions",
+  "targetedTests": "96 pass / 0 fail, 12 files (measured in the full test run)",
   "navigationTests": "17 pass / 0 fail",
   "migrationRed": "26841dc",
   "archiveRed": "eb7bb8f",
@@ -209,20 +209,20 @@
   "hoverRed": "4e122e9",
   "hoverGreen": "4565411",
   "fullTests": {
-    "pass": 1490,
+    "pass": 1499,
     "skip": 0,
     "fail": 0,
-    "total": 1490,
-    "files": 229,
-    "assertions": 510667
+    "total": 1499,
+    "files": 230,
+    "assertions": 511065
   },
   "withoutOriginals": {
-    "pass": 53,
+    "pass": 62,
     "skip": 34,
     "fail": 0,
-    "files": 11
+    "files": 12
   },
-  "http": "200; all 15 inventory counts and 19 structural hashes match",
+  "http": "200; 40 choices, 16 diagram headers, all 15 source inventory counts and 19 canonical structure hashes match",
   "validation": [
     "npm test -- --timeout 30000",
     "npm run lint",
@@ -233,5 +233,38 @@
   "navigationPages": 31,
   "originalRepairs": [
     "Normalize invalid nested hero paragraphs into browser-equivalent siblings without changing text"
-  ]
+  ],
+  "design": {
+    "updated": "2026-10-24",
+    "red": "047a0b7",
+    "green": "173382a",
+    "contrastRed": "395d578",
+    "contrastGreen": "6c2ef93",
+    "questions": 10,
+    "options": 40,
+    "diagramHeaders": 16,
+    "minimumCaptionContrast": 4.5,
+    "responsiveWidths": [
+      375,
+      768,
+      1440
+    ],
+    "sourceTextAndDefinitions": "unchanged",
+    "sourceCanonicalAdapter": "unwrap only chapter 13 presentation spans before comparing immutable structure",
+    "testFiles": {
+      "src/app/docs/csslp-guide/sidebar.test.tsx": 6,
+      "src/app/docs/csslp-guide/foundation.test.tsx": 5,
+      "src/app/docs/csslp-guide/archive.test.ts": 4,
+      "src/app/docs/csslp-guide/integration.test.tsx": 6,
+      "src/app/docs/csslp-guide/styles.test.tsx": 12,
+      "src/app/docs/csslp-guide/hydration.test.tsx": 4,
+      "src/app/docs/csslp-guide/readability.test.tsx": 4,
+      "src/app/docs/csslp-guide/sections-8-15.test.tsx": 8,
+      "src/app/docs/csslp-guide/design.test.tsx": 9,
+      "src/app/docs/csslp-guide/snapshot.test.tsx": 19,
+      "src/app/docs/csslp-guide/sections-0-7.test.tsx": 8,
+      "src/app/docs/csslp-guide/runtime.test.tsx": 11
+    },
+    "visualReview": "user-pending"
+  }
 }
