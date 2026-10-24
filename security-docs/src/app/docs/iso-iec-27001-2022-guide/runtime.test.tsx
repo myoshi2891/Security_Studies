@@ -96,3 +96,20 @@ test('lazy engine loader disables Mermaid auto-start on the shared instance with
  finally{initialize.mockRestore();render.mockRestore();}
 });
 
+test('the figure is a labelled group so its text description stays readable, with the image role only on the rendered SVG viewport',async()=>{
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const original=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;
+ try{
+ const view=render(createElement(MermaidFigure,{id:'d2',source:'flowchart LR\nA["入力"] --> B["出力"]',ariaLabel:'入出力の図',renderer:async()=>({svg:'<svg viewBox="0 0 200 100"><text>図</text></svg>'})}));
+ const figure=view.container.querySelector('.mmd')!;
+ // 描画中も status が読み上げから消えないよう、外側は常に group
+ expect(figure).toHaveAttribute('role','group');expect(figure).toHaveAttribute('aria-label','入出力の図');
+ await waitFor(()=>expect(view.container.querySelector('svg')).not.toBeNull());
+ expect(figure).toHaveAttribute('role','group');
+ const viewport=view.container.querySelector('.diagram-viewport')!;
+ expect(viewport).toHaveAttribute('role','img');expect(viewport).toHaveAttribute('aria-label','入出力の図');
+ const description=view.container.querySelector('.diagram-description')!;
+ expect(description.closest('[role="img"]')).toBeNull();
+ expect(description.querySelector('li')).toHaveTextContent('入力 → 出力');
+ }finally{globalThis.IntersectionObserver=original;}
+});
