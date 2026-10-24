@@ -11,15 +11,14 @@ import { expect, test } from 'bun:test';
 
 const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Csslp-guide.html');
 // アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
-const originalPath = existsSync(sourcePath) ? sourcePath : resolve(import.meta.dir, '../../../../../Csslp-guide.html');
-export const hasSource = existsSync(originalPath);
+export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
 export let sourceDocument: Document;
 export let definitions: Map<string, string>;
 export let sourceCss: postcss.Root;
 function loadSource() {
   if (sourceHtml) return;
-  sourceHtml = readFileSync(originalPath, 'utf8');
+  sourceHtml = readFileSync(sourcePath, 'utf8');
   sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
   const outer=sourceDocument.querySelector('.hero > p');
   if(outer?.querySelector('p')){const inner=outer.querySelector('p')!;const trailing=[...outer.childNodes].slice([...outer.childNodes].indexOf(inner)+1);outer.after(inner,...trailing);sourceDocument.querySelector('.hero')!.append(sourceDocument.createElement('p'));}
