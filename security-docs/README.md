@@ -296,7 +296,7 @@ ISO27001 HTML更新: 既存 `/docs/iso-iec-27001-2022-guide` を元HTMLの全17�
 <!-- csslp-migration-status -->
 ## CSSLP移行（2026-10-24）
 
-CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行。専用79件/9ファイル・既存ナビ17件成功。5幅×明暗のCSS、丸点/番号、全CSS/media、全章構造ハッシュ、目次/図操作、全表とページのhydrationを検証。npm経由テスト・lint・型チェック成功。移行Green `d53c0ed`。原本アーカイブは次工程、目視はユーザー担当・未確認、ビルド禁止・未実行。全体直近確定値は1403成功/0失敗・218ファイル（移行前の事前検証）。
+CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用87件/11ファイル成功。原本なし隔離環境53成功/34skip/0失敗（全16章とブランド/ヒーロー/目次の19構造ハッシュは原本なしでも検証）。全CSS宣言/media、5幅×明暗のCSS、丸点・番号・参考番号、全97表のホバー、目次/図操作、全表とページのhydrationを検証。全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。資格ナビ・ホーム・静的/動的検索は31ページ・CSSLPの130見出しを収録。npm経由テスト・lint・型チェック成功。Next.js開発サーバーのHTTP 200で全15件数項目と19構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `d53c0ed`、アーカイブGreen `db89d6e`、ホバー修正Green `4565411`。
 
-配置: `security-docs/src/app/docs/csslp-guide/page.mdx`。資格ナビ・ホーム・静的/動的検索31ページに登録。台帳: `docs/migration-inventory/csslp-guide.json`。目視確認表: `docs/migration-inventory/csslp-guide-review.md`。
+配置: `security-docs/src/app/docs/csslp-guide/page.mdx`。原本: `archive/security-certifications/Csslp-guide.html` / `archive/security-certifications/Csslp-guide.md`。台帳: `docs/migration-inventory/csslp-guide.json`。目視確認表: `docs/migration-inventory/csslp-guide-review.md`。
 <!-- /csslp-migration-status -->

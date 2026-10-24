@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-24（CSSLP移行Green・専用79件成功・原本アーカイブ準備）
+> **最終更新**: 2026-10-24（CSSLP移行・原本アーカイブ・ホバー回帰Green・全1490件成功）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,28 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1403成功 / 0 skip / 0失敗** | npm test -- --timeout 30000実測（2026-10-24）・218ファイル・1403件。507,982 expect。ISO27001専用100件を含む。 |
-| テストファイル数 | **218ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **87/87 (100%)** | 従来84 + ISO27001部品3（GuideSidebar / MermaidFigure / GuideIcon）。純粋データ・MDXは分母外。全218テストファイルとは別集計 |
+| テストケース総数 | **1490成功 / 0 skip / 0失敗** | npm test -- --timeout 30000実測（2026-10-24）・229ファイル・1490件。510,667 expect。CSSLP専用87件を含む。 |
+| テストファイル数 | **229ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **91/91 (100%)** | 従来87 + CSSLP部品4（GuideSidebar / MermaidFigure / GuideIcon / CodeSample）。純粋データ・MDXは分母外。全229テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で53成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISC2 CC完了欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/csslp-guide/archive.test.ts` | 4 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/foundation.test.tsx` | 5 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/readability.test.tsx` | 4 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/sections-0-7.test.tsx` | 8 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/sections-8-15.test.tsx` | 8 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/snapshot.test.tsx` | 19 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
+| `src/app/docs/csslp-guide/styles.test.tsx` | 12 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
 | `src/app/docs/iso-iec-27001-2022-guide/archive.test.ts` | 5 | ✅ 2026-10-24 HTML画面更新・原本アーカイブ後Green |
 | `src/app/docs/iso-iec-27001-2022-guide/foundation.test.tsx` | 5 | ✅ 2026-10-24 HTML画面更新・原本アーカイブ後Green |
 | `src/app/docs/iso-iec-27001-2022-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 HTML画面更新・原本アーカイブ後Green |
@@ -303,13 +314,13 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `GEMINI.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `README.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
-| `docs/progress.md` | 2026-10-24 | ISO27001 HTML画面更新・新旧原本保存・テスト実測・目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `GEMINI.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `README.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `security-docs/CLAUDE.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `security-docs/README.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
+| `docs/progress.md` | 2026-10-24 | CSSLP全16章・原本アーカイブ・全体実測・表ホバー回帰・目視待ちを同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -339,6 +350,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CSSLP | **CSSLP全16章移行・両原本アーカイブ** — 専用87件成功、全97表のホバー回帰も修正。目視待ち。 | 2026-10-24 |
 | ISO27001-HTML | **既存ISO27001画面をHTML全17章で更新・新旧原本保存** — 専用100件成功。丸点/丸囲み番号・13図・36表845セル・43出典・16チェックを検証。目視待ち。 | 2026-10-24 |
 | CISSP | **CISSP全18節移行・原本アーカイブ** — 専用97件成功。5幅×明暗・丸点/番号/カウンター・42図・143表・検索/操作/hydration検証。目視待ち。 | 2026-10-24 |
 | GUIDE-READABILITY | **ISC2 CC表ホバー・参照コード配色と同種の7ガイドを修正** — 新規23件/全1212件成功。Chrome4条件と16ガイド比較。ビルド未実行。 | 2026-10-24 |
@@ -1184,5 +1196,9 @@ ISO27001 HTML更新・アーカイブRed（2026-10-24）: 原本アーカイブ5
 <!-- csslp-status -->
 ## CSSLP移行（2026-10-24）
 
-CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行。専用79件/9ファイル・既存ナビ17件成功。5幅×明暗のCSS、丸点/番号、全CSS/media、全章構造ハッシュ、目次/図操作、全表とページのhydrationを検証。npm経由テスト・lint・型チェック成功。移行Green `d53c0ed`。原本アーカイブは次工程、目視はユーザー担当・未確認、ビルド禁止・未実行。全体直近確定値は1403成功/0失敗・218ファイル（移行前の事前検証）。
+CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用87件/11ファイル成功。原本なし隔離環境53成功/34skip/0失敗（全16章とブランド/ヒーロー/目次の19構造ハッシュは原本なしでも検証）。全CSS宣言/media、5幅×明暗のCSS、丸点・番号・参考番号、全97表のホバー、目次/図操作、全表とページのhydrationを検証。全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。資格ナビ・ホーム・静的/動的検索は31ページ・CSSLPの130見出しを収録。npm経由テスト・lint・型チェック成功。Next.js開発サーバーのHTTP 200で全15件数項目と19構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `d53c0ed`、アーカイブGreen `db89d6e`、ホバー修正Green `4565411`。
+
+TDD履歴: 移行Red `26841dc` → Green `d53c0ed`、アーカイブRed `eb7bb8f`（2失敗/2skip）→ Green `db89d6e`、全表ホバーRed `4e122e9`（4失敗）→ Green `4565411`。テスト・実装・文書同期を分離コミット。
+
+次の確認: ユーザーが `docs/migration-inventory/csslp-guide-review.md` に沿って目視。原本の番号付き本文リストは0個。本文の丸点5リスト16項目・目次章番号・16参考ソース番号を保持し、ネイティブ番号の表示も検証。原本の不正なヒーローp入れ子は、ブラウザーの修復結果と同じ兄弟要素へ正規化して全テキストを保持。
 <!-- /csslp-status -->

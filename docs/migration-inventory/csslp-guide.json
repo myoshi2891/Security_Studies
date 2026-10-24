@@ -192,15 +192,46 @@
   ],
   "updated": "2026-10-24",
   "slug": "csslp-guide",
-  "stage": "migration-green",
-  "source": "Csslp-guide.html",
-  "markdown": "Csslp-guide.md",
+  "stage": "complete-awaiting-user-visual-review",
+  "source": "archive/security-certifications/Csslp-guide.html",
+  "markdown": "archive/security-certifications/Csslp-guide.md",
   "target": "security-docs/src/app/docs/csslp-guide/page.mdx",
   "archive": "archive/security-certifications/",
   "visualReview": "user-pending",
   "build": "prohibited-not-run",
   "red": "26841dc: 1 pass / 72 fail / 1 module error; 73 tests, 9 executed files (sidebar import prevents collection)",
   "migrationGreen": "d53c0ed",
-  "targetedTests": "79 pass / 0 fail, 9 files, 2390 assertions",
-  "navigationTests": "17 pass / 0 fail"
+  "targetedTests": "87 pass / 0 fail, 11 files, 2410 assertions",
+  "navigationTests": "17 pass / 0 fail",
+  "migrationRed": "26841dc",
+  "archiveRed": "eb7bb8f",
+  "archiveGreen": "db89d6e",
+  "hoverRed": "4e122e9",
+  "hoverGreen": "4565411",
+  "fullTests": {
+    "pass": 1490,
+    "skip": 0,
+    "fail": 0,
+    "total": 1490,
+    "files": 229,
+    "assertions": 510667
+  },
+  "withoutOriginals": {
+    "pass": 53,
+    "skip": 34,
+    "fail": 0,
+    "files": 11
+  },
+  "http": "200; all 15 inventory counts and 19 structural hashes match",
+  "validation": [
+    "npm test -- --timeout 30000",
+    "npm run lint",
+    "npm run types:check"
+  ],
+  "archiveHashesVerified": true,
+  "rootOriginalsAbsent": true,
+  "navigationPages": 31,
+  "originalRepairs": [
+    "Normalize invalid nested hero paragraphs into browser-equivalent siblings without changing text"
+  ]
 }

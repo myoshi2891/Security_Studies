@@ -1,12 +1,14 @@
 # Technical Specification: Security Studies Documentation (Next.js + Tailwind v4 + MDX)
 
+Updated 2026-10-24
+
 ## 1. Project Overview
 
 This project aims to build a high-performance, secure, and modern documentation site using the latest Next.js features, replacing the Fumadocs framework with a custom, lightweight MDX implementation.
 
 ### Tech Stack
 
-- **Framework:** Next.js 16.2.2 (App Router)
+- **Framework:** Next.js 16.4.2 (App Router)
 - **Styling:** Tailwind CSS v4 (Alpha/Stable) with CSS Variables
 - **Content:** MDX via `@next/mdx` and `next-mdx-remote` (or standard MDX components)
 - **Language:** TypeScript (Strict Mode)
@@ -110,3 +112,9 @@ This project aims to build a high-performance, secure, and modern documentation 
 - [x] All `.mdx` files have valid TypeScript types.
 - [x] Sidebar reflects the actual file structure (`src/config/docs.ts` — 10 pages).
 - [ ] Code blocks have "Copy" buttons and syntax highlighting. (未実装 — Phase 4 タスク)
+
+## CSSLP migration — 2026-10-24
+
+CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図・3コード・16参考ソースを移行し、HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み。専用87件/11ファイル成功。原本なし隔離環境53成功/34skip/0失敗（全16章とブランド/ヒーロー/目次の19構造ハッシュは原本なしでも検証）。全CSS宣言/media、5幅×明暗のCSS、丸点・番号・参考番号、全97表のホバー、目次/図操作、全表とページのhydrationを検証。全体1490成功/0skip/0失敗（229ファイル、510,667 expect）。資格ナビ・ホーム・静的/動的検索は31ページ・CSSLPの130見出しを収録。npm経由テスト・lint・型チェック成功。Next.js開発サーバーのHTTP 200で全15件数項目と19構造ハッシュの一致も確認。ビルド禁止・未実行、目視はユーザー担当・未確認。移行Green `d53c0ed`、アーカイブGreen `db89d6e`、ホバー修正Green `4565411`。
+
+Inventory: `docs/migration-inventory/csslp-guide.json`. User review: `docs/migration-inventory/csslp-guide-review.md`.
