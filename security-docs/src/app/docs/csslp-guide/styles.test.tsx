@@ -14,7 +14,7 @@ export async function compareCascade(width:number,theme:string,selectors:string[
  original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}'+resolveClamps(sourceStyle(),width)+'</style>';original.document.body.innerHTML=sourceDocument.body.innerHTML;
  actual.document.head.innerHTML='<style>'+resolveClamps(css(),width)+'</style>';actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
  const errors=new Set<string>();
- for(const selector of selectors){const a=[...actual.document.querySelectorAll(selector)].filter(e=>!e.closest('.mermaid')),o=[...original.document.querySelectorAll(selector.replaceAll('.guide-content','main'))];expect(a.length,selector).toBe(o.length);
+ for(const selector of selectors){const a=[...actual.document.querySelectorAll(selector)].filter(e=>!e.closest('.mmd')),o=[...original.document.querySelectorAll(selector.replaceAll('.guide-content','main'))];expect(a.length,selector).toBe(o.length);
  for(let i=0;i<a.length;i++){const as=actual.getComputedStyle(a[i]),os=original.getComputedStyle(o[i]);for(const p of ['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','list-style-type']){const av=norm(as.getPropertyValue(p),p),ov=norm(os.getPropertyValue(p),p);if(av!==ov)errors.add(`${selector} ${p} expected ${ov} received ${av}`);}}}
  expect([...errors]).toEqual([]);
  }finally{await actual.happyDOM.close();await original.happyDOM.close();}
