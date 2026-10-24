@@ -1,0 +1,686 @@
+
+            .cissp-guide.cissp-guide {
+                --color-paper: #f6f7f9;
+                --color-ink: #161b26;
+                --color-indigo: #2e3f72;
+                --color-gold: #b8802a;
+                --color-forest: #1b6e6a;
+                --color-plum: #8c3a5c;
+                --surface: #ffffff;
+                --line: #dce1eb;
+                --line-strong: #c3cbda;
+                --ink-2: #434c61;
+                --ink-3: #586277;
+                --indigo-tint: #eef1f8;
+                --gold-tint: #faf1df;
+                --forest-tint: #e6f2f1;
+                --plum-tint: #f7ecf1;
+                --done-tint: #eaf4ec;
+                --radius: 12px;
+                --sidebar-w: 288px;
+                --font-sans:
+                    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic',
+                    Meiryo, system-ui, sans-serif;
+                --font-serif:
+                    'Source Serif 4', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', Georgia,
+                    serif;
+            }
+            .cissp-guide.cissp-guide * {
+                box-sizing: border-box;
+            }
+            .cissp-guide.cissp-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .cissp-guide.cissp-guide {
+                margin: 0;
+                background: var(--color-paper);
+                color: var(--color-ink);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.75;
+                overflow-wrap: break-word;
+            }
+            .cissp-guide.cissp-guide.drawer-open {
+                overflow: hidden;
+            }
+            .cissp-guide.cissp-guide a {
+                color: var(--color-indigo);
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+            .cissp-guide.cissp-guide a:hover {
+                color: var(--color-gold);
+            }
+            .cissp-guide.cissp-guide strong {
+                font-weight: 600;
+            }
+            .cissp-guide.cissp-guide em {
+                font-style: italic;
+            }
+
+            /* layout: block + fixed sidebar */
+            .cissp-guide.cissp-guide .layout {
+                display: block;
+            }
+            .cissp-guide.cissp-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--surface);
+                border-right: 1px solid var(--line);
+                display: flex;
+                flex-direction: column;
+                z-index: 40;
+            }
+            .cissp-guide.cissp-guide .brand {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 22px 20px 18px;
+                border-bottom: 1px solid var(--line);
+                text-decoration: none;
+                color: var(--color-ink);
+            }
+            .cissp-guide.cissp-guide .brand svg {
+                flex: none;
+            }
+            .cissp-guide.cissp-guide .brand-title {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.125rem;
+                line-height: 1.3;
+                color: var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide .brand-sub {
+                font-size: 1rem;
+                color: var(--ink-3);
+                line-height: 1.4;
+            }
+            .cissp-guide.cissp-guide .sidebar nav {
+                flex: 1;
+                overflow-y: auto;
+                padding: 12px 12px 28px;
+            }
+            .cissp-guide.cissp-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .cissp-guide.cissp-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 2px 0;
+            }
+            .cissp-guide.cissp-guide .sidebar nav li::before {
+                content: none;
+            }
+            .cissp-guide.cissp-guide .sidebar nav a {
+                display: flex;
+                gap: 10px;
+                align-items: baseline;
+                padding: 7px 12px;
+                border-radius: 8px;
+                color: var(--ink-2);
+                text-decoration: none;
+                font-size: 1rem;
+                line-height: 1.45;
+                border-left: 3px solid transparent;
+            }
+            .cissp-guide.cissp-guide .sidebar nav a:hover {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide .sidebar nav a.active {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+                border-left-color: var(--color-gold);
+            }
+            .cissp-guide.cissp-guide .nav-num {
+                flex: none;
+                min-width: 1.7em;
+                text-align: right;
+                color: var(--color-gold);
+                font-weight: 600;
+                font-variant-numeric: tabular-nums;
+            }
+
+            .cissp-guide.cissp-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 0 clamp(24px, 4vw, 72px) 96px;
+            }
+
+            /* hero */
+            .cissp-guide.cissp-guide .hero {
+                padding: 64px 0 40px;
+                border-bottom: 1px solid var(--line-strong);
+            }
+            .cissp-guide.cissp-guide .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--color-gold);
+                font-weight: 600;
+                letter-spacing: 0.04em;
+            }
+            .cissp-guide.cissp-guide .hero h1 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: clamp(2rem, 4vw, 2.875rem);
+                line-height: 1.25;
+                margin: 12px 0 24px;
+                color: var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide .meta {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 12px;
+                margin: 0;
+            }
+            .cissp-guide.cissp-guide .meta div {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+            }
+            .cissp-guide.cissp-guide .meta dt {
+                color: var(--ink-3);
+                font-weight: 500;
+                margin: 0;
+            }
+            .cissp-guide.cissp-guide .meta dd {
+                margin: 2px 0 0;
+                font-weight: 500;
+                color: var(--color-ink);
+            }
+
+            /* sections & headings */
+            .cissp-guide.cissp-guide .section {
+                padding-top: 56px;
+            }
+            .cissp-guide.cissp-guide .section > h2 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.875rem;
+                line-height: 1.35;
+                color: var(--color-indigo);
+                margin: 0 0 20px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide h3 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.375rem;
+                line-height: 1.4;
+                margin: 44px 0 14px;
+                color: var(--color-ink);
+                padding-left: 14px;
+                border-left: 4px solid var(--color-gold);
+            }
+            .cissp-guide.cissp-guide h4 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.1875rem;
+                line-height: 1.4;
+                margin: 32px 0 10px;
+                color: var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide p {
+                margin: 0 0 1rem;
+            }
+            .cissp-guide.cissp-guide ul, .cissp-guide.cissp-guide ol {
+                margin: 0 0 1.1rem;
+                padding: 0;
+            }
+            .cissp-guide.cissp-guide ul {
+                list-style: none;
+            }
+            .cissp-guide.cissp-guide ul > li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin: 0.4rem 0;
+            }
+            .cissp-guide.cissp-guide ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.35rem;
+                top: 0.78em;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--color-gold);
+            }
+            .cissp-guide.cissp-guide ol {
+                padding-left: 1.7rem;
+            }
+            .cissp-guide.cissp-guide ol > li {
+                margin: 0.4rem 0;
+                padding-left: 0.2rem;
+            }
+            .cissp-guide.cissp-guide ol > li::marker {
+                color: var(--color-indigo);
+                font-weight: 600;
+            }
+            .cissp-guide.cissp-guide li > ul, .cissp-guide.cissp-guide li > ol {
+                margin: 0.3rem 0 0.3rem;
+            }
+
+            .cissp-guide.cissp-guide p.oneliner {
+                background: var(--indigo-tint);
+                border-left: 4px solid var(--color-indigo);
+                border-radius: 0 var(--radius) var(--radius) 0;
+                padding: 12px 18px;
+                margin: 0 0 1.25rem;
+            }
+
+            /* tables */
+            .cissp-guide.cissp-guide .table-wrap {
+                overflow-x: auto;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                margin: 1.1rem 0 1.6rem;
+            }
+            .cissp-guide.cissp-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+            }
+            .cissp-guide.cissp-guide th, .cissp-guide.cissp-guide td {
+                padding: 10px 16px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--line);
+            }
+            .cissp-guide.cissp-guide thead th {
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+                white-space: nowrap;
+                border-bottom: 2px solid var(--line-strong);
+            }
+            .cissp-guide.cissp-guide tbody tr:nth-child(even) td {
+                background: #fafbfd;
+            }
+            .cissp-guide.cissp-guide tbody tr:hover td {
+                background: var(--gold-tint);
+            }
+            .cissp-guide.cissp-guide tbody tr:last-child td {
+                border-bottom: none;
+            }
+            .cissp-guide.cissp-guide td:first-child {
+                font-weight: 500;
+            }
+            .cissp-guide.cissp-guide td a {
+                overflow-wrap: anywhere;
+            }
+
+            /* callouts: exactly three types */
+            .cissp-guide.cissp-guide .callout {
+                border: 1px solid var(--line);
+                border-left-width: 5px;
+                border-radius: var(--radius);
+                padding: 14px 20px 8px;
+                margin: 1.25rem 0 1.5rem;
+                background: var(--surface);
+            }
+            .cissp-guide.cissp-guide .callout-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+                margin-bottom: 6px;
+            }
+            .cissp-guide.cissp-guide .callout-title i {
+                font-size: 1.25rem;
+            }
+            .cissp-guide.cissp-guide .callout-body > :last-child {
+                margin-bottom: 0.6rem;
+            }
+            .cissp-guide.cissp-guide .callout.practice {
+                background: var(--gold-tint);
+                border-color: #e6d3a8;
+                border-left-color: var(--color-gold);
+            }
+            .cissp-guide.cissp-guide .callout.practice .callout-title {
+                color: #8a5e17;
+            }
+            .cissp-guide.cissp-guide .callout.source {
+                background: var(--forest-tint);
+                border-color: #bbd9d6;
+                border-left-color: var(--color-forest);
+            }
+            .cissp-guide.cissp-guide .callout.source .callout-title {
+                color: var(--color-forest);
+            }
+            .cissp-guide.cissp-guide .callout.note {
+                background: var(--plum-tint);
+                border-color: #e3c5d2;
+                border-left-color: var(--color-plum);
+            }
+            .cissp-guide.cissp-guide .callout.note .callout-title {
+                color: var(--color-plum);
+            }
+            .cissp-guide.cissp-guide .callout ul > li::before {
+                background: currentColor;
+                opacity: 0.55;
+            }
+
+            /* mermaid */
+            .cissp-guide.cissp-guide .mermaid {
+                display: flex;
+                justify-content: center;
+                margin: 1.25rem 0 1.75rem;
+                padding: 20px 16px;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                overflow: visible;
+                min-height: 64px;
+            }
+            .cissp-guide.cissp-guide .mermaid svg {
+                display: block;
+                overflow: visible;
+            }
+            .cissp-guide.cissp-guide .mermaid.failed {
+                color: var(--color-plum);
+                justify-content: flex-start;
+            }
+
+            /* quiz */
+            .cissp-guide.cissp-guide .qcard {
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 16px 20px 14px;
+                margin: 0 0 16px;
+            }
+            .cissp-guide.cissp-guide .qcard > p {
+                margin: 0 0 12px;
+            }
+            .cissp-guide.cissp-guide .qcard > p > strong:first-child {
+                display: inline-block;
+                background: var(--color-indigo);
+                color: #fff;
+                border-radius: 8px;
+                padding: 0 12px;
+                margin-right: 10px;
+                font-weight: 600;
+            }
+            .cissp-guide.cissp-guide details.qa {
+                border: 1px solid var(--line-strong);
+                border-radius: 10px;
+                background: var(--color-paper);
+            }
+            .cissp-guide.cissp-guide details.qa summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 9px 16px;
+                font-weight: 600;
+                color: var(--color-indigo);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .cissp-guide.cissp-guide details.qa summary::-webkit-details-marker {
+                display: none;
+            }
+            .cissp-guide.cissp-guide details.qa summary i {
+                font-size: 1.1rem;
+                transition: transform 0.15s;
+            }
+            .cissp-guide.cissp-guide details.qa[open] summary i {
+                transform: rotate(90deg);
+            }
+            .cissp-guide.cissp-guide details.qa[open] summary {
+                border-bottom: 1px solid var(--line-strong);
+            }
+            .cissp-guide.cissp-guide details.qa > *:not(summary) {
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+            .cissp-guide.cissp-guide details.qa > p:first-of-type {
+                margin-top: 12px;
+            }
+            .cissp-guide.cissp-guide details.qa > p:last-child {
+                margin-bottom: 14px;
+            }
+
+            /* checklist cards */
+            .cissp-guide.cissp-guide .checklist {
+                counter-reset: chk;
+                margin: 1rem 0 1.5rem;
+            }
+            .cissp-guide.cissp-guide .checklist > li {
+                padding-left: 0;
+                margin: 0 0 10px;
+                counter-increment: chk;
+            }
+            .cissp-guide.cissp-guide .checklist > li::before {
+                content: none;
+            }
+            .cissp-guide.cissp-guide .checklist label {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                cursor: pointer;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+                transition:
+                    background 0.15s,
+                    border-color 0.15s;
+            }
+            .cissp-guide.cissp-guide .checklist label:hover {
+                border-color: var(--color-indigo);
+            }
+            .cissp-guide.cissp-guide .checklist .num {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 600;
+            }
+            .cissp-guide.cissp-guide .checklist .num::before {
+                content: counter(chk);
+            }
+            .cissp-guide.cissp-guide .checklist input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .cissp-guide.cissp-guide .checklist .box {
+                flex: none;
+                width: 1.4rem;
+                height: 1.4rem;
+                border: 2px solid var(--line-strong);
+                border-radius: 6px;
+                background: var(--surface);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: transparent;
+            }
+            .cissp-guide.cissp-guide .checklist .box i {
+                font-size: 1rem;
+                line-height: 1;
+            }
+            .cissp-guide.cissp-guide .checklist input:focus-visible + .box {
+                outline: 2px solid var(--color-gold);
+                outline-offset: 2px;
+            }
+            .cissp-guide.cissp-guide .checklist li:has(input:checked) label {
+                background: var(--done-tint);
+                border-color: #bbd7c0;
+            }
+            .cissp-guide.cissp-guide .checklist li:has(input:checked) .box {
+                background: var(--color-forest);
+                border-color: var(--color-forest);
+                color: #fff;
+            }
+            .cissp-guide.cissp-guide .checklist li:has(input:checked) .txt {
+                text-decoration: line-through;
+                color: var(--ink-3);
+            }
+            .cissp-guide.cissp-guide .checklist .txt {
+                flex: 1;
+            }
+
+            /* reference cards */
+            .cissp-guide.cissp-guide .reflist {
+                display: grid;
+                gap: 10px;
+                margin: 1rem 0 1.6rem;
+            }
+            .cissp-guide.cissp-guide .refcard {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                background: var(--surface);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 12px 16px;
+            }
+            .cissp-guide.cissp-guide .refcard .badge {
+                flex: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--color-forest);
+                color: #fff;
+                font-weight: 600;
+            }
+            .cissp-guide.cissp-guide .refcard .ref-title {
+                font-weight: 500;
+                margin-bottom: 2px;
+            }
+            .cissp-guide.cissp-guide .refcard .ref-url {
+                overflow-wrap: anywhere;
+            }
+
+            /* footer */
+            .cissp-guide.cissp-guide .footer {
+                margin-top: 72px;
+                padding-top: 24px;
+                border-top: 1px solid var(--line-strong);
+                color: var(--ink-3);
+            }
+            .cissp-guide.cissp-guide .footer p {
+                margin: 0;
+            }
+
+            /* mobile drawer */
+            .cissp-guide.cissp-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 60;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: none;
+                background: var(--color-indigo);
+                color: #fff;
+                font-size: 1.6rem;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(22, 27, 38, 0.28);
+            }
+            .cissp-guide.cissp-guide .menu-btn:focus-visible {
+                outline: 3px solid var(--color-gold);
+                outline-offset: 3px;
+            }
+            .cissp-guide.cissp-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(22, 27, 38, 0.45);
+                z-index: 30;
+            }
+            @media (max-width: 1024px) {
+                .cissp-guide.cissp-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                }
+                .cissp-guide.cissp-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .cissp-guide.cissp-guide .guide-content {
+                    margin-left: 0;
+                    padding: 0 20px 96px;
+                }
+                .cissp-guide.cissp-guide .menu-btn {
+                    display: inline-flex;
+                }
+                .cissp-guide.cissp-guide .backdrop.show {
+                    display: block;
+                }
+                .cissp-guide.cissp-guide .section > h2 {
+                    font-size: 1.625rem;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .cissp-guide.cissp-guide {
+                    scroll-behavior: auto;
+                }
+                .cissp-guide.cissp-guide .sidebar, .cissp-guide.cissp-guide details.qa summary i {
+                    transition: none;
+                }
+            }
+            @media print {
+                .cissp-guide.cissp-guide .sidebar, .cissp-guide.cissp-guide .menu-btn, .cissp-guide.cissp-guide .backdrop {
+                    display: none;
+                }
+                .cissp-guide.cissp-guide .guide-content {
+                    margin-left: 0;
+                }
+                .cissp-guide.cissp-guide details.qa {
+                    display: block;
+                }
+            }
+        
+/* Restore source defaults after shared prose styles and Tailwind reset. */
+.cissp-guide.cissp-guide { min-width:0; min-height:100vh; --font-serif:'Source Serif 4 Variable', 'Source Serif 4', 'Hiragino Mincho ProN', 'Noto Serif JP', 'Yu Mincho', Georgia,
+                    serif; }
+.docs-main:has(.cissp-guide) { padding:0; }
+.cissp-guide.cissp-guide h1, .cissp-guide.cissp-guide h2, .cissp-guide.cissp-guide h3, .cissp-guide.cissp-guide h4 { letter-spacing:0px; }
+.cissp-guide.cissp-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; }
+.cissp-guide.cissp-guide .eyebrow { font-family:var(--font-sans); font-size:1rem; margin-bottom:0; letter-spacing:0.04em; }
+.cissp-guide.cissp-guide .eyebrow svg { color:currentColor; }
+.cissp-guide.cissp-guide ol { list-style-type:decimal; }
+.cissp-guide.cissp-guide ul { list-style-type:none; }
+.cissp-guide.cissp-guide table { margin:0; }
+.cissp-guide.cissp-guide code { font-size:1rem; color:var(--color-ink); }
+.cissp-guide.cissp-guide .sidebar { top:64px; z-index:40; visibility:visible; }
+.cissp-guide.cissp-guide .backdrop { top:64px; border:0; padding:0; }
+.cissp-guide.cissp-guide .menu-btn { z-index:50; }
+.cissp-guide.cissp-guide :is(section[id],h1,h2,h3,h4,.refcard,#top) { scroll-margin-top:88px; }
+.cissp-guide.cissp-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.cissp-guide.cissp-guide .menu-btn svg { display:block; width:1em; height:1em; }
+.cissp-guide.cissp-guide .mermaid { display:block; justify-content:normal; min-width:0; }
+.cissp-guide.cissp-guide .diagram-viewport { display:block; overflow-x:auto; }
+.cissp-guide.cissp-guide .mermaid svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+.cissp-guide.cissp-guide :is(a,summary):focus-visible { outline:2px solid var(--color-gold); outline-offset:2px; }
+html:has(.cissp-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (max-width:1024px) { .cissp-guide.cissp-guide .sidebar { visibility:hidden; } .cissp-guide.cissp-guide .sidebar.open { visibility:visible; } }
+@media (prefers-reduced-motion:reduce) { html:has(.cissp-guide) { scroll-behavior:auto; } }
+
+/* Explicit equivalent of the source shorthand keeps native summary markers hidden. */
+.cissp-guide.cissp-guide details.qa summary { list-style-type:none; }

@@ -1,0 +1,682 @@
+
+            .iso27001-guide.iso27001-guide {
+                --bg-primary: #07111e;
+                --bg-secondary: #0c1a2d;
+                --bg-tertiary: #12243b;
+                --text-primary: #f3f5fa;
+                --text-secondary: #c6d0e3;
+                --text-tertiary: #93a1bd;
+                --border-tertiary: #1e2f4d;
+                --border-secondary: #2d456e;
+                --border-primary: #3e5c8f;
+                --accent: #7c9eff;
+                --accent-bg: #13284a;
+                --teal: #5fd3b4;
+                --teal-bg: #0f2f2c;
+                --font-sans:
+                    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI',
+                    'Yu Gothic', 'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+                --sidebar-w: 300px;
+                --radius-md: 8px;
+                --radius-lg: 12px;
+            }
+            .iso27001-guide.iso27001-guide * {
+                box-sizing: border-box;
+            }
+            .iso27001-guide.iso27001-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .iso27001-guide.iso27001-guide {
+                    scroll-behavior: auto;
+                }
+            }
+            .iso27001-guide.iso27001-guide {
+                margin: 0;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.75;
+                -webkit-text-size-adjust: 100%;
+                overflow-wrap: anywhere;
+            }
+            .iso27001-guide.iso27001-guide a {
+                color: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide :focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .iso27001-guide.iso27001-guide.menu-open {
+                overflow: hidden;
+            }
+
+            /* sidebar */
+            .iso27001-guide.iso27001-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                overflow-y: auto;
+                background: var(--bg-secondary);
+                border-right: 1px solid var(--border-secondary);
+                padding: 28px 16px 32px;
+                z-index: 55;
+            }
+            .iso27001-guide.iso27001-guide .brand {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 12px;
+                align-items: center;
+                padding: 0 8px 22px;
+                border-bottom: 1px solid var(--border-tertiary);
+                margin-bottom: 18px;
+            }
+            .iso27001-guide.iso27001-guide .brand-mark {
+                width: 44px;
+                height: 44px;
+                border-radius: var(--radius-lg);
+                display: grid;
+                place-items: center;
+                background: var(--accent-bg);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                font-size: 1.5rem;
+            }
+            .iso27001-guide.iso27001-guide .brand-name {
+                font-weight: 500;
+                line-height: 1.35;
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .brand-sub {
+                line-height: 1.35;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav li::before {
+                content: none;
+            }
+            .iso27001-guide.iso27001-guide .nav-group {
+                margin-bottom: 18px;
+            }
+            .iso27001-guide.iso27001-guide .nav-group-title {
+                padding: 0 10px 6px;
+                font-weight: 500;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav a {
+                display: grid;
+                grid-template-columns: 2rem 1fr;
+                gap: 6px;
+                align-items: baseline;
+                padding: 7px 10px;
+                border-radius: var(--radius-md);
+                border-left: 3px solid transparent;
+                color: var(--text-secondary);
+                text-decoration: none;
+                line-height: 1.5;
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav a:hover {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav a.active {
+                background: var(--accent-bg);
+                border-left-color: var(--accent);
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .nav-no {
+                font-family: var(--font-mono);
+                color: var(--text-tertiary);
+                text-align: right;
+            }
+            .iso27001-guide.iso27001-guide .sidebar nav a.active .nav-no {
+                color: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide .side-foot {
+                margin: 8px 8px 0;
+                padding-top: 16px;
+                border-top: 1px solid var(--border-tertiary);
+                color: var(--text-tertiary);
+                line-height: 1.6;
+            }
+
+            /* layout */
+            .iso27001-guide.iso27001-guide .layout {
+                display: block;
+            }
+            .iso27001-guide.iso27001-guide .main {
+                margin-left: var(--sidebar-w);
+            }
+
+            /* hero */
+            .iso27001-guide.iso27001-guide .hero {
+                padding: 72px 56px 44px;
+                border-bottom: 1px solid var(--border-secondary);
+            }
+            .iso27001-guide.iso27001-guide .hero h1 {
+                margin: 0 0 20px;
+                font-weight: 500;
+                font-size: clamp(2rem, 3.4vw, 2.9rem);
+                line-height: 1.25;
+                letter-spacing: 0.01em;
+            }
+            .iso27001-guide.iso27001-guide .hero h1 .h1-sub {
+                display: block;
+                margin-top: 10px;
+                font-size: clamp(1.25rem, 2vw, 1.6rem);
+                color: var(--text-secondary);
+            }
+            .iso27001-guide.iso27001-guide .hero-lead {
+                margin: 0 0 30px;
+                color: var(--text-secondary);
+                font-size: 1.125rem;
+            }
+            .iso27001-guide.iso27001-guide .hero-meta {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 12px;
+                margin: 0 0 28px;
+            }
+            .iso27001-guide.iso27001-guide .hero-meta div {
+                padding: 14px 18px;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--radius-lg);
+                background: var(--bg-secondary);
+            }
+            .iso27001-guide.iso27001-guide .hero-meta dt {
+                margin: 0 0 4px;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .hero-meta dd {
+                margin: 0;
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            .iso27001-guide.iso27001-guide .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 11px 20px;
+                border-radius: var(--radius-md);
+                background: var(--accent);
+                color: #07111e;
+                font-weight: 500;
+                text-decoration: none;
+            }
+            .iso27001-guide.iso27001-guide .btn:hover {
+                background: #9bb5ff;
+            }
+
+            /* chapters */
+            .iso27001-guide.iso27001-guide .chapter {
+                padding: 56px 56px 52px;
+                border-bottom: 1px solid var(--border-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .chapter h2 {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                margin: 0 0 26px;
+                font-weight: 500;
+                font-size: 1.75rem;
+                line-height: 1.4;
+            }
+            .iso27001-guide.iso27001-guide .ch-num {
+                flex: none;
+                display: grid;
+                place-items: center;
+                min-width: 46px;
+                height: 46px;
+                padding: 0 10px;
+                border-radius: var(--radius-lg);
+                background: var(--accent-bg);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 1.125rem;
+                font-weight: 500;
+            }
+            .iso27001-guide.iso27001-guide .chapter h3 {
+                margin: 2.3em 0 0.7em;
+                padding-bottom: 0.45em;
+                border-bottom: 1px solid var(--border-secondary);
+                font-weight: 500;
+                font-size: 1.3125rem;
+                line-height: 1.5;
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .chapter h4 {
+                margin: 1.8em 0 0.5em;
+                font-weight: 500;
+                font-size: 1.0625rem;
+                color: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide .chapter p {
+                margin: 0.9em 0;
+                color: var(--text-secondary);
+            }
+            .iso27001-guide.iso27001-guide .chapter strong {
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .chapter ul, .iso27001-guide.iso27001-guide .chapter ol {
+                margin: 0.9em 0;
+                padding: 0;
+                list-style: none;
+            }
+            .iso27001-guide.iso27001-guide .chapter li {
+                position: relative;
+                margin: 0.5em 0;
+                padding-left: 1.5em;
+                color: var(--text-secondary);
+            }
+            .iso27001-guide.iso27001-guide .chapter ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.2em;
+                top: 0.8em;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide .chapter ol {
+                counter-reset: ol;
+            }
+            .iso27001-guide.iso27001-guide .chapter ol > li {
+                counter-increment: ol;
+                padding-left: 2.5em;
+            }
+            .iso27001-guide.iso27001-guide .chapter ol > li::before {
+                content: counter(ol);
+                position: absolute;
+                left: 0;
+                top: 0.15em;
+                display: grid;
+                place-items: center;
+                width: 1.7em;
+                height: 1.7em;
+                border-radius: 50%;
+                background: var(--accent-bg);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-weight: 500;
+            }
+            .iso27001-guide.iso27001-guide .chapter code {
+                font-family: var(--font-mono);
+                padding: 0.1em 0.4em;
+                border-radius: 6px;
+                background: var(--bg-tertiary);
+                border: 1px solid var(--border-tertiary);
+            }
+
+            /* tables */
+            .iso27001-guide.iso27001-guide .table-wrap {
+                margin: 1.3em 0;
+                overflow-x: auto;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--radius-lg);
+                background: var(--bg-secondary);
+            }
+            .iso27001-guide.iso27001-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+            }
+            .iso27001-guide.iso27001-guide th {
+                padding: 12px 16px;
+                text-align: left;
+                font-weight: 500;
+                color: var(--text-primary);
+                background: var(--bg-tertiary);
+                border-bottom: 1px solid var(--border-primary);
+                line-height: 1.5;
+            }
+            .iso27001-guide.iso27001-guide td {
+                padding: 11px 16px;
+                vertical-align: top;
+                border-top: 1px solid var(--border-tertiary);
+                color: var(--text-secondary);
+                line-height: 1.65;
+            }
+            .iso27001-guide.iso27001-guide tbody tr:first-child td {
+                border-top: none;
+            }
+            .iso27001-guide.iso27001-guide td:first-child {
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide th, .iso27001-guide.iso27001-guide td {
+                min-width: 6.5em;
+            }
+
+            /* callout */
+            .iso27001-guide.iso27001-guide .callout {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 14px;
+                margin: 1.4em 0;
+                padding: 16px 20px;
+                border: 1px solid var(--border-primary);
+                border-left: 4px solid var(--accent);
+                border-radius: var(--radius-lg);
+                background: var(--accent-bg);
+            }
+            .iso27001-guide.iso27001-guide .callout > i {
+                font-size: 1.5rem;
+                line-height: 1.5;
+                color: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide .callout-body p {
+                margin: 0;
+                color: var(--text-primary);
+            }
+            .iso27001-guide.iso27001-guide .callout-body p + p {
+                margin-top: 0.6em;
+            }
+
+            /* citations */
+            .iso27001-guide.iso27001-guide a.cite {
+                display: inline-block;
+                margin: 0 0.1em;
+                padding: 0 0.4em;
+                border: 1px solid var(--border-primary);
+                border-radius: 6px;
+                background: var(--bg-tertiary);
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.4;
+                text-decoration: none;
+                vertical-align: baseline;
+            }
+            .iso27001-guide.iso27001-guide a.cite:hover {
+                background: var(--accent-bg);
+                border-color: var(--accent);
+            }
+
+            /* diagrams */
+            .iso27001-guide.iso27001-guide .diagram {
+                margin: 1.6em 0;
+                padding: 24px;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--radius-lg);
+                background: var(--bg-secondary);
+                overflow-x: auto;
+            }
+            .iso27001-guide.iso27001-guide .mmd {
+                display: flex;
+                min-height: 72px;
+            }
+            .iso27001-guide.iso27001-guide .mmd:empty::before {
+                content: '図を読み込み中';
+                align-self: center;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .mmd svg {
+                flex: none;
+                margin: 0 auto;
+                overflow: visible;
+            }
+            .iso27001-guide.iso27001-guide .diagram figcaption {
+                margin-top: 14px;
+                text-align: center;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .mmd-fallback {
+                margin: 0;
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                color: var(--text-secondary);
+                text-align: left;
+            }
+
+            /* checklist */
+            .iso27001-guide.iso27001-guide .chk-group {
+                display: grid;
+                gap: 10px;
+                margin: 0.8em 0 1.8em;
+            }
+            .iso27001-guide.iso27001-guide .chk {
+                position: relative;
+                display: grid;
+                grid-template-columns: auto auto 1fr;
+                align-items: center;
+                gap: 14px;
+                padding: 13px 18px;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--radius-lg);
+                background: var(--bg-secondary);
+                cursor: pointer;
+            }
+            .iso27001-guide.iso27001-guide .chk:hover {
+                border-color: var(--border-primary);
+            }
+            .iso27001-guide.iso27001-guide .chk input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .iso27001-guide.iso27001-guide .chk-box {
+                display: grid;
+                place-items: center;
+                width: 26px;
+                height: 26px;
+                border: 2px solid var(--border-primary);
+                border-radius: 7px;
+                color: transparent;
+                background: var(--bg-primary);
+            }
+            .iso27001-guide.iso27001-guide .chk input:focus-visible + .chk-box {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .iso27001-guide.iso27001-guide .chk input:checked + .chk-box {
+                background: var(--teal);
+                border-color: var(--teal);
+                color: #07111e;
+            }
+            .iso27001-guide.iso27001-guide .chk-no {
+                display: grid;
+                place-items: center;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: 1px solid var(--border-primary);
+                color: var(--text-tertiary);
+                font-family: var(--font-mono);
+            }
+            .iso27001-guide.iso27001-guide .chk-text {
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            .iso27001-guide.iso27001-guide .chk:has(input:checked) {
+                border-color: var(--teal);
+                background: var(--teal-bg);
+            }
+            .iso27001-guide.iso27001-guide .chk:has(input:checked) .chk-text {
+                text-decoration: line-through;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .chk:has(input:checked) .chk-no {
+                border-color: var(--teal);
+                color: var(--teal);
+            }
+
+            /* sources */
+            .iso27001-guide.iso27001-guide .src-list {
+                display: grid;
+                gap: 12px;
+                margin: 1.2em 0 1.6em;
+            }
+            .iso27001-guide.iso27001-guide .src-card {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 16px;
+                padding: 16px 18px;
+                border: 1px solid var(--border-secondary);
+                border-radius: var(--radius-lg);
+                background: var(--bg-secondary);
+            }
+            .iso27001-guide.iso27001-guide .src-badge {
+                display: grid;
+                place-items: center;
+                min-width: 3.4rem;
+                height: 2.6rem;
+                padding: 0 10px;
+                border-radius: 10px;
+                background: var(--accent-bg);
+                border: 1px solid var(--accent);
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-weight: 500;
+            }
+            .iso27001-guide.iso27001-guide .src-head {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 12px;
+                align-items: baseline;
+            }
+            .iso27001-guide.iso27001-guide .chip {
+                display: inline-block;
+                padding: 0 0.7em;
+                border: 1px solid currentColor;
+                border-radius: 999px;
+                font-weight: 500;
+                line-height: 1.6;
+            }
+            .iso27001-guide.iso27001-guide .chip.p1 {
+                color: var(--teal);
+            }
+            .iso27001-guide.iso27001-guide .chip.p2 {
+                color: var(--accent);
+            }
+            .iso27001-guide.iso27001-guide .chip.p3 {
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .src-title {
+                color: var(--text-primary);
+                font-weight: 500;
+                line-height: 1.6;
+            }
+            .iso27001-guide.iso27001-guide .src-urls {
+                display: grid;
+                gap: 4px;
+                margin-top: 8px;
+            }
+            .iso27001-guide.iso27001-guide a.src-url {
+                font-family: var(--font-mono);
+                word-break: break-all;
+                color: var(--accent);
+                line-height: 1.55;
+            }
+
+            /* footer + mobile controls */
+            .iso27001-guide.iso27001-guide .footer {
+                padding: 30px 56px 44px;
+                color: var(--text-tertiary);
+            }
+            .iso27001-guide.iso27001-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 60;
+                width: 56px;
+                height: 56px;
+                border: none;
+                border-radius: 50%;
+                background: var(--accent);
+                color: #07111e;
+                font-size: 1.6rem;
+                place-items: center;
+                cursor: pointer;
+            }
+            .iso27001-guide.iso27001-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 50;
+                background: rgba(3, 8, 16, 0.72);
+            }
+            .iso27001-guide.iso27001-guide .backdrop.show {
+                display: block;
+            }
+
+            @media (max-width: 1024px) {
+                .iso27001-guide.iso27001-guide .main {
+                    margin-left: 0;
+                }
+                .iso27001-guide.iso27001-guide .sidebar {
+                    width: min(330px, 86vw);
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                }
+                .iso27001-guide.iso27001-guide .sidebar.open {
+                    transform: none;
+                }
+                .iso27001-guide.iso27001-guide .menu-btn {
+                    display: grid;
+                }
+                .iso27001-guide.iso27001-guide .hero {
+                    padding: 44px 20px 32px;
+                }
+                .iso27001-guide.iso27001-guide .chapter {
+                    padding: 36px 20px 36px;
+                }
+                .iso27001-guide.iso27001-guide .chapter h2 {
+                    font-size: 1.5rem;
+                    gap: 12px;
+                }
+                .iso27001-guide.iso27001-guide .footer {
+                    padding: 26px 20px 90px;
+                }
+                .iso27001-guide.iso27001-guide .diagram {
+                    padding: 14px;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .iso27001-guide.iso27001-guide .sidebar {
+                    transition: none;
+                }
+            }
+        
+/* Scope the source document inside the shared header and prose shell. */
+.iso27001-guide.iso27001-guide { min-width:0; min-height:100vh; font-weight:400; }
+.docs-main:has(.iso27001-guide) { padding:0; }
+.iso27001-guide.iso27001-guide .sidebar { top:64px; z-index:40; visibility:visible; }
+.iso27001-guide.iso27001-guide .backdrop { top:64px; z-index:30; border:0; padding:0; }
+.iso27001-guide.iso27001-guide .menu-btn { z-index:50; }
+.iso27001-guide.iso27001-guide :is(section[id],h1,h2,h3,h4,[id]) { scroll-margin-top:88px; }
+.iso27001-guide.iso27001-guide .ti svg { display:inline-block; width:1em; height:1em; vertical-align:middle; }
+.iso27001-guide.iso27001-guide .menu-btn svg { display:block; width:1em; height:1em; }
+.iso27001-guide.iso27001-guide .mmd { display:block; min-width:0; }
+.iso27001-guide.iso27001-guide .diagram-viewport { display:block; overflow-x:auto; }
+.iso27001-guide.iso27001-guide .mmd svg { display:block; max-width:none; margin-left:auto; margin-right:auto; }
+html:has(.iso27001-guide) { scroll-behavior:smooth; scroll-padding-top:0; }
+@media (max-width:1024px) { .iso27001-guide.iso27001-guide .sidebar { visibility:hidden; } .iso27001-guide.iso27001-guide .sidebar.open { visibility:visible; } }
+@media (prefers-reduced-motion:reduce) { html:has(.iso27001-guide) { scroll-behavior:auto; } }
+
+/* Preserve the fixed source palette and defaults against shared prose/landing styles. */
+.iso27001-guide.iso27001-guide .hero h1 { color:var(--text-primary); }
+.iso27001-guide.iso27001-guide .chapter h2 { color:var(--text-primary); padding-bottom:0; border-bottom:0; }
+.iso27001-guide.iso27001-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0px; color:var(--text-primary); }
+.iso27001-guide.iso27001-guide .brand-mark { box-shadow:none; }
+.iso27001-guide.iso27001-guide table { margin:0; }
+.iso27001-guide.iso27001-guide td { border-bottom:0; }
+.iso27001-guide.iso27001-guide tr:hover td { background:transparent; }

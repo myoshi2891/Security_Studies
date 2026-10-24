@@ -1,0 +1,13 @@
+import {expect,test} from 'bun:test';
+import {existsSync,readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+const root=resolve(import.meta.dir,'../../../../..');
+const name='Iso-27001-2022-beginner-guide';
+const archive=resolve(root,'archive/standards/iso-iec-27001-2022-guide-2026-10-24');
+test('both current HTML and Markdown originals leave the repository root',()=>{for(const ext of ['html','md'])expect(existsSync(resolve(root,`${name}.${ext}`))).toBe(false);});
+test('HTML fidelity comparisons point exclusively to the new versioned standards archive',()=>{expect(readFileSync(new URL('./fidelity-helpers.ts',import.meta.url),'utf8')).toContain('../../../../../archive/standards/iso-iec-27001-2022-guide-2026-10-24/Iso-27001-2022-beginner-guide.html');});
+test.skipIf(!existsSync(resolve(archive,`${name}.html`)))('archived HTML keeps the inventoried bytes unchanged',()=>{expect(createHash('sha256').update(readFileSync(resolve(archive,`${name}.html`))).digest('hex')).toBe('e6f812fc2ea6f9d04a072bd6d61c2585466e447b76901a6dfee946da15d14d12');});
+test.skipIf(!existsSync(resolve(archive,`${name}.md`)))('archived current Markdown keeps the inventoried bytes independently of HTML availability',()=>{expect(createHash('sha256').update(readFileSync(resolve(archive,`${name}.md`))).digest('hex')).toBe('ff7a24e8763624cca1ed3c2ebcc5fca1004d85a70911352ee64cbed911907bf2');});
+const previous=resolve(root,'archive/standards/Iso-27001-2022-beginner-guide.md');
+test.skipIf(!existsSync(previous))('the different previously archived Markdown is never overwritten or changed',()=>{expect(createHash('sha256').update(readFileSync(previous)).digest('hex')).toBe('2a1335b092dc56a0e0c1f90f0f72665b51f39ff0a76bec1d0dfcf0e452303f2f');});
