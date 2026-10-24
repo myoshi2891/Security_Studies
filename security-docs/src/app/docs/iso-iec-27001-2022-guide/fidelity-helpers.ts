@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-const sourcePath = resolve(import.meta.dir, '../../../../../Iso-27001-2022-beginner-guide.html');
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/standards/iso-iec-27001-2022-guide-2026-10-24/Iso-27001-2022-beginner-guide.html');
 // アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
 export const SOURCE_PATH = sourcePath;
 export const hasSource = existsSync(sourcePath);
