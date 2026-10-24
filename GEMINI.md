@@ -315,3 +315,10 @@ CISSP: `/docs/cissp-guide` へ全18節・147見出し・143表2214セル・42図
 
 配置: `security-docs/src/app/docs/cissp-guide/page.mdx`。台帳: `docs/migration-inventory/cissp-guide.json`。目視確認表: `docs/migration-inventory/cissp-guide-review.md`。原本: `archive/security-certifications/Cissp-guide.html` / `archive/security-certifications/Cissp-guide.md`（Git管理外）。
 <!-- /cissp-migration-status -->
+
+
+<!-- iso27001-html-status -->
+## ISO27001 HTML画面更新（2026-10-24）
+
+ISO27001 HTML更新・前半Green（2026-10-24）: 既存URL /docs/iso-iec-27001-2022-guide で表示基盤と0〜5章を更新。元の17リンクのグループ目次・ヒーロー・フッター、全13図定義とdark配色を保持。前半/基盤28件成功、lint・型チェック成功。6〜16章と全文・装飾・検索・チェックの検証は次段階。npm使用・ビルド禁止・未実行、目視はユーザー担当。
+<!-- /iso27001-html-status -->
