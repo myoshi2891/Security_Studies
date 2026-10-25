@@ -592,9 +592,6 @@ NIST SP 800-18 Rev.2（2026年6月に最終化）は、システムセキュリ�
 
 **公式アウトラインの論点** [S3]: コスト見積り／人件費／確率と統計（Monte Carlo 法、MTBF、MTD、MTTF、MTTR（修復）、MTTR（復旧））
 
-> 受験者の非公式な報告として、この項目（特に Monte Carlo 法）は従来の公式教材で手薄だったという声があります [S18]。数式を伴う項目なので、手を動かして確認しておくと安心です。
-> 補足: 該当の ISC2 コミュニティは移転済みで、元の URL は現在 ISC2 Chapters（isc2chapters.isc2.org）へリダイレクトされ、投稿本文は表示されません。Internet Archive と archive.today にも該当スレッドの保存版は見つかりませんでした（2026年10月25日確認）。
-
 #### Step 1: コスト見積りの代表手法
 
 | 手法 | 内容 | 向く場面 |
@@ -1425,7 +1422,7 @@ NIST SP 800-88 Rev.2（2025年9月最終）は、旧版（Rev.1、2014年）か�
 
 #### ベストプラクティス（5.4）
 
-- 廃棄要件は**設計段階で決める**（暗号化済みなら鍵の廃棄が消去になる、など設計で楽になる）。
+- 廃棄要件は**設計段階で決める**（例: 書き込み前から十分に強く正しく実装された暗号で保護し、平文のコピーや履歴を残さず、バックアップやエスクローを含むすべての鍵のコピーを消去できる設計にしておけば、鍵の廃棄を暗号消去として使える。条件を満たさない場合、暗号化だけでは消去として不十分で、他の Purge・Destroy 手段が必要）。
 - **鍵・証明書・アカウント・DNS・外部接続**を忘れずに廃止する（「データ以外」の残存が事故になる）。
 - 消去は**証跡（誰・いつ・どの媒体・どの方法・確認者）**を残す。
 - クラウドでは**データの所在**と事業者の消去保証を契約で確認する。
@@ -1598,7 +1595,6 @@ A. すぐ実施する　B. セキュリティ影響分析を行う　C. 文書�
 | S15 | 公式 | NIST Risk Management Framework プロジェクト（SP 800-53 5.2.0、SP 800-18r2 の更新情報） | https://csrc.nist.gov/Projects/risk-management |
 | S16 | 第三者 | Training Camp: What Is ISSEP?（配点・形式・CPE などの整理） | https://trainingcamp.com/what-is-issep/ |
 | S17 | 第三者 | Destination Certification: CISSP concentrations（配点の記載が公式 PDF と異なる） | https://destcert.com/resources/cissp-concentrations/ |
-| S18 | 非公式 | ISC2 Community: ISSEP Exam Changes（受験者の声。コミュニティ移転済み、元 URL はリダイレクト・保存版なし） | https://community.isc2.org/t5/ISSEP-Study-Group/ISSEP-Exam-Changes-Effective-August-2025/m-p/81860 |
 | S19 | 第三者経由 | DoD 8140 資格マトリクス（S16 内のリンク。本ガイド作成時は未取得） | https://www.cyber.mil/dod-workforce-innovation-directorate/dod8140/qualification-matrices |
 | S20 | 公式 | NIST: SP 800-88r2 公開ニュース | https://www.nist.gov/node/1898251 |
 
