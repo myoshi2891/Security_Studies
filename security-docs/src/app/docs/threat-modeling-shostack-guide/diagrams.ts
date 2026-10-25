@@ -119,7 +119,7 @@ U -->|"1 質問"| ORCH
 ORCH -->|"2 プロンプト"| LLM
 LLM -->|"3 応答・ツール呼び出し案"| ORCH
 ORCH -->|"4 検索"| RAG
-ORCH -->|"5 取得"| WEB
+ORCH <-->|"5 取得(外部コンテンツ＝信頼できない入力)"| WEB
 ORCH -->|"6 実行(要承認?)"| API
 ORCH <-->|"7 保存と参照"| MEM`,
   d9: `flowchart LR

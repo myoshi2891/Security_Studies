@@ -105,17 +105,28 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])];
-    links[0]?.focus();
+    // 非アクティブ章の .nav-sub は display:none のため除外し、開閉ボタンを循環の末尾に含める（アクティブ章は開いている間も変わるため毎回求める）
+    const focusables = () => {
+      const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])].filter(
+        a => !a.closest('.nav-sub') || a.closest('.nav-group')?.classList.contains('active'),
+      );
+      return toggle.current ? [...links, toggle.current] : links;
+    };
+    focusables()[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
-      const first = links[0];
-      const last = links.at(-1);
-      if (event.shiftKey && document.activeElement === first) {
+      const items = focusables();
+      const first = items[0];
+      const last = items.at(-1);
+      const current = document.activeElement;
+      if (!items.some(item => item === current)) {
+        event.preventDefault();
+        first?.focus();
+      } else if (event.shiftKey && current === first) {
         event.preventDefault();
         last?.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
+      } else if (!event.shiftKey && current === last) {
         event.preventDefault();
         first?.focus();
       }
