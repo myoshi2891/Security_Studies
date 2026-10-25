@@ -183,7 +183,7 @@ test('both code examples preserve exact whitespace, source bytes, language class
   }
 });
 
-sourceTest('mutation probes reject deleted cells, callouts, emphasis, code, details and reference cards', async () => {
+test('mutation probes reject deleted cells, callouts, emphasis, code, details and reference cards', async () => {
   const page = await renderedPage();
   for (const selector of ['td', '.callout', 'strong', 'pre code', '.ref-card', '#ch15 details', 'h2 .num', '.nav-link .n']) {
     const original = page.querySelector(selector)!;
