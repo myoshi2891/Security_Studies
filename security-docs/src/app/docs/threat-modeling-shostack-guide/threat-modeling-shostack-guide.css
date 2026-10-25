@@ -231,4 +231,30 @@ html:has(.shostack-threat-guide) { scroll-behavior: smooth; scroll-padding-top: 
   .shostack-threat-guide.shostack-threat-guide .nav-toggle,
   .shostack-threat-guide.shostack-threat-guide .backdrop { display: none; }
   .shostack-threat-guide.shostack-threat-guide .guide-content { margin-left: 0; }
+  /* 背景を印刷しない設定でも読めるよう、画面用の淡い文字色を白地の濃色へ切り替える */
+  .shostack-threat-guide.shostack-threat-guide {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #ffffff;
+    --color-background-tertiary: #f3f5fa;
+    --color-background-info: #ffffff;
+    --color-background-danger: #ffffff;
+    --color-background-success: #ffffff;
+    --color-background-warning: #ffffff;
+    --color-text-primary: #07111e;
+    --color-text-secondary: #1e2f4d;
+    --color-text-tertiary: #3e4a5f;
+    --color-text-info: #1f3f99;
+    --color-text-danger: #8a1f10;
+    --color-text-success: #0f5a3f;
+    --color-text-warning: #6b4a00;
+    --color-border-tertiary: #c6d0e3;
+    --color-border-secondary: #93a1bd;
+    --color-border-primary: #3e5c8f;
+    --accent: #1f3f99;
+  }
+  .shostack-threat-guide.shostack-threat-guide code { color: #1f3f99; background: #f3f5fa; }
+  .shostack-threat-guide.shostack-threat-guide .code-block,
+  .shostack-threat-guide.shostack-threat-guide .code-block pre { background: #ffffff; }
+  .shostack-threat-guide.shostack-threat-guide .hljs,
+  .shostack-threat-guide.shostack-threat-guide .hljs * { color: #07111e; }
 }

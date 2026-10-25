@@ -209,7 +209,9 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const svgId = `ghost-mermaid-${id}-${unique}`;
   const descriptionId = `${svgId}-description`;
-  const figureLabel = label ?? `図 ${Number(id.slice(1))}`;
+  // dg2 などの ID から番号を取り出し、番号がない ID はそのまま表示名にする
+  const figureNumber = id.match(/\d+/)?.[0];
+  const figureLabel = label ?? (figureNumber ? `図 ${Number(figureNumber)}` : id);
   const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
   const [attempt, setAttempt] = useState(0);
   const figureRef = useRef<HTMLDivElement>(null);
