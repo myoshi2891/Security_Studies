@@ -44,7 +44,7 @@ export function canonical(node: Node): unknown {
 
 let evaluated: ReturnType<typeof evaluate> | undefined;
 export function evaluatedPage() {
-  evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import ['"](?:\.\/threat-modeling-shostack-guide\.css)['"];?\s*$/gm, ''), {
+  evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import ['"](?:\.\/ghost-in-the-wires-guide\.css)['"];?\s*$/gm, ''), {
     ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url), remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
   });
   return evaluated;
