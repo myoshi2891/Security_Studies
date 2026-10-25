@@ -66,7 +66,7 @@ Security_Studies/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── docs/       # ドキュメントページ (各 page.mdx)
-│   │   │   │   ├── ghost-in-the-wires-guide/ # 原本構造を保持したMDX・部品・専用CSS・89テスト
+│   │   │   │   ├── ghost-in-the-wires-guide/ # 原本構造を保持したMDX・部品・専用CSS・91テスト
 │   │   │   │   ├── hacking-art-of-exploitation-guide/ # 全12章・専用CSS・部品・83テスト
 │   │   │   │   ├── approach/, architecture/, owasp/, ...
 │   │   │   │   ├── ccie-security/, ccst-cybersecurity/, cyberops-associate-guide/, cyberops-professional-guide/
