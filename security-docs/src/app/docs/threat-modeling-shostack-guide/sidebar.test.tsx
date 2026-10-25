@@ -50,7 +50,7 @@ test('mobile TOC opens via #navToggle, swaps ti-menu-2/ti-x icon, traps focus, c
   expect(visible.length).toBeLessThan(links.length);
   // 失敗時に DOM 全体の差分整形が走らないよう、href / id で比較する
   const focused = () => document.activeElement?.getAttribute('href') ?? document.activeElement?.id;
-  const first = visible[0].getAttribute('href');
+  const first = visible[0].getAttribute('href') ?? undefined;
   expect(focused()).toBe(first);
   const tab = async (shiftKey = false) => {
     const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey, bubbles: true, cancelable: true });
