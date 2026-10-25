@@ -83,6 +83,18 @@ test('selecting a topic from the open mobile drawer closes the drawer and focuse
   expect(document.activeElement).toBe(target);
 });
 
+test('selecting a drawer link without a matching target closes the drawer and returns focus to the toggle', async () => {
+  const v = await setup();
+  const btn = v.container.querySelector('#menuBtn');
+  const orphan = document.createElement('a');
+  orphan.href = '#missing-target';
+  v.container.querySelector('#sidebar nav')!.appendChild(orphan);
+  await click(btn);
+  await click(orphan);
+  expect(btn).toHaveAttribute('aria-expanded', 'false');
+  expect(document.activeElement).toBe(btn);
+});
+
 test('backdrop and desktop resize close the drawer', async () => {
   const v = await setup();
   const btn = v.container.querySelector('#menuBtn');
