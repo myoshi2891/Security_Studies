@@ -357,15 +357,14 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `GEMINI.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `README.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `docs/progress.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | GHOST-MIG | Ghost in the Wires: 全17節・6図・原本アーカイブ・91専用テストと実配信検証 | 2026-10-25 |
-| P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
+| `CLAUDE.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `GEMINI.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `README.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `security-docs/README.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `docs/progress.md` | 2026-10-25 | Ghost移行・専用91件/全2109件成功・原本アーカイブ・実配信検証を同期 |
+| `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
 | `.gemini/skills/docs-sync/SKILL.md` | 2026-05-27 | プロジェクトローカルの .gemini/skills に移行し適用 |
@@ -394,6 +393,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| GHOST-MIG | Ghost in the Wires: 全17節・6図・原本アーカイブ・91専用テストと実配信検証、全2109件成功 | 2026-10-25 |
 | REVIEW-1025 | **CyberOps Associateレビュー2件の対応** — 1024px以下で`hidden`の背景が`display:block`に上書きされる問題を`.backdrop[hidden]{display:none}`で修正。図コンテナのrole（img→group）を修正し、内側の`.diagram-viewport`はimgを維持。Red `12d298a` → Green `25edecc`。全1920件成功（未コミットの既存テスト追加分を含む）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | REVIEW-1024 | **依存監査とレビュー3件の対応** — happy-dom 21.0.4・zod 4.6.7でhigh 2件を解消。CISSP図説明の引用符なし日本語中間ラベル、ISO27001目次ボタンの`menu-btn`クラス、ISO27001統合テストの全体件数依存、ISO27001図コンテナのrole（img→group）を修正。全1502件成功。 | 2026-10-24 |
 | CSSLP-DESIGN | **練習問題・全16図のデザイン改善** — 10問40選択肢をカード化。図番号・タイトル・新テーマと補助文字コントラストを検証。専用96件成功、目視待ち。 | 2026-10-24 |
