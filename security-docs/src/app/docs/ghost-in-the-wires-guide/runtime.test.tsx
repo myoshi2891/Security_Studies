@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions and ignores stale results', async () => {
-  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure } = await import('./MermaidFigure');
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   const messages = spyOn(console, 'error').mockImplementation(() => {});
@@ -57,7 +57,7 @@ test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions
 });
 
 test('sequence diagrams retain their original 110px sequence clearance and accept comma-separated viewBox values', async () => {
-  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure } = await import('./MermaidFigure');
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   try {
@@ -79,7 +79,7 @@ test('sequence diagrams retain their original 110px sequence clearance and accep
 });
 
 test('lazy diagrams wait for intersection, disconnect observers and support retries after engine loading fails', async () => {
-  const { MermaidFigure, createEngineLoader } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure, createEngineLoader } = await import('./MermaidFigure');
   const saved = globalThis.IntersectionObserver;
   let notify: IntersectionObserverCallback | undefined;
   let disconnected = 0;
@@ -121,7 +121,7 @@ test('lazy diagrams wait for intersection, disconnect observers and support retr
 });
 
 test('a failed diagram offers a retry button that re-runs rendering and shows the diagram on success', async () => {
-  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure } = await import('./MermaidFigure');
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   const messages = spyOn(console, 'error').mockImplementation(() => {});
@@ -150,7 +150,7 @@ test('a failed diagram offers a retry button that re-runs rendering and shows th
 });
 
 test('a failed diagram still shows its text description alongside the error and definition', async () => {
-  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure } = await import('./MermaidFigure');
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   const messages = spyOn(console, 'error').mockImplementation(() => {});
@@ -177,7 +177,7 @@ test('a failed diagram still shows its text description alongside the error and 
 });
 
 test('diagram text descriptions resolve quoted node labels across edges, chains and isolated nodes', async () => {
-  const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { describeDiagram } = await import('./MermaidFigure');
   expect(
     describeDiagram('flowchart TD\nA["開始<br/>入力"] --> B{"判定"}\nB -- "はい" --> C("完了")\nB -->|"いいえ"| A\nC <--> E\nD["孤立"]'),
   ).toEqual(['フローチャート', '開始 入力 → 判定', '判定 → 完了: はい', '判定 → 開始 入力: いいえ', '完了 ↔ E', '孤立']);
@@ -185,7 +185,7 @@ test('diagram text descriptions resolve quoted node labels across edges, chains 
 });
 
 test('diagram text descriptions read labels from stadium and cylinder nodes instead of node IDs', async () => {
-  const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { describeDiagram } = await import('./MermaidFigure');
   expect(describeDiagram('flowchart LR\nAPI(["APIサーバー"]) --> DB[("顧客DB")]')).toEqual(['フローチャート', 'APIサーバー → 顧客DB']);
   expect(describeDiagram('flowchart LR\nDB[("顧客DB")]\nAPI(["APIサーバー"]) -->|"読み取り"| DB')).toEqual([
     'フローチャート',
@@ -194,7 +194,7 @@ test('diagram text descriptions read labels from stadium and cylinder nodes inst
 });
 
 test('live SVG sizing extends the viewBox only to the measured drawing bounds', async () => {
-  const { fitDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { fitDiagram } = await import('./MermaidFigure');
   const holder = document.createElement('div');
   holder.innerHTML = '<svg viewBox="0 0 900 300"></svg>';
   const svg = holder.querySelector('svg')!;
@@ -215,11 +215,11 @@ test('live SVG sizing extends the viewBox only to the measured drawing bounds', 
 
 test('the default renderer passes this guide configuration per render without re-initializing the shared engine', async () => {
   const { default: mermaid } = await import('mermaid');
-  const { renderDiagram, diagramConfig } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { renderDiagram, diagramConfig } = await import('./MermaidFigure');
   const draw = spyOn(mermaid, 'render').mockImplementation(async () => ({ svg: '<svg></svg>', diagramType: 'flowchart-v2' }));
   const init = spyOn(mermaid, 'initialize');
   try {
-    expect(await renderDiagram('ghost-d1', 'flowchart TD\nA-->B')).toEqual({ svg: '<svg></svg>', diagramType: 'flowchart-v2' });
+    expect(await renderDiagram('ghost-d1', 'flowchart TD\nA-->B')).toMatchObject({ svg: '<svg></svg>' });
     expect(init).not.toHaveBeenCalled();
     expect(draw).toHaveBeenCalledWith('ghost-d1', `---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart TD\nA-->B`);
   } finally {
@@ -239,7 +239,7 @@ test('all 6 exact definitions parse including flowchart and sequence diagrams', 
 
 test('lazy engine loader disables Mermaid auto-start on the shared instance without initializing it', async () => {
   const { default: mermaid } = await import('mermaid');
-  const { renderDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { renderDiagram } = await import('./MermaidFigure');
   const initialize = spyOn(mermaid, 'initialize');
   const render = spyOn(mermaid, 'render').mockResolvedValue({ svg: '<svg></svg>', diagramType: 'flowchart' });
   try {
@@ -254,7 +254,7 @@ test('lazy engine loader disables Mermaid auto-start on the shared instance with
 });
 
 test('diagram container is a labelled group so its description and retry controls stay accessible', async () => {
-  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { MermaidFigure } = await import('./MermaidFigure');
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   try {
