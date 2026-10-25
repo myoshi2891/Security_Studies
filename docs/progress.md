@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Ghost in the Wires 棚卸し・表示基盤Red）
+> **最終更新**: 2026-10-25（Ghost in the Wires移行・原本アーカイブ済み、全体テスト再検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2018成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・264ファイル・2018件（544,760 expect）。Threat Modeling (Shostack) 専用98件を含む。 |
-| テストファイル数 | **264ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **105/105 (100%)** | 従来101 + Threat Modeling (Shostack) 部品4（GuideSidebar / GuideIcon / MermaidFigure / CodeSample）。純粋データ・MDXは分母外。全264テストファイルとは別集計 |
+| テストケース総数 | **2107件・全体再検証中** | Ghost専用89件成功（8ファイル）。既存2018件と合わせて全体を再検証中。 |
+| テストファイル数 | **272ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **108/108 (100%)** | 従来105 + Ghost部品3（GuideSidebar / GuideIcon / MermaidFigure）。純粋データ・MDXは分母外。全272テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,14 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/ghost-in-the-wires-guide/archive.test.ts` | 4 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/foundation.test.tsx` | 11 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/chapters.test.tsx` | 34 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/integration.test.tsx` | 7 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/styles.test.tsx` | 12 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
 | `src/app/docs/threat-modeling-shostack-guide/archive.test.ts` | 4 | ✅ 2026-10-25 段階4 原本HTML/MDのSHA-256一致・ルート除去・比較参照Green |
 | `src/app/docs/threat-modeling-shostack-guide/rear.test.tsx` | 18 | ✅ 2026-10-25 段階3 第9章〜第17章（ch9〜ch17）構造SHA-256＋原本比較Green |
 | `src/app/docs/threat-modeling-shostack-guide/interactions.test.tsx` | 2 | ✅ 2026-10-25 段階3 演習解答details開閉・バッジ番号・参考URL安全性Green |
@@ -1296,10 +1304,8 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 <!-- /threat-modeling-shostack-status -->
 
-## Ghost in the Wires 移行（2026-10-25・進行中）
+## Ghost in the Wires 移行（2026-10-25）
 
-原本台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。17節・58見出し・20表332セル・65リスト項目・8解答・41出典・6図・年表10項目。表示基盤Red: 0 pass / 23 fail / 1 import error（3ファイル）。失敗原因は未実装のpage.mdx/部品。既存の全体実測2018件は移行前記録。npm使用・ビルド禁止・目視はユーザー担当。
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用89件/8ファイル成功、原本なし隔離環境53成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` の表示基盤28件成功（Red cd22987 → Green b82025d）。本文・構造・CSS・hydrationの段階2 Redは33成功/52失敗、85件/7ファイル。17節・58見出し・20表332セル・65リスト項目・8解答・41出典・6図の原本台帳あり。全体テスト実行中。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
-
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 本文・装飾移行済み。専用85件/7ファイル成功、Chrome 5幅×明暗10条件で全332セル・リスト点/番号・年表・ホバー比較差分0。表示基盤Red cd22987 → Green b82025d、本文Red 9110dd5 / Chrome Red 8d8ef36 → Green d2b15dc。原本アーカイブRedは4失敗/0成功。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。

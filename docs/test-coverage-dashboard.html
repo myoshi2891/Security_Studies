@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="test-coverage-dashboard.css" />
     </head>
     <body>
-<section class="container"><p id="ghost-wires-status">2026-10-25 Ghost in the Wires: /docs/ghost-in-the-wires-guide 本文・装飾移行済み。専用85件/7ファイル成功、Chrome 5幅×明暗10条件で全332セル・リスト点/番号・年表・ホバー比較差分0。表示基盤Red cd22987 → Green b82025d、本文Red 9110dd5 / Chrome Red 8d8ef36 → Green d2b15dc。原本アーカイブRedは4失敗/0成功。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。</p></section>
+<section class="container"><p id="ghost-wires-status">2026-10-25 Ghost in the Wires: /docs/ghost-in-the-wires-guide 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用89件/8ファイル成功、原本なし隔離環境53成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは archive/security-guides/ に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。</p></section>
         <!-- HEADER -->
         <header class="site-header">
             <div class="container">
@@ -63,7 +63,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            105 ロジックファイル中 105 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            108 ロジックファイル中 108 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4 + Ghost部品3。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -74,8 +74,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">2018</div>
-                        <div class="summary-sub">全体2018成功/0skip/0失敗（264ファイル、544,760 expect）。Threat Modeling (Shostack) 専用98件（原本なし60成功/38skip/0失敗）を含む。</div>
+                        <div class="summary-value">2107</div>
+                        <div class="summary-sub">登録2107件/272ファイル・全体再検証中。Ghost専用89成功（原本なし53成功/36skip/0失敗）。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -344,21 +344,22 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">1871 page/guide + 11 shared navigation tests · 83/84 logic files（全体2018件）</span>
+                                            <span class="cell-count">1960 page/guide + 11 shared navigation tests · 86/87 logic files（登録2107件、全体再検証中）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 99%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 83/84 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 86/87 ロジックファイル</div>
                                             docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modeling、Threat Modeling (Shostack) の描画・コード・本文をテスト済み。root layout は未カバー（HomePageは4件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
                                                 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (4 tests): ホーム一覧/統計/共通メニューと登録件数</li>
-<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在34+80=114ページ、テスト値）・開閉/フォーカス・320/375px</li>
+<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在35+80=115ページ、テスト値）・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（50件、移行・回帰検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（46件、移行・表示・回帰検証）</li>
+                                                <li>✓ Ghost in the Wires: GuideSidebar / GuideIcon / MermaidFigure（89件/8ファイル。17節・58見出し・332セル・6図・8解答・41出典・21構造SHA・Chrome10条件でリスト点/番号/年表/全セルホバーを検証）</li>
                                                 <li>✓ Threat Modeling (Shostack): GuideSidebar / GuideIcon / MermaidFigure / CodeSample（98件/12ファイル。17章・82見出し・52表944セル・9図・2コード・2演習解答・12注意欄・22参考文献・22構造ハッシュ・全944セルホバー・原本アーカイブを検証）</li>
                                                 <li>✓ CyberOps Professional: GuideSidebar / GuideRuntime / GuideIcon / MermaidFigure / CodeSample（330件/12ファイル。134ブロック・122表2051セル・42図・20コード・15問・61参考文献・137構造ハッシュ・190リスト項目・Chrome4条件で丸点/番号/ホバー）</li>
                                                 <li>✓ CyberOps Associate: GuideSidebar / GuideRuntime / GuideIcon / MermaidFigure / CodeSample（88件/10ファイル、12章・135表2706セル・42図・25問100選択肢・36チェック・リスト装飾・16構造ハッシュ・全セルホバー）</li>
@@ -1202,7 +1203,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-25</span>
                     <span
-                        >Runner: npm test -- --timeout 30000 · DOM: happy-dom · 264 files · 2018 pass / 0 skip / 0 fail（2018 total） · CI:
+                        >Runner: npm test -- --timeout 30000 · DOM: happy-dom · 272 files · 全体再検証中（2107 total） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
