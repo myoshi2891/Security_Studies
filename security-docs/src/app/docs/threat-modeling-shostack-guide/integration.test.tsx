@@ -2,7 +2,8 @@ import { expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { getSearchIndex } from '../../../lib/search';
-import { sourceTest, sourceHtml, sourceDocument, definitions, canonical, renderedPage } from './fidelity-helpers';
+import { diagrams } from './diagrams';
+import { sourceTest, sourceHtml, sourceDocument, definitions, definitionOverrides, expectedDefinition, canonical, renderedPage } from './fidelity-helpers';
 
 const counts = {
   'section.chapter': 17,
@@ -158,8 +159,15 @@ sourceTest('all 9 diagram attributes and definitions match the source containers
   const actual = [...page.querySelectorAll('.mermaid-target[data-diagram]')];
   expect(actual).toHaveLength(9);
   for (const el of actual) {
-    expect(el.getAttribute('data-definition')).toBe(definitions.get(el.getAttribute('data-diagram')!) ?? null);
+    expect(el.getAttribute('data-definition')).toBe(expectedDefinition(el.getAttribute('data-diagram')!));
   }
+  // 原本からの差分は明示した d8 の1件だけ
+  expect([...definitions].filter(([id, source]) => diagrams[id] !== source).map(([id]) => id)).toEqual(Object.keys(definitionOverrides));
+});
+
+test('LLM DFD shows retrieved external content flowing back from WEB to ORCH as untrusted input (11.2)', () => {
+  expect(diagrams.d8).toContain('ORCH <-->|"5 取得(外部コンテンツ＝信頼できない入力)"| WEB');
+  expect(diagrams.d8).not.toContain('ORCH -->|"5 取得"| WEB');
 });
 
 test('both code examples preserve exact whitespace, source bytes, language classes and syntax spans', async () => {

@@ -45,15 +45,29 @@ test('mobile TOC opens via #navToggle, swaps ti-menu-2/ti-x icon, traps focus, c
   expect(document.body.style.overflow).toBe('hidden');
   const links = [...v.container.querySelectorAll<HTMLAnchorElement>('#sidebar a')];
   expect(links).toHaveLength(77);
-  links.at(-1)!.focus();
-  await act(async () => {
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
-  });
-  expect(document.activeElement).toBe(links[0]);
-  await act(async () => {
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
-  });
-  expect(document.activeElement).toBe(links.at(-1)!);
+  // 非アクティブな章の .nav-sub は display:none のため、フォーカス循環は表示中のリンクと開閉ボタンに限る
+  const visible = links.filter(a => !a.closest('.nav-sub') || a.closest('.nav-group')?.classList.contains('active'));
+  expect(visible.length).toBeLessThan(links.length);
+  // 失敗時に DOM 全体の差分整形が走らないよう、href / id で比較する
+  const focused = () => document.activeElement?.getAttribute('href') ?? document.activeElement?.id;
+  const first = visible[0].getAttribute('href');
+  expect(focused()).toBe(first);
+  const tab = async (shiftKey = false) => {
+    await act(async () => {
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey, bubbles: true }));
+    });
+  };
+  await tab(true);
+  expect(focused()).toBe('navToggle');
+  await tab();
+  expect(focused()).toBe(first);
+  visible.at(-1)!.focus();
+  await tab();
+  expect(focused()).toBe('navToggle');
+  const hidden = links.find(a => !visible.includes(a))!;
+  hidden.focus();
+  await tab();
+  expect(focused()).toBe(first);
   await act(async () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   });

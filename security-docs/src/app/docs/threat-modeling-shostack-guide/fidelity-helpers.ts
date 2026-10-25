@@ -29,6 +29,16 @@ export function sourceTest(name: string, fn: () => void | Promise<unknown>, time
 }
 export const scope = '.shostack-threat-guide.shostack-threat-guide';
 
+/** レビュー対応で原本から変更した図（d8: 11.2 の「5 取得」を外部コンテンツの戻りを含む双方向にする）。他の図は原本と完全一致 */
+export const definitionOverrides: Record<string, [string, string]> = {
+  d8: ['ORCH -->|"5 取得"| WEB', 'ORCH <-->|"5 取得(外部コンテンツ＝信頼できない入力)"| WEB'],
+};
+export function expectedDefinition(id: string): string | null {
+  const source = definitions.get(id);
+  const override = definitionOverrides[id];
+  return source === undefined || !override ? (source ?? null) : source.replace(...override);
+}
+
 /** Compare every source node and attribute; only icons and runtime diagram markup have explicit adapters. */
 export function canonical(node: Node): unknown {
   if (node.nodeType === Node.TEXT_NODE) return node.textContent?.replace(/\s+/g, ' ').trim() || null;
@@ -80,7 +90,7 @@ export function chapterContracts(ids: string[]) {
       }
       expect([...migrated!.querySelectorAll('pre')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre')].map(el => el.textContent));
       for (const figure of migrated!.querySelectorAll('.mermaid-target[data-diagram]')) {
-        expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!) ?? null);
+        expect(figure.getAttribute('data-definition')).toBe(expectedDefinition(figure.getAttribute('data-diagram')!));
       }
     });
   }
