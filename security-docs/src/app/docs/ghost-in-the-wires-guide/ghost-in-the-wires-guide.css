@@ -529,7 +529,7 @@
 .ghost-wires-guide.ghost-wires-guide thead, .ghost-wires-guide.ghost-wires-guide tr {background:transparent;border:0;}
 .ghost-wires-guide.ghost-wires-guide th {text-transform:none;letter-spacing:normal;}
 .ghost-wires-guide.ghost-wires-guide th, .ghost-wires-guide.ghost-wires-guide td {font-family:inherit;}
-.ghost-wires-guide.ghost-wires-guide tbody tr:hover td {background:transparent;}
+.ghost-wires-guide.ghost-wires-guide tbody tr:hover td {background:#85e0c508;}
 .ghost-wires-guide.ghost-wires-guide i svg {width:1em;height:1em;display:block;}
 .ghost-wires-guide.ghost-wires-guide .sidebar {top:calc(76px + var(--disclaimer-height, 0px));z-index:30;}
 .ghost-wires-guide.ghost-wires-guide .diagram {display:block;}
@@ -541,3 +541,13 @@
 .ghost-wires-guide.ghost-wires-guide .sidebar {z-index:50;visibility:hidden;}
 .ghost-wires-guide.ghost-wires-guide .sidebar.open {visibility:visible;}
 }
+
+.ghost-wires-guide.ghost-wires-guide h1 {color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide .brand {font-weight:400;letter-spacing:normal;color:var(--color-text-primary);display:block;gap:normal;}
+.ghost-wires-guide.ghost-wires-guide blockquote {font-style:normal;color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide details.qa summary {list-style-type:none;}
+
+.ghost-wires-guide.ghost-wires-guide h2 {color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide .brand {font-size:inherit;}
+/* The source already owns its responsive content gutters. */
+.docs-main:has(.ghost-wires-guide) {padding:0;}
