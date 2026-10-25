@@ -53,7 +53,7 @@ test('mobile TOC opens via #navToggle, swaps ti-menu-2/ti-x icon, traps focus, c
   await act(async () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
   });
-  expect(document.activeElement).toBe(links.at(-1));
+  expect(document.activeElement).toBe(links.at(-1)!);
   await act(async () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   });
