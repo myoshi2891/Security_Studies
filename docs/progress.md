@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1913成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・252ファイル・1913件。526,507 expect。CyberOps Professional専用328件を含む。 |
+| テストケース総数 | **1920成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・252ファイル・1920件。526,543 expect。CyberOps Professional専用330件を含む。 |
 | テストファイル数 | **252ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **101/101 (100%)** | 従来96 + CyberOps Professional部品5。純粋データ・MDXは分母外。全252テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -29,7 +29,7 @@
 | `src/app/docs/cyberops-professional-guide/rear.test.tsx` | 112 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/static.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
-| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証（hashchange/フォーカス確認を含む） |
 | `src/app/docs/cyberops-professional-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/quiz.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
@@ -40,7 +40,7 @@
 | `src/app/docs/cyberops-associate-guide/chapters.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
-| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 7 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 12 | ✅ 2026-10-25 移行/操作/スタイル/原本アーカイブ検証（モーダルフォーカス復帰等5件追加） |
 | `src/app/docs/cyberops-associate-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 未解決importを除去・共通CSS読込ガード・375/1440px×明暗の全2706セル |
 | `src/app/docs/cyberops-associate-guide/snapshot.test.tsx` | 16 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
@@ -1268,7 +1268,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Professional移行（2026-10-25）
 
-移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用330件/12ファイルを含む全体1920成功/0skip/0失敗（252ファイル、526,543 expect）。原本なし隔離環境175成功/155skip/0失敗。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
