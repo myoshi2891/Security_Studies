@@ -254,6 +254,7 @@ test('lazy engine loader disables Mermaid auto-start on the shared instance with
 });
 
 test('diagram container is a labelled group so its description and retry controls stay accessible', async () => {
+  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
   const original = globalThis.IntersectionObserver;
   globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
   try {
