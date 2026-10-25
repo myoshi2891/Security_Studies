@@ -20,37 +20,20 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   const select = useCallback((id: string) => {
     const nav = panel.current;
     if (!nav) return;
+    // The TOC is a flat list of step links (no .nav-group), so only the matching link is highlighted.
     const links = [...nav.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]')];
-    const groups = [...nav.querySelectorAll<HTMLElement>('.nav-group[data-target]')];
     const selected = links.find(a => a.hash === `#${id}`);
-    const targetChapter = id.match(/^ch\d+/)?.[0] ?? id;
-    const activeGroup =
-      selected?.closest<HTMLElement>('.nav-group[data-target]') ??
-      groups.find(g => g.dataset.target === targetChapter);
-    if (!selected && !activeGroup) return;
+    if (!selected) return;
 
     for (const a of links) {
       a.classList.remove('active');
       a.removeAttribute('aria-current');
     }
-    for (const g of groups) {
-      g.classList.remove('active');
-    }
-    if (activeGroup) {
-      activeGroup.classList.add('active');
-      const top = activeGroup.offsetTop;
-      if (top < nav.scrollTop || top > nav.scrollTop + nav.clientHeight - 160) {
-        nav.scrollTop = Math.max(0, top - 80);
-      }
-    }
-    const currentLink = selected ?? activeGroup?.querySelector<HTMLAnchorElement>('.nav-link');
-    if (currentLink) {
-      currentLink.classList.add('active');
-      currentLink.setAttribute('aria-current', 'location');
-      const top = (currentLink as HTMLElement).offsetTop;
-      if (top < nav.scrollTop + 60 || top + (currentLink as HTMLElement).offsetHeight > nav.scrollTop + nav.clientHeight - 20) {
-        nav.scrollTop = Math.max(0, top - nav.clientHeight / 2);
-      }
+    selected.classList.add('active');
+    selected.setAttribute('aria-current', 'location');
+    const top = selected.offsetTop;
+    if (top < nav.scrollTop + 60 || top + selected.offsetHeight > nav.scrollTop + nav.clientHeight - 20) {
+      nav.scrollTop = Math.max(0, top - nav.clientHeight / 2);
     }
   }, []);
 
