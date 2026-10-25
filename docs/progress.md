@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（レビュー対応: ISSEP原稿・Hacking図role・Shostack目次フォーカス/d8図・Ghostホバー比較）
+> **最終更新**: 2026-10-25（レビュー対応＋Codecov patch: Hacking GuideSidebar未カバー行の解消）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -402,6 +402,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CODECOV-1025B | **PR #54 Codecov patch（2bc94da時点 98.95%・13行）の解消** — archive/なしのCI相当worktreeで実測し、Ghost/Shostack GuideSidebarは既に未カバー0（`78ab414`/`55ab137`で解消済み、Codecovコメントは旧コミット基準）。残るHacking GuideSidebarの未カバー8行を解消: 対象なしリンクで目次を閉じトグルへ戻す分岐にテスト（`d7a77d9`）、TOCが平坦で到達不能な`.nav-group`処理を除去（refactor `0322c80`）。CI相当で3ガイドのGuideSidebar/MermaidFigure未カバー行0。全2199件成功（550,271 expect）、CI相当1249 pass/950 skip/0 fail。lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | REVIEW-1025B | **レビュー対応（ISSEP原稿・3ガイド）** — `Issep-guide.md` のRTO+WRT≦MTD、公式出題形式（Multiple choice and advanced item types）、Domain 1.4〜1.6目標、V字モデルの対応関係、後方追跡の方向を修正（`005bb98`）。Hacking図の外側コンテナからrole/aria-labelを除去（内側viewportはimg維持）。Shostack目次のTabフォーカス循環を表示中リンク＋開閉ボタンに限定し、非表示`.nav-sub`を除外。Shostack d8のステップ5を双方向にし外部コンテンツの戻りを明示（台帳`allowedDifferences`に唯一の許容差分として記録）。Ghost `styles.browser.mjs` のホバー比較を`o[i]?.[prop]`化。変異プローブを原本非依存の`test`へ。Red `ca94702`・`150df91` → Green `1d19ef1`。全2198件/281ファイル成功（550,267 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | CODECOV-1025 | **PR #54 Codecov patch未カバー14行の解消** — Ghost/Shostack GuideSidebarの「見出しなしリンクで目次を閉じトグルへフォーカス復帰」分岐にテスト2件（`78ab414`）。Ghostの`.nav-group`処理はTOCが平坦なため到達不能と判明し除去（refactor `55ab137`）。対象2ファイルの未カバー行0、全2194件成功、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | HACKING-MIG | Hacking: The Art of Exploitation: 全12章・8図・83専用テスト・原本アーカイブ・実配信検証 | 2026-10-25 |
