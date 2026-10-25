@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Threat Modeling (Shostack) 移行・原本アーカイブ完了）
+> **最終更新**: 2026-10-25（Ghost in the Wires 棚卸し・表示基盤Red）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1295,3 +1295,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 配置: `security-docs/src/app/docs/threat-modeling-shostack-guide/page.mdx`。台帳: `docs/migration-inventory/threat-modeling-shostack-guide.json`。原本: `archive/security-guides/Threat-modeling-shostack-guide.html` / `archive/security-guides/Threat-modeling-shostack-guide.md`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 <!-- /threat-modeling-shostack-status -->
+
+## Ghost in the Wires 移行（2026-10-25・進行中）
+
+原本台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。17節・58見出し・20表332セル・65リスト項目・8解答・41出典・6図・年表10項目。表示基盤Red: 0 pass / 23 fail / 1 import error（3ファイル）。失敗原因は未実装のpage.mdx/部品。既存の全体実測2018件は移行前記録。npm使用・ビルド禁止・目視はユーザー担当。
