@@ -252,3 +252,18 @@ test('lazy engine loader disables Mermaid auto-start on the shared instance with
     render.mockRestore();
   }
 });
+
+test('diagram container is a labelled group so its description and retry controls stay accessible', async () => {
+  const original = globalThis.IntersectionObserver;
+  globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
+  try {
+    const view = render(createElement(MermaidFigure, { id: 'd1', source: 'flowchart LR\nA-->B', label: '図ラベル', renderer: async () => ({ svg: '<svg viewBox="0 0 10 10"></svg>' }) }));
+    const figure = view.container.querySelector('.mermaid-target');
+    expect(figure).toHaveAttribute('role', 'group');
+    expect(figure).toHaveAttribute('aria-label', '図ラベル');
+    await waitFor(() => expect(view.container.querySelector('.diagram-viewport')).toHaveAttribute('role', 'img'));
+    expect(view.container.querySelector('.diagram-viewport')).toHaveAttribute('aria-label', '図ラベル');
+  } finally {
+    globalThis.IntersectionObserver = original;
+  }
+});
