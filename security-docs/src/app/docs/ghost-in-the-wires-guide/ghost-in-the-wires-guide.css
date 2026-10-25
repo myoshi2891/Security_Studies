@@ -551,3 +551,8 @@
 .ghost-wires-guide.ghost-wires-guide .brand {font-size:inherit;}
 /* The source already owns its responsive content gutters. */
 .docs-main:has(.ghost-wires-guide) {padding:0;}
+
+html:has(.ghost-wires-guide) {scroll-behavior:smooth;scroll-padding-top:28px;}
+@media (prefers-reduced-motion: reduce) {
+html:has(.ghost-wires-guide) {scroll-behavior:auto;}
+}

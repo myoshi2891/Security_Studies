@@ -47,6 +47,10 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (currentLink) {
       currentLink.classList.add('active');
       currentLink.setAttribute('aria-current', 'location');
+      const top = (currentLink as HTMLElement).offsetTop;
+      if (top < nav.scrollTop + 60 || top + (currentLink as HTMLElement).offsetHeight > nav.scrollTop + nav.clientHeight - 20) {
+        nav.scrollTop = Math.max(0, top - nav.clientHeight / 2);
+      }
     }
   }, []);
 
