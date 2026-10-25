@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Threat Modeling (Shostack) 移行・段階2 第1章〜第8章Green）
+> **最終更新**: 2026-10-25（Threat Modeling (Shostack) 移行・段階3 全17章・スタイル・ホバー・Hydration・統合テストGreen）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1962成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・257ファイル・1962件。Threat Modeling (Shostack) 段階2までの42件を含む。 |
-| テストファイル数 | **257ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **105/105 (100%)** | 従来101 + Threat Modeling (Shostack) 部品4（GuideSidebar / GuideIcon / MermaidFigure / CodeSample）。純粋データ・MDXは分母外。全257テストファイルとは別集計 |
+| テストケース総数 | **2014成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・263ファイル・2014件。Threat Modeling (Shostack) 段階3までの94件を含む。 |
+| テストファイル数 | **263ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **105/105 (100%)** | 従来101 + Threat Modeling (Shostack) 部品4（GuideSidebar / GuideIcon / MermaidFigure / CodeSample）。純粋データ・MDXは分母外。全263テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,12 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/threat-modeling-shostack-guide/rear.test.tsx` | 18 | ✅ 2026-10-25 段階3 第9章〜第17章（ch9〜ch17）構造SHA-256＋原本比較Green |
+| `src/app/docs/threat-modeling-shostack-guide/interactions.test.tsx` | 2 | ✅ 2026-10-25 段階3 演習解答details開閉・バッジ番号・参考URL安全性Green |
+| `src/app/docs/threat-modeling-shostack-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 段階3 全52表・ページ全体のHydration回帰Green |
+| `src/app/docs/threat-modeling-shostack-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 段階3 全要素数・81 ID・82見出し検索・2コードSHA・変異プローブGreen |
+| `src/app/docs/threat-modeling-shostack-guide/styles.test.tsx` | 13 | ✅ 2026-10-25 段階3 5幅×明暗CSS比較・リスト点/番号・バッジ・空セル・図スクロールGreen |
+| `src/app/docs/threat-modeling-shostack-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 段階3 全944セルホバー（#0b1a2e）・インラインcode・Mermaid設定Green |
 | `src/app/docs/threat-modeling-shostack-guide/front.test.tsx` | 16 | ✅ 2026-10-25 段階2 第1章〜第8章（ch1〜ch8）構造SHA-256＋原本比較Green |
 | `src/app/docs/threat-modeling-shostack-guide/foundation.test.tsx` | 4 | ✅ 2026-10-25 段階1 表示基盤・CSS宣言・ナビ登録・9図定義Green |
 | `src/app/docs/threat-modeling-shostack-guide/static.test.tsx` | 5 | ✅ 2026-10-25 段階1 固定構造SHA-256（.hero/.brand/.sidebar nav/.sidebar-foot/.footer）Green |
