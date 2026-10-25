@@ -175,3 +175,15 @@ test('pointerdown on the shared header closes the drawer and returns focus, othe
     header.remove();
   }
 });
+
+test('scroll tracking keeps the active step visible in the scrolling sidebar itself', async () => {
+  const {v,notify}=await observed();
+  const panel=v.container.querySelector<HTMLElement>('#sidebar')!;
+  const link=v.container.querySelector<HTMLElement>('nav a[href="#step-16"]')!;
+  Object.defineProperty(panel,'clientHeight',{configurable:true,value:500});
+  Object.defineProperty(link,'offsetTop',{configurable:true,value:1200});
+  notify([[v.container.querySelector('section#step-16'),true]]);
+  expect(panel.scrollTop).toBeGreaterThan(0);
+  expect(link).toHaveAttribute('aria-current','location');
+  expect(v.container.querySelector('nav')!.scrollTop).toBe(0);
+});

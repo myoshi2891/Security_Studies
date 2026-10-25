@@ -144,3 +144,13 @@ test('diagrams center small SVGs and keep oversized SVGs scrollable from the lef
   }finally{await w.happyDOM.close();}
  }
 });
+
+test('document anchor scrolling stays smooth with a reduced-motion override scoped to this guide', () => {
+ const css=postcss.parse(readFileSync(new URL('./ghost-in-the-wires-guide.css',import.meta.url),'utf8'));
+ const rules:{media:string,value:string}[]=[];
+ css.walkRules('html:has(.ghost-wires-guide)',rule=>rule.walkDecls('scroll-behavior',d=>{
+  rules.push({media:rule.parent?.type==='atrule'?(rule.parent as postcss.AtRule).params:'',value:d.value});
+ }));
+ expect(rules).toContainEqual({media:'',value:'smooth'});
+ expect(rules).toContainEqual({media:'(prefers-reduced-motion: reduce)',value:'auto'});
+});
