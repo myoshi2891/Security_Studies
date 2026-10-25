@@ -326,5 +326,5 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- /threat-modeling-shostack-status -->
 
 <!-- ghost-wires-migration-status -->
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` の表示基盤28件成功（Red cd22987 → Green b82025d）。本文・構造・CSS・hydrationの段階2 Redは33成功/52失敗、85件/7ファイル。17節・58見出し・20表332セル・65リスト項目・8解答・41出典・6図の原本台帳あり。全体テスト実行中。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 本文・装飾移行済み。専用85件/7ファイル成功、Chrome 5幅×明暗10条件で全332セル・リスト点/番号・年表・ホバー比較差分0。表示基盤Red cd22987 → Green b82025d、本文Red 9110dd5 / Chrome Red 8d8ef36 → Green d2b15dc。原本アーカイブRedは4失敗/0成功。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /ghost-wires-migration-status -->
