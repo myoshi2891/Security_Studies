@@ -219,5 +219,47 @@
     "#step-14": "f000eecd1de733cb67ebc5103bfb006d3dada7ad7c29c29dc5bf68a8edb471ca",
     "#step-15": "e51cde3dbfb63f8d0ab5a9aa68d4311a55ac2472c1bf668d3629980cbc4e2a31",
     "#step-16": "dee5a6914d00cfe26209dcd6972b5b61997830a2dade498907578779657147c9"
+  },
+  "verification": {
+    "updated": "2026-10-25",
+    "dedicatedTests": 91,
+    "testFiles": 8,
+    "fullSuitePass": 2109,
+    "fullSuiteFiles": 272,
+    "fullSuiteExpectations": 548280,
+    "sourceAbsent": {
+      "pass": 55,
+      "skip": 36,
+      "fail": 0
+    },
+    "http": {
+      "url": "http://localhost:3000/docs/ghost-in-the-wires-guide",
+      "status": 200,
+      "countContracts": 16,
+      "structureHashes": 21
+    },
+    "chromium": {
+      "widths": [
+        375,
+        640,
+        768,
+        1024,
+        1440
+      ],
+      "colorSchemes": [
+        "light",
+        "dark"
+      ],
+      "styleDifferences": 0,
+      "cellsPerCondition": 332,
+      "runtimeWidths": [
+        375,
+        1440
+      ],
+      "renderedSvgPerPage": 6,
+      "runtimeErrors": 0
+    },
+    "build": "prohibited / not run",
+    "visualReview": "user / pending"
   }
 }

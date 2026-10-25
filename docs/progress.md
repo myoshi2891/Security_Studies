@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Ghost in the Wires移行・原本アーカイブ済み、全体テスト再検証中）
+> **最終更新**: 2026-10-25（Ghost in the Wires移行・原本アーカイブ・最終自動検証完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,11 +12,11 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2109件・全体再検証中** | Ghost専用91件成功。既存2018件と合わせて全体2109件を再検証中。 |
+| テストケース総数 | **2109成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・272ファイル・2109件（548,280 expect）。Ghost専用91件を含む。 |
 | テストファイル数 | **272ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **108/108 (100%)** | 従来105 + Ghost部品3（GuideSidebar / GuideIcon / MermaidFigure）。純粋データ・MDXは分母外。全272テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
@@ -364,7 +364,8 @@ form-action 'self'
 | `security-docs/README.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
 | `docs/test-coverage-dashboard.html` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
 | `docs/progress.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
+| `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | GHOST-MIG | Ghost in the Wires: 全17節・6図・原本アーカイブ・91専用テストと実配信検証 | 2026-10-25 |
+| P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
 | `.gemini/skills/docs-sync/SKILL.md` | 2026-05-27 | プロジェクトローカルの .gemini/skills に移行し適用 |
@@ -1306,8 +1307,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## Ghost in the Wires 移行（2026-10-25）
 
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイル成功、原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ完了。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイルを含む全体2109成功/0skip/0失敗（272ファイル、548,280 expect）。原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致。Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。375/1440pxで6図の実SVG描画と左右スクロール、目次、8解答、smooth/reduced-motionを操作し実行時エラー0。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。Security Guides・ホーム・静的/動的検索35ページへ登録。ロジック単位108/108。npm test・lint・型チェック成功。ビルド禁止/未実行・目視はユーザー担当/未確認。
 
-配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
-
-2026-10-25 追加回帰完了: 目次内の現在項目への自動スクロール、文書ルートのsmooth/reduced-motion。Red 801f666 → Green 8b993ad。専用91成功/0失敗。
+配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。TDD: 表示基盤cd22987→b82025d、本文9110dd5/8d8ef36→d2b15dc、アーカイブ3ddf7b5→23c8512、目次補完801f666→8b993ad。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
