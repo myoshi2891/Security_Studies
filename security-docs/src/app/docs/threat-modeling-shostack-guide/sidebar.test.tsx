@@ -53,17 +53,19 @@ test('mobile TOC opens via #navToggle, swaps ti-menu-2/ti-x icon, traps focus, c
   const first = visible[0].getAttribute('href');
   expect(focused()).toBe(first);
   const tab = async (shiftKey = false) => {
+    const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey, bubbles: true, cancelable: true });
     await act(async () => {
-      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey, bubbles: true }));
+      document.dispatchEvent(event);
     });
+    return event;
   };
   await tab(true);
   expect(focused()).toBe('navToggle');
   await tab();
   expect(focused()).toBe(first);
+  // 最後の表示リンクからの Tab は DOM 順で開閉ボタンへ進むため、既定動作を妨げない
   visible.at(-1)!.focus();
-  await tab();
-  expect(focused()).toBe('navToggle');
+  expect((await tab()).defaultPrevented).toBe(false);
   const hidden = links.find(a => !visible.includes(a))!;
   hidden.focus();
   await tab();

@@ -2,7 +2,7 @@ import { expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import postcss from 'postcss';
 import { docsConfig } from '../../../config/docs';
-import { sourceTest, sourceDocument, sourceCss, definitions, scope, canonical, renderedPage, evaluatedPage } from './fidelity-helpers';
+import { sourceTest, sourceDocument, sourceCss, definitions, expectedDefinition, scope, canonical, renderedPage, evaluatedPage } from './fidelity-helpers';
 
 sourceTest('hero, brand, sidebar nav, sidebar-foot and footer retain exact source structure and content', async () => {
   const page = await renderedPage();
@@ -48,7 +48,7 @@ test('metadata and Security Guides navigation register Threat Modeling (Shostack
   ]);
 });
 
-sourceTest('all 9 Mermaid definitions remain verbatim', async () => {
+sourceTest('all 9 Mermaid definitions remain verbatim except the documented d8 override', async () => {
   const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
-  expect(Object.entries(diagrams)).toEqual([...definitions]);
+  expect(Object.entries(diagrams)).toEqual([...definitions.keys()].map(id => [id, expectedDefinition(id)]));
 });
