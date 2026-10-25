@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Hacking: The Art of Exploitation移行・アーカイブ・最終自動検証完了）
+> **最終更新**: 2026-10-25（Codecov patch未カバー行の解消: Ghost/Shostack GuideSidebar）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2192成功 / 0 skip / 0失敗** | 全体2192成功/0skip/0失敗（281ファイル、550,252 expect）。Hacking専用83件を含む。 |
+| テストケース総数 | **2194成功 / 0 skip / 0失敗** | 全体2194成功/0skip/0失敗（281ファイル）。Hacking専用83件、目次フォールバック回帰2件を含む。 |
 | テストファイル数 | **281ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **112/112 (100%)** | 従来108 + Hacking部品4（GuideSidebar / GuideIcon / MermaidFigure / CodeSample）。純粋データ・MDXは分母外。全281テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -402,6 +402,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| CODECOV-1025 | **PR #54 Codecov patch未カバー14行の解消** — Ghost/Shostack GuideSidebarの「見出しなしリンクで目次を閉じトグルへフォーカス復帰」分岐にテスト2件（`78ab414`）。Ghostの`.nav-group`処理はTOCが平坦なため到達不能と判明し除去（refactor `55ab137`）。対象2ファイルの未カバー行0、全2194件成功、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | HACKING-MIG | Hacking: The Art of Exploitation: 全12章・8図・83専用テスト・原本アーカイブ・実配信検証 | 2026-10-25 |
 | GHOST-MIG | Ghost in the Wires: 全17節・6図・原本アーカイブ・91専用テストと実配信検証、全2109件成功 | 2026-10-25 |
 | REVIEW-1025 | **CyberOps Associateレビュー2件の対応** — 1024px以下で`hidden`の背景が`display:block`に上書きされる問題を`.backdrop[hidden]{display:none}`で修正。図コンテナのrole（img→group）を修正し、内側の`.diagram-viewport`はimgを維持。Red `12d298a` → Green `25edecc`。全1920件成功（未コミットの既存テスト追加分を含む）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
