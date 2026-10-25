@@ -485,3 +485,13 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 <!-- /cyberops-professional-status -->
+
+<!-- threat-modeling-shostack-status -->
+
+## Threat Modeling (Shostack) 移行（2026-10-25）
+
+移行・アーカイブ完了: `/docs/threat-modeling-shostack-guide`。全17章（`section.chapter` 17）・82見出し（h1:1 / h2:17 / h3:60 / h4:4）・52表944セル（th:152 / td:792）・9図・2コード（JSON / YAML）・2演習解答（`details.answer`）・12注意欄（`.callout`）・22参考文献（`.ref-card`）・77目次リンク（17グループ）・81固有IDを保持。原本比較＋全22固定構造SHA-256（`.hero`/`.brand`/`.sidebar nav`/`.sidebar-foot`/`.footer`＋17章）・全2コードの改行/空白SHA・全CSS/media・5画面幅（375/768/980/1024/1440px）×明暗両配色の計算済みCSS・リスト丸点（`ul li::before`）と番号（`ol`）・ステップバッジ・空セルダッシュ表示・全944セルホバー（`#0b1a2e`）・インラインcode継承・全52表とページ全体のhydration・目次操作/フォーカストラップ/hashchange/スクロールスパイ・Mermaid遅延描画/110px余白/再試行/テキスト説明を検証。専用98件/12ファイルを含む全体2018成功/0skip/0失敗（264ファイル、544,760 expect）。原本なし隔離環境は専用60成功/38skip/0失敗。Security Guidesナビ・ホーム・静的/動的検索は34ページ（全82見出しを収録）。ロジック単位105/105（従来101＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-guides/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。TDD: 段階1（表示基盤）Red `aede778` → Green `ea1c415`、段階2（第1〜8章）Red `0c3a089` → Green `c36c81d`、段階3（第9〜17章・統合・スタイル・可読性）Red `39158e8` → Green `5259c9e`、段階4（原本アーカイブ）Red `b0cde59` → Green `37b12b2`。目視確認表: `docs/migration-inventory/threat-modeling-shostack-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/threat-modeling-shostack-guide/page.mdx`。台帳: `docs/migration-inventory/threat-modeling-shostack-guide.json`。原本: `archive/security-guides/Threat-modeling-shostack-guide.html` / `archive/security-guides/Threat-modeling-shostack-guide.md`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /threat-modeling-shostack-status -->
