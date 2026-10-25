@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Hacking: The Art of Exploitation移行・第1〜6章Red・追加12件すべて失敗。専用31成功/12失敗（4ファイル）。全登録2152件/276ファイル。表示基盤Greenを維持し本文の欠落を検出）
+> **最終更新**: 2026-10-25（Hacking: The Art of Exploitation移行・第1〜6章Green・専用43成功/0失敗（4ファイル、556 expect）。Redコミット拒否見落としはユーザー承認後に本文を退避・直前Green復元・12失敗再確認・Red af97a26で復旧。全登録2152件/276ファイル。後半は未移行）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1314,7 +1314,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- hacking-exploitation-status -->
 ## Hacking: The Art of Exploitation移行（2026-10-25）
 
-2026-10-25 Hacking: The Art of Exploitation: 第1〜6章Red・追加12件すべて失敗。専用31成功/12失敗（4ファイル）。全登録2152件/276ファイル。表示基盤Greenを維持し本文の欠落を検出。原本は12章・68見出し・20表341セル・8図・Cコード2件・参考文献21件・7注意欄・18リスト項目。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。
+2026-10-25 Hacking: The Art of Exploitation: 第1〜6章Green・専用43成功/0失敗（4ファイル、556 expect）。Redコミット拒否見落としはユーザー承認後に本文を退避・直前Green復元・12失敗再確認・Red af97a26で復旧。全登録2152件/276ファイル。後半は未移行。原本は12章・68見出し・20表341セル・8図・Cコード2件・参考文献21件・7注意欄・18リスト項目。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置予定: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。
 <!-- /hacking-exploitation-status -->
