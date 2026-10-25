@@ -19,14 +19,16 @@ try{
  const ctx=await browser.newContext({viewport:{width,height:900},colorScheme,javaScriptEnabled:false});
  try{
  const original=await ctx.newPage(),actual=await ctx.newPage();
- await original.setContent(source);await actual.setContent('<style>'+css+'</style><main class="docs-main"><article class="prose docs-article">'+html+'</article></main>');
- const sample=(page,selector)=>page.locator(selector).evaluateAll((els,props)=>els.filter(e=>!e.closest('.mermaid-target')).map(e=>{const s=getComputedStyle(e);return Object.fromEntries(props.map(p=>[p,s[p]]));}),props);
+ await original.setContent(source);
+ if(process.env.DOCS_BASE_URL) await actual.goto(new URL('/docs/ghost-in-the-wires-guide',process.env.DOCS_BASE_URL).href,{waitUntil:'networkidle'});
+ else await actual.setContent('<style>'+css+'</style><main class="docs-main"><article class="prose docs-article">'+html+'</article></main>');
+ const sample=(page,selector)=>(page===actual?page.locator('.ghost-wires-guide').locator(selector):page.locator(selector)).evaluateAll((els,props)=>els.filter(e=>!e.closest('.mermaid-target')).map(e=>{const s=getComputedStyle(e);return Object.fromEntries(props.map(p=>[p,s[p]]));}),props);
  for(const selector of selectors){const a=await sample(actual,selector),o=await sample(original,selector.replaceAll('.guide-content','main'));
  if(a.length!==o.length)failures.push({width,colorScheme,selector,counts:[a.length,o.length]});
  for(let i=0;i<a.length;i++)for(const prop of props)if(a[i][prop]!==o[i]?.[prop])failures.push({width,colorScheme,selector,i,prop,expected:o[i]?.[prop],actual:a[i][prop]});
  }
  for(const [selector,pseudo] of [['.section ul>li','::before'],['.timeline-events>li','::before'],['.timeline-events>li:not(:last-child)','::after'],['.section ol>li','::marker'],['details.qa summary','::before']]){
- const capture=page=>page.locator(selector).evaluateAll((els,pseudo)=>els.map(e=>{const s=getComputedStyle(e,pseudo);return ['content','color','backgroundColor','width','height','borderRadius','left','fontWeight'].map(p=>s[p]);}),pseudo);
+ const capture=page=>(page===actual?page.locator('.ghost-wires-guide').locator(selector):page.locator(selector)).evaluateAll((els,pseudo)=>els.map(e=>{const s=getComputedStyle(e,pseudo);return ['content','color','backgroundColor','width','height','borderRadius','left','fontWeight'].map(p=>s[p]);}),pseudo);
  const a=await capture(actual),o=await capture(original);if(JSON.stringify(a)!==JSON.stringify(o))failures.push({width,colorScheme,selector,pseudo,expected:o,actual:a});
  }
  for(const page of [actual,original]){const cdp=await ctx.newCDPSession(page);await cdp.send('DOM.enable');await cdp.send('CSS.enable');const {root}=await cdp.send('DOM.getDocument');const {nodeIds}=await cdp.send('DOM.querySelectorAll',{nodeId:root.nodeId,selector:'tr'});await Promise.all(nodeIds.map(nodeId=>cdp.send('CSS.forcePseudoState',{nodeId,forcedPseudoClasses:['hover']})));}
