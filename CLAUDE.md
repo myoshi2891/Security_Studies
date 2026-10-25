@@ -67,6 +67,7 @@ Security_Studies/
 │   │   ├── app/
 │   │   │   ├── docs/       # ドキュメントページ (各 page.mdx)
 │   │   │   │   ├── ghost-in-the-wires-guide/ # 原本構造を保持したMDX・部品・専用CSS・89テスト
+│   │   │   │   ├── hacking-art-of-exploitation-guide/ # 全12章・専用CSS・部品・83テスト
 │   │   │   │   ├── approach/, architecture/, owasp/, ...
 │   │   │   │   ├── ccie-security/, ccst-cybersecurity/, cyberops-associate-guide/, cyberops-professional-guide/
 │   │   │   │   ├── secure-by-design/, mitre-atlas/, hacking-kubernetes/
@@ -501,3 +502,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ完了。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイルを含む全体2109成功/0skip/0失敗（272ファイル、548,280 expect）。原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致。Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。375/1440pxで6図の実SVG描画と左右スクロール、目次、8解答、smooth/reduced-motionを操作し実行時エラー0。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。Security Guides・ホーム・静的/動的検索35ページへ登録。ロジック単位108/108。npm test・lint・型チェック成功。ビルド禁止/未実行・目視はユーザー担当/未確認。
 配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。TDD: 表示基盤cd22987→b82025d、本文9110dd5/8d8ef36→d2b15dc、アーカイブ3ddf7b5→23c8512、目次補完801f666→8b993ad。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
 <!-- /ghost-wires-migration-status -->
+
+<!-- hacking-exploitation-status -->
+## Hacking: The Art of Exploitation移行（2026-10-25）
+
+2026-10-25 Hacking: The Art of Exploitation: `/docs/hacking-art-of-exploitation-guide` 移行・原本アーカイブ完了。全12章・68見出し・20表341セル・8図・Cコード2件・21参考文献・7注意欄・18リスト項目（本文6/目次12）を保持。全17固定構造SHA-256・コードの改行/空白SHA・全CSS/media・ローカル構文配色・5幅×明暗のCSS・全表/ページhydrationを検証。Chrome10条件で文字/リスト丸点/章番号バッジ/全341セルホバー差分0、375/1440pxで全8図の実描画・自然幅/左右スクロール・目次/配慮設定が成功（pageErrors 0）。専用83件/9ファイル成功、原本なし隔離環境52成功/31skip/0失敗。全登録2192件/281ファイル・最終全体テスト実行中（直前の2186成功/2失敗は既存ナビ期待値と原本参照の修正後に対象101件成功）。Security Guides・ホーム・静的/動的検索36ページへ登録（全68見出し）。ロジック単位112/112（従来108＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownは `archive/security-guides/` へ両SHA-256一致で保存（Git管理外）。HTTP 200で13件数/17構造SHA-256一致。npm test・lint・型チェック成功（全体は上記再検証中）。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
+<!-- /hacking-exploitation-status -->
