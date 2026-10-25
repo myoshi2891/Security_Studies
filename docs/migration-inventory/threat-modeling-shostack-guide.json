@@ -224,5 +224,14 @@
   "codeHashes": [
     "795d3f7be81067f4b1d5c44988640a91c7ac21572dccaf0e6dd6a64f5b08e272",
     "c795b2aa80c32030b0911fc242b7773e48b2d76170a2a76455eb59234acec65f"
+  ],
+  "allowedDifferences": [
+    {
+      "date": "2026-10-25",
+      "target": "diagram d8",
+      "source": "ORCH -->|\"5 取得\"| WEB",
+      "migrated": "ORCH <-->|\"5 取得(外部コンテンツ＝信頼できない入力)\"| WEB",
+      "reason": "レビュー対応: 11.2 の「取得した外部コンテンツは信頼できない入力」を図に反映し、WEB→ORCH の戻りを明示。他の8図は原本と完全一致（fidelity-helpers の definitionOverrides で1件のみ許容）"
+    }
   ]
 }
