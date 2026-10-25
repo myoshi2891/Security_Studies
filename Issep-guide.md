@@ -593,7 +593,7 @@ NIST SP 800-18 Rev.2（2026年6月に最終化）は、システムセキュリ�
 **公式アウトラインの論点** [S3]: コスト見積り／人件費／確率と統計（Monte Carlo 法、MTBF、MTD、MTTF、MTTR（修復）、MTTR（復旧））
 
 > 受験者の非公式な報告として、この項目（特に Monte Carlo 法）は従来の公式教材で手薄だったという声があります [S18]。数式を伴う項目なので、手を動かして確認しておくと安心です。
-> 補足: 該当の ISC2 コミュニティは 2026年5月29日に廃止予定と告知されていたため、リンクが開けない可能性があります。
+> 補足: 該当の ISC2 コミュニティは移転済みで、元の URL は現在 ISC2 Chapters（isc2chapters.isc2.org）へリダイレクトされ、投稿本文は表示されません。Internet Archive と archive.today にも該当スレッドの保存版は見つかりませんでした（2026年10月25日確認）。
 
 #### Step 1: コスト見積りの代表手法
 
@@ -1398,17 +1398,19 @@ flowchart TD
 
 NIST SP 800-88 Rev.2（2025年9月最終）は、旧版（Rev.1、2014年）から焦点を「現場の個別判断」から**組織の媒体消去プログラムの確立**へ移しました。技術手順の細目は、IEEE 2883、NSA の仕様、または組織が承認した基準に従う方針に変わっています（暗号消去を除く）[S10][S20]。
 
-| 方法 | 内容 | 使い分け |
+| 方法 | 内容 | 使い分けの例（固定ルールではない） |
 |---|---|---|
-| **Clear** | ユーザーがアクセスできる領域を論理的に消去 | 再利用・低〜中リスクの媒体 |
-| **Purge** | 研究所レベルの高度な復元攻撃に耐える消去（暗号消去など） | 機密度が高い媒体、組織外へ出す場合 |
-| **Destroy** | 媒体を物理的に使用不能にする | 最高機密、消去を保証できない媒体 |
+| **Clear** | ユーザーがアクセスできる領域を論理的に消去 | 例: 組織内で再利用する低〜中リスクの媒体 |
+| **Purge** | 研究所レベルの高度な復元攻撃に耐える消去（暗号消去など） | 例: 機密度が高い媒体、組織外へ出す場合 |
+| **Destroy** | 媒体を物理的に使用不能にする | 例: 最高機密、消去を保証できない媒体 |
 
+> 上表の対応は目安です。実際の方法は**組織の媒体消去方針**と、NIST のリスクに基づく判断フローに従って選びます。判断では、媒体の種類、再利用の有無、媒体が組織の管理下に残るか、データの機密度、コスト（消去・検証・破壊の費用と媒体の価値）を考慮します [S10]。
+>
 > 第三者の解説は、Rev.2 が HDD の多重上書き（旧来の複数回上書き）を推奨しない点にも触れています。詳細は NIST 原文 [S10] で確認してください。
 
 | 概念 | 説明 |
 |---|---|
-| **暗号消去（Cryptographic Erase）** | 暗号化されたデータの**鍵を安全に消去**して、データを復元不能にする |
+| **暗号消去（Cryptographic Erase）** | 暗号化されたデータの**鍵を安全に消去**して、データを復元不能にする。有効なのは、①データが書き込み前から十分に強く正しく実装された暗号で保護されている、②平文のコピーや履歴（暗号化前の残存データなど）が残っていない、③バックアップやエスクローを含む**すべての鍵のコピー**を消去・管理できる、の条件を満たす場合に限られる |
 | **消去の検証** | 消去が有効に行われたことの確認（Rev.2 で強化） |
 | **論理的消去** | クラウドなど、物理媒体を直接扱えない環境での消去の考え方 |
 
@@ -1522,9 +1524,9 @@ A. Categorize　B. Authorize　C. Prepare　D. Monitor
 A. ISSE　B. 開発者　C. 認可権限者（AO）　D. 監査人
 <details><summary>解答</summary>C</details>
 
-**問 7.** 暗号化されたストレージの廃棄時、鍵を安全に消去してデータを復元不能にする方法はどれか。
+**問 7.** 書き込み前から十分に強く正しく実装された暗号で保護され、平文のコピーや履歴が残っておらず、バックアップやエスクローを含むすべての鍵のコピーを管理できるストレージの廃棄時、鍵を安全に消去してデータを復元不能にする方法はどれか。
 A. 暗号消去（Cryptographic Erase）　B. 再フォーマットのみ　C. 名前変更　D. 保管のみ
-<details><summary>解答</summary>A</details>
+<details><summary>解答</summary>A（前提条件のいずれかを満たさない場合、暗号消去だけでは不十分で、他の Purge・Destroy 手段を検討する）</details>
 
 **問 8.** 要件追跡マトリクス（RTM）の主な目的は。
 A. 予算の管理　B. 要件・設計・テストの対応を追跡し、漏れや余剰を発見する　C. 人員配置　D. 契約交渉
@@ -1596,7 +1598,7 @@ A. すぐ実施する　B. セキュリティ影響分析を行う　C. 文書�
 | S15 | 公式 | NIST Risk Management Framework プロジェクト（SP 800-53 5.2.0、SP 800-18r2 の更新情報） | https://csrc.nist.gov/Projects/risk-management |
 | S16 | 第三者 | Training Camp: What Is ISSEP?（配点・形式・CPE などの整理） | https://trainingcamp.com/what-is-issep/ |
 | S17 | 第三者 | Destination Certification: CISSP concentrations（配点の記載が公式 PDF と異なる） | https://destcert.com/resources/cissp-concentrations/ |
-| S18 | 非公式 | ISC2 Community: ISSEP Exam Changes（受験者の声。廃止予定の告知あり） | https://community.isc2.org/t5/ISSEP-Study-Group/ISSEP-Exam-Changes-Effective-August-2025/m-p/81860 |
+| S18 | 非公式 | ISC2 Community: ISSEP Exam Changes（受験者の声。コミュニティ移転済み、元 URL はリダイレクト・保存版なし） | https://community.isc2.org/t5/ISSEP-Study-Group/ISSEP-Exam-Changes-Effective-August-2025/m-p/81860 |
 | S19 | 第三者経由 | DoD 8140 資格マトリクス（S16 内のリンク。本ガイド作成時は未取得） | https://www.cyber.mil/dod-workforce-innovation-directorate/dod8140/qualification-matrices |
 | S20 | 公式 | NIST: SP 800-88r2 公開ニュース | https://www.nist.gov/node/1898251 |
 
