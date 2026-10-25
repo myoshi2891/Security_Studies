@@ -1,0 +1,234 @@
+.shostack-threat-guide.shostack-threat-guide{
+  --color-background-primary:#07111e;
+  --color-background-secondary:#0b1a2e;
+  --color-background-tertiary:#10233c;
+  --color-background-info:#12284d;
+  --color-background-danger:#2a1613;
+  --color-background-success:#0f2a22;
+  --color-background-warning:#2a2210;
+  --color-text-primary:#f3f5fa;
+  --color-text-secondary:#c6d0e3;
+  --color-text-tertiary:#93a1bd;
+  --color-text-info:#7c9eff;
+  --color-text-danger:#ff9b88;
+  --color-text-success:#6fd9b0;
+  --color-text-warning:#f2c06b;
+  --color-border-tertiary:#1e2f4d;
+  --color-border-secondary:#2d456e;
+  --color-border-primary:#3e5c8f;
+  --font-sans:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --border-radius-xl:16px;
+  --accent:#7c9eff;
+  --sidebar-w:300px;
+}
+.shostack-threat-guide.shostack-threat-guide *{box-sizing:border-box}
+.shostack-threat-guide.shostack-threat-guide{scroll-behavior:smooth;scroll-padding-top:24px}
+.shostack-threat-guide.shostack-threat-guide{margin:0;background:var(--color-background-primary);color:var(--color-text-secondary);font-family:var(--font-sans);font-size:1rem;line-height:1.7;-webkit-text-size-adjust:100%}
+.shostack-threat-guide.shostack-threat-guide a{color:var(--accent)}
+.shostack-threat-guide.shostack-threat-guide .layout{display:block}
+
+/* sidebar */
+.shostack-threat-guide.shostack-threat-guide .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--color-background-secondary);border-right:1px solid var(--color-border-tertiary);overflow-y:auto;padding:1.5rem 1rem 2rem;z-index:50}
+.shostack-threat-guide.shostack-threat-guide .brand{display:flex;gap:.75rem;align-items:center;padding:0 .5rem 1.25rem;border-bottom:1px solid var(--color-border-tertiary);margin-bottom:1rem}
+.shostack-threat-guide.shostack-threat-guide .brand i{font-size:2rem;color:var(--accent)}
+.shostack-threat-guide.shostack-threat-guide .brand-title{color:var(--color-text-primary);font-weight:500;line-height:1.3}
+.shostack-threat-guide.shostack-threat-guide .brand-sub{color:var(--color-text-tertiary);line-height:1.3}
+.shostack-threat-guide.shostack-threat-guide .nav-group{margin:0 0 .125rem}
+.shostack-threat-guide.shostack-threat-guide .nav-link{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem .6rem;border-radius:var(--border-radius-md);color:var(--color-text-secondary);text-decoration:none;line-height:1.45}
+.shostack-threat-guide.shostack-threat-guide .nav-link .n{flex:0 0 1.75rem;text-align:right;color:var(--color-text-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .nav-link:hover{background:var(--color-background-tertiary);color:var(--color-text-primary)}
+.shostack-threat-guide.shostack-threat-guide .nav-group.active>.nav-link{background:var(--color-background-info);color:var(--color-text-primary)}
+.shostack-threat-guide.shostack-threat-guide .nav-group.active>.nav-link .n{color:var(--accent)}
+.shostack-threat-guide.shostack-threat-guide .nav-sub{display:none;margin:.125rem 0 .6rem 2.4rem;padding-left:.5rem;border-left:1px solid var(--color-border-secondary)}
+.shostack-threat-guide.shostack-threat-guide .nav-group.active .nav-sub{display:block}
+.shostack-threat-guide.shostack-threat-guide .nav-sub a{display:block;padding:.3rem .5rem;color:var(--color-text-tertiary);text-decoration:none;line-height:1.45;border-radius:6px}
+.shostack-threat-guide.shostack-threat-guide .nav-sub a:hover{color:var(--color-text-primary);background:var(--color-background-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .sidebar-foot{margin-top:1.5rem;padding:1rem .5rem 0;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary);line-height:1.5}
+
+/* main (no max-width anywhere) */
+.shostack-threat-guide.shostack-threat-guide .guide-content{margin-left:var(--sidebar-w);padding:3rem 3.5rem 4rem}
+.shostack-threat-guide.shostack-threat-guide .hero{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--color-border-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .eyebrow{display:flex;align-items:center;gap:.5rem;color:var(--accent);font-weight:500;letter-spacing:.04em}
+.shostack-threat-guide.shostack-threat-guide .hero h1{font-size:2.25rem;line-height:1.3;font-weight:500;color:var(--color-text-primary);margin:.5rem 0 1.5rem}
+.shostack-threat-guide.shostack-threat-guide .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.75rem;margin:0 0 1.5rem}
+.shostack-threat-guide.shostack-threat-guide .meta-item{display:flex;gap:.75rem;align-items:flex-start;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.85rem 1rem}
+.shostack-threat-guide.shostack-threat-guide .meta-item i{color:var(--accent);font-size:1.25rem;margin-top:.2rem}
+.shostack-threat-guide.shostack-threat-guide .meta-label{display:block;color:var(--color-text-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .meta-value{display:block;color:var(--color-text-primary)}
+
+.shostack-threat-guide.shostack-threat-guide section.chapter{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--color-border-tertiary)}
+.shostack-threat-guide.shostack-threat-guide section.chapter:first-of-type{margin-top:0;border-top:0;padding-top:0}
+.shostack-threat-guide.shostack-threat-guide h2{display:flex;align-items:flex-start;gap:.9rem;margin:0 0 1.5rem;font-size:1.625rem;font-weight:500;line-height:1.4;color:var(--color-text-primary)}
+.shostack-threat-guide.shostack-threat-guide h2 .num{flex:0 0 auto;min-width:2.5rem;height:2.5rem;padding:0 .5rem;border-radius:var(--border-radius-lg);background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-size:1.125rem;font-weight:500}
+.shostack-threat-guide.shostack-threat-guide h2 .title{padding-top:.15rem}
+.shostack-threat-guide.shostack-threat-guide h3{margin:2.25rem 0 .9rem;padding-left:.75rem;border-left:3px solid var(--accent);font-size:1.25rem;font-weight:500;line-height:1.5;color:var(--color-text-primary)}
+.shostack-threat-guide.shostack-threat-guide h4{margin:1.75rem 0 .6rem;font-size:1.0625rem;font-weight:500;color:var(--color-text-info)}
+.shostack-threat-guide.shostack-threat-guide p{margin:0 0 1rem}
+.shostack-threat-guide.shostack-threat-guide strong{color:var(--color-text-primary);font-weight:500}
+.shostack-threat-guide.shostack-threat-guide ul, .shostack-threat-guide.shostack-threat-guide ol{margin:0 0 1rem;padding-left:1.4rem}
+.shostack-threat-guide.shostack-threat-guide li{margin:.25rem 0}
+
+/* inline code and code blocks */
+.shostack-threat-guide.shostack-threat-guide code{font-family:var(--font-mono);font-size:1rem;background:var(--color-background-tertiary);border:1px solid var(--color-border-tertiary);border-radius:6px;padding:.05em .4em;color:#a9c1ff;word-break:break-word}
+.shostack-threat-guide.shostack-threat-guide .code-block{margin:1.25rem 0;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;background:#0a1626}
+.shostack-threat-guide.shostack-threat-guide .code-head{display:flex;align-items:center;gap:.5rem;padding:.5rem 1rem;background:var(--color-background-tertiary);border-bottom:1px solid var(--color-border-secondary);color:var(--color-text-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .code-block pre{margin:0;padding:1rem 1.25rem;overflow-x:auto;background:#0a1626}
+.shostack-threat-guide.shostack-threat-guide .code-block pre code, .shostack-threat-guide.shostack-threat-guide pre code.hljs{display:block;padding:0;border:0;background:transparent;font-size:1rem;line-height:1.6;color:var(--color-text-secondary);word-break:normal;white-space:pre}
+
+/* tables */
+.shostack-threat-guide.shostack-threat-guide .table-wrap{margin:1.25rem 0 1.5rem;overflow-x:auto;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg)}
+.shostack-threat-guide.shostack-threat-guide table{width:100%;border-collapse:collapse}
+.shostack-threat-guide.shostack-threat-guide th{background:var(--color-background-tertiary);color:var(--color-text-primary);font-weight:500;text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--color-border-secondary);white-space:nowrap}
+.shostack-threat-guide.shostack-threat-guide td{padding:.65rem .9rem;border-bottom:1px solid var(--color-border-tertiary);vertical-align:top;color:var(--color-text-secondary)}
+.shostack-threat-guide.shostack-threat-guide tr:last-child td{border-bottom:0}
+.shostack-threat-guide.shostack-threat-guide tbody tr:hover td{background:var(--color-background-secondary)}
+.shostack-threat-guide.shostack-threat-guide td:empty::after{content:"";display:block;min-height:1.7rem}
+
+/* callouts (flat, no shadow) */
+.shostack-threat-guide.shostack-threat-guide .callout{display:flex;gap:.9rem;margin:1.25rem 0 1.5rem;padding:1rem 1.15rem;border-radius:var(--border-radius-lg);border:1px solid var(--color-border-secondary);border-left-width:4px}
+.shostack-threat-guide.shostack-threat-guide .callout i{flex:0 0 auto;font-size:1.4rem;margin-top:.15rem}
+.shostack-threat-guide.shostack-threat-guide .callout-body{min-width:0}
+.shostack-threat-guide.shostack-threat-guide .callout-body p:last-child{margin-bottom:0}
+.shostack-threat-guide.shostack-threat-guide .callout.note{background:var(--color-background-info);border-color:var(--color-border-primary);border-left-color:var(--color-text-info)}
+.shostack-threat-guide.shostack-threat-guide .callout.note i{color:var(--color-text-info)}
+.shostack-threat-guide.shostack-threat-guide .callout.point{background:var(--color-background-warning);border-color:#5a4a1c;border-left-color:var(--color-text-warning)}
+.shostack-threat-guide.shostack-threat-guide .callout.point i{color:var(--color-text-warning)}
+.shostack-threat-guide.shostack-threat-guide .callout.caution{background:var(--color-background-danger);border-color:#5c2f28;border-left-color:var(--color-text-danger)}
+.shostack-threat-guide.shostack-threat-guide .callout.caution i{color:var(--color-text-danger)}
+
+/* diagrams */
+.shostack-threat-guide.shostack-threat-guide .diagram{margin:1.5rem 0;padding:1.25rem;background:#0a1626;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow-x:auto}
+.shostack-threat-guide.shostack-threat-guide .mermaid-target{display:flex;justify-content:center}
+.shostack-threat-guide.shostack-threat-guide .mermaid-target svg{flex:0 1 auto}
+.shostack-threat-guide.shostack-threat-guide .mermaid-error{margin:0;white-space:pre-wrap;color:var(--color-text-danger)}
+
+/* details (exercise answers) */
+.shostack-threat-guide.shostack-threat-guide details{margin:1rem 0 1.5rem;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary)}
+.shostack-threat-guide.shostack-threat-guide summary{cursor:pointer;padding:.7rem 1rem;color:var(--accent);font-weight:500}
+.shostack-threat-guide.shostack-threat-guide details[open] summary{border-bottom:1px solid var(--color-border-tertiary)}
+.shostack-threat-guide.shostack-threat-guide .details-body{padding:1rem 1rem .25rem}
+
+/* reference cards */
+.shostack-threat-guide.shostack-threat-guide .ref-list{display:grid;gap:.75rem;margin:1rem 0 1.75rem}
+.shostack-threat-guide.shostack-threat-guide .ref-card{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.1rem;background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg)}
+.shostack-threat-guide.shostack-threat-guide .ref-num{flex:0 0 2.5rem;height:2.5rem;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-background-info);border:1px solid var(--color-border-primary);color:var(--accent);font-weight:500}
+.shostack-threat-guide.shostack-threat-guide .ref-main{min-width:0}
+.shostack-threat-guide.shostack-threat-guide .ref-title{color:var(--color-text-primary);font-weight:500}
+.shostack-threat-guide.shostack-threat-guide .ref-desc{margin-top:.1rem;color:var(--color-text-secondary)}
+.shostack-threat-guide.shostack-threat-guide .ref-url{display:inline-flex;align-items:baseline;gap:.4rem;margin-top:.35rem;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--color-border-primary);word-break:break-all}
+.shostack-threat-guide.shostack-threat-guide .ref-url:hover{border-bottom-color:var(--accent)}
+
+.shostack-threat-guide.shostack-threat-guide .footer{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--color-border-tertiary);color:var(--color-text-tertiary)}
+
+/* tablet and below: sidebar becomes a left-to-right drawer opened from a bottom-right button */
+.shostack-threat-guide.shostack-threat-guide .nav-toggle{display:none;position:fixed;right:20px;bottom:20px;width:3.5rem;height:3.5rem;border-radius:50%;background:var(--accent);color:#07111e;border:1px solid var(--color-border-primary);align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;z-index:60;padding:0}
+.shostack-threat-guide.shostack-threat-guide .backdrop{display:none;position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(7,17,30,.7);z-index:40}
+@media (max-width:1024px){
+  .shostack-threat-guide.shostack-threat-guide .sidebar{transform:translateX(-100%);transition:transform .25s ease;width:min(320px,86vw)}
+  .shostack-threat-guide.shostack-threat-guide .sidebar.open{transform:translateX(0)}
+  .shostack-threat-guide.shostack-threat-guide .nav-toggle{display:flex}
+  .shostack-threat-guide.shostack-threat-guide .backdrop.show{display:block}
+  .shostack-threat-guide.shostack-threat-guide .guide-content{margin-left:0;padding:2rem 1.5rem 5.5rem}
+}
+@media (max-width:640px){
+  .shostack-threat-guide.shostack-threat-guide .guide-content{padding:1.5rem 1rem 5.5rem}
+  .shostack-threat-guide.shostack-threat-guide .hero h1{font-size:1.75rem}
+  .shostack-threat-guide.shostack-threat-guide h2{font-size:1.375rem}
+  .shostack-threat-guide.shostack-threat-guide .meta{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .shostack-threat-guide.shostack-threat-guide{scroll-behavior:auto}
+  .shostack-threat-guide.shostack-threat-guide .sidebar{transition:none}
+}
+
+/* Local Atom One Dark syntax palette replaces the source CDN. */
+.shostack-threat-guide.shostack-threat-guide .hljs { color: #abb2bf; background: transparent; }
+.shostack-threat-guide.shostack-threat-guide .hljs-comment,
+.shostack-threat-guide.shostack-threat-guide .hljs-quote { color: #8f96a3; font-style: italic; }
+.shostack-threat-guide.shostack-threat-guide .hljs-doctag,
+.shostack-threat-guide.shostack-threat-guide .hljs-keyword,
+.shostack-threat-guide.shostack-threat-guide .hljs-formula { color: #c678dd; }
+.shostack-threat-guide.shostack-threat-guide .hljs-section,
+.shostack-threat-guide.shostack-threat-guide .hljs-name,
+.shostack-threat-guide.shostack-threat-guide .hljs-selector-tag,
+.shostack-threat-guide.shostack-threat-guide .hljs-deletion,
+.shostack-threat-guide.shostack-threat-guide .hljs-subst { color: #e06c75; }
+.shostack-threat-guide.shostack-threat-guide .hljs-literal { color: #56b6c2; }
+.shostack-threat-guide.shostack-threat-guide .hljs-string,
+.shostack-threat-guide.shostack-threat-guide .hljs-regexp,
+.shostack-threat-guide.shostack-threat-guide .hljs-addition,
+.shostack-threat-guide.shostack-threat-guide .hljs-attribute,
+.shostack-threat-guide.shostack-threat-guide .hljs-meta .hljs-string { color: #98c379; }
+.shostack-threat-guide.shostack-threat-guide .hljs-attr,
+.shostack-threat-guide.shostack-threat-guide .hljs-variable,
+.shostack-threat-guide.shostack-threat-guide .hljs-template-variable,
+.shostack-threat-guide.shostack-threat-guide .hljs-type,
+.shostack-threat-guide.shostack-threat-guide .hljs-selector-class,
+.shostack-threat-guide.shostack-threat-guide .hljs-selector-attr,
+.shostack-threat-guide.shostack-threat-guide .hljs-selector-pseudo,
+.shostack-threat-guide.shostack-threat-guide .hljs-number { color: #d19a66; }
+.shostack-threat-guide.shostack-threat-guide .hljs-symbol,
+.shostack-threat-guide.shostack-threat-guide .hljs-bullet,
+.shostack-threat-guide.shostack-threat-guide .hljs-link,
+.shostack-threat-guide.shostack-threat-guide .hljs-meta,
+.shostack-threat-guide.shostack-threat-guide .hljs-selector-id,
+.shostack-threat-guide.shostack-threat-guide .hljs-title { color: #61aeee; }
+.shostack-threat-guide.shostack-threat-guide .hljs-built_in,
+.shostack-threat-guide.shostack-threat-guide .hljs-title.class_,
+.shostack-threat-guide.shostack-threat-guide .hljs-class .hljs-title { color: #e6c07b; }
+.shostack-threat-guide.shostack-threat-guide .hljs-emphasis { font-style: italic; }
+.shostack-threat-guide.shostack-threat-guide .hljs-strong { font-weight: bold; }
+.shostack-threat-guide.shostack-threat-guide .hljs-link { text-decoration: underline; }
+
+/* Preserve source defaults through shared prose/landing rules, and account for the app header. */
+.docs-main:has(.shostack-threat-guide) { padding: 0; }
+.shostack-threat-guide.shostack-threat-guide { width: 100%; min-width: 0; min-height: 100vh; font-weight: 400; }
+.shostack-threat-guide.shostack-threat-guide .guide-content { min-width: 0; }
+.shostack-threat-guide.shostack-threat-guide .sidebar { top: 64px; z-index: 40; visibility: visible; }
+.shostack-threat-guide.shostack-threat-guide .backdrop { top: 64px; z-index: 30; border: 0; padding: 0; }
+.shostack-threat-guide.shostack-threat-guide .nav-toggle { z-index: 50; }
+.shostack-threat-guide.shostack-threat-guide h1,
+.shostack-threat-guide.shostack-threat-guide h2,
+.shostack-threat-guide.shostack-threat-guide h3,
+.shostack-threat-guide.shostack-threat-guide h4 { letter-spacing: 0; border-bottom: 0; padding-bottom: 0; }
+.shostack-threat-guide.shostack-threat-guide .brand { font-size: 1rem; font-weight: 400; color: var(--color-text-secondary); letter-spacing: 0; box-shadow: none; }
+.shostack-threat-guide.shostack-threat-guide .eyebrow { font-family: var(--font-sans); font-size: 1rem; margin-bottom: 0; }
+.shostack-threat-guide.shostack-threat-guide table { margin: 0; font-size: 1rem; }
+.shostack-threat-guide.shostack-threat-guide thead tr:hover th { background-color: var(--color-background-tertiary); color: var(--color-text-primary); }
+.shostack-threat-guide.shostack-threat-guide tbody tr:hover td { background-color: var(--color-background-secondary); color: var(--color-text-secondary); }
+.shostack-threat-guide.shostack-threat-guide ul { list-style: disc; list-style-type: disc; }
+.shostack-threat-guide.shostack-threat-guide ol { list-style: decimal; list-style-type: decimal; }
+.shostack-threat-guide.shostack-threat-guide ul > li::before,
+.shostack-threat-guide.shostack-threat-guide ol > li::before { content: none; display: none; }
+.shostack-threat-guide.shostack-threat-guide .code-block pre { border: 0; border-radius: 0; color: var(--color-text-secondary); font-family: var(--font-sans); }
+.shostack-threat-guide.shostack-threat-guide .ti { display: inline-flex; align-items: center; justify-content: center; }
+.shostack-threat-guide.shostack-threat-guide .ti svg { display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+.shostack-threat-guide.shostack-threat-guide .nav-toggle svg { width: 24px; height: 24px; }
+.shostack-threat-guide.shostack-threat-guide .diagram { min-width: 0; }
+.shostack-threat-guide.shostack-threat-guide .mermaid-target { display: block; justify-content: normal; min-width: 0; }
+.shostack-threat-guide.shostack-threat-guide .diagram-viewport { display: block; overflow-x: auto; }
+.shostack-threat-guide.shostack-threat-guide .mermaid-target svg { display: block; max-width: none; margin-left: auto; margin-right: auto; }
+.shostack-threat-guide.shostack-threat-guide .diagram-description { margin-top: 12px; }
+.shostack-threat-guide.shostack-threat-guide .guide-content [id] { scroll-margin-top: 88px; }
+.shostack-threat-guide.shostack-threat-guide .sidebar a { scroll-margin-top: 0; }
+html:has(.shostack-threat-guide) { scroll-behavior: smooth; scroll-padding-top: 24px; }
+@media (max-width: 1024px) {
+  .shostack-threat-guide.shostack-threat-guide .sidebar { visibility: hidden; }
+  .shostack-threat-guide.shostack-threat-guide .sidebar.open { visibility: visible; }
+}
+@media (max-width: 640px) {
+  .shostack-threat-guide.shostack-threat-guide .eyebrow { font-size: 1rem; letter-spacing: .04em; }
+  .shostack-threat-guide.shostack-threat-guide .brand { gap: .75rem; font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.shostack-threat-guide) { scroll-behavior: auto; }
+}
+@media print {
+  .shostack-threat-guide.shostack-threat-guide .sidebar,
+  .shostack-threat-guide.shostack-threat-guide .nav-toggle,
+  .shostack-threat-guide.shostack-threat-guide .backdrop { display: none; }
+  .shostack-threat-guide.shostack-threat-guide .guide-content { margin-left: 0; }
+}
