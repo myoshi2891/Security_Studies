@@ -203,3 +203,47 @@ test('diagrams retain intrinsic width, centered small figures and left-reachable
     }
   }
 });
+
+test('print styles switch pale dark-screen text to high-contrast ink on white while keeping navigation hidden', () => {
+  const tree = postcss.parse(readFileSync(new URL('./threat-modeling-shostack-guide.css', import.meta.url), 'utf8'));
+  const printDecls = new Map<string, Map<string, string>>();
+  tree.walkAtRules('media', media => {
+    if (media.params.trim() !== 'print') return;
+    media.walkRules(rule => {
+      for (const selector of rule.selectors) {
+        const decls = printDecls.get(selector) ?? new Map<string, string>();
+        rule.walkDecls(d => void decls.set(d.prop, d.value));
+        printDecls.set(selector, decls);
+      }
+    });
+  });
+  const root = printDecls.get('.shostack-threat-guide.shostack-threat-guide');
+  expect(root).toBeDefined();
+  const luminance = (hex: string) => {
+    const [r, g, b] = [1, 3, 5].map(i => {
+      const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a: string, b: string) => {
+    const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+  expect(root!.get('--color-background-primary')).toBe('#ffffff');
+  for (const prop of ['--color-text-primary', '--color-text-secondary', '--color-text-tertiary', '--color-text-info', '--accent']) {
+    const value = root!.get(prop);
+    expect(value).toMatch(/^#[0-9a-f]{6}$/);
+    expect(contrast(value!, '#ffffff')).toBeGreaterThanOrEqual(4.5);
+  }
+  // 固定色のインラインcodeと構文ハイライトも印刷時は濃色へ切り替える
+  for (const selector of ['.shostack-threat-guide.shostack-threat-guide code', '.shostack-threat-guide.shostack-threat-guide .hljs']) {
+    const color = printDecls.get(selector)?.get('color');
+    expect(color).toMatch(/^#[0-9a-f]{6}$/);
+    expect(contrast(color!, '#ffffff')).toBeGreaterThanOrEqual(4.5);
+  }
+  for (const selector of ['.sidebar', '.nav-toggle', '.backdrop']) {
+    expect(printDecls.get(`.shostack-threat-guide.shostack-threat-guide ${selector}`)?.get('display')).toBe('none');
+  }
+  expect(printDecls.get('.shostack-threat-guide.shostack-threat-guide .guide-content')?.get('margin-left')).toBe('0');
+});

@@ -268,3 +268,20 @@ test('diagram container is a labelled group so its description and retry control
     globalThis.IntersectionObserver = original;
   }
 });
+
+test('without an explicit label, diagram IDs such as dg2 yield a numbered figure label and non-numeric IDs fall back to the ID', async () => {
+  const { MermaidFigure } = await import('./MermaidFigure');
+  const original = globalThis.IntersectionObserver;
+  globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
+  try {
+    const renderer = async () => ({ svg: '<svg viewBox="0 0 10 10"></svg>' });
+    const numbered = render(createElement(MermaidFigure, { id: 'dg2', source: 'flowchart LR\nA-->B', renderer }));
+    expect(numbered.container.querySelector('.mermaid-target')?.getAttribute('aria-label')).toBe('図 2');
+    numbered.unmount();
+    const named = render(createElement(MermaidFigure, { id: 'overview', source: 'flowchart LR\nA-->B', renderer }));
+    expect(named.container.querySelector('.mermaid-target')?.getAttribute('aria-label')).toBe('overview');
+    expect(named.container.textContent).not.toContain('NaN');
+  } finally {
+    globalThis.IntersectionObserver = original;
+  }
+});
