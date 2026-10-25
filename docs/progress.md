@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2109件・全体再検証中** | Ghost専用89件成功＋目次スクロール/スクロール配慮の追加2件Red。既存2018件と合わせて全体を再検証中。 |
+| テストケース総数 | **2109件・全体再検証中** | Ghost専用91件成功。既存2018件と合わせて全体2109件を再検証中。 |
 | テストファイル数 | **272ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **108/108 (100%)** | 従来105 + Ghost部品3（GuideSidebar / GuideIcon / MermaidFigure）。純粋データ・MDXは分母外。全272テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -1306,8 +1306,8 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## Ghost in the Wires 移行（2026-10-25）
 
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用89件/8ファイル成功、原本なし隔離環境53成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイル成功、原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
 
-2026-10-25 追加回帰Red: 目次内の現在項目への自動スクロール、文書ルートのsmooth/reduced-motion。18成功/2失敗（2ファイル）。実装前にテストを分離コミットする。
+2026-10-25 追加回帰完了: 目次内の現在項目への自動スクロール、文書ルートのsmooth/reduced-motion。Red 801f666 → Green 8b993ad。専用91成功/0失敗。

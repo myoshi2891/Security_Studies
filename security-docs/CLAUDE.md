@@ -326,6 +326,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- /threat-modeling-shostack-status -->
 
 <!-- ghost-wires-migration-status -->
-2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用89件/8ファイル成功、原本なし隔離環境53成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ済み。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイル成功、原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致、Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。全体テストは再検証中（既存30ページの登録契約をGhost追加に対応、該当5件成功）。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。目次内自動スクロールとsmooth/reduced-motionも追加Red 801f666 → Green 8b993ad。npm使用・lint/型検査成功・ビルド禁止/未実行・目視はユーザー担当/未確認。
 配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。共通Security Guides・ホーム・静的/動的検索35ページへ登録。表示基盤Red cd22987 → Green b82025d、本文Red 9110dd5 / Chrome Red 8d8ef36 → Green d2b15dc、原本アーカイブRed 3ddf7b5 → Green 23c8512。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
 <!-- /ghost-wires-migration-status -->
