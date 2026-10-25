@@ -1,0 +1,2 @@
+/** Native elements keep the original HTML semantics and source structure. */
+export const E = {"a":"a","article":"article","br":"br","button":"button","circle":"circle","code":"code","details":"details","div":"div","em":"em","footer":"footer","h1":"h1","h2":"h2","h3":"h3","h4":"h4","header":"header","i":"i","input":"input","label":"label","li":"li","nav":"nav","p":"p","path":"path","pre":"pre","section":"section","span":"span","strong":"strong","summary":"summary","svg":"svg","table":"table","tbody":"tbody","td":"td","th":"th","thead":"thead","tr":"tr","ul":"ul"} as const;

@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-24（依存監査修正・CISSP図説明/ISO27001目次ボタンのレビュー対応Green・全1502件成功）
+> **最終更新**: 2026-10-25（CyberOps Professional移行・段階別TDD）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,39 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1502成功 / 0 skip / 0失敗** | bun test実測（2026-10-24）・230ファイル・1502件。511,077 expect。CSSLP専用96件を含む。 |
-| テストファイル数 | **230ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **91/91 (100%)** | 従来87 + CSSLP部品4（GuideSidebar / MermaidFigure / GuideIcon / CodeSample）。純粋データ・MDXは分母外。全230テストファイルとは別集計 |
+| テストケース総数 | **1913成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・252ファイル・1913件。526,507 expect。CyberOps Professional専用328件を含む。 |
+| テストファイル数 | **252ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **101/101 (100%)** | 従来96 + CyberOps Professional部品5。純粋データ・MDXは分母外。全252テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/cyberops-professional-guide/archive.test.ts` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/foundation.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/front.test.tsx` | 156 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/rear.test.tsx` | 112 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/static.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/quiz.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/styles.test.tsx` | 12 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/archive.test.ts` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/foundation.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/chapters.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 7 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 未解決importを除去・共通CSS読込ガード・375/1440px×明暗の全2706セル |
+| `src/app/docs/cyberops-associate-guide/snapshot.test.tsx` | 16 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/styles.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/csslp-guide/design.test.tsx` | 9 | ✅ 2026-10-24 10問40選択肢・16図・3幅・コントラスト・開閉を検証 |
 | `src/app/docs/csslp-guide/archive.test.ts` | 4 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
 | `src/app/docs/csslp-guide/foundation.test.tsx` | 5 | ✅ 2026-10-24 CSSLP移行・原本アーカイブ・ホバー回帰Green |
@@ -351,6 +373,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-1025 | **CyberOps Associateレビュー2件の対応** — 1024px以下で`hidden`の背景が`display:block`に上書きされる問題を`.backdrop[hidden]{display:none}`で修正。図コンテナのrole（img→group）を修正し、内側の`.diagram-viewport`はimgを維持。Red `12d298a` → Green `25edecc`。全1920件成功（未コミットの既存テスト追加分を含む）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | REVIEW-1024 | **依存監査とレビュー3件の対応** — happy-dom 21.0.4・zod 4.6.7でhigh 2件を解消。CISSP図説明の引用符なし日本語中間ラベル、ISO27001目次ボタンの`menu-btn`クラス、ISO27001統合テストの全体件数依存、ISO27001図コンテナのrole（img→group）を修正。全1502件成功。 | 2026-10-24 |
 | CSSLP-DESIGN | **練習問題・全16図のデザイン改善** — 10問40選択肢をカード化。図番号・タイトル・新テーマと補助文字コントラストを検証。専用96件成功、目視待ち。 | 2026-10-24 |
 | CSSLP | **CSSLP全16章移行・両原本アーカイブ** — 専用87件成功、全97表のホバー回帰も修正。目視待ち。 | 2026-10-24 |
@@ -1220,3 +1243,33 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 - ISO27001統合テスト: 検索インデックス全体の件数（31件）とCSSLP依存の件数検証を削除し、当該ルートの項目一致のみ検証（`628fe12`）。
 - ISO27001図: 外側 `.mmd` の `role="img"` が内部のテキスト説明 `<details>` と描画状態を読み上げから隠していた。外側を常に `role="group"`＋aria-label、描画済みSVGの表示領域に `role="img"`＋aria-label。原本は13図とも `role="img"` のため、台帳 `allowedDifferences` に意図的なa11y差分として記録し、比較処理は原本側の img のみ group へ読み替え。固定構造ハッシュ10章（ch0/1/3/5/7〜12）を再計算し、group→img の逆変換で旧ハッシュ22件すべてと一致（変化はroleのみ）を確認。原本なし隔離環境61成功/41skip/0失敗。Red `b997359` → Green `dd0edee`。
 - 全体1502成功/0失敗（230ファイル、511,077 expect）。lint・型チェック成功。ビルド禁止・未実行。push未実施。
+
+<!-- cyberops-migration-status -->
+
+## CyberOps Associate移行（2026-10-24）
+
+移行・アーカイブ完了: `/docs/cyberops-associate-guide`。全12章・76小節（section計88）・153見出し・135表2706セル・42図・6コード・本文26リスト118項目・36チェック・25問100選択肢を保持。全CSS/media・丸点/番号カウンター・5幅×明暗・全セルホバー・全表/ページhydration・採点3評価帯/解答表示/両リセット・目次/チェック/図操作を検証。専用80件/10ファイル、原本なし隔離環境48成功/32skip/0失敗。全体1582成功/0skip/0失敗（240ファイル、534,027 expect）。資格ナビ・ホーム・静的/動的検索は32ページ（全153見出しを収録）。ロジック単位96/96（従来91＋GuideSidebar/GuideRuntime/MermaidFigure/GuideIcon/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。HTTP 200配信HTMLも16件数/16構造ハッシュ一致。表示基盤Red e694e3e→Green a8caf1e、本文Red b407224・ホバーRed d17d525→Green 451d28d、アーカイブRed 9b206d1→Green 8980a07。目視確認表: `docs/migration-inventory/cyberops-associate-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-migration-status -->
+
+<!-- cyberops-hover-status -->
+
+## CyberOps表ホバー修正（2026-10-25）
+
+ホバー修正完了。Red 17a2859 → Green 38f4aba（専用CSSのみ）。強化した単体7件成功、CyberOps専用83件/10ファイルを含む全体1585成功/0skip/0失敗（240ファイル、520,277 expect）。原本なし隔離環境51成功/32skip/0失敗。実Chromeは375/1440px×明暗4条件・全135表2706セル（合計10824セル条件）の背景/文字/罫線変化0セル、実ポインターの奇数/偶数行12チェックも成功。修正前は全4条件で各1253セルの背景変化を検出。未解決Tailwind importをテスト用CSSから除去し、共通ホバールールの読込ガードを追加。製品CSSのimportや共通ホバーは変更せず、他ガイドへの適用もない。HTML/Markdown原本・本文・構造ハッシュは不変。npm test・lint・型チェック成功。ビルド未実行。
+
+共通 `.prose tr:hover td` が専用 `td` より高い詳細度を持つため、OSダーク設定で背景 #18181b / 文字 #161B26 となっていた。Happy DOM用CSSに未解決のTailwind importを残すと共通ルールを評価できないため、テスト用にimportだけを除去する。実ブラウザー検証: Playwrightが利用可能な環境で `npm exec --package=playwright --call "node src/app/docs/cyberops-associate-guide/hover.browser.mjs"`（security-docs内、起動済み開発サーバーを使用）。`PLAYWRIGHT_MODULE_PATH` / `CHROME_PATH` / `DOCS_BASE_URL` も指定可。npm使用・ビルド禁止/未実行・目視はユーザー担当。
+
+<!-- /cyberops-hover-status -->
+
+<!-- cyberops-professional-status -->
+
+## CyberOps Professional移行（2026-10-25）
+
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-professional-status -->

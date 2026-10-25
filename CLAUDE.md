@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Updated 2026-10-24
+Updated 2026-10-25
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -67,7 +67,7 @@ Security_Studies/
 │   │   ├── app/
 │   │   │   ├── docs/       # ドキュメントページ (各 page.mdx)
 │   │   │   │   ├── approach/, architecture/, owasp/, ...
-│   │   │   │   ├── ccie-security/, ccst-cybersecurity/
+│   │   │   │   ├── ccie-security/, ccst-cybersecurity/, cyberops-associate-guide/, cyberops-professional-guide/
 │   │   │   │   ├── secure-by-design/, mitre-atlas/, hacking-kubernetes/
 │   │   │   │   └── web-application-hackers-handbook/  # 元HTMLに対応する部品・CSS・原本比較テスト
 │   │   │   ├── api/search/ # 検索インデックス API エンドポイント
@@ -455,3 +455,33 @@ CSSLP: `/docs/csslp-guide` へ全16章・130見出し・97表1566セル・16図�
 
 CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に分けたカードへ整理。スマートフォンは1列、768px以上は2列の選択肢。解答欄はネイティブdetailsの開閉を保持し、正解バッジと内部フォーカスリングを整備。全16図へ図番号・内容別タイトル・種類表示を追加し、描画面・角丸ノード・曲線の矢印・サンセリフ体・配色を統一。小さい補助文字のコントラスト比4.5以上を検証。図の自然幅・中央寄せ・左端からの横スクロール・遅延描画・再試行・テキスト説明を保持。原文・正解・図定義・両原本のSHA-256は不変。第13章の装飾spanのみ透過した全19構造ハッシュ、問題文10件の固定ハッシュ、全40選択肢、3幅のデザインを検証。他章は5幅×明暗の原本CSS比較を継続。専用96件/12ファイル成功、原本なし隔離環境62成功/34skip/0失敗。全体1499成功/0skip/0失敗（230ファイル、511,065 expect）。npm test・lint・型チェック成功。HTTP 200の配信HTMLで40選択肢・16図見出しと全件数・19構造ハッシュの一致を確認。Red `047a0b7` → Green `173382a`、文字コントラストRed `395d578` → Green `6c2ef93`。ビルド禁止・未実行、目視はユーザー担当・未確認。
 <!-- /csslp-design-status -->
+
+<!-- cyberops-migration-status -->
+
+## CyberOps Associate移行（2026-10-24）
+
+移行・アーカイブ完了: `/docs/cyberops-associate-guide`。全12章・76小節（section計88）・153見出し・135表2706セル・42図・6コード・本文26リスト118項目・36チェック・25問100選択肢を保持。全CSS/media・丸点/番号カウンター・5幅×明暗・全セルホバー・全表/ページhydration・採点3評価帯/解答表示/両リセット・目次/チェック/図操作を検証。専用80件/10ファイル、原本なし隔離環境48成功/32skip/0失敗。全体1582成功/0skip/0失敗（240ファイル、534,027 expect）。資格ナビ・ホーム・静的/動的検索は32ページ（全153見出しを収録）。ロジック単位96/96（従来91＋GuideSidebar/GuideRuntime/MermaidFigure/GuideIcon/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。HTTP 200配信HTMLも16件数/16構造ハッシュ一致。表示基盤Red e694e3e→Green a8caf1e、本文Red b407224・ホバーRed d17d525→Green 451d28d、アーカイブRed 9b206d1→Green 8980a07。目視確認表: `docs/migration-inventory/cyberops-associate-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/cyberops-associate-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-associate-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-migration-status -->
+
+<!-- cyberops-hover-status -->
+
+## CyberOps表ホバー修正（2026-10-25）
+
+ホバー修正完了。Red 17a2859 → Green 38f4aba（専用CSSのみ）。強化した単体7件成功、CyberOps専用83件/10ファイルを含む全体1585成功/0skip/0失敗（240ファイル、520,277 expect）。原本なし隔離環境51成功/32skip/0失敗。実Chromeは375/1440px×明暗4条件・全135表2706セル（合計10824セル条件）の背景/文字/罫線変化0セル、実ポインターの奇数/偶数行12チェックも成功。修正前は全4条件で各1253セルの背景変化を検出。未解決Tailwind importをテスト用CSSから除去し、共通ホバールールの読込ガードを追加。製品CSSのimportや共通ホバーは変更せず、他ガイドへの適用もない。HTML/Markdown原本・本文・構造ハッシュは不変。npm test・lint・型チェック成功。ビルド未実行。
+
+共通 `.prose tr:hover td` が専用 `td` より高い詳細度を持つため、OSダーク設定で背景 #18181b / 文字 #161B26 となっていた。Happy DOM用CSSに未解決のTailwind importを残すと共通ルールを評価できないため、テスト用にimportだけを除去する。実ブラウザー検証: Playwrightが利用可能な環境で `npm exec --package=playwright --call "node src/app/docs/cyberops-associate-guide/hover.browser.mjs"`（security-docs内、起動済み開発サーバーを使用）。`PLAYWRIGHT_MODULE_PATH` / `CHROME_PATH` / `DOCS_BASE_URL` も指定可。npm使用・ビルド禁止/未実行・目視はユーザー担当。
+
+<!-- /cyberops-hover-status -->
+
+<!-- cyberops-professional-status -->
+
+## CyberOps Professional移行（2026-10-25）
+
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /cyberops-professional-status -->
