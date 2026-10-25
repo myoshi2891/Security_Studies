@@ -218,6 +218,7 @@
   .cyberops-associate-guide.cyberops-associate-guide .content{margin-left:0;padding:32px 20px 112px}
   .cyberops-associate-guide.cyberops-associate-guide .menu-btn{display:flex}
   .cyberops-associate-guide.cyberops-associate-guide .backdrop{display:block}
+  .cyberops-associate-guide.cyberops-associate-guide .backdrop[hidden]{display:none}
   .cyberops-associate-guide.cyberops-associate-guide body.menu-open .backdrop{opacity:1;pointer-events:auto}
   .cyberops-associate-guide.cyberops-associate-guide .hero{padding:24px 20px}
   .cyberops-associate-guide.cyberops-associate-guide .chapter{margin-top:48px}

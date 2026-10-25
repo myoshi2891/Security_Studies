@@ -166,7 +166,7 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
 
   const current = result?.source === source ? result : undefined;
   return (
-    <div ref={figureRef} className="diagram" role="img" aria-label={label} data-diagram={id} data-definition={source}>
+    <div ref={figureRef} className="diagram" role="group" aria-label={label} data-diagram={id} data-definition={source}>
       {current?.svg ? (
         <div className="diagram-viewport" role="img" aria-label={label ?? `図 ${Number(id.slice(1)) + 1}`} tabIndex={0} aria-describedby={descriptionId} dangerouslySetInnerHTML={{ __html: current.svg }} />
       ) : current?.failed ? (
