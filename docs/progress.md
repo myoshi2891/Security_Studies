@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（Ghost in the Wires移行・原本アーカイブ・最終自動検証完了）
+> **最終更新**: 2026-10-25（Hacking: The Art of Exploitation移行・表示基盤Red・専用0成功/31失敗（3ファイル）。原文構造の固定SHA-256と全CSS/media、目次と図の操作を検証するテストを先行追加。既存テスト2109件は開始時に再確認中、全登録2140件/275ファイル）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1310,3 +1310,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ完了。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイルを含む全体2109成功/0skip/0失敗（272ファイル、548,280 expect）。原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致。Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。375/1440pxで6図の実SVG描画と左右スクロール、目次、8解答、smooth/reduced-motionを操作し実行時エラー0。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。Security Guides・ホーム・静的/動的検索35ページへ登録。ロジック単位108/108。npm test・lint・型チェック成功。ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。TDD: 表示基盤cd22987→b82025d、本文9110dd5/8d8ef36→d2b15dc、アーカイブ3ddf7b5→23c8512、目次補完801f666→8b993ad。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
+
+<!-- hacking-exploitation-status -->
+## Hacking: The Art of Exploitation移行（2026-10-25）
+
+2026-10-25 Hacking: The Art of Exploitation: 表示基盤Red・専用0成功/31失敗（3ファイル）。原文構造の固定SHA-256と全CSS/media、目次と図の操作を検証するテストを先行追加。既存テスト2109件は開始時に再確認中、全登録2140件/275ファイル。原本は12章・68見出し・20表341セル・8図・Cコード2件・参考文献21件・7注意欄・18リスト項目。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置予定: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。
+<!-- /hacking-exploitation-status -->
