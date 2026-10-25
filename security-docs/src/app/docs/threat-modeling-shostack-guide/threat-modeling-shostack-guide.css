@@ -195,7 +195,7 @@
 .shostack-threat-guide.shostack-threat-guide h3,
 .shostack-threat-guide.shostack-threat-guide h4 { letter-spacing: 0; border-bottom: 0; padding-bottom: 0; }
 .shostack-threat-guide.shostack-threat-guide .brand { font-size: 1rem; font-weight: 400; color: var(--color-text-secondary); letter-spacing: 0; box-shadow: none; }
-.shostack-threat-guide.shostack-threat-guide .eyebrow { font-family: var(--font-sans); font-size: 1rem; margin-bottom: 0; }
+.shostack-threat-guide.shostack-threat-guide .eyebrow { font-family: var(--font-sans); font-size: 1rem; letter-spacing: .04em; margin-bottom: 0; }
 .shostack-threat-guide.shostack-threat-guide table { margin: 0; font-size: 1rem; }
 .shostack-threat-guide.shostack-threat-guide thead tr:hover th { background-color: var(--color-background-tertiary); color: var(--color-text-primary); }
 .shostack-threat-guide.shostack-threat-guide tbody tr:hover td { background-color: var(--color-background-secondary); color: var(--color-text-secondary); }
