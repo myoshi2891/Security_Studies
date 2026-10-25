@@ -1,0 +1,38 @@
+---
+title: "Ghost in the Wires 初学者向け入門ガイド"
+description: "ケビン・ミトニックの回想録を通じて、ソーシャルエンジニアリング、防御、事件の論争点と批判的読解を17ステップで学ぶ入門ガイド。"
+---
+
+import './ghost-in-the-wires-guide.css';
+import { E } from './GuideElements';
+import { GuideSidebar } from './GuideSidebar';
+import { GuideIcon } from './GuideIcon';
+import { MermaidFigure } from './MermaidFigure';
+import { diagrams } from './diagrams';
+
+export const metadata = {"title":"Ghost in the Wires 初学者向け入門ガイド","description":"ケビン・ミトニックの回想録を通じて、ソーシャルエンジニアリング、防御、事件の論争点と批判的読解を17ステップで学ぶ入門ガイド。"};
+
+<E.div className="ghost-wires-guide layout">
+<GuideSidebar>{"\n                "}<E.div className={"brand"}>{"\n                    "}<E.a href={"#top"}><E.span className={"brand-title"}><GuideIcon name="ti-ghost-2" className="ti ti-ghost-2" /><E.span>{"Ghost in the Wires"}</E.span></E.span>{"\n                        "}<E.span className={"brand-sub"}>{"初学者向け入門ガイド"}</E.span></E.a>{"\n                "}</E.div>{"\n                "}<E.nav aria-label={"ステップ一覧"}>{"\n                    "}<E.ul>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-0"} data-sec={"step-0"}>{"Step 0 このガイドの読み方と注意"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li><E.a href={"#step-1"} data-sec={"step-1"}>{"Step 1 本書を一言でいうと"}</E.a></E.li>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-2"} data-sec={"step-2"}>{"Step 2 著者ケビン・ミトニックとは"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li><E.a href={"#step-3"} data-sec={"step-3"}>{"Step 3 まず押さえる用語集"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-4"} data-sec={"step-4"}>{"Step 4 本書の全体構成"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-5"} data-sec={"step-5"}>{"Step 5 部ごとの読み解き"}</E.a></E.li>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-6"} data-sec={"step-6"}>{"Step 6 ソーシャルエンジニアリング徹底解説"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-7"} data-sec={"step-7"}>{"Step 7 追跡と逮捕を技術面から見る"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li><E.a href={"#step-8"} data-sec={"step-8"}>{"Step 8 裁判・量刑と論争点"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-9"} data-sec={"step-9"}>{"Step 9 神話と現実"}</E.a></E.li>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-10"} data-sec={"step-10"}>{"Step 10 出所後の歩みと、その後"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li>{"\n                            "}<E.a href={"#step-11"} data-sec={"step-11"}>{"Step 11 現代の防御に活かす"}</E.a>{"\n                        "}</E.li>{"\n                        "}<E.li><E.a href={"#step-12"} data-sec={"step-12"}>{"Step 12 批判的に読む"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-13"} data-sec={"step-13"}>{"Step 13 学習ロードマップ"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-14"} data-sec={"step-14"}>{"Step 14 理解度チェック"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-15"} data-sec={"step-15"}>{"Step 15 出典一覧"}</E.a></E.li>{"\n                        "}<E.li><E.a href={"#step-16"} data-sec={"step-16"}>{"Step 16 このガイドの限界"}</E.a></E.li>{"\n                    "}</E.ul>{"\n                "}</E.nav>{"\n            "}</GuideSidebar>
+<E.div className="guide-content">
+<E.header className={"hero"} id={"top"}>{"\n                    "}<E.h1>{"Ghost in the Wires 初学者向け入門ガイド"}</E.h1>{"\n                    "}<E.p className={"lead"}>{"\n                        ケビン・ミトニック著『Ghost in the Wires: My Adventures as the World's Most\n                        Wanted Hacker』を、ステップバイステップで読み解く入門ガイド\n                    "}</E.p>{"\n                    "}<E.div className={"table-wrap"}>{"\n                        "}<E.table><E.thead><E.tr><E.th>{"項目"}</E.th><E.th>{"内容"}</E.th></E.tr></E.thead><E.tbody><E.tr><E.td>{"作成日・情報基準日"}</E.td><E.td>{"2026年10月15日(ウェブ情報はこの日までに確認できたもの)"}</E.td></E.tr><E.tr><E.td>{"対象読者"}</E.td><E.td>{"セキュリティ初学者、エンジニア、本書をこれから読む人"}</E.td></E.tr><E.tr><E.td>{"前提知識"}</E.td><E.td>{"不要(専門用語は Step 3 で解説)"}</E.td></E.tr><E.tr><E.td>{"形式"}</E.td><E.td>{"\n                                        Markdown(図は Mermaid、表は Markdown。ASCII 図解は不使用)\n                                    "}</E.td></E.tr><E.tr><E.td>{"出典表記"}</E.td><E.td>{"\n                                        本文中の "}<E.code>{"【S1】"}</E.code>{" などは、末尾「Step 15\n                                        出典一覧」の番号に対応\n                                    "}</E.td></E.tr></E.tbody></E.table>{"\n                    "}</E.div>{"\n                "}</E.header>
+<E.section className="section" id="step-0"><E.h2>{"Step 0 このガイドの読み方と注意"}</E.h2></E.section>
+<E.section className="section" id="step-1"><E.h2>{"Step 1 本書を一言でいうと"}</E.h2></E.section>
+<E.section className="section" id="step-2"><E.h2>{"Step 2 著者ケビン・ミトニックとは"}</E.h2></E.section>
+<E.section className="section" id="step-3"><E.h2>{"Step 3 まず押さえる用語集"}</E.h2></E.section>
+<E.section className="section" id="step-4"><E.h2>{"Step 4 本書の全体構成"}</E.h2></E.section>
+<E.section className="section" id="step-5"><E.h2>{"Step 5 部ごとの読み解き"}</E.h2></E.section>
+<E.section className="section" id="step-6"><E.h2>{"Step 6 ソーシャルエンジニアリング徹底解説"}</E.h2></E.section>
+<E.section className="section" id="step-7"><E.h2>{"Step 7 追跡と逮捕を技術面から見る"}</E.h2></E.section>
+<E.section className="section" id="step-8"><E.h2>{"Step 8 裁判・量刑と論争点"}</E.h2></E.section>
+<E.section className="section" id="step-9"><E.h2>{"Step 9 神話と現実"}</E.h2></E.section>
+<E.section className="section" id="step-10"><E.h2>{"Step 10 出所後の歩みと、その後"}</E.h2></E.section>
+<E.section className="section" id="step-11"><E.h2>{"Step 11 現代の防御に活かす"}</E.h2></E.section>
+<E.section className="section" id="step-12"><E.h2>{"Step 12 批判的に読む"}</E.h2></E.section>
+<E.section className="section" id="step-13"><E.h2>{"Step 13 学習ロードマップ"}</E.h2></E.section>
+<E.section className="section" id="step-14"><E.h2>{"Step 14 理解度チェック"}</E.h2></E.section>
+<E.section className="section" id="step-15"><E.h2>{"Step 15 出典一覧"}</E.h2></E.section>
+<E.section className="section" id="step-16"><E.h2>{"Step 16 このガイドの限界"}</E.h2></E.section>
+<E.footer className={"footer"}>{"\n                    "}<E.em>{"本ガイドは学習目的で作成されたものです。攻撃手順の再現を目的とせず、防御と批判的読解を目的としています。"}</E.em>{"\n                "}</E.footer>
+</E.div>
+</E.div>
