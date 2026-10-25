@@ -31,9 +31,12 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Secure SDLC Guide", href: "/docs/secdev-guide" },
         { title: "Secure by Design 入門ガイド", href: "/docs/secure-by-design" },
+        { title: "Ghost in the Wires", href: "/docs/ghost-in-the-wires-guide" },
+        { title: "Hacking: The Art of Exploitation", href: "/docs/hacking-art-of-exploitation-guide" },
         { title: "Secrets and Lies", href: "/docs/secrets-and-lies-guide" },
         { title: "Zero Trust Networks, 2nd Edition", href: "/docs/zero-trust-networks-2nd-edition-guide" },
         { title: "Threat Modeling 入門ガイド", href: "/docs/threat-modeling-guide" },
+        { title: "脅威モデリング入門ガイド (Shostack)", href: "/docs/threat-modeling-shostack-guide" },
         { title: "Web Application Hacker's Handbook", href: "/docs/web-application-hackers-handbook" },
       ],
     },

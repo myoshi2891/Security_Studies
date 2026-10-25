@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（CyberOps Professional移行・段階別TDD）
+> **最終更新**: 2026-10-25（レビュー対応＋Codecov patch: Hacking GuideSidebar未カバー行の解消）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,24 +12,53 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **1913成功 / 0 skip / 0失敗** | npm test実測（2026-10-25）・252ファイル・1913件。526,507 expect。CyberOps Professional専用328件を含む。 |
-| テストファイル数 | **252ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **101/101 (100%)** | 従来96 + CyberOps Professional部品5。純粋データ・MDXは分母外。全252テストファイルとは別集計 |
+| テストケース総数 | **2194成功 / 0 skip / 0失敗** | 全体2194成功/0skip/0失敗（281ファイル）。Hacking専用83件、目次フォールバック回帰2件を含む。 |
+| テストファイル数 | **281ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **112/112 (100%)** | 従来108 + Hacking部品4（GuideSidebar / GuideIcon / MermaidFigure / CodeSample）。純粋データ・MDXは分母外。全281テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびCSSLP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/hacking-art-of-exploitation-guide/archive.test.ts` | 4 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/foundation.test.tsx` | 13 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/front.test.tsx` | 12 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/rear.test.tsx` | 12 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/integration.test.tsx` | 6 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/styles.test.tsx` | 14 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/sidebar.test.tsx` | 7 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/hacking-art-of-exploitation-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/archive.test.ts` | 4 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/foundation.test.tsx` | 11 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/chapters.test.tsx` | 34 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/integration.test.tsx` | 7 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/styles.test.tsx` | 13 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/sidebar.test.tsx` | 7 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/ghost-in-the-wires-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文・固定構造・装飾・操作・アーカイブ検証 |
+| `src/app/docs/threat-modeling-shostack-guide/archive.test.ts` | 4 | ✅ 2026-10-25 段階4 原本HTML/MDのSHA-256一致・ルート除去・比較参照Green |
+| `src/app/docs/threat-modeling-shostack-guide/rear.test.tsx` | 18 | ✅ 2026-10-25 段階3 第9章〜第17章（ch9〜ch17）構造SHA-256＋原本比較Green |
+| `src/app/docs/threat-modeling-shostack-guide/interactions.test.tsx` | 2 | ✅ 2026-10-25 段階3 演習解答details開閉・バッジ番号・参考URL安全性Green |
+| `src/app/docs/threat-modeling-shostack-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 段階3 全52表・ページ全体のHydration回帰Green |
+| `src/app/docs/threat-modeling-shostack-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 段階3 全要素数・81 ID・82見出し検索・2コードSHA・変異プローブGreen |
+| `src/app/docs/threat-modeling-shostack-guide/styles.test.tsx` | 13 | ✅ 2026-10-25 段階3 5幅×明暗CSS比較・リスト点/番号・バッジ・空セル・図スクロールGreen |
+| `src/app/docs/threat-modeling-shostack-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 段階3 全944セルホバー（#0b1a2e）・インラインcode・Mermaid設定Green |
+| `src/app/docs/threat-modeling-shostack-guide/front.test.tsx` | 16 | ✅ 2026-10-25 段階2 第1章〜第8章（ch1〜ch8）構造SHA-256＋原本比較Green |
+| `src/app/docs/threat-modeling-shostack-guide/foundation.test.tsx` | 4 | ✅ 2026-10-25 段階1 表示基盤・CSS宣言・ナビ登録・9図定義Green |
+| `src/app/docs/threat-modeling-shostack-guide/static.test.tsx` | 5 | ✅ 2026-10-25 段階1 固定構造SHA-256（.hero/.brand/.sidebar nav/.sidebar-foot/.footer）Green |
+| `src/app/docs/threat-modeling-shostack-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-25 段階1 モバイル目次・フォーカストラップ・hashchange・スクロールスパイGreen |
+| `src/app/docs/threat-modeling-shostack-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 段階1 Mermaid描画・110px余白・再試行・テキスト説明・9図パースGreen |
 | `src/app/docs/cyberops-professional-guide/archive.test.ts` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/foundation.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/front.test.tsx` | 156 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/rear.test.tsx` | 112 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/static.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/runtime.test.tsx` | 11 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
-| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
+| `src/app/docs/cyberops-professional-guide/sidebar.test.tsx` | 6 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証（hashchange/フォーカス確認を含む） |
 | `src/app/docs/cyberops-professional-guide/integration.test.tsx` | 8 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/hydration.test.tsx` | 4 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
 | `src/app/docs/cyberops-professional-guide/quiz.test.tsx` | 3 | ✅ 2026-10-25 原文/固定構造/コード/操作/スタイル/アーカイブ検証 |
@@ -40,7 +69,7 @@
 | `src/app/docs/cyberops-associate-guide/chapters.test.tsx` | 12 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/hydration.test.tsx` | 4 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/integration.test.tsx` | 6 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
-| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 7 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
+| `src/app/docs/cyberops-associate-guide/interactions.test.tsx` | 12 | ✅ 2026-10-25 移行/操作/スタイル/原本アーカイブ検証（モーダルフォーカス復帰等5件追加） |
 | `src/app/docs/cyberops-associate-guide/runtime.test.tsx` | 11 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
 | `src/app/docs/cyberops-associate-guide/readability.test.tsx` | 7 | ✅ 2026-10-25 未解決importを除去・共通CSS読込ガード・375/1440px×明暗の全2706セル |
 | `src/app/docs/cyberops-associate-guide/snapshot.test.tsx` | 16 | ✅ 2026-10-24 移行/操作/スタイル/原本アーカイブ検証 |
@@ -337,13 +366,13 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `GEMINI.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `README.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/CLAUDE.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `security-docs/README.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
-| `docs/progress.md` | 2026-10-24 | CSSLP練習問題・16図のデザイン改善、全体実測・目視待ちを同期 |
+| `CLAUDE.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `GEMINI.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `README.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `security-docs/CLAUDE.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `security-docs/README.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
+| `docs/progress.md` | 2026-10-25 | Hacking移行・専用83件・原本アーカイブ・検証実測を同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -373,6 +402,15 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-1025F | **レビュー対応（ISSEP S18・鍵廃棄、Hacking図ラベル）** — `Issep-guide.md`: S18は元URLがリダイレクトし保存版もないため、S18に依拠する1.6節の非公式報告と補足、参考文献のS18行を削除（S19/S20は既存引用との整合のため番号維持）。5.4のベストプラクティスを、強固な暗号・平文履歴なし・バックアップ/エスクローを含む全鍵コピーの消去を満たす場合のみ鍵廃棄を暗号消去とし、暗号化だけでは不十分と明記（`3137bec`）。Hacking `MermaidFigure` の `label` 省略時、`d<番号>` は「図 N」、それ以外（`dg-overflow`など）は「図: overflow」とし「図 NaN」を解消。Red `29841ac` → Green `c0f5d20`。専用87件・全2203件/281ファイル成功（550,309 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| REVIEW-1025E | **レビュー対応（Hacking: The Art of Exploitation 目次の動き抑制）** — `prefers-reduced-motion: reduce` の上書きが文書スクロールのみで、980px以下のモバイル目次の `transform 0.25s ease` は残っていた。同じ動き抑制条件内でガイド範囲の `.sidebar` に `transition:none` を追加（条件外の遷移は維持）。Red `5f3e58d` → Green `70b44bd`。専用86件/9ファイル・全2202件/281ファイル成功（550,297 expect）、lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。 | 2026-10-25 |
+| REVIEW-1025D | **レビュー対応（Ghost図ラベル・Shostack印刷・移行記録）** — Ghost `MermaidFigure` の `label` 省略時に `dg2` が「図 NaN」になる不具合を、ID中の数字抽出（番号なしはIDそのもの）で修正。Shostackの `@media print` で配色変数を白地＋濃色（本文・見出し・補足・強調・アクセントは白地比4.5以上）へ上書きし、インラインcode・コード枠・構文ハイライトも濃色化。目次・開閉ボタン・背景幕の非表示と本文の左余白0は維持。Shostack移行記録（GEMINI/CLAUDE×2/README×2/本ファイル）のコードをMarkdown / Python、検証幅を375/640/768/1024/1440px、丸点を`ul`の`list-style-type: disc`へ訂正。Red `31ef505` → Green `86beb9d`、docs `6154b13`。全2201件/281ファイル成功（550,294 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| REVIEW-1025C | **レビュー対応（ISSEP原稿・Ghostテスト型）** — `Issep-guide.md` の消去方法表を「例」と明記し、組織方針とNISTのリスクに基づく判断フロー（媒体種別・再利用・組織管理・機密度・コスト）を追記。暗号消去の定義と問7に前提条件（事前の強固で正しい暗号化・平文コピー/履歴なし・バックアップ/エスクローを含む全鍵コピーの処理）を追加。S18は元URLがISC2 Chaptersへ301転送、Internet Archive・archive.todayとも保存版なしのため、URLは維持し移転済みと注記（`bd1ef41`）。Ghost `runtime.test.tsx` の計算URL動的importをリテラル指定子へ置換し、推論で露見した`renderDiagram`期待値を`{ svg }`契約に合わせた（refactor `d36e052`）。全2199件/281ファイル成功（550,271 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| CODECOV-1025B | **PR #54 Codecov patch（2bc94da時点 98.95%・13行）の解消** — archive/なしのCI相当worktreeで実測し、Ghost/Shostack GuideSidebarは既に未カバー0（`78ab414`/`55ab137`で解消済み、Codecovコメントは旧コミット基準）。残るHacking GuideSidebarの未カバー8行を解消: 対象なしリンクで目次を閉じトグルへ戻す分岐にテスト（`d7a77d9`）、TOCが平坦で到達不能な`.nav-group`処理を除去（refactor `0322c80`）。CI相当で3ガイドのGuideSidebar/MermaidFigure未カバー行0。全2199件成功（550,271 expect）、CI相当1249 pass/950 skip/0 fail。lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| REVIEW-1025B | **レビュー対応（ISSEP原稿・3ガイド）** — `Issep-guide.md` のRTO+WRT≦MTD、公式出題形式（Multiple choice and advanced item types）、Domain 1.4〜1.6目標、V字モデルの対応関係、後方追跡の方向を修正（`005bb98`）。Hacking図の外側コンテナからrole/aria-labelを除去（内側viewportはimg維持）。Shostack目次のTabフォーカス循環を表示中リンク＋開閉ボタンに限定し、非表示`.nav-sub`を除外。Shostack d8のステップ5を双方向にし外部コンテンツの戻りを明示（台帳`allowedDifferences`に唯一の許容差分として記録）。Ghost `styles.browser.mjs` のホバー比較を`o[i]?.[prop]`化。変異プローブを原本非依存の`test`へ。Red `ca94702`・`150df91` → Green `1d19ef1`。全2198件/281ファイル成功（550,267 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| CODECOV-1025 | **PR #54 Codecov patch未カバー14行の解消** — Ghost/Shostack GuideSidebarの「見出しなしリンクで目次を閉じトグルへフォーカス復帰」分岐にテスト2件（`78ab414`）。Ghostの`.nav-group`処理はTOCが平坦なため到達不能と判明し除去（refactor `55ab137`）。対象2ファイルの未カバー行0、全2194件成功、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
+| HACKING-MIG | Hacking: The Art of Exploitation: 全12章・8図・83専用テスト・原本アーカイブ・実配信検証 | 2026-10-25 |
+| GHOST-MIG | Ghost in the Wires: 全17節・6図・原本アーカイブ・91専用テストと実配信検証、全2109件成功 | 2026-10-25 |
 | REVIEW-1025 | **CyberOps Associateレビュー2件の対応** — 1024px以下で`hidden`の背景が`display:block`に上書きされる問題を`.backdrop[hidden]{display:none}`で修正。図コンテナのrole（img→group）を修正し、内側の`.diagram-viewport`はimgを維持。Red `12d298a` → Green `25edecc`。全1920件成功（未コミットの既存テスト追加分を含む）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | REVIEW-1024 | **依存監査とレビュー3件の対応** — happy-dom 21.0.4・zod 4.6.7でhigh 2件を解消。CISSP図説明の引用符なし日本語中間ラベル、ISO27001目次ボタンの`menu-btn`クラス、ISO27001統合テストの全体件数依存、ISO27001図コンテナのrole（img→group）を修正。全1502件成功。 | 2026-10-24 |
 | CSSLP-DESIGN | **練習問題・全16図のデザイン改善** — 10問40選択肢をカード化。図番号・タイトル・新テーマと補助文字コントラストを検証。専用96件成功、目視待ち。 | 2026-10-24 |
@@ -1268,8 +1306,32 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Professional移行（2026-10-25）
 
-移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用330件/12ファイルを含む全体1920成功/0skip/0失敗（252ファイル、526,543 expect）。原本なし隔離環境175成功/155skip/0失敗。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 <!-- /cyberops-professional-status -->
+
+<!-- threat-modeling-shostack-status -->
+
+## Threat Modeling (Shostack) 移行（2026-10-25）
+
+移行・アーカイブ完了: `/docs/threat-modeling-shostack-guide`。全17章（`section.chapter` 17）・82見出し（h1:1 / h2:17 / h3:60 / h4:4）・52表944セル（th:152 / td:792）・9図・2コード（Markdown / Python）・2演習解答（`details.answer`）・12注意欄（`.callout`）・22参考文献（`.ref-card`）・77目次リンク（17グループ）・81固有IDを保持。原本比較＋全22固定構造SHA-256（`.hero`/`.brand`/`.sidebar nav`/`.sidebar-foot`/`.footer`＋17章）・全2コードの改行/空白SHA・全CSS/media・5画面幅（375/640/768/1024/1440px）×明暗両配色の計算済みCSS・リスト丸点（`ul` の `list-style-type: disc`）と番号（`ol`）・ステップバッジ・空セルダッシュ表示・全944セルホバー（`#0b1a2e`）・インラインcode継承・全52表とページ全体のhydration・目次操作/フォーカストラップ/hashchange/スクロールスパイ・Mermaid遅延描画/110px余白/再試行/テキスト説明を検証。専用98件/12ファイルを含む全体2018成功/0skip/0失敗（264ファイル、544,760 expect）。原本なし隔離環境は専用60成功/38skip/0失敗。Security Guidesナビ・ホーム・静的/動的検索は34ページ（全82見出しを収録）。ロジック単位105/105（従来101＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-guides/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。TDD: 段階1（表示基盤）Red `aede778` → Green `ea1c415`、段階2（第1〜8章）Red `0c3a089` → Green `c36c81d`、段階3（第9〜17章・統合・スタイル・可読性）Red `39158e8` → Green `5259c9e`、段階4（原本アーカイブ）Red `b0cde59` → Green `37b12b2`。目視確認表: `docs/migration-inventory/threat-modeling-shostack-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/threat-modeling-shostack-guide/page.mdx`。台帳: `docs/migration-inventory/threat-modeling-shostack-guide.json`。原本: `archive/security-guides/Threat-modeling-shostack-guide.html` / `archive/security-guides/Threat-modeling-shostack-guide.md`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /threat-modeling-shostack-status -->
+
+## Ghost in the Wires 移行（2026-10-25）
+
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ完了。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイルを含む全体2109成功/0skip/0失敗（272ファイル、548,280 expect）。原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致。Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。375/1440pxで6図の実SVG描画と左右スクロール、目次、8解答、smooth/reduced-motionを操作し実行時エラー0。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。Security Guides・ホーム・静的/動的検索35ページへ登録。ロジック単位108/108。npm test・lint・型チェック成功。ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。TDD: 表示基盤cd22987→b82025d、本文9110dd5/8d8ef36→d2b15dc、アーカイブ3ddf7b5→23c8512、目次補完801f666→8b993ad。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
+
+<!-- hacking-exploitation-status -->
+## Hacking: The Art of Exploitation移行（2026-10-25）
+
+2026-10-25 Hacking: The Art of Exploitation: `/docs/hacking-art-of-exploitation-guide` 移行・原本アーカイブ完了。全12章・68見出し・20表341セル・8図・Cコード2件・21参考文献・7注意欄・18リスト項目（本文6/目次12）を保持。全17固定構造SHA-256・コードの改行/空白SHA・全CSS/media・ローカル構文配色・5幅×明暗のCSS・全表/ページhydrationを検証。Chrome10条件で文字/リスト丸点/章番号バッジ/全341セルホバー差分0、375/1440pxで全8図の実描画・自然幅/左右スクロール・目次/配慮設定が成功（pageErrors 0）。専用83件/9ファイル成功、原本なし隔離環境52成功/31skip/0失敗。全体2192成功/0skip/0失敗（281ファイル、550,252 expect）。Security Guides・ホーム・静的/動的検索36ページへ登録（全68見出し）。ロジック単位112/112（従来108＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownは `archive/security-guides/` へ両SHA-256一致で保存（Git管理外）。HTTP 200で13件数/17構造SHA-256一致。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
+<!-- /hacking-exploitation-status -->

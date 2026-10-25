@@ -1,0 +1,558 @@
+
+            .ghost-wires-guide.ghost-wires-guide {
+                color-scheme: dark;
+                --color-background-primary: #0b1118;
+                --color-background-secondary: #101923;
+                --color-background-tertiary: #16232f;
+                --color-text-primary: #eef5f5;
+                --color-text-secondary: #bdcbd3;
+                --color-text-tertiary: #91a6b2;
+                --color-border-tertiary: #21313d;
+                --color-border-secondary: #304653;
+                --color-border-primary: #4d6c7d;
+                --accent: #85e0c5;
+                --font-sans: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+                    'Yu Gothic', 'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 14px;
+                --sidebar-w: 296px;
+                --content-padding: clamp(24px, 2.5vw, 40px);
+            }
+            .ghost-wires-guide.ghost-wires-guide * { box-sizing: border-box; }
+            .ghost-wires-guide.ghost-wires-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 28px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .ghost-wires-guide.ghost-wires-guide {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.95;
+                overflow-wrap: anywhere;
+                -webkit-font-smoothing: antialiased;
+            }
+            .ghost-wires-guide.ghost-wires-guide.lock { overflow: hidden; }
+            .ghost-wires-guide.ghost-wires-guide ::selection { background: #85e0c53b; color: #fff; }
+            .ghost-wires-guide.ghost-wires-guide a { color: var(--accent); text-underline-offset: 4px; }
+            .ghost-wires-guide.ghost-wires-guide a, .ghost-wires-guide.ghost-wires-guide summary, .ghost-wires-guide.ghost-wires-guide button { -webkit-tap-highlight-color: #85e0c526; }
+            .ghost-wires-guide.ghost-wires-guide :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+            .ghost-wires-guide.ghost-wires-guide .layout { display: block; }
+
+            /* Quiet, persistent reading navigation. */
+            .ghost-wires-guide.ghost-wires-guide .sidebar {
+                position: fixed;
+                inset: 0 auto 0 0;
+                width: var(--sidebar-w);
+                padding: 36px 16px 32px;
+                background: #0e1720;
+                border-right: 1px solid var(--color-border-tertiary);
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                scrollbar-width: thin;
+                scrollbar-color: var(--color-border-secondary) transparent;
+                z-index: 30;
+            }
+            .ghost-wires-guide.ghost-wires-guide .brand {
+                padding: 0 12px 28px;
+                margin-bottom: 22px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .ghost-wires-guide.ghost-wires-guide .brand a { display: block; color: var(--color-text-primary); text-decoration: none; }
+            .ghost-wires-guide.ghost-wires-guide .brand-title {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 1.05rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
+            .ghost-wires-guide.ghost-wires-guide .brand-title i {
+                display: grid;
+                place-items: center;
+                width: 38px;
+                height: 42px;
+                border: 1px solid #85e0c536;
+                border-radius: 11px;
+                background: #85e0c50a;
+                color: var(--accent);
+                font-size: 1.55rem;
+            }
+            .ghost-wires-guide.ghost-wires-guide .brand-sub {
+                display: block;
+                margin-top: 12px;
+                color: var(--color-text-tertiary);
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+            }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav ul { list-style: none; margin: 0; padding: 0; }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav li { margin: 4px 0; padding: 0; }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav li::before { content: none; }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav a {
+                display: block;
+                position: relative;
+                padding: 10px 12px;
+                border: 1px solid transparent;
+                border-radius: 7px;
+                color: var(--color-text-tertiary);
+                font-size: 0.79rem;
+                line-height: 1.7;
+                text-decoration: none;
+                transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
+            }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav a:hover { background: #ffffff05; color: var(--color-text-primary); }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav a.active {
+                color: var(--accent);
+                background: #85e0c50b;
+                border-color: #85e0c526;
+                font-weight: 600;
+            }
+            .ghost-wires-guide.ghost-wires-guide .sidebar nav a.active::before {
+                content: '';
+                position: absolute;
+                inset: 10px auto 10px -17px;
+                width: 3px;
+                border-radius: 0 3px 3px 0;
+                background: var(--accent);
+            }
+
+            /* Editorial opening with a subtle wire motif. */
+            .ghost-wires-guide.ghost-wires-guide .guide-content { margin-left: var(--sidebar-w); min-width: 0; }
+            .ghost-wires-guide.ghost-wires-guide .hero, .ghost-wires-guide.ghost-wires-guide .section, .ghost-wires-guide.ghost-wires-guide .footer {
+                padding-inline: var(--content-padding);
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero {
+                position: relative;
+                isolation: isolate;
+                overflow: hidden;
+                padding-block: 84px 52px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                background: radial-gradient(ellipse at 95% 0%, #1b4b423d, transparent 60%),
+                    linear-gradient(135deg, #101d26, #0b1118 75%);
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero::before {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                top: -190px;
+                right: -170px;
+                width: 600px;
+                height: 600px;
+                border: 1px solid #85e0c514;
+                border-radius: 50%;
+                box-shadow: 0 0 0 44px #85e0c507, 0 0 0 45px #85e0c50c,
+                    0 0 0 100px #85e0c504, 0 0 0 101px #85e0c50a;
+                pointer-events: none;
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero::after {
+                content: '';
+                position: absolute;
+                top: 49px;
+                left: var(--content-padding);
+                width: 44px;
+                height: 3px;
+                border-radius: 2px;
+                background: var(--accent);
+                box-shadow: 54px 0 0 #85e0c52b;
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero h1 {
+                margin: 0 0 24px;
+                font-size: clamp(2rem, 3.4vw, 3.4rem);
+                font-weight: 700;
+                line-height: 1.4;
+                letter-spacing: -0.04em;
+                text-wrap: balance;
+                word-break: keep-all;
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero .lead {
+                margin: 0 0 36px;
+                font-size: 0.95rem;
+                line-height: 2;
+            }
+            .ghost-wires-guide.ghost-wires-guide .hero .table-wrap { background: #0b111880; margin-bottom: 0; }
+            .ghost-wires-guide.ghost-wires-guide .hero th { background: #85e0c509; }
+            .ghost-wires-guide.ghost-wires-guide .hero td:first-child { width: 25%; min-width: 140px; color: var(--color-text-tertiary); }
+            .ghost-wires-guide.ghost-wires-guide .hero table { font-size: 0.82rem; }
+            .ghost-wires-guide.ghost-wires-guide .hero th, .ghost-wires-guide.ghost-wires-guide .hero td { padding: 13px 20px; }
+            .ghost-wires-guide.ghost-wires-guide .section {
+                padding-block: 64px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .ghost-wires-guide.ghost-wires-guide h2 {
+                position: relative;
+                margin: 0 0 32px;
+                padding: 0 0 22px;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                font-size: clamp(1.35rem, 2vw, 1.8rem);
+                font-weight: 650;
+                line-height: 1.6;
+                letter-spacing: -0.025em;
+            }
+            .ghost-wires-guide.ghost-wires-guide h2::after {
+                content: '';
+                position: absolute;
+                inset: auto auto -1px 0;
+                width: 40px;
+                height: 2px;
+                background: var(--accent);
+            }
+            .ghost-wires-guide.ghost-wires-guide h3 {
+                margin: 40px 0 16px;
+                color: var(--accent);
+                font-size: 1.08rem;
+                font-weight: 600;
+                line-height: 1.7;
+            }
+            .ghost-wires-guide.ghost-wires-guide p { margin: 0 0 20px; color: var(--color-text-secondary); }
+            .ghost-wires-guide.ghost-wires-guide strong { font-weight: 650; color: var(--color-text-primary); }
+            .ghost-wires-guide.ghost-wires-guide em { color: var(--color-text-tertiary); }
+            .ghost-wires-guide.ghost-wires-guide a.ref { font-size: 0.84em; text-decoration: none; white-space: nowrap; }
+            .ghost-wires-guide.ghost-wires-guide a.ref:hover { text-decoration: underline; }
+            .ghost-wires-guide.ghost-wires-guide .section ul, .ghost-wires-guide.ghost-wires-guide .section ol { margin: 0 0 24px; padding: 0; }
+            .ghost-wires-guide.ghost-wires-guide .section ul { list-style: none; }
+            .ghost-wires-guide.ghost-wires-guide .section ul > li {
+                position: relative;
+                margin: 10px 0;
+                padding-left: 1.4em;
+                color: var(--color-text-secondary);
+            }
+            .ghost-wires-guide.ghost-wires-guide .section ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.2em;
+                top: 0.85em;
+                width: 5px;
+                height: 5px;
+                border-radius: 1px;
+                background: var(--accent);
+            }
+            .ghost-wires-guide.ghost-wires-guide .section ol { padding-left: 1.8em; }
+            .ghost-wires-guide.ghost-wires-guide .section ol > li { margin: 12px 0; padding-left: 0.4em; color: var(--color-text-secondary); }
+            .ghost-wires-guide.ghost-wires-guide .section ol > li::marker { color: var(--accent); font-weight: 600; }
+            .ghost-wires-guide.ghost-wires-guide blockquote {
+                margin: 28px 0;
+                padding: 22px 26px;
+                background: linear-gradient(110deg, #85e0c50b, #85e0c503);
+                border: 1px solid #85e0c51c;
+                border-left: 3px solid var(--accent);
+                border-radius: 0 10px 10px 0;
+            }
+            .ghost-wires-guide.ghost-wires-guide blockquote p { margin: 0; }
+
+            /* Tables and diagrams stay contained on small screens. */
+            .ghost-wires-guide.ghost-wires-guide .table-wrap {
+                margin: 24px 0;
+                overflow-x: auto;
+                overscroll-behavior-x: contain;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: #10192380;
+            }
+            .ghost-wires-guide.ghost-wires-guide table { width: 100%; border-collapse: collapse; font-size: 0.9rem; line-height: 1.85; }
+            .ghost-wires-guide.ghost-wires-guide th, .ghost-wires-guide.ghost-wires-guide td {
+                padding: 16px 20px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .ghost-wires-guide.ghost-wires-guide th { background: #192832; color: #d6e8e7; font-weight: 600; white-space: nowrap; }
+            .ghost-wires-guide.ghost-wires-guide td { color: var(--color-text-secondary); min-width: 120px; }
+            .ghost-wires-guide.ghost-wires-guide tbody tr:last-child td { border-bottom: 0; }
+            .ghost-wires-guide.ghost-wires-guide tbody tr:nth-child(even) { background: #ffffff02; }
+            .ghost-wires-guide.ghost-wires-guide tbody tr:hover td { background: #85e0c508; }
+            .ghost-wires-guide.ghost-wires-guide td:first-child { color: var(--color-text-primary); }
+            .ghost-wires-guide.ghost-wires-guide code {
+                padding: 3px 7px;
+                border: 1px solid #85e0c51a;
+                border-radius: 5px;
+                background: #85e0c508;
+                color: #a7e6d6;
+                font-family: var(--font-mono);
+                font-size: 0.86em;
+            }
+            .ghost-wires-guide.ghost-wires-guide .diagram-wrap {
+                margin: 32px 0;
+                padding: 32px 24px;
+                background: radial-gradient(ellipse at top, #142a35, #0e1720 75%);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                overflow-x: auto;
+            }
+            .ghost-wires-guide.ghost-wires-guide .diagram { display: flex; justify-content: center; min-width: 0; }
+            .ghost-wires-guide.ghost-wires-guide .diagram svg { overflow: visible; flex-shrink: 0; }
+            .ghost-wires-guide.ghost-wires-guide .diagram .mm-fallback {
+                margin: 0;
+                color: var(--color-text-tertiary);
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 0.85rem;
+            }
+
+            .ghost-wires-guide.ghost-wires-guide details.qa {
+                margin: 14px 0;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                transition: border-color 160ms ease;
+            }
+            .ghost-wires-guide.ghost-wires-guide details.qa:hover, .ghost-wires-guide.ghost-wires-guide details.qa[open] { border-color: #85e0c55c; }
+            .ghost-wires-guide.ghost-wires-guide details.qa summary {
+                cursor: pointer;
+                list-style: none;
+                padding: 22px 24px 22px 58px;
+                position: relative;
+                font-weight: 600;
+                line-height: 1.8;
+                color: var(--color-text-primary);
+            }
+            .ghost-wires-guide.ghost-wires-guide details.qa summary::-webkit-details-marker { display: none; }
+            .ghost-wires-guide.ghost-wires-guide details.qa summary::before {
+                content: '+';
+                position: absolute;
+                left: 22px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 22px;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 1.25rem;
+                text-align: center;
+            }
+            .ghost-wires-guide.ghost-wires-guide details.qa[open] summary::before { content: '\2212'; }
+            .ghost-wires-guide.ghost-wires-guide details.qa[open] summary { border-bottom: 1px solid var(--color-border-tertiary); }
+            .ghost-wires-guide.ghost-wires-guide .qa-body { padding: 22px 24px 4px; }
+            .ghost-wires-guide.ghost-wires-guide .src-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+                gap: 16px;
+                margin: 20px 0 32px;
+            }
+            .ghost-wires-guide.ghost-wires-guide .src-card {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr);
+                gap: 16px;
+                padding: 24px;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+                scroll-margin-top: 28px;
+                transition: border-color 160ms ease;
+            }
+            .ghost-wires-guide.ghost-wires-guide .src-card:hover { border-color: var(--color-border-primary); }
+            .ghost-wires-guide.ghost-wires-guide .src-card:target { border-color: var(--accent); background: #152c2a; }
+            .ghost-wires-guide.ghost-wires-guide .src-badge {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 42px;
+                height: 30px;
+                padding: 0 8px;
+                border-radius: 6px;
+                border: 1px solid #85e0c533;
+                background: #85e0c50a;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 0.75rem;
+            }
+            .ghost-wires-guide.ghost-wires-guide .src-type { color: var(--color-text-primary); font-weight: 600; margin-bottom: 8px; }
+            .ghost-wires-guide.ghost-wires-guide .src-desc { margin: 0 0 12px; font-size: 0.88rem; }
+            .ghost-wires-guide.ghost-wires-guide .src-url {
+                display: inline-flex;
+                align-items: flex-start;
+                gap: 6px;
+                max-width: 100%;
+                font-size: 0.75rem;
+                line-height: 1.8;
+                word-break: break-all;
+                text-decoration: none;
+            }
+            .ghost-wires-guide.ghost-wires-guide .src-url:hover { text-decoration: underline; }
+            .ghost-wires-guide.ghost-wires-guide .src-url i { margin-top: 0.3em; flex: none; }
+            .ghost-wires-guide.ghost-wires-guide .footer { padding-block: 32px 64px; font-size: 0.8rem; color: var(--color-text-tertiary); }
+            .ghost-wires-guide.ghost-wires-guide .footer em { font-style: normal; }
+
+            /* A chronological list keeps every date and event readable at any width. */
+            .ghost-wires-guide.ghost-wires-guide .life-timeline {
+                margin: 24px 0 28px;
+                padding: 28px 32px 12px;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                background: linear-gradient(120deg, #11232a, #101923 65%);
+            }
+            .ghost-wires-guide.ghost-wires-guide .life-timeline figcaption {
+                margin-bottom: 28px;
+                color: var(--color-text-primary);
+                font-size: 1rem;
+                font-weight: 600;
+            }
+            .ghost-wires-guide.ghost-wires-guide .life-timeline .timeline-events { margin: 0; padding: 0; list-style: none; }
+            .ghost-wires-guide.ghost-wires-guide .life-timeline .timeline-events > li {
+                position: relative;
+                display: grid;
+                grid-template-columns: 112px minmax(0, 1fr);
+                gap: 40px;
+                margin: 0;
+                padding: 0 0 24px;
+            }
+            .ghost-wires-guide.ghost-wires-guide .timeline-events > li::before {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 125px;
+                width: 9px;
+                height: 9px;
+                border: 2px solid var(--accent);
+                border-radius: 50%;
+                background: #11232a;
+                z-index: 1;
+            }
+            .ghost-wires-guide.ghost-wires-guide .timeline-events > li:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 19px;
+                bottom: -10px;
+                left: 129px;
+                width: 1px;
+                background: #85e0c535;
+            }
+            .ghost-wires-guide.ghost-wires-guide .timeline-year {
+                padding-top: 1px;
+                color: var(--accent);
+                font-family: var(--font-mono);
+                font-size: 0.9rem;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+            .ghost-wires-guide.ghost-wires-guide .timeline-events p { margin: 0; }
+            @media (max-width: 640px) {
+                .ghost-wires-guide.ghost-wires-guide .life-timeline { padding: 22px 16px 4px; }
+                .ghost-wires-guide.ghost-wires-guide .life-timeline .timeline-events > li {
+                    grid-template-columns: 88px minmax(0, 1fr);
+                    gap: 28px;
+                }
+                .ghost-wires-guide.ghost-wires-guide .timeline-events > li::before { left: 95px; }
+                .ghost-wires-guide.ghost-wires-guide .timeline-events > li:not(:last-child)::after { left: 99px; }
+                .ghost-wires-guide.ghost-wires-guide .timeline-year { font-size: 0.78rem; }
+            }
+
+            /* Responsive drawer and comfortable touch targets. */
+            .ghost-wires-guide.ghost-wires-guide .menu-btn, .ghost-wires-guide.ghost-wires-guide .backdrop { display: none; }
+            @media (max-width: 1024px) {
+                .ghost-wires-guide.ghost-wires-guide { --content-padding: 40px; }
+                .ghost-wires-guide.ghost-wires-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 220ms ease;
+                    width: min(320px, 86vw);
+                    z-index: 50;
+                }
+                .ghost-wires-guide.ghost-wires-guide .sidebar.open { transform: translateX(0); }
+                .ghost-wires-guide.ghost-wires-guide .sidebar nav a { min-height: 44px; display: flex; align-items: center; }
+                .ghost-wires-guide.ghost-wires-guide .guide-content { margin-left: 0; }
+                .ghost-wires-guide.ghost-wires-guide .hero { padding-block: 80px 40px; }
+                .ghost-wires-guide.ghost-wires-guide .hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
+                .ghost-wires-guide.ghost-wires-guide .section { padding-block: 48px; }
+                .ghost-wires-guide.ghost-wires-guide .footer { padding-bottom: 110px; }
+                .ghost-wires-guide.ghost-wires-guide .menu-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: fixed;
+                    right: max(20px, env(safe-area-inset-right));
+                    bottom: max(20px, env(safe-area-inset-bottom));
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 18px;
+                    border: 1px solid #b1f4e1;
+                    background: var(--accent);
+                    color: #0b211c;
+                    box-shadow: 0 8px 28px #0006;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    z-index: 60;
+                    padding: 0;
+                }
+                .ghost-wires-guide.ghost-wires-guide .backdrop {
+                    display: block;
+                    position: fixed;
+                    inset: 0;
+                    background: #030810b8;
+                    backdrop-filter: blur(4px);
+                    z-index: 40;
+                    opacity: 0;
+                    visibility: hidden;
+                    pointer-events: none;
+                    transition: opacity 220ms ease, visibility 220ms ease;
+                }
+                .ghost-wires-guide.ghost-wires-guide .backdrop.show { opacity: 1; visibility: visible; pointer-events: auto; }
+            }
+            @media (max-width: 640px) {
+                .ghost-wires-guide.ghost-wires-guide { --content-padding: 22px; }
+                .ghost-wires-guide.ghost-wires-guide { font-size: 0.9375rem; line-height: 1.95; }
+                .ghost-wires-guide.ghost-wires-guide .hero { padding-block: 64px 32px; }
+                .ghost-wires-guide.ghost-wires-guide .hero::after { top: 32px; }
+                .ghost-wires-guide.ghost-wires-guide .hero h1 { font-size: 1.95rem; line-height: 1.5; }
+                .ghost-wires-guide.ghost-wires-guide .hero .lead { font-size: 0.875rem; margin-bottom: 28px; }
+                .ghost-wires-guide.ghost-wires-guide .hero td:first-child { min-width: 112px; }
+                .ghost-wires-guide.ghost-wires-guide .hero th, .ghost-wires-guide.ghost-wires-guide .hero td { padding: 12px 14px; }
+                .ghost-wires-guide.ghost-wires-guide .section { padding-block: 38px; }
+                .ghost-wires-guide.ghost-wires-guide h2 { font-size: 1.3rem; padding-bottom: 18px; margin-bottom: 26px; }
+                .ghost-wires-guide.ghost-wires-guide h3 { font-size: 1.02rem; margin-top: 32px; }
+                .ghost-wires-guide.ghost-wires-guide th, .ghost-wires-guide.ghost-wires-guide td { padding: 14px; }
+                .ghost-wires-guide.ghost-wires-guide blockquote { padding: 18px; }
+                .ghost-wires-guide.ghost-wires-guide .diagram-wrap { padding: 22px 12px; }
+                .ghost-wires-guide.ghost-wires-guide .src-list { grid-template-columns: 1fr; }
+                .ghost-wires-guide.ghost-wires-guide .src-card { padding: 18px; gap: 12px; }
+                .ghost-wires-guide.ghost-wires-guide details.qa summary { padding: 18px 16px 18px 48px; }
+                .ghost-wires-guide.ghost-wires-guide details.qa summary::before { left: 16px; }
+                .ghost-wires-guide.ghost-wires-guide .qa-body { padding: 18px 16px 0; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .ghost-wires-guide.ghost-wires-guide { scroll-behavior: auto; }
+                .ghost-wires-guide.ghost-wires-guide *, .ghost-wires-guide.ghost-wires-guide *::before, .ghost-wires-guide.ghost-wires-guide *::after { transition: none !important; }
+            }
+        
+/* Restore native defaults after Tailwind preflight and the shared prose cascade. */
+.ghost-wires-guide.ghost-wires-guide {width:100%;isolation:isolate;}
+.ghost-wires-guide.ghost-wires-guide .guide-content {max-width:none;width:auto;padding:0;}
+.ghost-wires-guide.ghost-wires-guide section[id], .ghost-wires-guide.ghost-wires-guide [id] {scroll-margin-top:calc(100px + var(--disclaimer-height, 0px));}
+.ghost-wires-guide.ghost-wires-guide ol {list-style-type:decimal;}
+.ghost-wires-guide.ghost-wires-guide ul {list-style-type:disc;}
+.ghost-wires-guide.ghost-wires-guide .section ul, .ghost-wires-guide.ghost-wires-guide .sidebar nav ul, .ghost-wires-guide.ghost-wires-guide .timeline-events {list-style-type:none;}
+.ghost-wires-guide.ghost-wires-guide li {font-size:inherit;line-height:inherit;}
+.ghost-wires-guide.ghost-wires-guide em {font-style:italic;}
+.ghost-wires-guide.ghost-wires-guide .footer {text-align:start;margin:0;border:0;}
+.ghost-wires-guide.ghost-wires-guide .hero h1 {text-transform:none;}
+.ghost-wires-guide.ghost-wires-guide table {margin:0;border-radius:0;box-shadow:none;}
+.ghost-wires-guide.ghost-wires-guide thead, .ghost-wires-guide.ghost-wires-guide tr {background:transparent;border:0;}
+.ghost-wires-guide.ghost-wires-guide th {text-transform:none;letter-spacing:normal;}
+.ghost-wires-guide.ghost-wires-guide th, .ghost-wires-guide.ghost-wires-guide td {font-family:inherit;}
+.ghost-wires-guide.ghost-wires-guide tbody tr:hover td {background:#85e0c508;}
+.ghost-wires-guide.ghost-wires-guide i svg {width:1em;height:1em;display:block;}
+.ghost-wires-guide.ghost-wires-guide .sidebar {top:calc(76px + var(--disclaimer-height, 0px));z-index:30;}
+.ghost-wires-guide.ghost-wires-guide .diagram {display:block;}
+.ghost-wires-guide.ghost-wires-guide .mermaid-target {display:block;min-width:0;}
+.ghost-wires-guide.ghost-wires-guide .diagram-viewport {display:block;overflow-x:auto;}
+.ghost-wires-guide.ghost-wires-guide .diagram-viewport svg {display:block;margin-left:auto;margin-right:auto;max-width:none;height:auto;}
+.ghost-wires-guide.ghost-wires-guide .diagram-description {font-size:.85rem;}
+@media(max-width:1024px){
+.ghost-wires-guide.ghost-wires-guide .sidebar {z-index:50;visibility:hidden;}
+.ghost-wires-guide.ghost-wires-guide .sidebar.open {visibility:visible;}
+}
+
+.ghost-wires-guide.ghost-wires-guide h1 {color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide .brand {font-weight:400;letter-spacing:normal;color:var(--color-text-primary);display:block;gap:normal;}
+.ghost-wires-guide.ghost-wires-guide blockquote {font-style:normal;color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide details.qa summary {list-style-type:none;}
+
+.ghost-wires-guide.ghost-wires-guide h2 {color:var(--color-text-primary);}
+.ghost-wires-guide.ghost-wires-guide .brand {font-size:inherit;}
+/* The source already owns its responsive content gutters. */
+.docs-main:has(.ghost-wires-guide) {padding:0;}
+
+html:has(.ghost-wires-guide) {scroll-behavior:smooth;scroll-padding-top:28px;}
+@media (prefers-reduced-motion: reduce) {
+html:has(.ghost-wires-guide) {scroll-behavior:auto;}
+}

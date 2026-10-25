@@ -438,8 +438,31 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 ## CyberOps Professional移行（2026-10-25）
 
-移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用328件/12ファイルを含む全体1913成功/0skip/0失敗（252ファイル、526,507 expect）。原本なし隔離環境173成功/155skip/0失敗（4700 expect）。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+移行・アーカイブ完了: `/docs/cyberops-professional-guide`。全134本文ブロック・135見出し・122表2051セル・42図・20コード（8言語表記）・15確認問題と解答・61参考文献・57ul/14ol/190項目を保持。原本比較＋全137固定構造SHA-256・全20コードの改行/空白SHA・全CSS/media・5幅×明暗の計算済みCSS・全表/ページhydration・目次と問題の個別/一括開閉を検証。Chromeは375/1440px×明暗4条件で全2051セルのホバー変化0、全190項目の金色丸点/丸囲み番号/14カウンターリセット、実ポインター12チェックが成功。専用330件/12ファイルを含む全体1920成功/0skip/0失敗（252ファイル、526,543 expect）。原本なし隔離環境175成功/155skip/0失敗。資格ナビ・ホーム・静的/動的検索は33ページ（全135見出しを収録）。ロジック単位101/101（従来96＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-certifications/` へ両SHA-256一致でアーカイブ済み（Git管理外）。HTTP 200実配信も16件数/137構造ハッシュ/20コードハッシュ一致。npm test・lint・型チェック成功。TDD: 表示基盤adf5aee→2fc814b、前半0eccd25→a3c179f、後半ae61e93→676fba2、アーカイブf427b65→c97a37d。目視確認表: `docs/migration-inventory/cyberops-professional-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
 
 配置: `security-docs/src/app/docs/cyberops-professional-guide/page.mdx`。台帳: `docs/migration-inventory/cyberops-professional-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 <!-- /cyberops-professional-status -->
+
+<!-- threat-modeling-shostack-status -->
+
+## Threat Modeling (Shostack) 移行（2026-10-25）
+
+移行・アーカイブ完了: `/docs/threat-modeling-shostack-guide`。全17章（`section.chapter` 17）・82見出し（h1:1 / h2:17 / h3:60 / h4:4）・52表944セル（th:152 / td:792）・9図・2コード（Markdown / Python）・2演習解答（`details.answer`）・12注意欄（`.callout`）・22参考文献（`.ref-card`）・77目次リンク（17グループ）・81固有IDを保持。原本比較＋全22固定構造SHA-256（`.hero`/`.brand`/`.sidebar nav`/`.sidebar-foot`/`.footer`＋17章）・全2コードの改行/空白SHA・全CSS/media・5画面幅（375/640/768/1024/1440px）×明暗両配色の計算済みCSS・リスト丸点（`ul` の `list-style-type: disc`）と番号（`ol`）・ステップバッジ・空セルダッシュ表示・全944セルホバー（`#0b1a2e`）・インラインcode継承・全52表とページ全体のhydration・目次操作/フォーカストラップ/hashchange/スクロールスパイ・Mermaid遅延描画/110px余白/再試行/テキスト説明を検証。専用98件/12ファイルを含む全体2018成功/0skip/0失敗（264ファイル、544,760 expect）。原本なし隔離環境は専用60成功/38skip/0失敗。Security Guidesナビ・ホーム・静的/動的検索は34ページ（全82見出しを収録）。ロジック単位105/105（従来101＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownを `archive/security-guides/` へ両SHA-256一致でアーカイブ済み（Git管理外）。npm test・lint・型チェック成功。TDD: 段階1（表示基盤）Red `aede778` → Green `ea1c415`、段階2（第1〜8章）Red `0c3a089` → Green `c36c81d`、段階3（第9〜17章・統合・スタイル・可読性）Red `39158e8` → Green `5259c9e`、段階4（原本アーカイブ）Red `b0cde59` → Green `37b12b2`。目視確認表: `docs/migration-inventory/threat-modeling-shostack-guide-review.md`。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/threat-modeling-shostack-guide/page.mdx`。台帳: `docs/migration-inventory/threat-modeling-shostack-guide.json`。原本: `archive/security-guides/Threat-modeling-shostack-guide.html` / `archive/security-guides/Threat-modeling-shostack-guide.md`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+<!-- /threat-modeling-shostack-status -->
+
+<!-- ghost-wires-migration-status -->
+2026-10-25 Ghost in the Wires: `/docs/ghost-in-the-wires-guide` 移行・原本アーカイブ完了。全17節・58見出し・20表332セル・65リスト項目・年表10項目・8解答・41出典・6図を保持。専用91件/8ファイルを含む全体2109成功/0skip/0失敗（272ファイル、548,280 expect）。原本なし隔離環境55成功/36skip/0失敗。実配信HTTP 200で16件数/21構造SHA-256一致。Chrome 5幅×明暗10条件で文字・リスト点/番号・年表・全332セルホバー差分0。375/1440pxで6図の実SVG描画と左右スクロール、目次、8解答、smooth/reduced-motionを操作し実行時エラー0。原本HTML/Markdownは `archive/security-guides/` に両SHA-256一致で保存（Git管理外）。Security Guides・ホーム・静的/動的検索35ページへ登録。ロジック単位108/108。npm test・lint・型チェック成功。ビルド禁止/未実行・目視はユーザー担当/未確認。
+配置: `security-docs/src/app/docs/ghost-in-the-wires-guide/page.mdx`。TDD: 表示基盤cd22987→b82025d、本文9110dd5/8d8ef36→d2b15dc、アーカイブ3ddf7b5→23c8512、目次補完801f666→8b993ad。台帳: `docs/migration-inventory/ghost-in-the-wires-guide.json`。目視確認表: `docs/migration-inventory/ghost-in-the-wires-guide-review.md`。
+<!-- /ghost-wires-migration-status -->
+
+<!-- hacking-exploitation-status -->
+## Hacking: The Art of Exploitation移行（2026-10-25）
+
+2026-10-25 Hacking: The Art of Exploitation: `/docs/hacking-art-of-exploitation-guide` 移行・原本アーカイブ完了。全12章・68見出し・20表341セル・8図・Cコード2件・21参考文献・7注意欄・18リスト項目（本文6/目次12）を保持。全17固定構造SHA-256・コードの改行/空白SHA・全CSS/media・ローカル構文配色・5幅×明暗のCSS・全表/ページhydrationを検証。Chrome10条件で文字/リスト丸点/章番号バッジ/全341セルホバー差分0、375/1440pxで全8図の実描画・自然幅/左右スクロール・目次/配慮設定が成功（pageErrors 0）。専用83件/9ファイル成功、原本なし隔離環境52成功/31skip/0失敗。全体2192成功/0skip/0失敗（281ファイル、550,252 expect）。Security Guides・ホーム・静的/動的検索36ページへ登録（全68見出し）。ロジック単位112/112（従来108＋GuideSidebar/GuideIcon/MermaidFigure/CodeSample）。HTML/Markdownは `archive/security-guides/` へ両SHA-256一致で保存（Git管理外）。HTTP 200で13件数/17構造SHA-256一致。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
+<!-- /hacking-exploitation-status -->
