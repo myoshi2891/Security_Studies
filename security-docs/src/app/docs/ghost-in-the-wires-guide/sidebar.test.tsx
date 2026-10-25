@@ -138,17 +138,17 @@ async function observed() {
 
 test('scroll spy highlights the active chapter nav-group and falls back when a later chapter leaves', async () => {
   const { v, notify } = await observed();
-  const step-0 = v.container.querySelector('section#step-0');
-  const step-4 = v.container.querySelector('section#step-4');
+  const step0 = v.container.querySelector('section#step-0');
+  const step4 = v.container.querySelector('section#step-4');
   notify([
-    [step-0, true],
-    [step-4, true],
+    [step0, true],
+    [step4, true],
   ]);
   const g4 = v.container.querySelector('a[href="#step-4"]')!;
   const g1 = v.container.querySelector('a[href="#step-0"]')!;
   expect(g4).toHaveClass('active');
   expect(v.container.querySelector('a[href="#step-4"]')).toHaveAttribute('aria-current', 'location');
-  notify([[step-4, false]]);
+  notify([[step4, false]]);
   expect(g1).toHaveClass('active');
   expect(g4).not.toHaveClass('active');
   expect(v.container.querySelector('a[href="#step-0"]')).toHaveAttribute('aria-current', 'location');
