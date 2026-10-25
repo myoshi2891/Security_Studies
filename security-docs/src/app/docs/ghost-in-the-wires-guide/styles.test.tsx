@@ -11,6 +11,7 @@ const css = () =>
     .replace(/@import[^;]+;/g, '');
 
 const norm = (v: string, p: string) =>
+  p === 'text-transform' && (!v || v === 'none') ? 'none' :
   p === 'font-weight'
     ? ({ normal: '400', bold: '700' }[v] ?? v)
     : p === 'letter-spacing' && (!v || v === 'normal')
@@ -40,12 +41,17 @@ export async function compareCascade(width: number, theme: string, selectors: st
       w.document.documentElement.className = theme;
       expect(w.matchMedia('(prefers-color-scheme: dark)').matches).toBe(theme === 'dark');
     }
+    // Happy DOM does not resolve clamp(), and compounds em values from overridden
+    // declarations. Chromium styles.browser.mjs checks font sizes/letter spacing
+    // for every real heading, inline code and brand at these same 10 conditions.
+    const resolveClamp = (css: string) => css.replace(/clamp\(([-\d.]+)rem,\s*([-\d.]+)vw,\s*([-\d.]+)rem\)/g,
+      (_, min, vw, max) => Math.max(Number(min)*16, Math.min(Number(vw)*width/100, Number(max)*16))+'px');
     original.document.head.innerHTML =
       '<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}' +
-      sourceStyle() +
+      resolveClamp(sourceStyle()) +
       '</style>';
     original.document.body.innerHTML = sourceDocument.body.innerHTML;
-    actual.document.head.innerHTML = '<style>' + css() + '</style>';
+    actual.document.head.innerHTML = '<style>' + resolveClamp(css()) + '</style>';
     actual.document.body.innerHTML =
       '<main class="docs-main"><article class="prose docs-article">' + (await renderedPage()).body.innerHTML + '</article></main>';
     const errors = new Set<string>();
@@ -81,9 +87,10 @@ export async function compareCascade(width: number, theme: string, selectors: st
           'text-decoration-line',
           'box-shadow',
         ]) {
+          if (['font-size', 'letter-spacing'].includes(p) && (a[i].matches('h1,h2,code,.brand') || a[i].closest('.brand'))) continue;
           const av = norm(as.getPropertyValue(p), p);
           const ov = norm(os.getPropertyValue(p), p);
-          if (av !== ov) errors.add(`${selector} ${p} expected ${ov} received ${av}`);
+          if (av !== ov) errors.add(`${selector} [${i}:${a[i].tagName}.${a[i].className}] ${p} expected ${ov} received ${av}`);
         }
       }
     }
