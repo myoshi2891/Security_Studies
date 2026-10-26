@@ -39,7 +39,7 @@ export function canonical(node: Node): unknown {
   if (el.tagName === 'NOSCRIPT') return null;
   if (el.matches('.mermaid[id],.mermaid-target[data-diagram]')) return ['diagram', el.id];
   if (el.tagName === 'I') return ['icon', el.getAttribute('class')];
-  const attrs = [...el.attributes].filter(a => a.name !== 'style').map(a => [a.name, a.name === 'class' ? a.value.replace(/\s*hljs\b/g, '') : a.value]).sort((a, b) => a[0].localeCompare(b[0]));
+  const attrs = [...el.attributes].filter(a => a.name !== 'style' && !(a.name === 'id' && el.matches('h2') && el.parentElement?.id === el.id)).map(a => [a.name, a.name === 'class' ? a.value.replace(/\s*hljs\b/g, '') : a.value]).sort((a, b) => a[0].localeCompare(b[0]));
   const style = (el.getAttribute('style') || '').split(';').map(s => s.trim().replace(/\s+/g, '')).filter(Boolean).sort();
   return [el.tagName, attrs, style, el.matches('pre code') ? [el.textContent] : [...el.childNodes].map(canonical).filter(v => v !== null)];
 }

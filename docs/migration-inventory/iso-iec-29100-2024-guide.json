@@ -270,22 +270,22 @@
     ".brand": "f279fe9b88d66eb101d3fc01311b7ad73956f369013b62ee50c3f362cdb526f2",
     ".sidebar nav": "8c5bc324b1b8e9a5f916fa6a6f13b86d830fc71ffe39b5a084fb5e332f5e601c",
     ".footer": "c7e4a7936156f010c81bc6d44d64a5d8ec6270294b30c395b829beecf0a601e1",
-    "[id=\"0-このガイドの読み方\"]": "529841a539ac9270df9705cfdfa68fc3162463c117afd80936df3b0a3b025f39",
-    "[id=\"step-1-isoiec-29100-とは何か\"]": "b3ec63654121666f32edaecf5358ceccbf6d73495797e7c114fc83d227447a43",
-    "[id=\"step-2-2011年版から2024年版への変更点\"]": "6e0caddf6c478d684e9ab21e4ffe66a62db10de4f1bf24f81e3c4a372eab2e96",
-    "[id=\"step-3-規格の全体像6つの構成要素\"]": "8bb3ecf49a176bce89791af2c3a8451f5f6114347b1a9ad9f6ae4b6534e73dfd",
-    "[id=\"step-4-最低限おぼえる用語\"]": "7aec8ecf83544798aca8ff82d40f373faa66aef2c2cdcc3ca796b1f68269640a",
-    "[id=\"step-5-登場人物と役割actors-and-roles\"]": "44575025df98daa0f44c2026231527e3b73e59615d7d7cdfa7378026bbc18af8",
-    "[id=\"step-6-pii-を見分けるrecognizing-pii\"]": "4783eccb8c1a27579233ceee11e28f38738fba3bd219dbdd7c932307388f3fbb",
-    "[id=\"step-7-プライバシー保護要件ポリシーコントロール\"]": "c4ca858e5aac6c29823086863263ee8a1dbdb8a02cca0483034627d86cf09178",
-    "[id=\"step-8-11のプライバシー原則\"]": "fbcb8a20a04ead8010a1e91f6dc73fc2c1e53c6c18ce9c74cf92205a78b749da",
-    "[id=\"step-9-開発qaの現場に落とし込む\"]": "6ab5c15742ab683c8773b4a5b450903c145f3b395dfac5e2a9b0eead285c0191",
-    "[id=\"step-10-関連規格フレームワークとの関係\"]": "5a4597fa0f12291db7b035f6e5174f9717794c12bbcec302ad69e07ce372b901",
-    "[id=\"step-11-導入ロードマップ\"]": "2bf3e08b065f75acb62ba06944f62f2366252481aec8bc4b7572a35adcdde289",
-    "[id=\"step-12-よくある誤解\"]": "2ebdd616124074fe3adb19843e444fc914de3318caf221b693bdde4fca9f6511",
-    "[id=\"step-13-理解度チェック\"]": "9b02b15e1da331138e69fd3070178d23ba6e7afb31d38d223fe3fb001cdbb723",
-    "[id=\"step-14-参考文献と出典url\"]": "c87bd10cd1191d99df9ea85845497ad5eeb0c47c1d3650443344f5bd79aef5de",
-    "[id=\"付録-用語集英日対応\"]": "469adb32b819e7927aaf4bf5cdc2b4c598a34cc00d5ee8d52440bc2c703bb021"
+    "[id=\"0-このガイドの読み方\"]": "f2f8e21f07b38e94e419d5168d8f525118d368acf39cbd148c302cf9c96abd39",
+    "[id=\"step-1-isoiec-29100-とは何か\"]": "5d5e821fb53b4146f5c5fc9fbf8325f5b5ff3a7ef9d3364644d8de26c2df3648",
+    "[id=\"step-2-2011年版から2024年版への変更点\"]": "91dbdd4bd88d5d1fbc9633065aa7ded41dd17c5151bb32b178c07bf591f589da",
+    "[id=\"step-3-規格の全体像6つの構成要素\"]": "48b9a6fb22b6c86b67044c4032ae03eb35e5e3ecf483e9d09ebd3ad4dcb4ffdf",
+    "[id=\"step-4-最低限おぼえる用語\"]": "a30715a1ddf92bd3c1aed802b7c1dfdf51029d10342f5c7c2738ac942f109a82",
+    "[id=\"step-5-登場人物と役割actors-and-roles\"]": "25fbe041d9381cb18d71b66b0d232c1936f3339f2aa14dda573b25b2249e5bb6",
+    "[id=\"step-6-pii-を見分けるrecognizing-pii\"]": "faf4454b8e86ad7967815e5ddb1d32d374344331abdf2a1ce8c07b14a033b42e",
+    "[id=\"step-7-プライバシー保護要件ポリシーコントロール\"]": "33e7fc5dd96a3df67fdf2aa449e02629c238f7dc066f24ac30377b46880ec88c",
+    "[id=\"step-8-11のプライバシー原則\"]": "d7a19ff2bdd118aa7c26ebfe9231c9362bcf2ceae656959bd781383e6c67130e",
+    "[id=\"step-9-開発qaの現場に落とし込む\"]": "16c49f5d15f4028931cb0eeef7806c298c75dc2ddde2cc451e46ba869f86cd0e",
+    "[id=\"step-10-関連規格フレームワークとの関係\"]": "69fa66d4c2b032a9ea00cfc649591395aeb06e9c60d97cd23598a25ef886c6bc",
+    "[id=\"step-11-導入ロードマップ\"]": "3c435e0c7bc8f27805a7304bec4c3bc01baa2dca1d7a7b201d926eb12f810ed4",
+    "[id=\"step-12-よくある誤解\"]": "cbbabfd36daf74038088abddbab633c80c6ce7c84d7ea8f7e271855478abe4c9",
+    "[id=\"step-13-理解度チェック\"]": "2bc5466e0988a56c79a945cb7438e1659ec047a4dde4d046238e93c522a8a0d2",
+    "[id=\"step-14-参考文献と出典url\"]": "80098d5a3cc53f39c0bd910acac3f937df59084bb5e6039f5e0e9a0a313f072b",
+    "[id=\"付録-用語集英日対応\"]": "1f6b24873a058e842052bd561bcfc1d736f5f134b8629c76509283d4d145e24c"
   },
   "codeHashes": [
     "052ff7c1378f2311dde3efcd5b02c30238ac4313a7cbf6a1845e8735e1904546",
@@ -297,6 +297,7 @@
     "共有ヘッダー分の上端補正と全幅本文",
     "CDNアイコンをローカルSVGへ置換",
     "図をローカルMermaidへ移行し自然幅・再試行・テキスト説明を追加",
-    "Reactによる目次・確認問題操作。本文・表・リスト・リンクは原本を保持"
+    "Reactによる目次・確認問題操作。本文・表・リスト・リンクは原本を保持",
+    "原本のsectionと直下h2の重複ID16件はsectionへ集約。全126固有IDとリンクを保持"
   ]
 }
