@@ -894,3 +894,10 @@ hue-6-2: #e6c07b
 .iso29100-guide.iso29100-guide tbody tr:hover td:first-child{color:var(--text-primary);}
 html:has(.iso29100-guide){scroll-behavior:smooth;scroll-padding-top:88px;}
 @media(prefers-reduced-motion:reduce){html:has(.iso29100-guide){scroll-behavior:auto;}}
+/* Explicit inherited ink restores source values overwritten by shared typography. */
+.iso29100-guide.iso29100-guide :where(td,blockquote,pre,.quiz-answer){color:var(--text-secondary);}
+.iso29100-guide.iso29100-guide tbody td:first-child{color:var(--text-primary);}
+.iso29100-guide.iso29100-guide summary{list-style-type:none;}
+.iso29100-guide.iso29100-guide .prose{color:var(--text-secondary);}
+.iso29100-guide.iso29100-guide .brand{font-weight:400;color:var(--text-secondary);}
+.iso29100-guide.iso29100-guide .brand{font-size:1rem;line-height:1.75;letter-spacing:normal;}

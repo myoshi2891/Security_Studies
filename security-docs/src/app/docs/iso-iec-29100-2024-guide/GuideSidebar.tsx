@@ -18,9 +18,9 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   }, []);
 
   const select = useCallback((id: string) => {
-    const nav = panel.current;
+    const nav = panel.current?.querySelector('nav');
     if (!nav) return;
-    const links = [...nav.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]')];
+    const links = [...nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
     // The TOC is a flat list of chapter links (no .nav-group), so only the matching link is highlighted.
     const selected = links.find(a => decodeURIComponent(a.hash) === `#${id}`);
     if (!selected) return;
@@ -56,9 +56,12 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
         close();
         return;
       }
+      event.preventDefault();
+      window.history.pushState(null, '', `#${encodeURIComponent(id)}`);
       setOpen(false);
       if (!heading.hasAttribute('tabindex')) heading.tabIndex = -1;
       heading.focus({ preventScroll: true });
+      target?.scrollIntoView();
     };
     const nav = panel.current;
     nav?.addEventListener('click', click);
