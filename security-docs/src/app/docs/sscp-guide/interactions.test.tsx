@@ -1,0 +1,8 @@
+import {afterEach,expect,test} from 'bun:test';
+import {act,cleanup,render,fireEvent} from '@testing-library/react';
+import {createElement} from 'react';
+import {evaluatedPage} from './fidelity-helpers';
+afterEach(cleanup);
+async function setup(){const saved=globalThis.IntersectionObserver;globalThis.IntersectionObserver=class{observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;try{const {default:Page}=await evaluatedPage();return render(createElement(Page,{}));}finally{globalThis.IntersectionObserver=saved;}}
+test('all thirteen original checklist controls toggle independently by both input and label',async()=>{const v=await setup(),inputs=[...v.container.querySelectorAll<HTMLInputElement>('.checklist input')];expect(inputs).toHaveLength(13);for(let i=0;i<inputs.length;i++){expect(inputs[i].checked).toBe(false);await act(async()=>{fireEvent.click(inputs[i]);});expect(inputs[i].checked).toBe(true);expect(inputs.filter(x=>x.checked)).toHaveLength(i+1);}for(const input of inputs){await act(async()=>{fireEvent.click(input.closest('label')!);});expect(input.checked).toBe(false);}expect(inputs.filter(x=>x.checked)).toHaveLength(0);expect(v.container.querySelectorAll('.chk-num')).toHaveLength(13);expect([...v.container.querySelectorAll('.chk-text')].every(el=>el.textContent!.trim().length>0)).toBe(true);});
+test('the three ordered procedures remain native lists with complete ordered steps',async()=>{const {default:Page}=await evaluatedPage(),v=render(createElement(Page,{}));const lists=[...v.container.querySelectorAll('ol')];expect(lists).toHaveLength(3);expect(lists.map(list=>list.children.length)).toEqual([4,6,6]);for(const list of lists)for(const item of list.children)expect(item.tagName).toBe('LI');});
