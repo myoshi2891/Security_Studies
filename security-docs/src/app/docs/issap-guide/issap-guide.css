@@ -570,3 +570,8 @@
 html:has(.issap-guide){scroll-behavior:smooth;scroll-padding-top:88px;}
 @media(max-width:1024px){.issap-guide.issap-guide .sidebar:not(.open){visibility:hidden;}}
 @media(prefers-reduced-motion:reduce){html:has(.issap-guide){scroll-behavior:auto;}}
+/* Explicit longhands preserve source inheritance through the shared cascade. */
+.issap-guide.issap-guide ul{list-style-type:none;}
+.issap-guide.issap-guide .brand{font-size:1rem;font-weight:400;line-height:1.8;color:var(--color-ink);letter-spacing:normal;}
+.issap-guide.issap-guide .section h3,
+.issap-guide.issap-guide code{color:var(--color-ink);}
