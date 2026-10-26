@@ -199,3 +199,24 @@ test('scroll tracking keeps the active step visible in the scrolling nav itself'
   expect(link).toHaveAttribute('aria-current','location');
   expect(v.container.querySelector('#sidebar')!.scrollTop).toBe(0);
 });
+
+test('malformed URL fragments on load, hashchange and TOC links do not throw', async () => {
+  const errors: unknown[] = [];
+  const onError = (event: ErrorEvent) => errors.push(event.error ?? event.message);
+  window.addEventListener('error', onError);
+  try {
+    window.history.replaceState(null, '', '#%E0%A4%A');
+    const v = await setup();
+    const bad = document.createElement('a');
+    bad.href = '#%E0%A4%A';
+    v.container.querySelector('nav')!.appendChild(bad);
+    const id = 'step-4-最低限おぼえる用語';
+    await act(async () => {window.history.replaceState(null, '', '#'+id); window.dispatchEvent(new HashChangeEvent('hashchange'));});
+    expect(v.container.querySelector('a[href="#'+id+'"]')).toHaveAttribute('aria-current','location');
+    await act(async () => {window.history.replaceState(null, '', '#%E0%A4%A'); window.dispatchEvent(new HashChangeEvent('hashchange'));});
+    await click(bad);
+    expect(errors).toEqual([]);
+  } finally {
+    window.removeEventListener('error', onError);
+  }
+});

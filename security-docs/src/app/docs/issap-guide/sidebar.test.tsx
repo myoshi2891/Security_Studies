@@ -43,3 +43,9 @@ test('header pointer input closes only an open drawer; an orphan target restores
  const v=await setup(),header=document.body.appendChild(document.createElement('header'));header.className='docs-header';try{await click(v.container.querySelector('#menuBtn'));await act(async()=>{fireEvent.pointerDown(document.body);});expect(v.container.querySelector('#menuBtn')).toHaveAttribute('aria-expanded','true');await act(async()=>{fireEvent.pointerDown(header);});expect(v.container.querySelector('#menuBtn')).toHaveAttribute('aria-expanded','false');
  const a=document.createElement('a');a.href='#missing';v.container.querySelector('nav')!.appendChild(a);await click(v.container.querySelector('#menuBtn'));await click(a);expect(document.activeElement).toBe(v.container.querySelector('#menuBtn'));}finally{header.remove();}
 });
+test('malformed URL fragments on load, hashchange and TOC links do not throw',async()=>{
+ const errors:unknown[]=[],onError=(event:ErrorEvent)=>errors.push(event.error??event.message);window.addEventListener('error',onError);
+ try{window.history.replaceState(null,'','#%E0%A4%A');const v=await setup();const bad=document.createElement('a');bad.href='#%E0%A4%A';v.container.querySelector('nav')!.appendChild(bad);
+  await act(async()=>{window.history.replaceState(null,'','#s7-3');fireEvent(window,new HashChangeEvent('hashchange'));});expect(v.container.querySelector('a[data-sub="s7-3"]')).toHaveAttribute('aria-current','location');
+  await act(async()=>{window.history.replaceState(null,'','#%E0%A4%A');fireEvent(window,new HashChangeEvent('hashchange'));});await click(bad);expect(errors).toEqual([]);}finally{window.removeEventListener('error',onError);}
+});
