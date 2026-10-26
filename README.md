@@ -470,10 +470,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 
+
 <!-- iso29100-status -->
 ## ISO/IEC 29100:2024 移行（2026-10-26）
 
-原本アーカイブRed: 新規4件が失敗し、ルート残存・HTML/Markdown移動先・比較パスの未完了を検出。専用92件/9ファイル登録。本文88件は成功済み。次に両原本をarchive/standards/へSHA-256不変で移動する。
+移行・原本アーカイブGreen。/docs/iso-iec-29100-2024-guide。本文88件とアーカイブ4件（計92件/9ファイル）。HTML/Markdownはarchive/standards/へ両SHA-256一致で保存済み（Git管理外）。全16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を保持。全20構造/コードSHA・全CSS/media・5幅×明暗・リスト丸点/番号/カウンター・全セルホバー・全表/ページhydrationを検証。Chrome10条件差分0、375/1440pxの実配信HTTP200で全件数/20構造SHA/4コード一致・12図描画とスクロール・目次/10問/配慮設定成功、pageErrors0。重複ID16件を節へ集約し全126固有ID保持。ナビ/ホーム/検索37ページ。ロジック117/117（従来112＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。原本なし隔離環境と最終全体テストは実行中。TDD: 基盤1ab5ad3→34f8e35、本文4e7cf0e/6cf2612/7cddc81/d040e06→2903a9e、アーカイブ2a133af→61c0861。
 
 配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /iso29100-status -->
