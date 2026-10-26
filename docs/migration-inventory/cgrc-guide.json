@@ -324,5 +324,40 @@
     "Source Serif 4は既存依存のローカルフォント、日本語は原本のシステムフォールバック",
     "図は原文・配色・接続を保持しローカルMermaidへ移行。自然幅の中央寄せと左右スクロール",
     "Reactクライアント部品で目次、チェック進捗、10問の採点/解説/リセットを提供。キーボード操作・図再試行/テキスト説明を追加"
-  ]
+  ],
+  "updated": "2026-10-26",
+  "archiveStatus": "both originals archived with byte-exact SHA-256",
+  "verification": {
+    "dedicatedPass": 83,
+    "dedicatedFiles": 10,
+    "sourceFreePass": 54,
+    "sourceFreeSkip": 29,
+    "sourceFreeFail": 0,
+    "singleSourceArchives": {
+      "html": {
+        "pass": 3,
+        "skip": 1,
+        "fail": 0
+      },
+      "markdown": {
+        "pass": 3,
+        "skip": 1,
+        "fail": 0
+      }
+    },
+    "fullPass": 2465,
+    "fullSkip": 0,
+    "fullFail": 0,
+    "fullFiles": 309,
+    "expectCalls": 566227,
+    "chromiumCssConditions": 10,
+    "chromiumRuntimeWidths": [
+      375,
+      1440
+    ],
+    "lint": "passed",
+    "types": "passed",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)"
+  }
 }
