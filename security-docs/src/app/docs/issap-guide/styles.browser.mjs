@@ -8,7 +8,7 @@ const dir=import.meta.dirname,root=resolve(dir,'../../../../..');
 const sourceFile=[root+'/archive/security-certifications/Issap-guide.html',root+'/Issap-guide.html'].find(fs.existsSync);
 if(!sourceFile)throw Error('Original HTML is required');
 let source=fs.readFileSync(sourceFile,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<link\b[^>]*>/g,'');
-const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.HACKING_RENDERED_HTML??'/tmp/hacking-rendered.html','utf8');
+const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.ISSAP_RENDERED_HTML??'/tmp/issap-rendered.html','utf8');
 const css=['../../globals.css','../docs-layout.css','./issap-guide.css'].map(p=>fs.readFileSync(resolve(dir,p),'utf8')).join('\n').replace(/@import[^;]+;/g,'');
 const props=['fontFamily','fontSize','fontWeight','letterSpacing','lineHeight','color','backgroundColor','marginTop','marginBottom','paddingTop','paddingBottom','paddingLeft','paddingRight','borderTopWidth','borderBottomWidth','borderLeftWidth','listStyleType','display','textTransform','fontStyle','counterReset','counterIncrement'];
 const selectors=['h1,h2,h3,h4,h5,h6','th,td','.guide-content p','.guide-content ul,.guide-content ol,.guide-content li','code,em,strong','.hero,.kicker,.meta,.meta dt,.meta dd','.brand,.brand-name,.brand-sub','.sidebar nav a','.ref,.badge,.ref-desc,.ref-url','.callout,.callout-title,.callout-body,.qa,.qa .q,.qa .a','.footer'];
