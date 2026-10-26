@@ -193,6 +193,25 @@ test('diagram text descriptions read labels from stadium and cylinder nodes inst
   ]);
 });
 
+test('state diagram d14 descriptions keep [*] start/end markers and colon labels', async () => {
+  const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const { diagrams } = await import('./diagrams');
+  expect(describeDiagram(diagrams.d14)).toEqual([
+    'ステート図',
+    '[*]（開始） → PreActivation: 生成',
+    'PreActivation → Active: 有効化',
+    'Active → Suspended: 一時停止',
+    'Suspended → Active: 再開',
+    'Active → Deactivated: 暗号期間の満了',
+    'Suspended → Deactivated: 期間満了',
+    'Active → Compromised: 漏えい・疑い',
+    'Deactivated → Compromised: 漏えい判明',
+    'Deactivated → Destroyed: 破棄',
+    'Compromised → Destroyed: 破棄',
+    'Destroyed → [*]（終了）',
+  ]);
+});
+
 test('live SVG sizing extends the viewBox only to the measured drawing bounds', async () => {
   const { fitDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
   const holder = document.createElement('div');
