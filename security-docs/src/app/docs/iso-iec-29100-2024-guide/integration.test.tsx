@@ -4,7 +4,6 @@ import {createHash} from 'node:crypto';
 import {docsConfig} from '../../../config/docs';
 import {getSearchIndex} from '../../../lib/search';
 import inventory from '../../../../../docs/migration-inventory/iso-iec-29100-2024-guide.json';
-import {diagrams} from './diagrams';
 import {renderedPage,canonical} from './fidelity-helpers';
 
 test('all original counts, IDs and fragment links survive without introducing unsafe HTML',async()=>{
@@ -15,7 +14,7 @@ test('all original counts, IDs and fragment links survive without introducing un
  expect(page.querySelector('script,style,link,iframe,form')).toBeNull();for(const e of page.querySelectorAll('*'))for(const a of e.attributes){expect(a.name).not.toMatch(/^on/i);if(['href','src'].includes(a.name))expect(a.value).not.toMatch(/^(javascript:|data:text\/html)/i);}
 });
 test('all twelve rendered diagram definitions remain byte exact and all 20 original structure hashes resist deletion',async()=>{
- const page=await renderedPage();for(const [id,definition] of Object.entries(diagrams))expect(page.getElementById(id)?.getAttribute('data-definition')).toBe(definition);
+ const page=await renderedPage();for(const [id,definition] of Object.entries(inventory.diagrams))expect(page.getElementById(id)?.getAttribute('data-definition')).toBe(definition);
  for(const [selector,hash] of Object.entries(inventory.structures)){const node=page.querySelector(selector)!;expect(node).not.toBeNull();expect(createHash('sha256').update(JSON.stringify(canonical(node))).digest('hex')).toBe(hash);const clone=node.cloneNode(true) as Element;clone.appendChild(page.createTextNode('MISSING-CONTENT-PROBE'));expect(createHash('sha256').update(JSON.stringify(canonical(clone))).digest('hex')).not.toBe(hash);}
 });
 test('all Python, JSON and YAML samples retain exact whitespace hashes and local server-side syntax highlighting',async()=>{
