@@ -2,6 +2,9 @@
 import {useCallback,useEffect,useRef,useState,type ReactNode} from 'react';
 import {GuideIcon} from './GuideIcon';
 
+/** Decode a URL fragment, keeping the raw value when it is malformed. */
+const decodeFragment=(value:string)=>{try{return decodeURIComponent(value);}catch{return value;}};
+
 /** Keep the source's single expanded chapter, selected subsection and scrolling aside. */
 export function GuideSidebar({children}:{children:ReactNode}){
  const panel=useRef<HTMLElement>(null),toggle=useRef<HTMLButtonElement>(null);
@@ -12,7 +15,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const aside=panel.current;
   if(!aside)return;
   const links=[...aside.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
-  const selected=links.find(a=>decodeURIComponent(a.hash.slice(1))===id);
+  const selected=links.find(a=>decodeFragment(a.hash.slice(1))===id);
   if(!selected)return;
   const group=selected.closest<HTMLElement>('li[data-sec]');
   for(const item of aside.querySelectorAll('.nav-list>li[data-sec]'))item.classList.toggle('active',item===group);
@@ -23,12 +26,12 @@ export function GuideSidebar({children}:{children:ReactNode}){
  },[]);
  useEffect(()=>{
   const aside=panel.current,guide=aside?.closest('.issap-guide');
-  const hash=()=>select(decodeURIComponent(window.location.hash.slice(1))||'s1');
+  const hash=()=>select(decodeFragment(window.location.hash.slice(1))||'s1');
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
    if(!link)return;
-   const id=decodeURIComponent(link.hash.slice(1));select(id);
+   const id=decodeFragment(link.hash.slice(1));select(id);
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
    if(!heading){close();return;}

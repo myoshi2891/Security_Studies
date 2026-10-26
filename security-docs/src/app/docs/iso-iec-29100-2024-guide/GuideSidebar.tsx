@@ -2,6 +2,15 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { GuideIcon } from './GuideIcon';
 
+/** Decode a URL fragment, keeping the raw value when it is malformed. */
+function decodeFragment(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 /** Keep the original flat TOC markup, with keyboard-accessible mobile controls. */
 export function GuideSidebar({ children }: { children: ReactNode }) {
   const panel = useRef<HTMLElement>(null);
@@ -22,7 +31,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (!nav) return;
     const links = [...nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
     // The TOC is a flat list of chapter links (no .nav-group), so only the matching link is highlighted.
-    const selected = links.find(a => decodeURIComponent(a.hash) === `#${id}`);
+    const selected = links.find(a => decodeFragment(a.hash) === `#${id}`);
     if (!selected) return;
 
     for (const a of links) {
@@ -39,13 +48,13 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const guide = panel.current?.closest('.iso29100-guide');
-    const hash = () => select(decodeURIComponent(window.location.hash.slice(1)) || "0-このガイドの読み方");
+    const hash = () => select(decodeFragment(window.location.hash.slice(1)) || "0-このガイドの読み方");
     hash();
     window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
       if (!link) return;
-      const id = decodeURIComponent(link.hash.slice(1));
+      const id = decodeFragment(link.hash.slice(1));
       select(id);
       if (!openRef.current) return;
       const target = document.getElementById(id);
