@@ -188,14 +188,14 @@ test('pointerdown on the shared header closes the drawer and returns focus, othe
   }
 });
 
-test('scroll tracking keeps the active step visible in the scrolling sidebar itself', async () => {
+test('scroll tracking keeps the active step visible in the scrolling nav itself', async () => {
   const {v,notify}=await observed();
-  const panel=v.container.querySelector<HTMLElement>('#sidebar')!;
+  const panel=v.container.querySelector<HTMLElement>('#sidebar nav')!;
   const link=v.container.querySelector<HTMLElement>('nav a[href="#step-11-導入ロードマップ"]')!;
   Object.defineProperty(panel,'clientHeight',{configurable:true,value:500});
   Object.defineProperty(link,'offsetTop',{configurable:true,value:1200});
   notify([[v.container.querySelector('section#step-11-導入ロードマップ'),true]]);
   expect(panel.scrollTop).toBeGreaterThan(0);
   expect(link).toHaveAttribute('aria-current','location');
-  expect(v.container.querySelector('nav')!.scrollTop).toBe(0);
+  expect(v.container.querySelector('#sidebar')!.scrollTop).toBe(0);
 });
