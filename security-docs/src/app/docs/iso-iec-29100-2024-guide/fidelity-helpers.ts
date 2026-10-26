@@ -9,9 +9,7 @@ import remarkGfm from 'remark-gfm';
 import postcss from 'postcss';
 import { expect, test } from 'bun:test';
 
-const archivedPath = resolve(import.meta.dir, '../../../../../archive/standards/Iso-iec-29100-2024-guide.html');
-const rootPath = resolve(import.meta.dir, '../../../../../Iso-iec-29100-2024-guide.html');
-const sourcePath = existsSync(archivedPath) ? archivedPath : rootPath;
+const sourcePath = resolve(import.meta.dir, '../../../../../archive/standards/Iso-iec-29100-2024-guide.html');
 // アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
 export const hasSource = existsSync(sourcePath);
 export let sourceHtml = '';
