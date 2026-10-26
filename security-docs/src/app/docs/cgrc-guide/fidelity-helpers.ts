@@ -1,0 +1,89 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { evaluate } from '@mdx-js/mdx';
+import * as runtime from 'react/jsx-runtime';
+import { renderToStaticMarkup } from 'react-dom/server';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+import remarkGfm from 'remark-gfm';
+import postcss from 'postcss';
+import { expect, test } from 'bun:test';
+
+const archivePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Cgrc-guide.html');
+const rootPath = resolve(import.meta.dir, '../../../../../Cgrc-guide.html');
+const sourcePath = existsSync(archivePath) ? archivePath : rootPath;
+// アーカイブ原本を遅延読み込みする。原本のないCIでは原本依存テストだけをスキップする。
+export const hasSource = existsSync(sourcePath);
+export let sourceHtml = '';
+export let sourceDocument: Document;
+export let definitions: Map<string, string>;
+export let sourceCss: postcss.Root;
+function loadSource() {
+  if (sourceHtml) return;
+  sourceHtml = readFileSync(sourcePath, 'utf8');
+  sourceDocument = new DOMParser().parseFromString(sourceHtml.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+  definitions = new Map(Object.entries(Function('window', sourceHtml.match(/window\.DIAGRAMS = (\{[\s\S]*?\n            \});/)![0] + 'return window.DIAGRAMS;')({}) as Record<string, string>));
+  sourceCss = postcss.parse(sourceHtml.match(/<style>([\s\S]*?)<\/style>/)![1]);
+}
+/** 原本に依存するテスト。原本がない環境（CI）ではスキップし、原本非依存のテストは常に実行する */
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
+  test.skipIf(!hasSource)(name, () => { loadSource(); return fn(); }, timeout);
+}
+export const scope = '.cgrc-guide.cgrc-guide';
+
+/** Compare every source node and attribute; only icons and runtime diagram markup have explicit adapters. */
+export function canonical(node: Node): unknown {
+  if (node.nodeType === Node.TEXT_NODE) return node.textContent?.replace(/\s+/g, ' ').trim() || null;
+  if (node.nodeType !== Node.ELEMENT_NODE) return null;
+  const el = node as Element;
+  if (el.tagName === 'NOSCRIPT') return null;
+  if (el.matches('.mermaid-target')) return ['diagram', el.getAttribute('data-key')];
+  if (el.tagName === 'I') return ['icon', el.getAttribute('class')];
+  const attrs = [...el.attributes].filter(a => a.name !== 'style').map(a => [a.name, a.name === 'class' ? a.value.replace(/\s*hljs\b/g, '') : a.value]).sort((a, b) => a[0].localeCompare(b[0]));
+  const style = (el.getAttribute('style') || '').split(';').map(s => s.trim().replace(/\s+/g, '')).filter(Boolean).sort();
+  return [el.tagName, attrs, style, el.matches('pre code') ? [el.textContent] : [...el.childNodes].map(canonical).filter(v => v !== null)];
+}
+
+let evaluated: ReturnType<typeof evaluate> | undefined;
+export function evaluatedPage() {
+  evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import ['"](?:\.\/cgrc-guide\.css)['"];?\s*$/gm, ''), {
+    ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url), remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+  });
+  return evaluated;
+}
+
+let rendered: Promise<Document> | undefined;
+export function renderedPage() {
+  rendered ??= renderDocument();
+  return rendered;
+}
+async function renderDocument() {
+  const { default: Page } = await evaluatedPage();
+  return new DOMParser().parseFromString(renderToStaticMarkup(runtime.jsx(Page, {})), 'text/html');
+}
+
+export function declarations(css: postcss.Root, selector: string) {
+  const values: string[] = [];
+  css.walkRules(selector, rule => { rule.walkDecls(d => { values.push(`${d.prop}:${d.value}`); }); });
+  return values;
+}
+
+export function chapterContracts(ids: string[]) {
+  for (const id of ids) {
+    sourceTest(`${id}: all text, table cells, list hierarchy, code, callouts, diagrams, links and emphasis survive`, async () => {
+      const original = sourceDocument.getElementById(id)!;
+      const migrated = (await renderedPage()).getElementById(id);
+      expect(original).not.toBeNull();
+      expect(migrated).not.toBeNull();
+      expect(canonical(migrated!)).toEqual(canonical(original));
+      for (const selector of ['p', 'li', 'th', 'td', 'h2', 'h3', 'h4', '.callout-body', '.ref-title', '.ref-desc', '.ref-url', 'summary']) {
+        const content = (el: Element) => [...el.querySelectorAll(selector)].filter(child => !child.closest('.mermaid-target[data-key]')).map(child => child.textContent?.replace(/\s+/g, ' ').trim());
+        expect(content(migrated!), selector).toEqual(content(original));
+      }
+      expect([...migrated!.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent));
+      for (const figure of migrated!.querySelectorAll('.mermaid-target[data-diagram]')) {
+        expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-key')!) ?? null);
+      }
+    });
+  }
+}
