@@ -1,6 +1,6 @@
 # Technical Specification: Security Studies Documentation (Next.js + Tailwind v4 + MDX)
 
-Updated 2026-10-24
+Updated 2026-10-26
 
 ## 1. Project Overview
 
@@ -122,3 +122,7 @@ Inventory: `docs/migration-inventory/csslp-guide.json`. User review: `docs/migra
 ## CSSLP practice and diagrams — 2026-10-24
 
 CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に分けたカードへ整理。スマートフォンは1列、768px以上は2列の選択肢。解答欄はネイティブdetailsの開閉を保持し、正解バッジと内部フォーカスリングを整備。全16図へ図番号・内容別タイトル・種類表示を追加し、描画面・角丸ノード・曲線の矢印・サンセリフ体・配色を統一。小さい補助文字のコントラスト比4.5以上を検証。図の自然幅・中央寄せ・左端からの横スクロール・遅延描画・再試行・テキスト説明を保持。原文・正解・図定義・両原本のSHA-256は不変。第13章の装飾spanのみ透過した全19構造ハッシュ、問題文10件の固定ハッシュ、全40選択肢、3幅のデザインを検証。他章は5幅×明暗の原本CSS比較を継続。専用96件/12ファイル成功、原本なし隔離環境62成功/34skip/0失敗。全体1499成功/0skip/0失敗（230ファイル、511,065 expect）。npm test・lint・型チェック成功。HTTP 200の配信HTMLで40選択肢・16図見出しと全件数・19構造ハッシュの一致を確認。Red `047a0b7` → Green `173382a`、文字コントラストRed `395d578` → Green `6c2ef93`。ビルド禁止・未実行、目視はユーザー担当・未確認。
+
+## ISO/IEC 29100:2024 (2026-10-26)
+
+`/docs/iso-iec-29100-2024-guide`: 16節・96見出し・41表937セル・12図・4コード・10問・26出典を移行。専用92件/9ファイル。原本HTML/Markdownは `archive/standards/` へ両SHA-256一致で保存。原本なし環境58成功/34skip/0失敗。ナビ・ホーム・静的/動的検索37ページ。全体2295成功/0skip/0失敗（290ファイル）。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当。確認表: `docs/migration-inventory/iso-iec-29100-2024-guide-review.md`。

@@ -398,10 +398,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 
+
 <!-- iso29100-status -->
 ## ISO/IEC 29100:2024 移行（2026-10-26）
 
-移行・原本アーカイブGreen。専用92件/9ファイル、原本なし58成功/34skip/0失敗。Chrome10条件と実配信/全12図/10問/目次が成功。全体検証で旧い登録件数の期待値2箇所を更新: ホームISO6件（a7b2b0c、4件成功）、ISO27001の既存30ルート比較から新規ISO29100を除外（266b5d4、5件成功）。製品コード変更なし。全件テストを修正後に再実行中。ナビ/ホーム/検索37ページ、両原本archive/standards/でSHA不変。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+移行・原本アーカイブ完了: /docs/iso-iec-29100-2024-guide。全16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を保持。全20構造SHA-256・コードの空白SHA・全CSS/media・5幅×明暗・リスト丸点/丸囲み番号/カウンター・全セルホバー・全表/ページhydrationを検証。専用92件/9ファイルを含む全体2295成功/0skip/0失敗（290ファイル、553,875 expect）。原本なし隔離環境58成功/34skip/0失敗。Chrome10条件差分0、375/1440pxのHTTP200で全件数/20構造/4コードSHA一致・全12図描画と左右スクロール・目次/10問/配慮設定成功（pageErrors0）。原本HTML/Markdownはarchive/standards/へ両SHA-256一致で保存済み（Git管理外）。原本の16重複IDは節へ集約し全126固有ID保持。ナビ/ホーム/静的・動的検索は37ページ。ロジック117/117（従来112＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤1ab5ad3→34f8e35、本文4e7cf0e/6cf2612/7cddc81/d040e06→2903a9e、アーカイブ2a133af→61c0861。目視確認表: docs/migration-inventory/iso-iec-29100-2024-guide-review.md。 未移行のルート原稿: CGRC、ISSAP、ISSEP、SSCP、ISO/IEC24759（HTML3件/Markdown5件）。
 
 配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /iso29100-status -->

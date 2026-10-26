@@ -313,5 +313,28 @@
     "mm9": "flowchart LR\nA[\"企画・要件\"] --> B[\"設計\"]\nB --> C[\"実装\"]\nC --> D[\"テスト\"]\nD --> E[\"リリース・運用\"]\nE --> F[\"廃止・データ廃棄\"]\nA -.-> A1[\"PII の棚卸し<br/>目的の定義<br/>保護要件の特定\"]\nB -.-> B1[\"役割の整理<br/>PIA / 脅威モデリング<br/>最小化・保持の設計\"]\nC -.-> C1[\"同意・削除・開示の実装<br/>ログのマスキング<br/>アクセス制御\"]\nD -.-> D1[\"プライバシーテスト<br/>他人データの非表示確認<br/>テスト環境の PII 確認\"]\nE -.-> E1[\"監視・監査<br/>インシデント対応<br/>委託先管理\"]\nF -.-> F1[\"削除・匿名化<br/>バックアップ・ログの扱い\"]",
     "mm10": "flowchart TB\nP[\"ISO/IEC 29100:2024<br/>用語・役割・11原則\"]\nS[\"ISO/IEC 27001 / 27002<br/>情報セキュリティ\"]\nM[\"ISO/IEC 27701:2025<br/>プライバシー情報マネジメント\"]\nI[\"ISO/IEC 29134:2023<br/>PIA ガイドライン\"]\nN[\"ISO/IEC 29184<br/>オンライン通知と同意\"]\nC[\"ISO/IEC 29151 / 27018<br/>PII 保護の実施規範\"]\nD[\"ISO 31700-1:2023<br/>Privacy by design\"]\nNI[\"NIST Privacy Framework<br/>米国の任意の枠組み\"]\nL[\"LINDDUN<br/>プライバシー脅威モデリング\"]\nP -->|\"概念の対応 Annex A\"| S\nP -->|\"引用規格 / Annex C で対応づけ\"| M\nS -->|\"2025年版は独立した規格\"| M\nP -.->|\"参考文献に掲載\"| C\nP -.->|\"関連\"| I\nP -.->|\"関連\"| N\nP -.->|\"関連\"| D\nP -.->|\"考え方が近い\"| NI\nP -.->|\"設計時の脅威分析で併用\"| L",
     "mm11": "flowchart TD\nA[\"1 スコープ決定<br/>対象システムと PII の棚卸し\"] --> B[\"2 役割の整理<br/>controller / processor / third party\"]\nB --> C[\"3 保護要件の特定<br/>法令・契約・事業・本人の期待\"]\nC --> D[\"4 PIA とリスク評価\"]\nD --> E[\"5 方針の策定<br/>内部ポリシーと外部 notice\"]\nE --> F[\"6 統制の設計<br/>privacy by design と PET\"]\nF --> G[\"7 実装とテスト\"]\nG --> H[\"8 運用・監査・改善\"]\nH -->|\"変更があれば\"| A"
+  },
+  "updated": "2026-10-26",
+  "archiveStatus": "both originals archived with byte-exact SHA-256",
+  "verification": {
+    "dedicatedPass": 92,
+    "dedicatedFiles": 9,
+    "sourceFreePass": 58,
+    "sourceFreeSkip": 34,
+    "sourceFreeFail": 0,
+    "fullPass": 2295,
+    "fullSkip": 0,
+    "fullFail": 0,
+    "fullFiles": 290,
+    "expectCalls": 553875,
+    "chromiumCssConditions": 10,
+    "chromiumRuntimeWidths": [
+      375,
+      1440
+    ],
+    "lint": "passed",
+    "types": "passed",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)"
   }
 }
