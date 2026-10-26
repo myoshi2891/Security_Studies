@@ -186,7 +186,7 @@ function describeFlowchart(body: string[]): string[] {
 
 export function MermaidFigure({ id, source, label, renderer = renderDiagram }: MermaidFigureProps) {
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const svgId = `issap-mermaid-${id}-${unique}`;
+  const svgId = `cgrc-mermaid-${id}-${unique}`;
   const descriptionId = `${svgId}-description`;
   // d3 形式は番号、それ以外（dg-overflow など）は dg- 接頭辞を除いた名前を表示名にする
   const figureNumber = /^d(\d+)$/.exec(id)?.[1];
@@ -243,8 +243,8 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
   return (
     <div
       ref={figureRef}
-      id={id}
-      className="diagram mermaid-target"
+      data-key={id}
+      className="mermaid-target"
       data-diagram={id}
       data-definition={source}
     >
