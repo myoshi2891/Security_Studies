@@ -193,6 +193,13 @@ test('diagram text descriptions read labels from stadium and cylinder nodes inst
   ]);
 });
 
+test('state diagram descriptions mark [*] as start or end, keep transition labels and pass through non-transition lines', async () => {
+  const { describeDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  expect(
+    describeDiagram('stateDiagram-v2\n[*] --> Draft\nDraft --> Approved: 審査<br/>完了\nApproved --> [*]\nstate Approved {\n}'),
+  ).toEqual(['ステート図', '[*]（開始） → Draft', 'Draft → Approved: 審査 完了', 'Approved → [*]（終了）', 'state Approved {', '}']);
+});
+
 
 test('live SVG sizing extends the viewBox only to the measured drawing bounds', async () => {
   const { fitDiagram } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
