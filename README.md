@@ -1,6 +1,6 @@
 # Security Studies
 
-最終更新日: 2026-10-25
+最終更新日: 2026-10-26
 
 [![CI](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml/badge.svg)](https://github.com/myoshi2891/Security_Studies/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/myoshi2891/Security_Studies/graph/badge.svg)](https://codecov.io/gh/myoshi2891/Security_Studies)
@@ -466,3 +466,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
 <!-- /hacking-exploitation-status -->
+
+<!-- iso29100-status -->
+## ISO/IEC 29100:2024 移行（2026-10-26）
+
+表示基盤Green: 専用32件/3ファイル成功。16節の見出し・ヒーロー・目次・フッター・全CSS宣言・12図定義・目次操作と図ライフサイクルを検証。Red 1ab5ad3 → Green 34f8e35。本文の移行・原本アーカイブは次段階。
+
+配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /iso29100-status -->
