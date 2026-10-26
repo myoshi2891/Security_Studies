@@ -374,3 +374,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /iso29100-status -->
+
+<!-- issap-status -->
+## ISSAP 移行（2026-10-26）
+
+棚卸し・基盤Red: 13章・107見出し・53表854セル・22図・188リスト項目・12問と解答・30出典・41注意欄・47目次リンク（13章/34小節）を固定。新規32件/3ファイルが全件失敗。既存ベースライン2295成功/290ファイル（前回最終実測、HEAD 3a5e8fb）を7仕様書と照合。npm使用・ビルド禁止。本文・原本アーカイブは次段階。
+
+配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /issap-status -->
