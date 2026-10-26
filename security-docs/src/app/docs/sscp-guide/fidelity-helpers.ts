@@ -77,7 +77,14 @@ export function chapterContracts(ids: string[]) {
       expect(migrated).not.toBeNull();
       expect(canonical(migrated!)).toEqual(canonical(original));
       for (const selector of ['p', 'li', 'th', 'td', 'h2', 'h3', 'h4', '.callout-body', '.ref-title', '.ref-desc', '.ref-url', 'summary']) {
-        const content = (el: Element) => [...el.querySelectorAll(selector)].filter(child => !child.closest('.mermaid-target[data-diagram]')).map(child => child.textContent?.replace(/\s+/g, ' ').trim());
+        const content = (el: Element) => [...el.querySelectorAll(selector)].filter(child => !child.closest('.mermaid-target[data-diagram]')).map(child => {
+          const clone = child.cloneNode(true) as Element;
+          // React forbids formatting-only text between table cells; retain every cell's own text.
+          for (const container of clone.querySelectorAll('table,thead,tbody,tfoot,tr,colgroup')) {
+            for (const node of [...container.childNodes]) if (node.nodeType === Node.TEXT_NODE && !node.textContent?.trim()) node.remove();
+          }
+          return clone.textContent?.replace(/\s+/g, ' ').trim();
+        });
         expect(content(migrated!), selector).toEqual(content(original));
       }
       expect([...migrated!.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent));
