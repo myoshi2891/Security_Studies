@@ -1,5 +1,9 @@
 /* Restore browser defaults that shared MDX styles and Tailwind preflight replace. */
 .cgrc-guide.cgrc-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,blockquote,pre,code,table,thead,tbody,tr,th,td,a,strong,em,figure,dl,dt,dd){margin:0;padding:0;border:0;letter-spacing:normal;font-style:normal;text-transform:none;box-shadow:none;}
+.cgrc-guide.cgrc-guide .prose{color:var(--color-ink);max-width:none;margin-left:0;margin-right:0;}
+.cgrc-guide.cgrc-guide .brand{font-family:var(--font-sans);font-weight:400;}
+.cgrc-guide.cgrc-guide .eyebrow{font-family:var(--font-sans);font-weight:400;letter-spacing:0px;text-transform:none;}
+.cgrc-guide.cgrc-guide ul{list-style-type:none;}
 .cgrc-guide.cgrc-guide :where(h3,h5,td){color:inherit;}
 .cgrc-guide.cgrc-guide ol{list-style-type:decimal;}
 .cgrc-guide.cgrc-guide .brand{font:inherit;color:inherit;letter-spacing:normal;}
@@ -136,7 +140,7 @@
                 padding: 12px 12px 32px;
             }
             .cgrc-guide.cgrc-guide .sidebar nav ul {
-                list-style: none;
+                list-style: none; list-style-type: none;
                 margin: 0;
                 padding: 0;
             }
@@ -277,7 +281,7 @@
                 margin: 0 0 1em;
             }
             .cgrc-guide.cgrc-guide .prose ul {
-                list-style: none;
+                list-style: none; list-style-type: none;
                 margin: 0 0 1em;
                 padding: 0;
             }
@@ -845,7 +849,7 @@
                 font-weight: 500;
                 color: var(--color-indigo);
                 background: var(--tint-indigo);
-                list-style: none;
+                list-style: none; list-style-type: none;
                 display: flex;
                 align-items: center;
                 gap: 8px;
