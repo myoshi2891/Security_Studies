@@ -291,5 +291,59 @@
     "S18",
     "S19",
     "S19"
+  ],
+  "questionCitations": [
+    [
+      {
+        "text": "[S3]",
+        "href": "https://www.isc2.org/Insights/2025/07/new-exam-outlines-for-isc2-advanced-certifications"
+      }
+    ],
+    [
+      {
+        "text": "[S2]",
+        "href": "https://www.isc2.org/certifications/issap/issap-certification-exam-outline"
+      }
+    ],
+    [
+      {
+        "text": "[S16]",
+        "href": "https://sabsa.org/"
+      }
+    ],
+    [],
+    [
+      {
+        "text": "[S17]",
+        "href": "https://www.first.org/cvss/"
+      }
+    ],
+    [
+      {
+        "text": "[S20]",
+        "href": "https://datatracker.ietf.org/doc/html/rfc6749"
+      }
+    ],
+    [],
+    [],
+    [
+      {
+        "text": "[S12]",
+        "href": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
+      }
+    ],
+    [],
+    [
+      {
+        "text": "[S11]",
+        "href": "https://csrc.nist.gov/pubs/sp/800/63/4/final"
+      }
+    ],
+    [
+      {
+        "text": "[S13]",
+        "href": "https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf"
+      }
+    ]
   ]
 }
