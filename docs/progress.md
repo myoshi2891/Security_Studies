@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-25（レビュー対応＋Codecov patch: Hacking GuideSidebar未カバー行の解消）
+> **最終更新**: 2026-10-26（ISO29100棚卸し・表示基盤Red。既存テスト再検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1335,3 +1335,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
 <!-- /hacking-exploitation-status -->
+
+## ISO/IEC 29100:2024 移行中（2026-10-26）
+
+基盤Red: 32件/3ファイルが全件失敗。既存2194成功記録と別集計。16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を固定。npm使用、ビルド禁止、目視はユーザー担当。
