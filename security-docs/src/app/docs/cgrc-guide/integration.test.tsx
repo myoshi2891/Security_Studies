@@ -8,7 +8,7 @@ import {renderedPage,canonical} from './fidelity-helpers';
 
 test('all original counts, IDs and fragment links survive without introducing unsafe HTML',async()=>{
  const page=await renderedPage();
- for(const [s,n] of Object.entries(inventory.counts))expect(page.querySelectorAll(s==='pre.mermaid'?'.mermaid-target':s).length,s).toBe(n);
+ for(const [s,n] of Object.entries(inventory.counts))expect([...page.querySelectorAll(s)].filter(e=>s!=='svg'||!e.closest('i')).length,s).toBe(n);
  const ids=[...page.querySelectorAll('[id]')].map(e=>e.id);expect(new Set(ids).size).toBe(ids.length);expect(new Set(ids)).toEqual(new Set(inventory.ids));
  for(const a of page.querySelectorAll('a[href]')){const href=a.getAttribute('href')!;if(href.startsWith('#'))expect(page.getElementById(href.slice(1)),href).not.toBeNull();if(a.getAttribute('target')==='_blank')expect(a.getAttribute('rel')).toContain('noopener');}
  expect(page.querySelector('script,style,link,iframe,form')).toBeNull();for(const e of page.querySelectorAll('*'))for(const a of e.attributes){expect(a.name).not.toMatch(/^on/i);if(['href','src'].includes(a.name))expect(a.value).not.toMatch(/^(javascript:|data:text\/html)/i);}
