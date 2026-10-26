@@ -545,10 +545,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /issap-status -->
 
+
 <!-- cgrc-status -->
 ## CGRC 移行（2026-10-26）
 
-開始時監査: 既存登録38ページを確認。CGRCは未登録。基準の全体2379件/299ファイルをnpm testで再検証中。原本台帳を作成し、表示基盤の31件は未実装による失敗（Red）を確認。本文・装飾・操作・アーカイブは段階実装予定。
+段階1 Green: 表示基盤・モバイル目次・17図を実装。専用31成功/0失敗（3ファイル）、npm lint/型チェック成功。既存全体2379件の基準再検証を継続中。現在登録39ページ、本文は次段階。Red ef7382f → Green cc3e59e。
 
 配置: `security-docs/src/app/docs/cgrc-guide/page.mdx`。台帳: `docs/migration-inventory/cgrc-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /cgrc-status -->
