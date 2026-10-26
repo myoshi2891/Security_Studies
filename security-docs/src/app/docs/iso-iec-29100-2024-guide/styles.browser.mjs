@@ -11,7 +11,7 @@ let source=fs.readFileSync(sourceFile,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\
 const hljs=require('highlight.js');
 source=source.replace('<style>', '<style>'+fs.readFileSync(resolve(dir,'../../../../node_modules/highlight.js/styles/atom-one-dark.css'),'utf8')+'\n');
 source=source.replace(/<code class="language-(python|json|yaml)">([\s\S]*?)<\/code>/g,(_,lang,code)=>'<code class="language-'+lang+' hljs">'+hljs.highlight(code.replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&'),{language:lang}).value+'</code>');
-const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.HACKING_RENDERED_HTML??'/tmp/hacking-rendered.html','utf8');
+const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.ISO29100_RENDERED_HTML??'/tmp/iso29100-rendered.html','utf8');
 const css=['../../globals.css','../docs-layout.css','./iso-iec-29100-2024-guide.css'].map(p=>fs.readFileSync(resolve(dir,p),'utf8')).join('\n').replace(/@import[^;]+;/g,'');
 const props=['fontFamily','fontSize','fontWeight','letterSpacing','lineHeight','color','backgroundColor','marginTop','marginBottom','paddingTop','paddingBottom','paddingLeft','paddingRight','borderTopWidth','borderBottomWidth','borderLeftWidth','listStyleType','display','textTransform','fontStyle'];
 const selectors=['h1,h2,h3,h4','th,td','.guide-content p','.guide-content ul,.guide-content ol,.guide-content li','code,em,strong','.hero,.meta,.meta dt,.meta dd','.brand,.brand-title,.brand-sub','.sidebar nav a','.ref,.ref-badge,.ref-title,.ref-desc,.ref-url','.callout,.quiz-head,.quiz-badge,.quiz-q,.quiz-summary,.quiz-answer,.quiz-ans-badge','.footer'];
