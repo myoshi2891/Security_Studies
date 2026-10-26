@@ -13,7 +13,7 @@ try{
  for(const width of [375,1440]){
  const context=await browser.newContext({viewport:{width,height:900}});
  const page=await context.newPage();page.on('pageerror',error=>failures.push(error.message));
- const response=await page.goto(new URL(inventory.route,process.env.DOCS_BASE_URL??'http://127.0.0.1:3011').href,{waitUntil:'networkidle'});assert.equal(response.status(),200);
+ const response=await page.goto(new URL(inventory.route,process.env.DOCS_BASE_URL??'http://127.0.0.1:3011').href,{waitUntil:'networkidle'});assert.equal(response.status(),200);await page.getByRole("button",{name:"同意して閲覧する"}).click();
  const data=await page.locator('.iso29100-guide').evaluate((guide,inventory)=>{
   guide=guide.cloneNode(true);for(const a of guide.querySelectorAll('nav a.active')){a.classList.remove('active');if(!a.className)a.removeAttribute('class');a.removeAttribute('aria-current');}guide.querySelector('#quizProgressFill')?.removeAttribute('style');for(const d of guide.querySelectorAll('.mermaid-target'))d.replaceChildren();
   function canonical(node){if(node.nodeType===3)return node.textContent.replace(/\s+/g,' ').trim()||null;if(node.nodeType!==1)return null;const el=node;if(el.tagName==='NOSCRIPT')return null;if(el.matches('.mermaid[id],.mermaid-target[data-diagram]'))return ['diagram',el.id];if(el.tagName==='I')return ['icon',el.getAttribute('class')];const attrs=[...el.attributes].filter(a=>a.name!=='style'&&!(a.name==='id'&&el.matches('h2')&&el.parentElement?.id===el.id)).map(a=>[a.name,a.name==='class'?a.value.replace(/\s*hljs\b/g,''):a.value]).sort((a,b)=>a[0].localeCompare(b[0]));const style=(el.getAttribute('style')||'').split(';').map(s=>s.trim().replace(/\s+/g,'')).filter(Boolean).sort();return [el.tagName,attrs,style,el.matches('pre code')?[el.textContent]:[...el.childNodes].map(canonical).filter(v=>v!==null)];}
@@ -33,7 +33,7 @@ try{
  }
  await page.locator('#quizExpandAll').click();assert.equal(await page.locator('.quiz-details[open]').count(),10);
  await page.locator('#quizCollapseAll').click();assert.equal(await page.locator('.quiz-details[open]').count(),0);
- for(const input of await page.locator('.quiz-check-input').all())await input.check();
+ for(const label of await page.locator('.quiz-check').all())await label.click();
  assert.equal(await page.locator('#quizProgressText').textContent(),'10 / 10 問（100%）');
  await page.locator('#quizResetChecks').click();assert.equal(await page.locator('.quiz-check-input:checked').count(),0);
  assert.equal(await page.locator('#quizProgressText').textContent(),'0 / 10 問（0%）');
