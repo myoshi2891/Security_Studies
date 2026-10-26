@@ -1376,10 +1376,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 
+
 <!-- issap-status -->
 ## ISSAP 移行（2026-10-26）
 
-原本アーカイブGreen: HTML/Markdownをarchive/security-certifications/へ両SHA-256一致で保存済み（Git管理外）。ルート残存なし・比較参照は遅延読み込みのアーカイブ専用へ更新。アーカイブ4件成功。専用84件/9ファイル（本文80件＋アーカイブ4件）。全13章・107見出し・53表854セル・22図・188項目・12問・30出典を移行。Chrome10条件と375/1440px実配信・図/目次操作は成功。原本なし隔離環境と最終全体テストは実行中。ロジック120/120（従来117＋GuideSidebar/GuideIcon/MermaidFigure）。TDD: 基盤e054b4f→14e0aef、前半2806945→a37aa48、後半3184645→292389c、アーカイブc2a679e→2a47e28。
+移行・原本アーカイブGreen。専用84件/9ファイル、原本なし53成功/31skip/0失敗。全体検証で資格一覧の固定期待値2箇所（CCIE/CCST）がISSAP追加を検出したため更新し、該当17件成功（4e19749）。既存項目と順序は保持し、製品コード変更なし。全件テストは修正後に再実行中。両原本はarchive/security-certifications/にSHA-256一致で保存。Chrome10条件および実配信・22図・目次操作は成功。ナビ/ホーム/検索38ページ。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。
 
 配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /issap-status -->
