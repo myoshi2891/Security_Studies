@@ -126,3 +126,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 ## ISO/IEC 29100:2024 (2026-10-26)
 
 `/docs/iso-iec-29100-2024-guide`: 16節・96見出し・41表937セル・12図・4コード・10問・26出典を移行。専用92件/9ファイル。原本HTML/Markdownは `archive/standards/` へ両SHA-256一致で保存。原本なし環境58成功/34skip/0失敗。ナビ・ホーム・静的/動的検索37ページ。全体2295成功/0skip/0失敗（290ファイル）。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当。確認表: `docs/migration-inventory/iso-iec-29100-2024-guide-review.md`。
+
+## ISSAP (2026-10-26)
+
+`/docs/issap-guide`: 全13章・107見出し・53表854セル・22図・188リスト項目・12問/解答・30出典・41注意欄を移行。専用84件/9ファイル。HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致で保存。資格ナビ・ホーム・静的/動的検索は38ページ。全体2379成功/0skip/0失敗（299ファイル）、原本なし53成功/31skip/0失敗。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。確認表: `docs/migration-inventory/issap-guide-review.md`。

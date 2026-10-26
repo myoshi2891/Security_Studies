@@ -345,5 +345,28 @@
         "href": "https://csrc.nist.gov/csrc/media/presentations/2025/nist-pqc-project/nist_pqc_the_road_ahead-moody_1.1.pdf"
       }
     ]
-  ]
+  ],
+  "updated": "2026-10-26",
+  "archiveStatus": "both originals archived with byte-exact SHA-256",
+  "verification": {
+    "dedicatedPass": 84,
+    "dedicatedFiles": 9,
+    "sourceFreePass": 53,
+    "sourceFreeSkip": 31,
+    "sourceFreeFail": 0,
+    "fullPass": 2379,
+    "fullSkip": 0,
+    "fullFail": 0,
+    "fullFiles": 299,
+    "expectCalls": 557552,
+    "chromiumCssConditions": 10,
+    "chromiumRuntimeWidths": [
+      375,
+      1440
+    ],
+    "lint": "passed",
+    "types": "passed",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)"
+  }
 }

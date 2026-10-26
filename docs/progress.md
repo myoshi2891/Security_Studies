@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-26（ISO29100移行・原本アーカイブ・全自動検証完了）
+> **最終更新**: 2026-10-26（ISSAP移行・原本アーカイブ・全自動検証完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,26 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2295成功 / 0 skip / 0失敗** | 全体290ファイル・553,875 expect。ISO29100専用92件を含む。 |
-| テストファイル数 | **290ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **117/117 (100%)** | 従来112＋ISO29100部品5。純粋データ・MDXは分母外。全290テストファイルとは別集計 |
+| テストケース総数 | **2379成功 / 0 skip / 0失敗** | 全体299ファイル・557,552 expect。ISSAP専用84件を含む。 |
+| テストファイル数 | **299ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **120/120 (100%)** | 従来117＋ISSAP部品3。純粋データ・MDXは分母外。全299テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISO29100完了欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびISSAP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/issap-guide/archive.test.ts` | 4 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/foundation.test.tsx` | 11 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/front.test.tsx` | 12 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/hydration.test.tsx` | 4 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/integration.test.tsx` | 6 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/rear.test.tsx` | 14 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/runtime.test.tsx` | 13 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/sidebar.test.tsx` | 8 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/issap-guide/styles.test.tsx` | 12 | ✅ 2026-10-26 ISSAP追加・原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/iso-iec-29100-2024-guide/archive.test.ts` | 4 | ✅ 2026-10-26 ISO29100追加・原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/iso-iec-29100-2024-guide/chapters.test.tsx` | 32 | ✅ 2026-10-26 ISO29100追加・原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/iso-iec-29100-2024-guide/foundation.test.tsx` | 11 | ✅ 2026-10-26 ISO29100追加・原文/装飾/操作/アーカイブ検証 |
@@ -361,7 +370,7 @@ form-action 'self'
 | 検索インデックス (`src/lib/search.ts`) | ✅ 稼働中 | — |
 | 検索 UI (`SearchModal`) | ✅ 稼働中 | — |
 | DisclaimerModal | ✅ 稼働中 | — |
-| Docs ページ (37ページ、Archive含む) | ✅ 稼働中 | — |
+| Docs ページ (38ページ、Archive含む) | ✅ 稼働中 | — |
 | Standalone Docker モード | ✅ 稼働中 | — |
 | MITRE ATLAS全13節・11表・4図・6手順カード・29参考文献移行 | ✅ 自動検証完了・目視確認待ち | 2026-10-12 |
 | Secure by Design全17節・35表・15図・8 Java例・32参考文献移行 | ✅ 自動検証完了・目視確認待ち | 2026-10-12 |
@@ -375,13 +384,13 @@ form-action 'self'
 |---|---|---|
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `GEMINI.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `README.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `security-docs/CLAUDE.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `security-docs/README.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
-| `docs/progress.md` | 2026-10-26 | ISO29100移行・専用92件・全体2295件・原本アーカイブ・実測同期 |
+| `CLAUDE.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `GEMINI.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `README.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `security-docs/CLAUDE.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `security-docs/README.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `docs/test-coverage-dashboard.html` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
+| `docs/progress.md` | 2026-10-26 | ISSAP移行・専用84件・全体2379件・原本アーカイブ・実測同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -411,6 +420,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| ISSAP-1026 | **ISSAP全13章移行・原本アーカイブ・全自動検証完了** — `/docs/issap-guide`。専用84件、全体2379件。目視はユーザー担当・未確認。 | 2026-10-26 |
 | ISO29100-1026 | **ISO29100全16節移行・原本アーカイブ・自動検証完了** — `/docs/iso-iec-29100-2024-guide`。専用92件、全体2295件。目視はユーザー担当・未確認。 | 2026-10-26 |
 | REVIEW-1025F | **レビュー対応（ISSEP S18・鍵廃棄、Hacking図ラベル）** — `Issep-guide.md`: S18は元URLがリダイレクトし保存版もないため、S18に依拠する1.6節の非公式報告と補足、参考文献のS18行を削除（S19/S20は既存引用との整合のため番号維持）。5.4のベストプラクティスを、強固な暗号・平文履歴なし・バックアップ/エスクローを含む全鍵コピーの消去を満たす場合のみ鍵廃棄を暗号消去とし、暗号化だけでは不十分と明記（`3137bec`）。Hacking `MermaidFigure` の `label` 省略時、`d<番号>` は「図 N」、それ以外（`dg-overflow`など）は「図: overflow」とし「図 NaN」を解消。Red `29841ac` → Green `c0f5d20`。専用87件・全2203件/281ファイル成功（550,309 expect）、lint・型チェック成功。ビルド禁止・未実行。 | 2026-10-25 |
 | REVIEW-1025E | **レビュー対応（Hacking: The Art of Exploitation 目次の動き抑制）** — `prefers-reduced-motion: reduce` の上書きが文書スクロールのみで、980px以下のモバイル目次の `transform 0.25s ease` は残っていた。同じ動き抑制条件内でガイド範囲の `.sidebar` に `transition:none` を追加（条件外の遷移は維持）。Red `5f3e58d` → Green `70b44bd`。専用86件/9ファイル・全2202件/281ファイル成功（550,297 expect）、lint・型チェック成功。ビルド禁止・未実行。目視はユーザー担当。 | 2026-10-25 |
@@ -1362,7 +1372,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- iso29100-status -->
 ## ISO/IEC 29100:2024 移行（2026-10-26）
 
-移行・原本アーカイブ完了: /docs/iso-iec-29100-2024-guide。全16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を保持。全20構造SHA-256・コードの空白SHA・全CSS/media・5幅×明暗・リスト丸点/丸囲み番号/カウンター・全セルホバー・全表/ページhydrationを検証。専用92件/9ファイルを含む全体2295成功/0skip/0失敗（290ファイル、553,875 expect）。原本なし隔離環境58成功/34skip/0失敗。Chrome10条件差分0、375/1440pxのHTTP200で全件数/20構造/4コードSHA一致・全12図描画と左右スクロール・目次/10問/配慮設定成功（pageErrors0）。原本HTML/Markdownはarchive/standards/へ両SHA-256一致で保存済み（Git管理外）。原本の16重複IDは節へ集約し全126固有ID保持。ナビ/ホーム/静的・動的検索は37ページ。ロジック117/117（従来112＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤1ab5ad3→34f8e35、本文4e7cf0e/6cf2612/7cddc81/d040e06→2903a9e、アーカイブ2a133af→61c0861。目視確認表: docs/migration-inventory/iso-iec-29100-2024-guide-review.md。 未移行のルート原稿: CGRC、ISSAP、ISSEP、SSCP、ISO/IEC24759（HTML3件/Markdown5件）。
+移行・原本アーカイブ完了: /docs/iso-iec-29100-2024-guide。全16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を保持。全20構造SHA-256・コードの空白SHA・全CSS/media・5幅×明暗・リスト丸点/丸囲み番号/カウンター・全セルホバー・全表/ページhydrationを検証。専用92件/9ファイルを含む全体2295成功/0skip/0失敗（290ファイル、553,875 expect）。原本なし隔離環境58成功/34skip/0失敗。Chrome10条件差分0、375/1440pxのHTTP200で全件数/20構造/4コードSHA一致・全12図描画と左右スクロール・目次/10問/配慮設定成功（pageErrors0）。原本HTML/Markdownはarchive/standards/へ両SHA-256一致で保存済み（Git管理外）。原本の16重複IDは節へ集約し全126固有ID保持。ナビ/ホーム/静的・動的検索は37ページ。ロジック117/117（従来112＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤1ab5ad3→34f8e35、本文4e7cf0e/6cf2612/7cddc81/d040e06→2903a9e、アーカイブ2a133af→61c0861。目視確認表: docs/migration-inventory/iso-iec-29100-2024-guide-review.md。 ISO29100完了時点の未移行原稿（履歴）: CGRC、ISSAP、ISSEP、SSCP、ISO/IEC24759（HTML3件/Markdown5件）。
 
 配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /iso29100-status -->
@@ -1377,10 +1387,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 
+
 <!-- issap-status -->
 ## ISSAP 移行（2026-10-26）
 
-移行・原本アーカイブGreen。専用84件/9ファイル、原本なし53成功/31skip/0失敗。全体検証で資格一覧の固定期待値2箇所（CCIE/CCST）がISSAP追加を検出したため更新し、該当17件成功（4e19749）。既存項目と順序は保持し、製品コード変更なし。全件テストは修正後に再実行中。両原本はarchive/security-certifications/にSHA-256一致で保存。Chrome10条件および実配信・22図・目次操作は成功。ナビ/ホーム/検索38ページ。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。
+移行・原本アーカイブ完了: /docs/issap-guide。全13章・107見出し・53表854セル・22図・188リスト項目（54ul/2ol）・12問と解答・30出典・41注意欄・47目次リンク・72固有IDを保持。全17固定構造SHA-256と原本比較、22図の固定原文、全CSS/media、5幅×明暗、金色丸点/番号、全表/ページhydrationを検証。出典ラベルの枝番・重複・掲載順と12解答の全8引用を原本どおり保持。専用84件/9ファイルを含む全体2379成功/0skip/0失敗（299ファイル、557,552 expect）。原本なし隔離環境53成功/31skip/0失敗。Chrome10条件で文字/丸点/番号/全854セルホバー差分0、375/1440pxのHTTP200で全件数/17構造SHA/22図描画と左右スクロール/章・小節目次/フォーカス/配慮設定が成功（pageErrors0）。両原本はarchive/security-certifications/にSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索38ページ。ロジック120/120（従来117＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤e054b4f→14e0aef、前半2806945→a37aa48、後半3184645→292389c、アーカイブc2a679e→2a47e28。目視確認表: docs/migration-inventory/issap-guide-review.md。未移行のルート原稿: CGRC、ISSEP、SSCP、ISO/IEC24759（HTML2件/Markdown4件）。
 
 配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /issap-status -->
