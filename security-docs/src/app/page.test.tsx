@@ -20,7 +20,8 @@ test('ISO is an independent library category and every domain shortcut resolves'
  const doc=page();
  const iso=doc.querySelector('#domain-iso')!;
  expect(iso.querySelector('h3')!.textContent).toBe('ISO規格');
- expect(iso.querySelectorAll('a')).toHaveLength(5);
+ expect(iso.querySelectorAll('a')).toHaveLength(6);
+ expect(iso.querySelector('a[href="/docs/iso-iec-29100-2024-guide"]')).not.toBeNull();
  expect([...doc.querySelectorAll('#library a')].filter(a=>a.getAttribute('href')!.includes('/iso-')).every(a=>a.closest('article')===iso)).toBe(true);
  for(const link of doc.querySelectorAll('a[href^="#domain-"]')) expect(doc.querySelector(link.getAttribute('href')!)).not.toBeNull();
  const routes=[...doc.querySelectorAll('#library a')].map(a=>a.getAttribute('href'));

@@ -1,6 +1,6 @@
 # Security Studies 2026
 
-最終更新日: 2026-10-25
+最終更新日: 2026-10-26
 
 Next.js-based documentation application focused on security studies, leveraging MDX for high-fidelity content authoring.
 
@@ -359,3 +359,37 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 配置: `security-docs/src/app/docs/hacking-art-of-exploitation-guide/page.mdx`。台帳: `docs/migration-inventory/hacking-art-of-exploitation-guide.json`。目視確認表: `docs/migration-inventory/hacking-art-of-exploitation-guide-review.md`。TDD: 表示基盤a9ed7b0→aedb368、前半af97a26（ユーザー承認の復旧後）→8359341、後半/装飾fdaf555・a86dc51・454aff4→41ae1a8、アーカイブb9117cd→4915ef5。
 <!-- /hacking-exploitation-status -->
+
+
+
+
+
+
+
+
+<!-- iso29100-status -->
+## ISO/IEC 29100:2024 移行（2026-10-26）
+
+移行・原本アーカイブ完了: /docs/iso-iec-29100-2024-guide。全16節・96見出し・41表937セル・12図・4コード・125リスト項目・10問・26出典を保持。全20構造SHA-256・コードの空白SHA・全CSS/media・5幅×明暗・リスト丸点/丸囲み番号/カウンター・全セルホバー・全表/ページhydrationを検証。専用92件/9ファイルを含む全体2295成功/0skip/0失敗（290ファイル、553,875 expect）。原本なし隔離環境58成功/34skip/0失敗。Chrome10条件差分0、375/1440pxのHTTP200で全件数/20構造/4コードSHA一致・全12図描画と左右スクロール・目次/10問/配慮設定成功（pageErrors0）。原本HTML/Markdownはarchive/standards/へ両SHA-256一致で保存済み（Git管理外）。原本の16重複IDは節へ集約し全126固有ID保持。ナビ/ホーム/静的・動的検索は37ページ。ロジック117/117（従来112＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure/CodeSample）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤1ab5ad3→34f8e35、本文4e7cf0e/6cf2612/7cddc81/d040e06→2903a9e、アーカイブ2a133af→61c0861。目視確認表: docs/migration-inventory/iso-iec-29100-2024-guide-review.md。 ISO29100完了時点の未移行原稿（履歴）: CGRC、ISSAP、ISSEP、SSCP、ISO/IEC24759（HTML3件/Markdown5件）。
+
+配置: `security-docs/src/app/docs/iso-iec-29100-2024-guide/page.mdx`。台帳: `docs/migration-inventory/iso-iec-29100-2024-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /iso29100-status -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- issap-status -->
+## ISSAP 移行（2026-10-26）
+
+移行・原本アーカイブ完了: /docs/issap-guide。全13章・107見出し・53表854セル・22図・188リスト項目（54ul/2ol）・12問と解答・30出典・41注意欄・47目次リンク・72固有IDを保持。全17固定構造SHA-256と原本比較、22図の固定原文、全CSS/media、5幅×明暗、金色丸点/番号、全表/ページhydrationを検証。出典ラベルの枝番・重複・掲載順と12解答の全8引用を原本どおり保持。専用84件/9ファイルを含む全体2379成功/0skip/0失敗（299ファイル、557,552 expect）。原本なし隔離環境53成功/31skip/0失敗。Chrome10条件で文字/丸点/番号/全854セルホバー差分0、375/1440pxのHTTP200で全件数/17構造SHA/22図描画と左右スクロール/章・小節目次/フォーカス/配慮設定が成功（pageErrors0）。両原本はarchive/security-certifications/にSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索38ページ。ロジック120/120（従来117＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤e054b4f→14e0aef、前半2806945→a37aa48、後半3184645→292389c、アーカイブc2a679e→2a47e28。目視確認表: docs/migration-inventory/issap-guide-review.md。未移行のルート原稿: CGRC、ISSEP、SSCP、ISO/IEC24759（HTML2件/Markdown4件）。
+
+配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /issap-status -->
