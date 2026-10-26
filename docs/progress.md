@@ -1416,3 +1416,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 配置: `security-docs/src/app/docs/cgrc-guide/page.mdx`。台帳: `docs/migration-inventory/cgrc-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /cgrc-status -->
+
+<!-- sscp-status -->
+## SSCP 移行（2026-10-26）
+
+開始時監査: 既存39ページ・309テストファイルと仕様書の全2465件を確認。既存ナビ・検索・ISOルートの45件はnpm testで成功。原本を棚卸しし、未実装の基盤テストを追加。npm使用・ビルド禁止・目視はユーザー担当。
+
+配置: `security-docs/src/app/docs/sscp-guide/page.mdx`。台帳: `docs/migration-inventory/sscp-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /sscp-status -->
