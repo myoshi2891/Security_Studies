@@ -89,7 +89,7 @@ export async function compareCascade(width: number, theme: string, selectors: st
           'box-shadow',
         ]) {
           // Happy DOM has no browser form-control UA styles; styles.browser.mjs compares these in Chromium.
-          if (a[i].matches('input') && ['font-family','font-size','line-height','color'].includes(p)) continue;
+          if (a[i].matches('input') && ['font-family','font-size','font-weight','line-height','color'].includes(p)) continue;
           if (['font-size', 'letter-spacing'].includes(p) && (a[i].matches('h1,h2,code,.brand') || a[i].closest('.brand'))) continue;
           const av = norm(as.getPropertyValue(p), p);
           const ov = norm(os.getPropertyValue(p), p);
