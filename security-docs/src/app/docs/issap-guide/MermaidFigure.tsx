@@ -167,8 +167,21 @@ export function describeDiagram(source: string): string[] {
     .filter(Boolean);
   if (lines[0]?.startsWith('pie')) return ['円グラフ', ...lines.slice(1).map(plain)];
   if (lines[0] === 'sequenceDiagram') return ['シーケンス図', ...lines.slice(1).map(plain)];
+  if (lines[0]?.startsWith('stateDiagram')) return ['ステート図', ...lines.slice(1).map(describeTransition)];
   const edges = describeFlowchart(lines.slice(1));
   return ['フローチャート', ...(edges.length > 0 ? edges : lines.slice(1))];
+}
+
+/** `A --> B: ラベル` の状態遷移。`[*]` は遷移元なら開始、遷移先なら終了を表す */
+const TRANSITION_PATTERN = /^(\[\*\]|[\w.]+)\s*-->\s*(\[\*\]|[\w.]+)\s*(?::\s*(.*))?$/;
+
+function describeTransition(line: string): string {
+  const match = TRANSITION_PATTERN.exec(line);
+  if (!match) return plain(line);
+  const [, from, to, label] = match;
+  const source = from === '[*]' ? '[*]（開始）' : from;
+  const target = to === '[*]' ? '[*]（終了）' : to;
+  return `${source} → ${target}${label ? `: ${plain(label)}` : ''}`;
 }
 
 /** `A["x"]` / `C{"x"}` / `B("x")` / スタジアム形 `S(["x"])` / 円柱形 `D[("x")]` のノード定義（ID とラベル） */
