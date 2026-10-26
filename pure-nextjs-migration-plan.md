@@ -130,3 +130,11 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 ## ISSAP (2026-10-26)
 
 `/docs/issap-guide`: 全13章・107見出し・53表854セル・22図・188リスト項目・12問/解答・30出典・41注意欄を移行。専用84件/9ファイル。HTML/Markdown原本を `archive/security-certifications/` へ両SHA-256一致で保存。資格ナビ・ホーム・静的/動的検索は38ページ。全体2379成功/0skip/0失敗（299ファイル）、原本なし53成功/31skip/0失敗。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。確認表: `docs/migration-inventory/issap-guide-review.md`。
+
+## CGRC migration — 2026-10-26
+
+`/docs/cgrc-guide`: 導入＋第0〜9章・60小節・118見出し・92表1534セル・17図・346リスト項目・44出典・10問/40選択肢・60チェック項目を移行。両原本は `archive/security-certifications/` にSHA-256一致で保存済み。CSS10条件差分0、HTTP200の2幅で件数/15構造SHA/17図描画/目次/採点/チェックを自動検証。原本なし隔離環境54成功/29skip/0失敗。全体2465成功/0skip/0失敗（309ファイル）、専用83件/10ファイル。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。台帳: `docs/migration-inventory/cgrc-guide.json`。目視確認表: `docs/migration-inventory/cgrc-guide-review.md`。
+
+## SSCP migration — 2026-10-26
+
+`/docs/sscp-guide`: 全13章・64小節・170見出し・111表1752セル・38図・260リスト項目・50出典・21問と解説・13チェック項目を移行。両原本は `archive/security-certifications/` にSHA-256一致で保存済み。Chrome CSS10条件差分0、2幅のHTTP200で17構造SHA/38図描画/目次/チェックを検証。原本なし隔離環境55成功/31skip/0失敗。全体2551成功/0skip/0失敗（319ファイル）、専用86件/10ファイル。npm test・lint・型チェック成功。npm使用、ビルド禁止・未実行、目視はユーザー担当・未確認。台帳: `docs/migration-inventory/sscp-guide.json`。目視確認表: `docs/migration-inventory/sscp-guide-review.md`。

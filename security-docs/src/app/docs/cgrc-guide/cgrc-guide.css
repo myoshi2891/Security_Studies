@@ -1,0 +1,1011 @@
+/* Restore browser defaults that shared MDX styles and Tailwind preflight replace. */
+.cgrc-guide.cgrc-guide :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,blockquote,pre,code,table,thead,tbody,tr,th,td,a,strong,em,figure,dl,dt,dd){margin:0;padding:0;border:0;letter-spacing:normal;font-style:normal;text-transform:none;box-shadow:none;}
+.cgrc-guide.cgrc-guide .prose{color:var(--color-ink);max-width:none;margin-left:0;margin-right:0;}
+.cgrc-guide.cgrc-guide .brand{font-family:var(--font-sans);font-weight:400;}
+.cgrc-guide.cgrc-guide .eyebrow{font-family:var(--font-sans);font-weight:400;letter-spacing:0px;text-transform:none;}
+.cgrc-guide.cgrc-guide ul{list-style-type:none;}
+.cgrc-guide.cgrc-guide :where(h3,h5,td){color:inherit;}
+.cgrc-guide.cgrc-guide ol{list-style-type:decimal;}
+.cgrc-guide.cgrc-guide .brand{font:inherit;color:inherit;letter-spacing:normal;}
+
+            .cgrc-guide.cgrc-guide {
+                --color-paper: #f6f7f9;
+                --color-ink: #161b26;
+                --color-indigo: #2e3f72;
+                --color-gold: #b8802a;
+                --color-forest: #1b6e6a;
+                --color-plum: #8c3a5c;
+                --color-green: #2f6b3d;
+                --color-gold-ink: #7a5210;
+                --color-surface: #ffffff;
+                --color-ink-2: #3b4357;
+                --color-ink-3: #566078;
+                --color-line: #dadfe8;
+                --color-line-strong: #b7c0d2;
+                --tint-indigo: #eef1f8;
+                --tint-gold: #faf1df;
+                --tint-forest: #e6f2f0;
+                --tint-plum: #f7eaf0;
+                --tint-green: #eaf4ec;
+                --font-sans:
+                    'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',
+                    'Meiryo', system-ui, sans-serif;
+                --font-serif:
+                    'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia,
+                    serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --radius-md: 8px;
+                --radius-lg: 12px;
+                --sidebar-w: 288px;
+            }
+            .cgrc-guide.cgrc-guide * {
+                box-sizing: border-box;
+            }
+            .cgrc-guide.cgrc-guide {
+                font-size: 16px;
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .cgrc-guide.cgrc-guide {
+                margin: 0;
+                background: var(--color-paper);
+                color: var(--color-ink);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.8;
+                font-weight: 400;
+                overflow-wrap: break-word;
+            }
+            .cgrc-guide.cgrc-guide a {
+                color: var(--color-indigo);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                text-decoration-thickness: 1px;
+            }
+            .cgrc-guide.cgrc-guide a:hover {
+                color: var(--color-plum);
+            }
+            .cgrc-guide.cgrc-guide strong {
+                font-weight: 500;
+            }
+            .cgrc-guide.cgrc-guide i.ti {
+                font-size: 1.25rem;
+                line-height: 1;
+                vertical-align: -0.2em;
+            }
+
+            .cgrc-guide.cgrc-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--color-surface);
+                border-right: 1px solid var(--color-line);
+                overflow-y: auto;
+                z-index: 40;
+                display: flex;
+                flex-direction: column;
+            }
+            .cgrc-guide.cgrc-guide .brand {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                padding: 24px 20px 20px;
+                border-bottom: 1px solid var(--color-line);
+                text-decoration: none;
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .brand:hover {
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .seal {
+                width: 44px;
+                height: 44px;
+                flex: none;
+            }
+            .cgrc-guide.cgrc-guide .seal .ring {
+                fill: none;
+                stroke: var(--color-gold);
+                stroke-width: 1.5;
+            }
+            .cgrc-guide.cgrc-guide .seal .disc {
+                fill: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .seal .mark {
+                fill: none;
+                stroke: var(--color-paper);
+                stroke-width: 1.7;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .cgrc-guide.cgrc-guide .brand-text {
+                display: block;
+            }
+            .cgrc-guide.cgrc-guide .brand-name {
+                display: block;
+                font-family: var(--font-serif);
+                font-size: 1.25rem;
+                font-weight: 500;
+                line-height: 1.3;
+            }
+            .cgrc-guide.cgrc-guide .brand-sub {
+                display: block;
+                font-size: 1rem;
+                color: var(--color-ink-3);
+                line-height: 1.4;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav {
+                padding: 12px 12px 32px;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav ul {
+                list-style: none; list-style-type: none;
+                margin: 0;
+                padding: 0;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav li::before {
+                content: none;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav a {
+                display: block;
+                padding: 8px 12px;
+                border-radius: var(--radius-md);
+                color: var(--color-ink-2);
+                text-decoration: none;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-left: 3px solid transparent;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav a:hover {
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav a.active {
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                border-left-color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav ul ul {
+                display: none;
+                margin: 2px 0 8px 12px;
+                border-left: 1px solid var(--color-line);
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav li.open > ul {
+                display: block;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav ul ul a {
+                padding: 6px 10px;
+                color: var(--color-ink-3);
+                border-left-width: 0;
+            }
+            .cgrc-guide.cgrc-guide .sidebar nav ul ul a.active {
+                background: var(--tint-gold);
+                color: var(--color-gold-ink);
+            }
+
+            .cgrc-guide.cgrc-guide .layout {
+                display: block;
+                margin-left: var(--sidebar-w);
+            }
+            .cgrc-guide.cgrc-guide .content {
+                padding: 0 56px 48px;
+            }
+
+            .cgrc-guide.cgrc-guide .hero {
+                padding: 56px 0 32px;
+                border-bottom: 2px solid var(--color-indigo);
+                margin-bottom: 8px;
+            }
+            .cgrc-guide.cgrc-guide .eyebrow {
+                display: inline-block;
+                padding: 2px 12px;
+                border: 1px solid var(--color-gold);
+                color: var(--color-gold-ink);
+                background: var(--tint-gold);
+                border-radius: 999px;
+                font-size: 1rem;
+                margin-bottom: 16px;
+            }
+            .cgrc-guide.cgrc-guide .hero h1 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 2.25rem;
+                line-height: 1.4;
+                margin: 0 0 24px;
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .hero-meta {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+                gap: 0;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+                overflow: hidden;
+                margin: 0;
+            }
+            .cgrc-guide.cgrc-guide .hero-meta dt {
+                padding: 12px 20px;
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                border-bottom: 1px solid var(--color-line);
+            }
+            .cgrc-guide.cgrc-guide .hero-meta dd {
+                margin: 0;
+                padding: 12px 20px;
+                border-bottom: 1px solid var(--color-line);
+            }
+            .cgrc-guide.cgrc-guide .hero-meta dt:last-of-type, .cgrc-guide.cgrc-guide .hero-meta dd:last-of-type {
+                border-bottom: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .chapter {
+                padding-top: 16px;
+            }
+            .cgrc-guide.cgrc-guide .chapter > h2 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 1.875rem;
+                line-height: 1.45;
+                margin: 56px 0 24px;
+                padding: 0 0 12px;
+                border-bottom: 2px solid var(--color-indigo);
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .sub > h3 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 1.375rem;
+                line-height: 1.5;
+                margin: 48px 0 16px;
+                padding-left: 14px;
+                border-left: 4px solid var(--color-gold);
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .prose h4 {
+                font-family: var(--font-sans);
+                font-weight: 500;
+                font-size: 1.125rem;
+                line-height: 1.6;
+                margin: 32px 0 12px;
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .prose p {
+                margin: 0 0 1em;
+            }
+            .cgrc-guide.cgrc-guide .prose ul {
+                list-style: none; list-style-type: none;
+                margin: 0 0 1em;
+                padding: 0;
+            }
+            .cgrc-guide.cgrc-guide .prose ul > li {
+                position: relative;
+                padding-left: 1.4em;
+                margin: 0 0 0.4em;
+            }
+            .cgrc-guide.cgrc-guide .prose ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.3em;
+                top: 0.82em;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .prose ul ul {
+                margin: 0.4em 0 0;
+            }
+            .cgrc-guide.cgrc-guide .prose ol {
+                margin: 0 0 1em;
+                padding-left: 1.6em;
+            }
+            .cgrc-guide.cgrc-guide .prose em {
+                font-style: italic;
+            }
+            .cgrc-guide.cgrc-guide .prose code {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                background: var(--tint-indigo);
+                padding: 1px 6px;
+                border-radius: 4px;
+            }
+
+            .cgrc-guide.cgrc-guide .table-wrap {
+                overflow-x: auto;
+                margin: 16px 0 24px;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+            }
+            .cgrc-guide.cgrc-guide .table-wrap table {
+                border-collapse: separate;
+                border-spacing: 0;
+                width: 100%;
+                font-size: 1rem;
+                line-height: 1.65;
+            }
+            .cgrc-guide.cgrc-guide .table-wrap th {
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                text-align: left;
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--color-line-strong);
+                white-space: nowrap;
+            }
+            .cgrc-guide.cgrc-guide .table-wrap td {
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--color-line);
+                vertical-align: top;
+                min-width: 6rem;
+                overflow-wrap: anywhere;
+            }
+            .cgrc-guide.cgrc-guide .table-wrap tr:last-child td {
+                border-bottom: 0;
+            }
+            .cgrc-guide.cgrc-guide .table-wrap td:first-child {
+                color: var(--color-ink);
+            }
+            .cgrc-guide.cgrc-guide .table-wrap tbody tr:nth-child(even) td {
+                background: #fafbfc;
+            }
+
+            .cgrc-guide.cgrc-guide .lead {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                padding: 16px 20px;
+                margin: 0 0 24px;
+                background: var(--tint-indigo);
+                border-left: 4px solid var(--color-indigo);
+                border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            }
+            .cgrc-guide.cgrc-guide .lead > i {
+                color: var(--color-indigo);
+                margin-top: 0.25em;
+                flex: none;
+            }
+            .cgrc-guide.cgrc-guide .lead > div {
+                flex: 1;
+            }
+            .cgrc-guide.cgrc-guide .lead p {
+                margin: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .aside {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                padding: 14px 20px;
+                margin: 16px 0;
+                background: var(--color-surface);
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-md);
+            }
+            .cgrc-guide.cgrc-guide .aside > i {
+                flex: none;
+                margin-top: 0.25em;
+            }
+            .cgrc-guide.cgrc-guide .aside.why > i {
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .aside.analogy > i {
+                color: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .aside .aside-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .cgrc-guide.cgrc-guide .aside .aside-body > :last-child {
+                margin-bottom: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .callout {
+                margin: 20px 0;
+                padding: 16px 20px;
+                border: 1px solid var(--color-line);
+                border-left-width: 4px;
+                border-radius: var(--radius-md);
+                background: var(--color-surface);
+            }
+            .cgrc-guide.cgrc-guide .callout-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
+            .cgrc-guide.cgrc-guide .callout .callout-body > :last-child {
+                margin-bottom: 0;
+            }
+            .cgrc-guide.cgrc-guide .callout.practice {
+                background: var(--tint-gold);
+                border-color: #e7cf9c;
+                border-left-color: var(--color-gold);
+            }
+            .cgrc-guide.cgrc-guide .callout.practice .callout-title {
+                color: var(--color-gold-ink);
+            }
+            .cgrc-guide.cgrc-guide .callout.practice ul > li::before {
+                background: var(--color-gold);
+            }
+            .cgrc-guide.cgrc-guide .callout.source {
+                background: var(--tint-forest);
+                border-color: #b5d8d4;
+                border-left-color: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .callout.source .callout-title {
+                color: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .callout.source ul > li::before {
+                background: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .callout.note {
+                background: var(--tint-plum);
+                border-color: #e5c4d3;
+                border-left-color: var(--color-plum);
+            }
+            .cgrc-guide.cgrc-guide .callout.note .callout-title {
+                color: var(--color-plum);
+            }
+            .cgrc-guide.cgrc-guide .callout.note ul > li::before {
+                background: var(--color-plum);
+            }
+            .cgrc-guide.cgrc-guide .callout a {
+                overflow-wrap: anywhere;
+            }
+
+            .cgrc-guide.cgrc-guide .gloss {
+                margin: 20px 0 8px;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+                overflow: hidden;
+            }
+            .cgrc-guide.cgrc-guide .gloss-head {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 20px;
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                border-bottom: 1px solid var(--color-line);
+            }
+            .cgrc-guide.cgrc-guide .gloss dl {
+                margin: 0;
+                display: grid;
+                grid-template-columns: minmax(10rem, max-content) 1fr;
+            }
+            .cgrc-guide.cgrc-guide .gloss dt {
+                padding: 10px 20px;
+                font-weight: 500;
+                color: var(--color-ink);
+                border-bottom: 1px solid var(--color-line);
+                overflow-wrap: anywhere;
+            }
+            .cgrc-guide.cgrc-guide .gloss dd {
+                margin: 0;
+                padding: 10px 20px;
+                border-bottom: 1px solid var(--color-line);
+                color: var(--color-ink-2);
+            }
+            .cgrc-guide.cgrc-guide .gloss dt:last-of-type, .cgrc-guide.cgrc-guide .gloss dd:last-of-type {
+                border-bottom: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .diagram {
+                margin: 20px 0 24px;
+                padding: 24px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+            }
+            .cgrc-guide.cgrc-guide .mermaid-target {
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+            }
+            .cgrc-guide.cgrc-guide .mermaid-target svg {
+                overflow: visible;
+                max-width: 100%;
+                height: auto;
+            }
+            .cgrc-guide.cgrc-guide .mmd-error {
+                margin: 0;
+                padding: 12px;
+                border: 1px solid var(--color-plum);
+                border-radius: var(--radius-md);
+                background: var(--tint-plum);
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 1rem;
+            }
+
+            .cgrc-guide.cgrc-guide .checklist {
+                margin: 16px 0 28px;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+                overflow: hidden;
+            }
+            .cgrc-guide.cgrc-guide .cl-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 20px;
+                background: var(--tint-green);
+                color: var(--color-green);
+                font-weight: 500;
+                border-bottom: 1px solid var(--color-line);
+            }
+            .cgrc-guide.cgrc-guide .cl-head .cl-progress {
+                font-variant-numeric: tabular-nums;
+            }
+            .cgrc-guide.cgrc-guide .cl-list {
+                display: grid;
+                gap: 8px;
+                padding: 12px;
+            }
+            .cgrc-guide.cgrc-guide .cl-item {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                padding: 10px 14px;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-md);
+                background: var(--color-paper);
+                cursor: pointer;
+                position: relative;
+            }
+            .cgrc-guide.cgrc-guide .cl-item:hover {
+                border-color: var(--color-line-strong);
+            }
+            .cgrc-guide.cgrc-guide .cl-item input {
+                position: absolute;
+                opacity: 0;
+                width: 1px;
+                height: 1px;
+            }
+            .cgrc-guide.cgrc-guide .cl-box {
+                flex: none;
+                width: 24px;
+                height: 24px;
+                margin-top: 2px;
+                border: 2px solid var(--color-line-strong);
+                border-radius: 6px;
+                background: var(--color-surface);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--color-surface);
+            }
+            .cgrc-guide.cgrc-guide .cl-box i {
+                font-size: 1rem;
+                opacity: 0;
+            }
+            .cgrc-guide.cgrc-guide .cl-no {
+                flex: none;
+                min-width: 2rem;
+                height: 2rem;
+                padding: 0 6px;
+                border-radius: 999px;
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-variant-numeric: tabular-nums;
+                margin-top: -1px;
+            }
+            .cgrc-guide.cgrc-guide .cl-text {
+                flex: 1;
+                min-width: 0;
+            }
+            .cgrc-guide.cgrc-guide .cl-item input:checked + .cl-box {
+                background: var(--color-forest);
+                border-color: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .cl-item input:checked + .cl-box i {
+                opacity: 1;
+            }
+            .cgrc-guide.cgrc-guide .cl-item input:focus-visible + .cl-box {
+                outline: 2px solid var(--color-indigo);
+                outline-offset: 2px;
+            }
+            .cgrc-guide.cgrc-guide .cl-item:has(input:checked) {
+                background: var(--tint-green);
+                border-color: #bbd9c1;
+            }
+            .cgrc-guide.cgrc-guide .cl-item:has(input:checked) .cl-text {
+                text-decoration: line-through;
+                color: var(--color-ink-3);
+            }
+            .cgrc-guide.cgrc-guide .cl-item:has(input:checked) .cl-no {
+                background: #cfe6d4;
+                color: var(--color-green);
+            }
+
+            .cgrc-guide.cgrc-guide .src-list {
+                display: grid;
+                gap: 10px;
+                margin: 16px 0 28px;
+            }
+            .cgrc-guide.cgrc-guide .src-card {
+                display: grid;
+                grid-template-columns: 2.25rem 1fr auto;
+                gap: 14px;
+                align-items: start;
+                padding: 12px 16px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-md);
+            }
+            .cgrc-guide.cgrc-guide .src-no {
+                width: 2.25rem;
+                height: 2.25rem;
+                border-radius: 50%;
+                background: var(--color-indigo);
+                color: var(--color-paper);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                font-variant-numeric: tabular-nums;
+            }
+            .cgrc-guide.cgrc-guide .src-title {
+                font-weight: 500;
+                line-height: 1.6;
+                margin-bottom: 2px;
+            }
+            .cgrc-guide.cgrc-guide .src-url {
+                display: block;
+                color: var(--color-indigo);
+                overflow-wrap: anywhere;
+                line-height: 1.6;
+            }
+            .cgrc-guide.cgrc-guide .chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 2px 12px;
+                border-radius: 999px;
+                border: 1px solid;
+                white-space: nowrap;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            .cgrc-guide.cgrc-guide .chip.s-1 {
+                background: var(--tint-forest);
+                border-color: #b5d8d4;
+                color: var(--color-forest);
+            }
+            .cgrc-guide.cgrc-guide .chip.s-2 {
+                background: var(--tint-indigo);
+                border-color: #c9d3ea;
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .chip.s-3 {
+                background: var(--tint-gold);
+                border-color: #e7cf9c;
+                color: var(--color-gold-ink);
+            }
+            .cgrc-guide.cgrc-guide .chip.s-4 {
+                background: var(--tint-plum);
+                border-color: #e5c4d3;
+                color: var(--color-plum);
+            }
+
+            .cgrc-guide.cgrc-guide .q-toolbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+                margin: 16px 0;
+            }
+            .cgrc-guide.cgrc-guide .q-score {
+                font-weight: 500;
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .q-reset {
+                font: inherit;
+                padding: 6px 16px;
+                border: 1px solid var(--color-line-strong);
+                border-radius: var(--radius-md);
+                background: var(--color-surface);
+                color: var(--color-ink-2);
+                cursor: pointer;
+            }
+            .cgrc-guide.cgrc-guide .q-reset:hover {
+                border-color: var(--color-indigo);
+                color: var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .q-card {
+                margin: 0 0 16px;
+                padding: 18px 20px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+            }
+            .cgrc-guide.cgrc-guide .q-head {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                margin-bottom: 12px;
+            }
+            .cgrc-guide.cgrc-guide .q-no {
+                flex: none;
+                padding: 2px 14px;
+                border-radius: 999px;
+                background: var(--color-indigo);
+                color: var(--color-paper);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .cgrc-guide.cgrc-guide .q-text {
+                margin: 0;
+                flex: 1;
+                min-width: 0;
+            }
+            .cgrc-guide.cgrc-guide .q-opts {
+                display: grid;
+                gap: 8px;
+            }
+            .cgrc-guide.cgrc-guide .q-opt {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                width: 100%;
+                text-align: left;
+                font: inherit;
+                color: var(--color-ink);
+                padding: 10px 14px;
+                border: 1px solid var(--color-line-strong);
+                border-radius: var(--radius-md);
+                background: var(--color-paper);
+                cursor: pointer;
+            }
+            .cgrc-guide.cgrc-guide .q-opt:hover {
+                border-color: var(--color-indigo);
+                background: var(--tint-indigo);
+            }
+            .cgrc-guide.cgrc-guide .q-opt:focus-visible {
+                outline: 2px solid var(--color-indigo);
+                outline-offset: 2px;
+            }
+            .cgrc-guide.cgrc-guide .q-letter {
+                flex: none;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                border: 1px solid var(--color-line-strong);
+                background: var(--color-surface);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+            }
+            .cgrc-guide.cgrc-guide .q-opt-text {
+                flex: 1;
+                min-width: 0;
+            }
+            .cgrc-guide.cgrc-guide .q-card.answered .q-opt {
+                cursor: default;
+            }
+            .cgrc-guide.cgrc-guide .q-card.answered .q-opt:hover {
+                background: var(--color-paper);
+                border-color: var(--color-line-strong);
+            }
+            .cgrc-guide.cgrc-guide .q-opt.correct, .cgrc-guide.cgrc-guide .q-card.answered .q-opt.correct:hover {
+                background: var(--tint-green);
+                border-color: var(--color-green);
+            }
+            .cgrc-guide.cgrc-guide .q-opt.correct .q-letter {
+                background: var(--color-green);
+                border-color: var(--color-green);
+                color: var(--color-surface);
+            }
+            .cgrc-guide.cgrc-guide .q-opt.wrong, .cgrc-guide.cgrc-guide .q-card.answered .q-opt.wrong:hover {
+                background: var(--tint-plum);
+                border-color: var(--color-plum);
+            }
+            .cgrc-guide.cgrc-guide .q-opt.wrong .q-letter {
+                background: var(--color-plum);
+                border-color: var(--color-plum);
+                color: var(--color-surface);
+            }
+            .cgrc-guide.cgrc-guide .q-fb {
+                margin-top: 12px;
+                padding: 12px 16px;
+                border-radius: var(--radius-md);
+                background: var(--tint-indigo);
+                border-left: 4px solid var(--color-indigo);
+            }
+            .cgrc-guide.cgrc-guide .q-fb[hidden] {
+                display: none;
+            }
+
+            .cgrc-guide.cgrc-guide .answers {
+                margin: 16px 0 24px;
+                border: 1px solid var(--color-line);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+                overflow: hidden;
+            }
+            .cgrc-guide.cgrc-guide .answers > summary {
+                cursor: pointer;
+                padding: 12px 20px;
+                font-weight: 500;
+                color: var(--color-indigo);
+                background: var(--tint-indigo);
+                list-style: none; list-style-type: none;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .cgrc-guide.cgrc-guide .answers > summary::-webkit-details-marker {
+                display: none;
+            }
+            .cgrc-guide.cgrc-guide .answers > summary::after {
+                content: '';
+                margin-left: auto;
+                width: 8px;
+                height: 8px;
+                border-right: 2px solid var(--color-indigo);
+                border-bottom: 2px solid var(--color-indigo);
+                transform: rotate(45deg);
+                transition: transform 0.15s;
+            }
+            .cgrc-guide.cgrc-guide .answers[open] > summary::after {
+                transform: rotate(-135deg);
+            }
+            .cgrc-guide.cgrc-guide .answers .table-wrap {
+                margin: 0;
+                border: 0;
+                border-radius: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .footer {
+                margin-top: 64px;
+                padding: 24px 0 0;
+                border-top: 1px solid var(--color-line);
+                color: var(--color-ink-3);
+            }
+            .cgrc-guide.cgrc-guide .footer p {
+                margin: 0;
+            }
+
+            .cgrc-guide.cgrc-guide .nav-toggle {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: 1px solid var(--color-indigo);
+                background: var(--color-indigo);
+                color: var(--color-paper);
+                cursor: pointer;
+                z-index: 60;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+            }
+            .cgrc-guide.cgrc-guide .nav-toggle i {
+                font-size: 1.5rem;
+            }
+            .cgrc-guide.cgrc-guide .nav-toggle:focus-visible {
+                outline: 2px solid var(--color-gold);
+                outline-offset: 3px;
+            }
+            .cgrc-guide.cgrc-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(22, 27, 38, 0.45);
+                z-index: 45;
+            }
+
+            @media (max-width: 1024px) {
+                .cgrc-guide.cgrc-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.22s ease;
+                    width: min(320px, 86vw);
+                    z-index: 50;
+                }
+                .cgrc-guide.cgrc-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .cgrc-guide.cgrc-guide .layout {
+                    margin-left: 0;
+                }
+                .cgrc-guide.cgrc-guide .content {
+                    padding: 0 28px 48px;
+                }
+                .cgrc-guide.cgrc-guide .nav-toggle {
+                    display: inline-flex;
+                }
+                .cgrc-guide.cgrc-guide.drawer-open .backdrop {
+                    display: block;
+                }
+                .cgrc-guide.cgrc-guide.drawer-open {
+                    overflow: hidden;
+                }
+                .cgrc-guide.cgrc-guide .hero h1 {
+                    font-size: 1.875rem;
+                }
+            }
+            @media (max-width: 640px) {
+                .cgrc-guide.cgrc-guide .content {
+                    padding: 0 16px 40px;
+                }
+                .cgrc-guide.cgrc-guide .hero {
+                    padding: 32px 0 24px;
+                }
+                .cgrc-guide.cgrc-guide .hero h1 {
+                    font-size: 1.5rem;
+                }
+                .cgrc-guide.cgrc-guide .hero-meta {
+                    grid-template-columns: 1fr;
+                }
+                .cgrc-guide.cgrc-guide .hero-meta dt {
+                    border-bottom: 0;
+                    padding-bottom: 4px;
+                }
+                .cgrc-guide.cgrc-guide .chapter > h2 {
+                    font-size: 1.5rem;
+                }
+                .cgrc-guide.cgrc-guide .sub > h3 {
+                    font-size: 1.25rem;
+                }
+                .cgrc-guide.cgrc-guide .gloss dl {
+                    grid-template-columns: 1fr;
+                }
+                .cgrc-guide.cgrc-guide .gloss dt {
+                    border-bottom: 0;
+                    padding-bottom: 2px;
+                }
+                .cgrc-guide.cgrc-guide .src-card {
+                    grid-template-columns: 2.25rem 1fr;
+                }
+                .cgrc-guide.cgrc-guide .src-card .chip {
+                    grid-column: 2;
+                }
+                .cgrc-guide.cgrc-guide .diagram {
+                    padding: 12px;
+                }
+                .cgrc-guide.cgrc-guide .q-card {
+                    padding: 14px;
+                }
+            }
+        
+/* Local serif face; no runtime font/CDN requests. System Japanese fallbacks match source. */
+@font-face{font-family:'Source Serif 4';font-style:normal;font-weight:200 900;font-display:swap;src:url('../../../../node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2') format('woff2');}
+.docs-main:has(.cgrc-guide){padding:0;}
+.prose:has(>.cgrc-guide){max-width:none;margin:0;padding:0;}
+.cgrc-guide.cgrc-guide{width:100%;max-width:none;}
+.cgrc-guide.cgrc-guide .sidebar{top:var(--docs-header-height,64px);height:calc(100dvh - var(--docs-header-height,64px));}
+.cgrc-guide.cgrc-guide .sidebar.open{transform:translateX(0);box-shadow:8px 0 24px rgba(22,27,38,.18);visibility:visible;}
+.cgrc-guide.cgrc-guide .backdrop.open{display:block;}
+.cgrc-guide.cgrc-guide .sidebar:not(.open){visibility:visible;}
+.cgrc-guide.cgrc-guide i>svg{width:1em;height:1em;display:inline-block;vertical-align:-.125em;}
+.cgrc-guide.cgrc-guide .diagram{display:block;}
+.cgrc-guide.cgrc-guide .diagram-viewport{display:block;overflow-x:auto;width:100%;}
+.cgrc-guide.cgrc-guide .diagram-viewport svg{display:block;margin-left:auto;margin-right:auto;max-width:none;height:auto;}
+.cgrc-guide.cgrc-guide tr:hover td{background:transparent;}
+.cgrc-guide.cgrc-guide tbody tr:nth-child(even):hover td{background:#fafbfc;}
+html:has(.cgrc-guide){scroll-behavior:smooth;scroll-padding-top:88px;}
+@media(max-width:1024px){.cgrc-guide.cgrc-guide .sidebar:not(.open){visibility:hidden;}}
+@media(prefers-reduced-motion:reduce){html:has(.cgrc-guide){scroll-behavior:auto;}}

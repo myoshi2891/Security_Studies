@@ -496,7 +496,23 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- issap-status -->
 ## ISSAP 移行（2026-10-26）
 
-移行・原本アーカイブ完了: /docs/issap-guide。全13章・107見出し・53表854セル・22図・188リスト項目（54ul/2ol）・12問と解答・30出典・41注意欄・47目次リンク・72固有IDを保持。全17固定構造SHA-256と原本比較、22図の固定原文、全CSS/media、5幅×明暗、金色丸点/番号、全表/ページhydrationを検証。出典ラベルの枝番・重複・掲載順と12解答の全8引用を原本どおり保持。専用84件/9ファイルを含む全体2379成功/0skip/0失敗（299ファイル、557,552 expect）。原本なし隔離環境53成功/31skip/0失敗。Chrome10条件で文字/丸点/番号/全854セルホバー差分0、375/1440pxのHTTP200で全件数/17構造SHA/22図描画と左右スクロール/章・小節目次/フォーカス/配慮設定が成功（pageErrors0）。両原本はarchive/security-certifications/にSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索38ページ。ロジック120/120（従来117＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤e054b4f→14e0aef、前半2806945→a37aa48、後半3184645→292389c、アーカイブc2a679e→2a47e28。目視確認表: docs/migration-inventory/issap-guide-review.md。未移行のルート原稿: CGRC、ISSEP、SSCP、ISO/IEC24759（HTML2件/Markdown4件）。
+移行・原本アーカイブ完了: /docs/issap-guide。全13章・107見出し・53表854セル・22図・188リスト項目（54ul/2ol）・12問と解答・30出典・41注意欄・47目次リンク・72固有IDを保持。全17固定構造SHA-256と原本比較、22図の固定原文、全CSS/media、5幅×明暗、金色丸点/番号、全表/ページhydrationを検証。出典ラベルの枝番・重複・掲載順と12解答の全8引用を原本どおり保持。専用84件/9ファイルを含む全体2379成功/0skip/0失敗（299ファイル、557,552 expect）。原本なし隔離環境53成功/31skip/0失敗。Chrome10条件で文字/丸点/番号/全854セルホバー差分0、375/1440pxのHTTP200で全件数/17構造SHA/22図描画と左右スクロール/章・小節目次/フォーカス/配慮設定が成功（pageErrors0）。両原本はarchive/security-certifications/にSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索38ページ。ロジック120/120（従来117＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤e054b4f→14e0aef、前半2806945→a37aa48、後半3184645→292389c、アーカイブc2a679e→2a47e28。目視確認表: docs/migration-inventory/issap-guide-review.md。ISSAP完了時点の未移行原稿（履歴）: CGRC、ISSEP、SSCP、ISO/IEC24759（HTML2件/Markdown4件）。
 
 配置: `security-docs/src/app/docs/issap-guide/page.mdx`。台帳: `docs/migration-inventory/issap-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /issap-status -->
+
+<!-- cgrc-status -->
+## CGRC 移行（2026-10-26）
+
+移行・原本アーカイブ・自動検証完了: /docs/cgrc-guide。導入＋第0〜9章（11章）・60小節・118見出し・92表1534セル・17図・346リスト項目（96ul/0ol）・44出典カード・89注意欄・60補足・35用語欄・71目次リンク・75固有IDを保持。10問/40選択肢の正誤・原文解説・再回答防止・リセット、独立した解答表、8チェックリスト60項目の番号と進捗を検証。15固定構造SHA-256と原本比較、17図の固定定義、全CSS/media、5幅×明暗、藍色6px丸点/金色・緑色の注意欄丸点/目次の点抑制/チェック番号、全92表とページのHydrationを検証。専用83件/10ファイルを含む全体2465成功/0skip/0失敗（309ファイル、566,227 expect）。原本なし隔離環境54成功/29skip/0失敗、HTMLのみ・Markdownのみの各隔離環境でハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1534セルのホバー差分0。375/1440pxのHTTP200で全件数/15構造SHA一致・全17図描画と左右スクロール・目次/フォーカス/採点/60チェック操作を確認（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索39ページ。ロジック124/124（従来120＋GuideSidebar/GuideRuntime/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤ef7382f→cc3e59e、前半6bd86fe→1935351、後半48feeda→3b1e34a、アーカイブe55b5f9→028f83e。目視確認表: docs/migration-inventory/cgrc-guide-review.md。CGRC完了時点の未移行原稿（履歴）: ISSEP、SSCP、ISO/IEC24759（HTML1件/Markdown3件）。
+
+配置: `security-docs/src/app/docs/cgrc-guide/page.mdx`。台帳: `docs/migration-inventory/cgrc-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /cgrc-status -->
+
+<!-- sscp-status -->
+## SSCP 移行（2026-10-26）
+
+移行・原本アーカイブ・自動検証完了: /docs/sscp-guide。全13章（第0〜12章）・64小節・170見出し・111表1752セル・38図・260リスト項目（63ul/3ol）・50出典・57注意欄・70目次リンク・79固有IDを保持。7つの確認問題表の全21問/解説、13チェックの独立した入力/ラベル操作、番号付き手順3組（4/6/6項目）を検証。17固定構造SHA-256と原本比較、38図の固定定義/パース、全CSS/media、5幅×明暗、金色6px丸点/藍色番号/チェック欄CSSカウンター/見出し角点/出典番号、全111表とページのHydrationを検証。専用86件/10ファイルを含む全体2551成功/0skip/0失敗（319ファイル、570,787 expect）。原本なし隔離環境55成功/31skip/0失敗。HTMLのみ・Markdownのみの各隔離環境でもハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1752セルのホバー・13項目のチェック済み装飾が差分0。ブランドの共有15pxとフォームUAスタイルの1060差分をRedで検出し、原本の文字サイズ/UA既定値を復元。Happy DOMが持たないUAフォント比較はChromeで全条件検証する。375/1440pxのHTTP200で全件数/17構造SHA一致・全38図描画と左右スクロール・目次/フォーカス/チェック操作成功（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索40ページ。ロジック127/127（従来124＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤687bb22→85d792d（重複属性除去f9fe9e9）、前半d360924→e11e83a、後半008eaa6/Chrome Red119b726→796da5e、アーカイブf328864→234b06a。目視確認表: docs/migration-inventory/sscp-guide-review.md。現在未移行のルート原稿: ISSEP、ISO/IEC24759（HTML0件/Markdown2件）。
+
+配置: `security-docs/src/app/docs/sscp-guide/page.mdx`。台帳: `docs/migration-inventory/sscp-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+<!-- /sscp-status -->
