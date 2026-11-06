@@ -34,12 +34,12 @@ async function compareCascade(width:number,theme:string,hover=false){
   if(hover)for(const w of [actual,original])for(const row of w.document.querySelectorAll('tr'))row.classList.add('fidelity-hover');
   const selectors=hover?['th,td']:['.hero,.brand','.hero h1','.subtitle,.meta li','section h2,section h3,section h4','section p,section ul,section ol,section li','th,td','.callout,.callout-body p','.ref-card,.ref-badge,.ref-tag,.ref-title,.ref-url','.sidebar nav a,.brand-title,.brand-sub','.footer','pre,pre code','.quiz,.q-badge,.q-text,.q-opts,.q-opts li,.quiz details,.quiz summary,.answer','.checklist,.checklist li,.checklist label,.chk-text'];
   const errors=new Set<string>();
-  for(const selector of selectors){const a=[...actual.document.querySelectorAll('.issep-guide '+selector.split(',').join(', .issep-guide '))].filter(e=>!e.closest('[data-diagram]')),o=[...original.document.querySelectorAll(selector)];expect(a.length,selector).toBe(o.length);
+  for(const selector of selectors){const a=[...actual.document.querySelectorAll('.issep-guide '+selector.split(',').join(', .issep-guide '))].filter(e=>!e.closest('[data-diagram],.quiz')),o=[...original.document.querySelectorAll(selector)].filter(e=>!e.closest('.quiz'));expect(a.length,selector).toBe(o.length);
    for(let i=0;i<a.length;i++){const av=actual.getComputedStyle(a[i]),ov=original.getComputedStyle(o[i]);for(const p of ['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','list-style-type','counter-reset','counter-increment','box-shadow','display','position']){const act=norm(av.getPropertyValue(p),p),src=norm(ov.getPropertyValue(p),p);if(act!==src)errors.add(`${selector} ${p}: expected ${src}; received ${act}`);}}
   }expect([...errors]).toEqual([]);
  }finally{await actual.happyDOM.close();await original.happyDOM.close();}
 }
-for(const width of [375,768,1024,1025,1440])for(const theme of ['light','dark'])sourceTest(`all original text, 1080 cells, lists, numbered checks, citations and metadata retain their styles at ${width}px in ${theme}`,()=>compareCascade(width,theme),30000);
+for(const width of [375,768,1024,1025,1440])for(const theme of ['light','dark'])sourceTest(`original text, 1080 cells, lists, numbered checks, citations and metadata outside redesigned 11.3 retain their styles at ${width}px in ${theme}`,()=>compareCascade(width,theme),30000);
 for(const width of [375,1440])for(const theme of ['light','dark'])sourceTest(`hover cannot replace any of the 1080 cell surfaces or ink at ${width}px in ${theme}`,()=>compareCascade(width,theme,true),30000);
 
 
