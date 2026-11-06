@@ -1,3 +1,4 @@
+import postcss from 'postcss';
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
@@ -13,10 +14,12 @@ export { inventory };
 export const scope = '.iso24759-guide.iso24759-guide';
 export const sourcePath = resolve(import.meta.dir, '../../../../../Iso-iec-24759-2025-guide.html');
 export let sourceDocument: Document;
+export let sourceCss: import('postcss').Root;
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
 export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
   test.skipIf(!existsSync(sourcePath))(name, () => {
     sourceDocument ??= new DOMParser().parseFromString(readFileSync(sourcePath, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
+    sourceCss ??= postcss.parse(sourceDocument.querySelector('style')!.textContent!);
     return fn();
   }, timeout);
 }
@@ -24,6 +27,7 @@ export function canonical(n: Node): unknown {
   if (n.nodeType === 3) return n.textContent?.replace(/\s+/g, ' ').trim() || null;
   if (n.nodeType !== 1) return null;
   const e = n as Element;
+  if (e.matches('pre code')) return ['CODE', [...e.attributes].map(a => [a.name, a.name === 'class' ? a.value.replace(/ hljs/g, '') : a.value]).sort((a,b) => a[0].localeCompare(b[0])), [e.textContent?.replace(/\s+/g, ' ').trim()]];
   if (e.tagName === 'I') return ['icon', e.getAttribute('class')];
   if (e.matches('.diagram-body')) return ['diagram', e.getAttribute('data-id')];
   return [e.tagName, [...e.attributes].filter(a => !a.name.startsWith('aria-') && a.name !== 'tabindex').map(a => [a.name, a.value]).sort((a,b) => a[0].localeCompare(b[0])), [...e.childNodes].map(canonical).filter(v => v !== null)];

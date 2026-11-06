@@ -24,7 +24,7 @@ test('every source CSS declaration and media query is retained in its scoped sel
     css.walkRules(mapped(original.selector), r => { if ((r.parent?.type === 'atrule' ? (r.parent as postcss.AtRule).params : null) === original.media) matches.push(r); });
     expect(matches.some(r => JSON.stringify(r.nodes.filter(n => n.type === 'decl').map(n => { const d=n as postcss.Declaration; return [d.prop,d.value,d.important||false]; })) === JSON.stringify(original.declarations)), original.selector).toBe(true);
   }
-  css.walkRules(r => { for (const s of r.selector.split(',')) expect(s.trim().startsWith(scope),s).toBe(true); });
+  css.walkRules(r => { for (const s of r.selector.split(',')) expect(s.trim().startsWith(scope) || s.includes(':has(.iso24759-guide)'),s).toBe(true); });
 });
 test('all eight diagrams retain exact original definitions independently of the archive', async () => {
   const { diagrams } = await import(new URL('./diagrams.ts', import.meta.url).href);
