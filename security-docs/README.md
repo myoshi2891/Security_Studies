@@ -1,6 +1,6 @@
 # Security Studies 2026
 
-最終更新日: 2026-10-26
+最終更新日: 2026-11-06
 
 Next.js-based documentation application focused on security studies, leveraging MDX for high-fidelity content authoring.
 

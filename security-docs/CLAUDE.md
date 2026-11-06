@@ -1,6 +1,6 @@
 # Includes / Directives
 
-Updated 2026-10-26
+Updated 2026-11-06
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
