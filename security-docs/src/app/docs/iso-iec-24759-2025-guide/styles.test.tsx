@@ -25,8 +25,10 @@ async function compareCascade(width:number,theme:string,hover=false){
  const actual=new Window({settings:{device:{prefersColorScheme:theme}}}),original=new Window({settings:{device:{prefersColorScheme:theme}}});
  try{
   for(const w of [actual,original]){w.happyDOM.setWindowSize({width,height:900});expect(w.matchMedia('(prefers-color-scheme: dark)').matches).toBe(theme==='dark');}
-  original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}'+comparable(sourceCss.toString(),width)+'</style>';
+  // 原本は実行時に atom-one-dark.css と hljs クラスを読み込むため、比較元にも同じ条件を与える
+  original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}'+comparable(readFileSync(new URL('../../../../node_modules/highlight.js/styles/atom-one-dark.css',import.meta.url),'utf8')+sourceCss.toString(),width)+'</style>';
   original.document.body.innerHTML=sourceDocument.body.innerHTML;
+  for(const code of original.document.querySelectorAll('pre code'))code.classList.add('hljs');
   actual.document.head.innerHTML='<style>ul,ol{list-style:none;margin:0;padding:0}'+comparable(sharedCss()+'\n'+guideCss(),width)+'</style>';
   actual.document.body.innerHTML='<main class="docs-main"><article class="prose docs-article">'+(await renderedPage()).body.innerHTML+'</article></main>';
   if(hover)for(const w of [actual,original])for(const row of w.document.querySelectorAll('tr'))row.classList.add('fidelity-hover');
