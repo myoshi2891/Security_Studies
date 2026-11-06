@@ -1,0 +1,538 @@
+.iso24759-guide.iso24759-guide h1, .iso24759-guide.iso24759-guide h2, .iso24759-guide.iso24759-guide h3, .iso24759-guide.iso24759-guide h4, .iso24759-guide.iso24759-guide h5, .iso24759-guide.iso24759-guide h6, .iso24759-guide.iso24759-guide p, .iso24759-guide.iso24759-guide ul, .iso24759-guide.iso24759-guide ol, .iso24759-guide.iso24759-guide li, .iso24759-guide.iso24759-guide pre, .iso24759-guide.iso24759-guide code, .iso24759-guide.iso24759-guide table, .iso24759-guide.iso24759-guide thead, .iso24759-guide.iso24759-guide tbody, .iso24759-guide.iso24759-guide tr, .iso24759-guide.iso24759-guide th, .iso24759-guide.iso24759-guide td, .iso24759-guide.iso24759-guide a, .iso24759-guide.iso24759-guide strong, .iso24759-guide.iso24759-guide em, .iso24759-guide.iso24759-guide figure, .iso24759-guide.iso24759-guide dl, .iso24759-guide.iso24759-guide dt, .iso24759-guide.iso24759-guide dd{margin:0;padding:0;border:0;letter-spacing:0px;text-transform:none;box-shadow:none;}
+.iso24759-guide.iso24759-guide h1, .iso24759-guide.iso24759-guide h2, .iso24759-guide.iso24759-guide h3, .iso24759-guide.iso24759-guide h4, .iso24759-guide.iso24759-guide h5, .iso24759-guide.iso24759-guide h6{color:inherit;}
+.iso24759-guide.iso24759-guide code{color:inherit;}
+.iso24759-guide.iso24759-guide ul, .iso24759-guide.iso24759-guide ol{list-style-type:none;}
+
+            .iso24759-guide.iso24759-guide {
+                --color-background-primary: #07111e;
+                --color-background-secondary: #0d1b2e;
+                --color-background-tertiary: #13233d;
+                --color-background-info: #12274a;
+                --color-background-success: #0f2f2a;
+                --color-background-warning: #33280f;
+                --color-background-danger: #3a1a1f;
+                --color-text-primary: #f3f5fa;
+                --color-text-secondary: #c6d0e3;
+                --color-text-tertiary: #93a1bd;
+                --color-text-info: #7c9eff;
+                --color-text-success: #5fd6b5;
+                --color-text-warning: #f2c35b;
+                --color-text-danger: #ff9b94;
+                --color-border-tertiary: #1e2f4d;
+                --color-border-secondary: #2d456e;
+                --color-border-primary: #3e5c8f;
+                --accent: #7c9eff;
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+                    'Yu Gothic', 'Noto Sans JP', 'Segoe UI', sans-serif;
+                --font-mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+                --border-radius-md: 8px;
+                --border-radius-lg: 12px;
+                --border-radius-xl: 16px;
+                --sidebar-w: 320px;
+            }
+            .iso24759-guide.iso24759-guide * {
+                box-sizing: border-box;
+            }
+            .iso24759-guide.iso24759-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+            }
+            .iso24759-guide.iso24759-guide {
+                margin: 0;
+                background: var(--color-background-primary);
+                color: var(--color-text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.7;
+                font-weight: 400;
+                overflow-wrap: anywhere;
+            }
+            .iso24759-guide.iso24759-guide.lock {
+                overflow: hidden;
+            }
+            .iso24759-guide.iso24759-guide a {
+                color: var(--accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            .iso24759-guide.iso24759-guide strong {
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .iso24759-guide.iso24759-guide .layout {
+                display: block;
+            }
+            .iso24759-guide.iso24759-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                overflow-y: auto;
+                background: var(--color-background-secondary);
+                border-right: 1px solid var(--color-border-tertiary);
+                padding: 1.5rem 1rem 2rem;
+                z-index: 70;
+            }
+            .iso24759-guide.iso24759-guide .brand {
+                display: flex;
+                gap: 0.75rem;
+                align-items: flex-start;
+                padding: 0 0.5rem 1.25rem;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                margin-bottom: 1rem;
+            }
+            .iso24759-guide.iso24759-guide .brand i {
+                font-size: 1.75rem;
+                color: var(--accent);
+                line-height: 1.2;
+            }
+            .iso24759-guide.iso24759-guide .brand-title {
+                margin: 0;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                line-height: 1.4;
+            }
+            .iso24759-guide.iso24759-guide .brand-sub {
+                margin: 0;
+                color: var(--color-text-tertiary);
+                line-height: 1.5;
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav li::before {
+                content: none;
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav a {
+                display: flex;
+                gap: 0.75rem;
+                padding: 0.45rem 0.75rem;
+                border-radius: var(--border-radius-md);
+                color: var(--color-text-secondary);
+                text-decoration: none;
+                border-left: 2px solid transparent;
+                line-height: 1.5;
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav a:hover {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav a.active {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                border-left-color: var(--accent);
+            }
+            .iso24759-guide.iso24759-guide .nav-num {
+                min-width: 1.75rem;
+                color: var(--color-text-tertiary);
+                font-family: var(--font-mono);
+            }
+            .iso24759-guide.iso24759-guide .sidebar nav a.active .nav-num {
+                color: var(--accent);
+            }
+            .iso24759-guide.iso24759-guide .main {
+                margin-left: var(--sidebar-w);
+            }
+            .iso24759-guide.iso24759-guide .hero {
+                padding: 3.5rem 3rem 2.5rem;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                background: var(--color-background-secondary);
+            }
+            .iso24759-guide.iso24759-guide .eyebrow {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin: 0 0 1rem;
+                color: var(--accent);
+                font-family: var(--font-mono);
+            }
+            .iso24759-guide.iso24759-guide .hero h1 {
+                margin: 0 0 1rem;
+                font-size: 2.1rem;
+                line-height: 1.35;
+                font-weight: 500;
+            }
+            .iso24759-guide.iso24759-guide .lead {
+                margin: 0 0 1.75rem;
+                color: var(--color-text-secondary);
+                font-size: 1.15rem;
+            }
+            .iso24759-guide.iso24759-guide .meta {
+                display: grid;
+                gap: 0.6rem;
+                margin: 0;
+            }
+            .iso24759-guide.iso24759-guide .meta-row {
+                display: grid;
+                grid-template-columns: 9rem 1fr;
+                gap: 1rem;
+                padding: 0.75rem 1rem;
+                background: var(--color-background-tertiary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-md);
+            }
+            .iso24759-guide.iso24759-guide .meta dt {
+                color: var(--color-text-tertiary);
+            }
+            .iso24759-guide.iso24759-guide .meta dd {
+                margin: 0;
+                color: var(--color-text-secondary);
+            }
+            .iso24759-guide.iso24759-guide section {
+                padding: 2.75rem 3rem;
+                border-bottom: 1px solid var(--color-border-tertiary);
+            }
+            .iso24759-guide.iso24759-guide h2 {
+                display: flex;
+                gap: 0.9rem;
+                align-items: baseline;
+                margin: 0 0 1.25rem;
+                font-size: 1.6rem;
+                line-height: 1.4;
+                font-weight: 500;
+            }
+            .iso24759-guide.iso24759-guide .h-num {
+                color: var(--accent);
+                font-family: var(--font-mono);
+            }
+            .iso24759-guide.iso24759-guide h3 {
+                margin: 2.25rem 0 0.75rem;
+                font-size: 1.25rem;
+                line-height: 1.5;
+                font-weight: 500;
+                color: var(--color-text-primary);
+                padding-left: 0.75rem;
+                border-left: 3px solid var(--color-border-primary);
+            }
+            .iso24759-guide.iso24759-guide p {
+                margin: 0.9rem 0;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ul, .iso24759-guide.iso24759-guide .guide-content ol {
+                margin: 0.9rem 0;
+                padding-left: 0;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ul {
+                list-style: none;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ul > li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin: 0.5rem 0;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ul > li::before {
+                content: '';
+                position: absolute;
+                left: 0.35rem;
+                top: 0.8em;
+                width: 0.45rem;
+                height: 0.45rem;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            .iso24759-guide.iso24759-guide .guide-content ol {
+                list-style: none;
+                counter-reset: n;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ol > li {
+                position: relative;
+                padding-left: 2.5rem;
+                margin: 0.7rem 0;
+                counter-increment: n;
+            }
+            .iso24759-guide.iso24759-guide .guide-content ol > li::before {
+                content: counter(n);
+                position: absolute;
+                left: 0;
+                top: 0.1rem;
+                width: 1.8rem;
+                height: 1.8rem;
+                border-radius: 50%;
+                background: var(--color-background-info);
+                color: var(--accent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--font-mono);
+                line-height: 1;
+            }
+            .iso24759-guide.iso24759-guide code {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                background: var(--color-background-tertiary);
+                padding: 0.1em 0.4em;
+                border-radius: 6px;
+            }
+            .iso24759-guide.iso24759-guide .table-wrap {
+                margin: 1.25rem 0;
+                overflow-x: auto;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso24759-guide.iso24759-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+            }
+            .iso24759-guide.iso24759-guide th, .iso24759-guide.iso24759-guide td {
+                padding: 0.7rem 0.95rem;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--color-border-tertiary);
+                line-height: 1.6;
+            }
+            .iso24759-guide.iso24759-guide th {
+                background: var(--color-background-tertiary);
+                color: var(--color-text-primary);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .iso24759-guide.iso24759-guide td {
+                color: var(--color-text-secondary);
+            }
+            .iso24759-guide.iso24759-guide tbody tr:last-child td {
+                border-bottom: 0;
+            }
+            .iso24759-guide.iso24759-guide tbody tr:nth-child(even) td {
+                background: var(--color-background-secondary);
+            }
+            .iso24759-guide.iso24759-guide .callout {
+                display: flex;
+                gap: 0.9rem;
+                margin: 1.5rem 0;
+                padding: 1rem 1.25rem;
+                border: 1px solid var(--color-border-secondary);
+                border-left-width: 4px;
+                border-radius: var(--border-radius-lg);
+                background: var(--color-background-tertiary);
+            }
+            .iso24759-guide.iso24759-guide .callout > i {
+                font-size: 1.4rem;
+                line-height: 1.5;
+                flex: none;
+            }
+            .iso24759-guide.iso24759-guide .callout-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .iso24759-guide.iso24759-guide .callout-body p {
+                margin: 0.3rem 0;
+            }
+            .iso24759-guide.iso24759-guide .callout-title {
+                font-weight: 500;
+                color: var(--color-text-primary);
+            }
+            .iso24759-guide.iso24759-guide .callout.tip {
+                background: var(--color-background-info);
+                border-color: var(--accent);
+            }
+            .iso24759-guide.iso24759-guide .callout.tip > i {
+                color: var(--color-text-info);
+            }
+            .iso24759-guide.iso24759-guide .callout.warn {
+                background: var(--color-background-warning);
+                border-color: var(--color-text-warning);
+            }
+            .iso24759-guide.iso24759-guide .callout.warn > i {
+                color: var(--color-text-warning);
+            }
+            .iso24759-guide.iso24759-guide .callout.src {
+                background: var(--color-background-success);
+                border-color: var(--color-text-success);
+            }
+            .iso24759-guide.iso24759-guide .callout.src > i {
+                color: var(--color-text-success);
+            }
+            .iso24759-guide.iso24759-guide .callout.note > i {
+                color: var(--color-text-tertiary);
+            }
+            .iso24759-guide.iso24759-guide .diagram {
+                margin: 1.5rem 0;
+                padding: 1.5rem 1rem;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso24759-guide.iso24759-guide .diagram-body {
+                display: flex;
+                justify-content: center;
+                min-height: 3rem;
+            }
+            .iso24759-guide.iso24759-guide .diagram-body .messageText {
+                paint-order: stroke !important;
+                stroke: #0d1b2e !important;
+                stroke-width: 6px !important;
+                stroke-linejoin: round !important;
+            }
+            .iso24759-guide.iso24759-guide .code-block {
+                margin: 1.25rem 0;
+                border: 1px solid var(--color-border-secondary);
+                border-radius: var(--border-radius-lg);
+                overflow: hidden;
+                background: #0b1626;
+            }
+            .iso24759-guide.iso24759-guide .code-head {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                background: var(--color-background-tertiary);
+                border-bottom: 1px solid var(--color-border-secondary);
+                color: var(--color-text-tertiary);
+                font-family: var(--font-mono);
+            }
+            .iso24759-guide.iso24759-guide pre {
+                margin: 0;
+                padding: 1rem 1.25rem;
+                overflow-x: auto;
+                background: #0b1626;
+            }
+            .iso24759-guide.iso24759-guide pre code {
+                background: transparent;
+                padding: 0;
+                font-size: 1rem;
+                line-height: 1.65;
+                border-radius: 0;
+            }
+            .iso24759-guide.iso24759-guide pre code.hljs {
+                background: transparent;
+                padding: 0;
+            }
+            .iso24759-guide.iso24759-guide .ref-list {
+                display: grid;
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+            .iso24759-guide.iso24759-guide .ref-card {
+                display: grid;
+                grid-template-columns: 2.25rem 1fr;
+                gap: 1rem;
+                padding: 1rem 1.1rem;
+                background: var(--color-background-secondary);
+                border: 1px solid var(--color-border-tertiary);
+                border-radius: var(--border-radius-lg);
+            }
+            .iso24759-guide.iso24759-guide .ref-num {
+                width: 2.25rem;
+                height: 2.25rem;
+                border-radius: 50%;
+                background: var(--color-background-info);
+                color: var(--accent);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--font-mono);
+                font-weight: 500;
+                line-height: 1;
+            }
+            .iso24759-guide.iso24759-guide .ref-tag {
+                display: inline-block;
+                margin-bottom: 0.35rem;
+                padding: 0 0.7rem;
+                border: 1px solid var(--color-border-primary);
+                border-radius: 999px;
+                color: var(--color-text-secondary);
+            }
+            .iso24759-guide.iso24759-guide .ref-title {
+                margin: 0 0 0.3rem;
+                color: var(--color-text-primary);
+            }
+            .iso24759-guide.iso24759-guide .ref-url {
+                word-break: break-all;
+            }
+            .iso24759-guide.iso24759-guide .footer {
+                padding: 2rem 3rem 5rem;
+                color: var(--color-text-tertiary);
+            }
+            .iso24759-guide.iso24759-guide .footer p {
+                margin: 0;
+            }
+            .iso24759-guide.iso24759-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 1.25rem;
+                bottom: 1.25rem;
+                z-index: 90;
+                width: 3.5rem;
+                height: 3.5rem;
+                border-radius: 50%;
+                border: 0;
+                background: var(--accent);
+                color: #07111e;
+                font-size: 1.6rem;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+            .iso24759-guide.iso24759-guide .backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(3, 8, 16, 0.72);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s;
+                z-index: 60;
+            }
+            .iso24759-guide.iso24759-guide .backdrop.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            @media (max-width: 1024px) {
+                .iso24759-guide.iso24759-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s;
+                    width: min(var(--sidebar-w), 85vw);
+                }
+                .iso24759-guide.iso24759-guide .sidebar.open {
+                    transform: none;
+                }
+                .iso24759-guide.iso24759-guide .main {
+                    margin-left: 0;
+                }
+                .iso24759-guide.iso24759-guide .menu-btn {
+                    display: flex;
+                }
+                .iso24759-guide.iso24759-guide .hero, .iso24759-guide.iso24759-guide section {
+                    padding-left: 1.5rem;
+                    padding-right: 1.5rem;
+                }
+                .iso24759-guide.iso24759-guide .footer {
+                    padding-left: 1.5rem;
+                    padding-right: 1.5rem;
+                }
+            }
+            @media (max-width: 640px) {
+                .iso24759-guide.iso24759-guide .hero h1 {
+                    font-size: 1.65rem;
+                }
+                .iso24759-guide.iso24759-guide .meta-row {
+                    grid-template-columns: 1fr;
+                    gap: 0.25rem;
+                }
+                .iso24759-guide.iso24759-guide h2 {
+                    font-size: 1.4rem;
+                }
+                .iso24759-guide.iso24759-guide th {
+                    white-space: normal;
+                }
+            }
+        
+.iso24759-guide.iso24759-guide{font-size:16px;isolation:isolate;word-break:normal;}
+.iso24759-guide.iso24759-guide .sidebar{top:var(--docs-header-height, 64px);z-index:40;}
+.iso24759-guide.iso24759-guide .menu-btn{z-index:50;}
+.iso24759-guide.iso24759-guide .backdrop{z-index:35;}
+.iso24759-guide.iso24759-guide .diagram-body{display:block;min-width:0;}
+.iso24759-guide.iso24759-guide .diagram-viewport{display:block;overflow-x:auto;}
+.iso24759-guide.iso24759-guide .diagram-viewport svg{display:block;max-width:none;margin-left:auto;margin-right:auto;}
+.iso24759-guide.iso24759-guide .ti{display:inline-flex;vertical-align:middle;flex-shrink:0;}
+.iso24759-guide.iso24759-guide .ti svg{width:1em;height:1em;stroke-width:1.8;}
+.iso24759-guide.iso24759-guide section[id], .iso24759-guide.iso24759-guide h3[id]{scroll-margin-top:88px;}
+@media(prefers-reduced-motion:reduce){.iso24759-guide.iso24759-guide *, .iso24759-guide.iso24759-guide{scroll-behavior:auto;transition:none;}}
