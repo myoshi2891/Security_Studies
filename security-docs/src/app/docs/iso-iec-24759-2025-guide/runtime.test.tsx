@@ -67,6 +67,13 @@ test('diagram text descriptions resolve quoted node labels across edges, chains 
  expect(describeDiagram('flowchart LR\nA["入力"] --> B["処理"] --> C["出力"]')).toEqual(['フローチャート','入力 → 処理','処理 → 出力']);
  expect(describeDiagram('sequenceDiagram\nA->>B: 要求<br/>送信')).toEqual(['シーケンス図','A->>B: 要求 送信']);
 });
+test('state diagram descriptions name the start and end pseudo states, keep labels and retain non-transition lines',async()=>{
+ const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ expect(describeDiagram('stateDiagram-v2\n[*] --> 起動\n起動 --> 運用: 自己テスト<br/>合格\n起動 --> エラー\nエラー --> [*]\nnote right of エラー: 出力<br/>禁止')).toEqual(['ステート図','[*]（開始） → 起動','起動 → 運用: 自己テスト 合格','起動 → エラー','エラー → [*]（終了）','note right of エラー: 出力 禁止']);
+ const {diagrams}=await import('./diagrams');const description=describeDiagram(diagrams.d5);
+ expect(description.slice(0,4)).toEqual(['ステート図','[*]（開始） → 電源投入','電源投入 → 起動時自己テスト','起動時自己テスト → 通常動作: 合格']);
+ expect(description).toContain('エラー状態 → 初期化状態: 回復可能なエラーで 再初期化');expect(description).toContain('ハードエラー → [*]（終了）');expect(description.some((line:string)=>line.includes('-->'))).toBe(false);
+});
 test('diagram text descriptions read labels from stadium and cylinder nodes instead of node IDs',async()=>{
  const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  expect(describeDiagram('flowchart LR\nAPI(["APIサーバー"]) --> DB[("顧客DB")]')).toEqual(['フローチャート','APIサーバー → 顧客DB']);
