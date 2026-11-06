@@ -566,3 +566,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-06 ISO24759移行・原本アーカイブ・自動検証完了: /docs/iso-iec-24759-2025-guide （security-docs/src/app/docs/iso-iec-24759-2025-guide/page.mdx）。19章・48見出し・24表407セル・8図・37リスト項目・7注意欄・20出典・Pythonコードを保持。固定構造SHA-256/原本DOM/全CSS/media/丸点・丸囲み番号・CSSカウンター/全表とページのHydration/目次操作を検証。全体実行2647成功/0skip/0失敗（328ファイル、571,836 expect）。全体実行開始後のフォント回帰1件追加と修正は、最終専用95成功/0skip/0失敗（9ファイル、939 expect）で検証。現行の定義総数2648件/328ファイル。原本なし隔離環境60成功/35skip/0失敗、HTMLのみ/Markdownのみのアーカイブ検証は各3成功/1skip/0失敗。Chrome5幅×明暗の10条件で本文・丸点・丸数字・カウンター・全407セルのホバー配色差分0、全件数一致、全8図の描画と左右スクロール、モバイル目次開閉と章移動、pageErrors0。共有CSSによるpreのUA monospace差分をRed d64f9a4 → Green 2874888で修正。両原本はarchive/standards/へSHA-256一致で移動済み（Git管理外、Red cf007ef → Green 0ece9d2）。ナビ・静的/動的検索41ページ、ロジック131/131。npm test・npm run lint・npm run types:check成功。台帳: docs/migration-inventory/iso-iec-24759-2025-guide.json。目視確認表: docs/migration-inventory/iso-iec-24759-2025-guide-review.md。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-06 ISSEP: 開始監査で既存41ルート/328テストファイル、現行2648定義を確認。既存全体のnpm test実行中。原本は13章・120見出し・74表1080セル・22図・207リスト項目・10問/解答・6チェック・19出典・54目次リンク・4コード。表示基盤Redは0成功/5失敗（2ファイル）で未実装を検出。ビルド禁止/未実行、目視はユーザー担当。
