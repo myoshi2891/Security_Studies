@@ -14,7 +14,7 @@ export const scope = '.iso24759-guide.iso24759-guide';
 export const sourcePath = resolve(import.meta.dir, '../../../../../Iso-iec-24759-2025-guide.html');
 export let sourceDocument: Document;
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
-export function sourceTest(name: string, fn: () => unknown | Promise<unknown>, timeout?: number) {
+export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
   test.skipIf(!existsSync(sourcePath))(name, () => {
     sourceDocument ??= new DOMParser().parseFromString(readFileSync(sourcePath, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
     return fn();
