@@ -23,7 +23,7 @@ try {
     await buttons[j].click();const ok=String.fromCharCode(65+j)===correct;
     assert.equal(await card.locator('[role="status"]').textContent(),ok?'正解':'不正解');
     assert.equal(await buttons[j].getAttribute('aria-pressed'),'true');assert.equal(await buttons[j].getAttribute('data-choice-state'),ok?'correct':'incorrect');
-    assert.equal(await card.locator('[aria-pressed="true"]').count(),1);assert.equal(await card.locator('details').getAttribute('open'),'');
+    assert.equal(await card.locator('[aria-pressed="true"]').count(),1);assert.equal(await card.locator('[aria-pressed="false"][aria-describedby]').count(),0);assert.equal(await card.locator('details').getAttribute('open'),'');
     assert.equal(await buttons[j].getAttribute('aria-describedby'),await card.locator('[role="status"]').getAttribute('id'));
     assert.deepEqual(await snapshot(card),copy[i]);
     const correctStyle=await buttons[correct.charCodeAt(0)-65].evaluate(e=>({color:getComputedStyle(e).color,background:getComputedStyle(e).backgroundColor}));
