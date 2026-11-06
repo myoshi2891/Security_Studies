@@ -591,3 +591,6 @@
 .iso24759-guide.iso24759-guide .sidebar{visibility:visible;}
 @media (max-width: 1024px){.iso24759-guide.iso24759-guide .sidebar:not(.open){visibility:hidden;}}
 @media(max-width:1024px) and (prefers-reduced-motion:no-preference){.iso24759-guide.iso24759-guide .sidebar{transition:transform 0.25s,visibility 0.25s;}}
+
+/* Restore the original browser pre font after the shared Tailwind reset. */
+.iso24759-guide.iso24759-guide pre{font-family:monospace;}
