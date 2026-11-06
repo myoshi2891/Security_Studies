@@ -81,3 +81,9 @@ test('an undecodable fragment selects nothing and still registers the listeners 
   const link=view.container.querySelector<HTMLAnchorElement>('[href="#ch3"]')!;fireEvent.click(link);expect(link).toHaveAttribute('aria-current','location');
  }finally{globalThis.IntersectionObserver=saved;}
 });
+test('without a URL fragment the first link is selected even when its chapter ID is percent-encoded Japanese',()=>{
+ const id='0-本ガイドの読み方';
+ // 実ブラウザの a.hash はパーセントエンコード済みだが Happy DOM は生の値を返すため、href で同じ状態を作る
+ const view=render(h('div',{className:'iso24759-guide'},h(GuideSidebar,{children:h('nav',{},h('a',{href:`#${encodeURIComponent(id)}`},'第0章'),h('a',{href:'#ch1'},'第1章'))}),h('section',{id},h('h2',{},'第0章'))));
+ expect(view.container.querySelector('nav a')).toHaveAttribute('aria-current','location');
+});
