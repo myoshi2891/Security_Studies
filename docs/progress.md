@@ -23,6 +23,15 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/issep-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/foundation.test.tsx` | 3 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/front.test.tsx` | 12 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/hydration.test.tsx` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/integration.test.tsx` | 6 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/rear.test.tsx` | 14 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/runtime.test.tsx` | 14 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/sidebar.test.tsx` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/styles.test.tsx` | 16 | ✅ 2026-11-06 ISSEP最終実測 |
 | `src/app/docs/iso-iec-24759-2025-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
 | `src/app/docs/iso-iec-24759-2025-guide/foundation.test.tsx` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
 | `src/app/docs/iso-iec-24759-2025-guide/front.test.tsx` | 20 | ✅ 2026-11-06 ISO24759最終実測 |
@@ -1490,3 +1499,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-06 ISSEP: 原本HTML/Markdownをarchive/security-certifications/へ移動し両SHA-256一致。移動後77成功/0skip/0失敗（9ファイル、1427 expect）。原本なし48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip。既存検索回帰22件も成功し42ページで一致。lint・型チェック成功。Chrome10条件の文字/角点/番号/カウンター/全1080セルホバー/チェック済み装飾は差分0、375/1440pxで17構造SHA・22図・解答/チェック/目次操作成功（pageErrors0）。全体最終実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-06 ISSEP: 全体再検証で既存CCIE/CCSTの資格一覧固定値とISO27001の従来30ルート検証にISSEP分の同期漏れを検出。元の完全一致・既存ルート保持の条件を維持して3ファイルを同期。全体実行を中断し、この3ファイルのGreen確認後に変更確定状態で全体を再実行する。
