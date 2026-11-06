@@ -52,3 +52,13 @@ test('the original answer disclosure can still be toggled after choosing and reo
  fireEvent.click(b[1]);expect(details.open).toBe(true);
  assertCopy(c,0);
 });
+
+test('source fidelity adapts only a single choice button and still detects added or changed wording', async () => {
+ const { canonical }=await import('./fidelity-helpers');
+ const original=document.createElement('div'),enhanced=document.createElement('div');
+ original.innerHTML='<ul class="q-opts"><li>B. 検証</li></ul>';
+ enhanced.innerHTML='<ul class="q-opts"><li><button class="quiz-choice" type="button">B. 検証</button></li></ul>';
+ expect(canonical(enhanced.firstChild!)).toEqual(canonical(original.firstChild!));
+ enhanced.querySelector('button')!.append('変更');expect(canonical(enhanced.firstChild!)).not.toEqual(canonical(original.firstChild!));
+ enhanced.querySelector('button')!.textContent='B. 検証';enhanced.querySelector('li')!.append('追加');expect(canonical(enhanced.firstChild!)).not.toEqual(canonical(original.firstChild!));
+});
