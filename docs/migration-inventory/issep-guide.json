@@ -1,0 +1,3428 @@
+{
+  "source": "Issep-guide.html",
+  "markdownSource": "Issep-guide.md",
+  "htmlSha256": "dd03ed50a46dd9e3afbb7c1adaeff7239ecee31957c5271c0947bd1a36355fd8",
+  "markdownSha256": "d007798205ab338d8d3bb8b2971f04855902e9b5350492a5873eddd2fb853886",
+  "route": "/docs/issep-guide",
+  "title": "ISC2 ISSEP 初学者向け完全ガイド",
+  "description": "ISC2 ISSEPの5ドメイン、システムセキュリティエンジニアリング、リスク管理、要件・設計、実装・検証、運用・廃棄を図と確認問題で学ぶ初学者向けガイド。",
+  "counts": {
+    "section[id]": 13,
+    "h1,h2,h3,h4,h5,h6": 120,
+    "table": 74,
+    "th,td": 1080,
+    "ul": 53,
+    "ol": 1,
+    "li": 207,
+    ".callout": 54,
+    ".ref-card": 19,
+    ".sidebar nav a": 54,
+    "[data-diagram]": 22,
+    "pre code": 4,
+    ".quiz": 10,
+    ".quiz details": 10,
+    ".checklist input": 6,
+    "img": 0
+  },
+  "ids": [
+    "sidebar",
+    "backdrop",
+    "menuBtn",
+    "sec-1",
+    "h3-1",
+    "h3-2",
+    "h3-3",
+    "h3-4",
+    "sec-2",
+    "h3-5",
+    "h3-6",
+    "h3-7",
+    "sec-3",
+    "h3-8",
+    "h3-9",
+    "sec-4",
+    "h3-10",
+    "h3-11",
+    "h3-12",
+    "h3-13",
+    "h3-14",
+    "sec-5",
+    "h3-15",
+    "h3-16",
+    "h3-17",
+    "h3-18",
+    "h3-19",
+    "h3-20",
+    "sec-6",
+    "h3-21",
+    "h3-22",
+    "h3-23",
+    "sec-7",
+    "h3-24",
+    "h3-25",
+    "h3-26",
+    "h3-27",
+    "sec-8",
+    "h3-28",
+    "h3-29",
+    "sec-9",
+    "h3-30",
+    "h3-31",
+    "h3-32",
+    "h3-33",
+    "sec-10",
+    "sec-11",
+    "h3-34",
+    "h3-35",
+    "h3-36",
+    "h3-37",
+    "sec-12",
+    "h3-38",
+    "h3-39",
+    "sec-13",
+    "ref-S1",
+    "ref-S2",
+    "ref-S3",
+    "ref-S4",
+    "ref-S5",
+    "ref-S6",
+    "ref-S7",
+    "ref-S8",
+    "ref-S9",
+    "ref-S10",
+    "ref-S11",
+    "ref-S12",
+    "ref-S13",
+    "ref-S14",
+    "ref-S15",
+    "ref-S16",
+    "ref-S17",
+    "ref-S19",
+    "ref-S20",
+    "h3-40",
+    "h3-41"
+  ],
+  "structures": {
+    ".brand": "696818e02dc2a0ecc3ad86519102ff47a68a205ca5d68708ca39f304d5349a52",
+    ".sidebar nav": "de1cf81a8b4d743a9f5e7bbcac8530925e8774e04abf463e0373a75c356803bb",
+    ".hero": "1845138903a86005e79f63a7e1d2e283f960ef1f30b85672b5ce1674928d6d63",
+    "#sec-1": "d0170eb65375520d7be9492b4c54de4de5bf438b4ccc5079f509d88d7070fa23",
+    "#sec-2": "c235c4439abefa9b62ca3ca1765b953dff356770b8e34a7c790dc67c3af9546f",
+    "#sec-3": "46c11a7af031b2b04768594d91b244fe17cc952e795c1c988f6c5b97981255be",
+    "#sec-4": "34ec5a5494a3c43c157a2e16c15a1c0d7a8eeb7164bda186e4a85797047e116a",
+    "#sec-5": "9124ebe71a36271e92f88478973abc47794de2572849db857bbc83e396015fbf",
+    "#sec-6": "5e64c3cf837d046132e0322c55c9f88496204efbb17e014255a83fb3fc9d3d9f",
+    "#sec-7": "e6aeba9042f66eb682b15de7a7d607e1bc6d6c083ccd673fcd58d225115edd17",
+    "#sec-8": "e2364a31bbcce4c0747c77a6116cd20ffdbeaa636ba2cc16a9b564174ee38046",
+    "#sec-9": "4b53a50bf9bad288a0b4822918366cc9c07c94af74383d7fe388d0d0ad0e0bdb",
+    "#sec-10": "285d1eb884579e515b5ca4609053eb0962e89fcc637204d631beef4d407df7e4",
+    "#sec-11": "2ab21b48506a02918a5da8fba1e5d59fe29ba2627ec8009f119f99d292158dc1",
+    "#sec-12": "7639e038bd7ba08eab3e9f2af36ec46546e01f9e250e83a51feffa9e305f2602",
+    "#sec-13": "5e0436496ed0f6761342ba1feebe6f36cd88bf384b65f12fceffcf920fca9bbb",
+    ".footer": "3d21741ecaed08904abb6e699adbc4a8c53d0ea19261bad11023a7c525fc30d2"
+  },
+  "diagrams": {
+    "d0": "\nflowchart LR\nD1[\"Domain 1<br/>基礎・技術管理・調達<br/>24%\"] --> D2[\"Domain 2<br/>リスク管理<br/>20%\"]\nD2 --> D3[\"Domain 3<br/>計画・要件・設計<br/>22%\"]\nD3 --> D4[\"Domain 4<br/>実装・検証・妥当性確認<br/>20%\"]\nD4 --> D5[\"Domain 5<br/>運用・変更・廃棄<br/>14%\"]\nD2 -. \"全工程に関わる\" .-> D4\nD2 -. \"全工程に関わる\" .-> D5\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass D1,D2,D3,D4 box\nclass D5 done\n",
+    "d1": "\nflowchart TD\nA[\"Step 0<br/>前提知識を固める<br/>用語・ライフサイクル・RMF\"] --> B[\"Step 1<br/>Domain 1 を学ぶ<br/>SSE基礎・技術管理・調達\"]\nB --> C[\"Step 2<br/>Domain 2 を学ぶ<br/>リスク管理\"]\nC --> D[\"Step 3<br/>Domain 3 を学ぶ<br/>要件と設計\"]\nD --> E[\"Step 4<br/>Domain 4 を学ぶ<br/>実装と検証\"]\nE --> F[\"Step 5<br/>Domain 5 を学ぶ<br/>運用・変更・廃棄\"]\nF --> G[\"Step 6<br/>横断復習<br/>追跡可能性・RMFとの対応\"]\nG --> H[\"Step 7<br/>確認問題と弱点補強\"]\nH --> I{\"弱点は残っているか\"}\nI -- \"はい\" --> J[\"該当ドメインへ戻る\"]\nJ --> H\nI -- \"いいえ\" --> K[\"試験日程を確定する\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D,E,F,G,H,J box\nclass I hub\nclass K done\n",
+    "d2": "\nflowchart TD\nRoT[\"信頼の起点 Root of Trust<br/>HWルートオブトラスト・ルートCA\"] --> TCB[\"Trusted Computing Base<br/>セキュリティ機能の核となる部品群\"]\nTCB --> OS[\"OS・ハイパーバイザー\"]\nOS --> MW[\"ミドルウェア・ランタイム\"]\nMW --> APP[\"アプリケーション\"]\nAPP --> DATA[\"データ・利用者\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass RoT,TCB,OS,MW,APP box\nclass DATA done\n",
+    "d3": "\nflowchart LR\nL[\"法律・規則\"] --> P[\"組織方針\"]\nS[\"標準・ガイドライン\"] --> P\nC[\"契約要件\"] --> P\nP --> R[\"システムのセキュリティ要件\"]\nR --> E[\"設計・実装・検証\"]\nE --> Ev[\"証拠・監査可能な記録\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass L,P,S,C,R,E box\nclass Ev done\n",
+    "d4": "\nflowchart TD\nN[\"ステークホルダーのニーズ\"] --> R[\"システム要件\"]\nR --> A[\"アーキテクチャ設計\"]\nA --> D[\"詳細設計\"]\nD --> I[\"実装\"]\nI --> U[\"単体・コンポーネント検証\"]\nU --> IT[\"統合検証\"]\nIT --> SV[\"システム検証\"]\nSV --> VAL[\"妥当性確認\"]\nN -. \"対応\" .-> VAL\nR -. \"対応\" .-> SV\nA -. \"対応\" .-> IT\nD -. \"対応\" .-> U\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass N,R,A,D,I,U,IT,SV box\nclass VAL done\n",
+    "d5": "\nflowchart LR\nID[\"構成要素の識別\"] --> BL[\"ベースライン確立\"]\nBL --> CR[\"変更要求\"]\nCR --> IA[\"影響分析(セキュリティ含む)\"]\nIA --> AP{\"承認?\"}\nAP -- \"承認\" --> IM[\"変更の実施\"]\nAP -- \"却下\" --> RJ[\"却下・記録\"]\nIM --> VR[\"検証\"]\nVR --> NB[\"新ベースライン\"]\nNB --> AU[\"状況記録と監査\"]\nAU --> BL\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass ID,BL,CR,IA,IM,VR,NB,AU box\nclass AP hub\nclass RJ done\n",
+    "d6": "\nflowchart TD\nN[\"ニーズ・保護要件の確定\"] --> RFP[\"調達文書にセキュリティ要件を記載<br/>RFP・SOW・SLA\"]\nRFP --> EV[\"候補評価<br/>セキュリティを評価基準に含める\"]\nEV --> DD[\"サプライヤーのデューデリジェンス\"]\nDD --> SEL[\"選定\"]\nSEL --> CT[\"契約交渉<br/>セキュリティ条項\"]\nCT --> DEL[\"成果物の受け入れレビュー\"]\nDEL --> OPS[\"運用・継続的なサプライヤー監視\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass N,RFP,EV,DD,SEL,CT,DEL box\nclass OPS done\n",
+    "d7": "\nflowchart LR\nA[\"各入力に確率分布を設定<br/>例: 三点見積り\"] --> B[\"乱数で値を1セット抽出\"]\nB --> C[\"合計コスト・納期を計算\"]\nC --> D{\"規定回数に到達?\"}\nD -- \"いいえ\" --> B\nD -- \"はい\" --> E[\"結果の分布を作成\"]\nE --> F[\"P50・P80 など確率水準で判断\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,E box\nclass D hub\nclass F done\n",
+    "d8": "\nflowchart TD\nP[\"Prepare 準備<br/>組織・システムレベルの基盤整備\"] --> C[\"Categorize 分類<br/>FIPS 199 で影響度を決定\"]\nC --> S[\"Select 選択<br/>管理策のベースラインを選び調整\"]\nS --> I[\"Implement 実装<br/>管理策を実装し文書化\"]\nI --> A[\"Assess 評価<br/>管理策が有効か確認\"]\nA --> AU[\"Authorize 認可<br/>AO がリスクを受容して決定\"]\nAU --> M[\"Monitor 監視<br/>継続的に状態を把握\"]\nM -. \"変化があれば\" .-> C\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass P,C,S,I,A,AU,M box\n",
+    "d9": "\nflowchart TD\nCTX[\"1. コンテキストの確立<br/>境界・前提・制約・許容度\"] --> ID[\"2. リスクの特定<br/>脅威・事象・脆弱性・影響\"]\nID --> INH[\"3. 固有リスク分析<br/>管理策を考慮する前\"]\nINH --> EV[\"4. リスク評価<br/>許容度と比較し優先順位付け\"]\nEV --> TR[\"5. リスク対応の決定\"]\nTR --> MON[\"6. 監視・変化の評価<br/>残余・変更・新規リスク\"]\nMON --> DOC[\"7. リスク態勢の文書化<br/>所見・決定\"]\nDOC -. \"継続\" .-> CTX\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass CTX,ID,INH,EV,TR,MON,DOC box\n",
+    "d10": "\nflowchart LR\nBIA[\"事業影響度分析 BIA<br/>MTD・RTO・RPO\"] --> RA[\"運用リスクの特定・評価\"]\nRA --> CP[\"コンティンジェンシー計画<br/>事業継続・復旧\"]\nCP --> CM[\"継続的監視\"]\nCM --> IR[\"インシデント対応\"]\nIR --> LR[\"教訓の反映\"]\nLR --> RA\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass BIA,RA,CP,CM,IR,LR box\n",
+    "d11": "\nflowchart LR\nA[\"3.1 環境分析<br/>ニーズ・役割・制約\"] --> B[\"3.2 セキュリティ原則<br/>設計の指針\"]\nB --> C[\"3.3 要件開発<br/>コンテキスト・CONOPS・ベースライン\"]\nC --> D[\"3.4 設計<br/>機能配分・トレードオフ・妥当性確認\"]\nD -. \"変更・学習\" .-> A\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D box\n",
+    "d12": "\nflowchart TD\nA[\"ステークホルダーのニーズ\"] --> B[\"要件の抽出と整理\"]\nB --> C[\"要件の記述<br/>shall 形式・測定可能\"]\nC --> D[\"要件の分析<br/>一貫性・網羅性・実現可能性・検証可能性\"]\nD --> E{\"問題はあるか\"}\nE -- \"あり\" --> B\nE -- \"なし\" --> F[\"レビューと承認\"]\nF --> G[\"要件ベースライン確定<br/>変更は変更管理で統制\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D,F box\nclass E hub\nclass G done\n",
+    "d13": "\nflowchart LR\nN[\"ニーズ\"] --> R[\"要件\"]\nR --> D[\"設計要素\"]\nD --> I[\"実装\"]\nI --> T[\"テスト\"]\nT --> E[\"検証結果・証拠\"]\nE -. \"逆方向にもたどれる\" .-> N\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass N,R,D,I,T,E box\n",
+    "d14": "\nflowchart TD\nA[\"承認された設計・ベースライン\"] --> B[\"コンポーネントの実装・調達\"]\nB --> C[\"セキュアな構成の適用<br/>ハードニング・ベースライン\"]\nC --> D[\"段階的な統合<br/>インターフェースごとに確認\"]\nD --> E[\"統合後の動作確認\"]\nE --> F{\"設計・要件どおりか\"}\nF -- \"いいえ\" --> G[\"差異の分析と是正<br/>変更管理を通す\"]\nG --> D\nF -- \"はい\" --> H[\"検証フェーズへ\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D,E,G box\nclass F hub\nclass H done\n",
+    "d15": "\nflowchart LR\nC[\"コード コミット\"] --> S1[\"秘密情報スキャン\"]\nS1 --> S2[\"静的解析 SAST\"]\nS2 --> S3[\"依存関係・SBOM検査 SCA\"]\nS3 --> B[\"ビルド・署名\"]\nB --> S4[\"コンテナ・IaC検査\"]\nS4 --> T[\"テスト環境へデプロイ\"]\nT --> S5[\"動的解析 DAST・統合テスト\"]\nS5 --> G{\"品質・セキュリティゲート\"}\nG -- \"不合格\" --> F[\"修正してやり直し\"]\nF --> C\nG -- \"合格\" --> R[\"承認つきリリース\"]\nR --> M[\"本番の継続的監視\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass C,S1,S2,S3,B,S4,T,S5,F,R box\nclass G hub\nclass M done\n",
+    "d16": "\nflowchart TD\nT[\"テスト実施・証拠収集\"] --> F[\"所見の分類と優先順位付け\"]\nF --> R[\"リスク分析の見直し<br/>残余リスクの再評価\"]\nR --> D{\"受容可能か\"}\nD -- \"はい\" --> A[\"ステークホルダー受け入れの文書化\"]\nD -- \"いいえ\" --> X[\"是正・再テスト\"]\nX --> T\nA --> P[\"認可判断の材料として提出\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass T,F,R,A,X box\nclass D hub\nclass P done\n",
+    "d17": "\nflowchart LR\nA[\"5.1 運用計画<br/>役割・報告要件\"] --> B[\"5.2 運用支援<br/>監視・IR・保守\"]\nB --> C[\"5.3 変更管理<br/>影響分析・検証・文書更新\"]\nC --> B\nB --> D[\"5.4 廃棄<br/>消去・撤去・保持\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C box\nclass D done\n",
+    "d18": "\nflowchart LR\nA[\"戦略の定義\"] --> B[\"プログラムの確立<br/>指標・頻度・役割\"]\nB --> C[\"実装<br/>データ収集の自動化\"]\nC --> D[\"分析と報告\"]\nD --> E[\"対応<br/>是正・リスク受容\"]\nE --> F[\"見直しと更新\"]\nF --> A\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D,E,F box\n",
+    "d19": "\nflowchart TD\nA[\"変更要求\"] --> B[\"セキュリティ影響分析\"]\nB --> C{\"重大な変更か\"}\nC -- \"はい\" --> D[\"再評価・再認可の検討\"]\nC -- \"いいえ\" --> E[\"変更管理委員会 CCB のレビュー\"]\nD --> E\nE --> F{\"承認\"}\nF -- \"却下\" --> G[\"理由を記録して終了\"]\nF -- \"承認\" --> H[\"計画・テスト・ロールバック準備\"]\nH --> I[\"実施\"]\nI --> J[\"検証と妥当性確認<br/>回帰テスト含む\"]\nJ --> K[\"リスク評価・SSP・POA&M の更新\"]\nK --> L[\"ベースライン更新\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,D,E,H,I,J,K box\nclass C,F hub\nclass G,L done\n",
+    "d20": "\nflowchart TD\nA[\"廃棄要件の特定<br/>法令・契約・データ分類\"] --> B[\"廃棄計画の策定\"]\nB --> C[\"資産・データの棚卸し\"]\nC --> D[\"必要データの移行・保存\"]\nD --> E[\"アクセス権・鍵・証明書・外部接続の廃止\"]\nE --> F[\"媒体の消去<br/>Clear・Purge・Destroy\"]\nF --> G[\"消去結果の検証\"]\nG --> H[\"記録・証明書・監査\"]\nH --> I[\"保持期間の管理と最終削除\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass A,B,C,D,E,F,G,H box\nclass I done\n",
+    "d21": "\nflowchart TD\nQ[\"問題文を読む\"] --> A{\"どのライフサイクル段階か\"}\nA --> B[\"構想・要件\"]\nA --> C[\"設計\"]\nA --> D[\"実装・検証\"]\nA --> E[\"運用・変更・廃棄\"]\nB --> F[\"ステークホルダーのニーズと保護ニーズから始める\"]\nC --> G[\"要件への追跡可能性を維持しトレードオフを記録する\"]\nD --> H[\"要件に対する証拠を作る\"]\nE --> I[\"変更はリスクを再評価して文書を更新する\"]\nF --> J{\"選択肢のうち<br/>プロセスに沿うのはどれか\"}\nG --> J\nH --> J\nI --> J\nJ --> K[\"証拠・文書・権限者の承認を伴う案を選ぶ\"]\nclassDef box fill:#EEF1F8,stroke:#2E3F72,color:#161B26\nclassDef hub fill:#FAF1DF,stroke:#B8802A,color:#161B26\nclassDef done fill:#EAF4EC,stroke:#2F6B3D,color:#161B26\nclass Q,B,C,D,E,F,G,H,I box\nclass A,J hub\nclass K done\n"
+  },
+  "codes": [
+    "35d885866ff9be3a7650309e2335889a1ca34a00ff38a454f70774a73de72ee2",
+    "e1be58fa9b0edaad8c382931e673074e8fe928635f8157b0a17f252c087a7cc1",
+    "bd3bc089acf14544a57bc15caf4e6d2c337ebb73b3457d127840a0c8e3e38608",
+    "3a7f6c3ec75941451d36239488bf042930f352d6be0fbea62275b404b679305b"
+  ],
+  "cssRules": [
+    {
+      "selector": ":root",
+      "media": null,
+      "declarations": [
+        [
+          "--color-paper",
+          "#f6f7f9",
+          false
+        ],
+        [
+          "--color-surface",
+          "#ffffff",
+          false
+        ],
+        [
+          "--color-ink",
+          "#161b26",
+          false
+        ],
+        [
+          "--color-ink-2",
+          "#3b4458",
+          false
+        ],
+        [
+          "--color-ink-3",
+          "#5a6377",
+          false
+        ],
+        [
+          "--color-indigo",
+          "#2e3f72",
+          false
+        ],
+        [
+          "--color-indigo-tint",
+          "#eef1f8",
+          false
+        ],
+        [
+          "--color-indigo-line",
+          "#c9d3ea",
+          false
+        ],
+        [
+          "--color-gold",
+          "#b8802a",
+          false
+        ],
+        [
+          "--color-gold-tint",
+          "#faf1df",
+          false
+        ],
+        [
+          "--color-gold-line",
+          "#f1ddae",
+          false
+        ],
+        [
+          "--color-forest",
+          "#1b6e6a",
+          false
+        ],
+        [
+          "--color-forest-tint",
+          "#e6f2f1",
+          false
+        ],
+        [
+          "--color-forest-line",
+          "#bfe0db",
+          false
+        ],
+        [
+          "--color-plum",
+          "#8c3a5c",
+          false
+        ],
+        [
+          "--color-plum-tint",
+          "#f7ecf1",
+          false
+        ],
+        [
+          "--color-plum-line",
+          "#e8c7d6",
+          false
+        ],
+        [
+          "--color-green",
+          "#2f6b3d",
+          false
+        ],
+        [
+          "--color-green-tint",
+          "#eaf4ec",
+          false
+        ],
+        [
+          "--color-border",
+          "#d9dde6",
+          false
+        ],
+        [
+          "--color-border-strong",
+          "#b9c0cf",
+          false
+        ],
+        [
+          "--font-sans",
+          "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP',\n                    'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif",
+          false
+        ],
+        [
+          "--font-serif",
+          "'Source Serif 4', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', Georgia,\n                    serif",
+          false
+        ],
+        [
+          "--font-mono",
+          "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Mono CJK JP',\n                    monospace",
+          false
+        ],
+        [
+          "--sidebar-w",
+          "288px",
+          false
+        ],
+        [
+          "--radius-md",
+          "8px",
+          false
+        ],
+        [
+          "--radius-lg",
+          "12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "*",
+      "media": null,
+      "declarations": [
+        [
+          "box-sizing",
+          "border-box",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "html",
+      "media": null,
+      "declarations": [
+        [
+          "scroll-behavior",
+          "smooth",
+          false
+        ],
+        [
+          "scroll-padding-top",
+          "24px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "body",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "background",
+          "var(--color-paper)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ],
+        [
+          "font-family",
+          "var(--font-sans)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.8",
+          false
+        ],
+        [
+          "font-weight",
+          "400",
+          false
+        ],
+        [
+          "-webkit-text-size-adjust",
+          "100%",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "text-decoration",
+          "underline",
+          false
+        ],
+        [
+          "text-underline-offset",
+          "3px",
+          false
+        ],
+        [
+          "text-decoration-thickness",
+          "1px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a:hover",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-plum)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "strong",
+      "media": null,
+      "declarations": [
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "code",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-mono)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-indigo-line)",
+          false
+        ],
+        [
+          "border-radius",
+          "4px",
+          false
+        ],
+        [
+          "padding",
+          "0 6px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "media": null,
+      "declarations": [
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "top",
+          "0",
+          false
+        ],
+        [
+          "left",
+          "0",
+          false
+        ],
+        [
+          "bottom",
+          "0",
+          false
+        ],
+        [
+          "width",
+          "var(--sidebar-w)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border-right",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "overflow-y",
+          "auto",
+          false
+        ],
+        [
+          "z-index",
+          "30",
+          false
+        ],
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "flex-direction",
+          "column",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "gap",
+          "12px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "padding",
+          "24px 20px 20px",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--color-border)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand svg",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "width",
+          "44px",
+          false
+        ],
+        [
+          "height",
+          "44px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand-title",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-size",
+          "1.25rem",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.3",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand-sub",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-3)",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "12px 12px 32px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav ul",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li",
+      "media": null,
+      "declarations": [
+        [
+          "padding-left",
+          "0",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav a",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ],
+        [
+          "text-decoration",
+          "none",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-2)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ],
+        [
+          "padding",
+          "8px 12px",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "border-left",
+          "3px solid transparent",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav a:hover",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav a.active",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "border-left-color",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-sub",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "4px 0 8px 14px",
+          false
+        ],
+        [
+          "border-left",
+          "1px solid var(--color-border)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-group.open > .nav-sub",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-sub a",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "6px 10px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-3)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".layout",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": null,
+      "declarations": [
+        [
+          "margin-left",
+          "var(--sidebar-w)",
+          false
+        ],
+        [
+          "padding",
+          "0 56px 80px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "56px 0 32px",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "margin-bottom",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero .eyebrow",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-block",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "color",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "letter-spacing",
+          "0.08em",
+          false
+        ],
+        [
+          "margin-bottom",
+          "12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "2.25rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.35",
+          false
+        ],
+        [
+          "margin",
+          "0 0 12px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero .subtitle",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1.125rem",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-2)",
+          false
+        ],
+        [
+          "margin",
+          "0 0 20px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero .subtitle strong",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-ink-2)",
+          false
+        ],
+        [
+          "font-weight",
+          "400",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".meta",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "flex-wrap",
+          "wrap",
+          false
+        ],
+        [
+          "gap",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".meta li",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "padding",
+          "6px 14px",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".meta li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "section.section",
+      "media": null,
+      "declarations": [
+        [
+          "padding-top",
+          "48px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "section.section > h2",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "1.75rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "padding-bottom",
+          "12px",
+          false
+        ],
+        [
+          "border-bottom",
+          "2px solid var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose h3",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "1.375rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.45",
+          false
+        ],
+        [
+          "margin",
+          "48px 0 16px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "padding-left",
+          "14px",
+          false
+        ],
+        [
+          "border-left",
+          "4px solid var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose h4",
+      "media": null,
+      "declarations": [
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "1.0625rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ],
+        [
+          "margin",
+          "32px 0 12px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose p",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "0 0 20px",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul > li",
+      "media": null,
+      "declarations": [
+        [
+          "position",
+          "relative",
+          false
+        ],
+        [
+          "padding-left",
+          "22px",
+          false
+        ],
+        [
+          "margin",
+          "6px 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "''",
+          false
+        ],
+        [
+          "position",
+          "absolute",
+          false
+        ],
+        [
+          "left",
+          "4px",
+          false
+        ],
+        [
+          "top",
+          "0.8em",
+          false
+        ],
+        [
+          "width",
+          "7px",
+          false
+        ],
+        [
+          "height",
+          "7px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "border-radius",
+          "1px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ol",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 20px",
+          false
+        ],
+        [
+          "padding-left",
+          "1.6em",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ol > li",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "6px 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".table-wrap",
+      "media": null,
+      "declarations": [
+        [
+          "overflow-x",
+          "auto",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose table",
+      "media": null,
+      "declarations": [
+        [
+          "border-collapse",
+          "collapse",
+          false
+        ],
+        [
+          "width",
+          "100%",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.65",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose th,\n            .prose td",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "10px 16px",
+          false
+        ],
+        [
+          "text-align",
+          "left",
+          false
+        ],
+        [
+          "vertical-align",
+          "top",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--color-border)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose th",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose tbody tr:last-child td",
+      "media": null,
+      "declarations": [
+        [
+          "border-bottom",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose td",
+      "media": null,
+      "declarations": [
+        [
+          "min-width",
+          "7em",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose td a",
+      "media": null,
+      "declarations": [
+        [
+          "word-break",
+          "break-all",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout",
+      "media": null,
+      "declarations": [
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-left-width",
+          "5px",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "padding",
+          "16px 20px",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "8px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "margin-bottom",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-title svg",
+      "media": null,
+      "declarations": [
+        [
+          "width",
+          "22px",
+          false
+        ],
+        [
+          "height",
+          "22px",
+          false
+        ],
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "stroke",
+          "currentColor",
+          false
+        ],
+        [
+          "fill",
+          "none",
+          false
+        ],
+        [
+          "stroke-width",
+          "1.75",
+          false
+        ],
+        [
+          "stroke-linecap",
+          "round",
+          false
+        ],
+        [
+          "stroke-linejoin",
+          "round",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout > p:last-child,\n            .callout > ul:last-child",
+      "media": null,
+      "declarations": [
+        [
+          "margin-bottom",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout p",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 10px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout ul",
+      "media": null,
+      "declarations": [
+        [
+          "margin-bottom",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.practice",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-gold-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-gold-line)",
+          false
+        ],
+        [
+          "border-left-color",
+          "var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.practice .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-forest-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-forest-line)",
+          false
+        ],
+        [
+          "border-left-color",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-plum-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-plum-line)",
+          false
+        ],
+        [
+          "border-left-color",
+          "var(--color-plum)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-plum)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source strong",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note strong",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-plum)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.practice strong",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "pre.formula",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "padding",
+          "16px 20px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-left",
+          "5px solid var(--color-indigo)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "overflow-x",
+          "auto",
+          false
+        ],
+        [
+          "font-family",
+          "var(--font-mono)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.8",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "pre.formula code",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "transparent",
+          false
+        ],
+        [
+          "border",
+          "none",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 28px",
+          false
+        ],
+        [
+          "padding",
+          "24px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "overflow-x",
+          "auto",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram svg",
+      "media": null,
+      "declarations": [
+        [
+          "overflow",
+          "visible",
+          false
+        ],
+        [
+          "max-width",
+          "100%",
+          false
+        ],
+        [
+          "height",
+          "auto",
+          false
+        ],
+        [
+          "flex",
+          "0 1 auto",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram .fallback",
+      "media": null,
+      "declarations": [
+        [
+          "white-space",
+          "pre-wrap",
+          false
+        ],
+        [
+          "font-family",
+          "var(--font-mono)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-2)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul.q-opts > li",
+      "media": null,
+      "declarations": [
+        [
+          "padding-left",
+          "14px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul.q-opts > li::before,\n            .prose ul.checklist > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".prose ul.checklist > li",
+      "media": null,
+      "declarations": [
+        [
+          "padding-left",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout ul > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "input,\n            button",
+      "media": null,
+      "declarations": [
+        [
+          "font",
+          "inherit",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz-list",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "gap",
+          "16px",
+          false
+        ],
+        [
+          "margin",
+          "0 0 28px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "padding",
+          "20px 24px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-head",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "gap",
+          "14px",
+          false
+        ],
+        [
+          "align-items",
+          "flex-start",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-badge",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "padding",
+          "2px 12px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.8",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-text",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "flex",
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-opts",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "14px 0 0",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "grid-template-columns",
+          "repeat(auto-fit, minmax(220px, 1fr))",
+          false
+        ],
+        [
+          "gap",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-opts li",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "8px 14px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-indigo-line)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-opts li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz details",
+      "media": null,
+      "declarations": [
+        [
+          "margin-top",
+          "14px",
+          false
+        ],
+        [
+          "border-top",
+          "1px dashed var(--color-border-strong)",
+          false
+        ],
+        [
+          "padding-top",
+          "12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz summary",
+      "media": null,
+      "declarations": [
+        [
+          "cursor",
+          "pointer",
+          false
+        ],
+        [
+          "color",
+          "var(--color-forest)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz details[open] summary",
+      "media": null,
+      "declarations": [
+        [
+          "margin-bottom",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".quiz .answer",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "10px 14px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-forest-tint)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-forest-line)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "0 0 28px",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "gap",
+          "10px",
+          false
+        ],
+        [
+          "counter-reset",
+          "chk",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist li",
+      "media": null,
+      "declarations": [
+        [
+          "counter-increment",
+          "chk",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist label",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "14px",
+          false
+        ],
+        [
+          "padding",
+          "12px 16px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist label::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "counter(chk)",
+          false
+        ],
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "width",
+          "28px",
+          false
+        ],
+        [
+          "height",
+          "28px",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-indigo-line)",
+          false
+        ],
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist input",
+      "media": null,
+      "declarations": [
+        [
+          "appearance",
+          "none",
+          false
+        ],
+        [
+          "-webkit-appearance",
+          "none",
+          false
+        ],
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "order",
+          "3",
+          false
+        ],
+        [
+          "margin-left",
+          "auto",
+          false
+        ],
+        [
+          "width",
+          "24px",
+          false
+        ],
+        [
+          "height",
+          "24px",
+          false
+        ],
+        [
+          "border",
+          "2px solid var(--color-border-strong)",
+          false
+        ],
+        [
+          "border-radius",
+          "6px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ],
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "place-content",
+          "center",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist input::after",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "''",
+          false
+        ],
+        [
+          "width",
+          "12px",
+          false
+        ],
+        [
+          "height",
+          "7px",
+          false
+        ],
+        [
+          "border-left",
+          "3px solid #fff",
+          false
+        ],
+        [
+          "border-bottom",
+          "3px solid #fff",
+          false
+        ],
+        [
+          "transform",
+          "rotate(-45deg) translate(1px, -1px)",
+          false
+        ],
+        [
+          "opacity",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist input:checked",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-green)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-green)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist input:checked::after",
+      "media": null,
+      "declarations": [
+        [
+          "opacity",
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist label:has(input:checked)",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-green-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-green)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-3)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist label:has(input:checked) .chk-text",
+      "media": null,
+      "declarations": [
+        [
+          "text-decoration",
+          "line-through",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".checklist label:has(input:checked)::before",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-green)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-green)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chk-text",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "1",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-list",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "gap",
+          "12px",
+          false
+        ],
+        [
+          "margin",
+          "0 0 28px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-card",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "gap",
+          "16px",
+          false
+        ],
+        [
+          "align-items",
+          "flex-start",
+          false
+        ],
+        [
+          "background",
+          "var(--color-surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "padding",
+          "14px 18px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-badge",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "min-width",
+          "48px",
+          false
+        ],
+        [
+          "text-align",
+          "center",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "padding",
+          "2px 10px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.8",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-body",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "1",
+          false
+        ],
+        [
+          "min-width",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-title",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 4px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-tag",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-block",
+          false
+        ],
+        [
+          "margin-left",
+          "8px",
+          false
+        ],
+        [
+          "padding",
+          "0 10px",
+          false
+        ],
+        [
+          "border-radius",
+          "999px",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "font-weight",
+          "400",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-border-strong)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-2)",
+          false
+        ],
+        [
+          "vertical-align",
+          "1px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-tag.official",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-forest-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-forest-line)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-tag.standard",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-indigo-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-indigo-line)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-tag.third",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-gold-tint)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-gold-line)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-url",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-flex",
+          false
+        ],
+        [
+          "align-items",
+          "flex-start",
+          false
+        ],
+        [
+          "gap",
+          "6px",
+          false
+        ],
+        [
+          "word-break",
+          "break-all",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-url svg",
+      "media": null,
+      "declarations": [
+        [
+          "width",
+          "20px",
+          false
+        ],
+        [
+          "height",
+          "20px",
+          false
+        ],
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "margin-top",
+          "3px",
+          false
+        ],
+        [
+          "stroke",
+          "currentColor",
+          false
+        ],
+        [
+          "fill",
+          "none",
+          false
+        ],
+        [
+          "stroke-width",
+          "1.75",
+          false
+        ],
+        [
+          "stroke-linecap",
+          "round",
+          false
+        ],
+        [
+          "stroke-linejoin",
+          "round",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a.cite",
+      "media": null,
+      "declarations": [
+        [
+          "text-decoration",
+          "none",
+          false
+        ],
+        [
+          "color",
+          "var(--color-forest)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a.cite:hover",
+      "media": null,
+      "declarations": [
+        [
+          "text-decoration",
+          "underline",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-card:target",
+      "media": null,
+      "declarations": [
+        [
+          "border-color",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-gold-tint)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".footer",
+      "media": null,
+      "declarations": [
+        [
+          "margin-top",
+          "64px",
+          false
+        ],
+        [
+          "padding-top",
+          "20px",
+          false
+        ],
+        [
+          "border-top",
+          "1px solid var(--color-border)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink-3)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn,\n            .backdrop",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "transform",
+          "translateX(-100%)",
+          false
+        ],
+        [
+          "transition",
+          "transform 0.25s ease",
+          false
+        ],
+        [
+          "width",
+          "min(320px, 86vw)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar.open",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "transform",
+          "translateX(0)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "margin-left",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "0 24px 96px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "padding-top",
+          "32px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "font-size",
+          "1.75rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "right",
+          "20px",
+          false
+        ],
+        [
+          "bottom",
+          "20px",
+          false
+        ],
+        [
+          "width",
+          "56px",
+          false
+        ],
+        [
+          "height",
+          "56px",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "border",
+          "none",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ],
+        [
+          "z-index",
+          "50",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn svg",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "width",
+          "26px",
+          false
+        ],
+        [
+          "height",
+          "26px",
+          false
+        ],
+        [
+          "stroke",
+          "currentColor",
+          false
+        ],
+        [
+          "fill",
+          "none",
+          false
+        ],
+        [
+          "stroke-width",
+          "2",
+          false
+        ],
+        [
+          "stroke-linecap",
+          "round",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".backdrop",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ],
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "inset",
+          "0",
+          false
+        ],
+        [
+          "background",
+          "rgba(22, 27, 38, 0.45)",
+          false
+        ],
+        [
+          "opacity",
+          "0",
+          false
+        ],
+        [
+          "pointer-events",
+          "none",
+          false
+        ],
+        [
+          "transition",
+          "opacity 0.25s ease",
+          false
+        ],
+        [
+          "z-index",
+          "25",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".backdrop.show",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "opacity",
+          "1",
+          false
+        ],
+        [
+          "pointer-events",
+          "auto",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": "(max-width: 640px)",
+      "declarations": [
+        [
+          "padding",
+          "0 16px 96px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "section.section > h2",
+      "media": "(max-width: 640px)",
+      "declarations": [
+        [
+          "font-size",
+          "1.5rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".ref-card",
+      "media": "(max-width: 640px)",
+      "declarations": [
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "gap",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".q-head",
+      "media": "(max-width: 640px)",
+      "declarations": [
+        [
+          "flex-direction",
+          "column",
+          false
+        ],
+        [
+          "gap",
+          "8px",
+          false
+        ]
+      ]
+    }
+  ],
+  "quizAnswers": [
+    "B（仕様に対する確認＝検証）",
+    "B",
+    "B（2000 / 2008 ≈ 0.996）",
+    "B（RTO + WRT ≦ MTD のため、WRT > 0 なら RTO は MTD より短くする必要がある）",
+    "C",
+    "C",
+    "A（前提条件のいずれかを満たさない場合、暗号消去だけでは不十分で、他の Purge・Destroy 手段を検討する）",
+    "B",
+    "B（(6 + 4×9 + 18)/6 = 60/6 = 10）",
+    "B（影響分析→承認→実施→検証→文書・ベースライン更新）"
+  ],
+  "references": [
+    "S1 ISC2 ISSEP 認定ページ（起点）公式 https://www.isc2.org/certifications/issep",
+    "S2 ISC2 ISSEP 試験アウトライン概要ページ（AI の観点を含む）公式 https://www.isc2.org/certifications/issep/issep-certification-exam-outline",
+    "S3 ISC2 ISSEP Exam Outline（2025年8月1日発効・PDF）公式 https://edge.sitecorecloud.io/internationf173-xmc4e73-prodbc0f-9660/media/Project/ISC2/Main/Media/certifications/Certs/ISSEP/ISSEP-Exam-Outline-2025.pdf",
+    "S4 ISC2 Insights: 上級認定の新アウトライン（2025年7月）公式 https://www.isc2.org/insights/2025/07/new-exam-outlines-for-isc2-advanced-certifications",
+    "S5 NIST SP 800-160 Vol.1 Rev.1 Engineering Trustworthy Secure Systems（2022年11月）公式 https://csrc.nist.gov/pubs/sp/800/160/v1/r1/final",
+    "S6 NIST SP 800-37 Rev.2 RMF（2018年12月）※URL は第三者記事で確認公式 https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final",
+    "S7 NIST SP 800-53 Release 5.2.0 公開ニュース（2025年8月27日）公式 https://csrc.nist.gov/News/2025/nist-releases-revision-to-sp-800-53-controls",
+    "S8 NIST SP 800-161 Rev.1 C-SCRM（2022年5月、2024年11月更新含む）公式 https://csrc.nist.gov/pubs/sp/800/161/r1/upd1/final",
+    "S9 NIST SP 800-18 Rev.2（2026年6月）システム計画（セキュリティ・プライバシー・C-SCRM）公式 https://csrc.nist.gov/pubs/sp/800/18/r2/final",
+    "S10 NIST SP 800-88 Rev.2 Guidelines for Media Sanitization（2025年9月）公式 https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+    "S11 NIST SP 800-137 ISCM（2011年9月）公式 https://csrc.nist.gov/pubs/sp/800/137/final",
+    "S12 NIST SP 800-61 Rev.3 インシデント対応（2025年4月）公式 https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+    "S13 NIST SSDF プロジェクト関連文書一覧（SP 800-218、Rev.1 ドラフト、SP 800-218A）公式 https://csrc.nist.gov/projects/ssdf/publications",
+    "S14 ISO/IEC/IEEE 24641:2023 モデルベースのシステム・ソフトウェアエンジニアリング規格 https://www.iso.org/standard/79111.html",
+    "S15 NIST Risk Management Framework プロジェクト（SP 800-53 5.2.0、SP 800-18r2 の更新情報）公式 https://csrc.nist.gov/Projects/risk-management",
+    "S16 Training Camp: What Is ISSEP?（配点・形式・CPE などの整理）第三者 https://trainingcamp.com/what-is-issep/",
+    "S17 Destination Certification: CISSP concentrations（配点の記載が公式 PDF と異なる）第三者 https://destcert.com/resources/cissp-concentrations/",
+    "S19 DoD 8140 資格マトリクス（S16 内のリンク。本ガイド作成時は未取得）第三者経由 https://www.cyber.mil/dod-workforce-innovation-directorate/dod8140/qualification-matrices",
+    "S20 NIST: SP 800-88r2 公開ニュース公式 https://www.nist.gov/node/1898251"
+  ]
+}
