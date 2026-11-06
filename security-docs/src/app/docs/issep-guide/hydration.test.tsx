@@ -101,8 +101,8 @@ test('hydrates the complete guide without recoverable errors or nesting warnings
       });
     });
     expect(container.querySelectorAll('table')).toHaveLength(74);
-    expect(container.querySelectorAll('.diagram-body')).toHaveLength(8);
-    expect(container.querySelectorAll('.ref-card')).toHaveLength(20);
+    expect(container.querySelectorAll('[data-diagram]')).toHaveLength(22);
+    expect(container.querySelectorAll('.ref-card')).toHaveLength(19);
     expect(recoverable).toEqual([]);
     expect(messages.filter(m => /hydration|whitespace|cannot be a child|validateDOMNesting/i.test(m))).toEqual([]);
   } finally {

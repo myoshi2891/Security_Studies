@@ -37,3 +37,7 @@ test('certification navigation and static/dynamic search register the route once
 test('mutation probes reject lost cells, bullets, emphasis, references, answers and checkboxes', async () => {
  const d=await renderedPage();for(const selector of ['td','li','strong','a.cite','.answer','input']){const section=[...d.querySelectorAll('section')].find(e=>e.querySelector(selector))!;expect(section).not.toBeUndefined();const copy=section.cloneNode(true) as Element;copy.querySelector(selector)!.remove();expect(canonical(copy)).not.toEqual(canonical(section));}
 });
+
+test('all twenty-two figures retain the original diagram frame rather than just its definition', async () => {
+ const d=await renderedPage();expect(d.querySelectorAll('.diagram[data-diagram]')).toHaveLength(22);
+});
