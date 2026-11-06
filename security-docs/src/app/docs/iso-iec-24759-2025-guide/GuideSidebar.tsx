@@ -2,6 +2,11 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Menu, X } from 'lucide-react';
 
+/** URL のフラグメントは利用者が自由に書き換えられるため、復号できない値は「選択なし」として扱う */
+const decodeFragment = (value: string) => {
+  try { return decodeURIComponent(value); } catch { return ''; }
+};
+
 /** Keep the original nested TOC markup, with keyboard-accessible mobile controls. */
 export function GuideSidebar({ children }: { children: ReactNode }) {
   const panel = useRef<HTMLElement>(null);
@@ -13,7 +18,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   const select = useCallback((id: string) => {
     const nav = panel.current;
     const links = [...(nav?.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]') ?? [])];
-    const selected = links.find(a => decodeURIComponent(a.hash) === `#${id}`);
+    const selected = links.find(a => decodeFragment(a.hash) === `#${id}`);
     if (!selected) return;
     for (const a of links) { a.classList.remove('active'); a.removeAttribute('aria-current'); }
     selected.classList.add('active'); selected.setAttribute('aria-current', 'location');
@@ -29,12 +34,15 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   }, []);
   useEffect(() => {
     const guide = panel.current?.closest('.iso24759-guide');
-    const hash = () => select(decodeURIComponent(window.location.hash.slice(1)) || panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || '');
+    const hash = () => {
+      const fragment = window.location.hash.slice(1);
+      select(fragment ? decodeFragment(fragment) : panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || '');
+    };
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
       if (!link) return;
-      const id = decodeURIComponent(link.hash.slice(1));
+      const id = decodeFragment(link.hash.slice(1));
       select(id);
       if (!openRef.current) return;
       // リンク選択で閉じた場合は移動先の見出しへ。見出しがなければ従来どおりメニューボタンへ戻す

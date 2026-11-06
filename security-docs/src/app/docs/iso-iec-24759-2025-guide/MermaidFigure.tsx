@@ -38,6 +38,14 @@ export const renderDiagram: DiagramRenderer = async (id, source) => {
   return (await getEngine()).render(id, `---\nconfig: ${JSON.stringify(config)}\n---\n${source}`);
 };
 
+/**
+ * Mermaid が body 直下に置く、その描画限りの一時要素を取り除く。
+ * 構文エラーでは一時要素を残したまま失敗するため、描画の完了ごとに呼ぶ。
+ */
+function removeTemporaryOutput(renderId: string): void {
+  for (const prefix of ['d', 'i']) document.getElementById(`${prefix}${renderId}`)?.remove();
+}
+
 function sizeSvg(svgMarkup: string, source: string) {
   const holder = document.createElement('div');
   holder.innerHTML = svgMarkup;
@@ -139,6 +147,8 @@ export function MermaidFigure({ id, source, ariaLabel, renderer = renderDiagram 
   // 再試行ボタンで増やし、描画 effect を再実行させる
   const [attempt, setAttempt] = useState(0);
   const figureRef = useRef<HTMLDivElement>(null);
+  // 再試行や定義変更でも一時要素が混ざらないよう、描画ごとに固有の ID を発行する
+  const renderCount = useRef(0);
   // IntersectionObserver 非対応環境では即時描画する（state は描画結果に影響しないため hydration 差異は生じない）
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
 
@@ -159,13 +169,17 @@ export function MermaidFigure({ id, source, ariaLabel, renderer = renderDiagram 
     if (!nearView) return;
     let active = true;
     // 古い描画の結果・失敗ログは破棄する（定義変更やアンマウント後に完了した場合）
-    renderer(svgId, source).then(({ svg }) => {
+    const renderId = `${svgId}-${++renderCount.current}`;
+    renderer(renderId, source).then(({ svg }) => {
       if (!active) return;
       setResult({ source, svg: sizeSvg(svg, source) });
     }).catch((error: unknown) => {
       if (!active) return;
       console.error(`Mermaid figure ${id} failed to render`, error);
       setResult({ source, failed: true });
+    }).finally(() => {
+      // 描画中は Mermaid が要素を計測に使うため、アンマウント時ではなく完了時に片付ける
+      removeTemporaryOutput(renderId);
     });
     return () => { active = false; };
   }, [attempt, id, nearView, renderer, source, svgId]);
