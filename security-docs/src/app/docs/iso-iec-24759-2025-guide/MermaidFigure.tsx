@@ -96,8 +96,8 @@ export function describeDiagram(source: string): string[] {
   return ['フローチャート', ...(edges.length > 0 ? edges : lines.slice(1))];
 }
 
-/** `A --> B: ラベル` の状態遷移。`[*]` は遷移元なら開始、遷移先なら終了を表す */
-const TRANSITION_PATTERN = /^(\[\*\]|[\w.]+)\s*-->\s*(\[\*\]|[\w.]+)\s*(?::\s*(.*))?$/;
+/** `A --> B: ラベル` の状態遷移。`[*]` は遷移元なら開始、遷移先なら終了を表す。状態名は日本語も許容する（\w は ASCII のみ） */
+const TRANSITION_PATTERN = /^(\[\*\]|[\p{L}\p{N}_.]+)\s*-->\s*(\[\*\]|[\p{L}\p{N}_.]+)\s*(?::\s*(.*))?$/u;
 
 /** 状態遷移の 1 行を「遷移元 → 遷移先: ラベル」の読み上げ用テキストへ変換する */
 function describeTransition(line: string): string {
