@@ -64,7 +64,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            133 ロジックファイル中 133 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4 + Ghost部品3 + Hacking部品4 + ISO29100部品5 + ISSAP部品3 + CGRC部品4 + SSCP部品3 + ISO24759部品4 + ISSEP部品2。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            134 ロジックファイル中 134 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4 + Ghost部品3 + Hacking部品4 + ISO29100部品5 + ISSAP部品3 + CGRC部品4 + SSCP部品3 + ISO24759部品4 + ISSEP部品2 + QuizCard1。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -75,8 +75,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">2725</div>
-                        <div class="summary-sub">全体2725成功/0skip/0失敗（337ファイル、573,519 expect）。ISSEP専用77件、原本なし48成功/29skip/0失敗。</div>
+                        <div class="summary-value">2740</div>
+                        <div class="summary-sub">全体2740成功/0skip/0失敗（338ファイル、574,292 expect）。ISSEP専用92件、原本なし62成功/30skip/0失敗。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -345,16 +345,16 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">2593 app/guide/layout/navigation tests · 111/112 logic files（全体2725件）</span>
+                                            <span class="cell-count">2608 app/guide/layout/navigation tests · 112/113 logic files（全体2740件）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 99%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 111/112 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 112/113 ロジックファイル</div>
                                             docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modeling、Threat Modeling (Shostack) の描画・コード・本文をテスト済み。root layout は未カバー（HomePageは4件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
-                                                <li>✓ ISSEP: GuideSidebar / MermaidFigure（77件/9ファイル。13章・74表1080セル・22図・10解答・6チェック・金色角点/番号/チェックカウンター・17構造SHA・Chrome10条件・原本アーカイブ）</li>
+                                                <li>✓ ISSEP: GuideSidebar / MermaidFigure / QuizCard（92件/10ファイル。13章・74表1080セル・22図・10解答・6チェック・金色角点/番号/チェックカウンター・17構造SHA・Chrome10条件・原本アーカイブ）</li>
 <li>✓ ISO24759: GuideSidebar / GuideIcon / MermaidFigure / CodeSample（95件/9ファイル、19章・24表407セル・8図・丸点/丸数字・原本アーカイブ）</li>
 <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (4 tests): ホーム一覧/統計/共通メニューと登録件数</li>
@@ -1211,7 +1211,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-11-07</span>
                     <span
-                        >Runner: npm test · DOM: happy-dom · 337 files · 2725 pass / 0 skip / 0 fail（573,519 expect） · CI:
+                        >Runner: npm test · DOM: happy-dom · 338 files · 2740 pass / 0 skip / 0 fail（574,292 expect） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1325,3 +1325,5 @@
 <section class="container"><p>2026-11-07 ISSEP 11.3: クリック判定14件が成功（全40選択肢、文言の文字単位一致、独立状態、解説開閉）。旧移行テストは新しい選択ボタンの構造差と許可された11.3の装飾差を検出。原文比較は選択肢内の単独ボタンだけを透過し、追加/変更文言は検出し続ける仕様をRed追加（15件へ）。</p></section>
 
 <section class="container"><p>2026-11-07 ISSEP 11.3回答UI Green: db0f206で原文を保ったクリック判定カードを実装。専用92件成功、最終判定/原文保持15件成功（748 expect）。Chrome375/1440px×明暗4条件で全40選択肢の正誤・原文文字一致・Enter/Space/フォーカス・56px以上の選択領域を確認。11.3以外のCSSは10条件差分0、17構造SHAと22図/既存操作も成功。原本なし62成功/30skip/0失敗。全体実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
+
+<section class="container" id="issep-quiz-complete"><p>2026-11-07 ISSEP 11.3回答UI改善完了: /docs/issep-guide#h3-36。問題文・40選択肢・10解説・「解答を見る」の文言と強調を変更せず、QuizCardで選択ボタンと正誤表示を追加。選択直後に正解/不正解を色・文字・記号で示し、正しい選択肢を強調して元の解説を開く。答え直し可能で各問の状態は独立。選択済み回答だけに判定を読み上げ用に関連付ける。スマートフォン1列/PC2列、56px以上の選択領域、Tab/Enter/Spaceとフォーカス表示、動きを減らす設定に対応。全体2740成功/0skip/0失敗（338ファイル、574,292 expect）。ISSEP専用92件/10ファイルを含み、判定/原文保持の15件は単独実行でも成功（748 expect）。原本なし隔離環境62成功/30skip/0失敗。Chrome375/1440px×明暗4条件で全40選択肢の判定・原文一致・キーボード・読み上げ関連付け・解説開閉・レイアウトが成功（pageErrors0）。11.3以外の原本CSSはChrome10条件差分0、17構造SHA・22図・既存の目次/チェック操作も成功。原本比較は選択肢内の単独ボタンだけを透過し、追加/変更文字は引き続き検出する。ナビ・検索は42ページ、ロジック134/134（従来133＋QuizCard）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: Red 1fe707b/比較基盤c6696a7/判定関連付けb9e60c9 → Green db0f206、Chrome検証61bf7cb。配置: security-docs/src/app/docs/issep-guide/QuizCard.tsx。原文固定: quiz-copy.json。自動検証: QuizCard.test.tsx / quiz.browser.mjs。目視確認表: docs/migration-inventory/issep-guide-review.md。</p></section>

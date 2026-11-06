@@ -3427,12 +3427,11 @@
   ],
   "archiveStatus": "both originals archived with byte-exact SHA-256",
   "verification": {
-    "date": "2026-11-06",
-    "dedicatedPass": 77,
-    "dedicatedFiles": 9,
-    "dedicatedExpect": 1427,
-    "sourceFreePass": 48,
-    "sourceFreeSkip": 29,
+    "date": "2026-11-07",
+    "dedicatedPass": 92,
+    "dedicatedFiles": 10,
+    "sourceFreePass": 62,
+    "sourceFreeSkip": 30,
     "sourceFreeFail": 0,
     "htmlOnlyArchivePass": 3,
     "htmlOnlyArchiveSkip": 1,
@@ -3466,16 +3465,43 @@
       "menuAndChapterNavigation": "passed",
       "questionAnswerToggles": 10,
       "checkboxInputsAndLabels": 6,
-      "pageErrors": 0
+      "pageErrors": 0,
+      "cssScope": "outside the explicitly redesigned quiz cards in section 11.3"
     },
     "lint": "passed",
     "types": "passed",
     "build": "not run (user prohibited)",
     "visualReview": "pending (user; see issep-guide-review.md)",
-    "wholeSuitePass": 2725,
+    "wholeSuitePass": 2740,
     "wholeSuiteSkip": 0,
     "wholeSuiteFail": 0,
-    "wholeSuiteFiles": 337,
-    "wholeSuiteExpect": 573519
+    "wholeSuiteFiles": 338,
+    "wholeSuiteExpect": 574292,
+    "gradingPass": 15,
+    "gradingExpect": 748
+  },
+  "quizEnhancement": {
+    "date": "2026-11-07",
+    "section": "11.3",
+    "originalCopyUnchanged": true,
+    "copyFixture": "security-docs/src/app/docs/issep-guide/quiz-copy.json",
+    "questions": 10,
+    "choices": 40,
+    "independentSelection": true,
+    "retryBySelectingAnotherChoice": true,
+    "automaticOriginalExplanation": true,
+    "selectedChoiceOnlyFeedbackAssociation": true,
+    "browserWidths": [
+      375,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "minimumChoiceHeight": 56,
+    "pageErrors": 0,
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)"
   }
 }

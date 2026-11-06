@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-07（ISSEP移行・原本アーカイブ・全検証完了）
+> **最終更新**: 2026-11-07（ISSEP 11.3: 文言保持・クリック判定・カードデザイン改善）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,18 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2725成功 / 0 skip / 0失敗** | 全体337ファイル・573,519 expect。ISSEP専用77件を含む。 |
-| テストファイル数 | **337ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **133/133 (100%)** | 従来131＋ISSEP部品2。純粋データ・MDXは分母外。全337テストファイルとは別集計 |
+| テストケース総数 | **2740成功 / 0 skip / 0失敗** | 全体338ファイル・574,292 expect。ISSEP専用92件を含む。 |
+| テストファイル数 | **338ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **134/134 (100%)** | 従来133＋QuizCard。純粋データ・MDXは分母外。全338テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | ISSEP原本なし隔離環境48成功/29skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびSSCP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/issep-guide/QuizCard.test.tsx` | 15 | ✅ 2026-11-07 全選択肢判定・原文文字一致・読み上げ・答え直し |
 | `src/app/docs/issep-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
 | `src/app/docs/issep-guide/foundation.test.tsx` | 3 | ✅ 2026-11-06 ISSEP最終実測 |
 | `src/app/docs/issep-guide/front.test.tsx` | 12 | ✅ 2026-11-06 ISSEP最終実測 |
@@ -424,13 +425,13 @@ form-action 'self'
 | `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `GEMINI.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `README.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `security-docs/CLAUDE.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `security-docs/README.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `docs/test-coverage-dashboard.html` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
-| `docs/progress.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `GEMINI.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `security-docs/CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `security-docs/README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `docs/test-coverage-dashboard.html` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `docs/progress.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -460,6 +461,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| ISSEP-QUIZ | **11.3回答UI改善** — 原文を保持した即時判定・答え直し・独立状態・解説表示。専用15件とChrome4条件成功、目視はユーザー担当。 | 2026-11-07 |
 | MIG-ISSEP | **ISSEP移行・原本アーカイブ・検証完了** — 13章/74表/22図/10解答/6チェックと原本装飾を保持。専用77件・Chrome10条件成功。目視はユーザー担当・未確認。 | 2026-11-06 |
 | DEP-1106-MERMAID | **Mermaid 11.12.0 → 11.17.2（Dependabot #26〜#34 の9件対応）** — 全アドバイザリは11.16.1で修正済みだが、11.16.xは `flowchart LR` 内の `direction TB` サブグラフ＋サブグラフ間の辺で約4倍幅に崩れる不具合があり（hacking #7 / SSCP #29）、11.17.0で解消するため11.17.2を採用。12.xはメジャー更新のため対象外。図の入力はリポジトリ内の静的定数のみ・`securityLevel: 'strict'` で実害は低い。実Chrome全585図を更新前後のDOM指紋（件数・文字・計算済みスタイル・寸法）で比較: 描画失敗・件数差・構文エラー・ページエラー0。寸法変化7図、状態図の矢印色変化3図、自己ループ辺の構造変化2図。円グラフの凡例順は不変で、11図・全67スライスの角度と凡例値の一致を更新前後で確認（CSSLPは目視）。スクリーンショット比較は免責モーダル越しの参考値のため判定根拠にしない。テスト2553成功/0失敗・lint・型チェック・既存Chrome検証13本成功。ビルド未実行。目視はユーザー担当・未確認。 | 2026-11-06 |
 | REVIEW-1026-FRAG | **ISO29100/ISSAP目次の不正URLフラグメント対策** — `decodeFragment` で `URIError` を回避（初期ロード/hashchange/リンク選択）。ISO29100ブラウザー検証スクリプトの既定描画HTMLをガイド専用名へ修正。Red `4b2140c` → Green `632e747`、スクリプト `fa02120`。両ガイド178 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
@@ -1514,3 +1516,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 2026-11-07 ISSEP 11.3: クリック判定14件が成功（全40選択肢、文言の文字単位一致、独立状態、解説開閉）。旧移行テストは新しい選択ボタンの構造差と許可された11.3の装飾差を検出。原文比較は選択肢内の単独ボタンだけを透過し、追加/変更文言は検出し続ける仕様をRed追加（15件へ）。
 
 2026-11-07 ISSEP 11.3回答UI Green: db0f206で原文を保ったクリック判定カードを実装。専用92件成功、最終判定/原文保持15件成功（748 expect）。Chrome375/1440px×明暗4条件で全40選択肢の正誤・原文文字一致・Enter/Space/フォーカス・56px以上の選択領域を確認。11.3以外のCSSは10条件差分0、17構造SHAと22図/既存操作も成功。原本なし62成功/30skip/0失敗。全体実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-07 ISSEP 11.3回答UI改善完了: /docs/issep-guide#h3-36。問題文・40選択肢・10解説・「解答を見る」の文言と強調を変更せず、QuizCardで選択ボタンと正誤表示を追加。選択直後に正解/不正解を色・文字・記号で示し、正しい選択肢を強調して元の解説を開く。答え直し可能で各問の状態は独立。選択済み回答だけに判定を読み上げ用に関連付ける。スマートフォン1列/PC2列、56px以上の選択領域、Tab/Enter/Spaceとフォーカス表示、動きを減らす設定に対応。全体2740成功/0skip/0失敗（338ファイル、574,292 expect）。ISSEP専用92件/10ファイルを含み、判定/原文保持の15件は単独実行でも成功（748 expect）。原本なし隔離環境62成功/30skip/0失敗。Chrome375/1440px×明暗4条件で全40選択肢の判定・原文一致・キーボード・読み上げ関連付け・解説開閉・レイアウトが成功（pageErrors0）。11.3以外の原本CSSはChrome10条件差分0、17構造SHA・22図・既存の目次/チェック操作も成功。原本比較は選択肢内の単独ボタンだけを透過し、追加/変更文字は引き続き検出する。ナビ・検索は42ページ、ロジック134/134（従来133＋QuizCard）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: Red 1fe707b/比較基盤c6696a7/判定関連付けb9e60c9 → Green db0f206、Chrome検証61bf7cb。配置: security-docs/src/app/docs/issep-guide/QuizCard.tsx。原文固定: quiz-copy.json。自動検証: QuizCard.test.tsx / quiz.browser.mjs。目視確認表: docs/migration-inventory/issep-guide-review.md。
