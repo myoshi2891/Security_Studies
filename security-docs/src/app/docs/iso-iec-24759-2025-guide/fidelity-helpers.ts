@@ -12,7 +12,7 @@ import { expect, test } from 'bun:test';
 import inventory from '../../../../../docs/migration-inventory/iso-iec-24759-2025-guide.json';
 export { inventory };
 export const scope = '.iso24759-guide.iso24759-guide';
-export const sourcePath = resolve(import.meta.dir, '../../../../../Iso-iec-24759-2025-guide.html');
+export const sourcePath = resolve(import.meta.dir, '../../../../../archive/standards/Iso-iec-24759-2025-guide.html');
 export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
