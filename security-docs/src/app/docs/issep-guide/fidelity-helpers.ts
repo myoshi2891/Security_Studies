@@ -31,7 +31,7 @@ export function canonical(n: Node): unknown {
   const e = n as Element;
   if (e.matches('[data-diagram]')) return ['diagram', e.getAttribute('data-diagram')];
   if (e.matches('pre code')) return ['CODE', e.textContent];
-  return [e.tagName, [...e.attributes].filter(a => !a.name.startsWith('aria-') && a.name !== 'tabindex').map(a => [a.name,a.value]).sort((a,b) => a[0].localeCompare(b[0])), [...e.childNodes].map(canonical).filter(v => v !== null)];
+  return [e.tagName, [...e.attributes].filter(a => !a.name.startsWith('aria-') && a.name !== 'tabindex').map(a => [a.name === 'viewbox' ? 'viewBox' : a.name,a.value]).sort((a,b) => a[0].localeCompare(b[0])), [...e.childNodes].map(canonical).filter(v => v !== null)];
 }
 /** 正規化した DOM 構造の SHA-256 を返す */
 export function structure(e: Node) { return hash(JSON.stringify(canonical(e))); }
