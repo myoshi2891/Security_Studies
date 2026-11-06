@@ -803,3 +803,19 @@
 .docs-article:has(.issep-guide){max-width:none;}
 @media(max-width:1024px){.issep-guide.issep-guide .sidebar{visibility:hidden;}.issep-guide.issep-guide .sidebar.open{visibility:visible;}}
 @media(prefers-reduced-motion:reduce){.issep-guide.issep-guide *,.issep-guide.issep-guide{scroll-behavior:auto;transition:none;}}
+
+/* Prevent shared prose, brand and hover rules from replacing source ink. */
+.issep-guide.issep-guide .prose{color:var(--color-ink);max-width:none;margin:0;}
+.issep-guide.issep-guide .brand{font-size:1rem;font-weight:400;color:var(--color-ink);}
+.issep-guide.issep-guide code{color:inherit;}
+.issep-guide.issep-guide .prose tr:hover td{background-color:transparent;}
+
+.issep-guide.issep-guide .prose code{color:inherit;}
+.issep-guide.issep-guide .sidebar{visibility:visible;}
+@media (max-width: 1024px){.issep-guide.issep-guide .sidebar{visibility:hidden;}.issep-guide.issep-guide .sidebar.open{visibility:visible;}}
+
+.issep-guide.issep-guide .prose code{color:var(--color-ink);}
+
+/* Restore inherited source typography and browser checkbox defaults. */
+.issep-guide.issep-guide .hero .eyebrow{font-family:inherit;}
+.issep-guide.issep-guide input{color:revert;margin:revert;}

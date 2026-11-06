@@ -198,7 +198,7 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
   return (
     <div
       ref={figureRef}
-      className="mermaid-target"
+      className="diagram mermaid-target"
       data-diagram={id}
       data-definition={source}
     >
