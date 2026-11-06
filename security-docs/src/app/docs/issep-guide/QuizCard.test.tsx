@@ -43,6 +43,7 @@ test('answering two questions maintains independent choices and announces each r
  for(let i=0;i<2;i++)fireEvent.click(cards[i].querySelectorAll('button')[i]);
  const status=cards.slice(0,2).map(c=>c.querySelector('[role="status"]')!);expect(new Set(status.map(e=>e.id)).size).toBe(2);
  for(let i=0;i<2;i++)expect(cards[i].querySelector('button[aria-pressed="true"]')).toHaveAttribute('aria-describedby',status[i].id);
+ for(const button of v.container.querySelectorAll('button[aria-pressed="false"]'))expect(button).not.toHaveAttribute('aria-describedby');
  expect(cards[2].querySelector('[role="status"]')).toBeNull();
 });
 test('the original answer disclosure can still be toggled after choosing and reopens for a new choice', async () => {
