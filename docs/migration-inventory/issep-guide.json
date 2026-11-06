@@ -1,6 +1,6 @@
 {
-  "source": "Issep-guide.html",
-  "markdownSource": "Issep-guide.md",
+  "source": "archive/security-certifications/Issep-guide.html",
+  "markdownSource": "archive/security-certifications/Issep-guide.md",
   "htmlSha256": "dd03ed50a46dd9e3afbb7c1adaeff7239ecee31957c5271c0947bd1a36355fd8",
   "markdownSha256": "d007798205ab338d8d3bb8b2971f04855902e9b5350492a5873eddd2fb853886",
   "route": "/docs/issep-guide",
@@ -3424,5 +3424,58 @@
     "S17 Destination Certification: CISSP concentrations（配点の記載が公式 PDF と異なる）第三者 https://destcert.com/resources/cissp-concentrations/",
     "S19 DoD 8140 資格マトリクス（S16 内のリンク。本ガイド作成時は未取得）第三者経由 https://www.cyber.mil/dod-workforce-innovation-directorate/dod8140/qualification-matrices",
     "S20 NIST: SP 800-88r2 公開ニュース公式 https://www.nist.gov/node/1898251"
-  ]
+  ],
+  "archiveStatus": "both originals archived with byte-exact SHA-256",
+  "verification": {
+    "date": "2026-11-06",
+    "dedicatedPass": 77,
+    "dedicatedFiles": 9,
+    "dedicatedExpect": 1427,
+    "sourceFreePass": 48,
+    "sourceFreeSkip": 29,
+    "sourceFreeFail": 0,
+    "htmlOnlyArchivePass": 3,
+    "htmlOnlyArchiveSkip": 1,
+    "markdownOnlyArchivePass": 3,
+    "markdownOnlyArchiveSkip": 1,
+    "browser": {
+      "engine": "Chrome headless / Next.js development server",
+      "cssWidths": [
+        375,
+        768,
+        1024,
+        1025,
+        1440
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "cssDifferences": 0,
+      "hoverCellsComparedPerCondition": 1080,
+      "checkedInputsCompared": 6,
+      "runtimeWidths": [
+        375,
+        1440
+      ],
+      "structureHashes": 17,
+      "renderedDiagrams": 22,
+      "originalCodeHashes": 4,
+      "diagramEdgesReachable": true,
+      "smallDiagramsCentered": true,
+      "menuAndChapterNavigation": "passed",
+      "questionAnswerToggles": 10,
+      "checkboxInputsAndLabels": 6,
+      "pageErrors": 0
+    },
+    "lint": "passed",
+    "types": "passed",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user; see issep-guide-review.md)",
+    "wholeSuitePass": 2725,
+    "wholeSuiteSkip": 0,
+    "wholeSuiteFail": 0,
+    "wholeSuiteFiles": 337,
+    "wholeSuiteExpect": 573519
+  }
 }

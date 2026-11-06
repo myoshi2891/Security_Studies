@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-06（ISO/IEC24759移行・原本アーカイブ・フォント回帰検証完了）
+> **最終更新**: 2026-11-06（ISSEP移行・原本アーカイブ・全検証完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,11 +12,11 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2648件（定義数）** | 全体再実行の結果は末尾のISO24759完了記録を参照。フォント修正後は専用95件/9ファイル・939 expect成功。 |
-| テストファイル数 | **328ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **131/131 (100%)** | 従来127＋ISO24759部品4。純粋データ・MDXは分母外。全328テストファイルとは別集計 |
+| テストケース総数 | **2725成功 / 0 skip / 0失敗** | 全体337ファイル・573,519 expect。ISSEP専用77件を含む。 |
+| テストファイル数 | **337ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **133/133 (100%)** | 従来131＋ISSEP部品2。純粋データ・MDXは分母外。全337テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | ISSEP原本なし隔離環境48成功/29skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびSSCP完了欄）
@@ -420,15 +420,17 @@ form-action 'self'
 
 | ファイル | 最終更新 | 内容 |
 |---|---|---|
+| `docs/migration-inventory/issep-guide.json` | 2026-11-06 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
+| `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `GEMINI.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `README.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `security-docs/CLAUDE.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `security-docs/README.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `docs/progress.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
+| `CLAUDE.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `GEMINI.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `README.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `security-docs/CLAUDE.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `security-docs/README.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `docs/test-coverage-dashboard.html` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
+| `docs/progress.md` | 2026-11-06 | ISSEP移行・専用77件・全体2725件・原本アーカイブ・Chrome実測同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -458,6 +460,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| MIG-ISSEP | **ISSEP移行・原本アーカイブ・検証完了** — 13章/74表/22図/10解答/6チェックと原本装飾を保持。専用77件・Chrome10条件成功。目視はユーザー担当・未確認。 | 2026-11-06 |
 | DEP-1106-MERMAID | **Mermaid 11.12.0 → 11.17.2（Dependabot #26〜#34 の9件対応）** — 全アドバイザリは11.16.1で修正済みだが、11.16.xは `flowchart LR` 内の `direction TB` サブグラフ＋サブグラフ間の辺で約4倍幅に崩れる不具合があり（hacking #7 / SSCP #29）、11.17.0で解消するため11.17.2を採用。12.xはメジャー更新のため対象外。図の入力はリポジトリ内の静的定数のみ・`securityLevel: 'strict'` で実害は低い。実Chrome全585図を更新前後のDOM指紋（件数・文字・計算済みスタイル・寸法）で比較: 描画失敗・件数差・構文エラー・ページエラー0。寸法変化7図、状態図の矢印色変化3図、自己ループ辺の構造変化2図。円グラフの凡例順は不変で、11図・全67スライスの角度と凡例値の一致を更新前後で確認（CSSLPは目視）。スクリーンショット比較は免責モーダル越しの参考値のため判定根拠にしない。テスト2553成功/0失敗・lint・型チェック・既存Chrome検証13本成功。ビルド未実行。目視はユーザー担当・未確認。 | 2026-11-06 |
 | REVIEW-1026-FRAG | **ISO29100/ISSAP目次の不正URLフラグメント対策** — `decodeFragment` で `URIError` を回避（初期ロード/hashchange/リンク選択）。ISO29100ブラウザー検証スクリプトの既定描画HTMLをガイド専用名へ修正。Red `4b2140c` → Green `632e747`、スクリプト `fa02120`。両ガイド178 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
 | PR56-COV | **PR #56 codecov/patch失敗の解消** — CGRC/SSCPの `MermaidFigure.tsx` はISSAPから引き継いだ `describeTransition`（ステート図説明）を持つが、両ガイドにstateDiagramがなく各7行が未実行だった。原本非依存の単体テストを両 `runtime.test.tsx` に追加し、両ファイルの行カバレッジ100%（原本なし環境でも同値）。製品コード変更なし。テスト `9a8bda6`。全体2553 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
@@ -1502,3 +1505,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-06 ISSEP: 全体再検証で既存CCIE/CCSTの資格一覧固定値とISO27001の従来30ルート検証にISSEP分の同期漏れを検出。元の完全一致・既存ルート保持の条件を維持して3ファイルを同期。全体実行を中断し、この3ファイルのGreen確認後に変更確定状態で全体を再実行する。
+
+
+2026-11-06 ISSEP移行・原本アーカイブ・自動検証完了: /docs/issep-guide （security-docs/src/app/docs/issep-guide/page.mdx）。全13章・120見出し・74表1080セル・22図・207リスト項目・54注意欄・19出典・54目次リンク・76固有ID・4コードを保持。10問の全解答/解説と開閉、6チェックの入力/ラベル操作、金色7px角点（角丸1px）/順序番号/丸囲みチェックカウンターを検証。17固定構造SHA-256と原本DOM比較、4コードの空白SHA、全CSS/media、全74表/ページのHydrationを検証。専用77成功/9ファイル（1427 expect）を含む全体2725成功/0skip/0失敗（337ファイル、573,519 expect）。原本なし隔離環境48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip/0失敗。Chrome5幅×明暗10条件で文字・角点・番号・チェックカウンター・全1080セルホバー・チェック済み装飾の差分0。375/1440pxの実ページで全件数/17構造SHA/4コードSHA一致、22図の描画・中央寄せ・左右端到達、目次/解答開閉/チェック操作成功（pageErrors0）。原本HTML/Markdownはarchive/security-certifications/へ両SHA-256一致で移動済み（Git管理外）。資格ナビ・ホーム・静的/動的検索42ページ、ロジック133/133（従来131＋GuideSidebar/MermaidFigure）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤9a698e2→ca8e27e、前半610a45b→db65a3c、後半495174b/図枠・Chrome Red33efd5f→5808ecb、アーカイブ2280956→709ad27。既存資格一覧/ISOルートの固定値同期はa4ccaa6。台帳: docs/migration-inventory/issep-guide.json。目視確認表: docs/migration-inventory/issep-guide-review.md。再検証用スクリプト: security-docs/src/app/docs/issep-guide/styles.browser.mjs と runtime.browser.mjs。

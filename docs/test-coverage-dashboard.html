@@ -64,7 +64,7 @@
                         <div class="summary-label">File Unit Coverage</div>
                         <div class="summary-value">100%</div>
                         <div class="summary-sub">
-                            131 ロジックファイル中 131 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4 + Ghost部品3 + Hacking部品4 + ISO29100部品5 + ISSAP部品3 + CGRC部品4 + SSCP部品3 + ISO24759部品4。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
+                            133 ロジックファイル中 133 ファイルに<br />テストあり（基準22 + CCIE部品3 + HeaderNav1 + Secure by Design部品3 + MITRE ATLAS部品3 + CCST部品4 + Kubernetes部品5 + WAHH部品4 + HomePage1 + Applied Cryptography部品4 + Threat Modeling部品4 + ISO15408部品3 + ISO27017部品4 + ISO18045部品3 + TLS/PKI部品4 + Zero Trust部品4 + Secrets and Lies部品3 + ISC2 CC部品3 + CCSP部品3 + CISSP部品3 + ISO27001部品3 + CSSLP部品4 + CyberOps部品5 + CyberOps Professional部品5 + Threat Modeling (Shostack) 部品4 + Ghost部品3 + Hacking部品4 + ISO29100部品5 + ISSAP部品3 + CGRC部品4 + SSCP部品3 + ISO24759部品4 + ISSEP部品2。MDXテストは別集計。ルートの src/app/layout.tsx はメタデータ定義と html/body・DisclaimerModal の配置のみで分岐ロジックを持たないため集計対象外とし、App/Pages欄で未カバーとして別掲）
                         </div>
                         <div class="progress-bar-wrap">
                             <div
@@ -75,8 +75,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">2648</div>
-                        <div class="summary-sub">現行2648件/328ファイル。ISO24759専用95成功/0skip/0失敗。全体実測と検証範囲は末尾の完了記録を参照。</div>
+                        <div class="summary-value">2725</div>
+                        <div class="summary-sub">全体2725成功/0skip/0失敗（337ファイル、573,519 expect）。ISSEP専用77件、原本なし48成功/29skip/0失敗。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -345,18 +345,20 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">2516 app/guide/layout/navigation tests · 109/110 logic files（全体2648件）</span>
+                                            <span class="cell-count">2593 app/guide/layout/navigation tests · 111/112 logic files（全体2725件）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 99%"></div>
                                             </div>
                                         </div>
                                         <div class="tooltip" role="tooltip">
-                                            <div class="tt-title">⚠️ Partial — 105/106 ロジックファイル</div>
+                                            <div class="tt-title">⚠️ Partial — 111/112 ロジックファイル</div>
                                             docs layout、CCIE、CCST、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modeling、Threat Modeling (Shostack) の描画・コード・本文をテスト済み。root layout は未カバー（HomePageは4件の一覧/統計/共通メニューテストで検証）。
                                             <ul class="tt-files">
-                                                <li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
+                                                <li>✓ ISSEP: GuideSidebar / MermaidFigure（77件/9ファイル。13章・74表1080セル・22図・10解答・6チェック・金色角点/番号/チェックカウンター・17構造SHA・Chrome10条件・原本アーカイブ）</li>
+<li>✓ ISO24759: GuideSidebar / GuideIcon / MermaidFigure / CodeSample（95件/9ファイル、19章・24表407セル・8図・丸点/丸数字・原本アーカイブ）</li>
+<li>✓ src/app/docs/layout.test.tsx (12 tests)</li>
                                                 <li>✓ src/app/page.test.tsx (4 tests): ホーム一覧/統計/共通メニューと登録件数</li>
-<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在40+80=120ページ、テスト値）・開閉/フォーカス・320/375px</li>
+<li>✓ DocsHeaderNav.test.tsx (11 tests): 可視ラベル由来のアクセシブルネーム・絞り込み・登録ページ＋仮ページ80件の拡張（現在42+80=122ページ、テスト値）・開閉/フォーカス・320/375px</li>
                                                 <li>✓ MermaidFigure / PythonCode / GuideSidebar（CCIEの67件で検証）</li>
                                                 <li>✓ Secure by Design: GuideSidebar / JavaCode / MermaidFigure（50件、移行・回帰検証）</li>
                                                 <li>✓ MITRE ATLAS: GuideIcon / GuideSidebar / MermaidDiagram（46件、移行・表示・回帰検証）</li>
@@ -1209,7 +1211,7 @@
                 <div class="footer-inner">
                     <span>Security Studies · Test Coverage Dashboard · Updated 2026-11-06</span>
                     <span
-                        >Runner: npm test · DOM: happy-dom · 328 files · 2648 defined cases · dedicated ISO24759: 95 pass / 0 skip / 0 fail（939 expect） · CI:
+                        >Runner: npm test · DOM: happy-dom · 337 files · 2725 pass / 0 skip / 0 fail（573,519 expect） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1315,3 +1317,5 @@
 <section class="container"><p>2026-11-06 ISSEP: 原本HTML/Markdownをarchive/security-certifications/へ移動し両SHA-256一致。移動後77成功/0skip/0失敗（9ファイル、1427 expect）。原本なし48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip。既存検索回帰22件も成功し42ページで一致。lint・型チェック成功。Chrome10条件の文字/角点/番号/カウンター/全1080セルホバー/チェック済み装飾は差分0、375/1440pxで17構造SHA・22図・解答/チェック/目次操作成功（pageErrors0）。全体最終実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
 
 <section class="container"><p>2026-11-06 ISSEP: 全体再検証で既存CCIE/CCSTの資格一覧固定値とISO27001の従来30ルート検証にISSEP分の同期漏れを検出。元の完全一致・既存ルート保持の条件を維持して3ファイルを同期。全体実行を中断し、この3ファイルのGreen確認後に変更確定状態で全体を再実行する。</p></section>
+
+<section class="container" id="issep-complete"><p>2026-11-06 ISSEP移行・原本アーカイブ・自動検証完了: /docs/issep-guide （security-docs/src/app/docs/issep-guide/page.mdx）。全13章・120見出し・74表1080セル・22図・207リスト項目・54注意欄・19出典・54目次リンク・76固有ID・4コードを保持。10問の全解答/解説と開閉、6チェックの入力/ラベル操作、金色7px角点（角丸1px）/順序番号/丸囲みチェックカウンターを検証。17固定構造SHA-256と原本DOM比較、4コードの空白SHA、全CSS/media、全74表/ページのHydrationを検証。専用77成功/9ファイル（1427 expect）を含む全体2725成功/0skip/0失敗（337ファイル、573,519 expect）。原本なし隔離環境48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip/0失敗。Chrome5幅×明暗10条件で文字・角点・番号・チェックカウンター・全1080セルホバー・チェック済み装飾の差分0。375/1440pxの実ページで全件数/17構造SHA/4コードSHA一致、22図の描画・中央寄せ・左右端到達、目次/解答開閉/チェック操作成功（pageErrors0）。原本HTML/Markdownはarchive/security-certifications/へ両SHA-256一致で移動済み（Git管理外）。資格ナビ・ホーム・静的/動的検索42ページ、ロジック133/133（従来131＋GuideSidebar/MermaidFigure）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤9a698e2→ca8e27e、前半610a45b→db65a3c、後半495174b/図枠・Chrome Red33efd5f→5808ecb、アーカイブ2280956→709ad27。既存資格一覧/ISOルートの固定値同期はa4ccaa6。台帳: docs/migration-inventory/issep-guide.json。目視確認表: docs/migration-inventory/issep-guide-review.md。再検証用スクリプト: security-docs/src/app/docs/issep-guide/styles.browser.mjs と runtime.browser.mjs。</p></section>
