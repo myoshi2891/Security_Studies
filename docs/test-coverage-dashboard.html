@@ -1291,3 +1291,5 @@
 <section class="container"><p>2026-11-06 ISO24759: 後半第10〜18章を移行しナビ・静的検索（41ページ）へ登録（1d14a16 → d981caf）。レビュー対応で共通シェルpadding解除、閉じたモバイル目次の非表示化、復号不能フラグメントの安全な処理、Mermaid一時要素の片付け（Red 7e032be → Green d0f3b9b）、JSDoc追加（29f3f44）、既存ISO固定値の同期（b69e686）。専用88件/8ファイルを含む全体2641成功/0skip/0失敗（327ファイル、571,820 expect）。原本なし隔離環境1566成功/1075skip/0失敗。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。残作業: Chrome実描画の確認、目視確認表、HTML/Markdown原本のarchive/standards/への移動（archive.test.ts追加）。</p></section>
 
 <section class="container"><p>2026-11-06 ISO24759: URL未指定時の先頭目次リンクがエンコード済みIDのまま比較され選択されない問題を修正（Red  → Green 0bb0fa1 afd7156 ）。sidebar 9件・統合5件成功、lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
+
+<section class="container"><p>2026-11-06 ISO24759: codecov/patch失敗（97.20%、未カバー7行）を調査。未検証だった状態遷移説明の正規表現が日本語状態名に一致せず、d5のテキスト説明がMermaid構文のまま出る実バグを発見しUnicode対応で修正（Red c6dd0f2 → Green b6da319）。専用90件成功、本ガイド実装の未カバー行0。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
