@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-10-26（PR #56 codecov/patch対応: CGRC/SSCPステート図説明のテスト追加）
+> **最終更新**: 2026-11-06（Mermaid 11.17.2へ更新: Dependabotアラート9件対応）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -440,6 +440,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| DEP-1106-MERMAID | **Mermaid 11.12.0 → 11.17.2（Dependabot #26〜#34 の9件対応）** — 全アドバイザリは11.16.1で修正済みだが、11.16.xは `flowchart LR` 内の `direction TB` サブグラフ＋サブグラフ間の辺で約4倍幅に崩れる不具合があり（hacking #7 / SSCP #29）、11.17.0で解消するため11.17.2を採用。12.xはメジャー更新のため対象外。図の入力はリポジトリ内の静的定数のみ・`securityLevel: 'strict'` で実害は低い。実Chrome全585図を更新前後のDOM指紋（件数・文字・計算済みスタイル・寸法）で比較: 描画失敗・件数差・構文エラー・ページエラー0。寸法変化7図、状態図の矢印色変化3図、自己ループ辺の構造変化2図。円グラフの凡例順は不変で、11図・全67スライスの角度と凡例値の一致を更新前後で確認（CSSLPは目視）。スクリーンショット比較は免責モーダル越しの参考値のため判定根拠にしない。テスト2553成功/0失敗・lint・型チェック・既存Chrome検証13本成功。ビルド未実行。目視はユーザー担当・未確認。 | 2026-11-06 |
 | REVIEW-1026-FRAG | **ISO29100/ISSAP目次の不正URLフラグメント対策** — `decodeFragment` で `URIError` を回避（初期ロード/hashchange/リンク選択）。ISO29100ブラウザー検証スクリプトの既定描画HTMLをガイド専用名へ修正。Red `4b2140c` → Green `632e747`、スクリプト `fa02120`。両ガイド178 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
 | PR56-COV | **PR #56 codecov/patch失敗の解消** — CGRC/SSCPの `MermaidFigure.tsx` はISSAPから引き継いだ `describeTransition`（ステート図説明）を持つが、両ガイドにstateDiagramがなく各7行が未実行だった。原本非依存の単体テストを両 `runtime.test.tsx` に追加し、両ファイルの行カバレッジ100%（原本なし環境でも同値）。製品コード変更なし。テスト `9a8bda6`。全体2553 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
 | REVIEW-1026-STATE | **ISSAPステート図のテキスト説明** — `describeDiagram` に stateDiagram 分岐を追加し「ステート図」と表示。`[*]` を遷移元は開始・遷移先は終了として保持し、コロン形式のラベルも残す。d14の専用テストを追加。Red `1ab514b` → Green `791d82a`。ISSAP専用86 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
