@@ -46,6 +46,7 @@ function removeTemporaryOutput(renderId: string): void {
   for (const prefix of ['d', 'i']) document.getElementById(`${prefix}${renderId}`)?.remove();
 }
 
+/** Mermaid の SVG を自然な px 幅へ固定し、図の種類に応じた下余白を viewBox に加える */
 function sizeSvg(svgMarkup: string, source: string) {
   const holder = document.createElement('div');
   holder.innerHTML = svgMarkup;
@@ -98,6 +99,7 @@ export function describeDiagram(source: string): string[] {
 /** `A --> B: ラベル` の状態遷移。`[*]` は遷移元なら開始、遷移先なら終了を表す */
 const TRANSITION_PATTERN = /^(\[\*\]|[\w.]+)\s*-->\s*(\[\*\]|[\w.]+)\s*(?::\s*(.*))?$/;
 
+/** 状態遷移の 1 行を「遷移元 → 遷移先: ラベル」の読み上げ用テキストへ変換する */
 function describeTransition(line: string): string {
   const match = TRANSITION_PATTERN.exec(line);
   if (!match) return plain(line);
@@ -139,6 +141,7 @@ function describeFlowchart(body: string[]): string[] {
   ];
 }
 
+/** 表示域に近づいてから図を描画し、失敗時の再試行とテキスト説明も提供する */
 export function MermaidFigure({ id, source, ariaLabel, renderer = renderDiagram }: MermaidFigureProps) {
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const svgId = `iso24759-mermaid-${id}-${unique}`;

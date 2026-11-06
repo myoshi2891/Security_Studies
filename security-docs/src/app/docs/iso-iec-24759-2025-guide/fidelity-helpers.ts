@@ -16,6 +16,7 @@ export const sourcePath = resolve(import.meta.dir, '../../../../../Iso-iec-24759
 export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
+/** 原本 HTML がある環境でのみ実行し、原本は最初の実行時まで読み込まないテストを登録する */
 export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
   test.skipIf(!existsSync(sourcePath))(name, () => {
     sourceDocument ??= new DOMParser().parseFromString(readFileSync(sourcePath, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
@@ -23,6 +24,7 @@ export function sourceTest(name: string, fn: () => void | Promise<unknown>, time
     return fn();
   }, timeout);
 }
+/** 空白・図の描画結果・支援技術用属性の差を除いた、比較用の DOM 表現を返す */
 export function canonical(n: Node): unknown {
   if (n.nodeType === 3) return n.textContent?.replace(/\s+/g, ' ').trim() || null;
   if (n.nodeType !== 1) return null;
@@ -32,18 +34,22 @@ export function canonical(n: Node): unknown {
   if (e.matches('.diagram-body')) return ['diagram', e.getAttribute('data-id')];
   return [e.tagName, [...e.attributes].filter(a => !a.name.startsWith('aria-') && a.name !== 'tabindex').map(a => [a.name, a.value]).sort((a,b) => a[0].localeCompare(b[0])), [...e.childNodes].map(canonical).filter(v => v !== null)];
 }
+/** 正規化した DOM 構造の SHA-256 を返す */
 export function structure(e: Node) { return hash(JSON.stringify(canonical(e))); }
 let evaluated: ReturnType<typeof evaluate> | undefined;
+/** page.mdx をスタイル読み込みなしで評価し、結果を共有する */
 export function evaluatedPage() {
   evaluated ??= evaluate(readFileSync(new URL('./page.mdx', import.meta.url), 'utf8').replace(/^import '\.\/guide\.css';\s*$/gm, ''), {
     ...runtime, development: false, baseUrl: new URL('./page.mdx', import.meta.url), remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
   });
   return evaluated;
 }
+/** 評価済みのページを静的 HTML として描画し、DOM へ解析して返す */
 export async function renderedPage() {
   const { default: Page } = await evaluatedPage();
   return new DOMParser().parseFromString(renderToStaticMarkup(runtime.jsx(Page, {})), 'text/html');
 }
+/** 台帳の章構造ハッシュと原本 DOM の比較テストを、指定範囲の章について登録する */
 export function contracts(start: number, end: number) {
   const entries = Object.entries(inventory.structures).filter(([s]) => s.startsWith('#') && s !== '#top').slice(start, end);
   for (const [selector, expected] of entries) {
