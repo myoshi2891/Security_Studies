@@ -36,7 +36,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     const guide = panel.current?.closest('.iso24759-guide');
     const hash = () => {
       const fragment = window.location.hash.slice(1);
-      select(fragment ? decodeFragment(fragment) : panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || '');
+      select(decodeFragment(fragment || panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || ''));
     };
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
