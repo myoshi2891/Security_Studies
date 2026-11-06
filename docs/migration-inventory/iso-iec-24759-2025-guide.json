@@ -1,6 +1,6 @@
 {
-  "source": "Iso-iec-24759-2025-guide.html",
-  "markdownSource": "Iso-iec-24759-2025-guide.md",
+  "source": "archive/standards/Iso-iec-24759-2025-guide.html",
+  "markdownSource": "archive/standards/Iso-iec-24759-2025-guide.md",
   "htmlSha256": "120534feb49379aeb43db3e04510a43d6d2f3f53e4644266334f486cad228b0f",
   "markdownSha256": "7f6bf45f300d6b1de11600bf68f0c09b489d6a49579f5746ce447150a44d1ac6",
   "route": "/docs/iso-iec-24759-2025-guide",
@@ -2326,5 +2326,53 @@
     "Scoped styles and header-offset sidebar integrate the application shell.",
     "Diagram SVGs retain intrinsic width and horizontal scrolling.",
     "Accessible React menu, focus restoration, hash tracking and observer cleanup replace inline scripts."
-  ]
+  ],
+  "archiveStatus": "both originals archived with byte-exact SHA-256",
+  "visualReview": "pending (user; see iso-iec-24759-2025-guide-review.md)",
+  "verification": {
+    "date": "2026-11-06",
+    "dedicatedPass": 95,
+    "dedicatedFiles": 9,
+    "dedicatedExpect": 939,
+    "sourceFreePass": 60,
+    "sourceFreeSkip": 35,
+    "sourceFreeFail": 0,
+    "htmlOnlyArchivePass": 3,
+    "htmlOnlyArchiveSkip": 1,
+    "markdownOnlyArchivePass": 3,
+    "markdownOnlyArchiveSkip": 1,
+    "browser": {
+      "engine": "Chrome headless / Next.js development server",
+      "widths": [
+        375,
+        768,
+        1024,
+        1025,
+        1440
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "cssDifferences": 0,
+      "pageErrors": 0,
+      "allCountsMatch": true,
+      "renderedDiagrams": 8,
+      "diagramEdgesReachable": true,
+      "mobileMenuAndChapterNavigation": "passed",
+      "hoverCellsComparedPerCondition": 407,
+      "hoverDifferences": 0
+    },
+    "lint": "passed",
+    "types": "passed",
+    "build": "not run (user prohibited)",
+    "visualReview": "pending (user)",
+    "wholeSuiteNote": "Whole suite began before the final one-test font regression addition; final dedicated run validates the current font correction.",
+    "currentDefinedCases": 2648,
+    "currentTestFiles": 328,
+    "wholeSuitePass": 2647,
+    "wholeSuiteFail": 0,
+    "wholeSuiteFiles": 328,
+    "wholeSuiteExpect": 571836
+  }
 }

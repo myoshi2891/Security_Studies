@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-06（Mermaid 11.17.2へ更新: Dependabotアラート9件対応）
+> **最終更新**: 2026-11-06（ISO/IEC24759移行・原本アーカイブ・フォント回帰検証完了）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2643成功 / 0 skip / 0失敗** | 全体327ファイル・571,826 expect。ISO24759専用90件を含む。 |
-| テストファイル数 | **327ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **131/131 (100%)** | 従来127＋ISO24759部品4。純粋データ・MDXは分母外。全327テストファイルとは別集計 |
+| テストケース総数 | **2648件（定義数）** | 全体再実行の結果は末尾のISO24759完了記録を参照。フォント修正後は専用95件/9ファイル・939 expect成功。 |
+| テストファイル数 | **328ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **131/131 (100%)** | 従来127＋ISO24759部品4。純粋データ・MDXは分母外。全328テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,15 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/iso-iec-24759-2025-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/foundation.test.tsx` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/front.test.tsx` | 20 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/hydration.test.tsx` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/integration.test.tsx` | 5 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/rear.test.tsx` | 18 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/runtime.test.tsx` | 14 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/sidebar.test.tsx` | 9 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/styles.test.tsx` | 17 | ✅ 2026-11-06 ISO24759最終実測 |
 | `src/app/docs/sscp-guide/archive.test.ts` | 4 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
 | `src/app/docs/sscp-guide/foundation.test.tsx` | 12 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
 | `src/app/docs/sscp-guide/front.test.tsx` | 14 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
@@ -1433,7 +1442,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- sscp-status -->
 ## SSCP 移行（2026-10-26）
 
-移行・原本アーカイブ・自動検証完了: /docs/sscp-guide。全13章（第0〜12章）・64小節・170見出し・111表1752セル・38図・260リスト項目（63ul/3ol）・50出典・57注意欄・70目次リンク・79固有IDを保持。7つの確認問題表の全21問/解説、13チェックの独立した入力/ラベル操作、番号付き手順3組（4/6/6項目）を検証。17固定構造SHA-256と原本比較、38図の固定定義/パース、全CSS/media、5幅×明暗、金色6px丸点/藍色番号/チェック欄CSSカウンター/見出し角点/出典番号、全111表とページのHydrationを検証。専用86件/10ファイルを含む全体2551成功/0skip/0失敗（319ファイル、570,787 expect）。原本なし隔離環境55成功/31skip/0失敗。HTMLのみ・Markdownのみの各隔離環境でもハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1752セルのホバー・13項目のチェック済み装飾が差分0。ブランドの共有15pxとフォームUAスタイルの1060差分をRedで検出し、原本の文字サイズ/UA既定値を復元。Happy DOMが持たないUAフォント比較はChromeで全条件検証する。375/1440pxのHTTP200で全件数/17構造SHA一致・全38図描画と左右スクロール・目次/フォーカス/チェック操作成功（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索40ページ。ロジック127/127（従来124＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤687bb22→85d792d（重複属性除去f9fe9e9）、前半d360924→e11e83a、後半008eaa6/Chrome Red119b726→796da5e、アーカイブf328864→234b06a。目視確認表: docs/migration-inventory/sscp-guide-review.md。現在未移行のルート原稿: ISSEP、ISO/IEC24759（HTML0件/Markdown2件）。
+移行・原本アーカイブ・自動検証完了: /docs/sscp-guide。全13章（第0〜12章）・64小節・170見出し・111表1752セル・38図・260リスト項目（63ul/3ol）・50出典・57注意欄・70目次リンク・79固有IDを保持。7つの確認問題表の全21問/解説、13チェックの独立した入力/ラベル操作、番号付き手順3組（4/6/6項目）を検証。17固定構造SHA-256と原本比較、38図の固定定義/パース、全CSS/media、5幅×明暗、金色6px丸点/藍色番号/チェック欄CSSカウンター/見出し角点/出典番号、全111表とページのHydrationを検証。専用86件/10ファイルを含む全体2551成功/0skip/0失敗（319ファイル、570,787 expect）。原本なし隔離環境55成功/31skip/0失敗。HTMLのみ・Markdownのみの各隔離環境でもハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1752セルのホバー・13項目のチェック済み装飾が差分0。ブランドの共有15pxとフォームUAスタイルの1060差分をRedで検出し、原本の文字サイズ/UA既定値を復元。Happy DOMが持たないUAフォント比較はChromeで全条件検証する。375/1440pxのHTTP200で全件数/17構造SHA一致・全38図描画と左右スクロール・目次/フォーカス/チェック操作成功（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索40ページ。ロジック127/127（従来124＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤687bb22→85d792d（重複属性除去f9fe9e9）、前半d360924→e11e83a、後半008eaa6/Chrome Red119b726→796da5e、アーカイブf328864→234b06a。目視確認表: docs/migration-inventory/sscp-guide-review.md。SSCP完了時点の未移行ルート原稿（履歴）: ISSEP、ISO/IEC24759（HTML0件/Markdown2件）。
 
 配置: `security-docs/src/app/docs/sscp-guide/page.mdx`。台帳: `docs/migration-inventory/sscp-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /sscp-status -->
@@ -1457,3 +1466,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-06 ISO24759コード枠Red: Chromeで共有CSSがpreのUA monospaceを別フォントスタックへ置換する差分を検出。UA条件を厳密化したstyles.test.tsxは6成功/11失敗（17件）。追加1件、専用合計95件。原本移動後の既存94件は成功、原本なし59成功/35skip、HTMLのみ/Markdownのみ各3成功/1skip。全体最終再実行中。
+
+
+2026-11-06 ISO24759移行・原本アーカイブ・自動検証完了: /docs/iso-iec-24759-2025-guide （security-docs/src/app/docs/iso-iec-24759-2025-guide/page.mdx）。19章・48見出し・24表407セル・8図・37リスト項目・7注意欄・20出典・Pythonコードを保持。固定構造SHA-256/原本DOM/全CSS/media/丸点・丸囲み番号・CSSカウンター/全表とページのHydration/目次操作を検証。全体実行2647成功/0skip/0失敗（328ファイル、571,836 expect）。全体実行開始後のフォント回帰1件追加と修正は、最終専用95成功/0skip/0失敗（9ファイル、939 expect）で検証。現行の定義総数2648件/328ファイル。原本なし隔離環境60成功/35skip/0失敗、HTMLのみ/Markdownのみのアーカイブ検証は各3成功/1skip/0失敗。Chrome5幅×明暗の10条件で本文・丸点・丸数字・カウンター・全407セルのホバー配色差分0、全件数一致、全8図の描画と左右スクロール、モバイル目次開閉と章移動、pageErrors0。共有CSSによるpreのUA monospace差分をRed d64f9a4 → Green 2874888で修正。両原本はarchive/standards/へSHA-256一致で移動済み（Git管理外、Red cf007ef → Green 0ece9d2）。ナビ・静的/動的検索41ページ、ロジック131/131。npm test・npm run lint・npm run types:check成功。台帳: docs/migration-inventory/iso-iec-24759-2025-guide.json。目視確認表: docs/migration-inventory/iso-iec-24759-2025-guide-review.md。ビルド禁止/未実行、目視はユーザー担当/未確認。

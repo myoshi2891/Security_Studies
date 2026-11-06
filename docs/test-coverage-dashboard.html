@@ -16,7 +16,7 @@
                         <div class="doc-classification">Security Studies · Test Audit Report</div>
                         <h1>Test Coverage Dashboard</h1>
                         <div class="header-meta">
-                            <span><span class="live-dot"></span>Scanned 2026-10-26</span>
+                            <span><span class="live-dot"></span>Scanned 2026-11-06</span>
                             <span>Runner: bun test --coverage</span>
                             <span>DOM: happy-dom</span>
                             <span>Assert: @testing-library/jest-dom</span>
@@ -75,8 +75,8 @@
                     </div>
                     <div class="summary-card c-green">
                         <div class="summary-label">Test Cases</div>
-                        <div class="summary-value">2643</div>
-                        <div class="summary-sub">全体2643成功/0skip/0失敗（327ファイル、571,826 expect）。ISO24759専用90件。アーカイブRed4件は別実行。</div>
+                        <div class="summary-value">2648</div>
+                        <div class="summary-sub">現行2648件/328ファイル。ISO24759専用95成功/0skip/0失敗。全体実測と検証範囲は末尾の完了記録を参照。</div>
                         <div class="progress-bar-wrap">
                             <div
                                 class="progress-bar"
@@ -345,7 +345,7 @@
                                     >
                                         <div class="cell-inner">
                                             <span class="cell-icon">⚠️</span>
-                                            <span class="cell-count">2511 app/guide/layout/navigation tests · 109/110 logic files（全体2643件）</span>
+                                            <span class="cell-count">2516 app/guide/layout/navigation tests · 109/110 logic files（全体2648件）</span>
                                             <div class="cell-bar">
                                                 <div class="cell-bar-fill" style="width: 99%"></div>
                                             </div>
@@ -1207,9 +1207,9 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-inner">
-                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-10-26</span>
+                    <span>Security Studies · Test Coverage Dashboard · Updated 2026-11-06</span>
                     <span
-                        >Runner: npm test -- --timeout 120000 · DOM: happy-dom · 327 files · 2643 pass / 0 skip / 0 fail（571,826 expect） · CI:
+                        >Runner: npm test · DOM: happy-dom · 328 files · 2648 defined cases · dedicated ISO24759: 95 pass / 0 skip / 0 fail（939 expect） · CI:
                         GitHub Actions ✅（パス除外なし・原本不在時のみskip） · Coverage: lcov生成（fidelity-helpers.ts除外） · Codecov送信（任意・失敗非致命）</span
                     >
                 </div>
@@ -1297,3 +1297,5 @@
 <section class="container"><p>2026-11-06 ISO24759継続監査: 既存移行実装は専用90件/8ファイル成功。全体2643成功/0skip/0失敗（327ファイル、571,826 expect）をnpm testで実測。19章・48見出し・24表407セル・8図・37リスト項目・20出典・Pythonコードを保持。主要集計を現行値へ修正。アーカイブRedは別実行で0成功/4失敗、未実装を検出。残作業: 原本アーカイブ、Chrome自動検証、目視確認表。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
 
 <section class="container"><p>2026-11-06 ISO24759コード枠Red: Chromeで共有CSSがpreのUA monospaceを別フォントスタックへ置換する差分を検出。UA条件を厳密化したstyles.test.tsxは6成功/11失敗（17件）。追加1件、専用合計95件。原本移動後の既存94件は成功、原本なし59成功/35skip、HTMLのみ/Markdownのみ各3成功/1skip。全体最終再実行中。</p></section>
+
+<section class="container" id="iso24759-complete"><p>2026-11-06 ISO24759移行・原本アーカイブ・自動検証完了: /docs/iso-iec-24759-2025-guide （security-docs/src/app/docs/iso-iec-24759-2025-guide/page.mdx）。19章・48見出し・24表407セル・8図・37リスト項目・7注意欄・20出典・Pythonコードを保持。固定構造SHA-256/原本DOM/全CSS/media/丸点・丸囲み番号・CSSカウンター/全表とページのHydration/目次操作を検証。全体実行2647成功/0skip/0失敗（328ファイル、571,836 expect）。全体実行開始後のフォント回帰1件追加と修正は、最終専用95成功/0skip/0失敗（9ファイル、939 expect）で検証。現行の定義総数2648件/328ファイル。原本なし隔離環境60成功/35skip/0失敗、HTMLのみ/Markdownのみのアーカイブ検証は各3成功/1skip/0失敗。Chrome5幅×明暗の10条件で本文・丸点・丸数字・カウンター・全407セルのホバー配色差分0、全件数一致、全8図の描画と左右スクロール、モバイル目次開閉と章移動、pageErrors0。共有CSSによるpreのUA monospace差分をRed d64f9a4 → Green 2874888で修正。両原本はarchive/standards/へSHA-256一致で移動済み（Git管理外、Red cf007ef → Green 0ece9d2）。ナビ・静的/動的検索41ページ、ロジック131/131。npm test・npm run lint・npm run types:check成功。台帳: docs/migration-inventory/iso-iec-24759-2025-guide.json。目視確認表: docs/migration-inventory/iso-iec-24759-2025-guide-review.md。ビルド禁止/未実行、目視はユーザー担当/未確認。</p></section>
