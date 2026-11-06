@@ -1,0 +1,2 @@
+/** Native source tags bypass shared MDX substitutions. */
+export const E = {"aside":"aside","div":"div","svg":"svg","circle":"circle","path":"path","nav":"nav","ul":"ul","li":"li","a":"a","button":"button","main":"main","header":"header","span":"span","h1":"h1","p":"p","strong":"strong","code":"code","br":"br","section":"section","h2":"h2","h3":"h3","table":"table","thead":"thead","tr":"tr","th":"th","tbody":"tbody","td":"td","h4":"h4","pre":"pre","details":"details","summary":"summary","label":"label","input":"input","ol":"ol","footer":"footer"} as const;
