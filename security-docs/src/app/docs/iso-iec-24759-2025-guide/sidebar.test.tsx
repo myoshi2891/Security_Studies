@@ -70,3 +70,14 @@ test('the drawer toggle carries the original menu-btn class targeted by the guid
  const view=render(harness());
  expect(view.container.querySelector('#menuBtn')).toHaveClass('menu-btn');
 });
+test('an undecodable fragment selects nothing and still registers the listeners and scroll tracking',()=>{
+ const saved=globalThis.IntersectionObserver;const targets:Element[]=[];
+ globalThis.IntersectionObserver=class{observe(e:Element){targets.push(e);}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  (window as unknown as Window).happyDOM.setURL('http://localhost/#%E0%A4%A');
+  const view=render(harness());
+  expect(view.container.querySelectorAll('[aria-current]')).toHaveLength(0);expect(targets.map(t=>t.id)).toEqual(ids);
+  expect(()=>act(()=>{window.dispatchEvent(new Event('hashchange'));})).not.toThrow();expect(view.container.querySelectorAll('[aria-current]')).toHaveLength(0);
+  const link=view.container.querySelector<HTMLAnchorElement>('[href="#ch3"]')!;fireEvent.click(link);expect(link).toHaveAttribute('aria-current','location');
+ }finally{globalThis.IntersectionObserver=saved;}
+});

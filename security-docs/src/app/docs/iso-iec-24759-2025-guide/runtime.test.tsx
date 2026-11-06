@@ -64,6 +64,7 @@ test('a failed diagram still shows its text description alongside the error and 
 test('diagram text descriptions resolve quoted node labels across edges, chains and isolated nodes',async()=>{
  const {describeDiagram}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  expect(describeDiagram('flowchart TD\nA["開始<br/>入力"] --> B{"判定"}\nB -- "はい" --> C("完了")\nB -->|"いいえ"| A\nC <--> E\nD["孤立"]')).toEqual(['フローチャート','開始 入力 → 判定','判定 → 完了: はい','判定 → 開始 入力: いいえ','完了 ↔ E','孤立']);
+ expect(describeDiagram('flowchart LR\nA["入力"] --> B["処理"] --> C["出力"]')).toEqual(['フローチャート','入力 → 処理','処理 → 出力']);
  expect(describeDiagram('sequenceDiagram\nA->>B: 要求<br/>送信')).toEqual(['シーケンス図','A->>B: 要求 送信']);
 });
 test('diagram text descriptions read labels from stadium and cylinder nodes instead of node IDs',async()=>{
@@ -112,4 +113,32 @@ test('the figure is a labelled group so its text description stays readable, wit
  expect(description.closest('[role="img"]')).toBeNull();
  expect([...description.querySelectorAll('li')].map(li=>li.textContent)).toEqual(['フローチャート','入力 → 出力']);
  }finally{globalThis.IntersectionObserver=original;}
+});
+
+test('failed and stale renders remove only their own temporary output from document.body, even after unmount',async()=>{
+ const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
+ const original=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;
+ const messages=spyOn(console,'error').mockImplementation(()=>{});
+ // Mermaid は描画中に #d{id} を body 直下へ置き、構文エラーではこれを残したまま失敗する
+ const temporary=(id:string)=>{const node=document.createElement('div');node.id='d'+id;document.body.append(node);return node;};
+ const figures=()=>document.body.querySelectorAll(':scope > [id^="diso24759-mermaid-"]');
+ try{
+  const failed=render(createElement(MermaidFigure,{id:'d1',source:'broken',renderer:async(id:string)=>{temporary(id);throw new Error('parse');}}));
+  await waitFor(()=>expect(failed.container.querySelector('[role="alert"]')).not.toBeNull());expect(figures()).toHaveLength(0);failed.unmount();
+
+  const settle:Array<()=>void>=[];const pendingRender=(id:string)=>new Promise<{svg:string}>((resolve,reject)=>{temporary(id);settle.push(()=>reject(new Error('late')));});
+  const unmounted=render(createElement(MermaidFigure,{id:'d2',source:'a',renderer:pendingRender}));await waitFor(()=>expect(figures()).toHaveLength(1));
+  // 描画中の一時要素は Mermaid が使用中なので、アンマウント時点では取り除かず、完了時に片付ける
+  unmounted.unmount();expect(figures()).toHaveLength(1);await act(async()=>settle[0]());expect(figures()).toHaveLength(0);
+
+  let finishOld:((value:{svg:string})=>void)|undefined;const ids:string[]=[];
+  const stale=render(createElement(MermaidFigure,{id:'d3',source:'old',renderer:(id:string)=>{ids.push(id);temporary(id);return new Promise<{svg:string}>(resolve=>{finishOld=resolve;});}}));
+  await waitFor(()=>expect(figures()).toHaveLength(1));
+  let finishNew:((value:{svg:string})=>void)|undefined;
+  stale.rerender(createElement(MermaidFigure,{id:'d3',source:'new',renderer:(id:string)=>{ids.push(id);temporary(id);return new Promise<{svg:string}>(resolve=>{finishNew=resolve;});}}));
+  await waitFor(()=>expect(figures()).toHaveLength(2));expect(new Set(ids).size).toBe(2);
+  await act(async()=>finishOld!({svg:'<svg viewBox="0 0 10 10"></svg>'}));
+  expect(document.getElementById('d'+ids[0])).toBeNull();expect(document.getElementById('d'+ids[1])).not.toBeNull();
+  await act(async()=>finishNew!({svg:'<svg viewBox="0 0 10 10"></svg>'}));expect(stale.container.querySelector('svg')).not.toBeNull();expect(figures()).toHaveLength(0);
+ }finally{for(const node of figures())node.remove();globalThis.IntersectionObserver=original;messages.mockRestore();}
 });
