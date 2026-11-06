@@ -26,3 +26,16 @@ test('Tab traps keyboard focus inside visible menu links and malformed fragments
  window.history.replaceState(null,'','#%');expect(()=>fireEvent(window,new Event('hashchange'))).not.toThrow();
  window.history.replaceState(null,'','/');
 });
+test('chapter and subsection selection expands only its original chapter and focuses its heading', async () => {
+ const v=await mounted(),btn=v.container.querySelector<HTMLButtonElement>('#menuBtn')!;
+ for(const link of v.container.querySelectorAll<HTMLAnchorElement>('nav a')){
+  fireEvent.click(btn);fireEvent.click(link);
+  expect(btn).toHaveAttribute('aria-expanded','false');expect(link).toHaveAttribute('aria-current','location');
+  const group=link.closest('.nav-group')!;expect(group).toHaveClass('open');expect(v.container.querySelectorAll('.nav-group.open')).toHaveLength(1);
+  expect(group.querySelector(':scope > a')).toHaveClass('active');
+  expect(document.activeElement?.id||document.activeElement?.closest('section')?.id).toBe(link.hash.slice(1));
+ }
+});
+test('all source TOC anchors have matching section and subsection targets', async () => {
+ const d=await renderedPage();for(const a of d.querySelectorAll('nav a'))expect(d.getElementById(a.getAttribute('href')!.slice(1))).not.toBeNull();
+});
