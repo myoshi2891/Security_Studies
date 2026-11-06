@@ -12,7 +12,7 @@ import { expect, test } from 'bun:test';
 import inventory from '../../../../../docs/migration-inventory/issep-guide.json';
 export { inventory };
 export const scope = '.issep-guide.issep-guide';
-export const sourcePath = resolve(import.meta.dir, '../../../../../Issep-guide.html');
+export const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Issep-guide.html');
 export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
