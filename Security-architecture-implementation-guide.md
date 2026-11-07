@@ -966,7 +966,7 @@ inputs:
 data_access:
   allow: ["tickets:read"]         # B: 読み取りだけを許可。書き込みは与えない
 actions:
-  external_network: false         # C: 外部通信は禁止。Rule of Two を満たす
+  external_network: false         # C: 外部通信は禁止。状態変更は次の行の承認で統制する
   require_human_approval: ["ticket:close", "refund:create"]
 logging:
   record_tool_calls: true         # 何を呼んだかを後から追えるようにする
