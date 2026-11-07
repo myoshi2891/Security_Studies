@@ -14,5 +14,38 @@ sourceTest('all 13 diagrams preserve the original definition, dark palette and p
  const engine={config:{} as Record<string,unknown>,initialize(value:Record<string,unknown>){this.config=value;}};
  Function('mermaid',sourceHtml.match(/var cs = [\s\S]*?mermaid\.initialize\([\s\S]*?\);/)![0])(engine);delete engine.config.startOnLoad;delete engine.config.securityLevel;expect(diagramConfig as Record<string,unknown>).toEqual(engine.config);
 });
-test('updates the existing ISO route while retaining its exact registration and all thirty existing route identities after CSSLP, both CyberOps, Shostack, Ghost, Hacking, ISO29100, ISSAP, CGRC and SSCP registrations',()=>{const items=docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>!['/docs/sscp-guide','/docs/cgrc-guide','/docs/issap-guide','/docs/iso-iec-29100-2024-guide','/docs/csslp-guide','/docs/cyberops-associate-guide','/docs/cyberops-professional-guide','/docs/threat-modeling-shostack-guide','/docs/ghost-in-the-wires-guide','/docs/hacking-art-of-exploitation-guide'].includes(i.href));const matching=items.filter(i=>i.href==='/docs/iso-iec-27001-2022-guide');expect(matching).toEqual([{title:'ISO/IEC 27001:2022 初学者向けガイド',href:'/docs/iso-iec-27001-2022-guide'}]);expect(items).toHaveLength(30);expect(new Set(items.map(i=>i.href)).size).toBe(30);expect(items.some(i=>i.href==='/docs/iso-iec-27000-2026-guide')).toBe(true);});
+// 新しいガイドを追加しても更新不要な、既存30ルートの固定一覧。
+const existingRoutes=[
+ '/docs/approach',
+ '/docs/architecture',
+ '/docs/secdev-guide',
+ '/docs/secure-by-design',
+ '/docs/secrets-and-lies-guide',
+ '/docs/zero-trust-networks-2nd-edition-guide',
+ '/docs/threat-modeling-guide',
+ '/docs/web-application-hackers-handbook',
+ '/docs/ai-coding-safety',
+ '/docs/llm-ai-security',
+ '/docs/mitre-atlas',
+ '/docs/hacking-kubernetes',
+ '/docs/supply-chain',
+ '/docs/bulletproof-tls-pki-guide',
+ '/docs/applied-cryptography-guide',
+ '/docs/pqc',
+ '/docs/threat-landscape',
+ '/docs/owasp',
+ '/docs/iso-iec-27000-2026-guide',
+ '/docs/iso-iec-27001-2022-guide',
+ '/docs/iso-iec-27017-2026-guide',
+ '/docs/iso-iec-15408-1-2026-guide',
+ '/docs/iso-iec-18045-2026-guide',
+ '/docs/ccie-security',
+ '/docs/ccst-cybersecurity',
+ '/docs/cc-certified-in-cybersecurity-guide',
+ '/docs/ccsp-study-guide',
+ '/docs/cissp-guide',
+ '/docs/certifications',
+ '/docs/archive/approach',
+];
+test('updates the existing ISO route while retaining its exact registration and all thirty existing route identities',()=>{const items=docsConfig.sidebarNav.flatMap(g=>g.items);const hrefs=items.map(i=>i.href);expect(items.filter(i=>i.href==='/docs/iso-iec-27001-2022-guide')).toEqual([{title:'ISO/IEC 27001:2022 初学者向けガイド',href:'/docs/iso-iec-27001-2022-guide'}]);expect(existingRoutes).toHaveLength(30);expect(new Set(existingRoutes).size).toBe(30);for(const href of existingRoutes)expect(hrefs.filter(h=>h===href),href).toHaveLength(1);});
 test('the new scaffold has all 17 unique chapter destinations and no unsafe legacy executable markup',async()=>{const page=await renderedPage();expect([...page.querySelectorAll('section.chapter[id]')].map(e=>e.id)).toEqual(Array.from({length:17},(_,i)=>'ch'+i));const ids=[...page.querySelectorAll('[id]')].map(e=>e.id);expect(new Set(ids).size).toBe(ids.length);expect(page.querySelector('script,style,iframe,form,link')).toBeNull();for(const e of page.querySelectorAll('*'))for(const a of e.attributes){expect(a.name).not.toMatch(/^on/i);if(['href','src'].includes(a.name))expect(a.value).not.toMatch(/^(javascript:|data:text\/html)/i);}});

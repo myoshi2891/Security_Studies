@@ -1,0 +1,862 @@
+.issep-guide.issep-guide aside,.issep-guide.issep-guide div,.issep-guide.issep-guide nav,.issep-guide.issep-guide ul,.issep-guide.issep-guide li,.issep-guide.issep-guide a,.issep-guide.issep-guide main,.issep-guide.issep-guide header,.issep-guide.issep-guide span,.issep-guide.issep-guide h1,.issep-guide.issep-guide p,.issep-guide.issep-guide strong,.issep-guide.issep-guide code,.issep-guide.issep-guide br,.issep-guide.issep-guide section,.issep-guide.issep-guide h2,.issep-guide.issep-guide h3,.issep-guide.issep-guide table,.issep-guide.issep-guide thead,.issep-guide.issep-guide tr,.issep-guide.issep-guide th,.issep-guide.issep-guide tbody,.issep-guide.issep-guide td,.issep-guide.issep-guide h4,.issep-guide.issep-guide pre,.issep-guide.issep-guide details,.issep-guide.issep-guide summary,.issep-guide.issep-guide label,.issep-guide.issep-guide ol,.issep-guide.issep-guide footer{margin:0;padding:0;border:0;letter-spacing:0px;text-transform:none;box-shadow:none;background:transparent;overflow-wrap:normal;word-break:normal;}
+.issep-guide.issep-guide h1,.issep-guide.issep-guide h2,.issep-guide.issep-guide h3,.issep-guide.issep-guide h4{font-family:inherit;color:inherit;font-size:inherit;font-weight:700;}
+.issep-guide.issep-guide ul{list-style-type:disc;}
+.issep-guide.issep-guide ol{list-style-type:decimal;}
+.issep-guide.issep-guide table{border-collapse:separate;border-spacing:2px;text-indent:0;}
+
+            .issep-guide.issep-guide {
+                --color-paper: #f6f7f9;
+                --color-surface: #ffffff;
+                --color-ink: #161b26;
+                --color-ink-2: #3b4458;
+                --color-ink-3: #5a6377;
+                --color-indigo: #2e3f72;
+                --color-indigo-tint: #eef1f8;
+                --color-indigo-line: #c9d3ea;
+                --color-gold: #b8802a;
+                --color-gold-tint: #faf1df;
+                --color-gold-line: #f1ddae;
+                --color-forest: #1b6e6a;
+                --color-forest-tint: #e6f2f1;
+                --color-forest-line: #bfe0db;
+                --color-plum: #8c3a5c;
+                --color-plum-tint: #f7ecf1;
+                --color-plum-line: #e8c7d6;
+                --color-green: #2f6b3d;
+                --color-green-tint: #eaf4ec;
+                --color-border: #d9dde6;
+                --color-border-strong: #b9c0cf;
+                --font-sans:
+                    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP',
+                    'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-serif:
+                    'Source Serif 4', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', Georgia,
+                    serif;
+                --font-mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, 'Noto Sans Mono CJK JP',
+                    monospace;
+                --sidebar-w: 288px;
+                --radius-md: 8px;
+                --radius-lg: 12px;
+            }
+            .issep-guide.issep-guide * {
+                box-sizing: border-box;
+            }
+            .issep-guide.issep-guide {
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+            }
+            .issep-guide.issep-guide {
+                margin: 0;
+                background: var(--color-paper);
+                color: var(--color-ink);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.8;
+                font-weight: 400;
+                -webkit-text-size-adjust: 100%;
+            }
+            .issep-guide.issep-guide a {
+                color: var(--color-indigo);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                text-decoration-thickness: 1px;
+            }
+            .issep-guide.issep-guide a:hover {
+                color: var(--color-plum);
+            }
+            .issep-guide.issep-guide strong {
+                font-weight: 500;
+                color: var(--color-indigo);
+            }
+            .issep-guide.issep-guide code {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                background: var(--color-indigo-tint);
+                border: 1px solid var(--color-indigo-line);
+                border-radius: 4px;
+                padding: 0 6px;
+            }
+
+            /* sidebar */
+            .issep-guide.issep-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--color-surface);
+                border-right: 1px solid var(--color-border);
+                overflow-y: auto;
+                z-index: 30;
+                display: flex;
+                flex-direction: column;
+            }
+            .issep-guide.issep-guide .brand {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                padding: 24px 20px 20px;
+                border-bottom: 1px solid var(--color-border);
+            }
+            .issep-guide.issep-guide .brand svg {
+                flex: none;
+                width: 44px;
+                height: 44px;
+            }
+            .issep-guide.issep-guide .brand-title {
+                font-family: var(--font-serif);
+                font-size: 1.25rem;
+                font-weight: 500;
+                line-height: 1.3;
+                color: var(--color-ink);
+            }
+            .issep-guide.issep-guide .brand-sub {
+                font-size: 1rem;
+                color: var(--color-ink-3);
+                line-height: 1.4;
+            }
+            .issep-guide.issep-guide .sidebar nav {
+                padding: 12px 12px 32px;
+            }
+            .issep-guide.issep-guide .sidebar nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .issep-guide.issep-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .issep-guide.issep-guide .sidebar nav li::before {
+                content: none;
+            }
+            .issep-guide.issep-guide .sidebar nav a {
+                display: block;
+                text-decoration: none;
+                color: var(--color-ink-2);
+                font-size: 1rem;
+                line-height: 1.5;
+                padding: 8px 12px;
+                border-radius: var(--radius-md);
+                border-left: 3px solid transparent;
+            }
+            .issep-guide.issep-guide .sidebar nav a:hover {
+                background: var(--color-indigo-tint);
+                color: var(--color-indigo);
+            }
+            .issep-guide.issep-guide .sidebar nav a.active {
+                background: var(--color-indigo-tint);
+                color: var(--color-indigo);
+                border-left-color: var(--color-gold);
+                font-weight: 500;
+            }
+            .issep-guide.issep-guide .nav-sub {
+                display: none;
+                margin: 4px 0 8px 14px;
+                border-left: 1px solid var(--color-border);
+            }
+            .issep-guide.issep-guide .nav-group.open > .nav-sub {
+                display: block;
+            }
+            .issep-guide.issep-guide .nav-sub a {
+                padding: 6px 10px;
+                color: var(--color-ink-3);
+            }
+
+            /* layout */
+            .issep-guide.issep-guide .layout {
+                display: block;
+            }
+            .issep-guide.issep-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 0 56px 80px;
+            }
+            .issep-guide.issep-guide .hero {
+                padding: 56px 0 32px;
+                border-bottom: 1px solid var(--color-border);
+                margin-bottom: 8px;
+            }
+            .issep-guide.issep-guide .hero .eyebrow {
+                display: inline-block;
+                font-size: 1rem;
+                color: var(--color-gold);
+                font-weight: 500;
+                letter-spacing: 0.08em;
+                margin-bottom: 12px;
+            }
+            .issep-guide.issep-guide .hero h1 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 2.25rem;
+                line-height: 1.35;
+                margin: 0 0 12px;
+                color: var(--color-ink);
+            }
+            .issep-guide.issep-guide .hero .subtitle {
+                font-size: 1.125rem;
+                color: var(--color-ink-2);
+                margin: 0 0 20px;
+            }
+            .issep-guide.issep-guide .hero .subtitle strong {
+                color: var(--color-ink-2);
+                font-weight: 400;
+            }
+            .issep-guide.issep-guide .meta {
+                list-style: none;
+                margin: 0 0 24px;
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .issep-guide.issep-guide .meta li {
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-md);
+                padding: 6px 14px;
+                font-size: 1rem;
+                line-height: 1.6;
+                margin: 0;
+            }
+            .issep-guide.issep-guide .meta li::before {
+                content: none;
+            }
+
+            .issep-guide.issep-guide section.section {
+                padding-top: 48px;
+            }
+            .issep-guide.issep-guide section.section > h2 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 1.75rem;
+                line-height: 1.4;
+                margin: 0 0 24px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--color-indigo);
+                color: var(--color-ink);
+            }
+            .issep-guide.issep-guide .prose h3 {
+                font-family: var(--font-serif);
+                font-weight: 500;
+                font-size: 1.375rem;
+                line-height: 1.45;
+                margin: 48px 0 16px;
+                color: var(--color-indigo);
+                padding-left: 14px;
+                border-left: 4px solid var(--color-gold);
+            }
+            .issep-guide.issep-guide .prose h4 {
+                font-weight: 500;
+                font-size: 1.0625rem;
+                line-height: 1.5;
+                margin: 32px 0 12px;
+                color: var(--color-ink);
+            }
+            .issep-guide.issep-guide .prose p {
+                margin: 0 0 16px;
+            }
+            .issep-guide.issep-guide .prose ul {
+                list-style: none;
+                margin: 0 0 20px;
+                padding: 0;
+            }
+            .issep-guide.issep-guide .prose ul > li {
+                position: relative;
+                padding-left: 22px;
+                margin: 6px 0;
+            }
+            .issep-guide.issep-guide .prose ul > li::before {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 0.8em;
+                width: 7px;
+                height: 7px;
+                background: var(--color-gold);
+                border-radius: 1px;
+            }
+            .issep-guide.issep-guide .prose ol {
+                margin: 0 0 20px;
+                padding-left: 1.6em;
+            }
+            .issep-guide.issep-guide .prose ol > li {
+                margin: 6px 0;
+            }
+
+            /* tables */
+            .issep-guide.issep-guide .table-wrap {
+                overflow-x: auto;
+                margin: 0 0 24px;
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                background: var(--color-surface);
+            }
+            .issep-guide.issep-guide .prose table {
+                border-collapse: collapse;
+                width: 100%;
+                font-size: 1rem;
+                line-height: 1.65;
+            }
+            .issep-guide.issep-guide .prose th, .issep-guide.issep-guide .prose td {
+                padding: 10px 16px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--color-border);
+            }
+            .issep-guide.issep-guide .prose th {
+                background: var(--color-indigo-tint);
+                color: var(--color-indigo);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .issep-guide.issep-guide .prose tbody tr:last-child td {
+                border-bottom: none;
+            }
+            .issep-guide.issep-guide .prose td {
+                min-width: 7em;
+            }
+            .issep-guide.issep-guide .prose td a {
+                word-break: break-all;
+            }
+
+            /* callouts */
+            .issep-guide.issep-guide .callout {
+                border: 1px solid var(--color-border);
+                border-left-width: 5px;
+                border-radius: var(--radius-lg);
+                padding: 16px 20px;
+                margin: 0 0 24px;
+                background: var(--color-surface);
+            }
+            .issep-guide.issep-guide .callout-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+            .issep-guide.issep-guide .callout-title svg {
+                width: 22px;
+                height: 22px;
+                flex: none;
+                stroke: currentColor;
+                fill: none;
+                stroke-width: 1.75;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .issep-guide.issep-guide .callout > p:last-child, .issep-guide.issep-guide .callout > ul:last-child {
+                margin-bottom: 0;
+            }
+            .issep-guide.issep-guide .callout p {
+                margin: 0 0 10px;
+            }
+            .issep-guide.issep-guide .callout ul {
+                margin-bottom: 0;
+            }
+            .issep-guide.issep-guide .callout.practice {
+                background: var(--color-gold-tint);
+                border-color: var(--color-gold-line);
+                border-left-color: var(--color-gold);
+            }
+            .issep-guide.issep-guide .callout.practice .callout-title {
+                color: var(--color-gold);
+            }
+            .issep-guide.issep-guide .callout.source {
+                background: var(--color-forest-tint);
+                border-color: var(--color-forest-line);
+                border-left-color: var(--color-forest);
+            }
+            .issep-guide.issep-guide .callout.source .callout-title {
+                color: var(--color-forest);
+            }
+            .issep-guide.issep-guide .callout.note {
+                background: var(--color-plum-tint);
+                border-color: var(--color-plum-line);
+                border-left-color: var(--color-plum);
+            }
+            .issep-guide.issep-guide .callout.note .callout-title {
+                color: var(--color-plum);
+            }
+            .issep-guide.issep-guide .callout.source strong {
+                color: var(--color-forest);
+            }
+            .issep-guide.issep-guide .callout.note strong {
+                color: var(--color-plum);
+            }
+            .issep-guide.issep-guide .callout.practice strong {
+                color: var(--color-ink);
+            }
+
+            /* formula blocks */
+            .issep-guide.issep-guide pre.formula {
+                margin: 0 0 24px;
+                padding: 16px 20px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-left: 5px solid var(--color-indigo);
+                border-radius: var(--radius-lg);
+                overflow-x: auto;
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                line-height: 1.8;
+                color: var(--color-ink);
+            }
+            .issep-guide.issep-guide pre.formula code {
+                background: transparent;
+                border: none;
+                padding: 0;
+                font-size: 1rem;
+            }
+
+            /* diagrams */
+            .issep-guide.issep-guide .diagram {
+                margin: 0 0 28px;
+                padding: 24px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                display: flex;
+                justify-content: center;
+                overflow-x: auto;
+            }
+            .issep-guide.issep-guide .diagram svg {
+                overflow: visible;
+                max-width: 100%;
+                height: auto;
+                flex: 0 1 auto;
+            }
+            .issep-guide.issep-guide .diagram .fallback {
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                color: var(--color-ink-2);
+            }
+
+            /* list overrides inside prose */
+            .issep-guide.issep-guide .prose ul.q-opts > li {
+                padding-left: 14px;
+            }
+            .issep-guide.issep-guide .prose ul.q-opts > li::before, .issep-guide.issep-guide .prose ul.checklist > li::before {
+                content: none;
+            }
+            .issep-guide.issep-guide .prose ul.checklist > li {
+                padding-left: 0;
+            }
+            .issep-guide.issep-guide .callout ul > li::before {
+                background: var(--color-gold);
+            }
+            .issep-guide.issep-guide input, .issep-guide.issep-guide button {
+                font: inherit;
+            }
+
+            /* quiz */
+            .issep-guide.issep-guide .quiz-list {
+                display: grid;
+                gap: 16px;
+                margin: 0 0 28px;
+            }
+            .issep-guide.issep-guide .quiz {
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                padding: 20px 24px;
+            }
+            .issep-guide.issep-guide .q-head {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+            }
+            .issep-guide.issep-guide .q-badge {
+                flex: none;
+                background: var(--color-indigo);
+                color: #fff;
+                border-radius: var(--radius-md);
+                padding: 2px 12px;
+                font-weight: 500;
+                line-height: 1.8;
+            }
+            .issep-guide.issep-guide .q-text {
+                margin: 0;
+                flex: 1;
+            }
+            .issep-guide.issep-guide .q-opts {
+                list-style: none;
+                margin: 14px 0 0;
+                padding: 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 8px;
+            }
+            .issep-guide.issep-guide .q-opts li {
+                margin: 0;
+                padding: 8px 14px;
+                background: var(--color-indigo-tint);
+                border: 1px solid var(--color-indigo-line);
+                border-radius: var(--radius-md);
+                line-height: 1.6;
+            }
+            .issep-guide.issep-guide .q-opts li::before {
+                content: none;
+            }
+            .issep-guide.issep-guide .quiz details {
+                margin-top: 14px;
+                border-top: 1px dashed var(--color-border-strong);
+                padding-top: 12px;
+            }
+            .issep-guide.issep-guide .quiz summary {
+                cursor: pointer;
+                color: var(--color-forest);
+                font-weight: 500;
+            }
+            .issep-guide.issep-guide .quiz details[open] summary {
+                margin-bottom: 8px;
+            }
+            .issep-guide.issep-guide .quiz .answer {
+                margin: 0;
+                padding: 10px 14px;
+                background: var(--color-forest-tint);
+                border: 1px solid var(--color-forest-line);
+                border-radius: var(--radius-md);
+            }
+
+            /* checklist */
+            .issep-guide.issep-guide .checklist {
+                list-style: none;
+                margin: 0 0 28px;
+                padding: 0;
+                display: grid;
+                gap: 10px;
+                counter-reset: chk;
+            }
+            .issep-guide.issep-guide .checklist li {
+                counter-increment: chk;
+                margin: 0;
+                padding: 0;
+            }
+            .issep-guide.issep-guide .checklist li::before {
+                content: none;
+            }
+            .issep-guide.issep-guide .checklist label {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 12px 16px;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                cursor: pointer;
+            }
+            .issep-guide.issep-guide .checklist label::before {
+                content: counter(chk);
+                flex: none;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--color-indigo-tint);
+                color: var(--color-indigo);
+                border: 1px solid var(--color-indigo-line);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .issep-guide.issep-guide .checklist input {
+                appearance: none;
+                -webkit-appearance: none;
+                flex: none;
+                order: 3;
+                margin-left: auto;
+                width: 24px;
+                height: 24px;
+                border: 2px solid var(--color-border-strong);
+                border-radius: 6px;
+                background: var(--color-surface);
+                cursor: pointer;
+                display: grid;
+                place-content: center;
+            }
+            .issep-guide.issep-guide .checklist input::after {
+                content: '';
+                width: 12px;
+                height: 7px;
+                border-left: 3px solid #fff;
+                border-bottom: 3px solid #fff;
+                transform: rotate(-45deg) translate(1px, -1px);
+                opacity: 0;
+            }
+            .issep-guide.issep-guide .checklist input:checked {
+                background: var(--color-green);
+                border-color: var(--color-green);
+            }
+            .issep-guide.issep-guide .checklist input:checked::after {
+                opacity: 1;
+            }
+            .issep-guide.issep-guide .checklist label:has(input:checked) {
+                background: var(--color-green-tint);
+                border-color: var(--color-green);
+                color: var(--color-ink-3);
+            }
+            .issep-guide.issep-guide .checklist label:has(input:checked) .chk-text {
+                text-decoration: line-through;
+            }
+            .issep-guide.issep-guide .checklist label:has(input:checked)::before {
+                background: var(--color-green);
+                color: #fff;
+                border-color: var(--color-green);
+            }
+            .issep-guide.issep-guide .chk-text {
+                flex: 1;
+            }
+
+            /* references */
+            .issep-guide.issep-guide .ref-list {
+                display: grid;
+                gap: 12px;
+                margin: 0 0 28px;
+            }
+            .issep-guide.issep-guide .ref-card {
+                display: flex;
+                gap: 16px;
+                align-items: flex-start;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                padding: 14px 18px;
+            }
+            .issep-guide.issep-guide .ref-badge {
+                flex: none;
+                min-width: 48px;
+                text-align: center;
+                background: var(--color-indigo);
+                color: #fff;
+                border-radius: var(--radius-md);
+                padding: 2px 10px;
+                font-weight: 500;
+                line-height: 1.8;
+            }
+            .issep-guide.issep-guide .ref-body {
+                flex: 1;
+                min-width: 0;
+            }
+            .issep-guide.issep-guide .ref-title {
+                margin: 0 0 4px;
+                font-weight: 500;
+            }
+            .issep-guide.issep-guide .ref-tag {
+                display: inline-block;
+                margin-left: 8px;
+                padding: 0 10px;
+                border-radius: 999px;
+                font-size: 1rem;
+                font-weight: 400;
+                border: 1px solid var(--color-border-strong);
+                color: var(--color-ink-2);
+                vertical-align: 1px;
+            }
+            .issep-guide.issep-guide .ref-tag.official {
+                background: var(--color-forest-tint);
+                border-color: var(--color-forest-line);
+                color: var(--color-forest);
+            }
+            .issep-guide.issep-guide .ref-tag.standard {
+                background: var(--color-indigo-tint);
+                border-color: var(--color-indigo-line);
+                color: var(--color-indigo);
+            }
+            .issep-guide.issep-guide .ref-tag.third {
+                background: var(--color-gold-tint);
+                border-color: var(--color-gold-line);
+                color: var(--color-gold);
+            }
+            .issep-guide.issep-guide .ref-url {
+                display: inline-flex;
+                align-items: flex-start;
+                gap: 6px;
+                word-break: break-all;
+                line-height: 1.6;
+            }
+            .issep-guide.issep-guide .ref-url svg {
+                width: 20px;
+                height: 20px;
+                flex: none;
+                margin-top: 3px;
+                stroke: currentColor;
+                fill: none;
+                stroke-width: 1.75;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .issep-guide.issep-guide a.cite {
+                text-decoration: none;
+                color: var(--color-forest);
+                font-weight: 500;
+            }
+            .issep-guide.issep-guide a.cite:hover {
+                text-decoration: underline;
+            }
+            .issep-guide.issep-guide .ref-card:target {
+                border-color: var(--color-gold);
+                background: var(--color-gold-tint);
+            }
+
+            .issep-guide.issep-guide .footer {
+                margin-top: 64px;
+                padding-top: 20px;
+                border-top: 1px solid var(--color-border);
+                color: var(--color-ink-3);
+                font-size: 1rem;
+            }
+
+            /* mobile drawer */
+            .issep-guide.issep-guide .menu-btn, .issep-guide.issep-guide .backdrop {
+                display: none;
+            }
+            @media (max-width: 1024px) {
+                .issep-guide.issep-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                }
+                .issep-guide.issep-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .issep-guide.issep-guide .guide-content {
+                    margin-left: 0;
+                    padding: 0 24px 96px;
+                }
+                .issep-guide.issep-guide .hero {
+                    padding-top: 32px;
+                }
+                .issep-guide.issep-guide .hero h1 {
+                    font-size: 1.75rem;
+                }
+                .issep-guide.issep-guide .menu-btn {
+                    display: flex;
+                    position: fixed;
+                    right: 20px;
+                    bottom: 20px;
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 50%;
+                    background: var(--color-indigo);
+                    color: #fff;
+                    border: none;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    z-index: 50;
+                }
+                .issep-guide.issep-guide .menu-btn svg {
+                    width: 26px;
+                    height: 26px;
+                    stroke: currentColor;
+                    fill: none;
+                    stroke-width: 2;
+                    stroke-linecap: round;
+                }
+                .issep-guide.issep-guide .backdrop {
+                    display: block;
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(22, 27, 38, 0.45);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.25s ease;
+                    z-index: 25;
+                }
+                .issep-guide.issep-guide .backdrop.show {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+            }
+            @media (max-width: 640px) {
+                .issep-guide.issep-guide .guide-content {
+                    padding: 0 16px 96px;
+                }
+                .issep-guide.issep-guide section.section > h2 {
+                    font-size: 1.5rem;
+                }
+                .issep-guide.issep-guide .ref-card {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                .issep-guide.issep-guide .q-head {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+            }
+        
+.issep-guide.issep-guide{font-size:16px;isolation:isolate;color-scheme:light;}
+.issep-guide.issep-guide .sidebar{top:var(--docs-header-height,64px);z-index:40;}
+.issep-guide.issep-guide .backdrop{z-index:35;}
+.issep-guide.issep-guide .menu-btn{z-index:50;}
+.issep-guide.issep-guide .diagram{display:block;}
+.issep-guide.issep-guide .mermaid-target{min-width:0;}
+.issep-guide.issep-guide .diagram-viewport{display:block;overflow-x:auto;}
+.issep-guide.issep-guide .diagram-viewport svg{display:block;max-width:none;margin-left:auto;margin-right:auto;}
+.issep-guide.issep-guide section[id],.issep-guide.issep-guide h3[id]{scroll-margin-top:88px;}
+.docs-main:has(.issep-guide){padding:0;}
+.docs-article:has(.issep-guide){max-width:none;}
+@media(max-width:1024px){.issep-guide.issep-guide .sidebar{visibility:hidden;}.issep-guide.issep-guide .sidebar.open{visibility:visible;}}
+@media(prefers-reduced-motion:reduce){.issep-guide.issep-guide *,.issep-guide.issep-guide{scroll-behavior:auto;transition:none;}}
+
+/* Prevent shared prose, brand and hover rules from replacing source ink. */
+.issep-guide.issep-guide .prose{color:var(--color-ink);max-width:none;margin:0;}
+.issep-guide.issep-guide .brand{font-size:1rem;font-weight:400;color:var(--color-ink);}
+.issep-guide.issep-guide code{color:inherit;}
+.issep-guide.issep-guide .prose tr:hover td{background-color:transparent;}
+
+.issep-guide.issep-guide .prose code{color:inherit;}
+.issep-guide.issep-guide .sidebar{visibility:visible;}
+@media (max-width: 1024px){.issep-guide.issep-guide .sidebar{visibility:hidden;}.issep-guide.issep-guide .sidebar.open{visibility:visible;}}
+
+.issep-guide.issep-guide .prose code{color:var(--color-ink);}
+
+/* Restore inherited source typography and browser checkbox defaults. */
+.issep-guide.issep-guide .hero .eyebrow{font-family:inherit;}
+.issep-guide.issep-guide input{color:revert;margin:revert;}
+
+/* Section 11.3: interactive answer cards; source wording remains in MDX. */
+.issep-guide.issep-guide .quiz-list{gap:24px;}
+.issep-guide.issep-guide .quiz{
+    padding:24px;
+    border:1px solid var(--color-indigo-line);
+    border-radius:16px;
+    background:var(--color-surface);
+    box-shadow:0 6px 24px rgba(46,63,114,.045);
+}
+.issep-guide.issep-guide .quiz .q-head{gap:16px;align-items:flex-start;}
+.issep-guide.issep-guide .quiz .q-badge{padding:5px 12px;background:var(--color-indigo-tint);color:var(--color-indigo);border:1px solid var(--color-indigo-line);border-radius:8px;white-space:nowrap;}
+.issep-guide.issep-guide .quiz .q-text{margin:0;line-height:1.9;}
+.issep-guide.issep-guide .quiz .q-opts{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0 0;padding:0;}
+.issep-guide.issep-guide .quiz .q-opts>li{margin:0;padding:0;border:0;border-radius:10px;background:transparent;min-width:0;}
+.issep-guide.issep-guide .quiz-choice{
+    position:relative;display:flex;align-items:center;width:100%;height:100%;min-height:56px;
+    margin:0;padding:14px 42px 14px 16px;border:1px solid var(--color-indigo-line);
+    border-radius:10px;background:var(--color-indigo-tint);color:var(--color-ink);
+    font:inherit;line-height:1.7;text-align:left;white-space:normal;overflow-wrap:anywhere;cursor:pointer;
+    transition:background-color .16s,border-color .16s,box-shadow .16s;
+}
+.issep-guide.issep-guide .quiz-choice:hover{border-color:var(--color-indigo);background:#e5eafa;}
+.issep-guide.issep-guide .quiz-choice:focus-visible{outline:3px solid var(--color-gold);outline-offset:3px;}
+.issep-guide.issep-guide .quiz-choice[data-choice-state="correct"]{border-color:var(--color-green);background:var(--color-green-tint);color:var(--color-green);}
+.issep-guide.issep-guide .quiz-choice[data-choice-state="incorrect"]{border-color:#a33147;background:#fff0f2;color:#8b2439;}
+.issep-guide.issep-guide .quiz-choice[aria-pressed="true"]{box-shadow:inset 0 0 0 1px currentColor;}
+.issep-guide.issep-guide .quiz-choice[data-choice-state="correct"]::after{content:'';position:absolute;right:18px;width:7px;height:13px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);}
+.issep-guide.issep-guide .quiz-choice[data-choice-state="incorrect"]::after{content:'×';position:absolute;right:14px;font-size:24px;line-height:1;}
+.issep-guide.issep-guide .quiz .quiz-feedback{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-weight:500;line-height:1.6;color:var(--color-green);}
+.issep-guide.issep-guide .quiz-feedback[data-result="incorrect"]{color:#8b2439;}
+.issep-guide.issep-guide .quiz-feedback svg{flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.issep-guide.issep-guide .quiz details{margin-top:18px;padding-top:16px;border-top:1px dashed var(--color-indigo-line);}
+.issep-guide.issep-guide .quiz summary{padding:4px 0;}
+.issep-guide.issep-guide .quiz .answer{padding:14px 16px;line-height:1.9;}
+@media (max-width:640px){
+    .issep-guide.issep-guide .quiz{padding:20px 16px;}
+    .issep-guide.issep-guide .quiz .q-head{gap:12px;}
+    .issep-guide.issep-guide .quiz .q-opts{grid-template-columns:minmax(0,1fr);}
+}
+@media (prefers-reduced-motion:reduce){.issep-guide.issep-guide .quiz-choice{transition:none;}}
