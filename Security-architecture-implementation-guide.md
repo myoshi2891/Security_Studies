@@ -474,6 +474,8 @@ const options = {
   user: { id: userHandle, name: "alice", displayName: "Alice" },
 
   // challenge は登録のたびにランダムに作る使い捨ての値。user handle を流用しない。
+  // サーバーはセッションごとに保存し、1 回だけ受け付けて破棄する。
+  // 期限切れの値や使用済みの値は拒否する。
   // 同じ値を使い回すと、過去の通信を再送する攻撃（リプレイ）を許してしまう。
   challenge: randomBytes(32),
 
@@ -489,7 +491,7 @@ const options = {
   },
 
   attestation: "none", // 認証器の機種情報は集めない。必要以上の情報を持たない方針
-  timeout: 60000,      // 60 秒で打ち切る。放置されたリクエストを残さないため
+  timeout: 60000,      // クライアント側へ渡す待ち時間の目安。サーバー側の challenge の有効期限は別に管理する
 };
 ```
 
@@ -534,6 +536,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class User:
     id: str
+    tenant_id: str  # 所属テナント。データへのアクセス範囲を決める
     roles: frozenset  # 権限は変更できない値にして、処理の途中で書き換わる事故を防ぐ
 
 class Forbidden(Exception):
@@ -545,6 +548,11 @@ def get_order(user: User, order_id: str, repo) -> dict:
     # 存在しない場合と権限がない場合で、同じ結果を返す。
     # 区別して返すと「その ID の注文は存在する」という情報が攻撃者に伝わるため。
     if order is None:
+        raise Forbidden()
+
+    # サポート担当を含め、アクセスは自テナントの注文に限る。
+    # 他テナントの注文にも、存在しない場合と同じ結果を返す。
+    if order["tenant_id"] != user.tenant_id:
         raise Forbidden()
 
     # 持ち主本人か、明示的に許可された役割のときだけ通す（拒否が初期値）。
@@ -674,7 +682,7 @@ CISA の Zero Trust Maturity Model（ZTMM）v2.0（2023年4月公開）は、5 �
 | 通信中（In Transit） | TLS 1.3 を使い、社内通信も暗号化する | 証明書の期限切れと設定の誤りに注意する |
 | 保存中（At Rest） | KMS（鍵管理サービス）で鍵を管理し、データはその鍵で暗号化する | 鍵とデータを同じ場所に置かない |
 | 秘密情報（Secrets） | パスワード、API キー、鍵は専用の保管庫に置き、コードや Git に入れない | 漏れたら即座に失効させて再発行する |
-| 鍵の寿命 | 定期的に更新し、更新の手順を自動化する | 更新できない鍵は、漏れたときに交換できない鍵 |
+| 鍵の寿命 | 定期的に更新し、更新の手順を自動化する。AES-GCM では暗号化回数の上限に達する前にも更新する（7.2 参照） | 更新できない鍵は、漏れたときに交換できない鍵 |
 
 #### 7.2 コード例：暗号化するときの注意点
 
@@ -689,6 +697,8 @@ def encrypt(data_key: bytes, plaintext: bytes, context: bytes) -> bytes:
 
     # nonce（使い捨ての値）は毎回ランダムに作る。
     # 同じ鍵で同じ nonce を再利用すると、暗号が破られるため絶対に避ける。
+    # ランダムな 96 ビット nonce では nonce の衝突を避けるため、同じ鍵での暗号化は
+    # 約 2^32 回（約 43 億回）までに制限し、上限に達する前に鍵を更新する（NIST SP 800-38D）。
     nonce = os.urandom(12)
 
     # context（関連データ）は暗号文に結び付けて検証される。
@@ -719,7 +729,15 @@ NIST は 2024年8月に、最初のポスト量子暗号の標準を最終化し
 | 証明書の署名 | ML-DSA を使う証明書は、主要ブラウザが標準で扱う段階にはまだなく、鍵共有より移行が難しい | 【二次】 |
 | 移行の道筋 | NIST IR 8547 が、従来の公開鍵暗号を段階的に廃止する道筋を示す。CSRC 上で最終版が確認できる | 【一次】 |
 
-NIST IR 8547 のドラフトでは、RSA や楕円曲線暗号を 2030年に非推奨、2035年に使用禁止とする道筋が示されていました。最終版の日付と記述は、必ず CSRC の原典で確認してください。
+NIST IR 8547 の 2024年11月のドラフトと 2026年10月の最終版では、期限の対象範囲が異なります。詳細は必ず CSRC の原典で確認してください。
+
+| 版 | 対象 | 非推奨 | 使用禁止 |
+|----|------|--------|----------|
+| ドラフト（2024年11月） | 112 ビット強度のパラメータ | 2030年より後 | 2035年より後 |
+| ドラフト（2024年11月） | 128 ビット以上の強度のパラメータ | 期限の記載なし | 2035年より後 |
+| 最終版（2026年10月） | 量子計算機に脆弱な公開鍵暗号全般（RSA、楕円曲線暗号、DH など。112 ビット以上の全強度） | 2030年より後 | 2035年より後 |
+
+IR 8547 最終版によれば、米国連邦機関の高価値資産（High Value Assets）と高影響度システムには、EO 14412 と OMB M-26-15 にもとづくより早い期限が適用されます。鍵共有は 2030年12月31日まで、デジタル署名は 2031年12月31日までに PQC へ移行します。
 
 この図は、PQC への移行を、何から手を付けるかの順に表しています。
 
@@ -1285,6 +1303,7 @@ gantt
 | OWASP SSRF Prevention Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html |
 | IPA 情報セキュリティ10大脅威 2026（プレス発表） | https://www.ipa.go.jp/pressrelease/2025/press20260129.html |
 | NIST IR 8547 Transition to Post-Quantum Cryptography Standards | https://csrc.nist.gov/pubs/ir/8547/final |
+| NIST SP 800-38D Recommendation for Block Cipher Modes of Operation: GCM and GMAC | https://csrc.nist.gov/pubs/sp/800/38/d/final |
 | NIST SP 800-63-4 Digital Identity Guidelines | https://csrc.nist.gov/pubs/sp/800/63/4/final |
 | NIST SP 800-207 Zero Trust Architecture ※ | https://csrc.nist.gov/pubs/sp/800/207/final |
 | NIST Cybersecurity Framework 2.0 ※ | https://www.nist.gov/cyberframework |
