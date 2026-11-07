@@ -1,6 +1,7 @@
 import { afterEach, expect, test } from 'bun:test';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { createElement as h } from 'react';
+import { QuizCard } from './QuizCard';
 import { evaluatedPage, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
 import copy from './quiz-copy.json';
 
@@ -22,6 +23,8 @@ test('server-rendered questions preserve every original character and offer fort
  const d=await renderedPage();const cards=[...d.querySelectorAll('.quiz')];expect(cards).toHaveLength(10);
  cards.forEach(assertCopy);expect(d.querySelectorAll('.q-opts button[type="button"]')).toHaveLength(40);
  expect(d.querySelectorAll('.quiz-feedback')).toHaveLength(0);
+ const regions=[...d.querySelectorAll('.quiz [role="status"]')];expect(regions).toHaveLength(10);
+ for(const region of regions)expect(region.textContent).toBe('');
 });
 for(let i=0;i<10;i++)test(`question ${i+1}: every choice reports its correct result while all original wording remains unchanged`, async () => {
  const v=await mounted();const cards=[...v.container.querySelectorAll('.quiz')];const card=cards[i];
@@ -35,7 +38,7 @@ for(let i=0;i<10;i++)test(`question ${i+1}: every choice reports its correct res
   expect(buttons.filter(b=>b.getAttribute('aria-pressed')==='true')).toHaveLength(1);
   expect(buttons[key(i).charCodeAt(0)-65]).toHaveAttribute('data-choice-state','correct');
   assertCopy(card,i);
-  expect(cards.filter(c=>c.querySelector('[role="status"]'))).toHaveLength(1);
+  expect(cards.filter(c=>c.querySelector('.quiz-feedback'))).toHaveLength(1);
  }
 });
 test('answering two questions maintains independent choices and announces each result through its own description', async () => {
@@ -44,7 +47,7 @@ test('answering two questions maintains independent choices and announces each r
  const status=cards.slice(0,2).map(c=>c.querySelector('[role="status"]')!);expect(new Set(status.map(e=>e.id)).size).toBe(2);
  for(let i=0;i<2;i++)expect(cards[i].querySelector('button[aria-pressed="true"]')).toHaveAttribute('aria-describedby',status[i].id);
  for(const button of v.container.querySelectorAll('button[aria-pressed="false"]'))expect(button).not.toHaveAttribute('aria-describedby');
- expect(cards[2].querySelector('[role="status"]')).toBeNull();
+ expect(cards[2].querySelector('[role="status"]')).toBeEmptyDOMElement();
 });
 test('the original answer disclosure can still be toggled after choosing and reopens for a new choice', async () => {
  const v=await mounted();const c=v.container.querySelector('.quiz')!;const b=c.querySelectorAll('button');expect(b).toHaveLength(4);
@@ -54,6 +57,44 @@ test('the original answer disclosure can still be toggled after choosing and reo
  assertCopy(c,0);
 });
 
+/** Render one card from fixed copy so these specs run without the archived source. */
+function fixture() {
+ const view=render(h(QuizCard,{number:3,correctAnswer:'B',children:[
+  h('ul',{className:'q-opts',key:'options'},h('li',{},'A. 誤'),h('li',{},'B. 正')),
+  h('details',{key:'answer'},h('summary',{},'解答を見る'),h('div',{className:'answer'},'B')),
+ ]}));
+ return {view,card:view.container.querySelector('.quiz')!,buttons:[...view.container.querySelectorAll('button')]};
+}
+test('the quiz wrapper is a group named by its existing label and keeps its answer state', () => {
+ const {view,card,buttons}=fixture();
+ expect(view.getByRole('group',{name:'問 3'})).toBe(card as HTMLElement);
+ expect(card).not.toHaveAttribute('data-answer-state');
+ fireEvent.click(buttons[1]);expect(card).toHaveAttribute('data-answer-state','correct');
+ fireEvent.click(buttons[0]);expect(card).toHaveAttribute('data-answer-state','incorrect');
+});
+test('the status region exists empty before any answer and the same node receives each result', () => {
+ const {card,buttons}=fixture();const region=card.querySelector('[role="status"]')!;
+ expect(region).toBeEmptyDOMElement();expect(region.id).not.toBe('');expect(card.querySelector('.quiz-feedback')).toBeNull();
+ for(const b of buttons)expect(b).not.toHaveAttribute('aria-describedby');
+ fireEvent.click(buttons[0]);
+ expect(card.querySelector('[role="status"]')).toBe(region);expect(region.textContent).toBe('不正解');
+ expect(region.querySelector('.quiz-feedback')).toHaveAttribute('data-result','incorrect');
+ expect(buttons[0]).toHaveAttribute('aria-describedby',region.id);
+ fireEvent.click(buttons[1]);
+ expect(card.querySelector('[role="status"]')).toBe(region);expect(region.textContent).toBe('正解');
+ expect(region.querySelectorAll('.quiz-feedback')).toHaveLength(1);
+ expect(buttons[0]).not.toHaveAttribute('aria-describedby');expect(buttons[1]).toHaveAttribute('aria-describedby',region.id);
+});
+test('source fidelity ignores only the group role on a quiz and an empty status region', async () => {
+ const { canonical }=await import('./fidelity-helpers');
+ const original=document.createElement('div'),enhanced=document.createElement('div');
+ original.innerHTML='<div class="quiz"><p>問</p></div>';
+ enhanced.innerHTML='<div class="quiz" role="group" aria-label="問 1"><p>問</p><div class="quiz-status" role="status" id="x"></div></div>';
+ expect(canonical(enhanced.firstChild!)).toEqual(canonical(original.firstChild!));
+ enhanced.querySelector('.quiz-status')!.textContent='追加';expect(canonical(enhanced.firstChild!)).not.toEqual(canonical(original.firstChild!));
+ enhanced.querySelector('.quiz-status')!.remove();enhanced.querySelector('.quiz')!.setAttribute('role','alert');expect(canonical(enhanced.firstChild!)).not.toEqual(canonical(original.firstChild!));
+ enhanced.querySelector('.quiz')!.setAttribute('role','group');enhanced.querySelector('.quiz')!.className='other';original.querySelector('.quiz')!.className='other';expect(canonical(enhanced.firstChild!)).not.toEqual(canonical(original.firstChild!));
+});
 test('source fidelity adapts only a single choice button and still detects added or changed wording', async () => {
  const { canonical }=await import('./fidelity-helpers');
  const original=document.createElement('div'),enhanced=document.createElement('div');
