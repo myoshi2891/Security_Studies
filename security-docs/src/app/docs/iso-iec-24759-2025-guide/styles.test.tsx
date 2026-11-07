@@ -1,6 +1,7 @@
 import {expect,test} from 'bun:test';
 import {Window} from 'happy-dom';
 import {readFileSync} from 'node:fs';
+import {createRequire} from 'node:module';
 import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
 const guideCss=()=>readFileSync(new URL('./guide.css',import.meta.url),'utf8');
@@ -26,7 +27,7 @@ async function compareCascade(width:number,theme:string,hover=false){
  try{
   for(const w of [actual,original]){w.happyDOM.setWindowSize({width,height:900});expect(w.matchMedia('(prefers-color-scheme: dark)').matches).toBe(theme==='dark');}
   // 原本は実行時に atom-one-dark.css と hljs クラスを読み込むため、比較元にも同じ条件を与える
-  original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}pre{font-family:monospace}'+comparable(readFileSync(new URL('../../../../node_modules/highlight.js/styles/atom-one-dark.css',import.meta.url),'utf8')+sourceCss.toString(),width)+'</style>';
+  original.document.head.innerHTML='<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}pre{font-family:monospace}'+comparable(readFileSync(createRequire(import.meta.url).resolve('highlight.js/styles/atom-one-dark.css'),'utf8')+sourceCss.toString(),width)+'</style>';
   original.document.body.innerHTML=sourceDocument.body.innerHTML;
   for(const code of original.document.querySelectorAll('pre code'))code.classList.add('hljs');
   actual.document.head.innerHTML='<style>ul,ol{list-style:none;margin:0;padding:0}'+comparable(sharedCss()+'\n'+guideCss(),width)+'</style>';
