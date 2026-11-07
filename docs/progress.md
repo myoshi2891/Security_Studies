@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-07（ISSEP目次のクリック選択維持・SCSガイドのレビュー修正）
+> **最終更新**: 2026-11-07（ISSEP目次・11.3回答UI・SCS/Security Architectureガイドのレビュー修正）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2746成功 / 0 skip / 0失敗** | 全体338ファイル・574,299 expect。ISSEP専用98件を含む。 |
+| テストケース総数 | **2754成功 / 0 skip / 0失敗** | 全体338ファイル・574,338 expect。ISSEP専用106件を含む。 |
 | テストファイル数 | **338ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **134/134 (100%)** | 従来133＋QuizCard。純粋データ・MDXは分母外。全338テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -461,6 +461,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-1107-A11Y | **ISSEP目次・回答UIと2ガイドのレビュー修正** — ページ内検索で目次の固定を解除（Green Red `14e5f87` → Green `b3c4f36`）。クイズに `role="group"` と常設の状態領域を追加（Red `0e06dff` → Green `05ad07a`）。SCSガイド6件・Security Architectureガイド6件を一次情報に合わせて修正。全体2754件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
 | REVIEW-1107-SCS | **ISSEP目次の選択維持とSCSガイドのレビュー修正** — クリックした小節を読者の次のスクロールまで維持（Red `9f957d2` → Green `c676049`）。Docstring 7件を追加。SCSガイド7件を一次情報に合わせて修正（`f1fc85c`）。全体2746件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
 | ISSEP-QUIZ | **11.3回答UI改善** — 原文を保持した即時判定・答え直し・独立状態・解説表示。専用15件とChrome4条件成功、目視はユーザー担当。 | 2026-11-07 |
 | MIG-ISSEP | **ISSEP移行・原本アーカイブ・検証完了** — 13章/74表/22図/10解答/6チェックと原本装飾を保持。専用77件・Chrome10条件成功。目視はユーザー担当・未確認。 | 2026-11-06 |
@@ -1524,4 +1525,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 2026-11-07 レビュー指摘対応: ISSEP目次で、クリックした小節が移動後の監視で次の見出しへ置き換わる不具合を修正（Red 9f957d2 → Green c676049）。読者のwheel・pointerdown・スクロールキーで監視の選択へ戻す。同じ監視設定はISSAP/CGRC/SSCPにもあるが今回は未変更。不足していたDocstring 7件を追加（87db84b）。SCSガイドの7件をIPA SCS-410/SCS-400、npm、pip、Bunの一次情報に合わせて修正（f1fc85c）。全体2746成功/0skip/0失敗（338ファイル、574,299 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。同期前HEAD `f1fc85c`。
 
-再開プロンプト: 「dev の `0e0c3e5` 以降から再開。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2746件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
+2026-11-07 レビュー指摘対応（2回目）: ISSEP目次で、ページ内検索のジャンプが固定を解除するよう修正（Red 14e5f87 → Green b3c4f36）。ページ内検索はscrollしか発生させないため、ジャンプ完了後に固定中の見出しが画面上で動いたら解除し、監視の選択へ戻す。目次自身の移動とスクロールアンカリングでは維持する。wheel・pointerdown・スクロールキーの解除は変更なし。QuizCardは全10問に role="group" を付け、role="status" の領域を回答前から常設（Red 0e06dff → Green 05ad07a）。原本比較は `.quiz` の group と空の `.quiz-status` だけを許容し、文字の追加は検出する。SCSガイド6件をIPA SCS-410/SCS-620・詳細情報ページに合わせて修正（7d6bde6）。Security Architectureガイド6件をGitHub Docs・Renovate Docs・OWASP SSRF Prevention Cheat Sheet等に合わせて修正（d4ca1df）。is_allowed のコード例は実行して8入力を確認。全体2754成功/0skip/0失敗（338ファイル、574,338 expect）。npm test・npm run lint・npm run types:check成功。Chrome 1440/375pxで window.find のジャンプ解除と追従再開、空の状態領域の高さ0、quiz.browser.mjs 4条件、runtime.browser.mjsの17構造SHAが成功。styles.browser.mjsは未実行。ビルド禁止/未実行、目視はユーザー担当/未確認。同期前HEAD `05ad07a`。
+
+再開プロンプト: 「dev の `05ad07a` 以降から再開。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2754件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
