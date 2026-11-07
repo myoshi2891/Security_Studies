@@ -454,17 +454,26 @@ flowchart TD
 次の例は、Passkeys の登録時にサーバーがブラウザへ渡す設定です。ユーザー確認（生体認証や PIN）を必須にし、パスワードのいらないログインを成り立たせる目的で、各項目を指定します。
 
 ```javascript
+// アカウントの user handle を返す。未設定なら 1 度だけ生成して保存する。
+async function getOrCreateUserHandle(account) {
+  if (account.webauthnUserHandle) return account.webauthnUserHandle;
+  // 同時に登録されても値が 1 つに定まるよう、未設定のときだけ保存し、保存された値を返す。
+  return saveUserHandleIfAbsent(account.id, randomBytes(32));
+}
+
 // WebAuthn 登録オプションの例（サーバー側で生成してブラウザへ渡す）
+const userHandle = await getOrCreateUserHandle(account);
 const options = {
   // rp は Relying Party。自分のサービスのこと。id はドメイン名で、
   // この値が認証を「正しいサイト」に結び付ける。偽サイトでは使えなくなる。
   rp: { name: "Example Service", id: "example.com" },
 
-  // user.id は個人情報（メールアドレス等）を入れず、ランダムな値にする。
+  // user.id（user handle）は個人情報（メールアドレス等）を入れず、ランダムな値にする。
   // 個人情報を入れると、認証器の側に個人情報が残るため。
-  user: { id: randomBytes(32), name: "alice", displayName: "Alice" },
+  // アカウントごとに 1 度だけ生成して保存し、2 台目以降の登録でも同じ値を使う。
+  user: { id: userHandle, name: "alice", displayName: "Alice" },
 
-  // challenge は毎回ランダムに作る使い捨ての値。
+  // challenge は登録のたびにランダムに作る使い捨ての値。user handle を流用しない。
   // 同じ値を使い回すと、過去の通信を再送する攻撃（リプレイ）を許してしまう。
   challenge: randomBytes(32),
 
@@ -635,8 +644,10 @@ CISA の Zero Trust Maturity Model（ZTMM）v2.0（2023年4月公開）は、5 �
 
 1. ネットワーク内の「全員が全部に届く」通信を 1 つ見つけ、必要な通信だけを許可する設定に変える
 2. サービス間の通信を mTLS か、短命のトークンによる認証にする
-3. インターネットへ出る通信（Egress）を許可リスト方式にする。これは、サーバーを踏み台にした外部への通信や、SSRF（サーバーに内部の宛先へ通信させる攻撃）の被害を減らす効果があります
-4. 管理画面や運用ツールは VPN 頼みにせず、ID と端末の状態で毎回確認するアクセス経路に置き換える
+3. インターネットへ出る通信（Egress）を許可リスト方式にする。これは、サーバーを踏み台にした外部への通信を減らす効果があります
+4. 内部サービスとメタデータエンドポイント（クラウドの認証情報を返す `169.254.169.254` など）への通信は、Egress の許可リストとは別に、ネットワーク側で遮断する。インターネット向けの許可リストだけでは、SSRF（サーバーに内部の宛先へ通信させる攻撃）で狙われる内部の宛先を守れません
+5. 利用者が指定した URL を取得するアプリでは、アプリ側でも URL を検証する。宛先が固定できるなら許可リストと照合し、名前解決後の IP アドレスも確認して、検証した IP アドレスへ接続します。リダイレクトの自動追跡は無効にします（OWASP SSRF Prevention Cheat Sheet）
+6. 管理画面や運用ツールは VPN 頼みにせず、ID と端末の状態で毎回確認するアクセス経路に置き換える
 
 📖 このセクションで登場した用語
 - PDP / PEP：許可を判断する場所と、その判断を強制する場所
@@ -804,7 +815,7 @@ updates:
     schedule:
       interval: "daily"
     cooldown:
-      default-days: 7   # 公開から 7 日たったバージョンだけを更新の対象にする
+      default-days: 7   # 通常のバージョン更新は、公開から 7 日たった版だけを対象にする
 ```
 
 ```json
@@ -813,6 +824,8 @@ updates:
   "minimumReleaseAge": "7 days"
 }
 ```
+
+⚠ 7 日の待機が効くのは通常のバージョン更新だけです。Dependabot のセキュリティ更新には `cooldown` が適用されません。Renovate のセキュリティ更新も、既定では `minimumReleaseAge` を適用しません。そのため、セキュリティ更新では公開直後の版が提案されることがあります。
 
 上の 2 つ目は Renovate の設定です。uv（Python のパッケージ管理）では `--exclude-newer=P7D` のように相対期間を指定する機能が使えると、Woodruff の続報で紹介されています。設定名は更新されることがあるため、各ツールの公式ドキュメントで最新の書き方を確認してください。
 
@@ -899,8 +912,8 @@ flowchart TD
     QC{"C 状態変更か外部通信ができるか"}
     Count{"A と B と C がすべて当てはまるか"}
     Ok["設計を採用 ログと権限の最小化は必須"]
-    Fix["いずれか 1 つを外す 例 外部通信を禁止 読み取り専用にする"]
-    Human["外せない場合は 破壊的操作と外部送信に人間の承認を必須にする"]
+    Fix["いずれか 1 つを外す 例 C を外すなら状態変更と外部通信の両方を禁止する"]
+    Human["外せない場合は 状態変更と外部送信に人間の承認を必須にする"]
     Start --> QA
     QA --> QB
     QB --> QC
@@ -913,7 +926,7 @@ flowchart TD
 各ノードの意味：
 - A、B、C の 3 つの確認：Rule of Two の 3 性質をそれぞれ確認する
 - 「すべて当てはまるか」：3 つが同時に成立すると、プロンプトインジェクション 1 回で漏えいにつながる
-- 「いずれか 1 つを外す」：最も確実な対策。例として、メールを読むエージェントには送信権限を与えない
+- 「いずれか 1 つを外す」：最も確実な対策。例として、メールを読むエージェントには、送信も含めて状態を変更する権限を与えず、外部通信も禁止する
 - 人間の承認：外せない場合の最後の砦。承認画面で内容を省略せず見せる
 
 #### 9.3 防御フィルターだけに頼らない
@@ -1033,14 +1046,24 @@ OWASP A10:2025 の Mishandling of Exceptional Conditions は、エラーや想�
 
 ```python
 def is_allowed(user, action, policy_client) -> bool:
+    # 応答の約束：check は {"allowed": True} または {"allowed": False} を返す。
     try:
-        return policy_client.check(user, action)
+        decision = policy_client.check(user, action)
     except Exception:
-        # ポリシーサーバーに接続できない、応答が壊れているなどの場合でも
+        # ポリシーサーバーに接続できないなどの場合でも
         # 「許可」にしない。判断できない状態は「拒否」に倒す（Fail Closed）。
         # 内部情報を含む例外の詳細は、利用者には返さず、ログにだけ残す。
         log_internal_error()
         return False
+
+    # 約束どおりの形でない応答は、壊れた応答として「拒否」に倒す。
+    if not isinstance(decision, dict) or not isinstance(decision.get("allowed"), bool):
+        log_internal_error()
+        return False
+
+    # 応答をそのまま真偽値として扱わない。{"allowed": False} も空でない辞書なので、
+    # そのまま返すと呼び出し側の if 文では「許可」と判定されてしまう。
+    return decision["allowed"]
 ```
 
 ⚠ 逆に、停止が人命や重要な業務に直結するシステムでは、「安全側」が何かを、事前に決めておく必要があります（Fail Safe の考え方）。設計時に、業務の責任者と一緒に決めます。
@@ -1109,7 +1132,7 @@ def is_allowed(user, action, policy_client) -> bool:
 | 8 | ロックファイルの固定、クールダウン、CI の最小権限を設定した | ☐ |
 | 8 | 重要なサービスで SBOM を生成している | ☐ |
 | 9 | すべての AI エージェントで Rule of Two を確認した | ☐ |
-| 9 | 破壊的操作と外部送信に人間の承認がある | ☐ |
+| 9 | 状態変更と外部送信に人間の承認がある | ☐ |
 | 10 | 重要なログを集め、警告と対応手順がある | ☐ |
 | 10 | バックアップが書き換え不能で、復元を訓練している | ☐ |
 | 11 | 指標を決め、毎月確認している | ☐ |
@@ -1259,6 +1282,7 @@ gantt
 | OWASP Top 10:2025（日本語） | https://owasp.org/Top10/2025/ja/ |
 | OWASP A03:2025 Software Supply Chain Failures | https://top10.owasp.org/2025/A03_2025-Software_Supply_Chain_Failures/ |
 | OWASP Threat Modeling Project | https://owasp.org/www-project-threat-modeling/ |
+| OWASP SSRF Prevention Cheat Sheet | https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html |
 | IPA 情報セキュリティ10大脅威 2026（プレス発表） | https://www.ipa.go.jp/pressrelease/2025/press20260129.html |
 | NIST IR 8547 Transition to Post-Quantum Cryptography Standards | https://csrc.nist.gov/pubs/ir/8547/final |
 | NIST SP 800-63-4 Digital Identity Guidelines | https://csrc.nist.gov/pubs/sp/800/63/4/final |
