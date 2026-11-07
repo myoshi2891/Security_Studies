@@ -454,6 +454,9 @@ flowchart TD
 次の例は、Passkeys の登録時にサーバーがブラウザへ渡す設定です。ユーザー確認（生体認証や PIN）を必須にし、パスワードのいらないログインを成り立たせる目的で、各項目を指定します。
 
 ```javascript
+// バイト列を base64url 文字列にする。JSON にはバイト列をそのまま入れられないため。
+const toBase64Url = (bytes) => Buffer.from(bytes).toString("base64url");
+
 // アカウントの user handle を返す。未設定なら 1 度だけ生成して保存する。
 async function getOrCreateUserHandle(account) {
   if (account.webauthnUserHandle) return account.webauthnUserHandle;
@@ -461,7 +464,7 @@ async function getOrCreateUserHandle(account) {
   return saveUserHandleIfAbsent(account.id, randomBytes(32));
 }
 
-// WebAuthn 登録オプションの例（サーバー側で生成してブラウザへ渡す）
+// WebAuthn 登録オプションの例（サーバー側で生成し、JSON でブラウザへ渡す）
 const userHandle = await getOrCreateUserHandle(account);
 const options = {
   // rp は Relying Party。自分のサービスのこと。id はドメイン名で、
@@ -471,13 +474,15 @@ const options = {
   // user.id（user handle）は個人情報（メールアドレス等）を入れず、ランダムな値にする。
   // 個人情報を入れると、認証器の側に個人情報が残るため。
   // アカウントごとに 1 度だけ生成して保存し、2 台目以降の登録でも同じ値を使う。
-  user: { id: userHandle, name: "alice", displayName: "Alice" },
+  // 保存するのはバイト列のままで、JSON にするときだけ base64url へ変換する。
+  user: { id: toBase64Url(userHandle), name: "alice", displayName: "Alice" },
 
   // challenge は登録のたびにランダムに作る使い捨ての値。user handle を流用しない。
   // サーバーはセッションごとに保存し、1 回だけ受け付けて破棄する。
   // 期限切れの値や使用済みの値は拒否する。
   // 同じ値を使い回すと、過去の通信を再送する攻撃（リプレイ）を許してしまう。
-  challenge: randomBytes(32),
+  // セッションにはこの base64url 文字列を保存し、検証時に clientDataJSON の challenge と完全一致で比べる。
+  challenge: toBase64Url(randomBytes(32)),
 
   // 許可する署名アルゴリズム。-7 は ES256、-257 は RS256。
   pubKeyCredParams: [
@@ -487,9 +492,10 @@ const options = {
 
   // アカウントに登録済みの資格情報 ID を渡す。同じ認証器が、登録済みの Passkey を
   // 置き換えたり、重複して登録したりしないようにする。
+  // listCredentialIds はバイト列の ID を返す想定。
   excludeCredentials: (await listCredentialIds(account)).map((id) => ({
     type: "public-key",
-    id,
+    id: toBase64Url(id),
   })),
 
   authenticatorSelection: {
@@ -500,6 +506,40 @@ const options = {
   attestation: "none", // 認証器の機種情報は集めない。必要以上の情報を持たない方針
   timeout: 60000,      // クライアント側へ渡す待ち時間の目安。サーバー側の challenge の有効期限は別に管理する
 };
+```
+
+ブラウザの登録 API が受け取る challenge、user.id、資格情報 ID は、文字列ではなくバイト列（BufferSource）です。そのため、ブラウザ側で JSON の base64url 文字列を元に戻してから `navigator.credentials.create()` を呼びます。対応ブラウザでは `PublicKeyCredential.parseCreationOptionsFromJSON()` がこの変換を行います。
+
+```javascript
+// base64url 文字列をバイト列に戻す。
+function fromBase64Url(value) {
+  const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, "=");
+  return Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
+}
+
+// サーバーの JSON を、登録 API に渡せる形へ変換する。
+function toCreationOptions(json) {
+  if (typeof PublicKeyCredential.parseCreationOptionsFromJSON === "function") {
+    return PublicKeyCredential.parseCreationOptionsFromJSON(json);
+  }
+  // 未対応のブラウザでは、バイト列の項目だけを手動で戻す。
+  return {
+    ...json,
+    challenge: fromBase64Url(json.challenge),
+    user: { ...json.user, id: fromBase64Url(json.user.id) },
+    excludeCredentials: (json.excludeCredentials ?? []).map((credential) => ({
+      ...credential,
+      id: fromBase64Url(credential.id),
+    })),
+  };
+}
+
+const response = await fetch("/webauthn/registration/options", { method: "POST" });
+if (!response.ok) throw new Error("登録オプションを取得できませんでした");
+
+const publicKey = toCreationOptions(await response.json());
+const credential = await navigator.credentials.create({ publicKey });
 ```
 
 ⚠ `userVerification: "required"` は登録時だけでは足りません。パスワードのいらないログインでは、認証リクエストにも同じ設定を指定します。さらにサーバーは、受け取った assertion の署名を検証したうえで、署名対象の authenticatorData にある UV フラグ（ユーザー確認済みを示す値）が立っていることを確認し、立っていなければ拒否します。ブラウザへ渡す設定だけでは、本人確認が実施された証拠にはなりません。
@@ -519,6 +559,8 @@ const options = {
 - フィッシング：本物そっくりの偽サイトで認証情報を入力させる詐欺
 - Passkeys：パスワードの代わりに、端末内の秘密鍵で認証する仕組み
 - WebAuthn：ブラウザから Passkeys やセキュリティキーを使うための標準
+- base64url：バイト列を URL でも安全な文字だけで表す方式
+- BufferSource：ブラウザの API がバイト列を受け取るときの型
 - origin：ウェブサイトの識別単位（プロトコル、ドメイン、ポートの組）
 - MFA 疲労攻撃：承認の通知を大量に送り、うんざりした本人に承認させる手口
 - ワークロード ID：人ではなく、プログラムやサービスに与える ID
