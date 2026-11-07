@@ -8,7 +8,7 @@ import { inventory, renderedPage, evaluatedPage, hash, canonical } from './fidel
 
 test('complete source counts, all 76 unique IDs, internal links and safe attributes are preserved', async () => {
  const d=await renderedPage();for(const [s,c] of Object.entries(inventory.counts))expect(d.querySelectorAll(s).length,s).toBe(c);
- expect([...d.querySelectorAll('[id]')].map(e=>e.id).sort()).toEqual([...inventory.ids].sort());
+ expect([...d.querySelectorAll('[id]:not(.quiz-status)')].map(e=>e.id).sort()).toEqual([...inventory.ids].sort());
  for(const a of d.querySelectorAll('a[href^="#"]'))expect(d.getElementById(a.getAttribute('href')!.slice(1))).not.toBeNull();
  expect(d.querySelectorAll('script,iframe,form,[onclick],a[href^="javascript:"]')).toHaveLength(0);
 });

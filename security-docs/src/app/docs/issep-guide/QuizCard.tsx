@@ -17,15 +17,18 @@ export function QuizCard({ number, correctAnswer, children }: {
   const [expanded, setExpanded] = useState(false);
   const feedbackId = `issep-quiz-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const correct = selected === correctAnswer;
-  const feedback = selected !== null && <p className="quiz-feedback" id={feedbackId} role="status" data-result={correct ? 'correct' : 'incorrect'}>
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <circle cx="12" cy="12" r="9" />
-      <path d={correct ? 'm8 12 3 3 5-6' : 'm9 9 6 6m0-6-6 6'} />
-    </svg>
-    <span>{correct ? '正解' : '不正解'}</span>
-  </p>;
+  // The live region stays mounted so screen readers announce the first result it receives.
+  const feedback = <div className="quiz-status" id={feedbackId} role="status">
+    {selected !== null && <p className="quiz-feedback" data-result={correct ? 'correct' : 'incorrect'}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle cx="12" cy="12" r="9" />
+        <path d={correct ? 'm8 12 3 3 5-6' : 'm9 9 6 6m0-6-6 6'} />
+      </svg>
+      <span>{correct ? '正解' : '不正解'}</span>
+    </p>}
+  </div>;
 
-  return <div className="quiz" aria-label={`問 ${number}`} data-answer-state={selected ? (correct ? 'correct' : 'incorrect') : undefined}>
+  return <div className="quiz" role="group" aria-label={`問 ${number}`} data-answer-state={selected ? (correct ? 'correct' : 'incorrect') : undefined}>
     {Children.map(children, node => {
       if (!isSourceElement(node)) return node;
       if (node.props.className === 'q-opts') {

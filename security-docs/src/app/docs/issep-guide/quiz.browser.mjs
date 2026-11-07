@@ -33,7 +33,7 @@ try {
    for(const button of buttons)assert.ok(await button.evaluate(e=>e.getBoundingClientRect().height>=56));
    assert.ok(await card.evaluate(e=>e.scrollWidth<=e.clientWidth+1));
   }
-  const ids=await page.locator('.quiz-feedback').evaluateAll(els=>els.map(e=>e.id));assert.equal(new Set(ids).size,10);
+  const ids=await page.locator('.quiz-status').evaluateAll(els=>els.map(e=>e.id));assert.equal(new Set(ids).size,10);
   const first=cards[0],choices=first.locator('.quiz-choice');await choices.nth(0).focus();await page.keyboard.press('Tab');
   assert.equal(await choices.nth(1).evaluate(e=>document.activeElement===e),true);
   assert.equal(await choices.nth(1).evaluate(e=>getComputedStyle(e).outlineWidth),'3px');
