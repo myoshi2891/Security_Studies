@@ -1,4 +1,4 @@
-/** npm exec with PLAYWRIGHT_MODULE_PATH, DOCS_BASE_URL, CHROME_PATH and ISSEP_QUIZ_RESULTS_PATH; automated checks, no build. CHROME_PATH sets the Chrome executable; its default path is macOS-specific. ISSEP_QUIZ_RESULTS_PATH sets the results file; by default each run writes a unique file in the OS temporary directory. */
+/** npm exec with PLAYWRIGHT_MODULE_PATH, DOCS_BASE_URL, CHROME_PATH and ISSEP_QUIZ_RESULTS_PATH; automated checks, no build. CHROME_PATH sets the Chrome executable; without it Playwright uses its bundled browser. ISSEP_QUIZ_RESULTS_PATH sets the results file; by default each run writes a unique file in the OS temporary directory. */
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
 import {tmpdir} from 'node:os';
@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 const copy=JSON.parse(fs.readFileSync(resolve(import.meta.dirname,'quiz-copy.json'),'utf8'));
-const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
 const results=[];
 const resultsPath=process.env.ISSEP_QUIZ_RESULTS_PATH??join(tmpdir(),`issep-quiz-browser-results-${process.pid}-${Date.now()}.json`);
 try {

@@ -52,5 +52,7 @@ try{
   results.push({width,status:response.status(),structures:Object.keys(actual.structures).length,counts:actual.counts,diagrams:drawn,pageErrors:errors.length});console.log(JSON.stringify(results.at(-1)));await context.close();
  }
  assert.deepEqual(errors,[]);
-}finally{await browser.close();}
-fs.writeFileSync('/tmp/issep-runtime-results.json',JSON.stringify(results,null,2));
+}finally{
+ try{await browser.close();}
+ finally{fs.writeFileSync('/tmp/issep-runtime-results.json',JSON.stringify(results,null,2));}
+}
