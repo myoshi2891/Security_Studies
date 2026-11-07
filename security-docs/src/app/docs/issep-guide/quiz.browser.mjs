@@ -1,13 +1,15 @@
-/** npm exec with PLAYWRIGHT_MODULE_PATH, DOCS_BASE_URL and CHROME_PATH; automated checks, no build. CHROME_PATH sets the Chrome executable; its default path is macOS-specific. */
+/** npm exec with PLAYWRIGHT_MODULE_PATH, DOCS_BASE_URL, CHROME_PATH and ISSEP_QUIZ_RESULTS_PATH; automated checks, no build. CHROME_PATH sets the Chrome executable; its default path is macOS-specific. ISSEP_QUIZ_RESULTS_PATH sets the results file; by default each run writes a unique file in the OS temporary directory. */
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
-import {resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
 import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 const copy=JSON.parse(fs.readFileSync(resolve(import.meta.dirname,'quiz-copy.json'),'utf8'));
 const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
 const results=[];
+const resultsPath=process.env.ISSEP_QUIZ_RESULTS_PATH??join(tmpdir(),`issep-quiz-browser-results-${process.pid}-${Date.now()}.json`);
 try {
  for(const width of [375,1440])for(const colorScheme of ['light','dark']){
   const context=await browser.newContext({viewport:{width,height:900},colorScheme});
@@ -44,5 +46,7 @@ try {
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await choices.first().evaluate(e=>getComputedStyle(e).transitionDuration),'0s');
   assert.deepEqual(errors,[]);results.push({width,colorScheme,questions:10,choices:40,copyUnchanged:true,allChoicesGraded:true,keyboard:true,focus:true,minimumTarget:56,pageErrors:0});console.log(JSON.stringify(results.at(-1)));await context.close();
  }
-} finally {await browser.close();}
-fs.writeFileSync('/tmp/issep-quiz-browser-results.json',JSON.stringify(results,null,2));
+} finally {
+ try {await browser.close();}
+ finally {fs.writeFileSync(resultsPath,JSON.stringify(results,null,2));console.log(`results: ${resultsPath}`);}
+}
