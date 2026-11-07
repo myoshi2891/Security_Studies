@@ -1,4 +1,4 @@
-/** npm exec with PLAYWRIGHT_MODULE_PATH and DOCS_BASE_URL; automated checks, no build. */
+/** npm exec with PLAYWRIGHT_MODULE_PATH, DOCS_BASE_URL and CHROME_PATH; automated checks, no build. CHROME_PATH sets the Chrome executable; its default path is macOS-specific. */
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
 import {resolve} from 'node:path';
