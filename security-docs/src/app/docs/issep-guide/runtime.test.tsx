@@ -127,8 +127,10 @@ test('a failed diagram offers a retry button that re-runs rendering and shows th
   const messages = spyOn(console, 'error').mockImplementation(() => {});
   try {
     let calls = 0;
-    const renderer = async () => {
+    const renderIds: string[] = [];
+    const renderer = async (renderId: string) => {
       calls++;
+      renderIds.push(renderId);
       if (calls === 1) throw new Error('engine load failed');
       return { svg: '<svg viewBox="0 0 10 10"></svg>' };
     };
@@ -142,6 +144,8 @@ test('a failed diagram offers a retry button that re-runs rendering and shows th
     });
     await waitFor(() => expect(view.container.querySelector('svg')).not.toBeNull());
     expect(calls).toBe(2);
+    // 再試行のたびに別の ID を渡し、前回の描画が残した一時要素と衝突させない
+    expect(new Set(renderIds).size).toBe(2);
     expect(view.container.querySelector('[role="alert"]')).toBeNull();
   } finally {
     globalThis.IntersectionObserver = original;
@@ -291,5 +295,61 @@ test('only the rendered viewport is an image; the outer container keeps its desc
     expect(view.container.querySelector('.diagram-viewport')).toHaveAttribute('aria-label', '図ラベル');
   } finally {
     globalThis.IntersectionObserver = original;
+  }
+});
+
+test('failed and stale renders remove only their own temporary output from document.body, even after unmount', async () => {
+  const { MermaidFigure } = await import(new URL('./MermaidFigure.tsx', import.meta.url).href);
+  const original = globalThis.IntersectionObserver;
+  globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
+  const messages = spyOn(console, 'error').mockImplementation(() => {});
+  // Mermaid は描画中に #d{id} / #i{id} を body 直下へ置き、構文エラーではこれを残したまま失敗する
+  const temporary = (id: string) => {
+    for (const prefix of ['d', 'i']) {
+      const node = document.createElement('div');
+      node.id = prefix + id;
+      document.body.append(node);
+    }
+  };
+  const leftovers = () => document.body.querySelectorAll(':scope > [id^="dissep-mermaid-"], :scope > [id^="iissep-mermaid-"]');
+  const svg = { svg: '<svg viewBox="0 0 10 10"></svg>' };
+  try {
+    const failed = render(createElement(MermaidFigure, { id: 'd1', source: 'broken', renderer: async (id: string) => { temporary(id); throw new Error('parse'); } }));
+    await waitFor(() => expect(failed.container.querySelector('[role="alert"]')).not.toBeNull());
+    expect(leftovers()).toHaveLength(0);
+    failed.unmount();
+
+    const succeeded = render(createElement(MermaidFigure, { id: 'd2', source: 'a', renderer: async (id: string) => { temporary(id); return svg; } }));
+    await waitFor(() => expect(succeeded.container.querySelector('svg')).not.toBeNull());
+    expect(leftovers()).toHaveLength(0);
+    succeeded.unmount();
+
+    // 描画中の一時要素は Mermaid が使用中なので、アンマウント時点では取り除かず、完了時に片付ける
+    let rejectLate: (reason: Error) => void = () => {};
+    const unmounted = render(createElement(MermaidFigure, { id: 'd3', source: 'a', renderer: (id: string) => { temporary(id); return new Promise<{ svg: string }>((_, reject) => { rejectLate = reject; }); } }));
+    await waitFor(() => expect(leftovers()).toHaveLength(2));
+    unmounted.unmount();
+    expect(leftovers()).toHaveLength(2);
+    await act(async () => rejectLate(new Error('late')));
+    expect(leftovers()).toHaveLength(0);
+
+    const ids: string[] = [];
+    let finishOld: (value: { svg: string }) => void = () => {};
+    let finishNew: (value: { svg: string }) => void = () => {};
+    const stale = render(createElement(MermaidFigure, { id: 'd4', source: 'old', renderer: (id: string) => { ids.push(id); temporary(id); return new Promise<{ svg: string }>(resolve => { finishOld = resolve; }); } }));
+    await waitFor(() => expect(ids).toHaveLength(1));
+    stale.rerender(createElement(MermaidFigure, { id: 'd4', source: 'new', renderer: (id: string) => { ids.push(id); temporary(id); return new Promise<{ svg: string }>(resolve => { finishNew = resolve; }); } }));
+    await waitFor(() => expect(ids).toHaveLength(2));
+    expect(new Set(ids).size).toBe(2);
+    await act(async () => finishOld(svg));
+    expect(document.getElementById('d' + ids[0])).toBeNull();
+    expect(document.getElementById('d' + ids[1])).not.toBeNull();
+    await act(async () => finishNew(svg));
+    await waitFor(() => expect(stale.container.querySelector('svg')).not.toBeNull());
+    expect(leftovers()).toHaveLength(0);
+  } finally {
+    for (const node of leftovers()) node.remove();
+    globalThis.IntersectionObserver = original;
+    messages.mockRestore();
   }
 });
