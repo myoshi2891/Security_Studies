@@ -254,10 +254,10 @@ gantt
     section 予定
     登録申請の手引（予定）       :active, p1, 2026-11-25, 6d
     評価機関等の指定・公表（予定） :p2, 2026-12-15, 14d
-    専門家の登録受付開始（予定）   :p3, 2027-01-05, 10d
-    ★3・★4 申請受付開始（予定）  :p4, 2027-03-01, 10d
 ```
 
+> 専門家の登録受付と★3・★4の申請受付は、開始時期だけが示された予定のため図には載せていません。上の表で確認してください。
+>
 > 予定は変更されることがあります。**IPAの特設サイトを必ず確認してください**: https://www.ipa.go.jp/security/scs/index.html
 
 ### 2.7 制度を騙る勧誘への注意
@@ -375,7 +375,7 @@ flowchart LR
 | 4-1-4-1 | PCログオン等は、10回以上の失敗でロックするか試行間隔を延ばす |
 | 4-1-4-2 | PCログオン等は、6文字以上のパスワードかPIN |
 | 4-2-2-1 | インシデント対応の教育・訓練を、新規受入れ時かつ年1回以上 |
-| 4-4-4-2 | 「重大」「高リスク」やCVSS基本値7.0以上などの脆弱性を直すアップデートは、リリースから14日以内に適用（Ver.1.1で、攻撃が観測されていない脆弱性は対応計画を作る運用が認められた旨が解説されている） |
+| 4-4-4-2 | 「重大」「高リスク」やCVSS基本値7.0以上などの脆弱性を直すアップデートは、リリースから14日以内に適用。やむを得ず14日以内に適用できない場合は、適用に向けた対応計画を作り、適用までの間、次のいずれかの対策を実施する。攻撃を観測済みの脆弱性: 悪用対象の機能の無効化、ベンダー推奨の回避策、適用範囲のネットワークからの分離、不正通信の遮断機器等を導入済みの場合の監視・設定の一時的な強化。攻撃を観測していない脆弱性: 対応計画を完了まで管理・記録【一次: IPA 自己評価等ガイド No.4-4-4-2 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf】 |
 | 年1回以上の点検 | 体制、外部システム把握、ルール遵守、機密情報管理、訓練内容、インシデント体制などを年1回以上点検 |
 
 > 「点検は年1回以上」という基準は、**実施日を記録に残す**ことが重要です。最新の実施日が1年以上前だと、確認で指摘されます【二次: Admina】。
@@ -405,10 +405,12 @@ flowchart LR
 ### Step 8: 経営層の自己適合宣言、登録申請、毎年の更新
 
 1. 経営層が、自己評価の結果にもとづいて適合を宣言します。
-2. 専門家の署名を含む評価結果を、IPA事務局へ提出します。
-3. 問題なければ台帳に登録・公開されます。
-4. ★3の有効期間は1年です。毎年、アセスメントシートを更新し、専門家の確認を受けます。
-5. 適用範囲が変わった場合や、達成状況に大きく影響する変更（大規模なリプレイスやクラウド移行など）があった場合は、速やかに再確認を受けます【二次: Admina】。
+2. 専門家（★3確認責任者）が適合と判断し、自己適合宣言に係る署名又は記名が済んだアセスメントシート全体をPDF化します。
+3. そのPDFのSHA-256ハッシュ値を算出し、**PDFとハッシュ値の両方を証跡として保管**したうえで、**ハッシュ値を制度運営機関へ提出**します【一次: IPA 自己評価等ガイド 3.3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf】。
+4. 登録申請でほかに何を提出するかは、公表予定の「★3・★4 登録申請の手引」で確認します。
+5. 問題なければ台帳に登録・公開されます。
+6. ★3の有効期間は1年です。毎年、アセスメントシートを更新し、専門家の確認を受けます。
+7. 適用範囲が変わった場合や、達成状況に大きく影響する変更（大規模なリプレイスやクラウド移行など）があった場合は、速やかに再確認を受けます【二次: Admina】。
 
 ### 3.1 初学者がつまずきやすいポイント
 
@@ -771,13 +773,15 @@ pip install llm --uploaded-prior-to P4D
 ### 7.3 ベストプラクティス2: 長期トークンをやめ、信頼された公開（Trusted Publishing）へ
 
 - Axios の事例では、長期有効なnpmトークンの漏えいが原因とみられ、同プロジェクトには、Trusted Publishing（GitHub Actionsのワークフローだけが公開できる仕組み）の導入を求める課題が、すでに起票されていました【開発者: Willison https://simonwillison.net/2026/Mar/31/supply-chain-attack-on-axios/】。
+- ただし、Trusted Publishing を有効にしても、トークンや手動での公開が**自動的に止まるわけではありません**。npm では、パッケージの Settings → Publishing access で「Require two-factor authentication and disallow tokens」を選んでトークンでの公開を制限し、使っていないトークンは失効させます【一次: npm https://docs.npmjs.com/trusted-publishers】。この設定でも、2要素認証に応答する手動公開はできます【一次: npm https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification】。
 - PyPI は、Trusted Publishing を使うと**デジタル署名付きの証明（attestation）**がデフォルトで付く仕組みを提供しています【開発者: Willison https://simonwillison.net/2024/Nov/14/pypi-digital-attestations/】。
 - 一方で、二次情報によれば、Trusted Publishing を悪用するワームも観測されています。**信頼された公開を使えば万全、ではない**点に注意してください【二次: https://phoenix.security/accelerating-supply-chain-attacks-npm-pypi-vsx-ai-enabled-2026/】。
 - 同じ二次情報では、必須の2要素認証や Trusted Publishing の導入後に、PyPI と NuGet では悪性パッケージが減ったと報告されています。
 
 **チェックリスト**:
 - [ ] 公開用の長期トークンが、どこに保存されているかを棚卸しした
-- [ ] 公開はCI（OIDC）経由に統一し、個人の端末から公開できないようにした
+- [ ] 公開はCI（OIDC）経由に統一し、トークンでの公開を禁止して、不要なトークンを失効させた
+- [ ] 2要素認証つきの手動公開は残ることを理解し、公開権限を持つメンテナーを最小限にした
 - [ ] 公開アカウントには、パスキー等のフィッシング耐性のある認証を使っている
 
 ### 7.4 ベストプラクティス3: 攻撃の原因を知る（Filippo Valsorda の分析）
@@ -805,22 +809,33 @@ LiteLLM の事例は、CIで使われていたセキュリティスキャナ（T
 ### 7.6 ベストプラクティス5: バージョンの固定とロックファイル
 
 - LiteLLM の分析では、依存パッケージの88%が、被害を避けられる形でバージョンを固定していませんでした（上記7.1）。
-- pip 26.1 は、`pip lock` コマンドでロックファイル（`pylock.toml`）を作れるようになりました【開発者: Willison https://simonwillison.net/2026/Apr/28/pip-261/】。
+- pip には、ロックファイル（`pylock.toml`）を作る `pip lock` コマンドがあります【開発者: Willison https://simonwillison.net/2026/Apr/28/pip-261/】。pip 26.1 からは、`pip install -r pylock.toml` でロックファイルを読み込めます【一次: pip https://pip.pypa.io/en/stable/news/】。
 
 ```bash
 # 依存関係と、そのすべての依存先を、ロックファイルに書き出す
 pip lock datasette llm
 ```
 
+```bash
+# CIでの例: ロックファイルにある依存だけをインストールする
+pip install -r pylock.toml --no-deps
+```
+
 - **ロックファイルはコミットする。CIでは、ロックファイルどおりにインストールする。**
+- pip のロックファイル読み込みは**実験的機能**です。将来、予告なく変更・削除されることがあります【一次: pip https://pip.pypa.io/en/stable/cli/pip_install/ ／ 開発者: Richard Si https://ichard26.github.io/blog/2026/04/whats-new-in-pip-26.1/】。
+- 既定では、ロックされた要件が、**ロックされていない依存を追加で取り込む**ことがあります。これを防ぐ場合は `--no-deps` を付けます【開発者: Richard Si 上記】。
+- CIで `--no-deps` を使うのは、対象環境に必要な依存が**すべてロックされている**場合に限ります。足りない依存は補われません。
+- 生成したロックファイルが有効と保証されるのは、**生成に使ったPythonバージョンとプラットフォームだけ**です【一次: pip https://pip.pypa.io/en/stable/cli/pip_lock/】。CIや本番の環境が異なる場合は、その環境向けに生成してください。
 
 ### 7.7 ベストプラクティス6: インストール時に勝手にコードが動かないようにする
 
-二次情報によれば、2026年の攻撃では、**インストール時**にコードが実行される仕組みが多用されています。npm の postinstall、PyPI のインポート時実行や `.pth` ファイル、Cargo の `build.rs` などです【二次: https://tuxcare.com/blog/supply-chain-broke-in-2026/ ／ https://safeguard.sh/resources/blog/postinstall-script-attacks-package-managers】。LiteLLM の悪性版も、`.pth` ファイルにより、**インポートしなくても**インストールだけで実行される仕組みでした【開発者: Willison https://simonwillison.net/2026/Mar/24/malicious-litellm/】。
+二次情報によれば、2026年の攻撃では、コードを自動で実行させる仕組みが多用されています。**インストールやビルドの処理中**に動くものには、npm の postinstall や Cargo の `build.rs` があります。**インストール後**に動くものには、PyPI のインポート時実行や、Python の起動時に処理される `.pth` ファイルがあります【二次: https://tuxcare.com/blog/supply-chain-broke-in-2026/ ／ https://safeguard.sh/resources/blog/postinstall-script-attacks-package-managers】。
+
+LiteLLM 1.82.8 の悪性版は `.pth` ファイル（`litellm_init.pth`）を含んでいました。このファイルは通常、インストール後に Python が起動した時点で実行されるため、`import litellm` をしなくても動きます【開発者: Willison https://simonwillison.net/2026/Mar/24/malicious-litellm/ ／ 二次: SafeDep https://safedep.io/malicious-litellm-1-82-8-analysis】。
 
 対策の方向性は次のとおりです。
 
-- インストール時スクリプトの**許可リスト化**（例: npm の `trustedDependencies`、LavaMoat の allow-scripts）【二次: safeguard.sh】
+- インストール時スクリプトの**許可リスト化**（例: Bun の `trustedDependencies`、LavaMoat の allow-scripts）【二次: safeguard.sh ／ 一次: Bun https://bun.sh/docs/pm/lifecycle】
 - 開発・CI環境を**隔離（サンドボックス）**して、認証情報を置かない
 - 開発者の端末に、クラウドの管理者認証情報や長期トークンを置かない
 
@@ -985,6 +1000,7 @@ A. IPAの特設サイト（https://www.ipa.go.jp/security/scs/index.html）の�
 | IPA: よくある質問 | https://www.ipa.go.jp/security/scs/faq.html |
 | IPA: 料金設定のお知らせ（PDF、2026年9月18日） | https://www.ipa.go.jp/security/scs/rcu1hd00000075om-att/pricelist.pdf |
 | 経済産業省: 制度構築方針（PDF、2026年3月27日） | https://www.ipa.go.jp/security/scs/rcu1hd0000007ajp-att/20260327001-br.pdf |
+| IPA: ★3・★4 自己評価等ガイド（PDF） | https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf |
 | IPA: ★3・★4 要求事項・評価基準 解説書（PDF） | https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf |
 | IPA: サイバーセキュリティお助け隊サービス（新類型）実証事業 | https://www.ipa.go.jp/security/sme/otasuke-scs.html |
 | IPA: 情報セキュリティ10大脅威 2026 | https://www.ipa.go.jp/security/10threats/10threats2026.html |
@@ -1025,6 +1041,12 @@ A. IPAの特設サイト（https://www.ipa.go.jp/security/scs/index.html）の�
 | Filippo Valsorda: A Retrospective Survey of 2024/2025 Open Source Supply Chain Compromises | https://words.filippo.io/compromise-survey/ | 開発者 |
 | Richard Si: What's new in pip 26.1 | https://ichard26.github.io/blog/2026/04/whats-new-in-pip-26.1/ | 開発者 |
 | Axios 事後報告 | https://github.com/axios/axios/issues/10636 | 一次 |
+| npm Docs: Trusted publishing | https://docs.npmjs.com/trusted-publishers | 一次 |
+| npm Docs: 公開時の2要素認証の要求 | https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification | 一次 |
+| pip: リリースノート | https://pip.pypa.io/en/stable/news/ | 一次 |
+| pip: `pip install` | https://pip.pypa.io/en/stable/cli/pip_install/ | 一次 |
+| pip: `pip lock` | https://pip.pypa.io/en/stable/cli/pip_lock/ | 一次 |
+| Bun: Lifecycle scripts | https://bun.sh/docs/pm/lifecycle | 一次 |
 | LiteLLM 悪性版の報告 | https://github.com/BerriAI/litellm/issues/24512 | 一次 |
 | Rust公式ブログ: 標的型攻撃への警告 | https://blog.rust-lang.org/2026/09/17/targeted-attacks/ | 一次 |
 | Rust公式ブログ: arrayref への供給網攻撃 | https://blog.rust-lang.org/2026/08/20/supply-chain-attack-on-arrayref/ | 一次 |
@@ -1036,6 +1058,7 @@ A. IPAの特設サイト（https://www.ipa.go.jp/security/scs/index.html）の�
 | CrowdStrike: Trivy Action の侵害の解説 | https://www.crowdstrike.com/en-us/blog/from-scanner-to-stealer-inside-the-trivy-action-supply-chain-compromise/ | 二次 |
 | Zscaler: 2026年3月の供給網攻撃 | https://www.zscaler.com/blogs/security-research/supply-chain-attacks-surge-march-2026 | 二次 |
 | TuxCare: 2026年の供給網攻撃のまとめ | https://tuxcare.com/blog/supply-chain-broke-in-2026/ | 二次 |
+| SafeDep: 悪性 LiteLLM 1.82.8 の分析 | https://safedep.io/malicious-litellm-1-82-8-analysis | 二次 |
 | Phoenix Security: 供給網攻撃の加速 | https://phoenix.security/accelerating-supply-chain-attacks-npm-pypi-vsx-ai-enabled-2026/ | 二次 |
 
 ### B.5 今回の検索では本文を取得していない、既知の公式資料
@@ -1065,3 +1088,4 @@ A. IPAの特設サイト（https://www.ipa.go.jp/security/scs/index.html）の�
 | 日付 | 内容 |
 |---|---|
 | 2026年11月6日 | 初版。2026年11月6日時点のウェブ情報にもとづいて作成 |
+| 2026年11月7日 | レビュー指摘を反映。★3の提出物とハッシュ値、4-4-4-2の未適用時の対応、Trusted Publishing の範囲、pip のロックファイルの制約、`.pth` の実行時点、Bun の `trustedDependencies`、予定の図示を、一次情報にもとづいて修正 |
