@@ -61,6 +61,14 @@ function sizeSvg(svgMarkup: string, source: string) {
   return holder.innerHTML;
 }
 
+/**
+ * Mermaid が body 直下に置く、その描画限りの一時要素を取り除く。
+ * 構文エラーでは一時要素を残したまま失敗するため、描画の完了ごとに呼ぶ。
+ */
+function removeTemporaryOutput(renderId: string): void {
+  for (const prefix of ['d', 'i']) document.getElementById(`${prefix}${renderId}`)?.remove();
+}
+
 /** Match the original live drawing bounds instead of adding fixed sequence padding. */
 export function fitDiagram(svg: SVGSVGElement): void {
   const box = (svg.getAttribute('viewBox') ?? '').trim().split(/[\s,]+/).map(Number);
@@ -153,6 +161,7 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
   const [result, setResult] = useState<{ source: string; svg?: string; failed?: boolean }>();
   const [attempt, setAttempt] = useState(0);
   const figureRef = useRef<HTMLDivElement>(null);
+  const renderCount = useRef(0);
   const [nearView, setNearView] = useState(() => typeof IntersectionObserver === 'undefined');
 
   useEffect(() => {
@@ -173,7 +182,9 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
   useEffect(() => {
     if (!nearView) return;
     let active = true;
-    renderer(svgId, source)
+    // 再試行や再実行でも ID を変え、前回の描画が残した一時要素と衝突させない
+    const renderId = `${svgId}-${++renderCount.current}`;
+    renderer(renderId, source)
       .then(({ svg }) => {
         if (!active) return;
         setResult({ source, svg: sizeSvg(svg, source) });
@@ -182,6 +193,10 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
         if (!active) return;
         console.error(`Mermaid figure ${id} failed to render`, error);
         setResult({ source, failed: true });
+      })
+      .finally(() => {
+        // 描画中は Mermaid が要素を計測に使うため、アンマウント時ではなく完了時に片付ける
+        removeTemporaryOutput(renderId);
       });
     return () => {
       active = false;

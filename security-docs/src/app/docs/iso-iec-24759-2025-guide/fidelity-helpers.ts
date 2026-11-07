@@ -17,11 +17,17 @@ export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
 /** 文字列のSHA-256ハッシュを16進文字列で返す。 */
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
+/** 原本の style 要素の本文を返す。欠落を空の CSS で代用せず、原本のパスを示して失敗させる */
+export function sourceStyleText(document: Document): string {
+  const css = document.querySelector('style')?.textContent;
+  if (!css?.trim()) throw new Error(`原本 HTML に CSS を含む style 要素がありません: ${sourcePath}`);
+  return css;
+}
 /** 原本 HTML がある環境でのみ実行し、原本は最初の実行時まで読み込まないテストを登録する */
 export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {
   test.skipIf(!existsSync(sourcePath))(name, () => {
     sourceDocument ??= new DOMParser().parseFromString(readFileSync(sourcePath, 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), 'text/html');
-    sourceCss ??= postcss.parse(sourceDocument.querySelector('style')!.textContent!);
+    sourceCss ??= postcss.parse(sourceStyleText(sourceDocument));
     return fn();
   }, timeout);
 }
