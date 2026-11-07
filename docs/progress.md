@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-07（ISSEP 11.3: 文言保持・クリック判定・カードデザイン改善）
+> **最終更新**: 2026-11-07（ISSEP目次のクリック選択維持・SCSガイドのレビュー修正）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2740成功 / 0 skip / 0失敗** | 全体338ファイル・574,292 expect。ISSEP専用92件を含む。 |
+| テストケース総数 | **2746成功 / 0 skip / 0失敗** | 全体338ファイル・574,299 expect。ISSEP専用98件を含む。 |
 | テストファイル数 | **338ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **134/134 (100%)** | 従来133＋QuizCard。純粋データ・MDXは分母外。全338テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -1519,3 +1519,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-07 ISSEP 11.3回答UI改善完了: /docs/issep-guide#h3-36。問題文・40選択肢・10解説・「解答を見る」の文言と強調を変更せず、QuizCardで選択ボタンと正誤表示を追加。選択直後に正解/不正解を色・文字・記号で示し、正しい選択肢を強調して元の解説を開く。答え直し可能で各問の状態は独立。選択済み回答だけに判定を読み上げ用に関連付ける。スマートフォン1列/PC2列、56px以上の選択領域、Tab/Enter/Spaceとフォーカス表示、動きを減らす設定に対応。全体2740成功/0skip/0失敗（338ファイル、574,292 expect）。ISSEP専用92件/10ファイルを含み、判定/原文保持の15件は単独実行でも成功（748 expect）。原本なし隔離環境62成功/30skip/0失敗。Chrome375/1440px×明暗4条件で全40選択肢の判定・原文一致・キーボード・読み上げ関連付け・解説開閉・レイアウトが成功（pageErrors0）。11.3以外の原本CSSはChrome10条件差分0、17構造SHA・22図・既存の目次/チェック操作も成功。原本比較は選択肢内の単独ボタンだけを透過し、追加/変更文字は引き続き検出する。ナビ・検索は42ページ、ロジック134/134（従来133＋QuizCard）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: Red 1fe707b/比較基盤c6696a7/判定関連付けb9e60c9 → Green db0f206、Chrome検証61bf7cb。配置: security-docs/src/app/docs/issep-guide/QuizCard.tsx。原文固定: quiz-copy.json。自動検証: QuizCard.test.tsx / quiz.browser.mjs。目視確認表: docs/migration-inventory/issep-guide-review.md。
+
+
+2026-11-07 レビュー指摘対応: ISSEP目次で、クリックした小節が移動後の監視で次の見出しへ置き換わる不具合を修正（Red 9f957d2 → Green c676049）。読者のwheel・pointerdown・スクロールキーで監視の選択へ戻す。同じ監視設定はISSAP/CGRC/SSCPにもあるが今回は未変更。不足していたDocstring 7件を追加（87db84b）。SCSガイドの7件をIPA SCS-410/SCS-400、npm、pip、Bunの一次情報に合わせて修正（f1fc85c）。全体2746成功/0skip/0失敗（338ファイル、574,299 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。同期前HEAD `f1fc85c`。
