@@ -8,11 +8,17 @@ const decodeFragment=(value:string)=>{try{return decodeURIComponent(value);}catc
 /** Keys that scroll the document, so pressing one means the reader has resumed scrolling. */
 const SCROLL_KEYS=new Set(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' ']);
 
+/** Quiet time that ends a clicked entry's jump, long enough to span the frames of a smooth scroll. */
+const JUMP_SETTLE_MS=150;
+
+/** Sub-pixel movement of a pinned heading, which never means the reader has gone elsewhere. */
+const PIN_DRIFT_PX=2;
+
 /** Keep the source's single expanded chapter, selected subsection and scrolling aside. */
 export function GuideSidebar({children}:{children:ReactNode}){
  const panel=useRef<HTMLElement>(null),toggle=useRef<HTMLButtonElement>(null);
  const [open,setOpen]=useState(false),openRef=useRef(open);
- // A clicked entry stays selected through the jump; only the reader's own scroll input hands selection back to the observers.
+ // A clicked entry stays selected through the jump; the reader's own scroll input, or any later scroll that moves the entry away, hands selection back to the observers.
  const pinned=useRef(false);
  useEffect(()=>{openRef.current=open;const guide=panel.current?.closest('.issep-guide');guide?.classList.toggle('nav-open',open);return ()=>{guide?.classList.remove('nav-open');};},[open]);
  const close=useCallback(()=>{setOpen(false);toggle.current?.focus();},[]);
@@ -36,12 +42,22 @@ export function GuideSidebar({children}:{children:ReactNode}){
  },[]);
  useEffect(()=>{
   const aside=panel.current,guide=aside?.closest('.issep-guide');
+  // Find-in-page sends the page no input events, so a scroll is its only trace; the pinned heading moving tells it apart from layout-only scrolls.
+  let pinnedTarget:HTMLElement|null=null,pinnedTop:number|null=null,settleTimer:ReturnType<typeof setTimeout>|undefined;
+  const trackers:(()=>void)[]=[];
+  const settle=()=>{clearTimeout(settleTimer);pinnedTop=null;settleTimer=setTimeout(()=>{pinnedTop=pinnedTarget?.getBoundingClientRect().top??null;},JUMP_SETTLE_MS);};
+  const followScroll=()=>{
+   if(!pinned.current)return;
+   if(pinnedTop===null){settle();return;}
+   if(Math.abs((pinnedTarget?.getBoundingClientRect().top??pinnedTop)-pinnedTop)<=PIN_DRIFT_PX)return;
+   pinned.current=false;trackers.forEach(track=>{track();});
+  };
   const hash=()=>select(decodeFragment(window.location.hash.slice(1))||'sec-1');
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
    if(!link)return;
-   const id=decodeFragment(link.hash.slice(1));select(id);pinned.current=document.getElementById(id)!==null;
+   const id=decodeFragment(link.hash.slice(1));select(id);pinnedTarget=document.getElementById(id);pinned.current=pinnedTarget!==null;settle();
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
    if(!heading){close();return;}
@@ -50,15 +66,16 @@ export function GuideSidebar({children}:{children:ReactNode}){
   aside?.addEventListener('click',click);
   const release=()=>{pinned.current=false;};
   const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
-  window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);
+  window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
   const observers:IntersectionObserver[]=[];
   for(const selector of ['section[id]','section h3[id]']){
    if(typeof IntersectionObserver==='undefined')continue;
    const nodes=[...(guide?.querySelectorAll(selector)??[])],visible=new Set<Element>();
-   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}if(pinned.current)return;const current=nodes.filter(node=>visible.has(node)).at(-1);if(current)select(current.id);},{rootMargin:'-20% 0px -70% 0px'});
-   nodes.forEach(node=>observer.observe(node));observers.push(observer);
+   const track=()=>{const current=nodes.filter(node=>visible.has(node)).at(-1);if(current)select(current.id);};
+   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}if(!pinned.current)track();},{rootMargin:'-20% 0px -70% 0px'});
+   nodes.forEach(node=>observer.observe(node));observers.push(observer);trackers.push(track);
   }
-  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);observers.forEach(observer=>observer.disconnect());};
+  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
  },[close,select]);
  useEffect(()=>{
   if(!open)return;
