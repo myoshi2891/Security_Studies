@@ -325,7 +325,7 @@ flowchart TD
 | 必ず含める | インターネットに公開しているサーバ（Web、メールなど） |
 | 含める | 社内サーバ、PC・スマートデバイス、利用中のクラウドサービス（SaaS・IaaS）、境界のFW・ルータ・VPN機器、グループ共通ネットワーク |
 | 端末の扱い | 会社支給端末は場所を問わず含める。業務に使う個人所有端末（BYOD）も含める。ただし、業務上の通話、SMS、多要素認証のためだけに使う個人所有端末は除外できる（その他の用途にも業務で使う個人所有端末は除外できない）【一次: IPA 解説書 3.2.3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
-| 含めない | 委託先所有の端末、境界防護で分離された製造現場の制御（OT）システム、自組織が構築・運用する社外向けサービスの基盤のうち、基準を満たすのに他組織の対応が必要なものなど。自組織だけで対策できる基盤は含める。インターネット公開サーバは常に含める【一次: IPA 解説書 3.2.2 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
+| 含めない | 委託先所有の端末（自組織のシステムに接続させる場合も適用範囲には含めない。ただし、その端末が機密情報又は業務システムを取り扱う際の条件を定め、遵守状況を確認する必要がある【一次: IPA 解説書 3.2.3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】）、境界防護で分離された製造現場の制御（OT）システム、自組織が構築・運用する社外向けサービスの基盤のうち、基準を満たすのに他組織の対応が必要なものなど。自組織だけで対策できる基盤は含める。インターネット公開サーバは常に含める【一次: IPA 解説書 3.2.2 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
 
 除外する場合は、除外対象と理由を一覧にし、範囲との境界にファイアウォールやVLANなどの保護策が必要です。適用範囲外から適用範囲内への通信は、業務上必要な範囲に限定します【一次: IPA 解説書 3.3.3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】。
 
@@ -439,7 +439,7 @@ flowchart LR
 ### 3.2 中小企業向けの支援
 
 - IPAは「サイバーセキュリティお助け隊サービス（新類型）」の実証事業を進めています。診断、改善計画、ツール導入、規程整備、専門家確認、申請支援をまとめて提供する取り組みで、実証期間は2026年10月〜2027年9月の予定です【一次: IPA https://www.ipa.go.jp/security/sme/otasuke-scs.html ／ 期間は二次情報で確認】。
-- 「中小企業の情報セキュリティ対策ガイドライン」第4.0版には、★3・★4の対策に備えられる内容が含まれます【二次: INTERNET Watch https://internet.watch.impress.co.jp/docs/news/2097212.html】。
+- 「中小企業の情報セキュリティ対策ガイドライン」第4.0版には、★3・★4の対策に備えられる内容が含まれます【一次: IPA 中小企業の情報セキュリティ対策ガイドライン https://www.ipa.go.jp/security/guide/sme/about.html ／ ★3・★4との対応は IPA 関連制度・施策 https://www.ipa.go.jp/security/scs/related-regulations-policies.html】。
 - SECURITY ACTIONの宣言は、最初の一歩として取り組みやすい準備です【二次: キヤノンMJ https://canon.jp/biz/trend/securityaction】。
 
 ---
@@ -697,7 +697,7 @@ flowchart LR
 | 1 | 低減 | ポータルとメールに多要素認証を必須化、適用漏れの点検 | 情シス・11月中 |
 | 2 | 低減 | VPN機器の脆弱性情報を購読し、重要な更新は14日以内に適用する運用を決める | 情シス・12月中 |
 | 3・4 | 低減 | バックアップをネットワーク分離し、復元テストを実施 | 情シス・1月中 |
-| 5 | 低減＋移転 | 保守ベンダーとの契約に、機密情報の取り扱いとインシデント時の連絡・役割分担を明記 | 総務・1月中 |
+| 5 | 低減＋移転 | 保守ベンダーとの契約に、機密情報の取り扱いとインシデント時の連絡・役割分担を明記。リモート保守の接続先を必要なシステムに限定し、接続は作業時だけ有効にする | 情シス・総務・1月中 |
 | 6 | 低減 | 退職者アカウント削除の手順化と、年1回の権限棚卸し | 情シス・総務・12月中 |
 | 7 | 低減 | 主要システムのログの取得範囲と保管期間を決める | 情シス・2月中 |
 
@@ -1020,6 +1020,8 @@ A. IPAの特設サイト（https://www.ipa.go.jp/security/scs/index.html）の�
 | 経済産業省: 制度構築方針（PDF、2026年3月27日） | https://www.ipa.go.jp/security/scs/rcu1hd0000007ajp-att/20260327001-br.pdf |
 | IPA: ★3・★4 自己評価等ガイド（PDF） | https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf |
 | IPA: ★3・★4 要求事項・評価基準 解説書（PDF） | https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf |
+| IPA: 中小企業の情報セキュリティ対策ガイドライン | https://www.ipa.go.jp/security/guide/sme/about.html |
+| IPA: 関連制度・施策 | https://www.ipa.go.jp/security/scs/related-regulations-policies.html |
 | IPA: サイバーセキュリティお助け隊サービス（新類型）実証事業 | https://www.ipa.go.jp/security/sme/otasuke-scs.html |
 | IPA: 情報セキュリティ10大脅威 2026 | https://www.ipa.go.jp/security/10threats/10threats2026.html |
 | IPA: 10大脅威 2026 決定のプレス発表 | https://www.ipa.go.jp/pressrelease/2025/press20260129.html |
