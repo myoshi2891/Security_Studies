@@ -40,6 +40,7 @@ export const renderDiagram: DiagramRenderer = async (id, source) => {
   return (await getEngine()).render(id, `---\nconfig: ${JSON.stringify(config)}\n---\n${source}`);
 };
 
+/** 描画結果のSVGへ、viewBox由来の自然幅を保ったまま表示サイズを設定する。 */
 function sizeSvg(svgMarkup: string, source: string) {
   const holder = document.createElement('div');
   holder.innerHTML = svgMarkup;
@@ -99,6 +100,7 @@ export function describeDiagram(source: string): string[] {
 /** `A --> B: ラベル` の状態遷移。`[*]` は遷移元なら開始、遷移先なら終了を表す */
 const TRANSITION_PATTERN = /^(\[\*\]|[\w.]+)\s*-->\s*(\[\*\]|[\w.]+)\s*(?::\s*(.*))?$/;
 
+/** 状態遷移図の1行を、読み上げ用の説明文へ変換する。 */
 function describeTransition(line: string): string {
   const match = TRANSITION_PATTERN.exec(line);
   if (!match) return plain(line);
@@ -115,6 +117,7 @@ const NODE_PATTERN = /(\w+)\s*(?:\(\[|\[\(|\[\[?|\(\(?|\{\{?)"([^"]*)"(?:\]\)|\)
  */
 const EDGE_PATTERN = /(\w+)\s*(<)?(?:--|-\.|==)(?:\s*"([^"]*)"\s*(?:--|\.-|==))?(-?>|-|(?<=\.-))\s*(?:\|"([^"]*)"\|)?\s*(?=(\w+))/g;
 
+/** フローチャート定義の本文から、接続ごとの説明文を組み立てる。 */
 function describeFlowchart(body: string[]): string[] {
   const labels = new Map<string, string>();
   const edges: { from: string; to: string; arrow: string; label: string }[] = [];
@@ -139,6 +142,7 @@ function describeFlowchart(body: string[]): string[] {
   ];
 }
 
+/** 図が画面に近づいてから描画し、失敗時は定義の表示と再試行を提供する。 */
 export function MermaidFigure({ id, source, label, renderer = renderDiagram }: MermaidFigureProps) {
   const unique = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const svgId = `issep-mermaid-${id}-${unique}`;

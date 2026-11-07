@@ -15,6 +15,7 @@ export const scope = '.issep-guide.issep-guide';
 export const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Issep-guide.html');
 export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
+/** 文字列のSHA-256ハッシュを16進文字列で返す。 */
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
 /** 原本 HTML がある環境でのみ実行し、原本は最初の実行時まで読み込まないテストを登録する */
 export function sourceTest(name: string, fn: () => void | Promise<unknown>, timeout?: number) {

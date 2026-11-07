@@ -4,6 +4,7 @@ import { Children, cloneElement, isValidElement, useId, useState, type ReactElem
 
 type Choice = 'A' | 'B' | 'C' | 'D';
 interface SourceElementProps { className?: string; children?: ReactNode }
+/** 原本由来のReact要素かどうかを判定し、props型を絞り込む。 */
 const isSourceElement = (node: ReactNode): node is ReactElement<SourceElementProps> => isValidElement<SourceElementProps>(node);
 
 /** Enhance the original question nodes without rewriting their text or emphasis. */
