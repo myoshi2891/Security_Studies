@@ -1,7 +1,8 @@
 import { afterEach, expect, test } from 'bun:test';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { createElement as h } from 'react';
 import { evaluatedPage, renderedPage } from './fidelity-helpers';
+import { GuideSidebar } from './GuideSidebar';
 afterEach(cleanup);
 async function mounted() {
  const { default: Page } = await evaluatedPage();
@@ -38,4 +39,80 @@ test('chapter and subsection selection expands only its original chapter and foc
 });
 test('all source TOC anchors have matching section and subsection targets', async () => {
  const d=await renderedPage();for(const a of d.querySelectorAll('nav a'))expect(d.getElementById(a.getAttribute('href')!.slice(1))).not.toBeNull();
+});
+
+/** Render a small guide whose observers can be driven by hand, independent of the archived source. */
+function observedGuide() {
+ const observers: { callback: IntersectionObserverCallback; nodes: Element[] }[] = [];
+ globalThis.IntersectionObserver = class {
+  nodes: Element[] = [];
+  constructor(callback: IntersectionObserverCallback) {
+   observers.push({ callback, nodes: this.nodes });
+  }
+  observe(node: Element) {
+   this.nodes.push(node);
+  }
+  disconnect() {}
+ } as unknown as typeof IntersectionObserver;
+ const link = (id: string) => h('a', { href: `#${id}` }, id);
+ const toc = h('nav', {}, h('ul', {}, h('li', {}, link('sec-1'), h('ul', {}, h('li', {}, link('h3-1')), h('li', {}, link('h3-2'))))));
+ const body = h('section', { id: 'sec-1' }, h('h3', { id: 'h3-1' }), h('h3', { id: 'h3-2' }));
+ const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, {}, toc), body));
+ const notify = (id: string, isIntersecting: boolean) => {
+  const target = view.container.querySelector(`#${id}`)!;
+  const owner = observers.find(entry => entry.nodes.includes(target))!;
+  act(() => owner.callback([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver));
+ };
+ const current = () => view.container.querySelector('[aria-current="location"]')?.getAttribute('href');
+ return { view, notify, current };
+}
+const originalObserver = globalThis.IntersectionObserver;
+test('observer entries caused by navigation keep the clicked subsection selected', () => {
+ try {
+  const { view, notify, current } = observedGuide();
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  notify('h3-2', true);
+  notify('sec-1', true);
+  expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test.each([
+ ['wheel', (target: Element) => fireEvent.wheel(target)],
+ ['pointer', (target: Element) => fireEvent.pointerDown(target)],
+ ['scroll key', (target: Element) => fireEvent.keyDown(target, { key: 'PageDown' })],
+])('%s input hands selection back to the observer after a click', (_name, scroll) => {
+ try {
+  const { view, notify, current } = observedGuide();
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  scroll(view.container.querySelector('#h3-1')!);
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-2');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('a non-scrolling key does not release the clicked subsection', () => {
+ try {
+  const { view, notify, current } = observedGuide();
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  fireEvent.keyDown(view.container.querySelector('#h3-1')!, { key: 'Tab' });
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('without a click, the observer keeps following the reader', () => {
+ try {
+  const { notify, current } = observedGuide();
+  notify('h3-1', true);
+  expect(current()).toBe('#h3-1');
+  notify('h3-1', false);
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-2');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
 });
