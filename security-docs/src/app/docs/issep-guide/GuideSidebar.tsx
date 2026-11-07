@@ -5,10 +5,15 @@ import {useCallback,useEffect,useRef,useState,type ReactNode} from 'react';
 /** Decode a URL fragment, keeping the raw value when it is malformed. */
 const decodeFragment=(value:string)=>{try{return decodeURIComponent(value);}catch{return value;}};
 
+/** Keys that scroll the document, so pressing one means the reader has resumed scrolling. */
+const SCROLL_KEYS=new Set(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' ']);
+
 /** Keep the source's single expanded chapter, selected subsection and scrolling aside. */
 export function GuideSidebar({children}:{children:ReactNode}){
  const panel=useRef<HTMLElement>(null),toggle=useRef<HTMLButtonElement>(null);
  const [open,setOpen]=useState(false),openRef=useRef(open);
+ // A clicked entry stays selected through the jump; only the reader's own scroll input hands selection back to the observers.
+ const pinned=useRef(false);
  useEffect(()=>{openRef.current=open;const guide=panel.current?.closest('.issep-guide');guide?.classList.toggle('nav-open',open);return ()=>{guide?.classList.remove('nav-open');};},[open]);
  const close=useCallback(()=>{setOpen(false);toggle.current?.focus();},[]);
  const select=useCallback((id:string)=>{
@@ -36,21 +41,24 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
    if(!link)return;
-   const id=decodeFragment(link.hash.slice(1));select(id);
+   const id=decodeFragment(link.hash.slice(1));select(id);pinned.current=document.getElementById(id)!==null;
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
    if(!heading){close();return;}
    event.preventDefault();window.history.pushState(null,'',`#${encodeURIComponent(id)}`);setOpen(false);heading.tabIndex=-1;heading.focus({preventScroll:true});target?.scrollIntoView();
   };
   aside?.addEventListener('click',click);
+  const release=()=>{pinned.current=false;};
+  const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
+  window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);
   const observers:IntersectionObserver[]=[];
   for(const selector of ['section[id]','section h3[id]']){
    if(typeof IntersectionObserver==='undefined')continue;
    const nodes=[...(guide?.querySelectorAll(selector)??[])],visible=new Set<Element>();
-   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}const current=nodes.filter(node=>visible.has(node)).at(-1);if(current)select(current.id);},{rootMargin:'-20% 0px -70% 0px'});
+   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}if(pinned.current)return;const current=nodes.filter(node=>visible.has(node)).at(-1);if(current)select(current.id);},{rootMargin:'-20% 0px -70% 0px'});
    nodes.forEach(node=>observer.observe(node));observers.push(observer);
   }
-  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);observers.forEach(observer=>observer.disconnect());};
+  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);observers.forEach(observer=>observer.disconnect());};
  },[close,select]);
  useEffect(()=>{
   if(!open)return;

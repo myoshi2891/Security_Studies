@@ -57,7 +57,7 @@ function observedGuide() {
  const link = (id: string) => h('a', { href: `#${id}` }, id);
  const toc = h('nav', {}, h('ul', {}, h('li', {}, link('sec-1'), h('ul', {}, h('li', {}, link('h3-1')), h('li', {}, link('h3-2'))))));
  const body = h('section', { id: 'sec-1' }, h('h3', { id: 'h3-1' }), h('h3', { id: 'h3-2' }));
- const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, {}, toc), body));
+ const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, { children: toc }), body));
  const notify = (id: string, isIntersecting: boolean) => {
   const target = view.container.querySelector(`#${id}`)!;
   const owner = observers.find(entry => entry.nodes.includes(target))!;
