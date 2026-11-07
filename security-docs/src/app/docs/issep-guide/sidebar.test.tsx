@@ -64,8 +64,11 @@ function observedGuide() {
   act(() => owner.callback([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver));
  };
  const current = () => view.container.querySelector('[aria-current="location"]')?.getAttribute('href');
- return { view, notify, current };
+ /** Place the clicked subsection at a viewport offset, as a jump or a layout change would. */
+ const moveTarget = (id: string, top: number) => { view.container.querySelector(`#${id}`)!.getBoundingClientRect = () => ({ top } as DOMRect); };
+ return { view, notify, current, moveTarget };
 }
+const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
 test('observer entries caused by navigation keep the clicked subsection selected', () => {
  try {
@@ -100,6 +103,82 @@ test('a non-scrolling key does not release the clicked subsection', () => {
   fireEvent.keyDown(view.container.querySelector('#h3-1')!, { key: 'Tab' });
   notify('h3-2', true);
   expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('a find-in-page jump, which sends only a scroll event, releases the pin and restores observer tracking', async () => {
+ try {
+  const { view, notify, current, moveTarget } = observedGuide();
+  moveTarget('h3-1', 88);
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  notify('h3-2', true);
+  await settled();
+  moveTarget('h3-1', -4000);
+  fireEvent.scroll(window);
+  expect(current()).toBe('#h3-2');
+  notify('h3-2', false);
+  notify('h3-1', true);
+  expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('the sidebar jump itself keeps the pin, however long its smooth scroll runs', async () => {
+ try {
+  const { view, notify, current, moveTarget } = observedGuide();
+  moveTarget('h3-1', 2400);
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  for (const top of [1800, 1200, 600, 88]) {
+   await new Promise(resolve => setTimeout(resolve, 100));
+   moveTarget('h3-1', top);
+   fireEvent.scroll(window);
+  }
+  notify('h3-2', true);
+  await settled();
+  fireEvent.scroll(window);
+  notify('sec-1', true);
+  expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('a scroll that leaves the pinned target in place, such as scroll anchoring, keeps the pin', async () => {
+ try {
+  const { view, notify, current, moveTarget } = observedGuide();
+  moveTarget('h3-1', 88);
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  await settled();
+  moveTarget('h3-1', 88.5);
+  fireEvent.scroll(window);
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-1');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('a find-in-page jump after a sidebar click that caused no scroll still releases the pin', async () => {
+ try {
+  const { view, notify, current, moveTarget } = observedGuide();
+  moveTarget('h3-1', 88);
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  await settled();
+  moveTarget('h3-1', 900);
+  fireEvent.scroll(window);
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-2');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+ }
+});
+test('unmounting while a jump settles removes the scroll tracking without errors', async () => {
+ try {
+  const { view, moveTarget } = observedGuide();
+  moveTarget('h3-1', 88);
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
+  view.unmount();
+  await settled();
+  expect(() => fireEvent.scroll(window)).not.toThrow();
  } finally {
   globalThis.IntersectionObserver = originalObserver;
  }
