@@ -35,7 +35,7 @@ try{
  const a=await capture(actual),o=await capture(original);if(JSON.stringify(a)!==JSON.stringify(o))failures.push({width,colorScheme,selector,pseudo,expected:o,actual:a});
  }
  for(const page of [actual,original]){const cdp=await ctx.newCDPSession(page);await cdp.send('DOM.enable');await cdp.send('CSS.enable');const {root}=await cdp.send('DOM.getDocument');const {nodeIds}=await cdp.send('DOM.querySelectorAll',{nodeId:root.nodeId,selector:'tr'});await Promise.all(nodeIds.map(nodeId=>cdp.send('CSS.forcePseudoState',{nodeId,forcedPseudoClasses:['hover']})));}
- const a=await sample(actual,'th,td'),o=await sample(original,'th,td');for(let i=0;i<a.length;i++)for(const prop of ['backgroundColor','color','borderBottomWidth'])if(a[i][prop]!==o[i][prop])failures.push({width,colorScheme,hoverCell:i,prop,actual:a[i][prop],expected:o[i][prop]});
+ const a=await sample(actual,'th,td'),o=await sample(original,'th,td');for(let i=0;i<a.length;i++)for(const prop of ['backgroundColor','color','borderBottomWidth'])if(a[i][prop]!==o[i]?.[prop])failures.push({width,colorScheme,hoverCell:i,prop,actual:a[i][prop],expected:o[i]?.[prop]});
  for(const page of [actual,original])for(const input of await page.locator('.checklist input').all())await input.evaluate(e=>{e.checked=true;});
  const ac=await sample(actual,'.checklist label,.chk-text,.checklist input'),oc=await sample(original,'.checklist label,.chk-text,.checklist input');for(let i=0;i<ac.length;i++)for(const prop of props)if(ac[i][prop]!==oc[i]?.[prop])failures.push({width,colorScheme,checked:i,prop,actual:ac[i][prop],expected:oc[i]?.[prop]});
  fs.writeFileSync('/tmp/issep-browser-results.json',JSON.stringify(failures,null,2));
