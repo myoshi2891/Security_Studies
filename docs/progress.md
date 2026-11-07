@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-07（ISSEP目次・11.3回答UI・SCS/Security Architectureガイドのレビュー修正）
+> **最終更新**: 2026-11-07（ISSEP目次・11.3回答UI・SCS/Security Architectureガイドのレビュー修正、WebAuthn JSON例・範囲合意ステップ追加）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1529,4 +1529,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 2026-11-07 レビュー指摘対応（ガイド本文ほか）: SCSガイドの適用除外と4-4-4-2（悪用確認済み脆弱性の14日期限）を解説書SCS-620で照合して修正（db6dab4）。Security Architectureガイドへ excludeCredentials、認証時のUVフラグ検証、URL取得ワークロードの通信制御、AES-GCM contextの独立導出を追記（685351d）。ISSEPのquiz.browser.mjsへCHROME_PATHを追記（586aacd）。「暫定対策は期限を延ばさない」は解説書の明文ではなく、14日適用義務からの整理。ISSEPの.diagram原本宣言（display:flex等）は削除すると原本宣言保持テストが失敗するため保持。検証: ISSEP/ISO24759/ホーム209成功（21ファイル）、lint・型検査・markdownlint成功。全体テスト・ビルドは未実行。
 
-再開プロンプト: 「dev の `586aacd` 以降から再開。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2754件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
+2026-11-07 レビュー指摘対応（3回目）: SCSガイドをSCS-620/SCS-410で照合して修正（3d31d12）。4-1-4-2の6文字はローカル認証のPINに適用される旨を追記し、4-1-5-3の行を追加（MFA又は10回失敗でのロックを実施して8文字以上、どちらも不可なら英大文字小文字・数字を含む10文字以上）。Step 4「★3確認責任者と取得単位・適用範囲を合意」を追加してStep 0〜9へ振り直し、90日計画へ事前合意の節目を追加。専門家の登録受付は2027年1月以降の予定のため、12月時点は候補者との事前合意、1月に再確認とした。現状確認の開始は12/7へ移り、終了日は不変。WebAuthn登録例をbase64url JSON＋ブラウザ側変換へ変更（c3188d6）。ISO24759のhighlight.js CSS取得をパッケージ解決へ変更（6b851be、同じ相対パスは他ガイドに残存）。ISO27001の除外リストを既存30ルートの固定一覧へ変更（df5cc8b）。quiz.browser.mjsの結果出力をISSEP_QUIZ_RESULTS_PATH／一意な既定パス、失敗時も書き込む方式へ変更（572bdec）。検証: 対象2ファイル22成功、ルート削除の負の対照で失敗検出、lint・型検査・markdownlint成功、mermaid 2図描画、WebAuthn例はChromeのparseCreationOptionsFromJSONと手動変換の両方でバイト一致、quiz.browser.mjsはlocalhost:3107で4条件成功・接続失敗時も結果書き込み。全体テストは未実行。ビルド禁止/未実行。注意: Next.js devは127.0.0.1からのdevリソースを遮断するため、quiz.browser.mjs既定のDOCS_BASE_URL（127.0.0.1:3107）ではhydrationされず失敗する。DOCS_BASE_URL=http://localhost:3107 を指定する。
+
+再開プロンプト: 「dev の `572bdec` 以降から再開。quiz.browser.mjsの既定URLをlocalhostへ変更するか判断し、他ガイドのhighlight.js相対パス参照をパッケージ解決へ揃えるか確認する。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2754件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
