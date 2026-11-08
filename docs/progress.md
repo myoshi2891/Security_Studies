@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-08（SCS/Security Architectureガイドの5回目レビュー修正、ISSEPのruntime検証のChrome既定パス除去）
+> **最終更新**: 2026-11-08（6回目レビュー修正: SCSガイド3点、ISSEP目次の断片選択固定、styles検証のChrome既定パス除去）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -1534,5 +1534,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 2026-11-07 レビュー指摘対応（4回目）: SCSガイドの第4.0版の出典をIPA公式ページと関連制度・施策へ変更（INTERNET Watchの当該記事は制度構築方針の記事で無関係。★3・★4との対応は付録5の見直しで裏付け）。委託先所有端末は適用範囲外のまま、取り扱い条件の設定と遵守確認を追記（解説書3.2.3）。保守ベンダー対策へ接続先の限定と作業時のみの接続を追加（1d0b6d1）。Security Architectureガイドへ登録レスポンスのサーバー検証、TLSを前提としたトークン認証、許可リスト不可時の公開IPv4/IPv6限定、エージェントログの引数の項目限定とマスクを追記（0c589b5）。quiz.browser.mjsはCHROME_PATH未指定時にPlaywright同梱ブラウザを使用、runtime.browser.mjsは失敗時も途中結果を保存（50538db）。検証: markdownlint・lint・型検査成功、localhost:3107でquiz 4条件（CHROME_PATH指定）とruntime 2幅が成功、runtimeの接続失敗時も結果書き込み。同梱ブラウザでの成功経路は、手元のPlaywrightと版が合うブラウザがなく未確認。全体テストは未実行。ビルド禁止/未実行。
 
 2026-11-08 レビュー指摘対応（5回目）: SCSガイドの適用範囲を解説書3.2.1注10・3.2.2で照合し、除外に当たる社外向けサービス基盤のサーバは公開していても自動的には含めないと明記。それ以外の公開サーバは必ず含める（注10は「必ず含める」も併記するため、公開サーバへの当てはめは筆者整理と表示）。ハンズオンの図で ENG→PORTAL のエッジを信頼境界の外へ移動（Mermaidの解析結果で PORTAL が境界から外れ、エッジ6本を維持）。CI例を `--no-deps --only-binary :all:` に変更し、ビルド依存の扱いを追記。pip 26.2.1 のオフライン実験で `--no-deps` だけではsdistのビルド依存を取得しに行くこと、`--only-binary :all:` でビルド前に停止することを確認（656c2d5）。Security Architectureガイドへ既存アカウントへの資格情報追加時の再認証とアカウント紐づけ、ログイン時のassertion全検証を追記（4cf60a7）。ISSEPのruntime.browser.mjsからmacOS固定のChromeパスを除去（0415b70。50538dbではquiz.browser.mjsのみ変更済みだった）。guide.css 844-850の指摘は対応不要: QuizCardの常設 role="status" で読み上げ済み、正解色のコントラストは5.67:1（不正解は7.89:1）、#e5eafa に対応する既存トークンなし。ISSEP専用107成功/0失敗（10ファイル、2265 expect）、npm run lint・npm run types:check成功。全体テストは未実行（ガイド本文と未テストのbrowserスクリプトのみの変更）。runtime.browser.mjsは構文確認のみで実ブラウザー実行は未実施。ビルド禁止/未実行、目視はユーザー担当。
+
+2026-11-08 レビュー指摘対応（6回目）: SCSガイドの4-1-4-1を「ロック閾値は10回以下」と明記し、原文の「10回以上」を11回以上の閾値を許す意味に読まないと注記。`pip lock` を `--only-binary :all:` に限定し、sdistが必要な場合は認証情報のない隔離環境でロックを生成すると追記。プロバナンス検証は署名の有効性だけでなく、成果物ハッシュ・期待するソースリポジトリ・信頼済みの署名者とビルダーの全検証を要求（63a1765）。ISSEP目次: 初期フラグメントとhashchangeで要求された小節を、クリックと同じ固定（pin）経路で選択し、競合する観測通知で上書きされないよう修正。読者のスクロール入力で観測追従へ戻る。回帰2件追加（Red 441090d、テスト間のURL持ち越し解消と小節追跡の期待値修正14b8901 → Green 078691b）。styles.browser.mjsはCHROME_PATH指定時のみexecutablePathを渡し、未指定時はPlaywright同梱Chromiumを使用（8586908）。ISO24759 styles.test.tsxの実ジオメトリ検証の提案は見送り: Happy DOMはレイアウトを計算しないため、境界・中央寄せ・左右スクロール到達は検証できず、Chromeでの確認は移行時に実施済み。ISSEP専用109成功/0失敗（10ファイル）、npm run lint・npm run types:check成功。全体テスト未実行、styles.browser.mjsは構文確認のみ。ビルド禁止/未実行、目視はユーザー担当。
 
 再開プロンプト: 「dev の `0415b70` 以降から再開。styles.browser.mjs に残るmacOS固定のChromeパスを quiz/runtime と同じ形へ揃えるか判断する。ISSEPのbrowserスクリプトの既定URLをlocalhostへ変更するか判断し、他ガイドのhighlight.js相対パス参照をパッケージ解決へ揃えるか確認する。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2754件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
