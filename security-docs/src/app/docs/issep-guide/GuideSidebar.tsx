@@ -52,12 +52,14 @@ export function GuideSidebar({children}:{children:ReactNode}){
    if(Math.abs((pinnedTarget?.getBoundingClientRect().top??pinnedTop)-pinnedTop)<=PIN_DRIFT_PX)return;
    pinned.current=false;trackers.forEach(track=>{track();});
   };
-  const hash=()=>select(decodeFragment(window.location.hash.slice(1))||'sec-1');
+  // A requested entry, by click or fragment, stays selected through its jump until the reader scrolls.
+  const pin=(id:string)=>{select(id);pinnedTarget=document.getElementById(id);pinned.current=pinnedTarget!==null;settle();};
+  const hash=()=>{const id=decodeFragment(window.location.hash.slice(1));if(id)pin(id);else select('sec-1');};
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
    if(!link)return;
-   const id=decodeFragment(link.hash.slice(1));select(id);pinnedTarget=document.getElementById(id);pinned.current=pinnedTarget!==null;settle();
+   const id=decodeFragment(link.hash.slice(1));pin(id);
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
    if(!heading){close();return;}
