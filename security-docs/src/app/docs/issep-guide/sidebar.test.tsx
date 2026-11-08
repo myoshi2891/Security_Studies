@@ -3,7 +3,8 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { createElement as h } from 'react';
 import { evaluatedPage, renderedPage } from './fidelity-helpers';
 import { GuideSidebar } from './GuideSidebar';
-afterEach(cleanup);
+// 各テストは URL の断片を持ち越さない（断片は目次の選択を固定するため）
+afterEach(() => { cleanup(); window.history.replaceState(null, '', '/'); });
 async function mounted() {
  const { default: Page } = await evaluatedPage();
  return render(h(Page, {}));
@@ -203,7 +204,7 @@ test('an initial fragment keeps its subsection selected against a competing obse
   notify('h3-2', true);
   expect(current()).toBe('#h3-1');
   fireEvent.wheel(view.container.querySelector('#h3-1')!);
-  notify('sec-1', true);
+  notify('h3-1', false);
   expect(current()).toBe('#h3-2');
  } finally {
   globalThis.IntersectionObserver = originalObserver;
@@ -219,7 +220,7 @@ test('a hashchange keeps its subsection selected against a competing observer en
   notify('h3-2', true);
   expect(current()).toBe('#h3-1');
   fireEvent.keyDown(view.container.querySelector('#h3-1')!, { key: 'PageDown' });
-  notify('sec-1', true);
+  notify('h3-1', false);
   expect(current()).toBe('#h3-2');
  } finally {
   globalThis.IntersectionObserver = originalObserver;
