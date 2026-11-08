@@ -12,7 +12,7 @@ const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.ISSEP_RENDER
 const css=['../../globals.css','../docs-layout.css','./guide.css'].map(p=>fs.readFileSync(resolve(dir,p),'utf8')).join('\n').replace(/@import[^;]+;/g,'');
 const props=['fontFamily','fontSize','fontWeight','letterSpacing','lineHeight','color','backgroundColor','marginTop','marginBottom','paddingTop','paddingBottom','paddingLeft','paddingRight','borderTopWidth','borderBottomWidth','borderLeftWidth','listStyleType','display','textTransform','fontStyle','counterReset','counterIncrement'];
 const selectors=['h1,h2,h3,h4,h5,h6','th,td','.guide-content p','.guide-content ul,.guide-content ol,.guide-content li','code,em,strong','pre','.hero,.eyebrow,.meta,.meta li','.brand,.brand-title,.brand-sub','.sidebar nav a','.ref-card,.ref-badge,.ref-title,.ref-url,.ref-tag','.callout,.callout-title','.quiz,.q-badge,.q-text,.q-opts,.quiz details,.quiz summary,.answer','.checklist label,.chk-text,.checklist input','.footer'];
-const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
 console.log('Chrome launched');
 const failures=[];
 try{
