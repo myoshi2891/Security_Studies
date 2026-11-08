@@ -195,3 +195,34 @@ test('without a click, the observer keeps following the reader', () => {
   globalThis.IntersectionObserver = originalObserver;
  }
 });
+test('an initial fragment keeps its subsection selected against a competing observer entry until the reader scrolls', () => {
+ try {
+  window.history.replaceState(null, '', '#h3-1');
+  const { view, notify, current } = observedGuide();
+  expect(current()).toBe('#h3-1');
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-1');
+  fireEvent.wheel(view.container.querySelector('#h3-1')!);
+  notify('sec-1', true);
+  expect(current()).toBe('#h3-2');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+  window.history.replaceState(null, '', '/');
+ }
+});
+test('a hashchange keeps its subsection selected against a competing observer entry until the reader scrolls', () => {
+ try {
+  const { view, notify, current } = observedGuide();
+  window.history.replaceState(null, '', '#h3-1');
+  act(() => { window.dispatchEvent(new Event('hashchange')); });
+  expect(current()).toBe('#h3-1');
+  notify('h3-2', true);
+  expect(current()).toBe('#h3-1');
+  fireEvent.keyDown(view.container.querySelector('#h3-1')!, { key: 'PageDown' });
+  notify('sec-1', true);
+  expect(current()).toBe('#h3-2');
+ } finally {
+  globalThis.IntersectionObserver = originalObserver;
+  window.history.replaceState(null, '', '/');
+ }
+});
