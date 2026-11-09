@@ -160,6 +160,7 @@ bun run lint         # ESLint v9 (eslint . を直接呼ぶ)
 - **コンテンツの作成:** 新しいドキュメントコンテンツはすべて MDX で作成し、`security-docs/src/app/docs/<slug>/page.mdx` に配置してください。追加後は `src/config/docs.ts` にもエントリを追加してください。
 - **スタイリング:** プロジェクトでは Tailwind CSS (v4) を使用しています。カスタムコンポーネントにスタイルを追加する際は、原則として Tailwind のユーティリティクラスを利用してください。移行ページ（2026-10-18時点で CCIE Security、CCST Cybersecurity、Secure by Design、MITRE ATLAS、Hacking Kubernetes、WAHH、Applied Cryptography、Threat Modeling。下記「CCIE Security migration details」の4ガイドは当時の記録で、以降の移行分を追加）は元の点・番号・配色を保持するため、ページ内部に限定したCSSを使用します。
 - **型安全性:** 変更をコミットする前に `bun run types:check` を実行し、プロジェクト全体の型安全性を確認してください。
+- **ISO/IEC 24759の承認済みスタイル例外:** `/docs/iso-iec-24759-2025-guide` は、既存の表示と操作を保持するため、ルート内に限定したCSSとネイティブHTML要素を使用します（2026年11月9日ユーザー承認）。範囲・理由・検証記録は[例外記録](docs/migration-inventory/iso-iec-24759-2025-guide-review.md#ページ固有cssの承認済み例外)を参照してください。
 - **リント:** コミット前に `bun run lint` を実行してください。`_` プレフィックスの未使用引数は警告対象外です。
 
 ### CCIE Security migration status

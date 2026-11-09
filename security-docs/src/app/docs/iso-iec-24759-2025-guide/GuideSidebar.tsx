@@ -77,24 +77,35 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       const target = document.getElementById(id);
       const heading = target?.matches('h1,h2,h3,h4') ? target : target?.querySelector<HTMLElement>('h1,h2,h3,h4') ?? target;
       if (!heading) { close(); return; }
+      event.preventDefault();
+      window.history.pushState(null, '', `#${encodeURIComponent(id)}`);
       setOpen(false);
+      heading.closest('.main')?.removeAttribute('inert');
       if (!heading.hasAttribute('tabindex')) heading.tabIndex = -1;
       heading.focus({ preventScroll: true });
+      target?.scrollIntoView();
     };
     const nav = panel.current; nav?.addEventListener('click', click);
+    const wheel = (event: WheelEvent) => {
+      if (window.innerWidth > 1024 && event.target instanceof Node && nav?.contains(event.target)) return;
+      release();
+    };
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
       areaTop = entries[0]?.rootBounds?.top ?? window.innerHeight * 0.2;
       track();
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);
-    window.addEventListener('wheel', release, { passive: true }); window.addEventListener('keydown', releaseKey); window.addEventListener('scroll', scroll, { capture: true, passive: true });
-    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); clearTimeout(settleTimer); window.removeEventListener('wheel', release); window.removeEventListener('keydown', releaseKey); window.removeEventListener('scroll', scroll, { capture: true }); };
+    window.addEventListener('wheel', wheel, { passive: true }); window.addEventListener('keydown', releaseKey); window.addEventListener('scroll', scroll, { capture: true, passive: true });
+    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); clearTimeout(settleTimer); window.removeEventListener('wheel', wheel); window.removeEventListener('keydown', releaseKey); window.removeEventListener('scroll', scroll, { capture: true }); };
   }, [close, select]);
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow; document.body.style.overflow = 'hidden';
-    const links = [...(panel.current?.querySelectorAll<HTMLAnchorElement>('a') ?? [])]; links[0]?.focus();
+    const content = panel.current?.closest('.iso24759-guide')?.querySelector<HTMLElement>('.main');
+    const previousInert = content?.inert ?? false;
+    if (content) content.inert = true;
+    const links = [...(panel.current?.querySelectorAll<HTMLElement>('a,button') ?? [])]; links[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
@@ -110,10 +121,13 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       setOpen(false);
     };
     document.addEventListener('keydown', key); window.addEventListener('resize', resize); document.addEventListener('pointerdown', header);
-    return () => { document.body.style.overflow = previous; document.removeEventListener('keydown', key); window.removeEventListener('resize', resize); document.removeEventListener('pointerdown', header); };
+    return () => { document.body.style.overflow = previous; if (content) content.inert = previousInert; document.removeEventListener('keydown', key); window.removeEventListener('resize', resize); document.removeEventListener('pointerdown', header); };
   }, [open, close]);
   return <>
-    <aside className={`sidebar${open ? ' open' : ''}`} id="sidebar" aria-label="目次" ref={panel}>{children}</aside>
+    <aside className={`sidebar${open ? ' open' : ''}`} id="sidebar" role={open ? 'dialog' : undefined} aria-modal={open ? true : undefined} aria-label="目次" ref={panel}>
+      {children}
+      {open && <button type="button" className="mt-4 flex items-center gap-2 rounded border px-3 py-2" onClick={close}><X aria-hidden="true" />目次を閉じる</button>}
+    </aside>
     <button type="button" className={`backdrop${open ? ' show' : ''}`} id="backdrop" aria-label="目次を閉じる背景" tabIndex={-1} hidden={!open} onClick={close} />
     <button className="menu-btn" id="menuBtn" type="button" aria-label={open ? '目次を閉じる' : '目次を開く'} aria-expanded={open} aria-controls="sidebar" ref={toggle} onClick={() => setOpen(value => !value)}>{open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
   </>;

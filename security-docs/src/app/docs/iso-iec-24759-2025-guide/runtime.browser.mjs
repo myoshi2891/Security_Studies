@@ -1,0 +1,65 @@
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+import assert from 'node:assert/strict';
+import { verifyChapterScroll } from '../../../../scripts/browser-chapter-scroll.mjs';
+
+const require = createRequire(import.meta.url);
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH ?? 'playwright');
+const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
+const results = [], errors = [];
+try {
+  for (const width of [375, 1440]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
+    try {
+      await context.addInitScript(() => localStorage.setItem('security-docs:disclaimer-acknowledged', '1'));
+      const page = await context.newPage();
+      page.on('pageerror', error => errors.push(error.message));
+      const response = await page.goto(new URL('/docs/iso-iec-24759-2025-guide', process.env.DOCS_BASE_URL ?? 'http://127.0.0.1:3107').href, { waitUntil: 'networkidle' });
+      assert.equal(response.status(), 200);
+      const guide = page.locator('.iso24759-guide'), sidebar = guide.locator('.sidebar'), content = guide.locator('.main');
+      if (width === 1440) {
+        const followed = await verifyChapterScroll(page, '.iso24759-guide');
+        assert.equal(followed.length, 4);
+        const target = await guide.locator('section[id]').nth(6).getAttribute('id');
+        await page.evaluate(id => { history.replaceState(null, '', '#' + encodeURIComponent(id)); window.dispatchEvent(new HashChangeEvent('hashchange')); }, target);
+        const current = () => sidebar.locator('[aria-current="location"]').getAttribute('href');
+        assert.equal(decodeURIComponent(await current()), '#' + target);
+        const scrollTop = await page.evaluate(() => window.scrollY);
+        await sidebar.hover(); await page.mouse.wheel(0, 250);
+        await page.waitForTimeout(200);
+        assert.equal(decodeURIComponent(await current()), '#' + target, 'desktop TOC wheel must preserve the navigation pin');
+        assert.equal(await page.evaluate(() => window.scrollY), scrollTop);
+        await page.mouse.move(1000, 500); await page.mouse.wheel(0, 250);
+        await page.waitForFunction(id => decodeURIComponent(document.querySelector('.sidebar [aria-current="location"]').hash.slice(1)) !== id, target);
+      } else {
+        const toggle = guide.locator('#menuBtn');
+        await toggle.click();
+        assert.equal(await sidebar.getAttribute('role'), 'dialog');
+        assert.equal(await sidebar.getAttribute('aria-modal'), 'true');
+        assert.equal(await content.evaluate(element => element.inert), true);
+        const cdp = await context.newCDPSession(page);
+        const tree = await cdp.send('Accessibility.getFullAXTree');
+        assert.ok(!tree.nodes.some(node => !node.ignored && node.role?.value === 'heading' && node.name?.value.includes('初学者向け')));
+        const close = sidebar.getByRole('button', { name: '目次を閉じる' });
+        await page.keyboard.press('Shift+Tab'); assert.ok(await close.evaluate(element => element === document.activeElement));
+        await close.click(); assert.equal(await content.evaluate(element => element.inert), false);
+        await toggle.click();
+        const link = sidebar.locator('nav a').nth(3), id = decodeURIComponent((await link.getAttribute('href')).slice(1));
+        await link.click();
+        assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+        assert.equal(await content.evaluate(element => element.inert), false);
+        assert.ok(await page.evaluate(id => document.activeElement === document.getElementById(id).querySelector('h2'), id));
+      }
+      await page.emulateMedia({ media: 'print' });
+      assert.equal(await sidebar.evaluate(element => getComputedStyle(element).display), 'none');
+      assert.equal(await content.evaluate(element => getComputedStyle(element).marginLeft), '0px');
+      for (const description of await guide.locator('.diagram-print-description').all()) assert.equal(await description.isVisible(), true);
+      results.push({ width, scrollFollowing: width === 1440, modalDrawer: width === 375, print: true });
+      console.log(JSON.stringify(results.at(-1)));
+    } finally { await context.close(); }
+  }
+  assert.deepEqual(errors, []);
+} finally {
+  await browser.close();
+  fs.writeFileSync('/tmp/iso24759-runtime-results.json', JSON.stringify(results, null, 2));
+}

@@ -9,12 +9,13 @@ afterEach(()=>{cleanup();(window as unknown as Window).happyDOM.setURL('http://l
 const ids=Array.from({length:19},(_,i)=>'ch'+i);
 const nav=()=>h('nav',{},ids.map((id,i)=>h('a',{href:`#${id}`,key:i},`章${i+1}`)));
 const sections=()=>ids.map((id,i)=>h('section',{id,key:i},h('h2',{},`章${i+1}`)));
-const harness=()=>h('div',{className:'iso24759-guide'},h(GuideSidebar,{children:nav()}),...sections());
+const harness=()=>h('div',{className:'iso24759-guide'},h(GuideSidebar,{children:nav()}),h('main',{className:'main'},...sections()));
 
 test('the original nineteen links are focus trapped and Escape/background restore focus and scrolling',()=>{
  const view=render(harness());const btn=view.container.querySelector('#menuBtn')!;const links=view.container.querySelectorAll<HTMLAnchorElement>('nav a');expect(links).toHaveLength(19);
  fireEvent.click(btn);expect(btn).toHaveAttribute('aria-expanded','true');expect(document.body.style.overflow).toBe('hidden');expect(document.activeElement).toBe(links[0]);
- fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement).toBe(links[18]);fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement).toBe(links[0]);
+ const closeButton=view.container.querySelector('aside button')!;
+ fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement).toBe(closeButton);fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement).toBe(links[0]);
  fireEvent.keyDown(document,{key:'Escape'});expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(btn);expect(document.body.style.overflow).toBe('');
  fireEvent.click(btn);fireEvent.click(view.container.querySelector('#backdrop')!);expect(btn).toHaveAttribute('aria-expanded','false');expect(document.activeElement).toBe(btn);
  fireEvent.click(btn);view.unmount();expect(document.body.style.overflow).toBe('');
@@ -32,10 +33,29 @@ test.each([false,true])('Tab returns outside focus to the open drawer (Shift: %s
  const event=new KeyboardEvent('keydown',{key:'Tab',shiftKey,bubbles:true,cancelable:true});
  fireEvent(document,event);
  const links=view.container.querySelectorAll('nav a');
- expect(event.defaultPrevented).toBe(true);expect(document.activeElement).toBe(links[shiftKey?18:0]);
+ expect(event.defaultPrevented).toBe(true);expect(document.activeElement).toBe(shiftKey?view.container.querySelector('aside button'):links[0]);
  // Interior focus keeps its normal Tab behavior.
  (links[5] as HTMLAnchorElement).focus();
  expect(fireEvent.keyDown(document,{key:'Tab',shiftKey})).toBe(true);
+});
+test('the open drawer is modal, makes covered content inert and provides an internal close control',()=>{
+ const view=render(harness()),button=view.container.querySelector('#menuBtn')!,content=view.container.querySelector<HTMLElement>('.main')!;
+ expect(content.inert).not.toBe(true);fireEvent.click(button);
+ expect(view.container.querySelector('aside')).toHaveAttribute('role','dialog');expect(view.container.querySelector('aside')).toHaveAttribute('aria-modal','true');expect(content.inert).toBe(true);
+ fireEvent.click(view.container.querySelector('aside button')!);
+ expect(content.inert).toBe(false);expect(view.container.querySelector('aside')).not.toHaveAttribute('aria-modal');expect(document.activeElement).toBe(button);
+ fireEvent.click(button);view.unmount();expect(content.inert).toBe(false);
+});
+test('desktop TOC wheel scrolling preserves a navigation pin while content wheel scrolling releases it',()=>{
+ const saved=globalThis.IntersectionObserver,previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});
+  const view=render(harness());fireEvent.click(view.container.querySelector('a[href="#ch3"]')!);
+  act(()=>notify!([{target:view.container.querySelector('#ch2')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+  fireEvent.wheel(view.container.querySelector('nav')!);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');
+  fireEvent.wheel(view.container.querySelector('.main')!);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch2');
+ }finally{globalThis.IntersectionObserver=saved;if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');}
 });
 test('scroll tracking retains intersecting chapters across notifications and removes previous activation',()=>{
  const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;const targets:Element[]=[];
