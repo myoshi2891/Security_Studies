@@ -54,6 +54,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
    const current=nodes.filter(node=>visible.has(node)&&node.matches('h3')).at(-1)??preceding??section??nodes.filter(node=>node.getBoundingClientRect().top<=window.innerHeight*0.2).at(-1);
    if(current)select(current.id);
   };
+  const release=()=>{pinned.current=false;track();};
   const settle=()=>{clearTimeout(settleTimer);pinnedTop=null;settleTimer=setTimeout(()=>{pinnedTop=pinnedTarget?.getBoundingClientRect().top??null;},JUMP_SETTLE_MS);};
   const followScroll=()=>{
    if(!pinned.current)return;
@@ -68,7 +69,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
    select(linked?id:pinnedTarget?.closest('section[id]')?.id??id);
    pinned.current=pinnedTarget!==null;settle();
   };
-  const hash=()=>{const id=decodeFragment(window.location.hash.slice(1));if(id)pin(id);else select('sec-1');};
+  const hash=()=>{const id=decodeFragment(window.location.hash.slice(1));if(id)pin(id);else release();};
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
@@ -80,10 +81,10 @@ export function GuideSidebar({children}:{children:ReactNode}){
    event.preventDefault();window.history.pushState(null,'',`#${encodeURIComponent(id)}`);setOpen(false);restoreBackground();heading.tabIndex=-1;heading.focus({preventScroll:true});target?.scrollIntoView();
   };
   aside?.addEventListener('click',click);
-  const release=()=>{pinned.current=false;track();};
   const wheel=(event:WheelEvent)=>{if(event.target instanceof Node&&aside?.contains(event.target))return;release();};
+  const pointer=(event:PointerEvent)=>{if(event.target instanceof Node&&aside?.contains(event.target))return;release();};
   const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
-  window.addEventListener('wheel',wheel,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
+  window.addEventListener('wheel',wheel,{passive:true});window.addEventListener('pointerdown',pointer);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
   const observers:IntersectionObserver[]=[];
   const observe=()=>{
    observers.forEach(observer=>observer.disconnect());observers.length=0;visible.clear();
@@ -96,8 +97,21 @@ export function GuideSidebar({children}:{children:ReactNode}){
    }
   };
   observe();window.addEventListener('resize',observe);
-  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',wheel);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});window.removeEventListener('resize',observe);clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
+  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',wheel);window.removeEventListener('pointerdown',pointer);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});window.removeEventListener('resize',observe);clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
  },[close,select,restoreBackground]);
+ useEffect(()=>{
+  const resize=()=>{
+   const focusNavigation=window.innerWidth>1024&&(openRef.current||document.activeElement===toggle.current);
+   if(openRef.current)close();
+   if(focusNavigation){
+    const selected=panel.current?.querySelector<HTMLAnchorElement>('nav a[aria-current="location"]')??panel.current?.querySelector<HTMLAnchorElement>('nav a');
+    // Chapter links remain visible if a subsequent observer update collapses the focused subsection's group.
+    (selected?.closest('nav>ul>li')?.querySelector<HTMLAnchorElement>(':scope>a')??selected)?.focus();
+   }
+  };
+  window.addEventListener('resize',resize);
+  return ()=>{window.removeEventListener('resize',resize);};
+ },[close]);
  useEffect(()=>{
   if(!open)return;
   const previous=document.body.style.overflow;document.body.style.overflow='hidden';
@@ -106,10 +120,9 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const visible=()=>[...(panel.current?.querySelectorAll<HTMLAnchorElement>('nav>ul>li>a,nav>ul>li.open>ul a')??[])];
   visible()[0]?.focus();
   const key=(event:KeyboardEvent)=>{if(event.key==='Escape')close();if(event.key!=='Tab')return;const links=visible(),first=links[0],last=links.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}};
-  const resize=()=>{close();};
   const header=(event:PointerEvent)=>{if(!(event.target instanceof Element)||!event.target.closest('.docs-header'))return;if(panel.current?.contains(document.activeElement))toggle.current?.focus();setOpen(false);};
-  document.addEventListener('keydown',key);window.addEventListener('resize',resize);document.addEventListener('pointerdown',header);
-  return ()=>{document.body.style.overflow=previous;restoreBackground();document.removeEventListener('keydown',key);window.removeEventListener('resize',resize);document.removeEventListener('pointerdown',header);};
+  document.addEventListener('keydown',key);document.addEventListener('pointerdown',header);
+  return ()=>{document.body.style.overflow=previous;restoreBackground();document.removeEventListener('keydown',key);document.removeEventListener('pointerdown',header);};
  },[open,close,restoreBackground]);
  return <>
   <aside className={`sidebar${open?' open':''}`} id="sidebar" aria-label="目次" ref={panel}>{children}</aside>

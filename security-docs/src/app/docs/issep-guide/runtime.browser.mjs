@@ -44,6 +44,10 @@ try{
   }
   await page.evaluate(()=>{history.replaceState(null,'','#h3-30');window.dispatchEvent(new HashChangeEvent('hashchange'));});
   assert.equal(await page.locator('nav>ul>li.open>a').getAttribute('href'),'#sec-9');assert.ok((await page.locator('a[href="#h3-30"]').getAttribute('class')).includes('active'));
+  if(width===1440){
+   await page.evaluate(()=>{history.replaceState(null,'',location.pathname);window.dispatchEvent(new HashChangeEvent('hashchange'));});
+   assert.equal((await verifyChapterScroll(page,'.issep-guide')).length,4);
+  }
   if(width===375){
    const button=page.locator('#menuBtn'),content=page.locator('.issep-guide .guide-content');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');
    assert.equal(await content.evaluate(element=>element.inert),true);assert.ok(await button.evaluate(element=>!element.closest('[inert]')));assert.ok(await page.locator('.sidebar').evaluate(element=>!element.closest('[inert]')));
@@ -59,6 +63,15 @@ try{
    await page.locator('nav>ul>li>a').first().focus();await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#sec-13');
    await page.locator('a[href="#sec-8"]').click();assert.equal(await button.getAttribute('aria-expanded'),'false');assert.ok(await page.locator('#sec-8 h2').evaluate(el=>document.activeElement===el));
    await button.click();await page.locator('a[href="#h3-28"]').click();assert.ok(await page.locator('#h3-28').evaluate(el=>document.activeElement===el));
+   for(const wasOpen of [true,false]){
+    if(wasOpen)await button.click();else await button.focus();
+    await page.setViewportSize({width:1440,height:900});
+    await page.waitForFunction(()=>{
+     const link=document.activeElement;
+     return document.querySelector('#menuBtn').getAttribute('aria-expanded')==='false'&&link?.matches('.sidebar nav a')&&getComputedStyle(link).visibility==='visible'&&link.getBoundingClientRect().height>0;
+    });
+    await page.setViewportSize({width:375,height:900});
+   }
   }
   const boxes=await page.locator('.checklist input').all();assert.equal(boxes.length,6);
   for(const input of boxes){await input.evaluate(e=>e.scrollIntoView({block:'center'}));await input.check();assert.equal(await input.isChecked(),true);}

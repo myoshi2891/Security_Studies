@@ -77,7 +77,7 @@ function observedGuide(nextChapter=false) {
  const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, { children: toc }), body, nextChapter?h('section',{id:'sec-2'}):null));
  const notify = (id: string, isIntersecting: boolean) => {
   const target = view.container.querySelector(`#${id}`)!;
-  const owner = observers.find(entry => entry.nodes.includes(target))!;
+  const owner = observers.find(entry => !entry.disconnected && entry.nodes.includes(target))!;
   act(() => owner.callback([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver));
  };
  const current = () => view.container.querySelector('[aria-current="location"]')?.getAttribute('href');
@@ -87,6 +87,39 @@ function observedGuide(nextChapter=false) {
 }
 const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
+test.each([false,true])('desktop resize focuses visible navigation when the drawer was open: %s',wasOpen=>{
+ const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
+ try{
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:375});
+  const {view,notify,current}=observedGuide(true);const button=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;
+  notify('h3-1',true);
+  if(wasOpen)fireEvent.click(button);else button.focus();
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});fireEvent(window,new Event('resize'));
+  expect(button).toHaveAttribute('aria-expanded','false');
+  expect(document.activeElement).toBe(view.container.querySelector('nav>ul>li>a'));
+  notify('sec-2',true);expect(current()).toBe('#sec-2');expect(document.activeElement).toBe(view.container.querySelector('nav>ul>li>a'));
+ }finally{
+  globalThis.IntersectionObserver=originalObserver;
+  if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
+ }
+});
+test('sidebar pointer presses preserve a navigation pin while outside presses resume tracking',()=>{
+ try{
+  const {view,notify,current}=observedGuide();
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);notify('h3-2',true);
+  fireEvent.pointerDown(view.container.querySelector('a[href="#h3-2"]')!);expect(current()).toBe('#h3-1');
+  fireEvent.pointerDown(view.container.querySelector('#h3-2')!);expect(current()).toBe('#h3-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
+test('removing the fragment releases the stale pin and resumes current observer selection',()=>{
+ try{
+  window.history.replaceState(null,'','#h3-1');
+  const {notify,current}=observedGuide();notify('h3-2',true);expect(current()).toBe('#h3-1');
+  act(()=>{window.history.replaceState(null,'','/');window.dispatchEvent(new Event('hashchange'));});
+  expect(current()).toBe('#h3-2');
+  notify('h3-2',false);notify('h3-1',true);expect(current()).toBe('#h3-1');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
 test('sidebar wheel scrolling preserves the selected link while content wheel scrolling resumes tracking',()=>{
  try{
   const {view,notify,current}=observedGuide();

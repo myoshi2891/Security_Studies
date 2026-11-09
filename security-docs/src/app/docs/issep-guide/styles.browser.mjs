@@ -1,11 +1,14 @@
 /** Chromium source fidelity checks; npm exec with PLAYWRIGHT_MODULE_PATH. No build. */
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
-import {resolve} from 'node:path';
+import {join,resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {randomUUID} from 'node:crypto';
 const require=createRequire(import.meta.url);
 const dir=import.meta.dirname,root=resolve(dir,'../../../../..');
-const sourceFile=[root+'/archive/security-certifications/Issep-guide.html',root+'/Issep-guide.html'].find(fs.existsSync);
-if(!sourceFile){console.log('SKIP: Original HTML is absent; browser source comparison is unavailable.');process.exit(0);}
+const sourceFile=resolve(root,'archive/security-certifications/Issep-guide.html');
+if(!fs.existsSync(sourceFile)){console.log('SKIP: Original HTML is absent; browser source comparison is unavailable.');process.exit(0);}
+const resultsPath=join(tmpdir(),`issep-browser-results-${randomUUID()}.json`);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 let source=fs.readFileSync(sourceFile,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<link\b[^>]*>/g,'');
 const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.ISSEP_RENDERED_HTML??'/tmp/issep-rendered.html','utf8');
@@ -38,11 +41,11 @@ try{
  const a=await sample(actual,'th,td'),o=await sample(original,'th,td');for(let i=0;i<a.length;i++)for(const prop of ['backgroundColor','color','borderBottomWidth'])if(a[i][prop]!==o[i]?.[prop])failures.push({width,colorScheme,hoverCell:i,prop,actual:a[i][prop],expected:o[i]?.[prop]});
  for(const page of [actual,original])for(const input of await page.locator('.checklist input').all())await input.evaluate(e=>{e.checked=true;});
  const ac=await sample(actual,'.checklist label,.chk-text,.checklist input'),oc=await sample(original,'.checklist label,.chk-text,.checklist input');for(let i=0;i<ac.length;i++)for(const prop of props)if(ac[i][prop]!==oc[i]?.[prop])failures.push({width,colorScheme,checked:i,prop,actual:ac[i][prop],expected:oc[i]?.[prop]});
- fs.writeFileSync('/tmp/issep-browser-results.json',JSON.stringify(failures,null,2));
+ fs.writeFileSync(resultsPath,JSON.stringify(failures,null,2));
  console.log(JSON.stringify({width,colorScheme,cells:a.length,failures:failures.filter(f=>f.width===width&&f.colorScheme===colorScheme).length}));
  }finally{await ctx.close();}
  }
 }finally{await browser.close();}
-fs.writeFileSync('/tmp/issep-browser-results.json',JSON.stringify(failures,null,2));
-if(failures.length)throw Error(`${failures.length} differences; /tmp/issep-browser-results.json`);
-console.log('All typography, cells, lists, pseudo markers and hovered cells match.');
+fs.writeFileSync(resultsPath,JSON.stringify(failures,null,2));
+if(failures.length)throw Error(`${failures.length} differences; ${resultsPath}`);
+console.log('All typography, cells, lists, pseudo markers and hovered cells match.',resultsPath);
