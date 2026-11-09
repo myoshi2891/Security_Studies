@@ -87,7 +87,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       target?.scrollIntoView();
     };
     const nav = panel.current; nav?.addEventListener('click', click);
-    const wheel = (event: WheelEvent) => {
+    const scrollInput = (event: WheelEvent | TouchEvent) => {
       if (event.target instanceof Node && nav?.contains(event.target)) return;
       release();
     };
@@ -97,8 +97,8 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       track();
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);
-    window.addEventListener('wheel', wheel, { passive: true }); window.addEventListener('keydown', releaseKey); window.addEventListener('scroll', scroll, { capture: true, passive: true });
-    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); clearTimeout(settleTimer); window.removeEventListener('wheel', wheel); window.removeEventListener('keydown', releaseKey); window.removeEventListener('scroll', scroll, { capture: true }); };
+    window.addEventListener('wheel', scrollInput, { passive: true }); window.addEventListener('touchmove', scrollInput, { passive: true }); window.addEventListener('keydown', releaseKey); window.addEventListener('scroll', scroll, { capture: true, passive: true });
+    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); clearTimeout(settleTimer); window.removeEventListener('wheel', scrollInput); window.removeEventListener('touchmove', scrollInput); window.removeEventListener('keydown', releaseKey); window.removeEventListener('scroll', scroll, { capture: true }); };
   }, [close, select]);
   useEffect(() => {
     if (!open) return;

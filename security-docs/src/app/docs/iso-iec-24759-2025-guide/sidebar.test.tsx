@@ -123,6 +123,35 @@ test('scroll movement after a fragment jump settles restores observer selection'
   top=-400;fireEvent.scroll(window);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch2');
  }finally{globalThis.IntersectionObserver=saved;}
 });
+test('touch scrolling before settling releases the pin and follows subsequent chapters',async()=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  (window as unknown as Window).happyDOM.setURL('http://localhost/#ch3');
+  await (window as unknown as Window).happyDOM.waitUntilComplete();
+  const view=render(harness()),content=view.container.querySelector('.main')!;
+  const change=(id:string,on:boolean)=>act(()=>notify!([{target:view.container.querySelector('#'+id)!,isIntersecting:on} as IntersectionObserverEntry],{} as IntersectionObserver));
+  const current=()=>view.container.querySelector('[aria-current]')?.getAttribute('href');
+  change('ch4',true);fireEvent.touchStart(content);expect(current()).toBe('#ch3');
+  fireEvent.touchMove(view.container.querySelector('aside')!);expect(current()).toBe('#ch3');
+  fireEvent.touchMove(content);expect(current()).toBe('#ch4');
+  for(let frame=0;frame<3;frame++){fireEvent.scroll(window);await new Promise(resolve=>setTimeout(resolve,60));expect(current()).toBe('#ch4');}
+  change('ch4',false);change('ch5',true);fireEvent.scroll(window);expect(current()).toBe('#ch5');
+ }finally{globalThis.IntersectionObserver=saved;}
+});
+test('a fragment jump keeps its pin throughout continued scroll notifications without touch input',async()=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  (window as unknown as Window).happyDOM.setURL('http://localhost/#ch3');
+  await (window as unknown as Window).happyDOM.waitUntilComplete();
+  const view=render(harness()),target=view.container.querySelector('#ch3')!;let top=2400;
+  target.getBoundingClientRect=()=>({top} as DOMRect);
+  act(()=>notify!([{target:view.container.querySelector('#ch4')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+  for(const position of [1800,1200,600,88]){top=position;fireEvent.scroll(window);await new Promise(resolve=>setTimeout(resolve,60));expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');}
+  await new Promise(resolve=>setTimeout(resolve,180));fireEvent.scroll(window);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');
+ }finally{globalThis.IntersectionObserver=saved;}
+});
 test('hash changes select the original chapter and closed-panel selection preserves link focus',()=>{
  const view=render(harness());act(()=>{(window as unknown as Window).happyDOM.setURL('http://localhost/#ch16');window.dispatchEvent(new Event('hashchange'));});const link=view.container.querySelector<HTMLAnchorElement>('[href="#ch16"]')!;expect(link).toHaveAttribute('aria-current','location');link.focus();fireEvent.click(link);expect(document.activeElement).toBe(link);expect(view.container.querySelector('#menuBtn')).toHaveAttribute('aria-expanded','false');
 });
