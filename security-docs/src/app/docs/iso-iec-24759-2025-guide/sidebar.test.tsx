@@ -169,6 +169,12 @@ test('an undecodable fragment selects nothing and still registers the listeners 
   const link=view.container.querySelector<HTMLAnchorElement>('[href="#ch3"]')!;fireEvent.click(link);expect(link).toHaveAttribute('aria-current','location');
  }finally{globalThis.IntersectionObserver=saved;}
 });
+test('changing a selected chapter to a malformed fragment clears its active and aria-current markers',()=>{
+ const view=render(harness());const link=view.container.querySelector('a[href="#ch3"]')!;
+ fireEvent.click(link);expect(link).toHaveClass('active');expect(link).toHaveAttribute('aria-current','location');
+ act(()=>{window.history.replaceState(null,'','#%zz');window.dispatchEvent(new Event('hashchange'));});
+ expect(view.container.querySelectorAll('nav a.active,nav a[aria-current]')).toHaveLength(0);
+});
 test('without a URL fragment the first link is selected even when its chapter ID is percent-encoded Japanese',()=>{
  const id='0-本ガイドの読み方';
  // 実ブラウザの a.hash はパーセントエンコード済みだが Happy DOM は生の値を返すため、href で同じ状態を作る

@@ -19,8 +19,8 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     const nav = panel.current;
     const links = [...(nav?.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]') ?? [])];
     const selected = links.find(a => decodeFragment(a.hash) === `#${id}`);
-    if (!selected) return;
     for (const a of links) { a.classList.remove('active'); a.removeAttribute('aria-current'); }
+    if (!selected) return;
     selected.classList.add('active'); selected.setAttribute('aria-current', 'location');
     // The original ISO27001 aside owns its scrolling viewport.
     const viewport = nav;
