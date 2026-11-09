@@ -10,15 +10,29 @@ async function mounted() {
  return render(h(Page, {}));
 }
 test('menu closes with Escape, backdrop and resize, restoring scroll and focus', async () => {
- const v=await mounted(),btn=v.container.querySelector<HTMLButtonElement>('#menuBtn')!;
+ const v=await mounted(),btn=v.container.querySelector<HTMLButtonElement>('#menuBtn')!,content=v.container.querySelector<HTMLElement>('.guide-content')!;
  for(const method of ['escape','backdrop','resize']){
-  fireEvent.click(btn);expect(btn).toHaveAttribute('aria-expanded','true');expect(document.body.style.overflow).toBe('hidden');
+  fireEvent.click(btn);expect(btn).toHaveAttribute('aria-expanded','true');expect(document.body.style.overflow).toBe('hidden');expect(v.container.querySelector('aside')!.contains(document.activeElement)).toBe(true);expect(content.inert).toBe(true);
   if(method==='escape')fireEvent.keyDown(document,{key:'Escape'});
   if(method==='backdrop')fireEvent.click(v.container.querySelector('#backdrop')!);
   if(method==='resize')fireEvent(window,new Event('resize'));
-  expect(btn).toHaveAttribute('aria-expanded','false');expect(document.body.style.overflow).not.toBe('hidden');
+  expect(btn).toHaveAttribute('aria-expanded','false');expect(document.body.style.overflow).not.toBe('hidden');expect(document.activeElement).toBe(btn);expect(content.inert).toBe(false);
  }
  fireEvent.click(btn);v.unmount();expect(document.body.style.overflow).not.toBe('hidden');
+});
+test.each([false,true])('drawer dismissal and unmount restore the previous background inert state (%s)',previousInert=>{
+ const view=render(h('div',{className:'issep-guide'},h(GuideSidebar,{children:h('nav',{},h('ul',{},h('li',{},h('a',{href:'#section'},'章'))))}),h('main',{className:'guide-content'},h('section',{id:'section'},h('h2',{},'本文')))));
+ const content=view.container.querySelector<HTMLElement>('.guide-content')!,button=view.container.querySelector<HTMLButtonElement>('#menuBtn')!,panel=view.container.querySelector('aside')!;
+ content.inert=previousInert;
+ for(const method of ['Escape','backdrop','resize','toggle']){
+  fireEvent.click(button);expect(content.inert).toBe(true);expect(panel.closest('[inert]')).toBeNull();expect(button.closest('[inert]')).toBeNull();expect(panel.contains(document.activeElement)).toBe(true);
+  if(method==='Escape')fireEvent.keyDown(document,{key:'Escape'});
+  if(method==='backdrop')fireEvent.click(view.container.querySelector('#backdrop')!);
+  if(method==='resize')fireEvent(window,new Event('resize'));
+  if(method==='toggle')fireEvent.click(button);
+  expect(content.inert).toBe(previousInert);expect(button).toHaveAttribute('aria-expanded','false');
+ }
+ fireEvent.click(button);view.unmount();expect(content.inert).toBe(previousInert);
 });
 test('Tab traps keyboard focus inside visible menu links and malformed fragments stay safe', async () => {
  const v=await mounted();fireEvent.click(v.container.querySelector('#menuBtn')!);
@@ -73,6 +87,14 @@ function observedGuide(nextChapter=false) {
 }
 const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
+test('sidebar wheel scrolling preserves the selected link while content wheel scrolling resumes tracking',()=>{
+ try{
+  const {view,notify,current}=observedGuide();
+  fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);notify('h3-2',true);
+  fireEvent.wheel(view.container.querySelector('aside')!);expect(current()).toBe('#h3-1');
+  fireEvent.wheel(view.container.querySelector('#h3-1')!);expect(current()).toBe('#h3-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
 test('desktop observer options leave an intersecting heading band, including after resize',()=>{
  const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth'),previousHeight=Object.getOwnPropertyDescriptor(window,'innerHeight');
  try{

@@ -43,7 +43,11 @@ export function QuizCard({ number, correctAnswer, children }: {
             aria-pressed={selected === choice}
             aria-describedby={selected === choice ? feedbackId : undefined}
             data-choice-state={state}
-            onClick={() => { setSelected(choice); setExpanded(true); }}
+            onClick={event => {
+              const disclosure = event.currentTarget.closest('.quiz')?.querySelector('details');
+              if (disclosure) disclosure.open = true;
+              setSelected(choice); setExpanded(true);
+            }}
           >{option.props.children}</button>);
         }));
         return <>{options}{feedback}</>;

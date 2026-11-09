@@ -18,10 +18,12 @@ const PIN_DRIFT_PX=2;
 export function GuideSidebar({children}:{children:ReactNode}){
  const panel=useRef<HTMLElement>(null),toggle=useRef<HTMLButtonElement>(null);
  const [open,setOpen]=useState(false),openRef=useRef(open);
+ const background=useRef<{element:HTMLElement;inert:boolean}|null>(null);
+ const restoreBackground=useCallback(()=>{if(background.current){background.current.element.inert=background.current.inert;background.current=null;}},[]);
  // A clicked entry stays selected through the jump; the reader's own scroll input, or any later scroll that moves the entry away, hands selection back to the observers.
  const pinned=useRef(false);
  useEffect(()=>{openRef.current=open;const guide=panel.current?.closest('.issep-guide');guide?.classList.toggle('nav-open',open);return ()=>{guide?.classList.remove('nav-open');};},[open]);
- const close=useCallback(()=>{setOpen(false);toggle.current?.focus();},[]);
+ const close=useCallback(()=>{setOpen(false);restoreBackground();toggle.current?.focus();},[restoreBackground]);
  const select=useCallback((id:string)=>{
   const aside=panel.current;
   if(!aside)return;
@@ -75,12 +77,13 @@ export function GuideSidebar({children}:{children:ReactNode}){
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
    if(!heading){close();return;}
-   event.preventDefault();window.history.pushState(null,'',`#${encodeURIComponent(id)}`);setOpen(false);heading.tabIndex=-1;heading.focus({preventScroll:true});target?.scrollIntoView();
+   event.preventDefault();window.history.pushState(null,'',`#${encodeURIComponent(id)}`);setOpen(false);restoreBackground();heading.tabIndex=-1;heading.focus({preventScroll:true});target?.scrollIntoView();
   };
   aside?.addEventListener('click',click);
   const release=()=>{pinned.current=false;track();};
+  const wheel=(event:WheelEvent)=>{if(event.target instanceof Node&&aside?.contains(event.target))return;release();};
   const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
-  window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
+  window.addEventListener('wheel',wheel,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
   const observers:IntersectionObserver[]=[];
   const observe=()=>{
    observers.forEach(observer=>observer.disconnect());observers.length=0;visible.clear();
@@ -93,19 +96,21 @@ export function GuideSidebar({children}:{children:ReactNode}){
    }
   };
   observe();window.addEventListener('resize',observe);
-  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});window.removeEventListener('resize',observe);clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
- },[close,select]);
+  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',wheel);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});window.removeEventListener('resize',observe);clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
+ },[close,select,restoreBackground]);
  useEffect(()=>{
   if(!open)return;
   const previous=document.body.style.overflow;document.body.style.overflow='hidden';
+  const content=panel.current?.closest('.issep-guide')?.querySelector<HTMLElement>('.guide-content');
+  if(content){background.current={element:content,inert:content.inert??false};content.inert=true;}
   const visible=()=>[...(panel.current?.querySelectorAll<HTMLAnchorElement>('nav>ul>li>a,nav>ul>li.open>ul a')??[])];
   visible()[0]?.focus();
   const key=(event:KeyboardEvent)=>{if(event.key==='Escape')close();if(event.key!=='Tab')return;const links=visible(),first=links[0],last=links.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}};
   const resize=()=>{close();};
   const header=(event:PointerEvent)=>{if(!(event.target instanceof Element)||!event.target.closest('.docs-header'))return;if(panel.current?.contains(document.activeElement))toggle.current?.focus();setOpen(false);};
   document.addEventListener('keydown',key);window.addEventListener('resize',resize);document.addEventListener('pointerdown',header);
-  return ()=>{document.body.style.overflow=previous;document.removeEventListener('keydown',key);window.removeEventListener('resize',resize);document.removeEventListener('pointerdown',header);};
- },[open,close]);
+  return ()=>{document.body.style.overflow=previous;restoreBackground();document.removeEventListener('keydown',key);window.removeEventListener('resize',resize);document.removeEventListener('pointerdown',header);};
+ },[open,close,restoreBackground]);
  return <>
   <aside className={`sidebar${open?' open':''}`} id="sidebar" aria-label="目次" ref={panel}>{children}</aside>
   <div className={`backdrop${open?' show':''}`} id="backdrop" aria-hidden="true" onClick={close}/>

@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from 'bun:test';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { createElement as h } from 'react';
 import { QuizCard } from './QuizCard';
 import { evaluatedPage, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
@@ -65,6 +65,15 @@ function fixture() {
  ]}));
  return {view,card:view.container.querySelector('.quiz')!,buttons:[...view.container.querySelectorAll('button')]};
 }
+test.each([0,1])('choice %i reopens the answer before a pending disclosure toggle event',choice=>{
+ const {card,buttons}=fixture();
+ fireEvent.click(buttons[0]);const details=card.querySelector('details')!;expect(details.open).toBe(true);
+ const deferClosedToggle=(event:Event)=>{if(!details.open)event.stopImmediatePropagation();};
+ details.addEventListener('toggle',deferClosedToggle,true);
+ act(()=>{details.open=false;});
+ fireEvent.click(buttons[choice]);expect(details.open).toBe(true);
+ details.removeEventListener('toggle',deferClosedToggle,true);
+});
 test('the quiz wrapper is a group named by its existing label and keeps its answer state', () => {
  const {view,card,buttons}=fixture();
  expect(view.getByRole('group',{name:'問 3'})).toBe(card as HTMLElement);

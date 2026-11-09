@@ -45,12 +45,14 @@ try{
   await page.evaluate(()=>{history.replaceState(null,'','#h3-30');window.dispatchEvent(new HashChangeEvent('hashchange'));});
   assert.equal(await page.locator('nav>ul>li.open>a').getAttribute('href'),'#sec-9');assert.ok((await page.locator('a[href="#h3-30"]').getAttribute('class')).includes('active'));
   if(width===375){
-   const button=page.locator('#menuBtn');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');await page.keyboard.press('Escape');assert.equal(await button.getAttribute('aria-expanded'),'false');
+   const button=page.locator('#menuBtn'),content=page.locator('.issep-guide .guide-content');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');
+   assert.equal(await content.evaluate(element=>element.inert),true);assert.ok(await button.evaluate(element=>!element.closest('[inert]')));assert.ok(await page.locator('.sidebar').evaluate(element=>!element.closest('[inert]')));
+   await page.keyboard.press('Escape');assert.equal(await button.getAttribute('aria-expanded'),'false');assert.equal(await content.evaluate(element=>element.inert),false);assert.ok(await button.evaluate(element=>element===document.activeElement));
    await button.click();
    const currentUrl=page.url(),selected=await page.locator('nav [aria-current="location"]').getAttribute('href');
    const originalWindow=await (await context.newCDPSession(page)).send('Browser.getWindowForTarget');
    const [popup]=await Promise.all([context.waitForEvent('page'),page.locator('a[href="#sec-8"]').click({modifiers:['Shift']})]);
-   await popup.waitForLoadState('domcontentloaded');assert.equal(new URL(popup.url()).hash,'#sec-8');
+   await popup.waitForURL(/#sec-8$/);assert.equal(new URL(popup.url()).hash,'#sec-8');
    const newWindow=await (await context.newCDPSession(popup)).send('Browser.getWindowForTarget');assert.notEqual(newWindow.windowId,originalWindow.windowId);
    assert.equal(page.url(),currentUrl);assert.equal(await button.getAttribute('aria-expanded'),'true');assert.equal(await page.locator('nav [aria-current="location"]').getAttribute('href'),selected);
    await popup.close();
