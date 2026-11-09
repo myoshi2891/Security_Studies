@@ -102,7 +102,8 @@ export function GuideSidebar({children}:{children:ReactNode}){
  useEffect(()=>{
   const resize=()=>{
    const focusNavigation=window.innerWidth>1024&&(openRef.current||document.activeElement===toggle.current);
-   if(openRef.current)close();
+   const focusMenu=window.innerWidth<=1024&&panel.current?.contains(document.activeElement);
+   if(openRef.current||focusMenu)close();
    if(focusNavigation){
     const selected=panel.current?.querySelector<HTMLAnchorElement>('nav a[aria-current="location"]')??panel.current?.querySelector<HTMLAnchorElement>('nav a');
     // Chapter links remain visible if a subsequent observer update collapses the focused subsection's group.

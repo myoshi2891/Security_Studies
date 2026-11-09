@@ -27,14 +27,17 @@ try{
   const hash=s=>createHash('sha256').update(s).digest('hex');
   for(const [selector,tree] of Object.entries(actual.structures))assert.equal(hash(tree),inventory.structures[selector],selector);
   assert.deepEqual(actual.codes.map(hash),inventory.codes);
-  let drawn=0;
+  let drawn=0,narrow=0,oversized=0;
   for(const figure of await page.locator('[data-diagram]').all()){
    const id=await figure.getAttribute('data-diagram');assert.equal(await figure.getAttribute('data-definition'),inventory.diagrams[id]);
    await figure.scrollIntoViewIfNeeded();await figure.locator('.diagram-viewport svg').waitFor({timeout:30000});
-   const bounds=await figure.locator('.diagram-viewport').evaluate(viewport=>{const svg=viewport.querySelector('svg');viewport.scrollLeft=0;const outer=viewport.getBoundingClientRect(),inner=svg.getBoundingClientRect(),left=inner.left-outer.left;viewport.scrollLeft=viewport.scrollWidth;return {svg:inner.width,viewport:outer.width,left,scroll:viewport.scrollLeft,max:viewport.scrollWidth-viewport.clientWidth};});
+   const bounds=await figure.locator('.diagram-viewport').evaluate(viewport=>{const svg=viewport.querySelector('svg');viewport.scrollLeft=0;const outer=viewport.getBoundingClientRect(),inner=svg.getBoundingClientRect(),left=inner.left-outer.left;viewport.scrollLeft=viewport.scrollWidth;return {svg:inner.width,natural:svg.viewBox.baseVal.width,viewport:outer.width,left,scroll:viewport.scrollLeft,max:viewport.scrollWidth-viewport.clientWidth};});
+   assert.ok(bounds.svg>=bounds.natural-1,'SVG intrinsic width is preserved');
+   if(bounds.natural<bounds.viewport)narrow++;else if(bounds.natural>bounds.viewport)oversized++;
    assert.ok(bounds.left>=-1,'SVG left edge reachable');assert.equal(bounds.scroll,bounds.max,'SVG right edge reachable');if(bounds.svg<bounds.viewport)assert.ok(Math.abs(bounds.left-(bounds.viewport-bounds.svg)/2)<2,'small diagram centered');drawn++;
   }
   assert.equal(drawn,22);
+  assert.ok(narrow>0,'narrow SVGs are checked at this viewport');assert.ok(oversized>0,'oversized SVGs are checked at this viewport');
   if(width===1440){
    assert.equal((await verifyChapterScroll(page,'.issep-guide')).length,4);
    const reference=page.locator('.ref-card[id]').first();
@@ -71,6 +74,7 @@ try{
      return document.querySelector('#menuBtn').getAttribute('aria-expanded')==='false'&&link?.matches('.sidebar nav a')&&getComputedStyle(link).visibility==='visible'&&link.getBoundingClientRect().height>0;
     });
     await page.setViewportSize({width:375,height:900});
+    await page.waitForFunction(()=>document.activeElement===document.querySelector('#menuBtn'));
    }
   }
   const boxes=await page.locator('.checklist input').all();assert.equal(boxes.length,6);
@@ -80,7 +84,7 @@ try{
   const questions=await page.locator('.quiz details').all();assert.equal(questions.length,10);
   for(const detail of questions){await detail.locator('summary').click();assert.equal(await detail.getAttribute('open'),'');assert.ok(await detail.locator('.answer').isVisible());await detail.locator('summary').click();assert.equal(await detail.getAttribute('open'),null);}
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.issep-guide').evaluate(el=>getComputedStyle(el).scrollBehavior),'auto');
-  results.push({width,status:response.status(),structures:Object.keys(actual.structures).length,counts:actual.counts,diagrams:drawn,pageErrors:errors.length});console.log(JSON.stringify(results.at(-1)));await context.close();
+  results.push({width,status:response.status(),structures:Object.keys(actual.structures).length,counts:actual.counts,diagrams:drawn,narrow,oversized,pageErrors:errors.length});console.log(JSON.stringify(results.at(-1)));await context.close();
  }
  assert.deepEqual(errors,[]);
 }finally{

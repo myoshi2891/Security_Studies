@@ -103,6 +103,19 @@ test.each([false,true])('desktop resize focuses visible navigation when the draw
   if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
  }
 });
+test.each([1024,375])('narrowing to %ipx moves focus from the closed desktop sidebar to the menu button',width=>{
+ const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
+ try{
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});
+  const {view,notify}=observedGuide();notify('h3-1',true);
+  view.container.querySelector<HTMLAnchorElement>('a[href="#h3-1"]')!.focus();
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:width});fireEvent(window,new Event('resize'));
+  const button=view.container.querySelector('#menuBtn')!;expect(button).toHaveAttribute('aria-expanded','false');expect(document.activeElement?.id).toBe('menuBtn');
+ }finally{
+  globalThis.IntersectionObserver=originalObserver;
+  if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
+ }
+});
 test('sidebar pointer presses preserve a navigation pin while outside presses resume tracking',()=>{
  try{
   const {view,notify,current}=observedGuide();
