@@ -46,12 +46,13 @@ test('the open drawer is modal, makes covered content inert and provides an inte
  expect(content.inert).toBe(false);expect(view.container.querySelector('aside')).not.toHaveAttribute('aria-modal');expect(document.activeElement).toBe(button);
  fireEvent.click(button);view.unmount();expect(content.inert).toBe(false);
 });
-test('desktop TOC wheel scrolling preserves a navigation pin while content wheel scrolling releases it',()=>{
+test.each([375,1440])('TOC wheel scrolling preserves a navigation pin while outside wheel scrolling releases it at %ipx',width=>{
  const saved=globalThis.IntersectionObserver,previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');let notify:IntersectionObserverCallback|undefined;
  globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
  try{
-  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:width});
   const view=render(harness());fireEvent.click(view.container.querySelector('a[href="#ch3"]')!);
+  if(width===375)fireEvent.click(view.container.querySelector('#menuBtn')!);
   act(()=>notify!([{target:view.container.querySelector('#ch2')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
   fireEvent.wheel(view.container.querySelector('nav')!);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');
   fireEvent.wheel(view.container.querySelector('.main')!);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch2');

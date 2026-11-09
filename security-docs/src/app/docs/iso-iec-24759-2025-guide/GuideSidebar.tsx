@@ -87,7 +87,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     };
     const nav = panel.current; nav?.addEventListener('click', click);
     const wheel = (event: WheelEvent) => {
-      if (window.innerWidth > 1024 && event.target instanceof Node && nav?.contains(event.target)) return;
+      if (event.target instanceof Node && nav?.contains(event.target)) return;
       release();
     };
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {

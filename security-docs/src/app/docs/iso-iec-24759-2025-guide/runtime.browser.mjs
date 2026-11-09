@@ -50,11 +50,18 @@ try {
         assert.equal(await content.evaluate(element => element.inert), false);
         assert.ok(await page.evaluate(id => document.activeElement === document.getElementById(id).querySelector('h2'), id));
       }
+      let drawn = 0;
+      for (const figure of await guide.locator('[data-diagram]').all()) {
+        await figure.scrollIntoViewIfNeeded();
+        await figure.locator('.diagram-viewport svg').waitFor({ timeout: 30000 });
+        drawn++;
+      }
+      assert.equal(drawn, 8);
       await page.emulateMedia({ media: 'print' });
       assert.equal(await sidebar.evaluate(element => getComputedStyle(element).display), 'none');
       assert.equal(await content.evaluate(element => getComputedStyle(element).marginLeft), '0px');
       for (const description of await guide.locator('.diagram-print-description').all()) assert.equal(await description.isVisible(), true);
-      results.push({ width, scrollFollowing: width === 1440, modalDrawer: width === 375, print: true });
+      results.push({ width, scrollFollowing: width === 1440, modalDrawer: width === 375, diagrams: drawn, print: true });
       console.log(JSON.stringify(results.at(-1)));
     } finally { await context.close(); }
   }
