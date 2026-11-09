@@ -860,3 +860,9 @@
     .issep-guide.issep-guide .quiz .q-opts{grid-template-columns:minmax(0,1fr);}
 }
 @media (prefers-reduced-motion:reduce){.issep-guide.issep-guide .quiz-choice{transition:none;}}
+.issep-guide.issep-guide .diagram-print-description{display:none;}
+@media print{
+    .issep-guide.issep-guide .diagram-print-description{display:block;}
+    .issep-guide.issep-guide .diagram-description,
+    .issep-guide.issep-guide .mermaid-target > [role="status"]{display:none;}
+}

@@ -38,7 +38,15 @@ try{
   assert.equal(await page.locator('nav>ul>li.open>a').getAttribute('href'),'#sec-9');assert.ok((await page.locator('a[href="#h3-30"]').getAttribute('class')).includes('active'));
   if(width===375){
    const button=page.locator('#menuBtn');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');await page.keyboard.press('Escape');assert.equal(await button.getAttribute('aria-expanded'),'false');
-   await button.click();await page.locator('nav>ul>li>a').first().focus();await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#sec-13');
+   await button.click();
+   const currentUrl=page.url(),selected=await page.locator('nav [aria-current="location"]').getAttribute('href');
+   const originalWindow=await (await context.newCDPSession(page)).send('Browser.getWindowForTarget');
+   const [popup]=await Promise.all([context.waitForEvent('page'),page.locator('a[href="#sec-8"]').click({modifiers:['Shift']})]);
+   await popup.waitForLoadState('domcontentloaded');assert.equal(new URL(popup.url()).hash,'#sec-8');
+   const newWindow=await (await context.newCDPSession(popup)).send('Browser.getWindowForTarget');assert.notEqual(newWindow.windowId,originalWindow.windowId);
+   assert.equal(page.url(),currentUrl);assert.equal(await button.getAttribute('aria-expanded'),'true');assert.equal(await page.locator('nav [aria-current="location"]').getAttribute('href'),selected);
+   await popup.close();
+   await page.locator('nav>ul>li>a').first().focus();await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#sec-13');
    await page.locator('a[href="#sec-8"]').click();assert.equal(await button.getAttribute('aria-expanded'),'false');assert.ok(await page.locator('#sec-8 h2').evaluate(el=>document.activeElement===el));
    await button.click();await page.locator('a[href="#h3-28"]').click();assert.ok(await page.locator('#h3-28').evaluate(el=>document.activeElement===el));
   }

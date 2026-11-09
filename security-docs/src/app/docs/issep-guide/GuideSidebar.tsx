@@ -47,7 +47,9 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const nodes=[...(guide?.querySelectorAll('section[id],section h3[id]')??[])],visible=new Set<Element>();
   const track=()=>{
    if(pinned.current)return;
-   const current=nodes.filter(node=>visible.has(node)&&node.matches('h3')).at(-1)??nodes.filter(node=>visible.has(node)).at(-1)??nodes.filter(node=>node.getBoundingClientRect().top<=window.innerHeight*0.2).at(-1);
+   const section=nodes.filter(node=>visible.has(node)&&node.matches('section')).at(-1);
+   const preceding=section&&nodes.filter(node=>node.matches('h3')&&node.closest('section[id]')===section&&node.getBoundingClientRect().top<=window.innerHeight*0.2).at(-1);
+   const current=nodes.filter(node=>visible.has(node)&&node.matches('h3')).at(-1)??preceding??section??nodes.filter(node=>node.getBoundingClientRect().top<=window.innerHeight*0.2).at(-1);
    if(current)select(current.id);
   };
   const settle=()=>{clearTimeout(settleTimer);pinnedTop=null;settleTimer=setTimeout(()=>{pinnedTop=pinnedTarget?.getBoundingClientRect().top??null;},JUMP_SETTLE_MS);};
@@ -68,7 +70,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
-   if(!link||event.ctrlKey||event.metaKey)return;
+   if(!link||event.ctrlKey||event.metaKey||event.shiftKey)return;
    const id=decodeFragment(link.hash.slice(1));pin(id);
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
@@ -76,7 +78,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
    event.preventDefault();window.history.pushState(null,'',`#${encodeURIComponent(id)}`);setOpen(false);heading.tabIndex=-1;heading.focus({preventScroll:true});target?.scrollIntoView();
   };
   aside?.addEventListener('click',click);
-  const release=()=>{pinned.current=false;};
+  const release=()=>{pinned.current=false;track();};
   const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
   window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
   const observers:IntersectionObserver[]=[];

@@ -254,6 +254,10 @@ export function MermaidFigure({ id, source, label, renderer = renderDiagram }: M
           </ul>
         </details>
       )}
+      <div className="diagram-print-description">
+        <p>{figureLabel} のテキスト説明</p>
+        {describeDiagram(source).map((line, index) => <p key={index}>{line}</p>)}
+      </div>
       <noscript>図の表示にはJavaScriptが必要です。</noscript>
     </div>
   );

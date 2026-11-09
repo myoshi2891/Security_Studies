@@ -100,6 +100,16 @@ test('between observed headings the nearest preceding heading is selected withou
   notify('h3-1',false);expect(current()).toBe('#h3-2');
  }finally{globalThis.IntersectionObserver=originalObserver;}
 });
+test('a visible chapter retains its nearest preceding subsection after the heading leaves the band',()=>{
+ try{
+  const {notify,current,moveTarget}=observedGuide();
+  moveTarget('sec-1',-800);moveTarget('h3-1',-300);moveTarget('h3-2',600);
+  notify('sec-1',true);notify('h3-1',true);notify('h3-1',false);
+  expect(current()).toBe('#h3-1');
+  moveTarget('h3-2',-10);notify('sec-1',true);expect(current()).toBe('#h3-2');
+  moveTarget('h3-1',400);moveTarget('h3-2',600);notify('sec-1',true);expect(current()).toBe('#sec-1');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
 test('citation hashes select their chapter and pin the citation element through observer notifications',async()=>{
  try{
   const {notify,current,moveTarget}=observedGuide();notify('h3-2',true);
@@ -129,8 +139,8 @@ test.each([
  try {
   const { view, notify, current } = observedGuide();
   fireEvent.click(view.container.querySelector('a[href="#h3-1"]')!);
-  scroll(view.container.querySelector('#h3-1')!);
   notify('h3-2', true);
+  scroll(view.container.querySelector('#h3-1')!);
   expect(current()).toBe('#h3-2');
  } finally {
   globalThis.IntersectionObserver = originalObserver;
