@@ -2,6 +2,23 @@ import { afterEach, expect, spyOn, test } from 'bun:test';
 import { createElement } from 'react';
 import { act, cleanup, render, waitFor } from '@testing-library/react';
 afterEach(()=>{cleanup();window.history.replaceState(null,'','/');});
+test('print descriptions exist offscreen, during rendering and with interactive details closed',async()=>{
+ const {MermaidFigure}=await import('./MermaidFigure');
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  let finish:((result:{svg:string})=>void)|undefined,calls=0;
+  const renderer=()=>{calls++;return new Promise<{svg:string}>(resolve=>{finish=resolve;});};
+  const view=render(createElement(MermaidFigure,{id:'d1',source:'flowchart LR\nA["入力"] --> B["出力"]',renderer}));
+  const fallback=()=>view.container.querySelector('.diagram-print-description')!;
+  expect(calls).toBe(0);expect(fallback()).toHaveTextContent('入力 → 出力');expect(fallback().closest('details')).toBeNull();
+  expect(view.container.querySelector('.diagram-description')).toBeNull();
+  act(()=>notify!([{isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+  expect(calls).toBe(1);expect(fallback()).toHaveTextContent('入力 → 出力');
+  await act(async()=>finish!({svg:'<svg viewBox="0 0 200 80"></svg>'}));
+  expect(view.container.querySelector('.diagram-description')).not.toHaveAttribute('open');expect(fallback()).toHaveTextContent('入力 → 出力');
+ }finally{globalThis.IntersectionObserver=saved;}
+});
 test('Mermaid retains unique IDs and intrinsic size, exposes failure definitions and ignores stale results',async()=>{
  const {MermaidFigure}=await import(new URL('./MermaidFigure.tsx',import.meta.url).href);
  const original=globalThis.IntersectionObserver;globalThis.IntersectionObserver=undefined as unknown as typeof IntersectionObserver;

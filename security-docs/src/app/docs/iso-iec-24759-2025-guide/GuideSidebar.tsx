@@ -34,16 +34,44 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
   }, []);
   useEffect(() => {
     const guide = panel.current?.closest('.iso24759-guide');
+    const visible = new Set<Element>();
+    let areaTop = window.innerHeight * 0.2;
+    let pinnedTarget: Element | null = null, pinnedTop: number | null = null;
+    let settleTimer: ReturnType<typeof setTimeout> | undefined;
+    const track = () => {
+      if (pinnedTarget) return;
+      const positions = [...visible].map(element => ({ element, top: element.getBoundingClientRect().top })).sort((a, b) => a.top - b.top);
+      const current = (positions.filter(({ top }) => top <= areaTop).at(-1) ?? positions[0])?.element;
+      if (current) select(current.id);
+    };
+    const settle = () => {
+      clearTimeout(settleTimer); pinnedTop = null;
+      settleTimer = setTimeout(() => { pinnedTop = pinnedTarget?.getBoundingClientRect().top ?? null; }, 150);
+    };
+    const pin = (id: string) => {
+      pinnedTarget = document.getElementById(id)?.closest('section[id]') ?? null;
+      select(pinnedTarget?.id ?? id); settle();
+    };
+    const release = () => { pinnedTarget = null; clearTimeout(settleTimer); track(); };
+    const releaseKey = (event: KeyboardEvent) => {
+      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) release();
+    };
+    const scroll = () => {
+      if (!pinnedTarget) return;
+      if (pinnedTop === null) { settle(); return; }
+      if (Math.abs(pinnedTarget.getBoundingClientRect().top - pinnedTop) > 2) release();
+    };
     const hash = () => {
       const fragment = window.location.hash.slice(1);
-      select(decodeFragment(fragment || panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || ''));
+      if (fragment) pin(decodeFragment(fragment));
+      else { pinnedTarget = null; select(decodeFragment(panel.current?.querySelector<HTMLAnchorElement>('nav a')?.hash.slice(1) || '')); }
     };
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
       if (!link) return;
       const id = decodeFragment(link.hash.slice(1));
-      select(id);
+      pin(id);
       if (!openRef.current) return;
       // リンク選択で閉じた場合は移動先の見出しへ。見出しがなければ従来どおりメニューボタンへ戻す
       const target = document.getElementById(id);
@@ -54,17 +82,14 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       heading.focus({ preventScroll: true });
     };
     const nav = panel.current; nav?.addEventListener('click', click);
-    const visible = new Set<Element>();
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
-      const candidates = [...(guide?.querySelectorAll('section[id]') ?? [])].filter(el => visible.has(el));
-      const areaTop = entries[0]?.rootBounds?.top ?? window.innerHeight * 0.2;
-      const positions = candidates.map(element => ({ element, top: element.getBoundingClientRect().top })).sort((a, b) => a.top - b.top);
-      const current = (positions.filter(({ top }) => top <= areaTop).at(-1) ?? positions[0])?.element;
-      if (current) select(current.id);
+      areaTop = entries[0]?.rootBounds?.top ?? window.innerHeight * 0.2;
+      track();
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);
-    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); };
+    window.addEventListener('wheel', release, { passive: true }); window.addEventListener('keydown', releaseKey); window.addEventListener('scroll', scroll, { capture: true, passive: true });
+    return () => { window.removeEventListener('hashchange', hash); nav?.removeEventListener('click', click); observer?.disconnect(); clearTimeout(settleTimer); window.removeEventListener('wheel', release); window.removeEventListener('keydown', releaseKey); window.removeEventListener('scroll', scroll, { capture: true }); };
   }, [close, select]);
   useEffect(() => {
     if (!open) return;

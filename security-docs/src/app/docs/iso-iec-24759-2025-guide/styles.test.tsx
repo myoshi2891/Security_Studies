@@ -6,6 +6,27 @@ import postcss from 'postcss';
 import {sourceTest,sourceCss,sourceDocument,renderedPage,scope} from './fidelity-helpers';
 const guideCss=()=>readFileSync(new URL('./guide.css',import.meta.url),'utf8');
 const sharedCss=()=>['../../globals.css','../docs-layout.css'].map(f=>readFileSync(new URL(f,import.meta.url),'utf8')).join('\n');
+test('comments and quotes retain italics and meet 4.5:1 contrast on the actual code background',async()=>{
+ const luminance=(color:string)=>{
+  const rgb=color.startsWith('#')?color.slice(1).match(/../g)!.map(value=>parseInt(value,16)):color.match(/[\d.]+/g)!.slice(0,3).map(Number);
+  const channels=rgb.map(value=>{const s=value/255;return s<=0.04045?s/12.92:((s+0.055)/1.055)**2.4;});
+  return channels[0]*0.2126+channels[1]*0.7152+channels[2]*0.0722;
+ };
+ for(const theme of ['light','dark']){
+  const w=new Window({settings:{device:{prefersColorScheme:theme}}});
+  try{
+   w.document.head.innerHTML='<style>'+sharedCss()+guideCss()+'</style>';
+   w.document.body.innerHTML='<div class="iso24759-guide"><pre><code class="hljs"><span class="hljs-comment">comment</span><span class="hljs-quote">quote</span></code></pre></div>';
+   for(const span of w.document.querySelectorAll('span')){
+    const style=w.getComputedStyle(span);let background=span.parentElement;
+    while(background&&['','transparent','rgba(0, 0, 0, 0)'].includes(w.getComputedStyle(background).backgroundColor))background=background.parentElement;
+    expect(background).not.toBeNull();
+    const levels=[luminance(style.color),luminance(w.getComputedStyle(background!).backgroundColor)].sort((a,b)=>a-b);
+    expect((levels[1]+0.05)/(levels[0]+0.05)).toBeGreaterThanOrEqual(4.5);expect(style.fontStyle).toBe('italic');
+   }
+  }finally{await w.happyDOM.close();}
+ }
+});
 function comparable(css:string,width:number){
  const resolved=css.replace(/clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)vw\s*,\s*([\d.]+)(rem|px)\s*\)/g,(_,lo,lu,mid,hi,hu)=>Math.min(Number(hi)*(hu==='rem'?16:1),Math.max(Number(lo)*(lu==='rem'?16:1),Number(mid)*width/100))+'px');
  const tree=postcss.parse(resolved);
