@@ -24,8 +24,10 @@ try {
           const svg = viewport.querySelector('svg'); viewport.scrollLeft = 0;
           const outer = viewport.getBoundingClientRect(), inner = svg.getBoundingClientRect();
           const left = inner.left - outer.left; viewport.scrollLeft = viewport.scrollWidth;
-          return { width: inner.width, viewport: outer.width, left, scroll: viewport.scrollLeft, max: viewport.scrollWidth - viewport.clientWidth };
+          return { width: inner.width, naturalWidth: svg.viewBox.baseVal.width, viewport: outer.width, left, scroll: viewport.scrollLeft, max: viewport.scrollWidth - viewport.clientWidth, overflowX: getComputedStyle(viewport).overflowX };
         });
+        assert.ok(bounds.width >= bounds.naturalWidth - 1, 'diagrams retain their natural width');
+        if (bounds.max > 0) assert.ok(['auto', 'scroll'].includes(bounds.overflowX), 'oversized diagrams use scrollable horizontal overflow');
         assert.ok(bounds.left >= -1, 'diagram left edge remains reachable');
         assert.equal(bounds.scroll, bounds.max, 'diagram right edge remains reachable');
         if (bounds.width < bounds.viewport) assert.ok(Math.abs(bounds.left - (bounds.viewport - bounds.width) / 2) < 2, 'small diagrams stay centered');
