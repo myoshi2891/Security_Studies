@@ -58,7 +58,9 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     const observer = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
       const candidates = [...(guide?.querySelectorAll('section[id]') ?? [])].filter(el => visible.has(el));
-      const current = candidates.at(-1);
+      const areaTop = entries[0]?.rootBounds?.top ?? window.innerHeight * 0.2;
+      const positions = candidates.map(element => ({ element, top: element.getBoundingClientRect().top })).sort((a, b) => a.top - b.top);
+      const current = (positions.filter(({ top }) => top <= areaTop).at(-1) ?? positions[0])?.element;
       if (current) select(current.id);
     }, { rootMargin: '-20% 0px -70% 0px' });
     for (const section of guide?.querySelectorAll('section[id]') ?? []) observer?.observe(section);
@@ -72,7 +74,8 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
       const first = links[0], last = links.at(-1);
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      if (!panel.current?.contains(document.activeElement)) { event.preventDefault(); (event.shiftKey ? last : first)?.focus(); }
+      else if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
     const resize = () => { if (window.innerWidth > 1024) close(); };

@@ -26,13 +26,39 @@ test('selecting any original chapter from the open drawer closes it and focuses 
   expect(btn).toHaveAttribute('aria-expanded','false');expect(link).toHaveAttribute('aria-current','location');expect(document.activeElement).toBe(view.container.querySelector(`#${ids[n-1]} h2`));expect(document.body.style.overflow).toBe('');
  }
 });
+test.each([false,true])('Tab returns outside focus to the open drawer (Shift: %s)',shiftKey=>{
+ const view=render(harness());const btn=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;
+ fireEvent.click(btn);btn.focus();
+ const event=new KeyboardEvent('keydown',{key:'Tab',shiftKey,bubbles:true,cancelable:true});
+ fireEvent(document,event);
+ const links=view.container.querySelectorAll('nav a');
+ expect(event.defaultPrevented).toBe(true);expect(document.activeElement).toBe(links[shiftKey?18:0]);
+ // Interior focus keeps its normal Tab behavior.
+ (links[5] as HTMLAnchorElement).focus();
+ expect(fireEvent.keyDown(document,{key:'Tab',shiftKey})).toBe(true);
+});
 test('scroll tracking retains intersecting chapters across notifications and removes previous activation',()=>{
  const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;const targets:Element[]=[];
  globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(el:Element){targets.push(el);}disconnect(){disconnected++;}} as unknown as typeof IntersectionObserver;
  try{const view=render(harness());expect(targets.map(t=>t.id)).toEqual(ids);
+  targets[0].getBoundingClientRect=()=>({top:-100} as DOMRect);targets[1].getBoundingClientRect=()=>({top:100} as DOMRect);
   const change=(index:number,on:boolean)=>act(()=>notify!([{target:targets[index],isIntersecting:on} as IntersectionObserverEntry],{} as IntersectionObserver));
   change(0,true);change(1,true);expect(view.container.querySelector('[href="#ch1"]')).toHaveAttribute('aria-current','location');change(1,false);expect(view.container.querySelector('[href="#ch0"]')).toHaveAttribute('aria-current','location');expect(view.container.querySelector('[href="#ch1"]')).not.toHaveClass('active');
   view.unmount();expect(disconnected).toBe(1);
+ }finally{globalThis.IntersectionObserver=saved;}
+});
+test('initial observer notification respects a hash chapter spanning the observer edge instead of a later chapter',()=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  (window as unknown as Window).happyDOM.setURL('http://localhost/#ch3');
+  const view=render(harness());
+  const earlier=view.container.querySelector('#ch3')!,later=view.container.querySelector('#ch4')!;
+  earlier.getBoundingClientRect=()=>({top:150,bottom:230} as DOMRect);later.getBoundingClientRect=()=>({top:230,bottom:500} as DOMRect);
+  const update=()=>act(()=>notify!([later,earlier].map(target=>({target,isIntersecting:true,rootBounds:{top:180,bottom:270}} as IntersectionObserverEntry)),{} as IntersectionObserver));
+  update();expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');
+  earlier.getBoundingClientRect=()=>({top:-100,bottom:170} as DOMRect);later.getBoundingClientRect=()=>({top:170,bottom:500} as DOMRect);
+  update();expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch4');
  }finally{globalThis.IntersectionObserver=saved;}
 });
 test('hash changes select the original chapter and closed-panel selection preserves link focus',()=>{
