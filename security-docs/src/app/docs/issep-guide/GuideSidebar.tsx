@@ -82,12 +82,18 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const releaseKey=(event:KeyboardEvent)=>{if(SCROLL_KEYS.has(event.key))release();};
   window.addEventListener('wheel',release,{passive:true});window.addEventListener('pointerdown',release);window.addEventListener('keydown',releaseKey);window.addEventListener('scroll',followScroll,{capture:true,passive:true});
   const observers:IntersectionObserver[]=[];
-  for(const selector of ['section[id]','section h3[id]']){
-   if(typeof IntersectionObserver==='undefined')continue;
-   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}track();},{rootMargin:'-20% 0px -70% 0px'});
-   nodes.filter(node=>node.matches(selector)).forEach(node=>observer.observe(node));observers.push(observer);
-  }
-  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
+  const observe=()=>{
+   observers.forEach(observer=>observer.disconnect());observers.length=0;visible.clear();
+   if(typeof IntersectionObserver==='undefined')return;
+   // Pixel margins keep the band at 20–30% of viewport height; percentage root margins use width.
+   const rootMargin=`-${window.innerHeight*0.2}px 0px -${window.innerHeight*0.7}px 0px`;
+   for(const selector of ['section[id]','section h3[id]']){
+    const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}track();},{rootMargin});
+    nodes.filter(node=>node.matches(selector)).forEach(node=>observer.observe(node));observers.push(observer);
+   }
+  };
+  observe();window.addEventListener('resize',observe);
+  return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});window.removeEventListener('resize',observe);clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
  },[close,select]);
  useEffect(()=>{
   if(!open)return;

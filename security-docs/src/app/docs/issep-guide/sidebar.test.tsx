@@ -44,16 +44,18 @@ test('all source TOC anchors have matching section and subsection targets', asyn
 
 /** Render a small guide whose observers can be driven by hand, independent of the archived source. */
 function observedGuide(nextChapter=false) {
- const observers: { callback: IntersectionObserverCallback; nodes: Element[] }[] = [];
+ const observers: { callback: IntersectionObserverCallback; nodes: Element[]; options?: IntersectionObserverInit; disconnected: boolean }[] = [];
  globalThis.IntersectionObserver = class {
   nodes: Element[] = [];
-  constructor(callback: IntersectionObserverCallback) {
-   observers.push({ callback, nodes: this.nodes });
+  registration: (typeof observers)[number];
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+   this.registration={ callback, nodes: this.nodes, options, disconnected: false };
+   observers.push(this.registration);
   }
   observe(node: Element) {
    this.nodes.push(node);
   }
-  disconnect() {}
+  disconnect() { this.registration.disconnected=true; }
  } as unknown as typeof IntersectionObserver;
  const link = (id: string) => h('a', { href: `#${id}` }, id);
  const toc = h('nav', {}, h('ul', {}, h('li', {}, link('sec-1'), h('ul', {}, h('li', {}, link('h3-1')), h('li', {}, link('h3-2')))), nextChapter?h('li',{},link('sec-2')):null));
@@ -67,10 +69,46 @@ function observedGuide(nextChapter=false) {
  const current = () => view.container.querySelector('[aria-current="location"]')?.getAttribute('href');
  /** Place the clicked subsection at a viewport offset, as a jump or a layout change would. */
  const moveTarget = (id: string, top: number) => { view.container.querySelector(`#${id}`)!.getBoundingClientRect = () => ({ top } as DOMRect); };
- return { view, notify, current, moveTarget };
+ return { view, notify, current, moveTarget, observers };
 }
 const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
+test('desktop observer options leave an intersecting heading band, including after resize',()=>{
+ const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth'),previousHeight=Object.getOwnPropertyDescriptor(window,'innerHeight');
+ try{
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});Object.defineProperty(window,'innerHeight',{configurable:true,value:900});
+  const {view,observers,current}=observedGuide();
+  const notifyGeometry=()=>{
+   const active=observers.filter(observer=>!observer.disconnected);expect(active).toHaveLength(2);
+   for(const observer of active){
+    expect(observer.options?.root??null).toBeNull();
+    const margins=observer.options?.rootMargin?.split(/\s+/);expect(margins).toHaveLength(4);
+    // The API resolves every percentage margin against the root width, including vertical margins.
+    // https://www.w3.org/TR/intersection-observer/#intersectionobserver-root-intersection-rectangle
+    const pixels=margins!.map(value=>parseFloat(value)*(value.endsWith('%')?window.innerWidth/100:1));
+    const top=-pixels[0],bottom=window.innerHeight+pixels[2];
+    expect(bottom-top).toBeGreaterThan(0);expect(top).toBeCloseTo(window.innerHeight*0.2);expect(bottom).toBeCloseTo(window.innerHeight*0.3);
+    const rootBounds={top,bottom,left:-pixels[3],right:window.innerWidth+pixels[1]} as DOMRectReadOnly;
+    const entries=observer.nodes.map(target=>{
+     const bounds=target.getBoundingClientRect();
+     return {target,boundingClientRect:bounds,rootBounds,isIntersecting:bounds.bottom>top&&bounds.top<bottom} as IntersectionObserverEntry;
+    });
+    if(observer.nodes.some(node=>node.matches('h3')))expect(entries.filter(entry=>entry.isIntersecting).map(entry=>entry.target.id)).toEqual(['h3-1']);
+    act(()=>observer.callback(entries,{} as IntersectionObserver));
+   }
+  };
+  view.container.querySelector('#sec-1')!.getBoundingClientRect=()=>({top:-800,bottom:1500} as DOMRect);
+  view.container.querySelector('#h3-1')!.getBoundingClientRect=()=>({top:200,bottom:240} as DOMRect);
+  view.container.querySelector('#h3-2')!.getBoundingClientRect=()=>({top:700,bottom:740} as DOMRect);
+  notifyGeometry();expect(current()).toBe('#h3-1');
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1920});Object.defineProperty(window,'innerHeight',{configurable:true,value:1080});
+  fireEvent(window,new Event('resize'));notifyGeometry();expect(current()).toBe('#h3-1');
+ }finally{
+  globalThis.IntersectionObserver=originalObserver;
+  if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
+  if(previousHeight)Object.defineProperty(window,'innerHeight',previousHeight);else Reflect.deleteProperty(window,'innerHeight');
+ }
+});
 test.each([true,false])('chapter notifications retain an intersecting subsection (chapter first: %s)',chapterFirst=>{
  try{
   const {notify,current,view}=observedGuide(true);
