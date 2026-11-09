@@ -44,21 +44,31 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const aside=panel.current,guide=aside?.closest('.issep-guide');
   // Find-in-page sends the page no input events, so a scroll is its only trace; the pinned heading moving tells it apart from layout-only scrolls.
   let pinnedTarget:HTMLElement|null=null,pinnedTop:number|null=null,settleTimer:ReturnType<typeof setTimeout>|undefined;
-  const trackers:(()=>void)[]=[];
+  const nodes=[...(guide?.querySelectorAll('section[id],section h3[id]')??[])],visible=new Set<Element>();
+  const track=()=>{
+   if(pinned.current)return;
+   const current=nodes.filter(node=>visible.has(node)&&node.matches('h3')).at(-1)??nodes.filter(node=>visible.has(node)).at(-1)??nodes.filter(node=>node.getBoundingClientRect().top<=window.innerHeight*0.2).at(-1);
+   if(current)select(current.id);
+  };
   const settle=()=>{clearTimeout(settleTimer);pinnedTop=null;settleTimer=setTimeout(()=>{pinnedTop=pinnedTarget?.getBoundingClientRect().top??null;},JUMP_SETTLE_MS);};
   const followScroll=()=>{
    if(!pinned.current)return;
    if(pinnedTop===null){settle();return;}
    if(Math.abs((pinnedTarget?.getBoundingClientRect().top??pinnedTop)-pinnedTop)<=PIN_DRIFT_PX)return;
-   pinned.current=false;trackers.forEach(track=>{track();});
+   pinned.current=false;track();
   };
   // A requested entry, by click or fragment, stays selected through its jump until the reader scrolls.
-  const pin=(id:string)=>{select(id);pinnedTarget=document.getElementById(id);pinned.current=pinnedTarget!==null;settle();};
+  const pin=(id:string)=>{
+   pinnedTarget=document.getElementById(id);
+   const linked=[...(aside?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')??[])].some(link=>decodeFragment(link.hash.slice(1))===id);
+   select(linked?id:pinnedTarget?.closest('section[id]')?.id??id);
+   pinned.current=pinnedTarget!==null;settle();
+  };
   const hash=()=>{const id=decodeFragment(window.location.hash.slice(1));if(id)pin(id);else select('sec-1');};
   hash();window.addEventListener('hashchange',hash);
   const click=(event:MouseEvent)=>{
    const link=event.target instanceof Element?event.target.closest<HTMLAnchorElement>('a[href^="#"]'):null;
-   if(!link)return;
+   if(!link||event.ctrlKey||event.metaKey)return;
    const id=decodeFragment(link.hash.slice(1));pin(id);
    if(!openRef.current)return;
    const target=document.getElementById(id),heading=target?.matches('h1,h2,h3,h4,h5')?target:target?.querySelector<HTMLElement>('h1,h2,h3,h4,h5')??target;
@@ -72,10 +82,8 @@ export function GuideSidebar({children}:{children:ReactNode}){
   const observers:IntersectionObserver[]=[];
   for(const selector of ['section[id]','section h3[id]']){
    if(typeof IntersectionObserver==='undefined')continue;
-   const nodes=[...(guide?.querySelectorAll(selector)??[])],visible=new Set<Element>();
-   const track=()=>{const current=nodes.filter(node=>visible.has(node)).at(-1);if(current)select(current.id);};
-   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}if(!pinned.current)track();},{rootMargin:'-20% 0px -70% 0px'});
-   nodes.forEach(node=>observer.observe(node));observers.push(observer);trackers.push(track);
+   const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);}track();},{rootMargin:'-20% 0px -70% 0px'});
+   nodes.filter(node=>node.matches(selector)).forEach(node=>observer.observe(node));observers.push(observer);
   }
   return ()=>{window.removeEventListener('hashchange',hash);aside?.removeEventListener('click',click);window.removeEventListener('wheel',release);window.removeEventListener('pointerdown',release);window.removeEventListener('keydown',releaseKey);window.removeEventListener('scroll',followScroll,{capture:true});clearTimeout(settleTimer);observers.forEach(observer=>observer.disconnect());};
  },[close,select]);

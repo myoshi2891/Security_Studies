@@ -43,7 +43,7 @@ test('all source TOC anchors have matching section and subsection targets', asyn
 });
 
 /** Render a small guide whose observers can be driven by hand, independent of the archived source. */
-function observedGuide() {
+function observedGuide(nextChapter=false) {
  const observers: { callback: IntersectionObserverCallback; nodes: Element[] }[] = [];
  globalThis.IntersectionObserver = class {
   nodes: Element[] = [];
@@ -56,9 +56,9 @@ function observedGuide() {
   disconnect() {}
  } as unknown as typeof IntersectionObserver;
  const link = (id: string) => h('a', { href: `#${id}` }, id);
- const toc = h('nav', {}, h('ul', {}, h('li', {}, link('sec-1'), h('ul', {}, h('li', {}, link('h3-1')), h('li', {}, link('h3-2'))))));
- const body = h('section', { id: 'sec-1' }, h('h3', { id: 'h3-1' }), h('h3', { id: 'h3-2' }));
- const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, { children: toc }), body));
+ const toc = h('nav', {}, h('ul', {}, h('li', {}, link('sec-1'), h('ul', {}, h('li', {}, link('h3-1')), h('li', {}, link('h3-2')))), nextChapter?h('li',{},link('sec-2')):null));
+ const body = h('section', { id: 'sec-1' }, h('h3', { id: 'h3-1' }), h('h3', { id: 'h3-2' }), h('div', { id: 'ref-S1' }));
+ const view = render(h('div', { className: 'issep-guide' }, h(GuideSidebar, { children: toc }), body, nextChapter?h('section',{id:'sec-2'}):null));
  const notify = (id: string, isIntersecting: boolean) => {
   const target = view.container.querySelector(`#${id}`)!;
   const owner = observers.find(entry => entry.nodes.includes(target))!;
@@ -71,6 +71,45 @@ function observedGuide() {
 }
 const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
+test.each([true,false])('chapter notifications retain an intersecting subsection (chapter first: %s)',chapterFirst=>{
+ try{
+  const {notify,current,view}=observedGuide(true);
+  if(chapterFirst)notify('sec-1',true);
+  notify('h3-1',true);notify('sec-1',true);
+  expect(current()).toBe('#h3-1');expect(view.container.querySelector('a[href="#h3-1"]')).toHaveClass('active');
+  notify('sec-1',false);expect(current()).toBe('#h3-1');
+  notify('sec-2',true);expect(current()).toBe('#h3-1');
+  notify('h3-1',false);expect(current()).toBe('#sec-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
+test.each(['ctrlKey','metaKey'])('%s clicks preserve selection and do not pin navigation',modifier=>{
+ try{
+  const {view,notify,current}=observedGuide();notify('h3-1',true);
+  fireEvent.click(view.container.querySelector('a[href="#h3-2"]')!,{[modifier]:true});
+  expect(current()).toBe('#h3-1');
+  notify('h3-2',true);expect(current()).toBe('#h3-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
+test('between observed headings the nearest preceding heading is selected without overriding a navigation pin',()=>{
+ try{
+  const {view,notify,current,moveTarget}=observedGuide();
+  moveTarget('sec-1',-600);moveTarget('h3-1',-200);moveTarget('h3-2',400);
+  notify('h3-2',true);expect(current()).toBe('#h3-2');
+  notify('h3-2',false);expect(current()).toBe('#h3-1');
+  fireEvent.click(view.container.querySelector('a[href="#h3-2"]')!);
+  notify('h3-1',false);expect(current()).toBe('#h3-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
+test('citation hashes select their chapter and pin the citation element through observer notifications',async()=>{
+ try{
+  const {notify,current,moveTarget}=observedGuide();notify('h3-2',true);
+  moveTarget('ref-S1',88);
+  window.history.replaceState(null,'','#ref-S1');act(()=>{window.dispatchEvent(new Event('hashchange'));});
+  expect(current()).toBe('#sec-1');notify('sec-1',true);expect(current()).toBe('#sec-1');
+  await settled();moveTarget('ref-S1',900);fireEvent.scroll(window);
+  expect(current()).toBe('#h3-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
 test('observer entries caused by navigation keep the clicked subsection selected', () => {
  try {
   const { view, notify, current } = observedGuide();
