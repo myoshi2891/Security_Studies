@@ -20,6 +20,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Security Approach 2026", href: "/docs/approach" },
         { title: "Security Architecture", href: "/docs/architecture" },
+        { title: "SCS評価制度と脅威分析", href: "/docs/scs-evaluation-threat-analysis-guide" },
       ],
     },
     {
