@@ -387,7 +387,7 @@ flowchart LR
 | 4-1-3-4 | 多要素認証の知識情報として使うパスワードは8文字以上 |
 | 4-1-4-1 | PCログオン等は、パスワードによるログオンの失敗が10回以下の回数でアカウントをロックする（ロックの閾値は10回以下に設定する）か、失敗のたびに試行間隔を延ばす。基準の「10回以上の失敗でロック」は、遅くとも10回目の失敗までにロックするという意味であり、11回以上の閾値を許す意味に読んではならない。どちらも設定できない場合は、4-1-5の要求より強度の高いパスワードを使うなどの代替策を用いる。この代替策は適合基準に含まれる選択肢なので、条件を満たして採用する限り、それだけで不適合にはならない【一次: IPA 自己評価等ガイド 別紙 No.4-1-4-1 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf、IPA 解説書 評価基準 No.4-1-4-1 関連 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
 | 4-1-4-2 | PCログオン等は、6文字以上のパスワードかPIN。解説書では、この6文字以上はローカル認証でPINを使う場合に適用し、オンライン認証でパスワードを使う場合は4-1-5の要求（4-1-5-3の8文字以上など）に従うとされています【一次: IPA 解説書 評価基準 No.4-1-4-2 関連 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
-| 4-1-5-3 | ユーザ認証にパスワードを使う場合の社内ルール。多要素認証、又は少なくとも10回の失敗でのアカウントロックを実施したうえで、8文字以上とする。どちらも実施できない場合は、英大文字小文字、数字を含めた10文字以上とする【一次: IPA 解説書 評価基準 No.4-1-5-3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
+| 4-1-5-3 | ユーザ認証にパスワードを使う場合の社内ルール。多要素認証、又は遅くとも10回目の失敗までにアカウントをロックする設定を実施したうえで、8文字以上とする。PCログオン等のロック閾値は4-1-4-1と同じく10回以下とし、11回以上の閾値を根拠に8文字以上を認めるものではない。どちらも実施できない場合は、英大文字小文字、数字を含めた10文字以上とする【一次: IPA 解説書 評価基準 No.4-1-5-3 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
 | 4-2-2-1 | 役員、従業員、派遣社員及び受入出向者を対象に、新規受入れ時かつ年1回以上、インシデント発生時の対応について、教育資料の配布・掲示に加え、eラーニング又は集合教育による教育・訓練を実施する |
 | 4-4-4-2 | 「重大」「高リスク」、CVSS基本値7.0以上の脆弱性を直すアップデートと、修正する脆弱性のレベルの詳細をベンダーが提供していないアップデートは、リリースから14日以内に適用。特に、CVSS基本値7.0以上で、情報公開時点で攻撃が観測されている、又はその蓋然性が高いとして IPA「重要なセキュリティ情報」、JPCERT/CC「注意喚起」、CISA KEV Catalog、ENISA EUVD などの情報源に掲載された脆弱性は、機器のインターネットへの露出状況に関わらず14日以内に適用する。次の暫定対策は適用までのリスクを下げるもので、この期限を延ばすものではない。やむを得ず14日以内に適用できない場合は、適用に向けた対応計画を作り、適用までの間、次のいずれかの対策を実施する。攻撃を観測済みの脆弱性: 悪用対象の機能の無効化、ベンダー推奨の回避策、適用範囲のネットワークからの分離、不正通信の遮断機器等を導入済みの場合の監視・設定の一時的な強化。攻撃を観測していない脆弱性: 対応計画を完了まで管理・記録【一次: IPA 自己評価等ガイド No.4-4-4-2 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-410-self-assess-guide-v1.0.pdf、IPA 解説書 評価基準 No.4-4-4-2 関連 https://www.ipa.go.jp/security/scs/rcu1hd0000007a2i-att/SCS-620-handbook-v1.0.pdf】 |
 | 年1回以上の点検 | 体制、外部システム把握、ルール遵守、機密情報管理、訓練内容、インシデント体制などを年1回以上点検 |
@@ -786,7 +786,7 @@ pip install llm --uploaded-prior-to P4D
 
 ### 7.3 ベストプラクティス2: 長期トークンをやめ、信頼された公開（Trusted Publishing）へ
 
-- Axios の事例では、長期有効なnpmトークンの漏えいが原因とみられ、同プロジェクトには、Trusted Publishing（GitHub Actionsのワークフローだけが公開できる仕組み）の導入を求める課題が、すでに起票されていました【開発者: Willison https://simonwillison.net/2026/Mar/31/supply-chain-attack-on-axios/】。
+- Axios の事例では、長期有効なnpmトークンの漏えいが原因とみられ、同プロジェクトには、Trusted Publishing（設定済みのGitHub Actions等のCIワークフローがOIDCで認証して公開できる仕組み）の導入を求める課題が、すでに起票されていました【開発者: Willison https://simonwillison.net/2026/Mar/31/supply-chain-attack-on-axios/／一次: npm https://docs.npmjs.com/trusted-publishers】。
 - ただし、Trusted Publishing を有効にしても、トークンや手動での公開が**自動的に止まるわけではありません**。npm では、パッケージの Settings → Publishing access で「Require two-factor authentication and disallow tokens」を選んでトークンでの公開を制限し、使っていないトークンは失効させます【一次: npm https://docs.npmjs.com/trusted-publishers】。この設定でも、2要素認証に応答する手動公開はできます【一次: npm https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification】。
 - PyPI は、Trusted Publishing を使うと**デジタル署名付きの証明（attestation）**がデフォルトで付く仕組みを提供しています【開発者: Willison https://simonwillison.net/2024/Nov/14/pypi-digital-attestations/】。
 - 一方で、二次情報によれば、Trusted Publishing を悪用するワームも観測されています。**信頼された公開を使えば万全、ではない**点に注意してください【二次: https://phoenix.security/accelerating-supply-chain-attacks-npm-pypi-vsx-ai-enabled-2026/】。
