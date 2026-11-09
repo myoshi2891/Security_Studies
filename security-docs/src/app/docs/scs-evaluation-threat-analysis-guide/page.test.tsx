@@ -29,6 +29,10 @@ test('the published MDX preserves the complete guide, exercise, 90-day plan and 
   expect(document.body).toHaveTextContent('ミライ製作所');
   expect(document.body).toHaveTextContent('90日');
   expect(document.querySelectorAll('table').length).toBeGreaterThan(20);
+  const referenceUrls = new Set(source.replace(/```[\s\S]*?```/g, '').match(/https?:\/\/[^\s<>{}`\[\]()（）【】、。；「」／|]+/g) ?? []);
+  const destinations = new Set([...document.querySelectorAll('a[href]')].map(link => link.getAttribute('href')));
+  expect(referenceUrls.size).toBeGreaterThan(0);
+  for (const url of referenceUrls) expect(destinations).toContain(url);
   for (const link of document.querySelectorAll('a[href]')) expect(link.getAttribute('href')).not.toMatch(/[【】、。]/);
 });
 

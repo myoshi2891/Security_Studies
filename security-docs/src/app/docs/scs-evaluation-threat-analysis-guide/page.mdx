@@ -456,6 +456,8 @@ Shostack自身は、これらは「手法（メソドロジー）」ではなく
 
 最初に、対象システムの「登場人物」と「データの流れ」を図にします。これを**データフロー図（DFD）**といいます。そのうえで、「信頼できる範囲」と「信頼できない範囲」の境目（**信頼境界**）を引きます。境界をまたぐ矢印は、攻撃が起きやすい場所です。
 
+信頼境界は社内と社外の間だけでなく、**社内の権限レベルの間**にもあります。例えば、一般利用者向けの社内アプリケーションが、より強い権限で人事情報を扱う管理サービスを呼び出す場合も、信頼境界を越えることがあります。脅威モデルには、その呼び出し元・利用者が対象データや操作を許可されているかを、どのサービスでどの認可チェックによって確認するかを明記します。社内からの呼び出しであることだけを、許可の根拠にしてはいけません【筆者整理】。
+
 次は、一般的な社外向けWebサービスの例です。
 
 <div className="not-prose my-8 rounded-lg border border-slate-700 bg-[#0d1b2e] p-4 text-slate-100 [&_p]:text-slate-100 [&_li]:text-slate-100 print:bg-white print:text-black print:[&_p]:text-black print:[&_li]:text-black [&_.diagram-viewport]:overflow-x-auto [&_.diagram-viewport_svg]:mx-auto [&_.diagram-viewport_svg]:block [&_.diagram-viewport_svg]:max-w-none [&_.diagram-print-description]:hidden print:[&_.diagram-print-description]:block print:[&_.diagram-description]:hidden">
