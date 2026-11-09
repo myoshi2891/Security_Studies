@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH ?? 'playwright');
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
@@ -42,7 +44,7 @@ try {
       await page.getByPlaceholder('Search documentation...').fill('SCS評価制度');
       await page.getByRole('button', { name: /最新セキュリティ対策アプローチ/ }).waitFor();
       await page.keyboard.press('Escape');
-      await page.screenshot({ path: `/tmp/scs-guide-${width}.png`, fullPage: true });
+      await page.screenshot({ path: join(tmpdir(), `scs-guide-${width}.png`), fullPage: true });
       console.log(JSON.stringify({ width, status: response.status(), diagrams: drawn, navigation: true, search: true }));
     } finally { await context.close(); }
   }
