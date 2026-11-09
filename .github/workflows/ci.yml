@@ -41,6 +41,33 @@ jobs:
         # 原本がない場合のみスキップされるため、パス除外は行わず原本非依存のテストをCIで実行する
         run: bun test --coverage
 
+      - name: Install Chromium for browser validation
+        run: bunx playwright install --with-deps chromium
+
+      - name: Validate SCS guide in Chromium
+        timeout-minutes: 10
+        env:
+          DOCS_BASE_URL: http://127.0.0.1:3107
+        run: |
+          set -euo pipefail
+          bun run dev --hostname 127.0.0.1 --port 3107 > "$RUNNER_TEMP/scs-next.log" 2>&1 &
+          docs_server_pid=$!
+          trap 'kill "$docs_server_pid" 2>/dev/null || true; cat "$RUNNER_TEMP/scs-next.log"' EXIT
+          docs_ready=false
+          for attempt in {1..60}; do
+            if curl --fail --silent --max-time 2 --output /dev/null "$DOCS_BASE_URL/docs/scs-evaluation-threat-analysis-guide"; then
+              docs_ready=true
+              break
+            fi
+            if ! kill -0 "$docs_server_pid" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          if [ "$docs_ready" != true ]; then
+            echo 'SCS documentation server did not become ready.'
+            exit 1
+          fi
+          node src/app/docs/scs-evaluation-threat-analysis-guide/runtime.browser.mjs
+
       - name: Upload coverage to Codecov
         # カバレッジ送信は品質ゲートではないため、Codecov 側の障害（TLS 拒否等）で CI を落とさない
         continue-on-error: true
