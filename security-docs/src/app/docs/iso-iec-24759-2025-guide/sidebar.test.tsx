@@ -58,6 +58,17 @@ test.each([375,1440])('TOC wheel scrolling preserves a navigation pin while outs
   fireEvent.wheel(view.container.querySelector('.main')!);expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch2');
  }finally{globalThis.IntersectionObserver=saved;if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');}
 });
+test.each(['PageDown','Home',' '])('sidebar %s keys preserve a navigation pin while outside keys release it',key=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  const view=render(harness());const link=view.container.querySelector('a[href="#ch3"]')!;
+  fireEvent.click(link);
+  act(()=>notify!([{target:view.container.querySelector('#ch2')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+  fireEvent.keyDown(link,{key});expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch3');
+  fireEvent.keyDown(view.container.querySelector('.main')!,{key});expect(view.container.querySelector('[aria-current]')).toHaveAttribute('href','#ch2');
+ }finally{globalThis.IntersectionObserver=saved;}
+});
 test('scroll tracking retains intersecting chapters across notifications and removes previous activation',()=>{
  const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;let disconnected=0;const targets:Element[]=[];
  globalThis.IntersectionObserver=class{constructor(cb:IntersectionObserverCallback){notify=cb;}observe(el:Element){targets.push(el);}disconnect(){disconnected++;}} as unknown as typeof IntersectionObserver;

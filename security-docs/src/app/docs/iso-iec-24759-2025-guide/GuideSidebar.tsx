@@ -54,6 +54,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     };
     const release = () => { pinnedTarget = null; clearTimeout(settleTimer); track(); };
     const releaseKey = (event: KeyboardEvent) => {
+      if (event.target instanceof Node && panel.current?.contains(event.target)) return;
       if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) release();
     };
     const scroll = () => {

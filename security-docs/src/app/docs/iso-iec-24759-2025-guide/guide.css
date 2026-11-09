@@ -596,7 +596,9 @@
 .iso24759-guide.iso24759-guide pre{font-family:monospace;}
 .iso24759-guide.iso24759-guide .diagram-print-description{display:none;}
 @media print{
-    .iso24759-guide.iso24759-guide .sidebar{display:none;}
+    .iso24759-guide.iso24759-guide .sidebar,
+    .iso24759-guide.iso24759-guide .backdrop,
+    .iso24759-guide.iso24759-guide .menu-btn{display:none;}
     .iso24759-guide.iso24759-guide .main{margin-left:0;}
     .iso24759-guide.iso24759-guide .diagram-print-description{display:block;}
     .iso24759-guide.iso24759-guide .diagram-description,

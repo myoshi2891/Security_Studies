@@ -57,8 +57,9 @@ try {
         drawn++;
       }
       assert.equal(drawn, 8);
+      if (width === 375) await guide.locator('#menuBtn').click();
       await page.emulateMedia({ media: 'print' });
-      assert.equal(await sidebar.evaluate(element => getComputedStyle(element).display), 'none');
+      for (const control of await guide.locator('.sidebar,.backdrop,.menu-btn').all()) assert.equal(await control.evaluate(element => getComputedStyle(element).display), 'none');
       assert.equal(await content.evaluate(element => getComputedStyle(element).marginLeft), '0px');
       for (const description of await guide.locator('.diagram-print-description').all()) assert.equal(await description.isVisible(), true);
       results.push({ width, scrollFollowing: width === 1440, modalDrawer: width === 375, diagrams: drawn, print: true });
