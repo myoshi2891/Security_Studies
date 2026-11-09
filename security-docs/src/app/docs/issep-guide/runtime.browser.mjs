@@ -4,6 +4,7 @@ import {createRequire} from 'node:module';
 import {createHash} from 'node:crypto';
 import {resolve} from 'node:path';
 import assert from 'node:assert/strict';
+import {verifyChapterScroll} from '../../../../scripts/browser-chapter-scroll.mjs';
 const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 const inventory=JSON.parse(fs.readFileSync(resolve(import.meta.dirname,'../../../../../docs/migration-inventory/issep-guide.json'),'utf8'));
@@ -34,6 +35,13 @@ try{
    assert.ok(bounds.left>=-1,'SVG left edge reachable');assert.equal(bounds.scroll,bounds.max,'SVG right edge reachable');if(bounds.svg<bounds.viewport)assert.ok(Math.abs(bounds.left-(bounds.viewport-bounds.svg)/2)<2,'small diagram centered');drawn++;
   }
   assert.equal(drawn,22);
+  if(width===1440){
+   assert.equal((await verifyChapterScroll(page,'.issep-guide')).length,4);
+   const reference=page.locator('.ref-card[id]').first();
+   await reference.evaluate(element=>element.scrollIntoView({block:'start',behavior:'instant'}));
+   const position=await reference.evaluate(element=>({top:element.getBoundingClientRect().top,margin:getComputedStyle(element).scrollMarginTop}));
+   assert.equal(position.margin,'88px');assert.ok(position.top>=64&&position.top<=90,'citation title remains below the sticky header');
+  }
   await page.evaluate(()=>{history.replaceState(null,'','#h3-30');window.dispatchEvent(new HashChangeEvent('hashchange'));});
   assert.equal(await page.locator('nav>ul>li.open>a').getAttribute('href'),'#sec-9');assert.ok((await page.locator('a[href="#h3-30"]').getAttribute('class')).includes('active'));
   if(width===375){

@@ -798,7 +798,7 @@
 .issep-guide.issep-guide .mermaid-target{min-width:0;}
 .issep-guide.issep-guide .diagram-viewport{display:block;overflow-x:auto;}
 .issep-guide.issep-guide .diagram-viewport svg{display:block;max-width:none;margin-left:auto;margin-right:auto;}
-.issep-guide.issep-guide section[id],.issep-guide.issep-guide h3[id]{scroll-margin-top:88px;}
+.issep-guide.issep-guide section[id],.issep-guide.issep-guide h3[id],.issep-guide.issep-guide .ref-card[id]{scroll-margin-top:88px;}
 .docs-main:has(.issep-guide){padding:0;}
 .docs-article:has(.issep-guide){max-width:none;}
 @media(max-width:1024px){.issep-guide.issep-guide .sidebar{visibility:hidden;}.issep-guide.issep-guide .sidebar.open{visibility:visible;}}
