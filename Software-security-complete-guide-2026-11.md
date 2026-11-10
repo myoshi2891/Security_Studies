@@ -32,7 +32,7 @@
 
 1. **2026年の主戦場は「自分のコード」ではなく「自分が信頼している他人のコードと道具」**です。OWASP Top 10:2025 では *ソフトウェアサプライチェーンの失敗* が新たに3位に入りました。
 2. **AI は「コードを書く側」にも「攻撃される側（エージェント）」にもなりました。** AI が書いたコードは"未レビューの外部コントリビューション"として扱い、AIエージェントには**最小権限**を与えます。
-3. **暗号の寿命が前倒しされています。** NIST は 2026年10月27日に IR 8547 最終版を公表し、RSA/ECC を **2030年を過ぎると非推奨、2035年を過ぎると NIST の標準・ガイドライン上で使用不可**としました。さらに Google・Cloudflare は **2029年**を自社の完了目標に設定しています。
+3. **暗号の寿命が前倒しされています。** NIST は 2026年10月27日に IR 8547 最終版を公表し、**現在承認されている鍵長・パラメータの RSA/ECC 等**を **2030年を過ぎると非推奨、2035年を過ぎると NIST の標準・ガイドライン上で使用不可**としました。**署名生成で既に禁止されている RSA-1024 等に猶予を与えるものではありません**。さらに Google・Cloudflare は **2029年**を自社の完了目標に設定しています。
 
 ### 0.2 全体マップ
 
@@ -835,15 +835,16 @@ flowchart TD
 
 | 項目 | 内容 |
 |---|---|
-| 非推奨（Deprecated） | RSA/ECC 等の量子計算機に脆弱な公開鍵暗号は **2030年を過ぎると非推奨**。**鍵長に関わらず**（P-256 や RSA-3072 も含む）対象 |
-| 使用禁止（Disallowed） | **2035年を過ぎると NIST の標準・ガイドライン上で使用不可** |
+| 非推奨（Deprecated） | **現在承認されている鍵長・パラメータ**の RSA/ECC 等の量子計算機に脆弱な公開鍵暗号は **2030年を過ぎると非推奨**。承認済みの範囲では P-256 や RSA-3072 も対象 |
+| 使用禁止（Disallowed） | 上記の承認済みの鍵長・パラメータも **2035年を過ぎると NIST の標準・ガイドライン上で使用不可** |
+| 既に禁止されている鍵長・用途 | **RSA-1024 による署名生成等は既に禁止**（[SP 800-131A Rev. 2 第3章・表2](https://csrc.nist.gov/pubs/sp/800/131/a/r2/final)）。2030年・2035年の移行期限まで利用できるという意味ではない。既存署名の検証などの legacy use は別の扱い |
 | 米連邦の高価値資産等 | 鍵確立は **2030-12-31**、署名は **2031-12-31** までに PQC へ（大統領令 14412・OMB M-26-15 に基づくとする報道。**二次情報のため原文で要確認**） |
 
 ### 6.3 各社・各国の期限は"NIST より早い"ことがある
 
 | 主体 | 目標 | 補足 |
 |---|---|---|
-| NIST | 2030年を過ぎると非推奨／2035年を過ぎると使用不可 | NIST の標準・ガイドライン上（上記） |
+| NIST | 現在承認されている鍵長・パラメータは2030年を過ぎると非推奨／2035年を過ぎると使用不可 | NIST の標準・ガイドライン上（上記）。既に禁止された鍵長・用途の猶予ではない |
 | **Google** | **2029 年**までに自社の移行完了 | 2026-03-25 公表。Android 17 で ML-DSA に対応予定 |
 | **Cloudflare** | **2029 年** | 2026-04-07 に内部目標を前倒し |
 | Microsoft | 2033 年 | postquantum.com の整理による |
@@ -1094,7 +1095,7 @@ gantt
 | 38 | 「2029 年」は**予測ではなく"否定しきれない"ための備え**。長寿命データは今すぐリスク | **Thom Wiggers**（PQShield） | https://pqshield.com/on-quantum-timelines-what-does-2029-actually-mean/ |
 | 39 | **ハイブリッド署名の是非**は専門家でも割れている。論点を把握して選ぶ | postquantum.com の整理 | https://postquantum.com/post-quantum/pqc-migration-risk-hybrid/ |
 | 40 | NIST IR 8547 **最終版**（2030年を過ぎると非推奨／2035年を過ぎると NIST の標準・ガイドライン上で使用不可）を一次情報で確認 | NIST CSRC 公式の公開一覧 | https://csrc.nist.gov/Projects/post-quantum-cryptography/publications |
-| 41 | 最終版の**ドラフトからの変更点**（鍵長を問わず非推奨） | CSA の研究ノート／postquantum.com | https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ir8547-pqc-transition-20261030-csa-st/ |
+| 41 | 最終版の**ドラフトからの変更点**（現在承認されている鍵長・パラメータ全体を非推奨化の対象に） | CSA の研究ノート／postquantum.com | https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ir8547-pqc-transition-20261030-csa-st/ |
 | 42 | HQC を待たず **ML-KEM を先に導入**する | postquantum.com の規制まとめ | https://postquantum.com/security-pqc/us-pqc-regulatory-framework-2026/ |
 | 43 | 主要ブラウザ・CDN の**ハイブリッド鍵交換の普及状況**を把握 | 解説記事（Cloudflare 報告を引用） | https://pete.lostsource.net/posts/2026-05-26-your-traffic-is-post-quantum.html |
 | 44 | **日本政府**の方針（原則 2035 年、2026 年度にロードマップ策定） | 内閣官房 国家サイバー統括室／@IT | https://atmarkit.itmedia.co.jp/ait/articles/2512/08/news045.html |
