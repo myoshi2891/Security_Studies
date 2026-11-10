@@ -12,7 +12,7 @@ import { expect, test } from 'bun:test';
 import inventory from '../../../../../docs/migration-inventory/issmp-guide.json';
 export { inventory };
 export const scope = '.issmp-guide.issmp-guide';
-export const sourcePath = resolve(import.meta.dir, '../../../../../Issmp-guide.html');
+export const sourcePath = resolve(import.meta.dir, '../../../../../archive/security-certifications/Issmp-guide.html');
 export let sourceDocument: Document;
 export let sourceCss: import('postcss').Root;
 /** 文字列のSHA-256ハッシュを16進文字列で返す。 */

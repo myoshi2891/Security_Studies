@@ -6,8 +6,7 @@ import {tmpdir} from 'node:os';
 import {randomUUID} from 'node:crypto';
 const require=createRequire(import.meta.url);
 const dir=import.meta.dirname,root=resolve(dir,'../../../../..');
-const archived=resolve(root,'archive/security-certifications/Issmp-guide.html');
-const sourceFile=fs.existsSync(archived)?archived:resolve(root,'Issmp-guide.html');
+const sourceFile=resolve(root,'archive/security-certifications/Issmp-guide.html');
 if(!fs.existsSync(sourceFile)){console.log('SKIP: Original HTML is absent; browser source comparison is unavailable.');process.exit(0);}
 const resultsPath=process.env.ISSMP_STYLES_RESULTS_PATH??join(tmpdir(),`issmp-browser-results-${randomUUID()}.json`);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
