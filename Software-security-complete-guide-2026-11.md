@@ -32,7 +32,7 @@
 
 1. **2026年の主戦場は「自分のコード」ではなく「自分が信頼している他人のコードと道具」**です。OWASP Top 10:2025 では *ソフトウェアサプライチェーンの失敗* が新たに3位に入りました。
 2. **AI は「コードを書く側」にも「攻撃される側（エージェント）」にもなりました。** AI が書いたコードは"未レビューの外部コントリビューション"として扱い、AIエージェントには**最小権限**を与えます。
-3. **暗号の寿命が前倒しされています。** NIST は 2026年10月27日に IR 8547 最終版を公表し、RSA/ECC を **2030年以降は非推奨、2035年以降は使用不可**としました。さらに Google・Cloudflare は **2029年**を自社の完了目標に設定しています。
+3. **暗号の寿命が前倒しされています。** NIST は 2026年10月27日に IR 8547 最終版を公表し、RSA/ECC を **2030年を過ぎると非推奨、2035年を過ぎると NIST の標準・ガイドライン上で使用不可**としました。さらに Google・Cloudflare は **2029年**を自社の完了目標に設定しています。
 
 ### 0.2 全体マップ
 
@@ -243,12 +243,15 @@ flowchart TD
     V -- "いいえ" --> M
     V -- "はい" --> TR["トリアージ<br/>影響範囲・悪用状況の確認"]
     TR --> FX["修正・緩和<br/>（パッチ、設定変更、ロールバック）"]
-    FX --> NT["通知<br/>顧客・規制当局（CRA 等）"]
+    TR -- "修正・緩和と並行" --> RP{"報告・通知の対象か？"}
+    RP -- "はい" --> NT["期限内に通知<br/>顧客・規制当局（CRA 等）"]
+    RP -- "いいえ" --> RC
+    FX --> RC
     NT --> RC["根本原因分析<br/>再発防止をSDLCへ反映"]
     RC --> M
 ```
 
-- **EU CRA（サイバーレジリエンス法）**: EU 市場向けの"デジタル要素を持つ製品"の製造者は、**2026年9月11日から**、悪用が確認された脆弱性と重大インシデントを ENISA の Single Reporting Platform 経由で報告する義務があります（早期警告 24 時間以内、続報 72 時間、最終報告 14 日などの段階制）。詳細は第5章。
+- **EU CRA（サイバーレジリエンス法）**: EU 市場向けの"デジタル要素を持つ製品"の製造者は、**2026年9月11日から**、悪用が確認された脆弱性と重大インシデントを ENISA の Single Reporting Platform 経由で報告する義務があります。いずれも**認知から早期警告 24 時間以内、続報 72 時間以内**。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です。詳細は第5章。
 
 ### 2.5 Secure SDLC セルフチェック（20問）
 
@@ -380,7 +383,7 @@ cursor.execute("SELECT * FROM users WHERE name = %s", (name,))
 
 | 対策 | 理由 |
 |---|---|
-| **パスキー（FIDO2/WebAuthn）** や MFA の提供 | パスワード使い回し・フィッシングに強い |
+| **パスキー（FIDO2/WebAuthn）** や MFA の提供 | パスキーはフィッシング耐性がある。MFA 全般に同じ耐性があるわけではなく、OTP 型 MFA のコードはリアルタイムのフィッシングで盗み取られ、中継され得る |
 | ログイン試行のレート制限・ロックアウト | 総当たり・クレデンシャルスタッフィング対策 |
 | セッション ID はログイン後に再発行、適切な有効期限 | セッション固定攻撃の防止 |
 | 弱い/漏えい済みパスワードの拒否 | 推測攻撃の成功率を下げる |
@@ -463,7 +466,7 @@ AI まわりは 3 つの異なる問題に分けると整理しやすくなり�
 | 1 | AI が出したコードを**自分で説明できるまで**マージしない | 理解していないコードは保守できず、脆弱性にも気づけない |
 | 2 | PR に「AI 生成部分あり」と明記し、通常と同じ（または厳しめの）レビューをする | 責任の所在を明確にする |
 | 3 | SAST・SCA・シークレットスキャンを **必須ゲート**にする | 人の目だけに頼らない |
-| 4 | **提案された依存パッケージ名を実在確認**してから追加する | 存在しない名前を AI が提示し、攻撃者がその名前で悪性パッケージを公開する手口（"スロップスクワッティング"）があるため |
+| 4 | **提案された依存パッケージの実在と、名前・公開元が正規プロジェクトの公式ドキュメントと一致することを確認**してから追加する | 存在しない名前を AI が提示し、攻撃者がその名前で悪性パッケージを公開する手口（"スロップスクワッティング"）があり、実在だけでは正規と判断できないため |
 | 5 | プロンプトに**セキュリティ要件**を明示（例:「パラメータ化クエリを使う」「入力検証を含める」） | 何も指示しないと安全性が後回しになりやすい |
 | 6 | 機密データ（顧客情報・鍵・内部コード）を外部の AI サービスに貼らない規則を作る | データ持ち出しの防止 |
 | 7 | 利用する AI ツール・モデル・拡張機能を**一覧管理**（承認制） | 野良ツールの混入防止 |
@@ -503,23 +506,27 @@ Simon Willison（"prompt injection" の命名者）は 2025 年 6 月 16 日に�
 
 #### Meta の「Agents Rule of Two」（2025年10月31日公表）
 
-Willison の 3 要素を"予算"として扱う考え方です。**人間の承認なしに動くエージェントは、3 要素のうち同時に満たしてよいのは 2 つまで**とします。
+Willison の 3 要素を発展させ、Meta は **[A] 信頼できない入力の処理、[B] 機密システムまたは非公開データへのアクセス、[C] 状態変更または外部通信**を評価します。**人間の承認なしに動くエージェントは、1 セッション内で満たしてよいのは 2 つまで**とします。現在有効な権限だけでなく、**蓄積したセッション履歴**も含めて判定します。
+
+一度読んだ機密データは、読み取り権限を外してもコンテキスト内に残ります。そこに信頼できない入力と外部通信を組み合わせる前に、**攻撃経路を断つ安全な遷移**（例: 外部通信を無効化し、同じセッションでは再有効化しない）か、**機密データや未検証の履歴を引き継がない新しいコンテキスト**への切り替えが必要です。権限の切り替えだけでカウントをリセットしてはいけません。
 
 ```mermaid
 flowchart TD
-    S["エージェントを設計する"] --> Q1{"機密データに<br/>アクセスするか？"}
+    S["セッション履歴と権限を評価する"] --> Q1{"[B] 機密データへのアクセス・既読の機密、<br/>または本番等の機密システムへの<br/>アクセス・操作があるか？"}
     Q1 -- "はい" --> C1["カウント +1"]
     Q1 -- "いいえ" --> Q2
-    C1 --> Q2{"信頼できない<br/>コンテンツを読むか？"}
+    C1 --> Q2{"[A] 信頼できないコンテンツを<br/>読むか、既に読んだか？"}
     Q2 -- "はい" --> C2["カウント +1"]
     Q2 -- "いいえ" --> Q3
-    C2 --> Q3{"外部へ通信/<br/>状態変更できるか？"}
+    C2 --> Q3{"[C] 外部へ通信/<br/>状態変更できるか？"}
     Q3 -- "はい" --> C3["カウント +1"]
     Q3 -- "いいえ" --> R
     C3 --> R{"合計は 3 か？"}
     R -- "いいえ（2以下）" --> OK["自律動作を許可<br/>ログと権限最小化は必須"]
-    R -- "はい（3つ全部）" --> FIX["いずれか1つを外す<br/>または 実行ごとに人間が承認"]
+    R -- "はい（3つ全部）" --> FIX["自律動作は禁止<br/>安全な遷移・新しいコンテキストで再評価<br/>または 実行ごとに人間が承認"]
 ```
+
+信頼できない入力を読み、本番システムを操作できるエージェントは **[A]・[B]・[C] のすべて**を満たすため、この方針では自律動作を許可しません。根拠: [Meta の公式解説](https://ai.meta.com/blog/practical-ai-agent-security/)。
 
 #### OWASP Top 10 for Agentic Applications 2026（2025年12月9日公開）
 
@@ -543,7 +550,7 @@ flowchart TD
 
 | Step | やること | 具体例 |
 |---|---|---|
-| 1 | 3 要素（機密・非信頼・外部通信）を棚卸しする | 上のフローチャートで判定 |
+| 1 | 3 要素（非信頼入力・機密システム/データ・状態変更/外部通信）を履歴も含めて棚卸しする | 上のフローチャートで判定 |
 | 2 | **権限を最小化**する | 読み取り専用トークン、対象リポジトリ/フォルダを限定 |
 | 3 | 外部通信を**許可リスト**にする | 送信先ドメイン固定、画像/リンクの自動展開を制限 |
 | 4 | 影響の大きい操作は**人間の承認**を挟む | 送金、削除、外部送信、本番デプロイ |
@@ -626,7 +633,7 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    L1["1 取り込む前<br/>待機期間・ロックファイル・実在確認"] --> L2["2 取り込む時<br/>インストール時スクリプトの無効化・検証"]
+    L1["1 取り込む前<br/>待機期間・ロックファイル・実在と正規性の確認"] --> L2["2 取り込む時<br/>インストール時スクリプトの無効化・検証"]
     L2 --> L3["3 ビルド時<br/>CI の権限最小化・SHA固定・隔離"]
     L3 --> L4["4 公開時<br/>二要素認証・Trusted Publishing・署名"]
     L4 --> L5["5 利用時<br/>SBOM・来歴・VEX で可視化"]
@@ -671,7 +678,7 @@ npm ci --ignore-scripts
 ```yaml
 name: ci
 on:
-  pull_request:            # ✅ pull_request を使う（fork からの PR に秘密情報を渡さない）
+  pull_request:            # ✅ fork への秘密情報の提供可否はリポジトリ・組織設定も確認
 permissions:
   contents: read           # ✅ 既定は読み取りのみ
 jobs:
@@ -687,6 +694,8 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm test
 ```
+
+`pull_request` だけで秘密情報の遮断が保証されるわけではありません。特に非公開リポジトリの fork PR では、リポジトリ・組織の Actions 設定によって秘密情報の提供を許可できます。**適用される両方の設定を確認し、`Send secrets to workflows from pull requests` を無効にして、信頼できないコードへ秘密情報を渡さない**運用にします（[GitHub 公式ドキュメント](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#enabling-workflows-for-forks-of-private-repositories)）。
 
 | ルール | 理由 |
 |---|---|
@@ -733,9 +742,9 @@ jobs:
 - **SLSA** は、ビルドの信頼性を段階的に高める枠組みです（ソースの出所、ビルドの隔離、来歴の署名など）。
 - 2026 年 5 月の事件が示したとおり、**来歴は"どこで作られたか"の証明であって、"中身が安全"の証明ではありません**。来歴＋待機期間＋権限最小化＋監視を**組み合わせる**のが正解です。
 
-#### Step 9: パッケージ名の実在確認（AI 提案の依存を含む）
+#### Step 9: パッケージの実在と正規性の確認（AI 提案の依存を含む）
 
-- 追加前に、**公開元・公開日・ダウンロード数・リポジトリ・メンテナ**を確認。
+- 追加前に、**パッケージの実在と、名前・公開元が正規プロジェクトの公式ドキュメントと一致すること**を確認。公開日・ダウンロード数・リポジトリ・メンテナも補助情報として確認しますが、実在や人気だけでは正規と判断しません。
 - 名前が似ている別物（タイポスクワッティング）に注意。
 
 #### Step 10: 継続的な脆弱性監視
@@ -751,7 +760,7 @@ jobs:
 | **2026-09-11** | **報告義務（第14条）開始**。悪用が確認された脆弱性・重大インシデントを、ENISA の Single Reporting Platform（SRP）から、ENISA と各国 CSIRT に同時通知。SRP は同日に稼働開始 |
 | 2027-12-11 | 大半の要件が全面適用 |
 
-- 解説記事では、早期警告 **24 時間**、続報 **72 時間**、最終報告 **14 日**などの段階的期限が示されています。
+- 両報告種別とも、**認知から早期警告 24 時間以内、続報 72 時間以内**。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です（[欧州委員会の公式説明](https://digital-strategy.ec.europa.eu/en/policies/cra-reporting)）。
 - 9 月 11 日以前に把握していて、**悪用が確認されていなかった**脆弱性は、遡って報告する義務はない、と整理する解説があります。
 - **OSS スチュワード**には限定的な義務があります。**自社が"製造者"に当たるか**は、プロダクトごとに確認してください（法的助言ではありません）。
 
@@ -759,14 +768,17 @@ jobs:
 
 ```mermaid
 flowchart TD
-    A["悪性バージョンの情報を入手"] --> B["影響調査<br/>ロックファイル/SBOM/ビルドログで該当版を特定"]
+    A["悪性バージョンの情報を入手"] --> B["トリアージ・影響調査<br/>ロックファイル/SBOM/ビルドログで該当版を特定"]
+    B -- "修正・緩和と並行" --> RP{"報告・通知の対象か？"}
+    RP -- "はい" --> I["期限内に報告・通知<br/>顧客/規制当局（CRA 等）"]
+    RP -- "いいえ" --> J
     B --> C{"該当版を<br/>インストールしたか？"}
     C -- "いいえ" --> D["固定/待機期間を維持し<br/>監視を継続"]
     C -- "はい" --> E["隔離<br/>該当の端末・CIランナーを停止"]
     E --> F["秘密情報を全て失効・再発行<br/>npm/GitHub/クラウド/SSH/AIキー"]
     F --> G["クリーンな版へ更新<br/>ロックファイル再生成・再ビルド"]
     G --> H["侵害の痕跡調査<br/>不審な公開・ワークフロー変更・外部通信"]
-    H --> I["報告・通知<br/>顧客/規制当局（CRA 等）"]
+    H --> J
     I --> J["再発防止をSDLCへ反映"]
 ```
 
@@ -817,19 +829,19 @@ flowchart TD
 | CSWP 39（更新版） | 暗号アジリティ | 暗号を入れ替えやすくする設計 | 最終（2026-06-29） |
 | **IR 8547** | **移行計画** | **いつ何をやめるか** | **最終（2026-10-27）** |
 
-**NIST IR 8547 最終版の要点**（NIST 公式の一覧で公表日を確認／内容は CSA・postquantum.com 等の解説による）
+**NIST IR 8547 最終版の要点**（[NIST 原文の第4章](https://nvlpubs.nist.gov/nistpubs/ir/2026/NIST.IR.8547.pdf)で移行期限を確認）
 
 | 項目 | 内容 |
 |---|---|
-| 非推奨（Deprecated） | 量子計算機に脆弱な公開鍵暗号は **2030年以降**。**鍵長に関わらず**（P-256 や RSA-3072 も含む）対象 |
-| 使用禁止（Disallowed） | **2035年以降** |
+| 非推奨（Deprecated） | RSA/ECC 等の量子計算機に脆弱な公開鍵暗号は **2030年を過ぎると非推奨**。**鍵長に関わらず**（P-256 や RSA-3072 も含む）対象 |
+| 使用禁止（Disallowed） | **2035年を過ぎると NIST の標準・ガイドライン上で使用不可** |
 | 米連邦の高価値資産等 | 鍵確立は **2030-12-31**、署名は **2031-12-31** までに PQC へ（大統領令 14412・OMB M-26-15 に基づくとする報道。**二次情報のため原文で要確認**） |
 
 ### 6.3 各社・各国の期限は"NIST より早い"ことがある
 
 | 主体 | 目標 | 補足 |
 |---|---|---|
-| NIST | 2030 年非推奨／2035 年禁止 | 米連邦の枠組み（上記） |
+| NIST | 2030年を過ぎると非推奨／2035年を過ぎると使用不可 | NIST の標準・ガイドライン上（上記） |
 | **Google** | **2029 年**までに自社の移行完了 | 2026-03-25 公表。Android 17 で ML-DSA に対応予定 |
 | **Cloudflare** | **2029 年** | 2026-04-07 に内部目標を前倒し |
 | Microsoft | 2033 年 | postquantum.com の整理による |
@@ -1027,7 +1039,7 @@ gantt
 |---|---|---|---|
 | 1 | 「機密データ・信頼できない入力・外部通信」の **3 要素を 1 つのエージェントに同居させない** | **Simon Willison**（"prompt injection" の命名者）。「LLM ベンダーが守ってくれるわけではない」と述べ、自衛を促している | https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ |
 | 2 | 「95% 検知」をうたうガードレール製品を**唯一の防御にしない** | 同上。Web セキュリティでは 95% は不合格点という指摘 | https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/ |
-| 3 | 人間の承認なしで動くエージェントは **3 要素のうち 2 つまで**（Rule of Two） | Meta（2025-10-31）。解説記事経由 | https://memx.app/blog/lethal-trifecta-ai-agent-data-exfiltration/ |
+| 3 | 人間の承認なしで動くエージェントは **履歴も含めて 1 セッション内で 3 要素のうち 2 つまで**（Rule of Two） | Meta（2025-10-31） | https://ai.meta.com/blog/practical-ai-agent-security/ |
 | 4 | プロンプトインジェクションは**アーキテクチャ由来**と捉え、権限と通信経路で封じる | OWASP 2026 報告（Help Net Security の解説） | https://www.helpnetsecurity.com/2026/06/11/owasp-prompt-injection-ai-security-failures/ |
 | 5 | エージェントに **ID・短寿命の資格情報・キルスイッチ**を与える | OWASP Top 10 for Agentic Applications 2026 の解説 | https://cycode.com/blog/owasp-top-10-agentic-applications/ |
 | 6 | Agentic Top 10 を**リスクの語彙**、LLM Top 10 を**モデル層の語彙**として併用 | Modulos のガイド | https://docs.modulos.ai/frameworks/owasp-top-10-agentic |
@@ -1046,7 +1058,7 @@ gantt
 | 14 | 2026 年 5 月 TanStack 事件の**攻撃連鎖**（fork PR → キャッシュ汚染 → OIDC トークン窃取）から対策を学ぶ | 事後分析（Medium） | https://medium.com/@jordanritter/security-hardening-github-workflows-at-scale-d291a33774e1 |
 | 15 | 2026 年の GitHub 側の防御変更と**残る攻撃面**を把握する | Wiz の解説 | https://www.wiz.io/blog/github-actions-security-pwn-request-reckoning |
 | 16 | `pull_request_target` と `checkout` の組み合わせを禁止し、更新には待機期間を置く | DEV Community の実務ガイド | https://dev.to/sachincool/lazy-sres-guide-to-secure-systems-part-2-the-actions-you-didnt-pin-428g |
-| 17 | **依存の新版に待機期間（例: 3 日）**を設け、PR を `pull_request`（秘密情報なし）で動かす | 実プロジェクトのセキュリティ方針 | https://github.com/strait-dev/ui/security |
+| 17 | **依存の新版に待機期間（例: 3 日）**を設け、PR を `pull_request` で動かす。fork への秘密情報の提供を無効にするリポジトリ・組織設定も確認 | 実プロジェクトのセキュリティ方針 | https://github.com/strait-dev/ui/security |
 | 18 | **来歴（provenance）があっても安全とは限らない**。Trusted Publishing 経由でも侵害され得る | Orca Security／DEV Community | https://orca.security/resources/blog/tanstack-npm-supply-chain-worm/ |
 | 19 | 同上の年表（2025〜2026 の主要事件）を確認 | DEV Community | https://dev.to/marco_odev/npm-supply-chain-the-worm-that-walked-in-through-trusted-publishing-4pm8 |
 | 20 | **インストール時スクリプトが感染経路**であることを前提に無効化を検討 | Datadog Security Labs（ChainDrop 分析） | https://securitylabs.datadoghq.com/articles/npm-worm-compromises-popular-npm-packages/ |
@@ -1054,7 +1066,7 @@ gantt
 | 22 | Microsoft の分析で、**侵害されたトークンから他パッケージへ再公開**する仕組みを理解する | Microsoft Security Blog | https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/ |
 | 23 | **SBOM は署名し、VEX と組み合わせて運用**する | CISA 2026 Minimum Elements の解説 | https://fossa.com/blog/cisa-releases-2026-minimum-sbom-elements/ |
 | 24 | SBOM の新基準（ハッシュ・ライセンス・生成ツール・署名）を確認 | Help Net Security | https://www.helpnetsecurity.com/2026/07/30/cisa-sbom-guidance-updated/ |
-| 25 | **CRA の報告プロセス**を製品ごとに設計（SRP への登録、24/72時間/14日の段階） | 欧州委員会の公式ページ | https://digital-strategy.ec.europa.eu/en/policies/cra-reporting |
+| 25 | **CRA の報告プロセス**を製品ごとに設計（SRP への登録、認知から24/72時間、最終報告は脆弱性の是正・緩和措置が利用可能になってから14日以内／重大インシデントの72時間の続報から1か月以内） | 欧州委員会の公式ページ | https://digital-strategy.ec.europa.eu/en/policies/cra-reporting |
 | 26 | 報告義務の実務ポイント（誰が・何を・いつ） | Jones Day | https://www.jonesday.com/en/insights/2026/07/eu-cyber-resilience-act-24hour-reporting-duties-start-september-11-2026 |
 | 27 | SRP の稼働と初期リリースの制約 | Help Net Security | https://helpnetsecurity.com/2026/09/14/enisa-cra-single-reporting-platform |
 
@@ -1079,7 +1091,7 @@ gantt
 | 37 | **認証（署名）の移行を優先**し、2029 年を目標にする | **Heather Adkins / Sophie Schmieg**（Google, 2026-03-25） | https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/ |
 | 38 | 「2029 年」は**予測ではなく"否定しきれない"ための備え**。長寿命データは今すぐリスク | **Thom Wiggers**（PQShield） | https://pqshield.com/on-quantum-timelines-what-does-2029-actually-mean/ |
 | 39 | **ハイブリッド署名の是非**は専門家でも割れている。論点を把握して選ぶ | postquantum.com の整理 | https://postquantum.com/post-quantum/pqc-migration-risk-hybrid/ |
-| 40 | NIST IR 8547 **最終版**（2030 非推奨／2035 禁止）を一次情報で確認 | NIST CSRC 公式の公開一覧 | https://csrc.nist.gov/Projects/post-quantum-cryptography/publications |
+| 40 | NIST IR 8547 **最終版**（2030年を過ぎると非推奨／2035年を過ぎると NIST の標準・ガイドライン上で使用不可）を一次情報で確認 | NIST CSRC 公式の公開一覧 | https://csrc.nist.gov/Projects/post-quantum-cryptography/publications |
 | 41 | 最終版の**ドラフトからの変更点**（鍵長を問わず非推奨） | CSA の研究ノート／postquantum.com | https://labs.cloudsecurityalliance.org/research/csa-research-note-nist-ir8547-pqc-transition-20261030-csa-st/ |
 | 42 | HQC を待たず **ML-KEM を先に導入**する | postquantum.com の規制まとめ | https://postquantum.com/security-pqc/us-pqc-regulatory-framework-2026/ |
 | 43 | 主要ブラウザ・CDN の**ハイブリッド鍵交換の普及状況**を把握 | 解説記事（Cloudflare 報告を引用） | https://pete.lostsource.net/posts/2026-05-26-your-traffic-is-post-quantum.html |
