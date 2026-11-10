@@ -88,7 +88,7 @@ flowchart TD
 |---|---|---|
 | 2025年に新たに確認された悪意あるOSSパッケージ | 454,600 超（前年比 +75%） | Sonatype 2026 レポート（Patrowl の記事経由で引用） |
 | サプライチェーン侵害の平均コスト／特定・封じ込め日数 | 約 491 万ドル／267 日 | IBM Cost of a Data Breach 2025（同上） |
-| OWASP A03（サプライチェーン）の発生率 | 5.19%（Top10 中で最高）だが CVE の紐付けは少ない | Qualys ブログ。**攻撃が起きていてもスキャナに"署名"が無い**ことを示唆 |
+| OWASP A03（サプライチェーン）の弱点を含むアプリの平均割合 | OWASP 公式本文は 5.19%、同ページの集計表は 5.72%（記載に差異あり） | [OWASP 公式](https://top10.owasp.org/2025/A03_2025-Software_Supply_Chain_Failures/)。テスト対象アプリに弱点が存在した割合で、攻撃頻度ではない。関連 CWE に紐づく CVE は 11 件で、スキャナの検出率や攻撃率を表す数値ではない |
 | 侵害の入口としての脆弱性悪用 | 31%（資格情報窃取を上回る） | 2026 Verizon DBIR（Veracode ブログ経由） |
 | 解消に1年超かかっている脆弱性（"セキュリティ負債"）を抱える組織 | 82% | Veracode 2026 State of Software Security |
 | AI生成コードのセキュリティ合格率（平均） | 62%（2026年10月） | Veracode。XSS(CWE-80)は夏版で合格率 15% |
@@ -251,7 +251,7 @@ flowchart TD
     RC --> M
 ```
 
-- **EU CRA（サイバーレジリエンス法）**: EU 市場向けの"デジタル要素を持つ製品"の製造者は、**2026年9月11日から**、悪用が確認された脆弱性と重大インシデントを ENISA の Single Reporting Platform 経由で報告する義務があります。いずれも**認知から早期警告 24 時間以内、続報 72 時間以内**。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です。詳細は第5章。
+- **EU CRA（サイバーレジリエンス法）**: EU 市場向けの"デジタル要素を持つ製品"の製造者は、**2026年9月11日から**、悪用が確認された脆弱性と重大インシデントを ENISA の Single Reporting Platform 経由で報告する義務があります。いずれも**早期警告と続報の両方を不当な遅滞なく提出し、認知から早期警告は遅くとも 24 時間以内、続報は遅くとも 72 時間以内**とします（[CRA 第14条](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng)）。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です。詳細は第5章。
 
 ### 2.5 Secure SDLC セルフチェック（20問）
 
@@ -648,7 +648,7 @@ flowchart TD
 |---|---|---|
 | npm | `npm ci`（ロックファイル通りにインストール） | `npm install` は更新が入り得る |
 | Python | ハッシュ付きの固定（例: `pip install --require-hashes`） | ツールは uv/pip-tools など |
-| Go / Rust | `go.sum` / `Cargo.lock` をコミット | |
+| Go / Rust | Go は `go.mod` と `go.sum`、Rust は `Cargo.lock` をコミット | |
 
 #### Step 2: 「新しすぎる版」を取り込まない（待機期間 / クールダウン）
 
@@ -760,7 +760,7 @@ jobs:
 | **2026-09-11** | **報告義務（第14条）開始**。悪用が確認された脆弱性・重大インシデントを、ENISA の Single Reporting Platform（SRP）から、ENISA と各国 CSIRT に同時通知。SRP は同日に稼働開始 |
 | 2027-12-11 | 大半の要件が全面適用 |
 
-- 両報告種別とも、**認知から早期警告 24 時間以内、続報 72 時間以内**。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です（[欧州委員会の公式説明](https://digital-strategy.ec.europa.eu/en/policies/cra-reporting)）。
+- 両報告種別とも、**早期警告と続報の両方を不当な遅滞なく提出し、認知から早期警告は遅くとも 24 時間以内、続報は遅くとも 72 時間以内**とします。最終報告は、**悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内**です（[欧州委員会の公式説明](https://digital-strategy.ec.europa.eu/en/policies/cra-reporting)）。
 - 9 月 11 日以前に把握していて、**悪用が確認されていなかった**脆弱性は、遡って報告する義務はない、と整理する解説があります。
 - **OSS スチュワード**には限定的な義務があります。**自社が"製造者"に当たるか**は、プロダクトごとに確認してください（法的助言ではありません）。
 
@@ -1066,7 +1066,7 @@ gantt
 | 22 | Microsoft の分析で、**侵害されたトークンから他パッケージへ再公開**する仕組みを理解する | Microsoft Security Blog | https://www.microsoft.com/en-us/security/blog/2026/08/04/chaindrop-supply-chain-compromise-anatomy-self-propagating-worm/ |
 | 23 | **SBOM は署名し、VEX と組み合わせて運用**する | CISA 2026 Minimum Elements の解説 | https://fossa.com/blog/cisa-releases-2026-minimum-sbom-elements/ |
 | 24 | SBOM の新基準（ハッシュ・ライセンス・生成ツール・署名）を確認 | Help Net Security | https://www.helpnetsecurity.com/2026/07/30/cisa-sbom-guidance-updated/ |
-| 25 | **CRA の報告プロセス**を製品ごとに設計（SRP への登録、認知から24/72時間、最終報告は脆弱性の是正・緩和措置が利用可能になってから14日以内／重大インシデントの72時間の続報から1か月以内） | 欧州委員会の公式ページ | https://digital-strategy.ec.europa.eu/en/policies/cra-reporting |
+| 25 | **CRA の報告プロセス**を製品ごとに設計（SRP への登録、早期警告・続報とも不当な遅滞なく、認知から遅くとも24/72時間以内、最終報告は脆弱性の是正・緩和措置が利用可能になってから14日以内／重大インシデントの72時間の続報から1か月以内） | 欧州委員会の公式ページ | https://digital-strategy.ec.europa.eu/en/policies/cra-reporting |
 | 26 | 報告義務の実務ポイント（誰が・何を・いつ） | Jones Day | https://www.jonesday.com/en/insights/2026/07/eu-cyber-resilience-act-24hour-reporting-duties-start-september-11-2026 |
 | 27 | SRP の稼働と初期リリースの制約 | Help Net Security | https://helpnetsecurity.com/2026/09/14/enisa-cra-single-reporting-platform |
 
@@ -1075,7 +1075,7 @@ gantt
 | # | ベストプラクティス | 根拠・提唱者 | URL |
 |---|---|---|---|
 | 28 | OWASP Top 10:2025 の**公式一覧**を共通言語にする | OWASP | https://owasp.org/Top10/2025/ |
-| 29 | A03（サプライチェーン）は**発生率が高いが CVE が少ない**＝スキャナだけでは見えない | Qualys のデータ解説 | https://blog.qualys.com/qualys-insights/2026/06/15/what-changed-in-owasp-top-10-2025-and-recommendations-for-each-category |
+| 29 | A03 のテスト対象で弱点を含むアプリの平均割合は**公式本文 5.19%／集計表 5.72%**。関連 CWE に紐づく CVE は 11 件。攻撃頻度やスキャナの検出率とは区別する | OWASP 公式の本文・集計表 | https://top10.owasp.org/2025/A03_2025-Software_Supply_Chain_Failures/ |
 | 30 | **ASVS と WSTG** でテスト範囲を決める | HackStack の解説 | https://hackstacksecure.com/blogs/owasp-top-10-2025-what-changed/ |
 | 31 | SSDF 1.2 ドラフトの**一次資料**を読む | NIST SP 800-218 Rev.1 IPD | https://csrc.nist.gov/pubs/sp/800/218/r1/ipd |
 | 32 | SSDF 関連文書の**最新状況**を NIST で確認する | NIST SSDF 公開資料一覧 | https://csrc.nist.gov/projects/ssdf/publications |
