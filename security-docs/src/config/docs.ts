@@ -20,6 +20,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
       items: [
         { title: "Security Approach 2026", href: "/docs/approach" },
         { title: "Security Architecture", href: "/docs/architecture" },
+        { title: "SCS評価制度と脅威分析", href: "/docs/scs-evaluation-threat-analysis-guide" },
       ],
     },
     {
@@ -90,6 +91,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
         { title: "ISO/IEC 29100:2024 プライバシーフレームワーク", href: "/docs/iso-iec-29100-2024-guide" },
         { title: "ISO/IEC 15408-1:2026 初学者向けガイド", href: "/docs/iso-iec-15408-1-2026-guide" },
         { title: "ISO/IEC 18045:2026 初学者向け解説ガイド", href: "/docs/iso-iec-18045-2026-guide" },
+        { title: "ISO/IEC 24759:2025 初学者向け解説ガイド", href: "/docs/iso-iec-24759-2025-guide" },
       ],
     },
     {
@@ -107,6 +109,7 @@ export const docsConfig: { sidebarNav: DocsSection[] } = {
         { title: "SSCP (Systems Security Certified Practitioner)", href: "/docs/sscp-guide" },
         { title: "CGRC (Certified in Governance, Risk and Compliance)", href: "/docs/cgrc-guide" },
         { title: "ISSAP (Information Systems Security Architecture Professional)", href: "/docs/issap-guide" },
+        { title: "ISSEP (Information Systems Security Engineering Professional)", href: "/docs/issep-guide" },
         { title: "CSSLP (Certified Secure Software Lifecycle Professional)", href: "/docs/csslp-guide" },
         { title: "CyberOps Associate (200-201 CBROPS)", href: "/docs/cyberops-associate-guide" },
         { title: "CyberOps Professional (350-201 CBRCOR / 300-215 CBRFIR)", href: "/docs/cyberops-professional-guide" },

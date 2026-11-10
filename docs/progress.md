@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-06（Mermaid 11.17.2へ更新: Dependabotアラート9件対応）
+> **最終更新**: 2026-11-08（6回目レビュー修正: SCSガイド3点、ISSEP目次の断片選択固定、styles検証のChrome既定パス除去）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,36 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **2553成功 / 0 skip / 0失敗** | 全体319ファイル・570,789 expect。SSCP専用87件・CGRC専用84件を含む。 |
-| テストファイル数 | **319ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **127/127 (100%)** | 従来124＋SSCP部品3。純粋データ・MDXは分母外。全319テストファイルとは別集計 |
+| テストケース総数 | **2754成功 / 0 skip / 0失敗** | 全体338ファイル・574,338 expect。ISSEP専用106件を含む。 |
+| テストファイル数 | **338ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **134/134 (100%)** | 従来133＋QuizCard。純粋データ・MDXは分母外。全338テストファイルとは別集計 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
-| CI | ✅ **稼働中** | SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
+| CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
 #### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびSSCP完了欄）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/issep-guide/QuizCard.test.tsx` | 15 | ✅ 2026-11-07 全選択肢判定・原文文字一致・読み上げ・答え直し |
+| `src/app/docs/issep-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/foundation.test.tsx` | 3 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/front.test.tsx` | 12 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/hydration.test.tsx` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/integration.test.tsx` | 6 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/rear.test.tsx` | 14 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/runtime.test.tsx` | 14 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/sidebar.test.tsx` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/issep-guide/styles.test.tsx` | 16 | ✅ 2026-11-06 ISSEP最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/foundation.test.tsx` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/front.test.tsx` | 20 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/hydration.test.tsx` | 4 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/integration.test.tsx` | 5 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/rear.test.tsx` | 18 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/runtime.test.tsx` | 14 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/sidebar.test.tsx` | 9 | ✅ 2026-11-06 ISO24759最終実測 |
+| `src/app/docs/iso-iec-24759-2025-guide/styles.test.tsx` | 17 | ✅ 2026-11-06 ISO24759最終実測 |
 | `src/app/docs/sscp-guide/archive.test.ts` | 4 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
 | `src/app/docs/sscp-guide/foundation.test.tsx` | 12 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
 | `src/app/docs/sscp-guide/front.test.tsx` | 14 | ✅ 2026-10-26 SSCP原文/丸点/番号/チェック/アーカイブ検証 |
@@ -402,15 +421,17 @@ form-action 'self'
 
 | ファイル | 最終更新 | 内容 |
 |---|---|---|
+| `docs/migration-inventory/issep-guide.json` | 2026-11-06 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
+| `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `GEMINI.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `README.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `security-docs/CLAUDE.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `security-docs/README.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `docs/test-coverage-dashboard.html` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
-| `docs/progress.md` | 2026-10-26 | SSCP移行・専用86件・全体2551件・原本アーカイブ・実測同期 |
+| `CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `GEMINI.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `security-docs/CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `security-docs/README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `docs/test-coverage-dashboard.html` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `docs/progress.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -440,6 +461,10 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| REVIEW-1107-A11Y | **ISSEP目次・回答UIと2ガイドのレビュー修正** — ページ内検索で目次の固定を解除（Green Red `14e5f87` → Green `b3c4f36`）。クイズに `role="group"` と常設の状態領域を追加（Red `0e06dff` → Green `05ad07a`）。SCSガイド6件・Security Architectureガイド6件を一次情報に合わせて修正。全体2754件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
+| REVIEW-1107-SCS | **ISSEP目次の選択維持とSCSガイドのレビュー修正** — クリックした小節を読者の次のスクロールまで維持（Red `9f957d2` → Green `c676049`）。Docstring 7件を追加。SCSガイド7件を一次情報に合わせて修正（`f1fc85c`）。全体2746件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
+| ISSEP-QUIZ | **11.3回答UI改善** — 原文を保持した即時判定・答え直し・独立状態・解説表示。専用15件とChrome4条件成功、目視はユーザー担当。 | 2026-11-07 |
+| MIG-ISSEP | **ISSEP移行・原本アーカイブ・検証完了** — 13章/74表/22図/10解答/6チェックと原本装飾を保持。専用77件・Chrome10条件成功。目視はユーザー担当・未確認。 | 2026-11-06 |
 | DEP-1106-MERMAID | **Mermaid 11.12.0 → 11.17.2（Dependabot #26〜#34 の9件対応）** — 全アドバイザリは11.16.1で修正済みだが、11.16.xは `flowchart LR` 内の `direction TB` サブグラフ＋サブグラフ間の辺で約4倍幅に崩れる不具合があり（hacking #7 / SSCP #29）、11.17.0で解消するため11.17.2を採用。12.xはメジャー更新のため対象外。図の入力はリポジトリ内の静的定数のみ・`securityLevel: 'strict'` で実害は低い。実Chrome全585図を更新前後のDOM指紋（件数・文字・計算済みスタイル・寸法）で比較: 描画失敗・件数差・構文エラー・ページエラー0。寸法変化7図、状態図の矢印色変化3図、自己ループ辺の構造変化2図。円グラフの凡例順は不変で、11図・全67スライスの角度と凡例値の一致を更新前後で確認（CSSLPは目視）。スクリーンショット比較は免責モーダル越しの参考値のため判定根拠にしない。テスト2553成功/0失敗・lint・型チェック・既存Chrome検証13本成功。ビルド未実行。目視はユーザー担当・未確認。 | 2026-11-06 |
 | REVIEW-1026-FRAG | **ISO29100/ISSAP目次の不正URLフラグメント対策** — `decodeFragment` で `URIError` を回避（初期ロード/hashchange/リンク選択）。ISO29100ブラウザー検証スクリプトの既定描画HTMLをガイド専用名へ修正。Red `4b2140c` → Green `632e747`、スクリプト `fa02120`。両ガイド178 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
 | PR56-COV | **PR #56 codecov/patch失敗の解消** — CGRC/SSCPの `MermaidFigure.tsx` はISSAPから引き継いだ `describeTransition`（ステート図説明）を持つが、両ガイドにstateDiagramがなく各7行が未実行だった。原本非依存の単体テストを両 `runtime.test.tsx` に追加し、両ファイルの行カバレッジ100%（原本なし環境でも同値）。製品コード変更なし。テスト `9a8bda6`。全体2553 pass / 0 fail、lint・型チェック成功。ビルド禁止/未実行。 | 2026-10-26 |
@@ -1433,7 +1458,83 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 <!-- sscp-status -->
 ## SSCP 移行（2026-10-26）
 
-移行・原本アーカイブ・自動検証完了: /docs/sscp-guide。全13章（第0〜12章）・64小節・170見出し・111表1752セル・38図・260リスト項目（63ul/3ol）・50出典・57注意欄・70目次リンク・79固有IDを保持。7つの確認問題表の全21問/解説、13チェックの独立した入力/ラベル操作、番号付き手順3組（4/6/6項目）を検証。17固定構造SHA-256と原本比較、38図の固定定義/パース、全CSS/media、5幅×明暗、金色6px丸点/藍色番号/チェック欄CSSカウンター/見出し角点/出典番号、全111表とページのHydrationを検証。専用86件/10ファイルを含む全体2551成功/0skip/0失敗（319ファイル、570,787 expect）。原本なし隔離環境55成功/31skip/0失敗。HTMLのみ・Markdownのみの各隔離環境でもハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1752セルのホバー・13項目のチェック済み装飾が差分0。ブランドの共有15pxとフォームUAスタイルの1060差分をRedで検出し、原本の文字サイズ/UA既定値を復元。Happy DOMが持たないUAフォント比較はChromeで全条件検証する。375/1440pxのHTTP200で全件数/17構造SHA一致・全38図描画と左右スクロール・目次/フォーカス/チェック操作成功（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索40ページ。ロジック127/127（従来124＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤687bb22→85d792d（重複属性除去f9fe9e9）、前半d360924→e11e83a、後半008eaa6/Chrome Red119b726→796da5e、アーカイブf328864→234b06a。目視確認表: docs/migration-inventory/sscp-guide-review.md。現在未移行のルート原稿: ISSEP、ISO/IEC24759（HTML0件/Markdown2件）。
+移行・原本アーカイブ・自動検証完了: /docs/sscp-guide。全13章（第0〜12章）・64小節・170見出し・111表1752セル・38図・260リスト項目（63ul/3ol）・50出典・57注意欄・70目次リンク・79固有IDを保持。7つの確認問題表の全21問/解説、13チェックの独立した入力/ラベル操作、番号付き手順3組（4/6/6項目）を検証。17固定構造SHA-256と原本比較、38図の固定定義/パース、全CSS/media、5幅×明暗、金色6px丸点/藍色番号/チェック欄CSSカウンター/見出し角点/出典番号、全111表とページのHydrationを検証。専用86件/10ファイルを含む全体2551成功/0skip/0失敗（319ファイル、570,787 expect）。原本なし隔離環境55成功/31skip/0失敗。HTMLのみ・Markdownのみの各隔離環境でもハッシュ独立判定3成功/1skip/0失敗。Chrome CSS10条件で文字・点・番号・全1752セルのホバー・13項目のチェック済み装飾が差分0。ブランドの共有15pxとフォームUAスタイルの1060差分をRedで検出し、原本の文字サイズ/UA既定値を復元。Happy DOMが持たないUAフォント比較はChromeで全条件検証する。375/1440pxのHTTP200で全件数/17構造SHA一致・全38図描画と左右スクロール・目次/フォーカス/チェック操作成功（pageErrors0）。両原本はarchive/security-certifications/へSHA-256一致で保存済み（Git管理外）。資格ナビ・ホーム・静的/動的検索40ページ。ロジック127/127（従来124＋GuideSidebar/GuideIcon/MermaidFigure）。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤687bb22→85d792d（重複属性除去f9fe9e9）、前半d360924→e11e83a、後半008eaa6/Chrome Red119b726→796da5e、アーカイブf328864→234b06a。目視確認表: docs/migration-inventory/sscp-guide-review.md。SSCP完了時点の未移行ルート原稿（履歴）: ISSEP、ISO/IEC24759（HTML0件/Markdown2件）。
 
 配置: `security-docs/src/app/docs/sscp-guide/page.mdx`。台帳: `docs/migration-inventory/sscp-guide.json`。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 <!-- /sscp-status -->
+
+2026-11-06 ISO24759 表示基盤Red準備: 既存40ルート/319テストファイルを確認。新規19章・48見出し・24表407セル・8図・37リスト項目・20出典・1コードを台帳に固定。基盤テストは未実装を検出。全体テスト実行中。npm使用、ビルド禁止・目視はユーザー担当。
+
+2026-11-06 ISO24759: 基盤23件成功（Red 3135b68 → Green c1e907b）。前半第0〜9章の原本比較/固定構造20件を追加しRed確認。専用登録43件/4ファイル。
+
+2026-11-06 ISO24759: 前半43件成功（1242668 → edfe260）。後半9章・全48見出し/24表407セル・全51ID・Python原文/色付け・5幅×明暗CSS・全セルホバー・丸点/丸数字・目次実リンク・Hydration・検索登録のRed追加（未実装を検出）。
+
+2026-11-06 ISO24759: 後半第10〜18章を移行しナビ・静的検索（41ページ）へ登録（1d14a16 → d981caf）。レビュー対応で共通シェルpadding解除、閉じたモバイル目次の非表示化、復号不能フラグメントの安全な処理、Mermaid一時要素の片付け（Red 7e032be → Green d0f3b9b）、JSDoc追加（29f3f44）、既存ISO固定値の同期（b69e686）。専用88件/8ファイルを含む全体2641成功/0skip/0失敗（327ファイル、571,820 expect）。原本なし隔離環境1566成功/1075skip/0失敗。npm test・lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。残作業: Chrome実描画の確認、目視確認表、HTML/Markdown原本のarchive/standards/への移動（archive.test.ts追加）。
+
+2026-11-06 ISO24759: URL未指定時の先頭目次リンクがエンコード済みIDのまま比較され選択されない問題を修正（Red  → Green 0bb0fa1 afd7156 ）。sidebar 9件・統合5件成功、lint・型チェック成功。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+2026-11-06 ISO24759: codecov/patch失敗（97.20%、未カバー7行）を調査。未検証だった状態遷移説明の正規表現が日本語状態名に一致せず、d5のテキスト説明がMermaid構文のまま出る実バグを発見しUnicode対応で修正（Red c6dd0f2 → Green b6da319）。専用90件成功、本ガイド実装の未カバー行0。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-06 ISO24759継続監査: 既存移行実装は専用90件/8ファイル成功。全体2643成功/0skip/0失敗（327ファイル、571,826 expect）をnpm testで実測。19章・48見出し・24表407セル・8図・37リスト項目・20出典・Pythonコードを保持。主要集計を現行値へ修正。アーカイブRedは別実行で0成功/4失敗、未実装を検出。残作業: 原本アーカイブ、Chrome自動検証、目視確認表。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+| ISO24759 `archive.test.ts` | 4 | 2026-11-06 Red: 0成功/4失敗、本文90件とは別実行 |
+
+
+2026-11-06 ISO24759コード枠Red: Chromeで共有CSSがpreのUA monospaceを別フォントスタックへ置換する差分を検出。UA条件を厳密化したstyles.test.tsxは6成功/11失敗（17件）。追加1件、専用合計95件。原本移動後の既存94件は成功、原本なし59成功/35skip、HTMLのみ/Markdownのみ各3成功/1skip。全体最終再実行中。
+
+
+2026-11-06 ISO24759移行・原本アーカイブ・自動検証完了: /docs/iso-iec-24759-2025-guide （security-docs/src/app/docs/iso-iec-24759-2025-guide/page.mdx）。19章・48見出し・24表407セル・8図・37リスト項目・7注意欄・20出典・Pythonコードを保持。固定構造SHA-256/原本DOM/全CSS/media/丸点・丸囲み番号・CSSカウンター/全表とページのHydration/目次操作を検証。全体実行2647成功/0skip/0失敗（328ファイル、571,836 expect）。全体実行開始後のフォント回帰1件追加と修正は、最終専用95成功/0skip/0失敗（9ファイル、939 expect）で検証。現行の定義総数2648件/328ファイル。原本なし隔離環境60成功/35skip/0失敗、HTMLのみ/Markdownのみのアーカイブ検証は各3成功/1skip/0失敗。Chrome5幅×明暗の10条件で本文・丸点・丸数字・カウンター・全407セルのホバー配色差分0、全件数一致、全8図の描画と左右スクロール、モバイル目次開閉と章移動、pageErrors0。共有CSSによるpreのUA monospace差分をRed d64f9a4 → Green 2874888で修正。両原本はarchive/standards/へSHA-256一致で移動済み（Git管理外、Red cf007ef → Green 0ece9d2）。ナビ・静的/動的検索41ページ、ロジック131/131。npm test・npm run lint・npm run types:check成功。台帳: docs/migration-inventory/iso-iec-24759-2025-guide.json。目視確認表: docs/migration-inventory/iso-iec-24759-2025-guide-review.md。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-06 ISSEP: 開始監査で既存41ルート/328テストファイル、現行2648定義を確認。既存全体のnpm test実行中。原本は13章・120見出し・74表1080セル・22図・207リスト項目・10問/解答・6チェック・19出典・54目次リンク・4コード。表示基盤Redは0成功/5失敗（2ファイル）で未実装を検出。ビルド禁止/未実行、目視はユーザー担当。
+
+
+2026-11-06 ISSEP: 表示基盤5件成功（Red 9a698e2、比較条件修正0fa7df4、Green ca8e27e）。型チェック成功。第1〜6章の全セル・強調・URL・リスト階層・図位置を固定SHAと原本DOMで比較する12件のRedを追加。npm使用、ビルド未実行。
+
+
+2026-11-06 ISSEP: 第1〜6章の原本DOMと固定構造比較12件を含む17件が成功（Red 610a45b → Green本文コミット）。後半7〜13章、全74表のHydration、全件数/120見出し検索、全10解答/6チェック、5幅×明暗CSS、角点/番号/チェックカウンターの厳密テストを追加しRed確認中。
+
+
+2026-11-06 ISSEP: 後半Red実測: 43件中5成功/38失敗（5ファイル）。22図の既存部品に対する遅延描画・再試行・古い結果の破棄・アクセシビリティの回帰検証も追加。本文後半はまだ未実装。
+
+
+2026-11-06 ISSEP: Chromeでeyebrowフォントと6チェック欄のUA余白/色の計38差分/条件を検出。図定義に加えて元のdiagram枠クラスも22個保持する厳密テストを追加し、未保持をRedで検出。既存の全章構造・コード・解答・検索登録は成功。
+
+
+2026-11-06 ISSEP: 全13章を含む専用73件/8ファイル成功（1417 expect）。後半とChrome差分のGreenは5808ecb。再現可能な実ブラウザー検証を5e71989で追加。開始時の全体2648件実行は途中の42ページへの登録更新によりキャッシュ済み41ナビと検索件数が食い違い2件失敗したため、変更確定後の全体再実行で確認する。原本アーカイブ4件のRedを追加。
+
+
+2026-11-06 ISSEP: 原本HTML/Markdownをarchive/security-certifications/へ移動し両SHA-256一致。移動後77成功/0skip/0失敗（9ファイル、1427 expect）。原本なし48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip。既存検索回帰22件も成功し42ページで一致。lint・型チェック成功。Chrome10条件の文字/角点/番号/カウンター/全1080セルホバー/チェック済み装飾は差分0、375/1440pxで17構造SHA・22図・解答/チェック/目次操作成功（pageErrors0）。全体最終実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-06 ISSEP: 全体再検証で既存CCIE/CCSTの資格一覧固定値とISO27001の従来30ルート検証にISSEP分の同期漏れを検出。元の完全一致・既存ルート保持の条件を維持して3ファイルを同期。全体実行を中断し、この3ファイルのGreen確認後に変更確定状態で全体を再実行する。
+
+
+2026-11-06 ISSEP移行・原本アーカイブ・自動検証完了: /docs/issep-guide （security-docs/src/app/docs/issep-guide/page.mdx）。全13章・120見出し・74表1080セル・22図・207リスト項目・54注意欄・19出典・54目次リンク・76固有ID・4コードを保持。10問の全解答/解説と開閉、6チェックの入力/ラベル操作、金色7px角点（角丸1px）/順序番号/丸囲みチェックカウンターを検証。17固定構造SHA-256と原本DOM比較、4コードの空白SHA、全CSS/media、全74表/ページのHydrationを検証。専用77成功/9ファイル（1427 expect）を含む全体2725成功/0skip/0失敗（337ファイル、573,519 expect）。原本なし隔離環境48成功/29skip/0失敗、HTMLのみ/Markdownのみの各アーカイブ検証3成功/1skip/0失敗。Chrome5幅×明暗10条件で文字・角点・番号・チェックカウンター・全1080セルホバー・チェック済み装飾の差分0。375/1440pxの実ページで全件数/17構造SHA/4コードSHA一致、22図の描画・中央寄せ・左右端到達、目次/解答開閉/チェック操作成功（pageErrors0）。原本HTML/Markdownはarchive/security-certifications/へ両SHA-256一致で移動済み（Git管理外）。資格ナビ・ホーム・静的/動的検索42ページ、ロジック133/133（従来131＋GuideSidebar/MermaidFigure）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: 基盤9a698e2→ca8e27e、前半610a45b→db65a3c、後半495174b/図枠・Chrome Red33efd5f→5808ecb、アーカイブ2280956→709ad27。既存資格一覧/ISOルートの固定値同期はa4ccaa6。台帳: docs/migration-inventory/issep-guide.json。目視確認表: docs/migration-inventory/issep-guide-review.md。再検証用スクリプト: security-docs/src/app/docs/issep-guide/styles.browser.mjs と runtime.browser.mjs。
+
+2026-11-07 ISSEP 11.3回答UI: 原本の問題文・40選択肢・10解説を文字単位で固定。クリック判定、全選択肢、答え直し、各問の独立状態、解説の開閉を検証する14件を追加（Red確認）。既存42ルート/337テストファイル、前回全体2725成功を確認。npm使用・ビルド禁止・目視はユーザー担当。
+
+2026-11-07 ISSEP 11.3: クリック判定14件が成功（全40選択肢、文言の文字単位一致、独立状態、解説開閉）。旧移行テストは新しい選択ボタンの構造差と許可された11.3の装飾差を検出。原文比較は選択肢内の単独ボタンだけを透過し、追加/変更文言は検出し続ける仕様をRed追加（15件へ）。
+
+2026-11-07 ISSEP 11.3回答UI Green: db0f206で原文を保ったクリック判定カードを実装。専用92件成功、最終判定/原文保持15件成功（748 expect）。Chrome375/1440px×明暗4条件で全40選択肢の正誤・原文文字一致・Enter/Space/フォーカス・56px以上の選択領域を確認。11.3以外のCSSは10条件差分0、17構造SHAと22図/既存操作も成功。原本なし62成功/30skip/0失敗。全体実行中。ビルド禁止/未実行、目視はユーザー担当/未確認。
+
+
+2026-11-07 ISSEP 11.3回答UI改善完了: /docs/issep-guide#h3-36。問題文・40選択肢・10解説・「解答を見る」の文言と強調を変更せず、QuizCardで選択ボタンと正誤表示を追加。選択直後に正解/不正解を色・文字・記号で示し、正しい選択肢を強調して元の解説を開く。答え直し可能で各問の状態は独立。選択済み回答だけに判定を読み上げ用に関連付ける。スマートフォン1列/PC2列、56px以上の選択領域、Tab/Enter/Spaceとフォーカス表示、動きを減らす設定に対応。全体2740成功/0skip/0失敗（338ファイル、574,292 expect）。ISSEP専用92件/10ファイルを含み、判定/原文保持の15件は単独実行でも成功（748 expect）。原本なし隔離環境62成功/30skip/0失敗。Chrome375/1440px×明暗4条件で全40選択肢の判定・原文一致・キーボード・読み上げ関連付け・解説開閉・レイアウトが成功（pageErrors0）。11.3以外の原本CSSはChrome10条件差分0、17構造SHA・22図・既存の目次/チェック操作も成功。原本比較は選択肢内の単独ボタンだけを透過し、追加/変更文字は引き続き検出する。ナビ・検索は42ページ、ロジック134/134（従来133＋QuizCard）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。TDD: Red 1fe707b/比較基盤c6696a7/判定関連付けb9e60c9 → Green db0f206、Chrome検証61bf7cb。配置: security-docs/src/app/docs/issep-guide/QuizCard.tsx。原文固定: quiz-copy.json。自動検証: QuizCard.test.tsx / quiz.browser.mjs。目視確認表: docs/migration-inventory/issep-guide-review.md。
+
+
+2026-11-07 レビュー指摘対応: ISSEP目次で、クリックした小節が移動後の監視で次の見出しへ置き換わる不具合を修正（Red 9f957d2 → Green c676049）。読者のwheel・pointerdown・スクロールキーで監視の選択へ戻す。同じ監視設定はISSAP/CGRC/SSCPにもあるが今回は未変更。不足していたDocstring 7件を追加（87db84b）。SCSガイドの7件をIPA SCS-410/SCS-400、npm、pip、Bunの一次情報に合わせて修正（f1fc85c）。全体2746成功/0skip/0失敗（338ファイル、574,299 expect）。npm test・npm run lint・npm run types:check成功。ビルド禁止/未実行、目視はユーザー担当/未確認。同期前HEAD `f1fc85c`。
+
+2026-11-07 レビュー指摘対応（2回目）: ISSEP目次で、ページ内検索のジャンプが固定を解除するよう修正（Red 14e5f87 → Green b3c4f36）。ページ内検索はscrollしか発生させないため、ジャンプ完了後に固定中の見出しが画面上で動いたら解除し、監視の選択へ戻す。目次自身の移動とスクロールアンカリングでは維持する。wheel・pointerdown・スクロールキーの解除は変更なし。QuizCardは全10問に role="group" を付け、role="status" の領域を回答前から常設（Red 0e06dff → Green 05ad07a）。原本比較は `.quiz` の group と空の `.quiz-status` だけを許容し、文字の追加は検出する。SCSガイド6件をIPA SCS-410/SCS-620・詳細情報ページに合わせて修正（7d6bde6）。Security Architectureガイド6件をGitHub Docs・Renovate Docs・OWASP SSRF Prevention Cheat Sheet等に合わせて修正（d4ca1df）。is_allowed のコード例は実行して8入力を確認。全体2754成功/0skip/0失敗（338ファイル、574,338 expect）。npm test・npm run lint・npm run types:check成功。Chrome 1440/375pxで window.find のジャンプ解除と追従再開、空の状態領域の高さ0、quiz.browser.mjs 4条件、runtime.browser.mjsの17構造SHAが成功。styles.browser.mjsは未実行。ビルド禁止/未実行、目視はユーザー担当/未確認。同期前HEAD `05ad07a`。
+
+2026-11-07 レビュー指摘対応（ガイド本文ほか）: SCSガイドの適用除外と4-4-4-2（悪用確認済み脆弱性の14日期限）を解説書SCS-620で照合して修正（db6dab4）。Security Architectureガイドへ excludeCredentials、認証時のUVフラグ検証、URL取得ワークロードの通信制御、AES-GCM contextの独立導出を追記（685351d）。ISSEPのquiz.browser.mjsへCHROME_PATHを追記（586aacd）。「暫定対策は期限を延ばさない」は解説書の明文ではなく、14日適用義務からの整理。ISSEPの.diagram原本宣言（display:flex等）は削除すると原本宣言保持テストが失敗するため保持。検証: ISSEP/ISO24759/ホーム209成功（21ファイル）、lint・型検査・markdownlint成功。全体テスト・ビルドは未実行。
+
+2026-11-07 レビュー指摘対応（3回目）: SCSガイドをSCS-620/SCS-410で照合して修正（3d31d12）。4-1-4-2の6文字はローカル認証のPINに適用される旨を追記し、4-1-5-3の行を追加（MFA又は10回失敗でのロックを実施して8文字以上、どちらも不可なら英大文字小文字・数字を含む10文字以上）。Step 4「★3確認責任者と取得単位・適用範囲を合意」を追加してStep 0〜9へ振り直し、90日計画へ事前合意の節目を追加。専門家の登録受付は2027年1月以降の予定のため、12月時点は候補者との事前合意、1月に再確認とした。計画の日程は、現状確認を11/23〜12/14から12/7〜12/28へ、脅威分析ワークショップの開始を12/1から12/7へ、数値要件の点検を12/14〜1/4から12/28〜1/18へ変更。計画全体の終了日（2/7）は不変。WebAuthn登録例をbase64url JSON＋ブラウザ側変換へ変更（c3188d6）。ISO24759のhighlight.js CSS取得をパッケージ解決へ変更（6b851be、同じ相対パスは他ガイドに残存）。ISO27001の除外リストを既存30ルートの固定一覧へ変更（df5cc8b）。quiz.browser.mjsの結果出力をISSEP_QUIZ_RESULTS_PATH／一意な既定パス、失敗時も書き込む方式へ変更（572bdec）。検証: 対象2ファイル22成功、ルート削除の負の対照で失敗検出、lint・型検査・markdownlint成功、mermaid 2図描画、WebAuthn例はChromeのparseCreationOptionsFromJSONと手動変換の両方でバイト一致、quiz.browser.mjsはlocalhost:3107で4条件成功・接続失敗時も結果書き込み。全体テストは未実行。ビルド禁止/未実行。注意: Next.js devは127.0.0.1からのdevリソースを遮断するため、quiz.browser.mjs既定のDOCS_BASE_URL（127.0.0.1:3107）ではhydrationされず失敗する。DOCS_BASE_URL=http://localhost:3107 を指定する。
+
+2026-11-07 レビュー指摘対応（4回目）: SCSガイドの第4.0版の出典をIPA公式ページと関連制度・施策へ変更（INTERNET Watchの当該記事は制度構築方針の記事で無関係。★3・★4との対応は付録5の見直しで裏付け）。委託先所有端末は適用範囲外のまま、取り扱い条件の設定と遵守確認を追記（解説書3.2.3）。保守ベンダー対策へ接続先の限定と作業時のみの接続を追加（1d0b6d1）。Security Architectureガイドへ登録レスポンスのサーバー検証、TLSを前提としたトークン認証、許可リスト不可時の公開IPv4/IPv6限定、エージェントログの引数の項目限定とマスクを追記（0c589b5）。quiz.browser.mjsはCHROME_PATH未指定時にPlaywright同梱ブラウザを使用、runtime.browser.mjsは失敗時も途中結果を保存（50538db）。検証: markdownlint・lint・型検査成功、localhost:3107でquiz 4条件（CHROME_PATH指定）とruntime 2幅が成功、runtimeの接続失敗時も結果書き込み。同梱ブラウザでの成功経路は、手元のPlaywrightと版が合うブラウザがなく未確認。全体テストは未実行。ビルド禁止/未実行。
+
+2026-11-08 レビュー指摘対応（5回目）: SCSガイドの適用範囲を解説書3.2.1注10・3.2.2で照合し、除外に当たる社外向けサービス基盤のサーバは公開していても自動的には含めないと明記。それ以外の公開サーバは必ず含める（注10は「必ず含める」も併記するため、公開サーバへの当てはめは筆者整理と表示）。ハンズオンの図で ENG→PORTAL のエッジを信頼境界の外へ移動（Mermaidの解析結果で PORTAL が境界から外れ、エッジ6本を維持）。CI例を `--no-deps --only-binary :all:` に変更し、ビルド依存の扱いを追記。pip 26.2.1 のオフライン実験で `--no-deps` だけではsdistのビルド依存を取得しに行くこと、`--only-binary :all:` でビルド前に停止することを確認（656c2d5）。Security Architectureガイドへ既存アカウントへの資格情報追加時の再認証とアカウント紐づけ、ログイン時のassertion全検証を追記（4cf60a7）。ISSEPのruntime.browser.mjsからmacOS固定のChromeパスを除去（0415b70。50538dbではquiz.browser.mjsのみ変更済みだった）。guide.css 844-850の指摘は対応不要: QuizCardの常設 role="status" で読み上げ済み、正解色のコントラストは5.67:1（不正解は7.89:1）、#e5eafa に対応する既存トークンなし。ISSEP専用107成功/0失敗（10ファイル、2265 expect）、npm run lint・npm run types:check成功。全体テストは未実行（ガイド本文と未テストのbrowserスクリプトのみの変更）。runtime.browser.mjsは構文確認のみで実ブラウザー実行は未実施。ビルド禁止/未実行、目視はユーザー担当。
+
+2026-11-08 レビュー指摘対応（6回目）: SCSガイドの4-1-4-1を「ロック閾値は10回以下」と明記し、原文の「10回以上」を11回以上の閾値を許す意味に読まないと注記。`pip lock` を `--only-binary :all:` に限定し、sdistが必要な場合は認証情報のない隔離環境でロックを生成すると追記。プロバナンス検証は署名の有効性だけでなく、成果物ハッシュ・期待するソースリポジトリ・信頼済みの署名者とビルダーの全検証を要求（63a1765）。ISSEP目次: 初期フラグメントとhashchangeで要求された小節を、クリックと同じ固定（pin）経路で選択し、競合する観測通知で上書きされないよう修正。読者のスクロール入力で観測追従へ戻る。回帰2件追加（Red 441090d、テスト間のURL持ち越し解消と小節追跡の期待値修正14b8901 → Green 078691b）。styles.browser.mjsはCHROME_PATH指定時のみexecutablePathを渡し、未指定時はPlaywright同梱Chromiumを使用（8586908）。ISO24759 styles.test.tsxの実ジオメトリ検証の提案は見送り: Happy DOMはレイアウトを計算しないため、境界・中央寄せ・左右スクロール到達は検証できず、Chromeでの確認は移行時に実施済み。ISSEP専用109成功/0失敗（10ファイル）、npm run lint・npm run types:check成功。全体テスト未実行、styles.browser.mjsは構文確認のみ。ビルド禁止/未実行、目視はユーザー担当。
+
+再開プロンプト: 「dev の `0415b70` 以降から再開。styles.browser.mjs に残るmacOS固定のChromeパスを quiz/runtime と同じ形へ揃えるか判断する。ISSEPのbrowserスクリプトの既定URLをlocalhostへ変更するか判断し、他ガイドのhighlight.js相対パス参照をパッケージ解決へ揃えるか確認する。ISSEPと同じ監視設定を持つISSAP/CGRC/SSCPの目次へ同じ修正を適用するか確認し、CLAUDE.md・GEMINI.md・README・ダッシュボードの2754件への同期を判断する。npm使用・ビルド禁止・テスト/実装/仕様書コミットの分割を継続。」
