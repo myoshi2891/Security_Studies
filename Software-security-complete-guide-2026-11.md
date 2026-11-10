@@ -570,7 +570,7 @@ MCP は、AI エージェントを外部ツールやデータにつなぐ標準�
 |---|---|---|
 | OWASP MCP Top 10 | 2026 年時点で **ベータ（v0.1）**。トークン管理、ツールポイズニング、シャドウ MCP サーバー、コンテキストの過剰共有など | OWASP プロジェクトページ |
 | 脆弱性の増加 | 2026 年 1〜2 月だけで 30 件超の CVE | Cycode |
-| 公開サーバー | 認証なしで到達可能な MCP サーバーが約 20 万台との報告（2026年4月） | mcp.directory のまとめ（二次情報のため要検証） |
+| MCP サーバー数 | 潜在的に脆弱なインスタンスは公開・非公開を含め最大約 20 万件と推計。公開サーバーは 7,000 台超との報告（2026年4月） | mcp.directory のまとめ（二次情報のため要検証） |
 
 **主な MCP 固有リスク**
 
@@ -735,7 +735,7 @@ jobs:
 | 形式 | **SPDX** と **CycloneDX**（SWID タグは言及されなくなった） |
 | 法的拘束力 | CISA の文書自体に**強制力はない**。ただし調達要件や **EU CRA** などで参照される |
 
-**活用の 3 ステップ**: ①ビルドごとに自動生成 → ②**VEX**（「この CVE はうちの製品では悪用不可」という声明）と組み合わせて優先順位付け → ③署名して成果物と一緒に配布・保管。
+**活用の 3 ステップ**: ①ビルドごとに自動生成 → ②**VEX**（製品の脆弱性に対する状態を `not_affected`（影響なし）、`affected`（影響あり）、`fixed`（修正済み）、`under_investigation`（調査中）の 4 状態で示す声明）と組み合わせて優先順位付け → ③署名して成果物と一緒に配布・保管。
 
 #### Step 8: SLSA と来歴（Provenance）
 
@@ -1012,7 +1012,7 @@ gantt
 | **QA エンジニア** | 他人のリソース ID を指定する認可テストを追加／異常系（タイムアウト・巨大入力）を追加 | DAST とファジングを CI に統合／AI 機能のインジェクションテストを追加 |
 | **テックリード** | PR ゲートの定義／脅威モデリングの導入／レビュー基準に AI 生成コードを追加 | SBOM・来歴の運用／ASVS レベルの合意 |
 | **プラットフォーム/SRE** | Actions の SHA 固定と権限最小化／公開アカウントのパスキー化 | シークレットの短寿命化／TLS のハイブリッド鍵交換の確認 |
-| **セキュリティ担当** | 失効・ローテーション手順書／MCP・AI ツールの台帳 | PQC 計画と CRA 報告窓口の整備 |
+| **セキュリティ担当** | 失効・ローテーション手順書／MCP・AI ツールの台帳／CRA 報告窓口の整備完了 | PQC 計画 |
 | **経営・管理者** | 予算と優先順位の承認／責任者の指名 | 四半期ごとのレビュー |
 
 ### 7.4 成功の測り方（KPI の例）
@@ -1096,7 +1096,7 @@ gantt
 | 42 | HQC を待たず **ML-KEM を先に導入**する | postquantum.com の規制まとめ | https://postquantum.com/security-pqc/us-pqc-regulatory-framework-2026/ |
 | 43 | 主要ブラウザ・CDN の**ハイブリッド鍵交換の普及状況**を把握 | 解説記事（Cloudflare 報告を引用） | https://pete.lostsource.net/posts/2026-05-26-your-traffic-is-post-quantum.html |
 | 44 | **日本政府**の方針（原則 2035 年、2026 年度にロードマップ策定） | 内閣官房 国家サイバー統括室／@IT | https://atmarkit.itmedia.co.jp/ait/articles/2512/08/news045.html |
-| 45 | 同上: 中間とりまとめの概要と**対象・移行期限** | 内閣官房 資料 | https://www.cas.go.jp/jp/seisaku/pqc/dai2/sanko.pdf |
+| 45 | 同上: 中間とりまとめの概要と**対象・移行期限** | 内閣官房 資料 | https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/b37edb39-2a1c-4a1f-8c5e-431fcc299cd5/3940f366/20260203_digital-cybersecurity.outline.05.pdf#page=57 |
 | 46 | 総務省 令和8年版 情報通信白書での整理 | 総務省 | https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r08/html/nd225310.html |
 
 ---
@@ -1119,7 +1119,7 @@ gantt
 | **Rule of Two** | 承認なしで動くエージェントは、3 要素のうち 2 つまで、という設計予算 |
 | **MCP** | AI をツールやデータにつなぐ標準プロトコル |
 | **ツールポイズニング** | ツールの説明文に AI だけに効く命令を仕込む攻撃 |
-| **SBOM / VEX** | ソフトウェア部品表／「この脆弱性は当製品では悪用不可」という声明 |
+| **SBOM / VEX** | ソフトウェア部品表／製品の脆弱性に対する状態を示す声明。`not_affected`（影響なし）、`affected`（影響あり）、`fixed`（修正済み）、`under_investigation`（調査中）の 4 状態 |
 | **SLSA / Provenance** | ビルドの信頼性の段階基準／成果物の来歴証明 |
 | **Trusted Publishing（OIDC）** | 長寿命トークンの代わりに、CI の身元証明で短期の公開権限を得る仕組み |
 | **ワーム** | 自分自身を他の対象にも複製して広がる悪性コード |
@@ -1147,7 +1147,7 @@ gantt
 | 6 | **GitHub の 2026-12-02 の適用開始** | Wiz の解説に基づく**予定**です。公式 changelog で最新を確認してください |
 | 7 | **npm の `min-release-age`／Dependabot の `cooldown`** | 設定名・単位は、公式ドキュメントで確認してください（本文の例は二次情報に基づく） |
 | 8 | **OWASP LLM Top 10 の項目一覧** | 私の知識に基づく一覧で、今回の検索では個別に再確認していません |
-| 9 | **MCP サーバー 20 万台の露出** | 二次情報です。一次の調査（OX Security 等）を確認してください |
+| 9 | **潜在的に脆弱な MCP インスタンス最大約 20 万件（公開・非公開を含む推計）** | 二次情報です。一次の調査（OX Security 等）を確認してください |
 | 10 | **ベンダー調査の数値**（Veracode、Qualys、Sonatype 等） | 製品を持つ企業の調査であり、方法論や母集団に偏りがあり得ます |
 | 11 | **法令・規制の解釈（CRA 等）** | 本ガイドは法的助言ではありません。自社が「製造者」等に当たるかは専門家に確認してください |
 
@@ -1168,7 +1168,7 @@ gantt
 | 欧州委員会 CRA 報告義務 | https://digital-strategy.ec.europa.eu/en/policies/cra-reporting |
 | CRA 報告ガイド（独立サイト） | https://www.cyberresilienceact.eu/reporting.html |
 | シンガポール CSA アドバイザリ（ChainDrop/Shai-Hulud） | https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2026-009/ |
-| 内閣官房 PQC 移行 中間とりまとめ概要 | https://www.cas.go.jp/jp/seisaku/pqc/dai2/sanko.pdf |
+| 内閣官房 PQC 移行 中間とりまとめ概要 | https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/b37edb39-2a1c-4a1f-8c5e-431fcc299cd5/3940f366/20260203_digital-cybersecurity.outline.05.pdf#page=57 |
 | 総務省 令和8年版 情報通信白書 | https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r08/html/nd225310.html |
 
 ### 著名な開発者・研究者・企業の発信
