@@ -609,8 +609,8 @@
 /* Adapt the source document to the shared application shell. */
 .issmp-guide.issmp-guide{width:100%;min-width:0;isolation:isolate;}
 .issmp-guide.issmp-guide .brand{font-size:1rem;font-weight:400;color:var(--color-ink);}
-.issmp-guide.issmp-guide .hero .eyebrow{font-family:inherit;}
-.issmp-guide.issmp-guide .sidebar{top:var(--docs-header-height,64px);z-index:40;}
+.issmp-guide.issmp-guide .hero .eyebrow{font-family:var(--font-sans);font-size:1rem;}
+.issmp-guide.issmp-guide .sidebar{top:var(--docs-header-height,64px);z-index:40;visibility:visible;}
 .issmp-guide.issmp-guide .backdrop{top:var(--docs-header-height,64px);z-index:35;}
 .issmp-guide.issmp-guide .menu-btn{z-index:50;}
 .issmp-guide.issmp-guide i.ti{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;vertical-align:-0.125em;}
@@ -621,9 +621,9 @@
 .issmp-guide.issmp-guide section[id]{scroll-margin-top:88px;}
 .docs-main:has(.issmp-guide){padding:0;}
 .docs-article:has(.issmp-guide){max-width:none;}
-.issmp-guide.issmp-guide tbody tr:hover td{background:var(--surface);}
+.issmp-guide.issmp-guide tbody tr:hover td{background:transparent;}
 .issmp-guide.issmp-guide tbody tr:nth-child(even):hover td{background:#fafbfd;}
-@media(max-width:1024px){.issmp-guide.issmp-guide .sidebar{visibility:hidden;}.issmp-guide.issmp-guide .sidebar.open{visibility:visible;}}
-@media(prefers-reduced-motion:reduce){html:has(.issmp-guide),.issmp-guide.issmp-guide,.issmp-guide.issmp-guide *{scroll-behavior:auto;transition:none;}}
+@media (max-width: 1024px){.issmp-guide.issmp-guide .sidebar{visibility:hidden;}.issmp-guide.issmp-guide .sidebar.open{visibility:visible;}}
+@media (prefers-reduced-motion: reduce){html:has(.issmp-guide),.issmp-guide.issmp-guide,.issmp-guide.issmp-guide *{scroll-behavior:auto;transition:none;}}
 .issmp-guide.issmp-guide .diagram-print-description{display:none;}
 @media print{.issmp-guide.issmp-guide .diagram-print-description{display:block;}.issmp-guide.issmp-guide .diagram-description,.issmp-guide.issmp-guide .mermaid-target>[role="status"]{display:none;}}
