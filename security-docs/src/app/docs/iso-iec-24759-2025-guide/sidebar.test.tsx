@@ -27,6 +27,31 @@ test('selecting any original chapter from the open drawer closes it and focuses 
   expect(btn).toHaveAttribute('aria-expanded','false');expect(link).toHaveAttribute('aria-current','location');expect(document.activeElement).toBe(view.container.querySelector(`#${ids[n-1]} h2`));expect(document.body.style.overflow).toBe('');
  }
 });
+test.each(['ctrlKey','metaKey'])('%s chapter clicks leave the open drawer and navigation pin untouched',modifier=>{
+ const saved=globalThis.IntersectionObserver;let notify:IntersectionObserverCallback|undefined;
+ globalThis.IntersectionObserver=class{constructor(callback:IntersectionObserverCallback){notify=callback;}observe(){}disconnect(){}} as unknown as typeof IntersectionObserver;
+ try{
+  const view=render(harness()),button=view.container.querySelector('#menuBtn')!;
+  fireEvent.click(button);
+  const event=new MouseEvent('click',{bubbles:true,cancelable:true,[modifier]:true});
+  fireEvent(view.container.querySelector('a[href="#ch3"]')!,event);
+  expect(event.defaultPrevented).toBe(false);expect(button).toHaveAttribute('aria-expanded','true');
+  expect(view.container.querySelector('.main') as HTMLElement).toHaveProperty('inert',true);
+  expect(view.container.querySelector('[aria-current]')?.getAttribute('href')).toBe('#ch0');
+  act(()=>notify!([{target:view.container.querySelector('#ch4')!,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));
+  expect(view.container.querySelector('[aria-current]')?.getAttribute('href')).toBe('#ch4');
+ }finally{globalThis.IntersectionObserver=saved;}
+});
+test.each(['ctrlKey','metaKey'])('%s+K closes the drawer and releases its Tab trap for search',modifier=>{
+ const view=render(h('div',{},h('input',{'aria-label':'Search fixture'}),harness()));
+ const button=view.container.querySelector('#menuBtn')!,input=view.container.querySelector('input')!;
+ fireEvent.click(button);fireEvent.keyDown(document,{key:'k'});expect(button).toHaveAttribute('aria-expanded','true');
+ fireEvent.keyDown(document,{key:'k',[modifier]:true});
+ expect(button).toHaveAttribute('aria-expanded','false');expect((view.container.querySelector('.main') as HTMLElement).inert).toBe(false);
+ expect(document.body.style.overflow).toBe('');
+ input.focus();const tab=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true});fireEvent(input,tab);
+ expect(tab.defaultPrevented).toBe(false);expect(document.activeElement?.getAttribute('aria-label')).toBe('Search fixture');
+});
 test.each([false,true])('Tab returns outside focus to the open drawer (Shift: %s)',shiftKey=>{
  const view=render(harness());const btn=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;
  fireEvent.click(btn);btn.focus();

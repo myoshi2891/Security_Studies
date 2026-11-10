@@ -596,11 +596,28 @@
 .iso24759-guide.iso24759-guide pre{font-family:monospace;}
 .iso24759-guide.iso24759-guide .diagram-print-description{display:none;}
 @media print{
+    .iso24759-guide.iso24759-guide{
+        --color-text-primary:#111827;
+        --color-text-secondary:#374151;
+        --color-text-tertiary:#4b5563;
+        --color-text-info:#1e40af;
+        --color-text-success:#166534;
+        --color-text-warning:#854d0e;
+        --color-text-danger:#991b1b;
+        --accent:#1e40af;
+        --color-background-primary:#fff;
+        --color-background-secondary:#fff;
+        --color-background-tertiary:#fff;
+        --color-background-info:#fff;
+        --color-background-success:#fff;
+        --color-background-warning:#fff;
+        --color-background-danger:#fff;
+    }
     .iso24759-guide.iso24759-guide .sidebar,
     .iso24759-guide.iso24759-guide .backdrop,
     .iso24759-guide.iso24759-guide .menu-btn{display:none;}
     .iso24759-guide.iso24759-guide .main{margin-left:0;}
-    .iso24759-guide.iso24759-guide .diagram-print-description{display:block;}
+    .iso24759-guide.iso24759-guide .diagram-print-description{display:block;color:var(--color-text-primary);}
     .iso24759-guide.iso24759-guide .diagram-description,
     .iso24759-guide.iso24759-guide .diagram-body > [role="status"]{display:none;}
 }

@@ -70,7 +70,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     hash(); window.addEventListener('hashchange', hash);
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="#"]') : null;
-      if (!link) return;
+      if (!link || event.ctrlKey || event.metaKey) return;
       const id = decodeFragment(link.hash.slice(1));
       pin(id);
       if (!openRef.current) return;
@@ -108,6 +108,7 @@ export function GuideSidebar({ children }: { children: ReactNode }) {
     if (content) content.inert = true;
     const links = [...(panel.current?.querySelectorAll<HTMLElement>('a,button') ?? [])]; links[0]?.focus();
     const key = (event: KeyboardEvent) => {
+      if (event.key === 'k' && (event.ctrlKey || event.metaKey)) { setOpen(false); return; }
       if (event.key === 'Escape') close();
       if (event.key !== 'Tab') return;
       const first = links[0], last = links.at(-1);

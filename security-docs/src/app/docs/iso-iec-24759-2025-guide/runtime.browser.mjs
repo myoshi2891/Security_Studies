@@ -43,8 +43,22 @@ try {
         const close = sidebar.getByRole('button', { name: '目次を閉じる' });
         await page.keyboard.press('Shift+Tab'); assert.ok(await close.evaluate(element => element === document.activeElement));
         await close.click(); assert.equal(await content.evaluate(element => element.inert), false);
+        for (const modifier of ['Control', 'Meta']) {
+          await toggle.click(); await page.keyboard.press(`${modifier}+k`);
+          const search = page.getByRole('dialog', { name: 'Search' }); await search.waitFor();
+          assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+          assert.ok(await search.getByRole('textbox').evaluate(element => element === document.activeElement));
+          await page.keyboard.press('Tab'); assert.ok(await search.evaluate(element => element.contains(document.activeElement)));
+          await page.keyboard.press('Escape'); await search.waitFor({ state: 'hidden' });
+        }
         await toggle.click();
         const link = sidebar.locator('nav a').nth(3), id = decodeURIComponent((await link.getAttribute('href')).slice(1));
+        const originalUrl = page.url(), selected = await sidebar.locator('[aria-current]').getAttribute('href');
+        const [popup] = await Promise.all([context.waitForEvent('page'), link.click({ modifiers: ['ControlOrMeta'] })]);
+        await popup.waitForURL(url => decodeURIComponent(url.hash.slice(1)) === id);
+        assert.equal(page.url(), originalUrl); assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+        assert.equal(await sidebar.locator('[aria-current]').getAttribute('href'), selected);
+        await popup.close();
         await link.click();
         assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
         assert.equal(await content.evaluate(element => element.inert), false);
@@ -62,6 +76,12 @@ try {
       for (const control of await guide.locator('.sidebar,.backdrop,.menu-btn').all()) assert.equal(await control.evaluate(element => getComputedStyle(element).display), 'none');
       assert.equal(await content.evaluate(element => getComputedStyle(element).marginLeft), '0px');
       for (const description of await guide.locator('.diagram-print-description').all()) assert.equal(await description.isVisible(), true);
+      const colors = await guide.locator('.main,.main h1,.main h2,.main p,.main td,.diagram-print-description').evaluateAll(elements => [...new Set(elements.filter(element => !element.closest('svg')).map(element => getComputedStyle(element).color))]);
+      for (const color of colors) {
+        const channels = color.match(/[\d.]+/g).slice(0, 3).map(value => { const channel = Number(value) / 255; return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4; });
+        const luminance = channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+        assert.ok(1.05 / (luminance + 0.05) >= 4.5, `print text contrasts against white without background graphics: ${color}`);
+      }
       results.push({ width, scrollFollowing: width === 1440, modalDrawer: width === 375, diagrams: drawn, print: true });
       console.log(JSON.stringify(results.at(-1)));
     } finally { await context.close(); }
