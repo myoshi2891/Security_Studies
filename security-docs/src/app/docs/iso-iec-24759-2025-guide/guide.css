@@ -617,6 +617,10 @@
     .iso24759-guide.iso24759-guide .backdrop,
     .iso24759-guide.iso24759-guide .menu-btn{display:none;}
     .iso24759-guide.iso24759-guide .main{margin-left:0;}
+    .iso24759-guide.iso24759-guide .code-block,
+    .iso24759-guide.iso24759-guide pre,
+    .iso24759-guide.iso24759-guide pre code.hljs,
+    .iso24759-guide.iso24759-guide pre code.hljs span{color:var(--color-text-primary)!important;background:#fff;}
     .iso24759-guide.iso24759-guide .diagram-print-description{display:block;color:var(--color-text-primary);}
     .iso24759-guide.iso24759-guide .diagram-description,
     .iso24759-guide.iso24759-guide .diagram-body > [role="status"]{display:none;}

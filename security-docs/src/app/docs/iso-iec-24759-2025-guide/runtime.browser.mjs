@@ -76,7 +76,10 @@ try {
       for (const control of await guide.locator('.sidebar,.backdrop,.menu-btn').all()) assert.equal(await control.evaluate(element => getComputedStyle(element).display), 'none');
       assert.equal(await content.evaluate(element => getComputedStyle(element).marginLeft), '0px');
       for (const description of await guide.locator('.diagram-print-description').all()) assert.equal(await description.isVisible(), true);
-      const colors = await guide.locator('.main,.main h1,.main h2,.main p,.main td,.diagram-print-description').evaluateAll(elements => [...new Set(elements.filter(element => !element.closest('svg')).map(element => getComputedStyle(element).color))]);
+      const code = guide.locator('pre code');
+      assert.ok(await code.count() > 0, 'print contrast check includes code samples');
+      for (const surface of await guide.locator('.code-block,pre,pre code.hljs,pre code.hljs span').all()) assert.equal(await surface.evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(255, 255, 255)');
+      const colors = await guide.locator('.main,.main h1,.main h2,.main p,.main td,.diagram-print-description,pre code,pre code span').evaluateAll(elements => [...new Set(elements.filter(element => !element.closest('svg')).map(element => getComputedStyle(element).color))]);
       for (const color of colors) {
         const channels = color.match(/[\d.]+/g).slice(0, 3).map(value => { const channel = Number(value) / 255; return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4; });
         const luminance = channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
