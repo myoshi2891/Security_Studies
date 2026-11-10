@@ -87,6 +87,26 @@ function observedGuide(nextChapter=false) {
 }
 const settled = () => new Promise(resolve => setTimeout(resolve, 200));
 const originalObserver = globalThis.IntersectionObserver;
+test('collapsing a focused subsection moves focus to its visible chapter link before hiding it',()=>{
+ try{
+  const {view,notify,current}=observedGuide(true);notify('h3-1',true);
+  const subsection=view.container.querySelector<HTMLAnchorElement>('a[href="#h3-1"]')!,group=subsection.closest('nav>ul>li')!;
+  let openAtFocus=false;group.querySelector(':scope>a')!.addEventListener('focus',()=>{openAtFocus=group.classList.contains('open');});
+  subsection.focus();notify('sec-2',true);notify('h3-1',false);
+  expect(current()).toBe('#sec-2');expect(openAtFocus).toBe(true);expect(group.classList.contains('open')).toBe(false);
+  expect(document.activeElement?.getAttribute('href')).toBe('#sec-1');expect(document.activeElement?.matches('nav>ul>li>a')).toBe(true);
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
+test('selection preserves focus when its chapter stays open or focus is outside the collapsing chapter',()=>{
+ try{
+  const {view,notify}=observedGuide(true);notify('h3-1',true);
+  view.container.querySelector<HTMLAnchorElement>('a[href="#h3-1"]')!.focus();notify('h3-2',true);
+  expect(document.activeElement?.getAttribute('href')).toBe('#h3-1');
+  const content=view.container.querySelector<HTMLElement>('#sec-2')!;content.tabIndex=-1;content.focus();
+  notify('sec-2',true);notify('h3-1',false);notify('h3-2',false);
+  expect(document.activeElement?.id).toBe('sec-2');
+ }finally{globalThis.IntersectionObserver=originalObserver;}
+});
 test.each([false,true])('desktop resize focuses visible navigation when the drawer was open: %s',wasOpen=>{
  const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
  try{

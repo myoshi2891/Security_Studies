@@ -2,7 +2,8 @@
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
 import {createHash} from 'node:crypto';
-import {resolve} from 'node:path';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
 import assert from 'node:assert/strict';
 import {verifyChapterScroll} from '../../../../scripts/browser-chapter-scroll.mjs';
 const require=createRequire(import.meta.url);
@@ -10,6 +11,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 const inventory=JSON.parse(fs.readFileSync(resolve(import.meta.dirname,'../../../../../docs/migration-inventory/issep-guide.json'),'utf8'));
 const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
 const errors=[],results=[];
+const resultsPath=join(tmpdir(),`issep-runtime-results-${process.pid}-${Date.now()}.json`);
 try{
  for(const width of [375,1440]){
   const context=await browser.newContext({viewport:{width,height:900}}),page=await context.newPage();
@@ -48,6 +50,10 @@ try{
   await page.evaluate(()=>{history.replaceState(null,'','#h3-30');window.dispatchEvent(new HashChangeEvent('hashchange'));});
   assert.equal(await page.locator('nav>ul>li.open>a').getAttribute('href'),'#sec-9');assert.ok((await page.locator('a[href="#h3-30"]').getAttribute('class')).includes('active'));
   if(width===1440){
+   await page.locator('a[href="#h3-30"]').focus();
+   await page.evaluate(()=>{history.replaceState(null,'','#sec-1');window.dispatchEvent(new HashChangeEvent('hashchange'));});
+   assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#sec-9');
+   assert.ok(await page.locator('a[href="#sec-9"]').evaluate(element=>getComputedStyle(element).visibility==='visible'&&element.getBoundingClientRect().height>0));
    await page.evaluate(()=>{history.replaceState(null,'',location.pathname);window.dispatchEvent(new HashChangeEvent('hashchange'));});
    assert.equal((await verifyChapterScroll(page,'.issep-guide')).length,4);
   }
@@ -89,5 +95,5 @@ try{
  assert.deepEqual(errors,[]);
 }finally{
  try{await browser.close();}
- finally{fs.writeFileSync('/tmp/issep-runtime-results.json',JSON.stringify(results,null,2));}
+ finally{fs.writeFileSync(resultsPath,JSON.stringify(results,null,2));console.log(`results: ${resultsPath}`);}
 }

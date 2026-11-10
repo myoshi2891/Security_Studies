@@ -1,6 +1,8 @@
 import { afterEach, expect, test } from 'bun:test';
 import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { createElement as h } from 'react';
+import { hydrateRoot, type Root } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { QuizCard } from './QuizCard';
 import { evaluatedPage, renderedPage, sourceDocument, sourceTest } from './fidelity-helpers';
 import copy from './quiz-copy.json';
@@ -58,13 +60,27 @@ test('the original answer disclosure can still be toggled after choosing and reo
 });
 
 /** Render one card from fixed copy so these specs run without the archived source. */
-function fixture() {
- const view=render(h(QuizCard,{number:3,correctAnswer:'B',children:[
+function fixtureTree() {
+ return h(QuizCard,{number:3,correctAnswer:'B',children:[
   h('ul',{className:'q-opts',key:'options'},h('li',{},'A. 誤'),h('li',{},'B. 正')),
   h('details',{key:'answer'},h('summary',{},'解答を見る'),h('div',{className:'answer'},'B')),
- ]}));
+ ]});
+}
+function fixture() {
+ const view=render(fixtureTree());
  return {view,card:view.container.querySelector('.quiz')!,buttons:[...view.container.querySelectorAll('button')]};
 }
+test('choice readiness markers appear after hydration and the marked choices handle clicks',async()=>{
+ const container=document.createElement('div'),tree=fixtureTree();container.innerHTML=renderToString(tree);document.body.appendChild(container);
+ let root:Root|undefined;
+ try{
+  expect(container.querySelectorAll('.quiz-choice[data-hydrated]')).toHaveLength(0);
+  await act(async()=>{root=hydrateRoot(container,tree);});
+  expect(container.querySelectorAll('.quiz-choice[data-hydrated="true"]')).toHaveLength(2);
+  fireEvent.click(container.querySelector('.quiz-choice[data-hydrated="true"]')!);
+  expect(container.querySelector('[role="status"]')?.textContent).toBe('不正解');
+ }finally{await act(async()=>{root?.unmount();});container.remove();}
+});
 test.each([0,1])('choice %i reopens the answer before a pending disclosure toggle event',choice=>{
  const {card,buttons}=fixture();
  fireEvent.click(buttons[0]);const details=card.querySelector('details')!;expect(details.open).toBe(true);

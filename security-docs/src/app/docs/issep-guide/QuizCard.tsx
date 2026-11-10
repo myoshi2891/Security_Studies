@@ -40,6 +40,7 @@ export function QuizCard({ number, correctAnswer, children }: {
           return cloneElement(option, {}, <button
             type="button"
             className="quiz-choice"
+            ref={button => { button?.setAttribute('data-hydrated', 'true'); }}
             aria-pressed={selected === choice}
             aria-describedby={selected === choice ? feedbackId : undefined}
             data-choice-state={state}

@@ -20,6 +20,7 @@ try {
   const snapshot=card=>card.evaluate(q=>({badge:q.querySelector('.q-badge').textContent,question:q.querySelector('.q-text').textContent,emphasis:[...q.querySelectorAll('.q-text strong')].map(e=>e.textContent),options:[...q.querySelectorAll('.q-opts li')].map(e=>e.textContent),summary:q.querySelector('summary').textContent,answer:q.querySelector('.answer').textContent}));
   for(let i=0;i<cards.length;i++){
    const card=cards[i];assert.deepEqual(await snapshot(card),copy[i]);
+   await card.locator('.quiz-choice[data-hydrated="true"]').nth(3).waitFor();
    const buttons=await card.locator('.quiz-choice').all();const correct=copy[i].answer.trim()[0];
    for(let j=0;j<4;j++){
     await buttons[j].click();const ok=String.fromCharCode(65+j)===correct;

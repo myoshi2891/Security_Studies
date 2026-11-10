@@ -32,7 +32,10 @@ export function GuideSidebar({children}:{children:ReactNode}){
   if(!selected)return;
   const group=selected.closest('nav>ul>li');
   const parent=group?.querySelector<HTMLAnchorElement>(':scope>a');
-  for(const item of aside.querySelectorAll('nav>ul>li'))item.classList.toggle('open',item===group);
+  for(const item of aside.querySelectorAll('nav>ul>li')){
+   if(item!==group&&item.contains(document.activeElement))item.querySelector<HTMLAnchorElement>(':scope>a')?.focus({preventScroll:true});
+   item.classList.toggle('open',item===group);
+  }
   for(const link of links){
    link.classList.toggle('active',link===selected||link===parent);
    link.removeAttribute('aria-current');
