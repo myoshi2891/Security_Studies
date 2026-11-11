@@ -15,3 +15,19 @@ test('the next test starts from the happy-dom default viewport again', () => {
   expect(window.innerWidth).toBe(1024);
   expect(window.innerHeight).toBe(768);
 });
+
+// 直接代入（例: window.innerWidth = 1200）は getter を値プロパティで覆い隠すため、
+// setWindowSize だけでは戻らない。後続テストでは本来の getter と寸法連動が復帰していること。
+test('a test may assign viewport properties directly', () => {
+  window.innerWidth = 1200;
+  window.innerHeight = 600;
+  expect(window.innerWidth).toBe(1200);
+});
+
+test('directly assigned viewport properties are restored to the live happy-dom getters', () => {
+  expect(window.innerWidth).toBe(1024);
+  expect(window.innerHeight).toBe(768);
+  expect(typeof Object.getOwnPropertyDescriptor(window, 'innerWidth')?.get).toBe('function');
+  (window as unknown as HappyWindow).happyDOM.setWindowSize({ width: 375, height: 700 });
+  expect(window.innerWidth).toBe(375);
+});
