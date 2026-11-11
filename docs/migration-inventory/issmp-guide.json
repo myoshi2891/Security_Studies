@@ -1,0 +1,2901 @@
+{
+  "source": "archive/security-certifications/Issmp-guide.html",
+  "markdownSource": "archive/security-certifications/Issmp-guide.md",
+  "htmlSha256": "7789dfe2e0c92fd164bbaa73725d28299645702589bcbaf156f7c0fa78b169b6",
+  "markdownSha256": "90194b87a9f0e3ef73d2ff6913576d2c3f80f63c3cda33c4945489dbc7bdb299",
+  "route": "/docs/issmp-guide",
+  "title": "ISSMP 初学者向けステップバイステップ完全ガイド",
+  "description": "ISC2 ISSMPの6ドメイン、セキュリティ管理・リーダーシップ、リスク管理、運用、事業継続、法令・倫理を34図と15問で学ぶ初学者向けガイド。",
+  "counts": {
+    "section[id]": 50,
+    "h1,h2,h3,h4,h5,h6": 270,
+    "table": 116,
+    "th,td": 1814,
+    "ul": 92,
+    "ol": 19,
+    "li": 462,
+    ".callout": 79,
+    ".sidebar nav a": 50,
+    "[data-diagram]": 34,
+    "pre code": 0,
+    ".qcard": 15,
+    ".qcard .opts > li": 60,
+    "img": 0
+  },
+  "ids": [
+    "sidebar",
+    "nav",
+    "backdrop",
+    "menuBtn",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6",
+    "s7",
+    "s8",
+    "s9",
+    "s10",
+    "s11",
+    "s12",
+    "s13",
+    "s14",
+    "s15",
+    "s16",
+    "s17",
+    "s18",
+    "s19",
+    "s20",
+    "s21",
+    "s22",
+    "s23",
+    "s24",
+    "s25",
+    "s26",
+    "s27",
+    "s28",
+    "s29",
+    "s30",
+    "s31",
+    "s32",
+    "s33",
+    "s34",
+    "s35",
+    "s36",
+    "s37",
+    "s38",
+    "s39",
+    "s40",
+    "s41",
+    "s42",
+    "s43",
+    "s44",
+    "s45",
+    "s46",
+    "s47",
+    "s48",
+    "s49",
+    "s50"
+  ],
+  "structures": {
+    ".brand": "bc1aaa7f153809235abf3af725de8acf196446f50a6ab768fe49dd57b79e2547",
+    ".sidebar nav": "0b01f73e2e69fed7e0efc70f41bd006850b49756565cbc09004f9b2ede503da6",
+    ".hero": "c3b15ab9dcc489cb863180f6eba6519b78b4d9df3a3b67a82a36a51a8983393d",
+    "#s1": "24ca193c033241673680e95a91ee28df67fab280f836213696a9d9355834a9cc",
+    "#s2": "e3fe812095f71e38fdd6ee86c3f54ab962e59f983f04b451def159b8125f5a7b",
+    "#s3": "d63291fd05d090bee0f1f6ae946281036b2c4dd19b4c9a54f00a52a87ef4b89f",
+    "#s4": "015405958956a5193deec0573fb62e059afa7123dc2f87c328a231d009135a71",
+    "#s5": "ccdc12d3f01280b6786c6d56263c897ad4e0192420f4d0aab1341b1ae8787b96",
+    "#s6": "649fa7dc9280819018916cbe15e4282b6806a16905c56be8d562903543518514",
+    "#s7": "2c5b20b0a4e693f06bd3a709fc0f83f390a31c4ac5df537e89fb5aff10c19cab",
+    "#s8": "b7f8424b401fb3f4f08671f312c6030e9ba259092e00c03ff4ce5b64cad081a2",
+    "#s9": "a4ed88f85d00fc99df56f1878bb9b6ea20a52d930823925dd602849fa45b676d",
+    "#s10": "c9c1543a70b611a4f374fc3bdb2e7290ebe2c2d880efecccfb27fce5b1176d46",
+    "#s11": "ec0a5e34ca2962a3edf87ea0efd3a955b000826ee74633de2123f130a6b8c49d",
+    "#s12": "9f3ca96e58a89c2e206f72a4635a2cd9bff106afa347a1425981973ace7ac1b5",
+    "#s13": "cc7bc325349123662c06adc6599168c626c99d49702aca41d3dcfcd7f6127284",
+    "#s14": "3b2c72d2dbbcc5b8051866285973379f4b29fff494c9daf7500e23cfdb060f8d",
+    "#s15": "cd33f414961a5127d2d0e3508435eca5061fb5ada24060e769e83f8e3a68ea13",
+    "#s16": "cb68d43347effeb23004db5cad101fa73c3a3016a09778a48ffd008ecc75c97b",
+    "#s17": "016cd04ea96a41928a994c82ab6b95e5895f49c3d55118823fcae4d225550387",
+    "#s18": "f175373b9eecbfea7066dfb787bde941fa743da84dd48b4abdbb609529fdc676",
+    "#s19": "10001329a12708efcb159e3589d0e0dbd6450bf3a44acb711f5deb2b1f6dbab1",
+    "#s20": "56b611ecc5534b413fca56bb1ec8a590b0b0e105a2aaf82bcf8841cd0ac9c334",
+    "#s21": "de7b476ba05840e6d870f2f34d0a6fc4100f07bc293dbc56591da0c7d350acdf",
+    "#s22": "21a38a91fd2e635a2aca958673c968c818065191dbd8200fc09ff178766cbdf4",
+    "#s23": "3d14d45006d827b92755988a72596d51ed7b3876872b66bc2580daa3e86d694e",
+    "#s24": "48f1eb3cf2ec4fcf7cbf9c45f9f5d34babe37e2ab76795d4b365f3ee8e71c4c0",
+    "#s25": "b8f4ed63303df761c7d55b53e20050a1bd1dba0528eaf3b4aa055a6eecf9c695",
+    "#s26": "9164a88c4deedf3e5050b540009946f24c01bbc352131de04580a1282a85c860",
+    "#s27": "d222f651e85d817c9185d78e1ede9e5451fbbd3ccdcc489738c0b9fc35d5e396",
+    "#s28": "ebaea59cc91c1dcb927922ea4238ab3005bf7943ebd89a4e58b14068436c69df",
+    "#s29": "acd2073e48d61721c1bc9b9f3620b336cf322be3a6948bfead7568bf0d66e22f",
+    "#s30": "79cb1049371dec25bab12a4ab3886fcc6956f69f14f8e59ccfdfdc8c61569228",
+    "#s31": "5adad38deceab1a9ed9624f0e44a2fd6c3a01b2483ed1f2c86de0976566bfa23",
+    "#s32": "d01709b843e0dd962d446c40549e8d7b6c55d649d73795a82b03355d7f29b2af",
+    "#s33": "ad547708ecef377414fdb6299787e30e6431dd59dffe920b7428d3738f78436c",
+    "#s34": "e1ca71ab8ea50ee397419230f3cabb8ed627add89d3e94f19367e69d2a116baa",
+    "#s35": "cf024c6f35708e05bf37602c73e1825e4607ce8f492cda58f0cd00474dba4667",
+    "#s36": "1f4b4cd7f8d9496cc8bc0474dd4371e025252c5282fb3afd7314847dcb1b026d",
+    "#s37": "88c20596fdaf1890cf81bcda8c79af49ba1825879dc58cc56ebca63d6a227836",
+    "#s38": "053a85da0560eaad50235a5cbd38f9f2f94ffb42e8e64375b39f59058d4e44a1",
+    "#s39": "b9710e3e3b618be48ae58f02368cacdf9109632e3caa3a2d7689f6113c0e153b",
+    "#s40": "80bde5e3b9c1b9c713084265044df0bcc403f6007988f5c3c1ae8f6416339ef0",
+    "#s41": "0e6d08290f6340a081b31618197f41abd4b7095493a300427fb1b501737d6080",
+    "#s42": "7cc916e1e7efba41c16c188981c45a08eda42a30f4a8c108117ca70ecfb1fad7",
+    "#s43": "53da72c13e527859a795cfea11f8f8894bc407eb09612a9d224dea7e14b28adc",
+    "#s44": "38c7eb2ad6e67b5dc8394ee732e61eaa67bc8499a308f011f4c2cfe47ce6f0c7",
+    "#s45": "8b6b8ab66c02ca7e612433e4c37faabd57a0a215ad64bbc10a4fec0cfa3e104a",
+    "#s46": "a4edad7d9223e5457ce34f6f4d0d1a3770edb18b36d51451a3c3e8e0665e9c34",
+    "#s47": "a35e1c7614724d80cb92777e5b4cf7cf166154559ff5403d162a80d9c5ec2532",
+    "#s48": "3b6b30dab291a8c1cf0e2c2eeab3e3330c82902264be7072813850b66058439f",
+    "#s49": "bc82922173f2d2da177b0e10cd0ca42e2bcb853614f1cb544260372c4bce78fa",
+    "#s50": "70ac062d15027b5ad1d6885f71a4d65d0d5ffbee7cc805881eb443182877c9a2"
+  },
+  "diagrams": {
+    "d1": "flowchart LR\nA[\"Step 1-3<br/>全体像と管理者思考\"] --> B[\"Domain 1<br/>リーダーシップ\"]\nB --> C[\"Domain 3<br/>リスク管理\"]\nC --> D[\"Domain 2<br/>ライフサイクル\"]\nD --> E[\"Domain 4<br/>セキュリティ運用\"]\nE --> F[\"Domain 5<br/>事業継続\"]\nF --> G[\"Domain 6<br/>法・倫理・コンプライアンス\"]\nG --> H[\"AI 横断テーマ\"]\nH --> I[\"確認テストと復習\"]",
+    "d2": "flowchart TB\nD1[\"Domain 1<br/>リーダーシップ・ガバナンス・方針\"]\nD3[\"Domain 3<br/>リスク管理\"]\nD2[\"Domain 2<br/>システムライフサイクル\"]\nD4[\"Domain 4<br/>セキュリティ運用\"]\nD5[\"Domain 5<br/>事業継続・復旧\"]\nD6[\"Domain 6<br/>法・倫理・コンプライアンス\"]\nD1 -->|\"方針・予算・体制\"| D3\nD6 -->|\"法的要求事項\"| D1\nD3 -->|\"統制の選定\"| D2\nD2 -->|\"運用への引き継ぎ\"| D4\nD4 -->|\"重大インシデント\"| D5\nD5 -->|\"教訓と改善\"| D3\nD6 -->|\"監査・例外管理\"| D3",
+    "d3": "flowchart TD\nQ[\"設問: 管理者として最初にとる行動は？\"] --> S{\"人命・安全に<br/>関わるか\"}\nS -->|\"はい\"| A1[\"安全確保を最優先\"]\nS -->|\"いいえ\"| L{\"法令・倫理に<br/>関わるか\"}\nL -->|\"はい\"| A2[\"法務・倫理規約に従い<br/>適切な担当へ\"]\nL -->|\"いいえ\"| R{\"リスクと事業影響は<br/>把握済みか\"}\nR -->|\"いいえ\"| A3[\"影響評価・リスク分析を<br/>先に実施\"]\nR -->|\"はい\"| M{\"経営層の承認・<br/>権限はあるか\"}\nM -->|\"いいえ\"| A4[\"関係者と合意形成し<br/>承認を得る\"]\nM -->|\"はい\"| A5[\"計画に沿って実行し<br/>記録・報告する\"]",
+    "d4": "flowchart LR\nV[\"1.1 ビジョンと使命\"] --> G[\"1.2 ガバナンス整合\"]\nG --> S[\"1.3 戦略の策定と実装\"]\nS --> P[\"1.4 ポリシー体系\"]\nP --> C[\"1.5 契約と合意\"]\nP --> T[\"1.6 意識向上と教育\"]\nS --> M[\"1.7 指標と報告\"]\nM --> B[\"1.8 予算\"]\nB --> PM[\"1.9 プログラム運営\"]\nPM --> PJ[\"1.10 開発・プロジェクト管理\"]",
+    "d5": "flowchart TD\nBD[\"取締役会・経営層<br/>リスク許容度・方針の承認\"] --> EC[\"セキュリティ委員会・リスク委員会\"]\nEC --> CISO[\"CISO・セキュリティ管理者<br/>プログラムの運営\"]\nCISO --> OPS[\"各部門・運用チーム<br/>統制の実装\"]\nOPS -->|\"指標・報告\"| CISO\nCISO -->|\"リスク報告\"| EC\nEC -->|\"状況報告\"| BD",
+    "d6": "flowchart LR\nA[\"現状評価<br/>成熟度・ギャップ\"] --> B[\"目標像の設定<br/>リスク姿勢・規制要求\"]\nB --> C[\"ギャップ分析\"]\nC --> D[\"ロードマップ作成<br/>優先順位・資源\"]\nD --> E[\"実装・管理\"]\nE --> F[\"レビュー・見直し\"]\nF --> A",
+    "d7": "flowchart TD\nL1[\"ポリシー(Policy)<br/>強制力あり・高レベル・経営層が承認\"]\nL2[\"標準(Standard)<br/>強制力あり・具体的な要求事項\"]\nL3[\"ベースライン(Baseline)<br/>最低限の構成水準\"]\nL4[\"手順(Procedure)<br/>強制力あり・ステップごとの作業\"]\nL5[\"ガイドライン(Guideline)<br/>推奨・任意\"]\nL1 --> L2\nL2 --> L3\nL2 --> L4\nL1 --> L5",
+    "d8": "flowchart LR\nA[\"ニーズ分析<br/>役割・リスク別\"] --> B[\"内容設計<br/>セグメント別\"]\nB --> C[\"実施<br/>多様な形式\"]\nC --> D[\"効果測定<br/>指標・テスト\"]\nD --> E[\"改善<br/>内容・頻度の見直し\"]\nE --> A",
+    "d9": "flowchart LR\nA[\"2.1 ライフサイクル全体への<br/>セキュリティ統合\"] --> B[\"2.2 新技術・取り組みの<br/>アーキテクチャへの統合\"]\nB --> C[\"2.3 脆弱性管理<br/>プログラム\"]\nC --> D[\"2.4 変更管理の<br/>セキュリティ\"]\nD -->|\"継続的な改善\"| A",
+    "d10": "flowchart LR\nP[\"Prepare<br/>準備\"] --> C[\"Categorize<br/>分類\"]\nC --> S[\"Select<br/>統制の選択\"]\nS --> I[\"Implement<br/>実装\"]\nI --> A[\"Assess<br/>評価\"]\nA --> AU[\"Authorize<br/>認可\"]\nAU --> M[\"Monitor<br/>継続的監視\"]\nM -->|\"変更・新たなリスク\"| C",
+    "d11": "flowchart TD\nB[\"ベースライン構成の定義\"] --> CI[\"構成アイテム(CI)の識別と登録\"]\nCI --> CC[\"変更の統制(CCB・変更管理)\"]\nCC --> ST[\"状況の記録(構成情報の更新)\"]\nST --> AU[\"監査・検証(実機と記録の照合)\"]\nAU -->|\"逸脱を検知\"| CC",
+    "d12": "flowchart TD\nN[\"新規の取り組み<br/>例: クラウド移行・IoT・AI・M&A\"] --> I[\"影響評価<br/>データ・資産・脅威・規制\"]\nI --> A[\"アーキテクチャレビュー<br/>設計審査会(ARB)\"]\nA --> D{\"リスクは許容範囲か\"}\nD -->|\"はい\"| G[\"承認し、統制と指標を設定\"]\nD -->|\"いいえ\"| M[\"追加統制・設計変更・<br/>見送り・リスク受容の判断\"]\nM --> A\nG --> O[\"運用開始後も継続的に評価\"]",
+    "d13": "flowchart LR\nA[\"資産の把握<br/>棚卸し・重要度\"] --> B[\"検出<br/>スキャン・診断・脅威情報\"]\nB --> C[\"評価・優先順位付け<br/>リスクベース\"]\nC --> D[\"対処<br/>修正・緩和・受容\"]\nD --> E[\"検証<br/>再スキャン・再試験\"]\nE --> F[\"報告・改善<br/>指標と傾向\"]\nF --> A",
+    "d14": "flowchart TD\nR[\"変更要求(RFC)\"] --> I[\"セキュリティ影響分析\"]\nI --> C[\"変更審査会(CAB)\"]\nC --> D{\"承認？\"}\nD -->|\"否認・保留\"| R\nD -->|\"承認\"| T[\"試験・ロールバック計画の確認\"]\nT --> E[\"実施\"]\nE --> V[\"実施後検証\"]\nV --> L[\"記録・構成情報の更新\"]\nL --> M[\"継続的モニタリング\"]",
+    "d15": "flowchart LR\nA[\"3.1 リスク管理<br/>プログラムの運営\"] --> B[\"3.3 リスク評価の実施\"]\nB --> C[\"3.4 リスク統制の管理\"]\nA --> D[\"3.2 サプライチェーン<br/>リスク\"]\nD --> B\nC --> A",
+    "d16": "flowchart TD\nCTX[\"適用範囲・状況・基準の設定\"] --> ID[\"リスク特定\"]\nID --> AN[\"リスク分析\"]\nAN --> EV[\"リスク評価<br/>許容度との比較\"]\nEV --> TR[\"リスク対応<br/>選択肢の決定\"]\nTR --> MR[\"モニタリングとレビュー\"]\nMR --> CTX\nCOM[\"コミュニケーションと協議\"] -.-> CTX\nCOM -.-> ID\nCOM -.-> AN\nCOM -.-> EV\nCOM -.-> TR\nCOM -.-> MR",
+    "d17": "flowchart LR\nA[\"供給者の棚卸しと<br/>重要度でティア分け\"] --> B[\"デューデリジェンス<br/>質問票・第三者報告書\"]\nB --> C[\"契約への要件反映<br/>監査権・通知・終了\"]\nC --> D[\"オンボーディング<br/>と統制の検証\"]\nD --> E[\"継続的モニタリング<br/>指標・再評価\"]\nE --> F[\"終了・移行<br/>データ返却と消去\"]\nE -->|\"重大な問題\"| G[\"是正要求・<br/>代替手段の検討\"]",
+    "d18": "flowchart TD\nP[\"準備\"] --> C[\"評価の実施\"]\nC --> T[\"脅威源・脅威事象の特定\"]\nT --> V[\"脆弱性・前提条件の特定\"]\nV --> L[\"発生可能性の判定\"]\nL --> M[\"影響の判定\"]\nM --> R[\"リスクの決定<br/>可能性 × 影響\"]\nR --> CM[\"結果の伝達\"]\nCM --> MA[\"評価の維持\"]",
+    "d19": "flowchart LR\nSOC[\"4.1 SOC の設立と維持\"] --> TI[\"4.2 脅威インテリジェンス\"]\nTI --> IM[\"4.3 インシデント管理\"]\nIM -->|\"教訓\"| SOC\nTI -->|\"実用的なアラート\"| SOC",
+    "d20": "flowchart LR\nA[\"方向付け<br/>要求の定義\"] --> B[\"収集\"]\nB --> C[\"処理\"]\nC --> D[\"分析\"]\nD --> E[\"配布\"]\nE --> F[\"フィードバック\"]\nF --> A",
+    "d21": "flowchart TD\nP[\"準備<br/>体制・手順・訓練・連絡網\"] --> D[\"検知・報告\"]\nD --> T[\"トリアージ<br/>インシデントか判断・重大度分類\"]\nT --> AN[\"分析<br/>範囲・影響・原因の調査\"]\nAN --> CT[\"封じ込め\"]\nCT --> ER[\"根絶\"]\nER --> RC[\"復旧\"]\nRC --> PI[\"事後レビュー<br/>根本原因分析・教訓\"]\nPI --> P\nT -.-> CM[\"コミュニケーション<br/>経営層・法務・広報・当局・顧客\"]\nAN -.-> CM\nRC -.-> CM",
+    "d22": "flowchart LR\nP[\"5.1 計画の策定<br/>BIA・BCP・DRP・危機対応\"] --> S[\"5.2 復旧戦略\"]\nS --> M[\"5.3 計画の維持・試験\"]\nM --> R[\"5.4 災害対応・復旧の実行\"]\nR -->|\"教訓\"| P",
+    "d23": "flowchart LR\nA[\"中断発生\"] --> B[\"RTO<br/>目標復旧時間<br/>システム・サービスの復旧\"]\nB --> C[\"WRT<br/>作業復旧時間<br/>データ確認・手作業の戻し\"]\nC --> D[\"MTD / MAO<br/>最大許容停止時間<br/>これを超えると存続の危機\"]",
+    "d24": "flowchart TD\nA[\"BIA の結果<br/>RTO・RPO・優先度\"] --> B{\"RTO が数時間以内か\"}\nB -->|\"はい\"| C[\"ホット／クラウド常時稼働<br/>同期レプリケーション\"]\nB -->|\"数日以内\"| D[\"ウォーム／DRaaS<br/>非同期レプリケーション\"]\nB -->|\"それ以上\"| E[\"コールド／バックアップ復元\"]\nC --> F[\"コストと効果を比較<br/>CBA\"]\nD --> F\nE --> F\nF --> G[\"経営層の承認\"]",
+    "d25": "flowchart LR\nA[\"読み合わせ\"] --> B[\"机上演習\"]\nB --> C[\"シミュレーション\"]\nC --> D[\"並行テスト\"]\nD --> E[\"完全中断テスト\"]",
+    "d26": "flowchart TD\nA[\"事象の発生・検知\"] --> B[\"初期評価<br/>人命・被害・影響の確認\"]\nB --> C{\"宣言基準を満たすか\"}\nC -->|\"いいえ\"| D[\"通常のインシデント対応で処理\"]\nC -->|\"はい\"| E[\"災害の宣言<br/>権限者が判断・記録\"]\nE --> F[\"関係者へ通知<br/>経営層・要員・顧客・当局\"]\nF --> G[\"計画の実行<br/>代替拠点・DR 切替\"]\nG --> H[\"暫定運用\"]\nH --> I[\"本番環境の復旧・検証\"]\nI --> J[\"通常運用への復帰(フェイルバック)\"]\nJ --> K[\"教訓の整理・計画更新\"]",
+    "d27": "flowchart LR\nL[\"6.1 法令・規制の影響の把握\"] --> C[\"6.3 コンプライアンスの検証\"]\nE[\"6.2 倫理の遵守と推進\"] --> C\nC --> A[\"6.4 監査・規制当局との連携\"]\nA --> X[\"6.5 例外の文書化と管理\"]\nX --> C",
+    "d28": "flowchart TD\nA[\"事業・データの棚卸し<br/>どこで何をどの国のデータ主体と扱うか\"] --> B[\"適用される法令・標準の特定<br/>法務と協働\"]\nB --> C[\"要件の整理<br/>義務・期限・罰則\"]\nC --> D[\"現状とのギャップ評価\"]\nD --> E[\"リスクの評価と助言<br/>不遵守の影響\"]\nE --> F[\"計画化と実施<br/>経営層の承認\"]\nF --> G[\"変化の監視<br/>法改正・新規制\"]\nG --> B",
+    "d29": "flowchart TD\nS[\"倫理的な判断が必要な状況\"] --> A{\"公共の利益・安全に<br/>害を及ぼすか(I)\"}\nA -->|\"はい\"| B[\"やらない／止める<br/>適切な機関・上位者へ報告\"]\nA -->|\"いいえ\"| C{\"違法・不誠実か(II)\"}\nC -->|\"はい\"| D[\"従わない<br/>法務へ相談し記録を残す\"]\nC -->|\"いいえ\"| E{\"依頼主への義務と<br/>利益相反はないか(III)\"}\nE -->|\"利益相反あり\"| F[\"開示し、回避または<br/>承認を得る\"]\nE -->|\"なし\"| G[\"職業上の責務に沿って実行(IV も考慮)\"]",
+    "d30": "flowchart TD\nA[\"要求事項の洗い出し<br/>法令・契約・顧客・業界\"] --> B[\"フレームワーク候補の評価<br/>適合性・コスト・認知度\"]\nB --> C[\"選定と経営層の承認\"]\nC --> D[\"統制の対応づけ(マッピング)<br/>重複を統合\"]\nD --> E[\"実装・ギャップ是正\"]\nE --> F[\"内部評価・証跡の整備\"]\nF --> G[\"指標による監視と報告\"]\nG --> H[\"レビューと改善\"]\nH --> B",
+    "d31": "flowchart TD\nP[\"計画<br/>範囲・基準・体制\"] --> S[\"スケジュール調整<br/>資料・関係者の確保\"]\nS --> C[\"監査活動の調整<br/>面談・証跡提出・窓口の一本化\"]\nC --> F[\"指摘事項の評価・検証<br/>事実確認・誤解の解消\"]\nF --> R[\"対応策の策定<br/>是正計画・期限・担当者\"]\nR --> M[\"緩和・是正の実施と<br/>検証・フォローアップ\"]\nM --> P",
+    "d32": "flowchart TD\nR[\"例外の申請<br/>理由・範囲・期間\"] --> A[\"リスク評価<br/>影響と代替統制\"]\nA --> C[\"補完統制の設計\"]\nC --> D{\"権限者の承認<br/>リスク所有者・経営層\"}\nD -->|\"否認\"| X[\"統制に準拠するか<br/>別の方法を検討\"]\nD -->|\"承認\"| E[\"例外登録簿へ記録<br/>期限・条件\"]\nE --> M[\"監視<br/>補完統制の実効性\"]\nM --> V{\"期限到来\"}\nV -->|\"解消\"| Z[\"クローズ\"]\nV -->|\"継続が必要\"| A",
+    "d33": "flowchart TD\nA[\"AI 利用の申請・発見<br/>シャドー AI の検出を含む\"] --> B[\"用途・データ・影響の分類<br/>リスクティア\"]\nB --> C[\"リスク評価<br/>NIST AI RMF: Map と Measure\"]\nC --> D{\"受容可能か\"}\nD -->|\"いいえ\"| E[\"追加統制または不許可\"]\nD -->|\"はい\"| F[\"承認と統制の設定<br/>データ保護・人による監督\"]\nF --> G[\"運用<br/>監視・ドリフト・インシデント対応\"]\nG --> H[\"定期レビュー<br/>NIST AI RMF: Manage と Govern\"]\nH --> C",
+    "d34": "flowchart TD\nQ[\"設問を読む\"] --> K[\"問われている立場・段階を特定<br/>管理者／最初／最適\"]\nK --> E[\"明らかに不適切な選択肢を除外<br/>違法・非倫理・独断・技術に偏った案\"]\nE --> P{\"残った選択肢は\"}\nP -->|\"手順の順序\"| O[\"準備→評価→承認→実施→検証の<br/>順で最も早い段階を選ぶ\"]\nP -->|\"優先順位\"| R[\"人命→法令・倫理→事業目的→<br/>リスク→コスト の順で判断\"]\nO --> F[\"最終確認: 経営層・事業の視点に合うか\"]\nR --> F"
+  },
+  "cssRules": [
+    {
+      "selector": ":root",
+      "media": null,
+      "declarations": [
+        [
+          "--color-paper",
+          "#f6f7f9",
+          false
+        ],
+        [
+          "--color-ink",
+          "#161b26",
+          false
+        ],
+        [
+          "--color-indigo",
+          "#2e3f72",
+          false
+        ],
+        [
+          "--color-gold",
+          "#b8802a",
+          false
+        ],
+        [
+          "--color-forest",
+          "#1b6e6a",
+          false
+        ],
+        [
+          "--color-plum",
+          "#8c3a5c",
+          false
+        ],
+        [
+          "--surface",
+          "#ffffff",
+          false
+        ],
+        [
+          "--ink-2",
+          "#3a4358",
+          false
+        ],
+        [
+          "--ink-3",
+          "#515b72",
+          false
+        ],
+        [
+          "--border",
+          "#d5dae5",
+          false
+        ],
+        [
+          "--border-strong",
+          "#b7c0d2",
+          false
+        ],
+        [
+          "--tint-indigo",
+          "#eef1f8",
+          false
+        ],
+        [
+          "--tint-gold",
+          "#faf1df",
+          false
+        ],
+        [
+          "--tint-forest",
+          "#e4f1ef",
+          false
+        ],
+        [
+          "--tint-plum",
+          "#f6e9ef",
+          false
+        ],
+        [
+          "--gold-ink",
+          "#7a5212",
+          false
+        ],
+        [
+          "--forest-ink",
+          "#14524f",
+          false
+        ],
+        [
+          "--plum-ink",
+          "#6e2b47",
+          false
+        ],
+        [
+          "--sidebar-w",
+          "288px",
+          false
+        ],
+        [
+          "--font-serif",
+          "'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia,\n                    serif",
+          false
+        ],
+        [
+          "--font-sans",
+          "'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',\n                    Meiryo, system-ui, -apple-system, 'Segoe UI', sans-serif",
+          false
+        ],
+        [
+          "--font-mono",
+          "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+          false
+        ],
+        [
+          "--radius-md",
+          "8px",
+          false
+        ],
+        [
+          "--radius-lg",
+          "12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "*",
+      "media": null,
+      "declarations": [
+        [
+          "box-sizing",
+          "border-box",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "html",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "16px",
+          false
+        ],
+        [
+          "scroll-behavior",
+          "smooth",
+          false
+        ],
+        [
+          "scroll-padding-top",
+          "24px",
+          false
+        ],
+        [
+          "-webkit-text-size-adjust",
+          "100%",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "body",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "background",
+          "var(--color-paper)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ],
+        [
+          "font-family",
+          "var(--font-sans)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.75",
+          false
+        ],
+        [
+          "font-weight",
+          "400",
+          false
+        ],
+        [
+          "overflow-wrap",
+          "anywhere",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "text-decoration",
+          "underline",
+          false
+        ],
+        [
+          "text-underline-offset",
+          "3px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "a:hover",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ":focus-visible",
+      "media": null,
+      "declarations": [
+        [
+          "outline",
+          "2px solid var(--color-indigo)",
+          false
+        ],
+        [
+          "outline-offset",
+          "2px",
+          false
+        ],
+        [
+          "border-radius",
+          "4px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "media": null,
+      "declarations": [
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "top",
+          "0",
+          false
+        ],
+        [
+          "left",
+          "0",
+          false
+        ],
+        [
+          "bottom",
+          "0",
+          false
+        ],
+        [
+          "width",
+          "var(--sidebar-w)",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ],
+        [
+          "border-right",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "overflow-y",
+          "auto",
+          false
+        ],
+        [
+          "z-index",
+          "50",
+          false
+        ],
+        [
+          "padding",
+          "0 0 32px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "gap",
+          "12px",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "padding",
+          "20px 20px 16px",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "position",
+          "sticky",
+          false
+        ],
+        [
+          "top",
+          "0",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ],
+        [
+          "z-index",
+          "2",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand svg",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "none",
+          false
+        ],
+        [
+          "width",
+          "44px",
+          false
+        ],
+        [
+          "height",
+          "44px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand-name",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ],
+        [
+          "font-size",
+          "1.25rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.2",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".brand-sub",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ],
+        [
+          "color",
+          "var(--ink-3)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "12px 12px 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-group",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-h1",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ],
+        [
+          "padding",
+          "8px 10px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ],
+        [
+          "text-decoration",
+          "none",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "background",
+          "var(--tint-indigo)",
+          false
+        ],
+        [
+          "margin-top",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-h1:hover",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "#e1e7f5",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav ul",
+      "media": null,
+      "declarations": [
+        [
+          "list-style",
+          "none",
+          false
+        ],
+        [
+          "margin",
+          "4px 0 0",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li",
+      "media": null,
+      "declarations": [
+        [
+          "padding-left",
+          "0",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li a",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ],
+        [
+          "padding",
+          "6px 10px 6px 14px",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ],
+        [
+          "color",
+          "var(--ink-2)",
+          false
+        ],
+        [
+          "text-decoration",
+          "none",
+          false
+        ],
+        [
+          "border-left",
+          "3px solid transparent",
+          false
+        ],
+        [
+          "border-radius",
+          "0 var(--radius-md) var(--radius-md) 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav li a:hover",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-paper)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar nav a.active",
+      "media": null,
+      "declarations": [
+        [
+          "border-left-color",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "background",
+          "var(--tint-gold)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".nav-h1.active",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ],
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "right",
+          "20px",
+          false
+        ],
+        [
+          "bottom",
+          "20px",
+          false
+        ],
+        [
+          "z-index",
+          "70",
+          false
+        ],
+        [
+          "width",
+          "56px",
+          false
+        ],
+        [
+          "height",
+          "56px",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-indigo)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "font-size",
+          "1.5rem",
+          false
+        ],
+        [
+          "cursor",
+          "pointer",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn:hover",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".backdrop",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "none",
+          false
+        ],
+        [
+          "position",
+          "fixed",
+          false
+        ],
+        [
+          "inset",
+          "0",
+          false
+        ],
+        [
+          "background",
+          "rgba(22, 27, 38, 0.45)",
+          false
+        ],
+        [
+          "z-index",
+          "55",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".layout",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": null,
+      "declarations": [
+        [
+          "margin-left",
+          "var(--sidebar-w)",
+          false
+        ],
+        [
+          "padding",
+          "0 48px 96px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "56px 0 32px",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "margin-bottom",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero .eyebrow",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-block",
+          false
+        ],
+        [
+          "padding",
+          "2px 12px",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--color-gold)",
+          false
+        ],
+        [
+          "border-radius",
+          "999px",
+          false
+        ],
+        [
+          "color",
+          "var(--gold-ink)",
+          false
+        ],
+        [
+          "background",
+          "var(--tint-gold)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "margin-bottom",
+          "16px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ],
+        [
+          "font-size",
+          "2.25rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.3",
+          false
+        ],
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero > p",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1.125rem",
+          false
+        ],
+        [
+          "color",
+          "var(--ink-2)",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "section",
+      "media": null,
+      "declarations": [
+        [
+          "padding-top",
+          "8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chapter",
+      "media": null,
+      "declarations": [
+        [
+          "margin-top",
+          "72px",
+          false
+        ],
+        [
+          "padding-top",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chapter h1",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ],
+        [
+          "font-size",
+          "1.75rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.35",
+          false
+        ],
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ],
+        [
+          "padding",
+          "20px 24px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "border-bottom",
+          "4px solid var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sec",
+      "media": null,
+      "declarations": [
+        [
+          "margin-top",
+          "48px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sec h2",
+      "media": null,
+      "declarations": [
+        [
+          "font-family",
+          "var(--font-serif)",
+          false
+        ],
+        [
+          "font-weight",
+          "600",
+          false
+        ],
+        [
+          "font-size",
+          "1.5rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ],
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ],
+        [
+          "padding",
+          "0 0 10px",
+          false
+        ],
+        [
+          "border-bottom",
+          "2px solid var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "h3",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1.1875rem",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.5",
+          false
+        ],
+        [
+          "margin",
+          "32px 0 12px",
+          false
+        ],
+        [
+          "padding-left",
+          "12px",
+          false
+        ],
+        [
+          "border-left",
+          "4px solid var(--color-gold)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "h4",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "margin",
+          "24px 0 8px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "p",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "strong",
+      "media": null,
+      "declarations": [
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chapter h1 strong",
+      "media": null,
+      "declarations": [
+        [
+          "color",
+          "inherit",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul,\n            ol",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 16px",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "list-style",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul > li",
+      "media": null,
+      "declarations": [
+        [
+          "position",
+          "relative",
+          false
+        ],
+        [
+          "padding-left",
+          "22px",
+          false
+        ],
+        [
+          "margin",
+          "6px 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "''",
+          false
+        ],
+        [
+          "position",
+          "absolute",
+          false
+        ],
+        [
+          "left",
+          "5px",
+          false
+        ],
+        [
+          "top",
+          "0.8em",
+          false
+        ],
+        [
+          "width",
+          "7px",
+          false
+        ],
+        [
+          "height",
+          "7px",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ol",
+      "media": null,
+      "declarations": [
+        [
+          "counter-reset",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ol > li",
+      "media": null,
+      "declarations": [
+        [
+          "counter-increment",
+          "n",
+          false
+        ],
+        [
+          "position",
+          "relative",
+          false
+        ],
+        [
+          "padding-left",
+          "44px",
+          false
+        ],
+        [
+          "margin",
+          "10px 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ol > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "counter(n)",
+          false
+        ],
+        [
+          "position",
+          "absolute",
+          false
+        ],
+        [
+          "left",
+          "0",
+          false
+        ],
+        [
+          "top",
+          "1px",
+          false
+        ],
+        [
+          "width",
+          "28px",
+          false
+        ],
+        [
+          "height",
+          "28px",
+          false
+        ],
+        [
+          "border-radius",
+          "50%",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "28px",
+          false
+        ],
+        [
+          "text-align",
+          "center",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "li > ul,\n            li > ol",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "6px 0 0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".table-wrap",
+      "media": null,
+      "declarations": [
+        [
+          "overflow-x",
+          "auto",
+          false
+        ],
+        [
+          "margin",
+          "0 0 24px",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "table",
+      "media": null,
+      "declarations": [
+        [
+          "width",
+          "100%",
+          false
+        ],
+        [
+          "border-collapse",
+          "collapse",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "th,\n            td",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "10px 16px",
+          false
+        ],
+        [
+          "text-align",
+          "left",
+          false
+        ],
+        [
+          "vertical-align",
+          "top",
+          false
+        ],
+        [
+          "border-bottom",
+          "1px solid var(--border)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "th",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-indigo)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "tbody tr:last-child td",
+      "media": null,
+      "declarations": [
+        [
+          "border-bottom",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "tbody tr:nth-child(even) td",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "#fafbfd",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "td a",
+      "media": null,
+      "declarations": [
+        [
+          "word-break",
+          "break-all",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "td:first-child",
+      "media": null,
+      "declarations": [
+        [
+          "min-width",
+          "7em",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "24px 0",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "border-left-width",
+          "5px",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ],
+        [
+          "overflow",
+          "hidden",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "align-items",
+          "center",
+          false
+        ],
+        [
+          "gap",
+          "10px",
+          false
+        ],
+        [
+          "padding",
+          "12px 20px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-title i",
+      "media": null,
+      "declarations": [
+        [
+          "font-size",
+          "1.375rem",
+          false
+        ],
+        [
+          "flex",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-title h3,\n            .callout-title span",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "0",
+          false
+        ],
+        [
+          "border",
+          "0",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.4",
+          false
+        ],
+        [
+          "color",
+          "inherit",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-body",
+      "media": null,
+      "declarations": [
+        [
+          "padding",
+          "16px 20px 4px",
+          false
+        ],
+        [
+          "border-top",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-body > *:last-child",
+      "media": null,
+      "declarations": [
+        [
+          "margin-bottom",
+          "12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout-body .table-wrap",
+      "media": null,
+      "declarations": [
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.practice",
+      "media": null,
+      "declarations": [
+        [
+          "border-left-color",
+          "var(--color-gold)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.practice .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-gold)",
+          false
+        ],
+        [
+          "color",
+          "var(--gold-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source",
+      "media": null,
+      "declarations": [
+        [
+          "border-left-color",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-forest)",
+          false
+        ],
+        [
+          "color",
+          "var(--forest-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note",
+      "media": null,
+      "declarations": [
+        [
+          "border-left-color",
+          "var(--color-plum)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note .callout-title",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-plum)",
+          false
+        ],
+        [
+          "color",
+          "var(--plum-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.source ul > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--color-forest)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".callout.note .callout-body",
+      "media": null,
+      "declarations": [
+        [
+          "padding-bottom",
+          "4px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ],
+        [
+          "justify-content",
+          "center",
+          false
+        ],
+        [
+          "align-items",
+          "flex-start",
+          false
+        ],
+        [
+          "margin",
+          "24px 0",
+          false
+        ],
+        [
+          "padding",
+          "24px",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ],
+        [
+          "min-height",
+          "96px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram svg",
+      "media": null,
+      "declarations": [
+        [
+          "flex",
+          "0 1 auto",
+          false
+        ],
+        [
+          "max-width",
+          "100%",
+          false
+        ],
+        [
+          "height",
+          "auto",
+          false
+        ],
+        [
+          "overflow",
+          "visible",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram-error",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "white-space",
+          "pre-wrap",
+          false
+        ],
+        [
+          "font-family",
+          "var(--font-mono)",
+          false
+        ],
+        [
+          "font-size",
+          "1rem",
+          false
+        ],
+        [
+          "color",
+          "var(--plum-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".qcard",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "20px 0",
+          false
+        ],
+        [
+          "padding",
+          "20px 24px",
+          false
+        ],
+        [
+          "background",
+          "var(--surface)",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-lg)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".qcard .qtext",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0 0 14px",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".qcard .qnum",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-block",
+          false
+        ],
+        [
+          "margin-right",
+          "10px",
+          false
+        ],
+        [
+          "padding",
+          "0 12px",
+          false
+        ],
+        [
+          "border-radius",
+          "999px",
+          false
+        ],
+        [
+          "background",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "#fff",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul.opts",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "grid",
+          false
+        ],
+        [
+          "grid-template-columns",
+          "repeat(auto-fit, minmax(240px, 1fr))",
+          false
+        ],
+        [
+          "gap",
+          "10px",
+          false
+        ],
+        [
+          "margin",
+          "0",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul.opts > li",
+      "media": null,
+      "declarations": [
+        [
+          "margin",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "10px 14px",
+          false
+        ],
+        [
+          "border",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "border-radius",
+          "var(--radius-md)",
+          false
+        ],
+        [
+          "background",
+          "var(--color-paper)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul.opts > li::before",
+      "media": null,
+      "declarations": [
+        [
+          "content",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chip",
+      "media": null,
+      "declarations": [
+        [
+          "display",
+          "inline-block",
+          false
+        ],
+        [
+          "padding",
+          "1px 12px",
+          false
+        ],
+        [
+          "border-radius",
+          "999px",
+          false
+        ],
+        [
+          "border",
+          "1px solid",
+          false
+        ],
+        [
+          "font-weight",
+          "500",
+          false
+        ],
+        [
+          "line-height",
+          "1.6",
+          false
+        ],
+        [
+          "white-space",
+          "nowrap",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chip.long",
+      "media": null,
+      "declarations": [
+        [
+          "white-space",
+          "normal",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chip.got",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-forest)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-forest)",
+          false
+        ],
+        [
+          "color",
+          "var(--forest-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chip.seen",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-indigo)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-indigo)",
+          false
+        ],
+        [
+          "color",
+          "var(--color-indigo)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chip.todo",
+      "media": null,
+      "declarations": [
+        [
+          "background",
+          "var(--tint-gold)",
+          false
+        ],
+        [
+          "border-color",
+          "var(--color-gold)",
+          false
+        ],
+        [
+          "color",
+          "var(--gold-ink)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".footer",
+      "media": null,
+      "declarations": [
+        [
+          "margin-top",
+          "64px",
+          false
+        ],
+        [
+          "padding-top",
+          "24px",
+          false
+        ],
+        [
+          "border-top",
+          "1px solid var(--border)",
+          false
+        ],
+        [
+          "color",
+          "var(--ink-3)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "transform",
+          "translateX(-100%)",
+          false
+        ],
+        [
+          "transition",
+          "transform 0.25s ease",
+          false
+        ],
+        [
+          "width",
+          "min(320px, 86vw)",
+          false
+        ],
+        [
+          "z-index",
+          "60",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar.open",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "transform",
+          "translateX(0)",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".backdrop.show",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "display",
+          "block",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".menu-btn",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "display",
+          "flex",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "margin-left",
+          "0",
+          false
+        ],
+        [
+          "padding",
+          "0 24px 112px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "padding-top",
+          "40px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "font-size",
+          "1.875rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".chapter h1",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "font-size",
+          "1.5rem",
+          false
+        ],
+        [
+          "padding",
+          "16px 18px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sec h2",
+      "media": "(max-width: 1024px)",
+      "declarations": [
+        [
+          "font-size",
+          "1.3125rem",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "main",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "padding",
+          "0 16px 112px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "padding",
+          "12px",
+          false
+        ],
+        [
+          "overflow-x",
+          "auto",
+          false
+        ],
+        [
+          "justify-content",
+          "flex-start",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".diagram svg",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "max-width",
+          "none",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".qcard",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "padding",
+          "16px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "th,\n                td",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "padding",
+          "8px 12px",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "ul.opts",
+      "media": "(max-width: 520px)",
+      "declarations": [
+        [
+          "grid-template-columns",
+          "1fr",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": "html",
+      "media": "(prefers-reduced-motion: reduce)",
+      "declarations": [
+        [
+          "scroll-behavior",
+          "auto",
+          false
+        ]
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "media": "(prefers-reduced-motion: reduce)",
+      "declarations": [
+        [
+          "transition",
+          "none",
+          false
+        ]
+      ]
+    }
+  ],
+  "headings": [
+    "ISSMP 初学者向けステップバイステップ完全ガイド",
+    "Step 0: このガイドの使い方",
+    "学習ロードマップ",
+    "Step 1: ISSMP とは何か",
+    "1-1. 定義",
+    "1-2. 同系統の認定との違い",
+    "1-3. 受験要件（概要）",
+    "1-4. 試験の基本情報",
+    "1-5. 取得後の維持（目安）",
+    "根拠ソース",
+    "Step 2: 出題ドメインと配点",
+    "2-1. 6 ドメインと配点",
+    "2-2. ドメイン同士の関係",
+    "根拠ソース",
+    "Step 3: 管理者の思考法（前提知識）",
+    "3-1. ガバナンスとマネジメントの違い",
+    "3-2. 基本の三要素と用語",
+    "3-3. 管理者としての優先順位の型",
+    "根拠ソース",
+    "Domain 1: Leadership and Organizational Management",
+    "1.1 セキュリティの役割を組織文化・ビジョン・使命の中に位置づける",
+    "この項目は何か",
+    "試験アウトラインの要点",
+    "ステップバイステップ",
+    "ビジョン・使命の違い",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.2 セキュリティプログラムを組織のガバナンスと整合させる",
+    "この項目は何か",
+    "試験アウトラインの要点",
+    "ガバナンスの流れ",
+    "ステップバイステップ",
+    "CSF 2.0 の GOVERN 機能（参考）",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.3 情報セキュリティ戦略を定義し、実装する",
+    "試験アウトラインの要点",
+    "ステップバイステップ",
+    "主な枠組み",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.4 セキュリティポリシー体系を定義し、維持する",
+    "試験アウトラインの要点",
+    "文書体系（階層）",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.5 契約・合意におけるセキュリティ要件を管理する",
+    "試験アウトラインの要点",
+    "主な文書",
+    "契約に入れるべきセキュリティ条項",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.6 セキュリティ意識向上・教育プログラムを管理する",
+    "試験アウトラインの要点",
+    "意識向上・教育・訓練の違い",
+    "ステップバイステップ",
+    "効果測定の指標例",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.7 セキュリティ指標を定義・測定・報告する",
+    "試験アウトラインの要点",
+    "KPI と KRI の違い",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.8 セキュリティ予算を準備・獲得・管理する",
+    "試験アウトラインの要点",
+    "主な概念",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.9 セキュリティプログラムを運営する",
+    "試験アウトラインの要点",
+    "ステップバイステップ",
+    "人事プロセスへの統合",
+    "ベストプラクティス",
+    "根拠ソース",
+    "1.10 製品開発・プロジェクト管理の原則を適用する",
+    "試験アウトラインの要点",
+    "開発手法の比較",
+    "プロジェクトの制約（トリプルコンストレイント＋リスク）",
+    "ベストプラクティス",
+    "根拠ソース",
+    "Domain 2: Systems Lifecycle Management",
+    "2.1 システムライフサイクル全体にセキュリティを統合する",
+    "この項目は何か",
+    "試験アウトラインの要点",
+    "ライフサイクルとセキュリティ活動",
+    "RMF（リスク管理フレームワーク）の 7 ステップ",
+    "構成管理（Configuration Management）",
+    "ベストプラクティス",
+    "根拠ソース",
+    "2.2 組織の取り組みと新技術をセキュリティアーキテクチャに統合する",
+    "試験アウトラインの要点",
+    "代表的なセキュリティ設計原則",
+    "新しい取り組みへの対応フロー",
+    "ベストプラクティス",
+    "根拠ソース",
+    "2.3 包括的な脆弱性管理プログラムを定義・管理する",
+    "試験アウトラインの要点",
+    "脆弱性管理サイクル",
+    "テストの種類",
+    "優先順位付けの指標",
+    "ベストプラクティス",
+    "根拠ソース",
+    "2.4 変更管理のセキュリティ面を管理する",
+    "試験アウトラインの要点",
+    "変更管理の流れ",
+    "セキュリティ影響分析で確認する項目",
+    "ベストプラクティス",
+    "根拠ソース",
+    "Domain 3: Risk Management",
+    "3.1 リスク管理プログラムを開発・管理する",
+    "試験アウトラインの要点（12 項目）",
+    "リスクマネジメントのプロセス（ISO 31000 の考え方）",
+    "重要概念",
+    "リスク対応の 4 つの選択肢",
+    "定量的な計算（試験頻出）",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "3.2 サプライチェーン内のセキュリティリスクを管理する",
+    "試験アウトラインの要点",
+    "ステップバイステップ",
+    "評価の観点",
+    "ベストプラクティス",
+    "根拠ソース",
+    "3.3 リスクアセスメントを実施する",
+    "試験アウトラインの要点",
+    "手法の比較",
+    "NIST SP 800-30 の評価プロセス",
+    "リスク要因（Risk Factors）",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "3.4 リスク統制（コントロール）を管理する",
+    "試験アウトラインの要点",
+    "統制の分類",
+    "有効性とカバレッジの考え方",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "Domain 4: Security Operations",
+    "4.1 セキュリティオペレーションセンター（SOC）を設立・維持する",
+    "試験アウトラインの要点",
+    "SOC とは",
+    "SOC の運営モデル",
+    "SOC の役割階層（例）",
+    "整備すべき文書",
+    "ステップバイステップ",
+    "主な指標",
+    "ベストプラクティス",
+    "根拠ソース",
+    "4.2 脅威インテリジェンスプログラムを設立・維持する",
+    "試験アウトラインの要点",
+    "脅威インテリジェンスの 4 層",
+    "インテリジェンスサイクル",
+    "情報源",
+    "標準・フレームワーク",
+    "ステップバイステップ",
+    "実用的なアラートの条件",
+    "ベストプラクティス",
+    "根拠ソース",
+    "4.3 インシデント管理プログラムを設立・維持する",
+    "試験アウトラインの要点",
+    "最新の考え方: NIST SP 800-61 Rev.3",
+    "インシデント対応の流れ",
+    "IR チームの構成（例）",
+    "フォレンジックと証拠の取扱い",
+    "重大度分類の例",
+    "通知・報告義務（例、要最新確認）",
+    "根本原因分析（RCA）の手法",
+    "ベストプラクティス",
+    "根拠ソース",
+    "Domain 5: Contingency Management",
+    "5.1 コンティンジェンシー計画の策定を促進する",
+    "試験アウトラインの要点",
+    "計画の種類と違い",
+    "事業影響分析（BIA）と主要な時間指標",
+    "NIST SP 800-34 の 7 ステップ",
+    "BIA のステップバイステップ",
+    "危機コミュニケーション計画",
+    "ベストプラクティス",
+    "根拠ソース",
+    "5.2 復旧戦略を策定する",
+    "試験アウトラインの要点",
+    "代替サイトの種類",
+    "バックアップ方式",
+    "データ保護の原則",
+    "戦略の選び方",
+    "ベストプラクティス",
+    "根拠ソース",
+    "5.3 コンティンジェンシー計画・BCP・DRP を維持する",
+    "試験アウトラインの要点",
+    "試験（テスト）の種類",
+    "計画更新のトリガー",
+    "ベストプラクティス",
+    "根拠ソース",
+    "5.4 災害対応・復旧プロセスを管理する",
+    "試験アウトラインの要点",
+    "災害対応の流れ",
+    "宣言の要点",
+    "復旧作業の順序（一般原則）",
+    "教訓の収集",
+    "ベストプラクティス",
+    "根拠ソース",
+    "Domain 6: Law, Ethics and Security Compliance Management",
+    "6.1 情報セキュリティに関わる法令・規制の影響を特定する",
+    "試験アウトラインの要点",
+    "法的な論点の整理",
+    "知的財産の 4 区分",
+    "越境データ移転（Trans-border Data Flow）",
+    "ステップバイステップ",
+    "ベストプラクティス",
+    "根拠ソース",
+    "6.2 職業倫理を理解し、遵守し、推進する",
+    "試験アウトラインの要点",
+    "ISC2 倫理規約の 4 つの規範（カノン）",
+    "倫理的ジレンマの判断フロー",
+    "管理者が直面しやすい論点",
+    "ベストプラクティス",
+    "根拠ソース",
+    "6.3 適用される法令・規制・業界標準に対する遵守を検証する",
+    "試験アウトラインの要点",
+    "代表的なフレームワークと標準",
+    "フレームワークの選定と実装",
+    "コンプライアンス指標の例",
+    "重要な考え方",
+    "ベストプラクティス",
+    "根拠ソース",
+    "6.4 内部・外部監査プロセスにおける監査人・規制当局と連携する",
+    "試験アウトラインの要点",
+    "監査の種類",
+    "スリーラインモデル（3 つのライン）",
+    "監査対応の流れ",
+    "指摘への対応の原則",
+    "ベストプラクティス",
+    "根拠ソース",
+    "6.5 コンプライアンスの例外を文書化し管理する",
+    "試験アウトラインの要点",
+    "例外管理の流れ",
+    "例外申請に含める項目",
+    "ベストプラクティス",
+    "根拠ソース",
+    "横断テーマ: AI とセキュリティマネジメント",
+    "ドメイン別の AI 論点",
+    "AI ガバナンスの基本フロー",
+    "主な枠組み",
+    "EU AI Act の適用時期（2026年10月時点の整理）",
+    "ベストプラクティス",
+    "根拠ソース",
+    "試験戦略と学習計画",
+    "1. 設問の読み方",
+    "選択肢の絞り込みフロー",
+    "2. 混同しやすい用語の整理",
+    "3. 学習計画（8 週間の目安）",
+    "4. 学習のコツ",
+    "根拠ソース",
+    "確認テスト",
+    "問題",
+    "解答と解説",
+    "用語集",
+    "参考ソース一覧と確認状況",
+    "試験・認定に関する情報",
+    "NIST（米国標準技術研究所）",
+    "国際標準・業界団体",
+    "政府・法令",
+    "免責と更新について"
+  ],
+  "allowances": [
+    "Bundled local SVG icons replace the CDN icon font; original icon classes are retained.",
+    "Local Mermaid renders in keyboard-scrollable regions with natural SVG widths; diagram nodes and edges are unchanged.",
+    "The original inner main becomes div.guide-content to avoid nested main landmarks.",
+    "Responsive navigation adds Escape/backdrop/focus/inert handling and fragment tracking."
+  ]
+}

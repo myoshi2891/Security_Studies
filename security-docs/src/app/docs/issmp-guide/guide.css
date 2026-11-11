@@ -1,0 +1,629 @@
+.issmp-guide.issmp-guide html,.issmp-guide.issmp-guide head,.issmp-guide.issmp-guide body,.issmp-guide.issmp-guide aside,.issmp-guide.issmp-guide div,.issmp-guide.issmp-guide nav,.issmp-guide.issmp-guide span,.issmp-guide.issmp-guide ul,.issmp-guide.issmp-guide li,.issmp-guide.issmp-guide a,.issmp-guide.issmp-guide header,.issmp-guide.issmp-guide h1,.issmp-guide.issmp-guide p,.issmp-guide.issmp-guide strong,.issmp-guide.issmp-guide table,.issmp-guide.issmp-guide thead,.issmp-guide.issmp-guide tr,.issmp-guide.issmp-guide th,.issmp-guide.issmp-guide tbody,.issmp-guide.issmp-guide td,.issmp-guide.issmp-guide section,.issmp-guide.issmp-guide h2,.issmp-guide.issmp-guide h3,.issmp-guide.issmp-guide ol{margin:0;padding:0;border:0;letter-spacing:0px;text-transform:none;box-shadow:none;background:transparent;overflow-wrap:normal;word-break:normal;}
+.issmp-guide.issmp-guide h1,.issmp-guide.issmp-guide h2,.issmp-guide.issmp-guide h3,.issmp-guide.issmp-guide h4{font-family:inherit;color:inherit;font-size:inherit;font-weight:700;}
+
+            .issmp-guide.issmp-guide {
+                --color-paper: #f6f7f9;
+                --color-ink: #161b26;
+                --color-indigo: #2e3f72;
+                --color-gold: #b8802a;
+                --color-forest: #1b6e6a;
+                --color-plum: #8c3a5c;
+                --surface: #ffffff;
+                --ink-2: #3a4358;
+                --ink-3: #515b72;
+                --border: #d5dae5;
+                --border-strong: #b7c0d2;
+                --tint-indigo: #eef1f8;
+                --tint-gold: #faf1df;
+                --tint-forest: #e4f1ef;
+                --tint-plum: #f6e9ef;
+                --gold-ink: #7a5212;
+                --forest-ink: #14524f;
+                --plum-ink: #6e2b47;
+                --sidebar-w: 288px;
+                --font-serif:
+                    'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia,
+                    serif;
+                --font-sans:
+                    'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',
+                    Meiryo, system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --radius-md: 8px;
+                --radius-lg: 12px;
+            }
+            .issmp-guide.issmp-guide * {
+                box-sizing: border-box;
+            }
+            .issmp-guide.issmp-guide {
+                font-size: 16px;
+                scroll-behavior: smooth;
+                scroll-padding-top: 24px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .issmp-guide.issmp-guide {
+                margin: 0;
+                background: var(--color-paper);
+                color: var(--color-ink);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.75;
+                font-weight: 400;
+                overflow-wrap: anywhere;
+            }
+            .issmp-guide.issmp-guide a {
+                color: var(--color-indigo);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+            }
+            .issmp-guide.issmp-guide a:hover {
+                color: var(--color-ink);
+            }
+            .issmp-guide.issmp-guide :focus-visible {
+                outline: 2px solid var(--color-indigo);
+                outline-offset: 2px;
+                border-radius: 4px;
+            }
+
+            /* ---------- sidebar ---------- */
+            .issmp-guide.issmp-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--surface);
+                border-right: 1px solid var(--border);
+                overflow-y: auto;
+                z-index: 50;
+                padding: 0 0 32px;
+            }
+            .issmp-guide.issmp-guide .brand {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                padding: 20px 20px 16px;
+                border-bottom: 1px solid var(--border);
+                position: sticky;
+                top: 0;
+                background: var(--surface);
+                z-index: 2;
+            }
+            .issmp-guide.issmp-guide .brand svg {
+                flex: none;
+                width: 44px;
+                height: 44px;
+            }
+            .issmp-guide.issmp-guide .brand-name {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.25rem;
+                line-height: 1.2;
+                color: var(--color-indigo);
+            }
+            .issmp-guide.issmp-guide .brand-sub {
+                font-size: 1rem;
+                line-height: 1.4;
+                color: var(--ink-3);
+            }
+            .issmp-guide.issmp-guide .sidebar nav {
+                padding: 12px 12px 0;
+            }
+            .issmp-guide.issmp-guide .nav-group {
+                margin: 0 0 8px;
+            }
+            .issmp-guide.issmp-guide .nav-h1 {
+                display: block;
+                padding: 8px 10px;
+                font-weight: 500;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: var(--color-ink);
+                text-decoration: none;
+                border-radius: var(--radius-md);
+                background: var(--tint-indigo);
+                margin-top: 8px;
+            }
+            .issmp-guide.issmp-guide .nav-h1:hover {
+                background: #e1e7f5;
+            }
+            .issmp-guide.issmp-guide .sidebar nav ul {
+                list-style: none;
+                margin: 4px 0 0;
+                padding: 0;
+            }
+            .issmp-guide.issmp-guide .sidebar nav li {
+                padding-left: 0;
+                margin: 0;
+            }
+            .issmp-guide.issmp-guide .sidebar nav li::before {
+                content: none;
+            }
+            .issmp-guide.issmp-guide .sidebar nav li a {
+                display: block;
+                padding: 6px 10px 6px 14px;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: var(--ink-2);
+                text-decoration: none;
+                border-left: 3px solid transparent;
+                border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            }
+            .issmp-guide.issmp-guide .sidebar nav li a:hover {
+                background: var(--color-paper);
+                color: var(--color-ink);
+            }
+            .issmp-guide.issmp-guide .sidebar nav a.active {
+                border-left-color: var(--color-gold);
+                background: var(--tint-gold);
+                color: var(--color-ink);
+                font-weight: 500;
+            }
+            .issmp-guide.issmp-guide .nav-h1.active {
+                background: var(--tint-gold);
+            }
+
+            .issmp-guide.issmp-guide .menu-btn {
+                display: none;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                z-index: 70;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                border: 1px solid var(--color-indigo);
+                background: var(--color-indigo);
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+            }
+            .issmp-guide.issmp-guide .menu-btn:hover {
+                background: var(--color-ink);
+            }
+            .issmp-guide.issmp-guide .backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(22, 27, 38, 0.45);
+                z-index: 55;
+            }
+
+            /* ---------- main ---------- */
+            .issmp-guide.issmp-guide .layout {
+                display: block;
+            }
+            .issmp-guide.issmp-guide .guide-content {
+                margin-left: var(--sidebar-w);
+                padding: 0 48px 96px;
+            }
+            .issmp-guide.issmp-guide .hero {
+                padding: 56px 0 32px;
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 8px;
+            }
+            .issmp-guide.issmp-guide .hero .eyebrow {
+                display: inline-block;
+                padding: 2px 12px;
+                border: 1px solid var(--color-gold);
+                border-radius: 999px;
+                color: var(--gold-ink);
+                background: var(--tint-gold);
+                font-weight: 500;
+                margin-bottom: 16px;
+            }
+            .issmp-guide.issmp-guide .hero h1 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 2.25rem;
+                line-height: 1.3;
+                margin: 0 0 16px;
+                color: var(--color-indigo);
+            }
+            .issmp-guide.issmp-guide .hero > p {
+                font-size: 1.125rem;
+                color: var(--ink-2);
+                margin: 0 0 24px;
+            }
+
+            .issmp-guide.issmp-guide section {
+                padding-top: 8px;
+            }
+            .issmp-guide.issmp-guide .chapter {
+                margin-top: 72px;
+                padding-top: 0;
+            }
+            .issmp-guide.issmp-guide .chapter h1 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.75rem;
+                line-height: 1.35;
+                margin: 0 0 16px;
+                padding: 20px 24px;
+                background: var(--color-indigo);
+                color: #fff;
+                border-radius: var(--radius-lg);
+                border-bottom: 4px solid var(--color-gold);
+            }
+            .issmp-guide.issmp-guide .sec {
+                margin-top: 48px;
+            }
+            .issmp-guide.issmp-guide .sec h2 {
+                font-family: var(--font-serif);
+                font-weight: 600;
+                font-size: 1.5rem;
+                line-height: 1.4;
+                margin: 0 0 16px;
+                padding: 0 0 10px;
+                border-bottom: 2px solid var(--color-indigo);
+                color: var(--color-ink);
+            }
+            .issmp-guide.issmp-guide h3 {
+                font-size: 1.1875rem;
+                font-weight: 500;
+                line-height: 1.5;
+                margin: 32px 0 12px;
+                padding-left: 12px;
+                border-left: 4px solid var(--color-gold);
+                color: var(--color-ink);
+            }
+            .issmp-guide.issmp-guide h4 {
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 24px 0 8px;
+            }
+            .issmp-guide.issmp-guide p {
+                margin: 0 0 16px;
+            }
+            .issmp-guide.issmp-guide strong {
+                font-weight: 500;
+                color: var(--color-indigo);
+            }
+            .issmp-guide.issmp-guide .chapter h1 strong {
+                color: inherit;
+            }
+
+            /* lists: block-level items (no flex) */
+            .issmp-guide.issmp-guide ul, .issmp-guide.issmp-guide ol {
+                margin: 0 0 16px;
+                padding: 0;
+                list-style: none;
+            }
+            .issmp-guide.issmp-guide ul > li {
+                position: relative;
+                padding-left: 22px;
+                margin: 6px 0;
+            }
+            .issmp-guide.issmp-guide ul > li::before {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 0.8em;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--color-indigo);
+            }
+            .issmp-guide.issmp-guide ol {
+                counter-reset: n;
+            }
+            .issmp-guide.issmp-guide ol > li {
+                counter-increment: n;
+                position: relative;
+                padding-left: 44px;
+                margin: 10px 0;
+            }
+            .issmp-guide.issmp-guide ol > li::before {
+                content: counter(n);
+                position: absolute;
+                left: 0;
+                top: 1px;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: var(--color-indigo);
+                color: #fff;
+                font-weight: 500;
+                line-height: 28px;
+                text-align: center;
+            }
+            .issmp-guide.issmp-guide li > ul, .issmp-guide.issmp-guide li > ol {
+                margin: 6px 0 0;
+            }
+
+            /* tables */
+            .issmp-guide.issmp-guide .table-wrap {
+                overflow-x: auto;
+                margin: 0 0 24px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                background: var(--surface);
+            }
+            .issmp-guide.issmp-guide table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            .issmp-guide.issmp-guide th, .issmp-guide.issmp-guide td {
+                padding: 10px 16px;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--border);
+            }
+            .issmp-guide.issmp-guide th {
+                background: var(--tint-indigo);
+                color: var(--color-indigo);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .issmp-guide.issmp-guide tbody tr:last-child td {
+                border-bottom: 0;
+            }
+            .issmp-guide.issmp-guide tbody tr:nth-child(even) td {
+                background: #fafbfd;
+            }
+            .issmp-guide.issmp-guide td a {
+                word-break: break-all;
+            }
+            .issmp-guide.issmp-guide td:first-child {
+                min-width: 7em;
+            }
+
+            /* callouts: practice / source / note */
+            .issmp-guide.issmp-guide .callout {
+                margin: 24px 0;
+                border: 1px solid var(--border);
+                border-left-width: 5px;
+                border-radius: var(--radius-lg);
+                background: var(--surface);
+                overflow: hidden;
+            }
+            .issmp-guide.issmp-guide .callout-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 20px;
+                font-weight: 500;
+                line-height: 1.4;
+            }
+            .issmp-guide.issmp-guide .callout-title i {
+                font-size: 1.375rem;
+                flex: none;
+            }
+            .issmp-guide.issmp-guide .callout-title h3, .issmp-guide.issmp-guide .callout-title span {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.4;
+                color: inherit;
+            }
+            .issmp-guide.issmp-guide .callout-body {
+                padding: 16px 20px 4px;
+                border-top: 1px solid var(--border);
+                background: var(--surface);
+            }
+            .issmp-guide.issmp-guide .callout-body > *:last-child {
+                margin-bottom: 12px;
+            }
+            .issmp-guide.issmp-guide .callout-body .table-wrap {
+                border-radius: var(--radius-md);
+            }
+            .issmp-guide.issmp-guide .callout.practice {
+                border-left-color: var(--color-gold);
+            }
+            .issmp-guide.issmp-guide .callout.practice .callout-title {
+                background: var(--tint-gold);
+                color: var(--gold-ink);
+            }
+            .issmp-guide.issmp-guide .callout.source {
+                border-left-color: var(--color-forest);
+            }
+            .issmp-guide.issmp-guide .callout.source .callout-title {
+                background: var(--tint-forest);
+                color: var(--forest-ink);
+            }
+            .issmp-guide.issmp-guide .callout.note {
+                border-left-color: var(--color-plum);
+            }
+            .issmp-guide.issmp-guide .callout.note .callout-title {
+                background: var(--tint-plum);
+                color: var(--plum-ink);
+            }
+            .issmp-guide.issmp-guide .callout.source ul > li::before {
+                background: var(--color-forest);
+            }
+            .issmp-guide.issmp-guide .callout.note .callout-body {
+                padding-bottom: 4px;
+            }
+
+            /* diagrams */
+            .issmp-guide.issmp-guide .diagram {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                margin: 24px 0;
+                padding: 24px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                min-height: 96px;
+            }
+            .issmp-guide.issmp-guide .diagram svg {
+                flex: 0 1 auto;
+                max-width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+            .issmp-guide.issmp-guide .diagram-error {
+                margin: 0;
+                white-space: pre-wrap;
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                color: var(--plum-ink);
+            }
+
+            /* quiz */
+            .issmp-guide.issmp-guide .qcard {
+                margin: 20px 0;
+                padding: 20px 24px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+            }
+            .issmp-guide.issmp-guide .qcard .qtext {
+                margin: 0 0 14px;
+                font-weight: 500;
+            }
+            .issmp-guide.issmp-guide .qcard .qnum {
+                display: inline-block;
+                margin-right: 10px;
+                padding: 0 12px;
+                border-radius: 999px;
+                background: var(--color-indigo);
+                color: #fff;
+                font-weight: 500;
+            }
+            .issmp-guide.issmp-guide ul.opts {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 10px;
+                margin: 0;
+            }
+            .issmp-guide.issmp-guide ul.opts > li {
+                margin: 0;
+                padding: 10px 14px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                background: var(--color-paper);
+            }
+            .issmp-guide.issmp-guide ul.opts > li::before {
+                content: none;
+            }
+
+            /* chips for source status */
+            .issmp-guide.issmp-guide .chip {
+                display: inline-block;
+                padding: 1px 12px;
+                border-radius: 999px;
+                border: 1px solid;
+                font-weight: 500;
+                line-height: 1.6;
+                white-space: nowrap;
+            }
+            .issmp-guide.issmp-guide .chip.long {
+                white-space: normal;
+            }
+            .issmp-guide.issmp-guide .chip.got {
+                background: var(--tint-forest);
+                border-color: var(--color-forest);
+                color: var(--forest-ink);
+            }
+            .issmp-guide.issmp-guide .chip.seen {
+                background: var(--tint-indigo);
+                border-color: var(--color-indigo);
+                color: var(--color-indigo);
+            }
+            .issmp-guide.issmp-guide .chip.todo {
+                background: var(--tint-gold);
+                border-color: var(--color-gold);
+                color: var(--gold-ink);
+            }
+
+            .issmp-guide.issmp-guide .footer {
+                margin-top: 64px;
+                padding-top: 24px;
+                border-top: 1px solid var(--border);
+                color: var(--ink-3);
+            }
+
+            /* ---------- tablet and below ---------- */
+            @media (max-width: 1024px) {
+                .issmp-guide.issmp-guide .sidebar {
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    width: min(320px, 86vw);
+                    z-index: 60;
+                }
+                .issmp-guide.issmp-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .issmp-guide.issmp-guide .backdrop.show {
+                    display: block;
+                }
+                .issmp-guide.issmp-guide .menu-btn {
+                    display: flex;
+                }
+                .issmp-guide.issmp-guide .guide-content {
+                    margin-left: 0;
+                    padding: 0 24px 112px;
+                }
+                .issmp-guide.issmp-guide .hero {
+                    padding-top: 40px;
+                }
+                .issmp-guide.issmp-guide .hero h1 {
+                    font-size: 1.875rem;
+                }
+                .issmp-guide.issmp-guide .chapter h1 {
+                    font-size: 1.5rem;
+                    padding: 16px 18px;
+                }
+                .issmp-guide.issmp-guide .sec h2 {
+                    font-size: 1.3125rem;
+                }
+            }
+            @media (max-width: 520px) {
+                .issmp-guide.issmp-guide .guide-content {
+                    padding: 0 16px 112px;
+                }
+                .issmp-guide.issmp-guide .diagram {
+                    padding: 12px;
+                    overflow-x: auto;
+                    justify-content: flex-start;
+                }
+                .issmp-guide.issmp-guide .diagram svg {
+                    max-width: none;
+                }
+                .issmp-guide.issmp-guide .qcard {
+                    padding: 16px;
+                }
+                .issmp-guide.issmp-guide th, .issmp-guide.issmp-guide td {
+                    padding: 8px 12px;
+                }
+                .issmp-guide.issmp-guide ul.opts {
+                    grid-template-columns: 1fr;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .issmp-guide.issmp-guide {
+                    scroll-behavior: auto;
+                }
+                .issmp-guide.issmp-guide .sidebar {
+                    transition: none;
+                }
+            }
+        
+/* Adapt the source document to the shared application shell. */
+.issmp-guide.issmp-guide{width:100%;min-width:0;isolation:isolate;}
+.issmp-guide.issmp-guide .brand{font-size:1rem;font-weight:400;color:var(--color-ink);}
+.issmp-guide.issmp-guide .hero .eyebrow{font-family:var(--font-sans);font-size:1rem;}
+.issmp-guide.issmp-guide .sidebar{top:var(--docs-header-height,64px);z-index:40;visibility:visible;}
+.issmp-guide.issmp-guide .backdrop{top:var(--docs-header-height,64px);z-index:35;}
+.issmp-guide.issmp-guide .menu-btn{z-index:50;}
+.issmp-guide.issmp-guide i.ti{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;vertical-align:-0.125em;}
+.issmp-guide.issmp-guide i.ti svg{width:1em;height:1em;}
+.issmp-guide.issmp-guide .diagram{display:block;min-width:0;}
+.issmp-guide.issmp-guide .diagram-viewport{display:block;overflow-x:auto;}
+.issmp-guide.issmp-guide .diagram-viewport svg{display:block;max-width:none;margin-left:auto;margin-right:auto;}
+.issmp-guide.issmp-guide section[id]{scroll-margin-top:88px;}
+.docs-main:has(.issmp-guide){padding:0;}
+.docs-article:has(.issmp-guide){max-width:none;}
+.issmp-guide.issmp-guide tbody tr:hover td{background:transparent;}
+.issmp-guide.issmp-guide tbody tr:nth-child(even):hover td{background:#fafbfd;}
+@media (max-width: 1024px){.issmp-guide.issmp-guide .sidebar{visibility:hidden;}.issmp-guide.issmp-guide .sidebar.open{visibility:visible;}}
+@media (prefers-reduced-motion: reduce){html:has(.issmp-guide),.issmp-guide.issmp-guide,.issmp-guide.issmp-guide *{scroll-behavior:auto;transition:none;}}
+.issmp-guide.issmp-guide .diagram-print-description{display:none;}
+@media print{.issmp-guide.issmp-guide .diagram-print-description{display:block;}.issmp-guide.issmp-guide .diagram-description,.issmp-guide.issmp-guide .mermaid-target>[role="status"]{display:none;}}
