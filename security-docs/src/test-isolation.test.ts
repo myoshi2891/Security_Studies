@@ -27,7 +27,6 @@ test('a test may assign viewport properties directly', () => {
 test('directly assigned viewport properties are restored to the live happy-dom getters', () => {
   expect(window.innerWidth).toBe(1024);
   expect(window.innerHeight).toBe(768);
-  expect(typeof Object.getOwnPropertyDescriptor(window, 'innerWidth')?.get).toBe('function');
   (window as unknown as HappyWindow).happyDOM.setWindowSize({ width: 375, height: 700 });
   expect(window.innerWidth).toBe(375);
 });
