@@ -670,8 +670,23 @@ flowchart TD
 npm ci --ignore-scripts
 ```
 
-- 必要なパッケージだけを許可リストで例外にします（ネイティブビルドが必要なものなど）。
 - ChainDrop 等は `preinstall` で動くため、**この 1 行で被害を避けられた可能性**があります。
+- ネイティブビルドなどで例外が必要なら、**npm 11.16.0 以降の 11.x** で、レビュー済みの依存だけをプロジェクトの `package.json` の `allowScripts` に追加します（以下は `sharp` の特定バージョンを許可する例。実際に固定・レビューした版に置き換えます）。
+
+```json
+{
+  "allowScripts": {
+    "sharp@0.35.5": true
+  }
+}
+```
+
+```bash
+# 許可済み依存のビルドを実行し、未レビューのインストール時スクリプトはエラーにする
+npm ci --strict-allow-scripts
+```
+
+例外フローでは `--ignore-scripts` を付けず、`.npmrc` や環境変数でも `ignore-scripts=true` が有効になっていないことを確認します。全スクリプトの無効化が優先されるため、併用すると許可済みのビルドも実行されません。11.x では未レビューのスクリプトも既定で実行されるため、`--strict-allow-scripts` が必要です。明示的に拒否する依存は `allowScripts` で `false` にします（[npm 11.16.0 リリース](https://github.com/npm/cli/releases/tag/v11.16.0)、[承認コマンド](https://docs.npmjs.com/cli/v11/commands/npm-approve-scripts/)、[設定仕様](https://docs.npmjs.com/cli/v11/using-npm/config/#strict-allow-scripts)）。
 
 #### Step 4: CI（GitHub Actions）を固くする
 
