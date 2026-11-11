@@ -67,7 +67,9 @@ try{
    const button=page.locator('#menuBtn');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');
    assert.equal(await page.locator('.guide-content').evaluate(e=>e.inert),true);
    await page.keyboard.press('Escape');assert.equal(await button.getAttribute('aria-expanded'),'false');assert.ok(await button.evaluate(e=>e===document.activeElement));
-   await button.click();await page.locator('.sidebar nav a').last().focus();await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#s1');
+   await button.click();await page.locator('.sidebar nav a').last().focus();await page.keyboard.press('Tab');assert.ok(await button.evaluate(e=>e===document.activeElement));
+   await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#s1');
+   await page.keyboard.press('Shift+Tab');assert.ok(await button.evaluate(e=>e===document.activeElement));
    await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('href')),'#s50');
    await page.locator('.sidebar a[href="#s47"]').click();assert.equal(await button.getAttribute('aria-expanded'),'false');assert.ok(await page.locator('#s47 h1').evaluate(e=>e===document.activeElement));
    assert.equal(await page.locator('.guide-content').evaluate(e=>e.inert),false);

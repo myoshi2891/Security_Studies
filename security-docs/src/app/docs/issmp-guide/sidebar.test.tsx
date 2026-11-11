@@ -23,11 +23,14 @@ test('mobile menu closes with Escape, backdrop, toggle and resize; restores body
  }
  fireEvent.click(btn);view.unmount();expect(document.body.style.overflow).not.toBe('hidden');expect(content.inert).toBe(false);
 });
-test('keyboard focus wraps through every visible link and malformed fragments remain safe',async()=>{
- const view=await mounted();fireEvent.click(view.container.querySelector('#menuBtn')!);
+test('keyboard focus wraps through the links and close button and malformed fragments remain safe',async()=>{
+ const view=await mounted(),button=view.container.querySelector<HTMLButtonElement>('#menuBtn')!;fireEvent.click(button);
  const links=[...view.container.querySelectorAll<HTMLAnchorElement>('nav a')];
- links.at(-1)!.focus();fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement).toBe(links[0]);
- fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement).toBe(links.at(-1)!);
+ // The browser handles the adjacent link/button steps; only the boundaries wrap.
+ links.at(-1)!.focus();expect(fireEvent.keyDown(document,{key:'Tab'})).toBe(true);
+ button.focus();fireEvent.keyDown(document,{key:'Tab'});expect(document.activeElement).toBe(links[0]);
+ fireEvent.keyDown(document,{key:'Tab',shiftKey:true});expect(document.activeElement).toBe(button);
+ expect(fireEvent.keyDown(document,{key:'Tab',shiftKey:true})).toBe(true);
  window.history.replaceState(null,'','#%');expect(()=>fireEvent(window,new Event('hashchange'))).not.toThrow();
 });
 test('every TOC jump closes the drawer, preserves the selected link and focuses the correct heading',async()=>{
