@@ -62,7 +62,7 @@ test('a pinned entry survives its own jump and sub-pixel drift, then releases on
  const s=observed();try{
   // Arrange: 固定前のスクロールは何もしない。クリックで s2 を固定し、着地後の位置を記録させる
   let top=0;s.view.container.querySelector<HTMLElement>('#s2')!.getBoundingClientRect=()=>({top,bottom:top+40} as DOMRect);
-  fireEvent.scroll(window);expect(s.current()).toBeUndefined();
+  const before=s.current();fireEvent.scroll(window);expect(s.current()).toBe(before);
   fireEvent.click(s.view.container.querySelector('a[href="#s2"]')!);
   fireEvent.scroll(window);await new Promise(resolve=>setTimeout(resolve,200));
   s.notify('s3');expect(s.current()).toBe('#s2');
@@ -71,16 +71,16 @@ test('a pinned entry survives its own jump and sub-pixel drift, then releases on
   top=-400;fireEvent.scroll(window);expect(s.current()).toBe('#s3');
  }finally{s.restore();}
 });
-test.each([true,false])('widening to desktop returns focus from the menu button to the chapter of the selection (selected: %s)',selected=>{
+test.each([['s2','#s1'],[null,'#s3']] as const)('widening to desktop returns focus from the menu button to the chapter of the selection (%s)',(observedId,chapter)=>{
  const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
  const s=observed();try{
-  // Arrange: 選択済みなら s2（章 s1 配下）、未選択なら先頭リンクが戻り先
-  if(selected)s.notify('s2');
+  // Arrange: s2 を観測すれば章 s1 配下、観測しなければ初期追跡の s3（章リンク自身）が選択される
+  if(observedId)s.notify(observedId);
   s.view.container.querySelector<HTMLButtonElement>('#menuBtn')!.focus();
   // Act
   Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});fireEvent(window,new Event('resize'));
-  // Assert: どちらも章見出しリンク s1 へフォーカスする
-  expect(document.activeElement).toBe(s.view.container.querySelector('a[href="#s1"]'));
+  // Assert: 選択中リンクが属する章見出しリンクへフォーカスする
+  expect(document.activeElement?.getAttribute('href')).toBe(chapter);
  }finally{
   s.restore();
   if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
