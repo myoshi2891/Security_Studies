@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-11（ISSMP移行開始監査・全体再検証中）
+> **最終更新**: 2026-11-11（CI OOM修正: テスト間の画面幅漏れをpreloadで解消）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -452,6 +452,7 @@ form-action 'self'
 | カバレッジ CI 連携 | ✅ **設定済み** | bun test --coverageでlcov生成。codecov-actionの送信はcontinue-on-errorで非致命。今回リモート送信の到達確認は未実施 |
 | `bun audit` CI 組み込み | ✅ **稼働中** | `audit` job として並列実行（`--audit-level=high`、高・重大のみ failure 扱い） |
 | E2E テスト CI | ❌ **未設定** | Playwright 未導入 |
+| テスト間の画面幅隔離 | ✅ **修正済み（2026-11-11）** | CI #490 等がランナーOOM（shutdown signal）で失敗。原因は layout.test / DocsHeaderNav.test の `setWindowSize(1440)` と secure-by-design/foundation.test の `innerWidth` 直接代入が後続ファイルへ漏れ、Linux の実行順で ISSMP/ISSEP sidebar テストが >1024px 分岐で失敗→巨大DOMの差分整形でメモリ枯渇。`test-setup.ts` の全体 `afterEach` で上書き値を null 解除し既定寸法へ戻す。Red `8960cdd`/`7d760ea` → Green `34355fe`。Linux+Bun 1.4.4+archiveなし+coverage で 1768 pass / 0 fail（ピーク16GB超→3.5GB）、ローカル全体 2970 pass / 0 fail |
 
 ---
 
