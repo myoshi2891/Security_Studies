@@ -42,8 +42,8 @@ test('every TOC jump closes the drawer, preserves the selected link and focuses 
 function observed(){
  const saved=globalThis.IntersectionObserver,observers:{callback:IntersectionObserverCallback;nodes:Element[];disconnected:boolean}[]=[];
  globalThis.IntersectionObserver=class{entry:{callback:IntersectionObserverCallback;nodes:Element[];disconnected:boolean};constructor(callback:IntersectionObserverCallback){this.entry={callback,nodes:[],disconnected:false};observers.push(this.entry);}observe(e:Element){this.entry.nodes.push(e);}disconnect(){this.entry.disconnected=true;}} as unknown as typeof IntersectionObserver;
- const link=(id:string)=>h('a',{href:'#'+id},id);
- const view=render(h('div',{className:'issmp-guide'},h(GuideSidebar,{children:h('nav',{},h('div',{className:'nav-group'},link('s1'),h('ul',{},h('li',{},link('s2')))),h('div',{className:'nav-group'},link('s3')))}),h('div',{className:'guide-content'},...['s1','s2','s3'].map(id=>h('section',{id,key:id},h('h2',{},id))))));
+ const link=(id:string,className?:string)=>h('a',{href:'#'+id,className},id);
+ const view=render(h('div',{className:'issmp-guide'},h(GuideSidebar,{children:h('nav',{},h('div',{className:'nav-group'},link('s1','nav-h1'),h('ul',{},h('li',{},link('s2')))),h('div',{className:'nav-group'},link('s3','nav-h1')))}),h('div',{className:'guide-content'},...['s1','s2','s3'].map(id=>h('section',{id,key:id},h('h2',{},id))))));
  const notify=(id:string)=>{const target=view.container.querySelector('#'+id)!;for(const observer of observers.filter(o=>!o.disconnected&&o.nodes.includes(target)))act(()=>observer.callback([{target,isIntersecting:true} as IntersectionObserverEntry],{} as IntersectionObserver));};
  const current=()=>view.container.querySelector('nav [aria-current]')?.getAttribute('href');
  return {view,notify,current,restore:()=>{view.unmount();globalThis.IntersectionObserver=saved;},observers};
@@ -57,4 +57,32 @@ test.each(['click','initial','hashchange'])('a %s fragment keeps its selected su
 });
 test('observers follow reading order, refresh on resize and disconnect on unmount',()=>{
  const s=observed();try{s.notify('s2');expect(s.current()).toBe('#s2');s.notify('s3');expect(s.current()).toBe('#s3');const old=s.observers.slice();fireEvent(window,new Event('resize'));expect(old.every(o=>o.disconnected)).toBe(true);}finally{s.restore();}expect(s.observers.every(o=>o.disconnected)).toBe(true);
+});
+test('a pinned entry survives its own jump and sub-pixel drift, then releases once the reader scrolls it away',async()=>{
+ const s=observed();try{
+  // Arrange: 固定前のスクロールは何もしない。クリックで s2 を固定し、着地後の位置を記録させる
+  let top=0;s.view.container.querySelector<HTMLElement>('#s2')!.getBoundingClientRect=()=>({top,bottom:top+40} as DOMRect);
+  fireEvent.scroll(window);expect(s.current()).toBeUndefined();
+  fireEvent.click(s.view.container.querySelector('a[href="#s2"]')!);
+  fireEvent.scroll(window);await new Promise(resolve=>setTimeout(resolve,200));
+  s.notify('s3');expect(s.current()).toBe('#s2');
+  // Act/Assert: 2px 以内の揺れでは固定を維持し、見出しが離れたら監視の選択へ戻す
+  top=1;fireEvent.scroll(window);expect(s.current()).toBe('#s2');
+  top=-400;fireEvent.scroll(window);expect(s.current()).toBe('#s3');
+ }finally{s.restore();}
+});
+test.each([true,false])('widening to desktop returns focus from the menu button to the chapter of the selection (selected: %s)',selected=>{
+ const previousWidth=Object.getOwnPropertyDescriptor(window,'innerWidth');
+ const s=observed();try{
+  // Arrange: 選択済みなら s2（章 s1 配下）、未選択なら先頭リンクが戻り先
+  if(selected)s.notify('s2');
+  s.view.container.querySelector<HTMLButtonElement>('#menuBtn')!.focus();
+  // Act
+  Object.defineProperty(window,'innerWidth',{configurable:true,value:1440});fireEvent(window,new Event('resize'));
+  // Assert: どちらも章見出しリンク s1 へフォーカスする
+  expect(document.activeElement).toBe(s.view.container.querySelector('a[href="#s1"]'));
+ }finally{
+  s.restore();
+  if(previousWidth)Object.defineProperty(window,'innerWidth',previousWidth);else Reflect.deleteProperty(window,'innerWidth');
+ }
 });
