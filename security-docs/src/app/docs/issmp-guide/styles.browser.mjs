@@ -11,7 +11,9 @@ if(!fs.existsSync(sourceFile)){console.log('SKIP: Original HTML is absent; brows
 const resultsPath=process.env.ISSMP_STYLES_RESULTS_PATH??join(tmpdir(),`issmp-browser-results-${randomUUID()}.json`);
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright');
 let source=fs.readFileSync(sourceFile,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<link\b[^>]*>/g,'');
-const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(process.env.ISSMP_RENDERED_HTML??'/private/tmp/issmp-rendered.html','utf8');
+const renderedHtmlPath=process.env.ISSMP_RENDERED_HTML;
+if(!process.env.DOCS_BASE_URL&&!renderedHtmlPath)throw new Error('ISSMP_RENDERED_HTML must point to the rendered page HTML when DOCS_BASE_URL is unset.');
+const html=process.env.DOCS_BASE_URL?'':fs.readFileSync(renderedHtmlPath,'utf8');
 const css=['../../globals.css','../docs-layout.css','./guide.css'].map(p=>fs.readFileSync(resolve(dir,p),'utf8')).join('\n').replace(/@import[^;]+;/g,'');
 const props=['fontFamily','fontSize','fontWeight','letterSpacing','lineHeight','color','backgroundColor','marginTop','marginBottom','paddingTop','paddingBottom','paddingLeft','paddingRight','borderTopWidth','borderBottomWidth','borderLeftWidth','listStyleType','display','textTransform','fontStyle','counterReset','counterIncrement'];
 const selectors=['h1,h2,h3,h4,h5,h6','th,td','.guide-content p','.guide-content ul,.guide-content ol,.guide-content li','em,strong','.hero,.eyebrow','.brand,.brand-name,.brand-sub','.sidebar nav a,.nav-h1','.callout,.callout-title,.callout-body','.qcard,.qtext,.qnum,.opts,.opts li','.chip'];
