@@ -23,7 +23,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
  const restoreBackground=useCallback(()=>{if(background.current){background.current.element.inert=background.current.inert;background.current=null;}},[]);
  // A clicked entry stays selected through the jump; the reader's own scroll input, or any later scroll that moves the entry away, hands selection back to the observers.
  const pinned=useRef(false);
- useEffect(()=>{openRef.current=open;const guide=panel.current?.closest('.issmp-guide');guide?.classList.toggle('nav-open',open);return ()=>{guide?.classList.remove('nav-open');};},[open]);
+ useEffect(()=>{openRef.current=open;},[open]);
  const close=useCallback(()=>{setOpen(false);restoreBackground();toggle.current?.focus();},[restoreBackground]);
  const select=useCallback((id:string)=>{
   const aside=panel.current;
