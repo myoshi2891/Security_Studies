@@ -656,8 +656,8 @@ flowchart TD
 
 | ツール | 設定例 | 出典 |
 |---|---|---|
-| Bun | `bunfig.toml` に `minimumReleaseAge = 259200`（3日。秒単位） | GitHub 上の実プロジェクトの記述 |
-| Renovate | `{ "matchManagers": ["github-actions"], "minimumReleaseAge": "7 days" }` | DEV Community の記事 |
+| Bun | `bunfig.toml` の `[install]` セクションに `minimumReleaseAge = 259200`（3日。秒単位） | GitHub 上の実プロジェクトの記述 |
+| Renovate | `packageRules` 配列の要素として `{ "matchManagers": ["github-actions"], "minimumReleaseAge": "7 days" }`（トップレベルの設定ではない） | DEV Community の記事 |
 | npm CLI | 2026 年 2 月の 11.10.0 で `min-release-age` を導入と紹介（**設定名・単位は公式ドキュメントで要確認**） | DEV Community の年表 |
 | Dependabot | `cooldown` 設定（**書式は公式ドキュメントで要確認**） | 各種解説 |
 
@@ -765,7 +765,7 @@ jobs:
 #### Step 10: 継続的な脆弱性監視
 
 - 依存の既知脆弱性は **SCA**（OSV 等）で毎日検知。
-- 優先順位は、**悪用の有無（KEV/EPSS）・到達可能性・VEX** で決める。
+- 優先順位は、**悪用の確認**（KEV 掲載や脅威インテリジェンスで実際の悪用を確認）、**EPSS**（今後 30 日間に悪用される確率の推定）、**到達可能性**、**VEX** を別々の指標として組み合わせて決める。
 
 #### Step 11: 規制への備え（EU CRA）
 
