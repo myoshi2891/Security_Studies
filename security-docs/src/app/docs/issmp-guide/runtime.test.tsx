@@ -252,6 +252,9 @@ test('the default renderer passes this guide configuration per render without re
     expect(await renderDiagram('exploitation-d1', 'flowchart TD\nA-->B')).toEqual({ svg: '<svg></svg>', diagramType: 'flowchart-v2' });
     expect(init).not.toHaveBeenCalled();
     expect(draw).toHaveBeenCalledWith('exploitation-d1', `---\nconfig: ${JSON.stringify(diagramConfig)}\n---\nflowchart TD\nA-->B`);
+    // frontmatter では上書きできない secure キーを図ごとの設定に含めない
+    expect(diagramConfig).not.toHaveProperty('securityLevel');
+    expect(diagramConfig).not.toHaveProperty('startOnLoad');
   } finally {
     draw.mockRestore();
     init.mockRestore();

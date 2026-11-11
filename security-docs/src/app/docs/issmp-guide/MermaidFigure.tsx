@@ -31,9 +31,8 @@ const getEngine = createEngineLoader(() =>
   }),
 );
 
+// securityLevel は図ごとの frontmatter では上書きできない secure キーのため、エンジン既定の strict を使う
 export const diagramConfig = {
-                    startOnLoad: false,
-                    securityLevel: 'loose',
                     theme: 'base',
                     fontFamily:
                         '"Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif',
