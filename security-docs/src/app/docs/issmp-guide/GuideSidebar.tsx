@@ -124,7 +124,7 @@ export function GuideSidebar({children}:{children:ReactNode}){
   if(content){background.current={element:content,inert:content.inert??false};content.inert=true;}
   const visible=()=>[...(panel.current?.querySelectorAll<HTMLAnchorElement>('nav a')??[])];
   visible()[0]?.focus();
-  const key=(event:KeyboardEvent)=>{if(event.key==='Escape')close();if(event.key!=='Tab')return;const links=visible(),first=links[0],last=links.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}};
+  const key=(event:KeyboardEvent)=>{if(event.key==='Escape')close();if(event.key!=='Tab')return;const controls=[...visible(),...(toggle.current?[toggle.current]:[])],first=controls[0],last=controls.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}};
   const header=(event:PointerEvent)=>{if(!(event.target instanceof Element)||!event.target.closest('.docs-header'))return;if(panel.current?.contains(document.activeElement))toggle.current?.focus();setOpen(false);};
   document.addEventListener('keydown',key);document.addEventListener('pointerdown',header);
   return ()=>{document.body.style.overflow=previous;restoreBackground();document.removeEventListener('keydown',key);document.removeEventListener('pointerdown',header);};
