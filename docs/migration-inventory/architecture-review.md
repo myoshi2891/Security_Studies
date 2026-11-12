@@ -22,3 +22,5 @@
 原本は `archive/security-guides/Security-architecture-implementation-guide.html` と `.md` にバイト不変で保存（Git管理外）。両SHA-256は [architecture.json](architecture.json) に記録。構造ハッシュ、CSS宣言・メディア条件、図定義も同台帳で固定しています。本文の情報基準日「2026年11月6日」は原本どおりです。
 
 TDD: 基盤79fbef6→e1bf405、前半1e21cb5→549535b、後半79bf459→da1a924、装飾/操作96da306→e4695bc、Chrome30d5689→7cef8bb、アーカイブdc7115a→46e9b3d、動きを減らす設定860320d→8191313。テスト・実装・仕様書は別コミット。npm使用、Next.jsビルド禁止・未実行。push・公開未実施。
+
+最終のnpm test: 全体3098成功/0skip/0失敗（359ファイル、584,719 expect）。npm run lint・npm run types:check成功。全体・専用とも失敗0件です。

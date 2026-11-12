@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-12（Architecture移行・専用125件成功・原本アーカイブ。全体再検証中）
+> **最終更新**: 2026-11-12（Architecture移行完了・全体3098件成功・原本アーカイブ）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,7 +12,7 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **全体再検証中** | 開始時2971成功/2失敗（350ファイル、580006 expect）。索引再生成後、Architecture専用125件成功。 |
+| テストケース総数 | **3098成功 / 0 skip / 0失敗** | 2026-11-12の全体359ファイル・584,719 expect。Architecture専用125件/9ファイルを含む。 |
 | テストファイル数 | **359ファイル** | 原本比較・ページ移行・配色回帰を含む |
 | File Unit Coverage | **141/141 (100%)** | 従来134＋ISSMP3＋Architecture4。データ・MDXは分母外。全359テストファイルとは別集計。 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
@@ -434,13 +434,13 @@ form-action 'self'
 | `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `GEMINI.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `README.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `security-docs/CLAUDE.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `security-docs/README.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `docs/test-coverage-dashboard.html` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
-| `docs/progress.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `CLAUDE.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `GEMINI.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `README.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `security-docs/CLAUDE.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `security-docs/README.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `docs/test-coverage-dashboard.html` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `docs/progress.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -1605,10 +1605,13 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 2026-11-12 Architecture: 追加の固定CSS台帳テスト11件と装飾/図ライフサイクル18件成功。原本なしでも全CSS宣言/メディア条件を検証可能。Chromeのホバー検証は代表セルで実施（全セルホバー検証ではない）。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 
-2026-11-12 Architecture移行: `/docs/architecture` を原本HTMLへ置換済み。全39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を保持。専用125件/9ファイル成功、原本なし隔離環境68成功/57skip/0失敗。Chrome5幅×明暗10条件で各1545要素の計算済みスタイルと丸点/番号が一致。375/1440px×明暗で11図の実描画/横スクロール・コピー・チェック・モバイル目次を検証しpageErrors0。代表セルのホバーも照合。npm経由のlint・型チェック成功。HTML/Markdownはarchive/security-guides/へ両SHA-256一致で移動済み（Git管理外）。固定構造/CSS台帳: docs/migration-inventory/architecture.json。目視確認表: docs/migration-inventory/architecture-review.md。検索索引44ページ・全79見出しを同期。ロジック単位141/141（従来134＋ISSMP3＋Architecture4。データとMDXは除外）。全体テストは確定状態で再実行中。開始時実測は2971成功/2失敗（350ファイル）で、静的索引と動的索引の比較2件が失敗した。索引再生成後の該当検証は専用テストで成功。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。push・公開未実施。
+2026-11-12 Architecture移行: `/docs/architecture` を原本HTMLへ置換済み。全39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を保持。専用125件/9ファイル成功、原本なし隔離環境68成功/57skip/0失敗。Chrome5幅×明暗10条件で各1545要素の計算済みスタイルと丸点/番号が一致。375/1440px×明暗で11図の実描画/横スクロール・コピー・チェック・モバイル目次を検証しpageErrors0。代表セルのホバーも照合。npm経由のlint・型チェック成功。HTML/Markdownはarchive/security-guides/へ両SHA-256一致で移動済み（Git管理外）。固定構造/CSS台帳: docs/migration-inventory/architecture.json。目視確認表: docs/migration-inventory/architecture-review.md。検索索引44ページ・全79見出しを同期。ロジック単位141/141（従来134＋ISSMP3＋Architecture4。データとMDXは除外）。確定状態のnpm testは全体3098成功/0skip/0失敗（359ファイル、584,719 expect）。開始時実測は2971成功/2失敗（350ファイル）で、静的索引と動的索引の比較2件が失敗した。索引再生成後の該当検証は専用テストで成功。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。push・公開未実施。
 
 
 2026-11-12 Architecture: 原本なし68成功/57skip/0失敗。Chromeでprefers-reduced-motionを追加検証したところsmoothが残る不具合を検出（Red）。全体テストは実行中。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
 
 
 2026-11-12 Architecture: 動きを減らす設定860320d→8191313をChrome全10条件で成功確認。検索関連3ファイル25件成功。全体テストは失敗なく進行中。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+
+2026-11-12 Architecture最終検証: 全体3098成功/0skip/0失敗（359ファイル、584,719 expect）。専用125件/9ファイル成功、原本なし68成功/57skip/0失敗。Chrome10条件（各1545要素）・図/操作・reduced-motion成功、pageErrors0。npm run lint・npm run types:check成功。全体検索比較も成功。ビルド禁止/未実行・目視はユーザー担当/未確認。台帳・確認表・全仕様書・ダッシュボードを同期。

@@ -233,7 +233,7 @@
     "ti ti-check",
     "ti ti-external-link"
   ],
-  "status": "Implemented and originals archived byte-exact; dedicated 125 pass; full suite in progress; no build; visual review pending",
+  "status": "Implemented and originals archived byte-exact; dedicated 125 pass; full suite 3098 pass / 0 skip / 0 fail; no build; user visual review pending",
   "cssRules": [
     {
       "selector": ":root",
@@ -1553,6 +1553,14 @@
       "pass": 25,
       "fail": 0,
       "files": 3
+    },
+    "fullSuite": {
+      "pass": 3098,
+      "skip": 0,
+      "fail": 0,
+      "cases": 3098,
+      "files": 359,
+      "assertions": 584719
     }
   }
 }
