@@ -467,3 +467,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 SCS画面置換完了: `/docs/scs-evaluation-threat-analysis-guide` をHTML原本の本文・構成・デザインへ置換。全85節・86見出し・44表865セル・14図・178リスト項目・17チェック・2解答欄・2コード・195リンクを保持。専用220件/10ファイル成功、原本なし隔離環境117成功/103skip/0失敗。Chrome5幅×明暗10条件で各1456要素・丸点/丸囲み番号/チェックカウンターと全865セルホバーが原本一致。375/1440px×明暗で14図の実描画/自然幅/中央寄せ/左右到達、チェック/解答/目次/検索/reduced-motionを検証しpageErrors0。原本なしCI相当からのChrome10条件も成功。原本HTML/Markdownはarchive/security-guides/へ両SHA-256一致で保存済み（Git管理外）。ローカルのSource Serif 4フォント・GitHub構文配色・SVGアイコンへ移行。検索44ページ・SCS86見出しを同期。ロジック145/145（従来141＋GuideRuntime/GuideCode/GuideIcon/MermaidFigureの4）。npm run lint・npm run types:check成功。全体テストは確定状態で実行中。台帳: docs/migration-inventory/scs-evaluation-threat-analysis-guide.json。確認表: docs/migration-inventory/scs-evaluation-threat-analysis-guide-review.md。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認、push・公開未実施。
+
+
+2026-11-12 SCS全体回帰Red: 構文配色の全言語importが共有レジストリを変更し、既存Kubernetes GuideCode検証へ干渉。独立プロセスの再現テスト1件が失敗（共有登録0→192言語）。全体実行は停止し、SCS専用highlighterへ分離後に再実行する。専用は221定義/11ファイル（従来220成功＋新規1失敗）。npm使用・ビルド禁止/未実行・目視はユーザー担当。

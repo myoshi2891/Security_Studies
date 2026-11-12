@@ -13,8 +13,8 @@
 | 指標 | 状態 | 詳細 |
 |---|---|---|
 | テストケース総数 | **前回3098成功 / 0 skip / 0失敗** | Architecture完了時の359ファイル・584719 expect。SCS専用220件成功、確定状態の全体を再検証中。 |
-| テストファイル数 | **368ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **145/145 (100%)** | 従来141＋SCSの4ロジック。MDX・データは分母外。全368テストファイルとは別集計。 |
+| テストファイル数 | **369ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **145/145 (100%)** | 従来141＋SCSの4ロジック。MDX・データは分母外。全369テストファイルとは別集計。 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,7 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/scs-evaluation-threat-analysis-guide/GuideCode.test.tsx` | 1 | Red: 共有レジストリの非干渉 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/foundation.test.tsx` | 11 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/front.test.tsx` | 56 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/middle.test.tsx` | 58 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
@@ -1656,3 +1657,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 SCS画面置換完了: `/docs/scs-evaluation-threat-analysis-guide` をHTML原本の本文・構成・デザインへ置換。全85節・86見出し・44表865セル・14図・178リスト項目・17チェック・2解答欄・2コード・195リンクを保持。専用220件/10ファイル成功、原本なし隔離環境117成功/103skip/0失敗。Chrome5幅×明暗10条件で各1456要素・丸点/丸囲み番号/チェックカウンターと全865セルホバーが原本一致。375/1440px×明暗で14図の実描画/自然幅/中央寄せ/左右到達、チェック/解答/目次/検索/reduced-motionを検証しpageErrors0。原本なしCI相当からのChrome10条件も成功。原本HTML/Markdownはarchive/security-guides/へ両SHA-256一致で保存済み（Git管理外）。ローカルのSource Serif 4フォント・GitHub構文配色・SVGアイコンへ移行。検索44ページ・SCS86見出しを同期。ロジック145/145（従来141＋GuideRuntime/GuideCode/GuideIcon/MermaidFigureの4）。npm run lint・npm run types:check成功。全体テストは確定状態で実行中。台帳: docs/migration-inventory/scs-evaluation-threat-analysis-guide.json。確認表: docs/migration-inventory/scs-evaluation-threat-analysis-guide-review.md。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認、push・公開未実施。
+
+
+2026-11-12 SCS全体回帰Red: 構文配色の全言語importが共有レジストリを変更し、既存Kubernetes GuideCode検証へ干渉。独立プロセスの再現テスト1件が失敗（共有登録0→192言語）。全体実行は停止し、SCS専用highlighterへ分離後に再実行する。専用は221定義/11ファイル（従来220成功＋新規1失敗）。npm使用・ビルド禁止/未実行・目視はユーザー担当。
