@@ -125,3 +125,18 @@ test('original GitHub syntax colors and a bundled serif font remain available lo
  const found:string[]=[];tree.walkRules(r=>{if(r.selector.split(',').map(s=>s.trim()).includes(scope+' .hljs-comment'))r.walkDecls('color',d=>{found.push(d.value);});});expect(found).toContain('#6a737d');
  const faces:string[]=[];tree.walkAtRules('font-face',r=>r.walkDecls('font-family',d=>{faces.push(d.value);}));expect(faces).toContain("'Source Serif 4'");
 });
+
+test('closed mobile TOC is hidden from focus while open and desktop sidebars stay visible',async()=>{
+ const w=new Window();
+ try{
+  w.document.head.innerHTML='<style>'+css()+'</style>';
+  w.document.body.innerHTML='<div class="scs-guide scs-guide"><aside class="sidebar"><a href="#s1">link</a></aside></div>';
+  const sidebar=w.document.querySelector<HTMLElement>('.sidebar')!;
+  for(const width of [375,1024]){
+   w.happyDOM.setWindowSize({width,height:900});
+   expect(w.getComputedStyle(sidebar).visibility).toBe('hidden');
+   sidebar.classList.add('open');expect(w.getComputedStyle(sidebar).visibility||'visible').toBe('visible');sidebar.classList.remove('open');
+  }
+  w.happyDOM.setWindowSize({width:1025,height:900});expect(w.getComputedStyle(sidebar).visibility||'visible').toBe('visible');
+ }finally{await w.happyDOM.close();}
+});

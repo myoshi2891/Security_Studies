@@ -1,5 +1,5 @@
 import {afterEach,beforeEach,expect,test} from 'bun:test';
-import {cleanup,fireEvent,render,waitFor} from '@testing-library/react';
+import {act,cleanup,fireEvent,render,waitFor} from '@testing-library/react';
 import {createElement} from 'react';
 import {MermaidFigure,sizeSvg} from './MermaidFigure';
 import {GuideCode} from './GuideCode';
@@ -18,7 +18,10 @@ test('diagram failure shows byte-exact source and allows a successful retry',asy
  const renderer=async()=>{if(++calls===1)throw new Error('first failure');return{svg};};
  const {container,getByRole}=render(createElement(MermaidFigure,{id:'test',label:'図テスト',source,renderer}));
  await waitFor(()=>expect(getByRole('alert')).toBeDefined());expect(container.querySelector('pre')?.textContent).toBe(source);
- fireEvent.click(getByRole('button',{name:'図の描画を再試行'}));await waitFor(()=>expect(container.querySelector('svg')).not.toBeNull());expect(calls).toBe(2);
+ expect(getByRole('alert').closest('[role="img"]')===null).toBe(true);
+ expect(container.querySelector('pre')?.closest('[role="img"]')===null).toBe(true);
+ expect(getByRole('button',{name:'図の描画を再試行'}).closest('[role="img"]')===null).toBe(true);
+ fireEvent.click(getByRole('button',{name:'図の描画を再試行'}));await waitFor(()=>expect(container.querySelector('svg')).not.toBeNull());expect(calls).toBe(2);expect(getByRole('img',{name:'図テスト'}).querySelector('svg')).not.toBeNull();
 });
 test('malformed renderer output follows the same visible failure path',async()=>{
  const {getByRole}=render(createElement(MermaidFigure,{id:'invalid',label:'図テスト',source:'flowchart TD\nA-->B',renderer:async()=>({svg:'invalid'})}));await waitFor(()=>expect(getByRole('alert')).toBeDefined());
@@ -27,8 +30,8 @@ test('a stale asynchronous diagram result cannot overwrite a changed source',asy
  let finish!:(value:{svg:string})=>void;const renderer=()=>new Promise<{svg:string}>(resolve=>{finish=resolve;});
  const view=render(createElement(MermaidFigure,{id:'stale',label:'図テスト',source:'old',renderer}));
  await waitFor(()=>expect(finish).toBeDefined());const first=finish;
- view.rerender(createElement(MermaidFigure,{id:'stale',label:'図テスト',source:'new',renderer}));first({svg});
- expect(view.container.querySelector('svg')).toBeNull();view.unmount();finish({svg});
+ view.rerender(createElement(MermaidFigure,{id:'stale',label:'図テスト',source:'new',renderer}));await act(async()=>{first({svg});});
+ expect(view.container.querySelector('svg')).toBeNull();view.unmount();await act(async()=>{finish({svg});});
 });
 test('unsupported code languages retain literal text without unsafe markup',()=>{
  const source='<script>alert("x")</script>\n  & unchanged';const {container}=render(createElement(GuideCode,{source,className:'language-unsupported'}));expect(container.querySelector('code')?.textContent).toBe(source);expect(container.querySelector('script')).toBeNull();

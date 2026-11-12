@@ -31,3 +31,12 @@ test('initial fragment, hash navigation and clicked subsection select the exact 
  expect(selected()).toBe('#step-8');history.replaceState(null,'','#step-10');fireEvent(window,new Event('hashchange'));expect(selected()).toBe('#step-10');
  const link=container.querySelector<HTMLAnchorElement>('#nav a[href="#step-4"]')!;fireEvent.click(link);expect(selected()).toBe('#step-4');expect(link.closest('.nav-ch')?.classList.contains('parent-active')).toBe(true);
 });
+
+test('drawer Tab boundaries follow DOM order from the toggle through the last link',async()=>{
+ const {container}=await mount();const toggle=container.querySelector<HTMLButtonElement>('#navToggle')!;
+ const links=[...container.querySelectorAll<HTMLAnchorElement>('#nav a[href^="#"]')];
+ fireEvent.click(toggle);
+ toggle.focus();expect(fireEvent.keyDown(document,{key:'Tab',shiftKey:true})).toBe(false);expect(document.activeElement===links.at(-1)).toBe(true);
+ links.at(-1)!.focus();expect(fireEvent.keyDown(document,{key:'Tab'})).toBe(false);expect(document.activeElement===toggle).toBe(true);
+ links[0].focus();expect(fireEvent.keyDown(document,{key:'Tab',shiftKey:true})).toBe(true);expect(document.activeElement===links[0]).toBe(true);
+});
