@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-12（Architecture移行完了・全体3098件成功・原本アーカイブ）
+> **最終更新**: 2026-11-12（SCS画面置換・専用220件成功・原本アーカイブ。全体再検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **3098成功 / 0 skip / 0失敗** | 2026-11-12の全体359ファイル・584,719 expect。Architecture専用125件/9ファイルを含む。 |
+| テストケース総数 | **前回3098成功 / 0 skip / 0失敗** | Architecture完了時の359ファイル・584719 expect。SCS専用220件成功、確定状態の全体を再検証中。 |
 | テストファイル数 | **368ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **141/141 (100%)** | 従来134＋ISSMP3＋Architecture4。データ・MDXは分母外。全359テストファイルとは別集計。 |
+| File Unit Coverage | **145/145 (100%)** | 従来141＋SCSの4ロジック。MDX・データは分母外。全368テストファイルとは別集計。 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,6 +23,16 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/scs-evaluation-threat-analysis-guide/foundation.test.tsx` | 11 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/front.test.tsx` | 56 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/middle.test.tsx` | 58 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/rear.test.tsx` | 56 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/page.test.tsx` | 4 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/styles.test.tsx` | 12 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/hydration.test.tsx` | 4 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/interactions.test.tsx` | 6 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/runtime.test.tsx` | 8 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/archive.test.ts` | 5 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/foundation.test.tsx` | 11 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/front.test.tsx` | 40 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/rear.test.tsx` | 38 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
@@ -434,13 +444,13 @@ form-action 'self'
 | `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `GEMINI.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `README.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `security-docs/CLAUDE.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `security-docs/README.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `docs/test-coverage-dashboard.html` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
-| `docs/progress.md` | 2026-11-12 | Architecture移行・原本移動・全体3098件成功 |
+| `CLAUDE.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `GEMINI.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `README.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `security-docs/CLAUDE.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `security-docs/README.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `docs/test-coverage-dashboard.html` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
+| `docs/progress.md` | 2026-11-12 | SCS画面置換・専用220件・原本移動・全体再検証中 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -472,6 +482,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| MIG-SCS-HTML | `/docs/scs-evaluation-threat-analysis-guide` HTML置換・専用220件・Chrome10条件・原本アーカイブ。目視はユーザー担当。 | 2026-11-12 |
 | MIG-ARCHITECTURE | `/docs/architecture` 置換・専用125件/Chrome10条件・原本アーカイブ。目視はユーザー担当。 | 2026-11-12 |
 | REVIEW-1107-A11Y | **ISSEP目次・回答UIと2ガイドのレビュー修正** — ページ内検索で目次の固定を解除（Green Red `14e5f87` → Green `b3c4f36`）。クイズに `role="group"` と常設の状態領域を追加（Red `0e06dff` → Green `05ad07a`）。SCSガイド6件・Security Architectureガイド6件を一次情報に合わせて修正。全体2754件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
 | REVIEW-1107-SCS | **ISSEP目次の選択維持とSCSガイドのレビュー修正** — クリックした小節を読者の次のスクロールまで維持（Red `9f957d2` → Green `c676049`）。Docstring 7件を追加。SCSガイド7件を一次情報に合わせて修正（`f1fc85c`）。全体2746件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
@@ -1642,3 +1653,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 SCS画面置換: Chrome375px/lightで本文/丸点/丸数字は一致。全865セルのホバー比較が、奇数行の透明背景が白へ変わる差分を検出（Red）。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+
+2026-11-12 SCS画面置換完了: `/docs/scs-evaluation-threat-analysis-guide` をHTML原本の本文・構成・デザインへ置換。全85節・86見出し・44表865セル・14図・178リスト項目・17チェック・2解答欄・2コード・195リンクを保持。専用220件/10ファイル成功、原本なし隔離環境117成功/103skip/0失敗。Chrome5幅×明暗10条件で各1454要素・丸点/丸囲み番号/チェックカウンターと全865セルホバーが原本一致。375/1440px×明暗で14図の実描画/自然幅/中央寄せ/左右到達、チェック/解答/目次/検索/reduced-motionを検証しpageErrors0。原本なしCI相当からのChrome10条件も成功。原本HTML/Markdownはarchive/security-guides/へ両SHA-256一致で保存済み（Git管理外）。ローカルのSource Serif 4フォント・GitHub構文配色・SVGアイコンへ移行。検索44ページ・SCS86見出しを同期。ロジック145/145（従来141＋GuideRuntime/GuideCode/GuideIcon/MermaidFigureの4）。npm run lint・npm run types:check成功。全体テストは確定状態で実行中。台帳: docs/migration-inventory/scs-evaluation-threat-analysis-guide.json。確認表: docs/migration-inventory/scs-evaluation-threat-analysis-guide-review.md。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認、push・公開未実施。
