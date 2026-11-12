@@ -410,3 +410,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 Architecture移行: `/docs/architecture` を原本HTMLへ置換済み。全39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を保持。専用125件/9ファイル成功、原本なし隔離環境68成功/57skip/0失敗。Chrome5幅×明暗10条件で各1545要素の計算済みスタイルと丸点/番号が一致。375/1440px×明暗で11図の実描画/横スクロール・コピー・チェック・モバイル目次を検証しpageErrors0。代表セルのホバーも照合。npm経由のlint・型チェック成功。HTML/Markdownはarchive/security-guides/へ両SHA-256一致で移動済み（Git管理外）。固定構造/CSS台帳: docs/migration-inventory/architecture.json。目視確認表: docs/migration-inventory/architecture-review.md。検索索引44ページ・全79見出しを同期。ロジック単位141/141（従来134＋ISSMP3＋Architecture4。データとMDXは除外）。動きを減らす設定もChrome10条件で成功（Red 860320d → Green 8191313）。開始時に失敗した検索関連3ファイル25件の再実行は成功。確定状態のnpm testは全体3098成功/0skip/0失敗（359ファイル、584,719 expect）。開始時実測は2971成功/2失敗（350ファイル）で、静的索引と動的索引の比較2件が失敗した。索引再生成後の該当検証は専用テストで成功。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。push・公開未実施。
+
+
+2026-11-12 SCS画面置換開始監査: /docs/scs-evaluation-threat-analysis-guide は既存URLのままHTML原本へ置換予定。85節・86見出し・44表865セル・14図・178リスト項目・17チェック・2解答欄。既存テスト2件成功、基盤11件失敗（Red）。直前全体実測3098成功/359ファイル、基盤テスト追加後360ファイル。固定台帳: docs/migration-inventory/scs-evaluation-threat-analysis-guide.json。npm使用、ビルド禁止・未実行、目視はユーザー担当。
