@@ -27,3 +27,10 @@ test('both original answer disclosures toggle independently and keep the full an
  const {container}=await mount(),answers=[...container.querySelectorAll<HTMLDetailsElement>('details.qa')];expect(answers).toHaveLength(2);
  for(const answer of answers){const original=answer.textContent;expect(answer.open).toBe(false);fireEvent.click(answer.querySelector('summary')!);expect(answer.open).toBe(true);expect(answer.textContent).toBe(original);fireEvent.click(answer.querySelector('summary')!);expect(answer.open).toBe(false);}
 });
+
+test('a requested link outside the visible TOC scrolls its actual sidebar container',async()=>{
+ const {container}=await mount(),link=container.querySelector<HTMLElement>('#nav a[href="#s84"]')!,sidebar=container.querySelector<HTMLElement>('#sidebar')!;
+ Object.defineProperty(sidebar,'clientHeight',{value:500,configurable:true});
+ sidebar.getBoundingClientRect=()=>({top:64,bottom:564,height:500}) as DOMRect;link.getBoundingClientRect=()=>({top:1300,bottom:1330,height:30}) as DOMRect;
+ fireEvent.click(link);expect(sidebar.scrollTop).toBeGreaterThan(0);
+});

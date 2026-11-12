@@ -48,7 +48,7 @@ export async function compareCascade(width: number, theme: string, selectors: st
       (_, min, vw, max) => Math.max(Number(min)*16, Math.min(Number(vw)*width/100, Number(max)*16))+'px');
     original.document.head.innerHTML =
       '<style>pre{font-family:monospace}h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}' +
-      resolveClamp(sourceStyle()) +
+      readFileSync(new URL('../../../../node_modules/highlight.js/styles/github.css',import.meta.url),'utf8') + resolveClamp(sourceStyle()) +
       '</style>';
     original.document.body.innerHTML = sourceDocument.body.innerHTML;
     for(const code of original.document.querySelectorAll('pre code')) code.classList.add('hljs');
@@ -118,4 +118,10 @@ test('custom round dots, ordered counters, checklist counters and hidden TOC dot
  expect(val(scope+' .sidebar nav li::before','content')).toContain('none');expect(val(scope+' ul.checklist > li::before','content')).toContain('none');
  tree.walkRules(r=>{for(const s of r.selector.split(','))expect(s.trim()).toMatch(/^(?:\.scs-guide\.scs-guide|\.docs-main:has\(\.scs-guide\)|html:has\(\.scs-guide\))/);});
  expect(val(scope+' .diagram','display').at(-1)).toBe('block');expect(val(scope+' .diagram svg','max-width').at(-1)).toBe('none');
+});
+
+test('original GitHub syntax colors and a bundled serif font remain available locally',()=>{
+ const tree=postcss.parse(readFileSync(new URL('./scs-guide.css',import.meta.url),'utf8'));
+ const found:string[]=[];tree.walkRules(scope+' .hljs-comment',r=>r.walkDecls('color',d=>{found.push(d.value);}));expect(found).toContain('#6a737d');
+ const faces:string[]=[];tree.walkAtRules('font-face',r=>r.walkDecls('font-family',d=>{faces.push(d.value);}));expect(faces).toContain("'Source Serif 4'");
 });
