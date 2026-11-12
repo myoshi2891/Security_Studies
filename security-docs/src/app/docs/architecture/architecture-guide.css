@@ -786,3 +786,5 @@ html:has(.architecture-guide) { scroll-behavior:smooth; }
 .architecture-guide.architecture-guide .eyebrow { display:block; font-family:var(--font-sans); font-size:1rem; letter-spacing:.08rem; }
 .architecture-guide.architecture-guide pre { color:var(--text-primary); }
 .architecture-guide.architecture-guide pre code { color:#e2e8f5; }
+.architecture-guide.architecture-guide .brand-mark { box-shadow:none; }
+.architecture-guide.architecture-guide pre { font-family:monospace; }

@@ -26,7 +26,7 @@ export function MermaidFigure({id,source,label,renderer=renderDiagram}:{id:strin
  const [result,setResult]=useState<{source:string;svg?:string;failed?:boolean}>();
  useEffect(()=>{
   if(near)return;
-  if(typeof IntersectionObserver==='undefined'){setNear(true);return;}
+  if(typeof IntersectionObserver==='undefined'){let active=true;queueMicrotask(()=>{if(active)setNear(true);});return()=>{active=false;};}
   const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){setNear(true);observer.disconnect();}},{rootMargin:'600px 0px'});
   if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();
  },[near]);
