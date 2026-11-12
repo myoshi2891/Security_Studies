@@ -1542,11 +1542,17 @@
         "dark"
       ],
       "comparedElementsPerCondition": 1545,
-      "pageErrors": 0
+      "pageErrors": 0,
+      "reducedMotion": "auto for reduce; smooth for no-preference; all 10 conditions passed"
     },
     "lint": "passed",
     "types": "passed",
     "build": "prohibited; not run",
-    "visualReview": "user-owned; pending"
+    "visualReview": "user-owned; pending",
+    "searchRegression": {
+      "pass": 25,
+      "fail": 0,
+      "files": 3
+    }
   }
 }
