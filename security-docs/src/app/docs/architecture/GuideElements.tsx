@@ -1,0 +1,2 @@
+/** Keep intrinsic HTML semantics and bypass shared MDX substitutions. */
+export const E = {"button":"button","div":"div","aside":"aside","span":"span","nav":"nav","ul":"ul","li":"li","a":"a","header":"header","p":"p","h1":"h1","table":"table","thead":"thead","tr":"tr","th":"th","tbody":"tbody","td":"td","section":"section","h2":"h2","h3":"h3","figure":"figure","strong":"strong","ol":"ol","pre":"pre","h4":"h4","code":"code","label":"label","input":"input","footer":"footer"} as const;

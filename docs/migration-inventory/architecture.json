@@ -1,0 +1,1566 @@
+{
+  "route": "/docs/architecture",
+  "title": "最新セキュリティ アーキテクチャ実装への包括的アプローチ",
+  "description": "ガバナンスから脅威モデリング、認証・認可、Zero Trust、暗号、開発、AI、検知・復旧まで11ステップで学ぶセキュリティアーキテクチャ実装ガイド。",
+  "originals": {
+    "html": "6c96fe5ee7c776d251dfa8ae7e19f8cb63695366591c23050d6b947ee874ea09",
+    "md": "e21d628df5af4a0a534bf41da4b784a18172e1b4e7a9201133eeda4fc1618279"
+  },
+  "counts": {
+    "section": 39,
+    "h1,h2,h3,h4,h5,h6": 79,
+    "table": 35,
+    "th,td": 670,
+    "ul": 37,
+    "ol": 5,
+    "li": 184,
+    "figure.diagram": 11,
+    ".mermaid-target": 11,
+    "pre code": 10,
+    ".copy-btn": 10,
+    ".ck-item": 18,
+    "a[href]": 80,
+    "i.ti": 108,
+    ".ref-card": 41,
+    ".callout": 22
+  },
+  "ids": [
+    "navToggle",
+    "backdrop",
+    "sidebar",
+    "nav",
+    "top",
+    "ch-0",
+    "s-0-1",
+    "s-0-2",
+    "s-0-3",
+    "ch-1",
+    "s-1-1",
+    "s-1-2",
+    "s-1-3",
+    "mm0",
+    "ch-2",
+    "s-2-1",
+    "s-2-2",
+    "s-2-3",
+    "ch-3",
+    "step-1",
+    "mm1",
+    "step-2",
+    "mm2",
+    "step-3",
+    "mm3",
+    "ch-4",
+    "step-4",
+    "mm4",
+    "step-5",
+    "step-6",
+    "mm5",
+    "ch-5",
+    "step-7",
+    "mm6",
+    "step-8",
+    "mm7",
+    "step-9",
+    "mm8",
+    "ch-6",
+    "step-10",
+    "mm9",
+    "step-11",
+    "ch-7",
+    "s-7-1",
+    "checklist",
+    "ckDone",
+    "ckBar",
+    "s-7-2",
+    "mm10",
+    "ch-8",
+    "s-8-1",
+    "s-8-2",
+    "s-8-3",
+    "ch-9",
+    "s-9-1",
+    "s-9-2",
+    "s-9-3",
+    "s-9-4"
+  ],
+  "headings": [
+    "最新セキュリティ アーキテクチャ実装への包括的アプローチ",
+    "0. このガイドの読み方",
+    "0.1 なぜこのガイドが必要か",
+    "0.2 出典の信頼度ラベル",
+    "0.3 ガイドの全体構成",
+    "1. 全体像",
+    "1.1 2026年の脅威の状況（日本）",
+    "1.2 OWASP Top 10:2025（世界のウェブアプリの主要リスク）",
+    "1.3 11 ステップの地図",
+    "2. 基本原則",
+    "2.1 7 つの原則",
+    "2.2 CISA の Secure by Design が求める姿勢",
+    "2.3 豪州 ASD ACSC の「Foundations」",
+    "3. ステップ 1〜3：準備と分析",
+    "Step 1. ガバナンスと範囲を決める",
+    "Step 2. 資産とデータを可視化する",
+    "2.1 データを分類する",
+    "2.2 信頼境界（Trust Boundary）つきのデータフロー図を描く",
+    "2.3 初学者の実践手順",
+    "Step 3. 脅威モデリングで「何が起こりうるか」を先に洗い出す",
+    "3.1 STRIDE：洗い出しの型",
+    "3.2 Mini 演習：ログイン API を 10 分で脅威モデリングする",
+    "3.3 ツールの例",
+    "4. ステップ 4〜6：ID・認可・Zero Trust",
+    "Step 4. ID と認証：フィッシングに強いログインにする",
+    "4.1 認証方式の強さ",
+    "4.2 導入の順序",
+    "4.3 WebAuthn の登録設定の例",
+    "4.4 人以外の ID（ワークロード ID）も守る",
+    "Step 5. 認可とアクセス制御：「拒否が初期値」にする",
+    "5.1 3 つの基本ルール",
+    "5.2 コード例：対象データごとの確認",
+    "5.3 権限を設計する手順",
+    "Step 6. Zero Trust を実装する",
+    "6.1 NIST SP 800-207 の 7 つの考え方（要旨）",
+    "6.2 判断する場所と守る場所を分ける",
+    "6.3 CISA Zero Trust Maturity Model で進み具合を測る",
+    "6.4 初学者の実践手順",
+    "5. ステップ 7〜9：データ、開発、AI の守り",
+    "Step 7. データ保護と暗号：量子コンピュータの時代にも備える",
+    "7.1 基本の 4 点",
+    "7.2 コード例：暗号化するときの注意点",
+    "7.3 ポスト量子暗号（PQC）の基礎",
+    "Step 8. 安全な開発とサプライチェーン",
+    "8.1 開発工程の各段階に守りを置く",
+    "8.2 メモリ安全な言語への移行",
+    "8.3 依存関係の守り：クールダウンと固定",
+    "8.4 CI/CD（自動ビルドと配備）を守る",
+    "8.5 「来歴があれば安全」ではない",
+    "Step 9. AI エージェントの安全設計",
+    "9.1 Lethal Trifecta（致命的な 3 つ組）",
+    "9.2 Agents Rule of Two",
+    "9.3 防御フィルターだけに頼らない",
+    "9.4 OWASP Top 10 for Agentic Applications 2026",
+    "9.5 エージェントの方針をコードにする",
+    "6. ステップ 10〜11：運用と改善",
+    "Step 10. 検知・対応・復旧",
+    "10.1 何を記録するか",
+    "10.2 対応の流れ",
+    "10.3 バックアップの原則",
+    "10.4 想定外の状態では「閉じる」：A10 への備え",
+    "Step 11. 測定して継続的に改善する",
+    "11.1 初学者向けの測定指標",
+    "11.2 年間の改善サイクル",
+    "7. 総合チェックリストと 30/60/90 日ロードマップ",
+    "7.1 総合チェックリスト",
+    "7.2 30/60/90 日ロードマップ",
+    "8. 補足ベストプラクティス：著名開発者の投稿と根拠ソース",
+    "8.1 投稿の一覧",
+    "8.2 補足ベストプラクティスの要約",
+    "8.3 最近のサプライチェーン事例（すべて二次情報）",
+    "9. よくある失敗、情報の限界、用語集、参考文献",
+    "9.1 よくある失敗",
+    "9.2 このガイドの情報の限界",
+    "9.3 用語集",
+    "9.4 参考文献と根拠 URL（2026年11月6日時点）",
+    "A. 標準化団体・政府機関・公式プロジェクト一次",
+    "B. 著名開発者・研究者の投稿著名開発者",
+    "C. 解説記事・ニュース・ベンダー資料二次"
+  ],
+  "structures": {
+    ".hero": "ae16107aa9cb644e756ec7e447c7be716bdb52673bf3851aa2b2d22356bb173e",
+    ".brand": "1f801aee0368281055f54fe8ef602f466fd118f83daaf912362f2637a59243b8",
+    "#nav": "ebedf6c260b397ea739bb9f631b520ca59d7b86ed2375e6b4939d357745cebf4",
+    ".footer": "6b1854fd56908c76955b6c49f23d98783e4004bf595bd9fee106ad163e6259c7",
+    "#ch-0": "69ad52c682d7c82bd7581627dc36f3d8a21af7ff662576ce8db621ef2d4a675a",
+    "#s-0-1": "dc1b2dd71f330de1c2340ec4de0c174f4eb615970b373d75f6f3ac6fa9c5753c",
+    "#s-0-2": "2a26c5556189fc37966e9fd4bc7b14d66071e40cbab84f49391433935a44accb",
+    "#s-0-3": "ced55ac7d1da87b6a369ea07c0f9fc5ce42bbd751260b71a91bee61ff24f7aa2",
+    "#ch-1": "d0d43078071d42b9397d7f501f3a4fd66a37ccecbd553844498c3264cc4f609b",
+    "#s-1-1": "609b41c534c4d95a8c70c5d137ea2e4c43f2840f1797b6025d1a2eb21c561024",
+    "#s-1-2": "e11ae107d18a106cccaaf5d4e105bfcd34f2f6da25b5ea805db8ea5836aaafa1",
+    "#s-1-3": "2369373ad8610b7739623a0f4cc118bdc94cc991abb49b2d5ba478f21809c235",
+    "#ch-2": "d3fa3bb395f05cfc59a9198ec75582fc150dea80a763cbbde05fbaedee27d7e7",
+    "#s-2-1": "eb959ea4ff1444389a7dcb38e7636a76498645a04a762232ba014d522e3a5ba4",
+    "#s-2-2": "caee92eba3396911f36922ec6e1bb251095b2b1fcb1449d2cdb71c40ac5f49b1",
+    "#s-2-3": "799af7863f0997217adfd8006990035a4813bcec09ac688ebf6a6670c3667564",
+    "#ch-3": "6bd5f2c0f31fcc001447f5b00c9610ee914c35fe96181d84078831acb60bc8a8",
+    "#step-1": "2d6e27512db5801c6921f43f7d93af0b310a99e8e5fc23b79a0c26374b4ddcc2",
+    "#step-2": "73f9e654c7aa1a79f046c483dd9ec1ccc72abe5d5eb7eac760c64fb788ef24dc",
+    "#step-3": "9e9ab688b0ed8756b9eaa625ed4e1e4f6351ff3e20abb19f8f1f4c495483e303",
+    "#ch-4": "2dd52949a4f40a6dd9d3ef6279a8a9d59a4d5a9ed6a18b0c64abc0054c4534d9",
+    "#step-4": "f63e07941caa612208f77b5b7dc1571ba33de422ead401287c0a495d8d19111c",
+    "#step-5": "017f56cbcc6cafa8a6faec1ed439d17eeafecc1179e74072ffacbade60e40a95",
+    "#step-6": "b14d432fa7ee32b02040c9c65979a8b1ce3778f6b6dd81e85ea5618736667c4e",
+    "#ch-5": "6856e86906ca788f256e7d6bd1807a79f9c2f71fa3ab00490266a60f8ec2e12c",
+    "#step-7": "68a03a5a575765fa15c053a75bf7941098a75577bafde4a5f96ef0e4ef8795eb",
+    "#step-8": "9ff2935425b9782017f088ce645b28b24cb3038cc876e998ccf7d3fb19262969",
+    "#step-9": "60be35abe115363a4639b7e43b01b5f1e9d3df01cf6c695d86dc35a73cfe54a3",
+    "#ch-6": "36243ae2db10d0980037e81b2e0e44b58757be49d05f8cb5638698e63036b942",
+    "#step-10": "177a922141a74165dffe28e3159c25cf1a266609c5c3830cdd125b5ebfb0fb57",
+    "#step-11": "df8e2e5c27bc0770f0f0aeff5b0a464468e50a3942747960eeb18cf710ff5c2f",
+    "#ch-7": "d2483c3f1f6cb4085356baa3a64af9a519d9456e4c368dc15509e946d60e8293",
+    "#s-7-1": "b89f6845707c424094b10eea80d6d22dbf5753cd15d6c2eb46c8f0b4fecf1623",
+    "#s-7-2": "9c60a52a55c6dd62ebeb2aa3ce40584a53df32ebdff508739a214f8ce99504b1",
+    "#ch-8": "5eca80b37ffe972c3b92b6348fc1421b8fc4db09c8ece05350c1f51be81eed3b",
+    "#s-8-1": "70c4ffadf8804bd68b4cc00c0bbdcd4a9e57716723f7bd20c55084d5c5eb4997",
+    "#s-8-2": "5342405565d78bfd621eeae98403e0834f255c4eca912e20aa0270fdf19a9c19",
+    "#s-8-3": "57f31d552b1a9b04bc83769d4bdcc6baed06fa480dca38eee01357e8578de6a1",
+    "#ch-9": "91e9e5412df77dcfcd2cb95f8bef2f47a4603cb567799bb0d5b78c6dbf51a53b",
+    "#s-9-1": "50fb6c84d91042d4efa8eac2e1000d50edb16fe1602b8037449fde712e4ac44d",
+    "#s-9-2": "9b81b314ba228770f1aab124cd6831b57fda5384f071bf2a06308335ac68ee37",
+    "#s-9-3": "baea08f00ca92b2b4d5058f4b7c263ea00306e1e904f6f5654b58a0b914d56f2",
+    "#s-9-4": "523215cce8b1e0779abb896b9c05e3286f755638588af78a48ef549dbd7c84ea"
+  },
+  "diagrams": {
+    "mm0": "886a080f848ed9fdd84c2b41ca01e9d287152fde0e06c78b48456f497d044936",
+    "mm1": "85539b0276a77142ba76ac3856e73a23c3b6ad41626ffda2fd4799db7b337d5f",
+    "mm2": "e966a33d336da1c515b6eb5912e53c2404552b24ca3144de243833c1babc2ea9",
+    "mm3": "4df4a54793999d45f296d44980d7d09eccf9d3c553b518c964122609d54cb91f",
+    "mm4": "aa478067146553e102c89d4cc3a924c4db1c89280b4f8003b733a196dd88f558",
+    "mm5": "377abb4c51456c34f5ef5d4349c8fa9c31bfe23555cd0a170e5bdcc03d80ba5f",
+    "mm6": "31e7c9fe99c4008ccffa8051832ebdf87078e9db789c68bcc5f0eb594c173b54",
+    "mm7": "c21c53e7d9ebc8d0b3f971934cff3737a2a5e751af580c1621986a242d15a754",
+    "mm8": "143cb18cabfc8ba7f09433c2f9e6eb8f0128dc3419045fd38fd4b6a2710d1b4f",
+    "mm9": "ccce6f419eebd14f2bcc2ac5f0883ce3601e6b7e818055d98fbbf2e04447ae55",
+    "mm10": "2ec763f19b4ad9af3bb8ca6666e9c5db0bba6203671c396d20bf83a406981fbc"
+  },
+  "icons": [
+    "ti ti-menu-2",
+    "ti ti-shield-check",
+    "ti ti-bulb",
+    "ti ti-alert-triangle",
+    "ti ti-book",
+    "ti ti-copy",
+    "ti ti-check",
+    "ti ti-external-link"
+  ],
+  "status": "Implemented and originals archived byte-exact; dedicated 125 pass; full suite 3098 pass / 0 skip / 0 fail; no build; user visual review pending",
+  "cssRules": [
+    {
+      "selector": ":root",
+      "ancestry": "",
+      "declarations": [
+        "--bg-primary:#07111e",
+        "--bg-secondary:#0d1b30",
+        "--bg-tertiary:#12243f",
+        "--bg-code:#0a1626",
+        "--text-primary:#f3f5fa",
+        "--text-secondary:#c6d0e3",
+        "--text-tertiary:#93a1bd",
+        "--border-1:#1e2f4d",
+        "--border-2:#2d456e",
+        "--border-3:#3e5c8f",
+        "--accent:#7c9eff",
+        "--teal:#5fd3a6",
+        "--amber:#f0b955",
+        "--coral:#ff8f7a",
+        "--purple:#b79cff",
+        "--font-sans:'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',\n                    'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif",
+        "--font-mono:ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas,\n                    'Noto Sans Mono CJK JP', 'Liberation Mono', monospace",
+        "--radius-md:8px",
+        "--radius-lg:12px",
+        "--sidebar-w:320px"
+      ]
+    },
+    {
+      "selector": "*",
+      "ancestry": "",
+      "declarations": [
+        "box-sizing:border-box"
+      ]
+    },
+    {
+      "selector": "html",
+      "ancestry": "",
+      "declarations": [
+        "scroll-behavior:smooth",
+        "-webkit-text-size-adjust:100%"
+      ]
+    },
+    {
+      "selector": "body",
+      "ancestry": "",
+      "declarations": [
+        "margin:0",
+        "background:var(--bg-primary)",
+        "color:var(--text-primary)",
+        "font-family:var(--font-sans)",
+        "font-size:1rem",
+        "line-height:1.7",
+        "font-weight:400"
+      ]
+    },
+    {
+      "selector": "a",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--accent)",
+        "text-decoration:none"
+      ]
+    },
+    {
+      "selector": "a:hover",
+      "ancestry": "",
+      "declarations": [
+        "text-decoration:underline"
+      ]
+    },
+    {
+      "selector": "strong",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "color:var(--text-primary)"
+      ]
+    },
+    {
+      "selector": "em",
+      "ancestry": "",
+      "declarations": [
+        "font-style:italic"
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "ancestry": "",
+      "declarations": [
+        "position:fixed",
+        "top:0",
+        "left:0",
+        "bottom:0",
+        "width:var(--sidebar-w)",
+        "background:var(--bg-secondary)",
+        "border-right:1px solid var(--border-1)",
+        "display:flex",
+        "flex-direction:column",
+        "z-index:50"
+      ]
+    },
+    {
+      "selector": ".brand",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:0.75rem",
+        "align-items:center",
+        "padding:1.25rem 1.25rem 1rem",
+        "border-bottom:1px solid var(--border-1)"
+      ]
+    },
+    {
+      "selector": ".brand-mark",
+      "ancestry": "",
+      "declarations": [
+        "flex:none",
+        "width:2.75rem",
+        "height:2.75rem",
+        "border-radius:var(--radius-md)",
+        "background:var(--bg-tertiary)",
+        "border:1px solid var(--border-3)",
+        "display:flex",
+        "align-items:center",
+        "justify-content:center",
+        "color:var(--accent)",
+        "font-size:1.5rem"
+      ]
+    },
+    {
+      "selector": ".brand-text",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "flex-direction:column",
+        "min-width:0"
+      ]
+    },
+    {
+      "selector": ".brand-title",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "line-height:1.4",
+        "color:var(--text-primary)"
+      ]
+    },
+    {
+      "selector": ".brand-sub",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-tertiary)",
+        "line-height:1.4"
+      ]
+    },
+    {
+      "selector": "#nav",
+      "ancestry": "",
+      "declarations": [
+        "flex:1",
+        "overflow-y:auto",
+        "padding:0.75rem 0.75rem 2rem"
+      ]
+    },
+    {
+      "selector": ".nav-root,\n            .nav-sub",
+      "ancestry": "",
+      "declarations": [
+        "list-style:none",
+        "margin:0",
+        "padding:0"
+      ]
+    },
+    {
+      "selector": "#nav li",
+      "ancestry": "",
+      "declarations": [
+        "padding-left:0"
+      ]
+    },
+    {
+      "selector": "#nav li::before",
+      "ancestry": "",
+      "declarations": [
+        "content:none"
+      ]
+    },
+    {
+      "selector": ".nav-ch",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:0.35rem"
+      ]
+    },
+    {
+      "selector": ".nav-ch > a",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "padding:0.45rem 0.75rem",
+        "border-radius:var(--radius-md)",
+        "color:var(--text-primary)",
+        "font-weight:500",
+        "border-left:3px solid transparent",
+        "line-height:1.5"
+      ]
+    },
+    {
+      "selector": ".nav-st > a",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "padding:0.3rem 0.75rem 0.3rem 1.6rem",
+        "border-radius:var(--radius-md)",
+        "color:var(--text-secondary)",
+        "border-left:3px solid transparent",
+        "line-height:1.5"
+      ]
+    },
+    {
+      "selector": "#nav a:hover",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--bg-tertiary)",
+        "text-decoration:none"
+      ]
+    },
+    {
+      "selector": "#nav a.active",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--bg-tertiary)",
+        "color:var(--accent)",
+        "border-left-color:var(--accent)"
+      ]
+    },
+    {
+      "selector": ".nav-ch.parent-active > a:not(.active)",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--accent)"
+      ]
+    },
+    {
+      "selector": ".layout",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "margin-left:var(--sidebar-w)",
+        "padding:3rem 3.5rem 5rem"
+      ]
+    },
+    {
+      "selector": ".hero",
+      "ancestry": "",
+      "declarations": [
+        "padding-bottom:1.5rem",
+        "border-bottom:1px solid var(--border-2)",
+        "margin-bottom:1rem"
+      ]
+    },
+    {
+      "selector": ".eyebrow",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 0.5rem",
+        "color:var(--accent)",
+        "letter-spacing:0.08em",
+        "font-weight:500"
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 0.5rem",
+        "font-size:2.25rem",
+        "line-height:1.35",
+        "font-weight:500"
+      ]
+    },
+    {
+      "selector": ".lead",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 1.5rem",
+        "color:var(--text-secondary)",
+        "font-size:1.25rem"
+      ]
+    },
+    {
+      "selector": "section",
+      "ancestry": "",
+      "declarations": [
+        "scroll-margin-top:1.5rem"
+      ]
+    },
+    {
+      "selector": "section.chapter",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:3.5rem"
+      ]
+    },
+    {
+      "selector": "h2,\n            h3,\n            h4",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "color:var(--text-primary)",
+        "line-height:1.4"
+      ]
+    },
+    {
+      "selector": "h2",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.75rem",
+        "margin:0 0 1.25rem",
+        "padding-bottom:0.6rem",
+        "border-bottom:1px solid var(--border-2)"
+      ]
+    },
+    {
+      "selector": "section.sub",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:2.25rem"
+      ]
+    },
+    {
+      "selector": "h3",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.375rem",
+        "margin:0 0 1rem",
+        "padding-left:0.75rem",
+        "border-left:4px solid var(--accent)"
+      ]
+    },
+    {
+      "selector": "h4",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.125rem",
+        "margin:1.75rem 0 0.75rem",
+        "color:var(--accent)"
+      ]
+    },
+    {
+      "selector": "p",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 1rem",
+        "line-height:1.8"
+      ]
+    },
+    {
+      "selector": "ul,\n            ol",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 1rem",
+        "padding-left:1.6rem"
+      ]
+    },
+    {
+      "selector": "li",
+      "ancestry": "",
+      "declarations": [
+        "margin:0.35rem 0",
+        "line-height:1.75"
+      ]
+    },
+    {
+      "selector": "li::marker",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--accent)"
+      ]
+    },
+    {
+      "selector": "ol > li::marker",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500"
+      ]
+    },
+    {
+      "selector": ".callout",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:0.9rem",
+        "align-items:flex-start",
+        "border-radius:var(--radius-md)",
+        "padding:1rem 1.25rem",
+        "margin:0 0 1.5rem",
+        "border:1px solid var(--border-1)",
+        "border-left-width:4px"
+      ]
+    },
+    {
+      "selector": ".callout > i",
+      "ancestry": "",
+      "declarations": [
+        "flex:none",
+        "font-size:1.5rem",
+        "line-height:1.5"
+      ]
+    },
+    {
+      "selector": ".callout > div",
+      "ancestry": "",
+      "declarations": [
+        "min-width:0",
+        "line-height:1.8"
+      ]
+    },
+    {
+      "selector": ".callout.intro",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--bg-secondary)",
+        "border-left-color:var(--accent)"
+      ]
+    },
+    {
+      "selector": ".callout.intro > i",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--accent)"
+      ]
+    },
+    {
+      "selector": ".callout.warn",
+      "ancestry": "",
+      "declarations": [
+        "background:#1b170c",
+        "border-color:#4a3a14",
+        "border-left-color:var(--amber)"
+      ]
+    },
+    {
+      "selector": ".callout.warn > i",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--amber)"
+      ]
+    },
+    {
+      "selector": ".tag",
+      "ancestry": "",
+      "declarations": [
+        "display:inline-block",
+        "padding:0.05rem 0.6rem",
+        "border-radius:999px",
+        "font-weight:500",
+        "line-height:1.6",
+        "border:1px solid",
+        "vertical-align:baseline",
+        "white-space:normal"
+      ]
+    },
+    {
+      "selector": ".tag-primary",
+      "ancestry": "",
+      "declarations": [
+        "color:#8fe3c3",
+        "border-color:#2a6b57",
+        "background:#0c2a24"
+      ]
+    },
+    {
+      "selector": ".tag-dev",
+      "ancestry": "",
+      "declarations": [
+        "color:#cdb9ff",
+        "border-color:#5b4a99",
+        "background:#1a1533"
+      ]
+    },
+    {
+      "selector": ".tag-secondary",
+      "ancestry": "",
+      "declarations": [
+        "color:#f6cf86",
+        "border-color:#6b5420",
+        "background:#2a200c"
+      ]
+    },
+    {
+      "selector": ".tag-note",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-secondary)",
+        "border-color:var(--border-3)",
+        "background:var(--bg-tertiary)"
+      ]
+    },
+    {
+      "selector": ".table-wrap",
+      "ancestry": "",
+      "declarations": [
+        "overflow-x:auto",
+        "margin:0 0 1.5rem",
+        "border:1px solid var(--border-1)",
+        "border-radius:var(--radius-md)"
+      ]
+    },
+    {
+      "selector": "table",
+      "ancestry": "",
+      "declarations": [
+        "border-collapse:collapse",
+        "width:100%",
+        "font-size:1rem"
+      ]
+    },
+    {
+      "selector": "th,\n            td",
+      "ancestry": "",
+      "declarations": [
+        "padding:0.65rem 0.9rem",
+        "text-align:left",
+        "vertical-align:top",
+        "border-bottom:1px solid var(--border-1)",
+        "line-height:1.65"
+      ]
+    },
+    {
+      "selector": "th",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--bg-tertiary)",
+        "color:var(--text-primary)",
+        "font-weight:500",
+        "white-space:nowrap"
+      ]
+    },
+    {
+      "selector": "tr:last-child td",
+      "ancestry": "",
+      "declarations": [
+        "border-bottom:none"
+      ]
+    },
+    {
+      "selector": "td",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-secondary)"
+      ]
+    },
+    {
+      "selector": "td:first-child",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-primary)"
+      ]
+    },
+    {
+      "selector": "tbody tr:hover td",
+      "ancestry": "",
+      "declarations": [
+        "background:#0a1829"
+      ]
+    },
+    {
+      "selector": "code",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-mono)",
+        "font-size:1rem",
+        "background:var(--bg-tertiary)",
+        "color:#cfe0ff",
+        "padding:0.08em 0.4em",
+        "border-radius:4px",
+        "overflow-wrap:anywhere"
+      ]
+    },
+    {
+      "selector": ".code-block",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 1.5rem",
+        "border:1px solid var(--border-2)",
+        "border-radius:var(--radius-md)",
+        "background:var(--bg-code)",
+        "overflow:hidden"
+      ]
+    },
+    {
+      "selector": ".code-head",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "justify-content:space-between",
+        "align-items:center",
+        "padding:0.4rem 0.9rem",
+        "background:var(--bg-secondary)",
+        "border-bottom:1px solid var(--border-1)"
+      ]
+    },
+    {
+      "selector": ".lang",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-tertiary)",
+        "font-weight:500",
+        "letter-spacing:0.04em"
+      ]
+    },
+    {
+      "selector": ".copy-btn",
+      "ancestry": "",
+      "declarations": [
+        "display:inline-flex",
+        "gap:0.4rem",
+        "align-items:center",
+        "font:inherit",
+        "font-size:1rem",
+        "color:var(--text-secondary)",
+        "background:transparent",
+        "border:1px solid var(--border-2)",
+        "border-radius:6px",
+        "padding:0.15rem 0.7rem",
+        "cursor:pointer"
+      ]
+    },
+    {
+      "selector": ".copy-btn:hover",
+      "ancestry": "",
+      "declarations": [
+        "border-color:var(--accent)",
+        "color:var(--accent)"
+      ]
+    },
+    {
+      "selector": "pre",
+      "ancestry": "",
+      "declarations": [
+        "margin:0",
+        "padding:1rem 1.1rem",
+        "overflow-x:auto",
+        "background:var(--bg-code)"
+      ]
+    },
+    {
+      "selector": "pre code,\n            pre code.hljs",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "padding:0",
+        "background:transparent",
+        "color:#e2e8f5",
+        "font-size:1rem",
+        "line-height:1.65",
+        "white-space:pre",
+        "overflow-wrap:normal"
+      ]
+    },
+    {
+      "selector": ".hljs-comment,\n            .hljs-quote",
+      "ancestry": "",
+      "declarations": [
+        "color:#8393b5",
+        "font-style:italic"
+      ]
+    },
+    {
+      "selector": ".hljs-keyword,\n            .hljs-selector-tag,\n            .hljs-doctag",
+      "ancestry": "",
+      "declarations": [
+        "color:#c9a8ff"
+      ]
+    },
+    {
+      "selector": ".hljs-string,\n            .hljs-regexp,\n            .hljs-template-string",
+      "ancestry": "",
+      "declarations": [
+        "color:#a5e075"
+      ]
+    },
+    {
+      "selector": ".hljs-number,\n            .hljs-symbol,\n            .hljs-bullet",
+      "ancestry": "",
+      "declarations": [
+        "color:#f0b955"
+      ]
+    },
+    {
+      "selector": ".hljs-attr,\n            .hljs-attribute,\n            .hljs-property",
+      "ancestry": "",
+      "declarations": [
+        "color:#7cc7ff"
+      ]
+    },
+    {
+      "selector": ".hljs-title,\n            .hljs-title.function_,\n            .hljs-section",
+      "ancestry": "",
+      "declarations": [
+        "color:#82a6ff"
+      ]
+    },
+    {
+      "selector": ".hljs-built_in,\n            .hljs-literal,\n            .hljs-name",
+      "ancestry": "",
+      "declarations": [
+        "color:#ff9e7a"
+      ]
+    },
+    {
+      "selector": ".hljs-type,\n            .hljs-class .hljs-title,\n            .hljs-title.class_",
+      "ancestry": "",
+      "declarations": [
+        "color:#5fd3a6"
+      ]
+    },
+    {
+      "selector": ".hljs-meta,\n            .hljs-params",
+      "ancestry": "",
+      "declarations": [
+        "color:#b4c1dd"
+      ]
+    },
+    {
+      "selector": ".hljs-variable,\n            .hljs-subst",
+      "ancestry": "",
+      "declarations": [
+        "color:#e2e8f5"
+      ]
+    },
+    {
+      "selector": "figure.diagram",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 1.5rem",
+        "padding:1.25rem 1rem",
+        "background:var(--bg-code)",
+        "border:1px solid var(--border-1)",
+        "border-radius:var(--radius-lg)"
+      ]
+    },
+    {
+      "selector": ".mermaid-target",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "justify-content:center",
+        "min-height:3rem"
+      ]
+    },
+    {
+      "selector": ".mermaid-target svg",
+      "ancestry": "",
+      "declarations": [
+        "overflow:visible",
+        "max-width:100%",
+        "height:auto"
+      ]
+    },
+    {
+      "selector": ".mermaid-error",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--coral)",
+        "margin:0 0 0.75rem"
+      ]
+    },
+    {
+      "selector": ".glossary",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--bg-secondary)",
+        "border:1px solid var(--border-1)",
+        "border-radius:var(--radius-md)",
+        "padding:1rem 1.25rem",
+        "margin:1.5rem 0"
+      ]
+    },
+    {
+      "selector": ".gl-head",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:0.5rem",
+        "align-items:center",
+        "font-weight:500",
+        "color:var(--teal)",
+        "margin-bottom:0.5rem"
+      ]
+    },
+    {
+      "selector": ".gl-head i",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.25rem"
+      ]
+    },
+    {
+      "selector": ".glossary ul",
+      "ancestry": "",
+      "declarations": [
+        "margin:0",
+        "padding-left:1.25rem",
+        "column-width:24rem",
+        "column-gap:2rem"
+      ]
+    },
+    {
+      "selector": ".glossary li",
+      "ancestry": "",
+      "declarations": [
+        "break-inside:avoid",
+        "margin:0.3rem 0"
+      ]
+    },
+    {
+      "selector": ".glossary li::marker",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--teal)"
+      ]
+    },
+    {
+      "selector": ".term",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "color:var(--text-primary)"
+      ]
+    },
+    {
+      "selector": ".legend",
+      "ancestry": "",
+      "declarations": [
+        "border-left:3px solid var(--purple)",
+        "padding:0.25rem 0 0.25rem 1.1rem",
+        "margin:0 0 1.5rem"
+      ]
+    },
+    {
+      "selector": ".lg-head",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "color:var(--purple)",
+        "margin-bottom:0.25rem"
+      ]
+    },
+    {
+      "selector": ".legend ul",
+      "ancestry": "",
+      "declarations": [
+        "margin:0"
+      ]
+    },
+    {
+      "selector": ".legend li::marker",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--purple)"
+      ]
+    },
+    {
+      "selector": ".checklist",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "flex-direction:column",
+        "gap:0.6rem",
+        "margin:0 0 1.5rem"
+      ]
+    },
+    {
+      "selector": ".ck-progress",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "align-items:center",
+        "gap:1rem",
+        "margin-bottom:0.4rem",
+        "color:var(--text-secondary)"
+      ]
+    },
+    {
+      "selector": ".ck-bar",
+      "ancestry": "",
+      "declarations": [
+        "display:inline-block",
+        "flex:0 1 16rem",
+        "height:0.5rem",
+        "background:var(--border-1)",
+        "border-radius:999px",
+        "overflow:hidden"
+      ]
+    },
+    {
+      "selector": "#ckBar",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "height:100%",
+        "width:0",
+        "background:var(--teal)",
+        "transition:width 0.2s"
+      ]
+    },
+    {
+      "selector": ".ck-item",
+      "ancestry": "",
+      "declarations": [
+        "position:relative",
+        "display:grid",
+        "grid-template-columns:auto auto auto 1fr",
+        "gap:0.75rem",
+        "align-items:center",
+        "background:var(--bg-secondary)",
+        "border:1px solid var(--border-1)",
+        "border-radius:var(--radius-md)",
+        "padding:0.7rem 1rem",
+        "cursor:pointer"
+      ]
+    },
+    {
+      "selector": ".ck-item:hover",
+      "ancestry": "",
+      "declarations": [
+        "border-color:var(--border-3)"
+      ]
+    },
+    {
+      "selector": ".ck-item input",
+      "ancestry": "",
+      "declarations": [
+        "position:absolute",
+        "opacity:0",
+        "pointer-events:none"
+      ]
+    },
+    {
+      "selector": ".ck-box",
+      "ancestry": "",
+      "declarations": [
+        "width:1.5rem",
+        "height:1.5rem",
+        "border:2px solid var(--border-3)",
+        "border-radius:6px",
+        "display:flex",
+        "align-items:center",
+        "justify-content:center",
+        "color:transparent",
+        "font-size:1rem"
+      ]
+    },
+    {
+      "selector": ".ck-item input:checked + .ck-box",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--teal)",
+        "border-color:var(--teal)",
+        "color:var(--bg-primary)"
+      ]
+    },
+    {
+      "selector": ".ck-item input:focus-visible + .ck-box",
+      "ancestry": "",
+      "declarations": [
+        "outline:2px solid var(--accent)",
+        "outline-offset:2px"
+      ]
+    },
+    {
+      "selector": ".ck-num",
+      "ancestry": "",
+      "declarations": [
+        "width:1.9rem",
+        "height:1.9rem",
+        "border-radius:50%",
+        "background:var(--bg-tertiary)",
+        "border:1px solid var(--border-3)",
+        "display:flex",
+        "align-items:center",
+        "justify-content:center",
+        "font-weight:500",
+        "color:var(--text-secondary)"
+      ]
+    },
+    {
+      "selector": ".ck-step",
+      "ancestry": "",
+      "declarations": [
+        "padding:0.05rem 0.6rem",
+        "border-radius:999px",
+        "background:#162a4a",
+        "border:1px solid var(--border-3)",
+        "color:#b7c9ff",
+        "font-weight:500",
+        "white-space:nowrap"
+      ]
+    },
+    {
+      "selector": ".ck-text",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--text-primary)",
+        "line-height:1.6"
+      ]
+    },
+    {
+      "selector": ".ck-item.done",
+      "ancestry": "",
+      "declarations": [
+        "background:#0a1a1a",
+        "border-color:#1f4d44"
+      ]
+    },
+    {
+      "selector": ".ck-item.done .ck-text",
+      "ancestry": "",
+      "declarations": [
+        "text-decoration:line-through",
+        "color:var(--text-tertiary)"
+      ]
+    },
+    {
+      "selector": ".refs",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "flex-direction:column",
+        "gap:0.5rem"
+      ]
+    },
+    {
+      "selector": ".ref-group h4",
+      "ancestry": "",
+      "declarations": [
+        "margin:1.5rem 0 0.75rem",
+        "padding-left:0.75rem",
+        "border-left:4px solid var(--accent)",
+        "color:var(--text-primary)"
+      ]
+    },
+    {
+      "selector": ".ref-group.g-primary h4",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--teal)"
+      ]
+    },
+    {
+      "selector": ".ref-group.g-dev h4",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--purple)"
+      ]
+    },
+    {
+      "selector": ".ref-group.g-secondary h4",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--amber)"
+      ]
+    },
+    {
+      "selector": ".ref-cards",
+      "ancestry": "",
+      "declarations": [
+        "display:grid",
+        "grid-template-columns:repeat(auto-fill, minmax(26rem, 1fr))",
+        "gap:0.7rem"
+      ]
+    },
+    {
+      "selector": ".ref-card",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:0.9rem",
+        "align-items:flex-start",
+        "background:var(--bg-secondary)",
+        "border:1px solid var(--border-1)",
+        "border-radius:var(--radius-md)",
+        "padding:0.85rem 1rem"
+      ]
+    },
+    {
+      "selector": ".ref-card:hover",
+      "ancestry": "",
+      "declarations": [
+        "border-color:var(--border-3)"
+      ]
+    },
+    {
+      "selector": ".ref-num",
+      "ancestry": "",
+      "declarations": [
+        "flex:none",
+        "min-width:2rem",
+        "height:2rem",
+        "border-radius:50%",
+        "background:var(--bg-tertiary)",
+        "border:1px solid var(--border-3)",
+        "display:flex",
+        "align-items:center",
+        "justify-content:center",
+        "font-weight:500",
+        "color:var(--text-secondary)"
+      ]
+    },
+    {
+      "selector": ".ref-body",
+      "ancestry": "",
+      "declarations": [
+        "min-width:0"
+      ]
+    },
+    {
+      "selector": ".ref-title",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "line-height:1.55",
+        "margin-bottom:0.25rem"
+      ]
+    },
+    {
+      "selector": ".ref-url",
+      "ancestry": "",
+      "declarations": [
+        "display:inline-flex",
+        "gap:0.35rem",
+        "align-items:baseline",
+        "word-break:break-all",
+        "line-height:1.5"
+      ]
+    },
+    {
+      "selector": ".ref-url i",
+      "ancestry": "",
+      "declarations": [
+        "flex:none"
+      ]
+    },
+    {
+      "selector": ".footer",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:3.5rem",
+        "padding-top:1.25rem",
+        "border-top:1px solid var(--border-2)",
+        "color:var(--text-tertiary)"
+      ]
+    },
+    {
+      "selector": ".footer p",
+      "ancestry": "",
+      "declarations": [
+        "margin:0"
+      ]
+    },
+    {
+      "selector": ".nav-toggle",
+      "ancestry": "",
+      "declarations": [
+        "display:none"
+      ]
+    },
+    {
+      "selector": ".backdrop",
+      "ancestry": "",
+      "declarations": [
+        "display:none"
+      ]
+    },
+    {
+      "selector": ".layout",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "margin-left:0",
+        "padding:1.5rem 1.1rem 6rem"
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "width:min(86vw, 340px)",
+        "transform:translateX(-100%)",
+        "transition:transform 0.25s ease",
+        "z-index:80"
+      ]
+    },
+    {
+      "selector": ".sidebar.open",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "transform:translateX(0)"
+      ]
+    },
+    {
+      "selector": ".backdrop",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "position:fixed",
+        "inset:0",
+        "background:rgba(3, 8, 16, 0.7)",
+        "z-index:70"
+      ]
+    },
+    {
+      "selector": ".backdrop.show",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "display:block"
+      ]
+    },
+    {
+      "selector": ".nav-toggle",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "display:flex",
+        "position:fixed",
+        "right:1.1rem",
+        "bottom:1.1rem",
+        "z-index:90",
+        "width:3.5rem",
+        "height:3.5rem",
+        "border-radius:50%",
+        "align-items:center",
+        "justify-content:center",
+        "background:var(--accent)",
+        "color:var(--bg-primary)",
+        "border:none",
+        "font-size:1.75rem",
+        "cursor:pointer"
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "font-size:1.75rem"
+      ]
+    },
+    {
+      "selector": "h2",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "font-size:1.5rem"
+      ]
+    },
+    {
+      "selector": ".ref-cards",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "grid-template-columns:1fr"
+      ]
+    },
+    {
+      "selector": ".ck-item",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "grid-template-columns:auto auto 1fr"
+      ]
+    },
+    {
+      "selector": ".ck-item .ck-step",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "grid-column:3",
+        "justify-self:start"
+      ]
+    },
+    {
+      "selector": ".ck-item .ck-text",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "grid-column:1 / -1"
+      ]
+    }
+  ],
+  "archive": "archive/security-guides/",
+  "verification": {
+    "date": "2026-11-12",
+    "dedicated": {
+      "pass": 125,
+      "files": 9
+    },
+    "sourceAbsent": {
+      "pass": 68,
+      "skip": 57,
+      "fail": 0
+    },
+    "browser": {
+      "widths": [
+        375,
+        768,
+        1024,
+        1025,
+        1440
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "comparedElementsPerCondition": 1545,
+      "pageErrors": 0,
+      "reducedMotion": "auto for reduce; smooth for no-preference; all 10 conditions passed"
+    },
+    "lint": "passed",
+    "types": "passed",
+    "build": "prohibited; not run",
+    "visualReview": "user-owned; pending",
+    "searchRegression": {
+      "pass": 25,
+      "fail": 0,
+      "files": 3
+    },
+    "fullSuite": {
+      "pass": 3098,
+      "skip": 0,
+      "fail": 0,
+      "cases": 3098,
+      "files": 359,
+      "assertions": 584719
+    }
+  }
+}

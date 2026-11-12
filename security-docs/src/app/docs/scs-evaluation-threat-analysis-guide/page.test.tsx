@@ -1,46 +1,32 @@
-import { expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
-import { evaluate } from '@mdx-js/mdx';
-import * as runtime from 'react/jsx-runtime';
-import { renderToStaticMarkup } from 'react-dom/server';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import remarkGfm from 'remark-gfm';
-import { docsConfig } from '@/config/docs';
-import { extractHeadings, getSearchIndex } from '@/lib/search';
-import { useMDXComponents } from '@/mdx-components';
-
-const route = '/docs/scs-evaluation-threat-analysis-guide';
-const source = readFileSync(new URL('../../../../../Scs-evaluation-threat-analysis-guide.md', import.meta.url), 'utf8');
-const page = readFileSync(new URL('./page.mdx', import.meta.url), 'utf8');
-
-test('the published MDX preserves the complete guide, exercise, 90-day plan and diagram definitions', async () => {
-  const body = page.slice(page.indexOf('\n# ') + 1).replace(/\n<\/div>\n$/, '');
-  const restored = body.replace(/<div className="[^"]+">\n<MermaidFigure id="d\d+" source=\{("(?:[^"\\]|\\.)*")\} \/>\n<\/div>/g,
-    (_match, definition: string) => '```mermaid\n' + JSON.parse(definition) + '\n```').replace(/\[(https?:\/\/[^\]\n]+)\]\(\1\)/g, '$1');
-  expect(restored).toBe(source);
-  const { default: Page } = await evaluate(page, {
-    ...runtime, development: false, baseUrl: import.meta.url,
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
-  });
-  const document = new DOMParser().parseFromString(renderToStaticMarkup(runtime.jsx(Page, { components: useMDXComponents({}) })), 'text/html');
-  expect([...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(heading => heading.textContent)).toEqual(extractHeadings(source));
-  expect(document.querySelectorAll('[data-diagram]')).toHaveLength(14);
-  expect(document.body).toHaveTextContent('ミライ製作所');
-  expect(document.body).toHaveTextContent('90日');
-  expect(document.querySelectorAll('table').length).toBeGreaterThan(20);
-  const referenceUrls = new Set(source.replace(/```[\s\S]*?```/g, '').match(/https?:\/\/[^\s<>{}`\[\]()（）【】、。；「」／|]+/g) ?? []);
-  const destinations = new Set([...document.querySelectorAll('a[href]')].map(link => link.getAttribute('href')));
-  expect(referenceUrls.size).toBeGreaterThan(0);
-  for (const url of referenceUrls) expect(destinations).toContain(url);
-  for (const link of document.querySelectorAll('a[href]')) expect(link.getAttribute('href')).not.toMatch(/[【】、。]/);
+import {expect,test} from 'bun:test';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {docsConfig} from '@/config/docs';
+import {getSearchIndex} from '@/lib/search';
+import {inventory,renderedPage,canonical} from './fidelity-helpers';
+test('every original element count, unique ID, local icon and fragment destination survives',async()=>{
+ const d=await renderedPage();
+ for(const [s,n] of Object.entries(inventory.counts))expect(d.querySelectorAll(s).length,s).toBe(n);
+ expect([...d.querySelectorAll('[id]')].map(e=>e.id).sort()).toEqual([...inventory.ids].sort());
+ expect(new Set(inventory.ids).size).toBe(inventory.ids.length);
+ expect(d.querySelectorAll('i.ti svg')).toHaveLength(11);
+ for(const a of d.querySelectorAll('a[href^="#"]'))expect(d.getElementById(a.getAttribute('href')!.slice(1))).not.toBeNull();
+ expect(d.querySelectorAll('script,iframe,form,link,main')).toHaveLength(0);
+ for(const e of d.querySelectorAll('*'))for(const a of [...e.attributes]){expect(a.name).not.toMatch(/^on/i);if(['href','src'].includes(a.name))expect(a.value).not.toMatch(/^\s*(?:javascript:|data:text\/html)/i);}
 });
-
-test('navigation and the generated search index expose the guide and its exercise and planning headings once', async () => {
-  expect(docsConfig.sidebarNav.flatMap(section => section.items).filter(item => item.href === route)).toHaveLength(1);
-  const entries = (await getSearchIndex()).filter(entry => entry.href === route);
-  expect(entries).toHaveLength(1);
-  expect(entries[0].headings).toEqual(extractHeadings(source));
-  const index = JSON.parse(readFileSync(new URL('../../../../public/search-index.json', import.meta.url), 'utf8'));
-  expect(index.filter((entry: { href: string }) => entry.href === route)).toEqual(entries);
+test('all fourteen diagram definitions retain fixed original hashes and corresponding targets',async()=>{
+ const {diagrams}=await import('./diagrams');const d=await renderedPage();
+ expect(Object.keys(diagrams)).toEqual(Object.keys(inventory.diagrams));
+ for(const [id,hash] of Object.entries(inventory.diagrams)){expect(createHash('sha256').update(diagrams[id]).digest('hex')).toBe(hash);expect(d.querySelector(`[data-diagram="${id}"]`)?.getAttribute('data-definition')).toBe(diagrams[id]);}
+});
+test('one existing route keeps original headings in live and stored search',async()=>{
+ expect(docsConfig.sidebarNav.flatMap(g=>g.items).filter(i=>i.href===inventory.route)).toHaveLength(1);
+ const index=(await getSearchIndex()).filter(i=>i.href===inventory.route);expect(index).toHaveLength(1);expect(index[0].headings).toEqual(inventory.headings);
+ const stored=JSON.parse(readFileSync(new URL('../../../../public/search-index.json',import.meta.url),'utf8'));expect(stored.filter((i:{href:string})=>i.href===inventory.route)).toEqual(index);
+ expect([...(await renderedPage()).querySelectorAll('h1,h2,h3,h4,h5,h6')].map(e=>e.textContent!.replace(/\s+/g,' ').trim())).toEqual(inventory.headings);
+});
+test('negative controls reject missing bullets, numbering, table cells, emphasis, URLs and checklist labels',async()=>{
+ const d=await renderedPage();
+ for(const selector of ['td','li','ol','ul','strong','a[href]','.ck-n','.ck-text']){const node=[...d.querySelectorAll('section')].find(e=>e.querySelector(selector))!;expect(node,selector).toBeDefined();const copy=node.cloneNode(true) as Element;copy.querySelector(selector)!.remove();expect(canonical(copy)).not.toEqual(canonical(node));}
+ const ol=d.querySelector('ol')!,copy=ol.cloneNode(true) as Element;copy.setAttribute('start','2');expect(canonical(copy)).not.toEqual(canonical(ol));
 });

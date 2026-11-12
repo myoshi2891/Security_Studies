@@ -1,0 +1,1361 @@
+{
+  "route": "/docs/scs-evaluation-threat-analysis-guide",
+  "title": "最新セキュリティ対策アプローチ ― SCS評価制度 & 脅威分析 初学者向けステップバイステップガイド",
+  "description": "SCS評価制度の概要と取得準備、STRIDEによる脅威分析、架空企業の演習、供給網対策、90日計画を学ぶ初学者向けガイド。",
+  "originals": {
+    "html": "6f2405873deda69aa6631c91b1e0aeeabf9ad9f10bb231f32de37bc81bcf0ded",
+    "md": "fbefabf84adab4028b663afc4c8dd5281245275129441e94d892d7d3bfb96b0c"
+  },
+  "counts": {
+    "section": 85,
+    "h1,h2,h3,h4,h5,h6": 86,
+    "table": 44,
+    "th,td": 865,
+    "ul": 38,
+    "ol": 5,
+    "li": 178,
+    ".diagram[data-diagram]": 14,
+    "pre code": 2,
+    "input[type=checkbox]": 17,
+    "details.qa": 2,
+    "a[href]": 195,
+    "i.ti": 11,
+    ".callout": 10
+  },
+  "ids": [
+    "sidebar",
+    "nav",
+    "backdrop",
+    "menuBtn",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6",
+    "s7",
+    "s8",
+    "s9",
+    "s10",
+    "s11",
+    "s12",
+    "s13",
+    "s14",
+    "s15",
+    "s16",
+    "s17",
+    "s18",
+    "s19",
+    "s20",
+    "s21",
+    "s22",
+    "s23",
+    "s24",
+    "s25",
+    "s26",
+    "s27",
+    "s28",
+    "s29",
+    "s30",
+    "s31",
+    "s32",
+    "s33",
+    "s34",
+    "s35",
+    "s36",
+    "s37",
+    "s38",
+    "s39",
+    "s40",
+    "s41",
+    "s42",
+    "s43",
+    "s44",
+    "s45",
+    "s46",
+    "s47",
+    "s48",
+    "s49",
+    "s50",
+    "s51",
+    "s52",
+    "s53",
+    "s54",
+    "s55",
+    "s56",
+    "s57",
+    "s58",
+    "s59",
+    "s60",
+    "s61",
+    "s62",
+    "s63",
+    "s64",
+    "s65",
+    "s66",
+    "s67",
+    "s68",
+    "s69",
+    "s70",
+    "s71",
+    "s72",
+    "s73",
+    "s74",
+    "s75",
+    "s76",
+    "s77",
+    "s78",
+    "s79",
+    "s80",
+    "s81",
+    "s82",
+    "s83",
+    "s84",
+    "s85"
+  ],
+  "headings": [
+    "最新セキュリティ対策アプローチ ― SCS評価制度 & 脅威分析 初学者向けステップバイステップガイド",
+    "0. はじめに",
+    "0.1 このガイドで身につくこと",
+    "0.2 学習ロードマップ",
+    "0.3 情報の信頼度ラベル",
+    "0.4 本ガイドの表記ルール",
+    "1. 基礎: サプライチェーン攻撃とは",
+    "1.1 まず用語を整理する",
+    "1.2 なぜ「取引先ごと」の対策が必要なのか",
+    "1.3 2つのサプライチェーンを区別する",
+    "1.4 最新の脅威状況（IPA 情報セキュリティ10大脅威 2026）",
+    "1.5 確認問題（第1章）",
+    "2. SCS評価制度とは",
+    "2.1 一言でいうと",
+    "2.2 誰が何をするのか（運営体制）",
+    "2.3 3つの★の段階",
+    "2.4 ★3と★4の評価の流れ",
+    "2.5 費用（登録料）",
+    "2.6 スケジュール（2026年11月6日時点）",
+    "2.7 制度を騙る勧誘への注意",
+    "2.8 確認問題（第2章）",
+    "3. ★3 取得ステップバイステップ",
+    "Step 0: 目的を確認する",
+    "Step 1: 取得単位を決める",
+    "Step 2: 適用範囲を決める",
+    "Step 3: 先に用意する3つの資料",
+    "Step 4: 7つの評価領域で現状を確認する",
+    "Step 5: 数値で決まっている要件を先に点検する",
+    "Step 6: アセスメントシートに記入し、証跡を残す",
+    "Step 7: セキュリティ専門家の確認を受ける",
+    "Step 8: 経営層の自己適合宣言、登録申請、毎年の更新",
+    "3.1 初学者がつまずきやすいポイント",
+    "3.2 中小企業向けの支援",
+    "4. ★4の概要",
+    "4.1 ★3との違い",
+    "4.2 評価の流れ（制度構築方針の想定）",
+    "4.3 発注側の責務にも注意",
+    "5. 脅威分析（脅威モデリング）入門",
+    "5.1 SCSと脅威分析の関係",
+    "5.2 脅威分析の土台: 4つの質問",
+    "5.3 進め方の全体像",
+    "5.4 Q1: 対象を図にする（データフロー図と信頼境界）",
+    "5.5 Q2: 何が起こりうるか（STRIDE）",
+    "5.6 リスクを見積もる（初学者向けの簡単な方法）",
+    "5.7 Q3: どう対処するか（4つの対応方針）",
+    "5.8 Q4: うまくやれたかを確かめる",
+    "5.9 道具（無理に使わなくてよい）",
+    "5.10 攻撃者の視点を足す: MITRE ATT&CK",
+    "5.11 AIエージェントの脅威分析: 「致死的三位一体」で考える",
+    "5.12 脅威分析でありがちな失敗",
+    "6. ハンズオン: 架空の会社「ミライ製作所」で、脅威分析からSCS準備までつなげる",
+    "6.1 設定",
+    "6.2 Q1: 図を描く（取引先ポータルへの図面連携）",
+    "6.3 Q2: STRIDEで脅威を洗い出す",
+    "6.4 Q3: 対応方針を決める",
+    "6.5 SCSの評価領域との対応づけ【筆者整理】",
+    "6.6 この演習から学ぶこと",
+    "7. 開発者視点の最新ベストプラクティス（国際的な開発者の投稿から）",
+    "7.1 2026年に起きた主な事例",
+    "7.2 ベストプラクティス1: 依存関係のクールダウン（新バージョンをすぐ入れない）",
+    "7.3 ベストプラクティス2: 長期トークンをやめ、信頼された公開（Trusted Publishing）へ",
+    "7.4 ベストプラクティス3: 攻撃の原因を知る（Filippo Valsorda の分析）",
+    "7.5 ベストプラクティス4: セキュリティツール自体を攻撃面として扱う",
+    "7.6 ベストプラクティス5: バージョンの固定とロックファイル",
+    "7.7 ベストプラクティス6: インストール時に勝手にコードが動かないようにする",
+    "7.8 ベストプラクティス7: 人を狙う攻撃への備え",
+    "7.9 ベストプラクティス8: 出所を検証する（SLSA、署名、再現ビルド）",
+    "7.10 ベストプラクティス9: 部品表と脆弱性情報の活用",
+    "7.11 ベストプラクティス10: 公開リリースの「不自然さ」に気づく",
+    "7.12 ベストプラクティスとSCS評価領域の対応表【筆者整理】",
+    "8. 90日アクションプラン",
+    "8.1 計画（2026年11月〜2027年2月）",
+    "8.2 今週中にできること（最初の一歩）",
+    "8.3 脅威分析を回す最小セット（60〜90分のワークショップ）",
+    "8.4 開発チーム向けチェックリスト",
+    "9. よくある質問（FAQ）",
+    "付録A. 用語集",
+    "付録B. 出典URL一覧",
+    "B.1 SCS評価制度（一次情報）",
+    "B.2 SCS評価制度（二次情報・解説）",
+    "B.3 脅威分析（開発者・標準）",
+    "B.4 ソフトウェア供給網（国際的な開発者・公式発表）",
+    "B.5 今回の検索では本文を取得していない、既知の公式資料",
+    "付録C. 注意事項と更新履歴",
+    "C.1 このガイドの限界",
+    "C.2 更新履歴"
+  ],
+  "structures": {
+    ".hero": "b22bf8d7d2aff6d67b6608e70c1da53229f1d1f7e448024a4891ec17e67b5ef2",
+    ".brand": "25b396d044796bd63ae0014fd4dc804c94dc1da64f54fbf33933498b10a7b7ab",
+    "#nav": "dd6a9efa50f767d487edda64756a8ce2c859e15b4e5d120acd7549bc4199f82b",
+    ".footer": "ce6cca149c4ff7e960e35a402d9407fec0a1e681e7499cf802e66eabd0ac8cdc",
+    "#s1": "15b1b278b96bbd2209b68e58402442200faddba3c9fc3276fdf710c8180896a7",
+    "#s2": "5575f56cf5b41591af0cfe6a7a5644bcd42863a8e6a36b26b827ff4f80819877",
+    "#s3": "67c0c286c6a2ca7ef72001514862954b0999177e8e09882877a28e651348202e",
+    "#s4": "cd6acd4647c823b5b5f847196034841263007465a4c7306147cfbe9f3c219136",
+    "#s5": "f55bcd084eabbc3c7be9d720ad43b16d74383855778bfea10c844df1140d3851",
+    "#s6": "48e4317ccb5fc9ec723926681fed8f0f63f2141b086db6c6a8b13394e6b4e98b",
+    "#s7": "e3b0a78e2202faeae4ccc8bf4a51cd96bd1e52953d3e802fe80800d49823a9df",
+    "#s8": "588ecf08b79a1fed538a4703b33f16bf6bb3b4eec15e038bcc8739a43399468a",
+    "#s9": "8aef02a61240b7ba7b9df2a9b040db505614dacc335c73ad25f250b4324e8fbc",
+    "#s10": "56769b619343f7c5f4a2a8b1d1839dfa0172a5edb71ea4e292a139ce617922c4",
+    "#s11": "ff6a22b0b9122723051d8f057cd62a23d8248aff502094c22dd84b212c87090d",
+    "#s12": "7905892850fcf03e53938915a0ba33495d8b617ee833039d8d72fa18198fae8b",
+    "#s13": "3544e0adc3d8381b2cdc62228eddfba0932318d178f601c930badad96080271a",
+    "#s14": "6e74a5ada74054e83b2d28e1f57e3c2583d02c8ef2d4e26befd8e52ac7316baa",
+    "#s15": "b5abebda653166fd6aa1c2bdf728169f49a255a5592aad5bd1c29c1b24fe1788",
+    "#s16": "bbd6a81c2c493afecf3a0eaec03f274c87f6ce8a3ca71abec0e1a1c7cf255014",
+    "#s17": "f7d290817ae33839faff59bdc346ce9f3a599e528a17b8ebbf4d480e237b66f4",
+    "#s18": "ae54d625eea57ca56c7dd313681c65097b78d66acbfb32213379574781343144",
+    "#s19": "5a4429dc71167ceec623076ec9373351ce1ab5141e2c0dd52f95d8fedb071bfd",
+    "#s20": "9384c972e9b6ef6603035fe59ea8799ecb7e4618ffa930511c7e934385c034c4",
+    "#s21": "2426601e8107775517873a1ac52799d412ff177feb5dcfb4a748e1d1d2cd6a81",
+    "#s22": "c09b6f9da589a5891ad412055cfcac4e7824fc4a22b8ce26bef2522c46ccfca2",
+    "#s23": "a83b2b25d5a0f3801eeef7684c689b7fdf46cc4f171916851e3b68c6842263b5",
+    "#s24": "e3567d231aeb0812d13739a4f4fb47ba4fb3ed1ef0d606174dc0ba31cd1f3e5f",
+    "#s25": "25c6c2e2dd5d7c5ffabaf3fae5cc1c45f54d44570063b16a1767821579517d97",
+    "#s26": "0ab43ebff8fb6681368872aefc20c5fc524fbb1a8c7132fa5055d04a44c9679c",
+    "#s27": "24520c5c081010aa32cf4abf00f963757701a801f224ac67916bcc306248d319",
+    "#s28": "a58d49fd19730446c95e3a9da0c7a1bc9a726c27a299feb577298c54d473f805",
+    "#s29": "f2a0797cc9bbb99b44203dba9ce0dbd118021e4928d394c6afa3bf389ab0f9d3",
+    "#s30": "180b52227767ffba8a25e25a375747ca7660837811fd2543f4451f52fbe15030",
+    "#s31": "6e545287e87ad8d89e3587a85cfdf41bfb6d5aaab5e2c97862117b0ef41b8b1f",
+    "#s32": "007b839c3d11a7c036432a7bb069c1e4bfa64642e68e625f45e599a6b8dfbc22",
+    "#s33": "60706340baf27a18b9b40ab0167bf76948af2a043bd0ad11d97b802f2dc69403",
+    "#s34": "b3e2398bd8eb5199c289bbaea2cf72fe62f357e76ca55084289a6472c698d963",
+    "#s35": "eac17e69bb62163c00a2a46e13f6f1b1f8694c022f66fb7fc4885c5007dd21f9",
+    "#s36": "bc70870ea4430df3426fd1579439bacb491b961605996b7b1a335a7e9149ab40",
+    "#s37": "f525dc22d57b1747770f6e8f628c2739a7f8b2cf8611e423f9e2ac3f3f75ad1c",
+    "#s38": "d29cdf8acf32c39da0ecf30cb5426cb10848c25d6a3f998642df74c578497bb9",
+    "#s39": "a135194df5297dddfbc21ec70998af1a786be474b87b37f42ebe94803490e75f",
+    "#s40": "d6f3ce69a84cda3ff9d79967b6d215674ebafae9aaba308a4031a768cc7a12c7",
+    "#s41": "41866e28063059dfc3fa3714a93ae189bc9640ddde135f6d7263c0557f0d0e8f",
+    "#s42": "8a1b6706dde7a2faf005ac34316c17b8b775dd90860c053effed08db7955e8fc",
+    "#s43": "a02e07be014dafbb895ea2baec68bd3e1ade8fbda739d430f430928b7c1f5c5b",
+    "#s44": "3d837de8b57e03936c33b84ec841201e17d16da476af1c2bfa78fe408191cfed",
+    "#s45": "e3c5109422f1a9be7908116946c0077e1cb706926cda62b1ffe8ee85048e6ac7",
+    "#s46": "2872fe5d57dfb7d4576f1a2d695893d095163ffb04d77422f36ee712d7a68816",
+    "#s47": "f54ce8a50bc016719d9e2e158980813a17841e472370b8d5a330e755fa9fdc42",
+    "#s48": "aa46a326553f939636c93664522528a588b5f630ec36380b8d3227da24b9302d",
+    "#s49": "a0b109aafa85aac17e7d581513d9627eb9942a712af16509a5796a3accf2b55c",
+    "#s50": "9cdc5fd91de1c27489390a850fbb7299ad8e7f58607c5729e246add63d05f7e6",
+    "#s51": "61221974f64c1d6f880bb74f8a18da2d87f7802eb4b1e14e1d9ea1023655e00d",
+    "#s52": "d83a6d007b9d5bf98f684e87cf3c09fc45b05ae8320da3904f494197d3a59731",
+    "#s53": "8aac3bdb8b65a44b89f64f68ba49d8f2ef0eb1a911bd38d7bc60efb10341ee6d",
+    "#s54": "7479a80c4229672505bff879968f4da0a23c9066cf71a326c1d2bda6f061c37e",
+    "#s55": "491748bfc9d155261dc9ed8686725f05a2724a20ac0a072caf5e5899ec8eed34",
+    "#s56": "4cdeb34e855783f2286345d77b0b30c75409f61954bfc4226fae269ffca2c4b5",
+    "#s57": "be228225410869516f028c745e85e3e808b38e709f482a7455768a51741cb817",
+    "#s58": "a554d11141f01de18bf582005827f5ba7ee8bff2b8787de2e87779a3b6e751a6",
+    "#s59": "94661f177c9bc2d139e7dce8fd0d144eb660f7649f35c3e6bd199d1136280ff5",
+    "#s60": "1f6b35257b1ccfb1e4a264280a8e99dcc1b725c40cebe5bfaa88e92821c5ee2a",
+    "#s61": "cd52362a1c0dc5739d954e76a2c3158cf07a70877576d3a6bcaa26d5e0356096",
+    "#s62": "9688cf5dd294e023f0cb6e0ae49fabdbf917882e13af4f283c3e05f98a2c8fbd",
+    "#s63": "a1045c6257aeeb4fd143b32f7a17f5ce9701b167c3a48cb6c00b05adca7a4ff0",
+    "#s64": "541e992f37fbb6fbc9d7006fc2c1db10dbec0c71358b1e360270dceb94005616",
+    "#s65": "d78dcafa826894325fb693876eb86addce799e9694dded81ba15c9c94c03be5c",
+    "#s66": "d1beae64dca76e26f9ac9f80d8a2a5d5a99b890a4926bcdca0becb3e28b866db",
+    "#s67": "61a423dc758c8034992679016a86891fc03f434df5629a8dde7e0cedd49547c7",
+    "#s68": "6c4ee45db9139f9b93e420eae77d33de236fb10fc19ebfc88b0fd6eadc9f8354",
+    "#s69": "d526b226c3b817612586518d9204cad00c1a8fd683162d5be4700266cc38bba9",
+    "#s70": "c3be1d44cd0416914040aad08afdab83e20ffeb01dbb1b4e1697c3178f298074",
+    "#s71": "490b1e66a8d18d221bdd101f575debbb5954d2de42b6770c079c7976fa4ea465",
+    "#s72": "d8a67ce2019f2dee87ddb4227435e5fdec2467daa0fb46745f7de23d5ce0f4f0",
+    "#s73": "038d8d2189cab9e1fbaa977c7cf7e2804ac882025524243ac7ad86d8ab524954",
+    "#s74": "b048d281e246ee3d25f1a175cd0b399186c33417fd97c2cbf74c0601ced534af",
+    "#s75": "76e34707a21c8069fd3543c5aaa0d94a324242994cc559abe2a5e190d1a549ed",
+    "#s76": "53e66d2b4f36fee137bde6ed66c6f419bd6d1b3092986c750d3a6e312a5dc71a",
+    "#s77": "97a0e7fee587a454993c7c8f8a9cab23ffecc2ff2e08e05e4f92d060ed12c6c9",
+    "#s78": "175e8161967c120d85dfb3a117bbcf89bbd0b18b7094a55aa872f61cf6c03b5f",
+    "#s79": "a7776cf98a37c09f6bbf7f8d26eb670fa999a592ce7c2e04f86f0b5d4ba91571",
+    "#s80": "79d126af6df7179fca84ff2a643f330a55d4d793abc9f3cec52fe4df6323e783",
+    "#s81": "2f078080b5045c00fe5ea5ac37e3d4d568aeb434e04da5f32d49e6580d2b88f6",
+    "#s82": "f90d71a114b64d1bc14899900ae6c1e258b97a8b30749c9b19f9a6e27ccd2e59",
+    "#s83": "5279a637d3239e6553898ce4c972a984dee3573652a1741c479251430f3346c6",
+    "#s84": "019cbdbf101dd527d1b716cb03652defbffa97d7c310381c34f3a1ca6a65386a",
+    "#s85": "fd157bbfa4db753dd423783b507431bedcd79e49ee51bc6c89cf6f4512ce9920"
+  },
+  "diagrams": {
+    "d1": "c0417da113bdcc04750e956510af3460cfeec2dfa27d68abcb7065cae6d08588",
+    "d2": "28359e35780d4f2ff44eb2c3037d065652fc62255580efd8e26e072aa0604f96",
+    "d3": "215f12934360d542b5d623f5cd2d2ec6a9c0ea1a25b17702c1c6897a0adba25f",
+    "d4": "8a9f26c237d8b46da09ddf0c79ba83d85dd2fc8c4770e03b43ef982876262c40",
+    "d5": "1cc453562cf9940ba6dd6dbb46251eb3ac3aaf25e8bebf864bd8bce3d17f1121",
+    "d6": "748189f6de9d63f2e9aa000fc92bb8cd890ec9b095de9bcfe5a695bd191b7b45",
+    "d7": "a3cf7fcf782ef8eead1e23d78b92f9bf82b201c35ea83ea89b8120638022ff19",
+    "d8": "efef42e3c63fdc6d1a9b5c8c0192f8112a5f7cda5d95d430e61fe74c90a5ac59",
+    "d9": "0de54b62b49a70ecd0a4a46f7a78da7b53fa882e833f53cd8373cef144c1797c",
+    "d10": "582b40e808332b1ceb30728eb505320c77d254d01f364d9f35a0200b3905ef7d",
+    "d11": "d0a925b06c7e115631aa0b40085322c6f72b9b8972c3af889bfa73841d01c12a",
+    "d12": "dadc6af6e195b6822cd306fbcf2a344bbcb2babda6a038dd213194c23fec8dd9",
+    "d13": "21d9d82673cdb2ac2d705118c93e1a4a462f4edabf02daf2336e13058afe4df9",
+    "d14": "172a1d5f75e46ea21e893f05da01442bda18fe1f88e49b9b6d6bf38dd3388f1c"
+  },
+  "icons": [
+    "ti ti-menu-2",
+    "ti ti-info-circle"
+  ],
+  "status": "Implemented and originals archived byte-exact; dedicated 220 pass; full suite in progress; no build; visual review pending",
+  "cssRules": [
+    {
+      "selector": ":root",
+      "ancestry": "",
+      "declarations": [
+        "--color-paper:#f6f7f9",
+        "--color-ink:#161b26",
+        "--color-indigo:#2e3f72",
+        "--color-gold:#b8802a",
+        "--color-forest:#1b6e6a",
+        "--color-plum:#8c3a5c",
+        "--surface:#ffffff",
+        "--ink-2:#3a4358",
+        "--ink-3:#515b72",
+        "--border:#d5dae5",
+        "--border-strong:#b7c0d2",
+        "--tint-indigo:#eef1f8",
+        "--tint-gold:#faf1df",
+        "--tint-forest:#e4f1ef",
+        "--tint-plum:#f6e9ef",
+        "--gold-ink:#7a5212",
+        "--forest-ink:#14524f",
+        "--plum-ink:#6e2b47",
+        "--sidebar-w:288px",
+        "--font-serif:'Source Serif 4', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia,\n                    serif",
+        "--font-sans:'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',\n                    Meiryo, system-ui, -apple-system, 'Segoe UI', sans-serif",
+        "--font-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+        "--radius-md:8px",
+        "--radius-lg:12px"
+      ]
+    },
+    {
+      "selector": "*",
+      "ancestry": "",
+      "declarations": [
+        "box-sizing:border-box"
+      ]
+    },
+    {
+      "selector": "html",
+      "ancestry": "",
+      "declarations": [
+        "font-size:16px",
+        "scroll-behavior:smooth",
+        "scroll-padding-top:24px",
+        "-webkit-text-size-adjust:100%"
+      ]
+    },
+    {
+      "selector": "body",
+      "ancestry": "",
+      "declarations": [
+        "margin:0",
+        "background:var(--color-paper)",
+        "color:var(--color-ink)",
+        "font-family:var(--font-sans)",
+        "font-size:1rem",
+        "line-height:1.75",
+        "overflow-wrap:anywhere"
+      ]
+    },
+    {
+      "selector": "a",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--color-indigo)",
+        "text-decoration:underline",
+        "text-underline-offset:3px"
+      ]
+    },
+    {
+      "selector": "a:hover",
+      "ancestry": "",
+      "declarations": [
+        "color:var(--color-ink)"
+      ]
+    },
+    {
+      "selector": ":focus-visible",
+      "ancestry": "",
+      "declarations": [
+        "outline:2px solid var(--color-indigo)",
+        "outline-offset:2px",
+        "border-radius:4px"
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "ancestry": "",
+      "declarations": [
+        "position:fixed",
+        "top:0",
+        "left:0",
+        "bottom:0",
+        "width:var(--sidebar-w)",
+        "background:var(--surface)",
+        "border-right:1px solid var(--border)",
+        "overflow-y:auto",
+        "z-index:50",
+        "padding:0 0 32px"
+      ]
+    },
+    {
+      "selector": ".brand",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:12px",
+        "align-items:center",
+        "padding:20px 20px 16px",
+        "border-bottom:1px solid var(--border)",
+        "position:sticky",
+        "top:0",
+        "background:var(--surface)",
+        "z-index:2"
+      ]
+    },
+    {
+      "selector": ".brand svg",
+      "ancestry": "",
+      "declarations": [
+        "flex:none",
+        "width:44px",
+        "height:44px"
+      ]
+    },
+    {
+      "selector": ".brand-name",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-serif)",
+        "font-weight:600",
+        "font-size:1.25rem",
+        "line-height:1.2",
+        "color:var(--color-indigo)"
+      ]
+    },
+    {
+      "selector": ".brand-sub",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1rem",
+        "line-height:1.4",
+        "color:var(--ink-3)"
+      ]
+    },
+    {
+      "selector": ".sidebar nav",
+      "ancestry": "",
+      "declarations": [
+        "padding:12px 12px 0"
+      ]
+    },
+    {
+      "selector": ".nav-h1",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "padding:8px 10px",
+        "font-weight:500",
+        "font-size:1rem",
+        "line-height:1.5",
+        "color:var(--color-ink)",
+        "text-decoration:none",
+        "border-radius:var(--radius-md)",
+        "background:var(--tint-indigo)",
+        "margin-top:8px"
+      ]
+    },
+    {
+      "selector": ".nav-h1:hover",
+      "ancestry": "",
+      "declarations": [
+        "background:#e1e7f5"
+      ]
+    },
+    {
+      "selector": ".sidebar nav ul",
+      "ancestry": "",
+      "declarations": [
+        "list-style:none",
+        "margin:4px 0 0",
+        "padding:0"
+      ]
+    },
+    {
+      "selector": ".sidebar nav li",
+      "ancestry": "",
+      "declarations": [
+        "padding-left:0",
+        "margin:0"
+      ]
+    },
+    {
+      "selector": ".sidebar nav li::before",
+      "ancestry": "",
+      "declarations": [
+        "content:none"
+      ]
+    },
+    {
+      "selector": ".sidebar nav li a",
+      "ancestry": "",
+      "declarations": [
+        "display:block",
+        "padding:6px 10px 6px 14px",
+        "font-size:1rem",
+        "line-height:1.5",
+        "color:var(--ink-2)",
+        "text-decoration:none",
+        "border-left:3px solid transparent",
+        "border-radius:0 var(--radius-md) var(--radius-md) 0"
+      ]
+    },
+    {
+      "selector": ".sidebar nav li a:hover",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--color-paper)",
+        "color:var(--color-ink)"
+      ]
+    },
+    {
+      "selector": ".sidebar nav a.active",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--color-gold)",
+        "background:var(--tint-gold)",
+        "color:var(--color-ink)",
+        "font-weight:500"
+      ]
+    },
+    {
+      "selector": ".menu-btn",
+      "ancestry": "",
+      "declarations": [
+        "display:none",
+        "position:fixed",
+        "right:20px",
+        "bottom:20px",
+        "z-index:70",
+        "width:56px",
+        "height:56px",
+        "border-radius:50%",
+        "border:1px solid var(--color-indigo)",
+        "background:var(--color-indigo)",
+        "color:var(--surface)",
+        "font-size:1.5rem",
+        "cursor:pointer",
+        "align-items:center",
+        "justify-content:center"
+      ]
+    },
+    {
+      "selector": ".menu-btn:hover",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--color-ink)"
+      ]
+    },
+    {
+      "selector": ".backdrop",
+      "ancestry": "",
+      "declarations": [
+        "display:none",
+        "position:fixed",
+        "inset:0",
+        "background:rgba(22, 27, 38, 0.45)",
+        "z-index:55"
+      ]
+    },
+    {
+      "selector": ".layout",
+      "ancestry": "",
+      "declarations": [
+        "display:block"
+      ]
+    },
+    {
+      "selector": "main",
+      "ancestry": "",
+      "declarations": [
+        "margin-left:var(--sidebar-w)",
+        "padding:0 48px 96px"
+      ]
+    },
+    {
+      "selector": ".hero",
+      "ancestry": "",
+      "declarations": [
+        "padding:56px 0 32px",
+        "border-bottom:1px solid var(--border)",
+        "margin-bottom:8px"
+      ]
+    },
+    {
+      "selector": ".eyebrow",
+      "ancestry": "",
+      "declarations": [
+        "display:inline-block",
+        "padding:2px 12px",
+        "border:1px solid var(--color-gold)",
+        "border-radius:999px",
+        "color:var(--gold-ink)",
+        "background:var(--tint-gold)",
+        "font-weight:500",
+        "margin-bottom:16px"
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-serif)",
+        "font-weight:600",
+        "font-size:2.25rem",
+        "line-height:1.3",
+        "margin:0 0 16px",
+        "color:var(--color-indigo)"
+      ]
+    },
+    {
+      "selector": ".hero > p",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.125rem",
+        "color:var(--ink-2)",
+        "margin:0 0 24px"
+      ]
+    },
+    {
+      "selector": "section",
+      "ancestry": "",
+      "declarations": [
+        "padding-top:8px"
+      ]
+    },
+    {
+      "selector": ".chapter",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:72px"
+      ]
+    },
+    {
+      "selector": ".chapter > h1",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-serif)",
+        "font-weight:600",
+        "font-size:1.75rem",
+        "line-height:1.35",
+        "margin:0 0 16px",
+        "padding:20px 24px",
+        "background:var(--color-indigo)",
+        "color:var(--surface)",
+        "border-radius:var(--radius-lg)",
+        "border-bottom:4px solid var(--color-gold)"
+      ]
+    },
+    {
+      "selector": ".sec",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:48px"
+      ]
+    },
+    {
+      "selector": ".sec > h2",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-serif)",
+        "font-weight:600",
+        "font-size:1.5rem",
+        "line-height:1.4",
+        "margin:0 0 16px",
+        "padding:0 0 10px",
+        "border-bottom:2px solid var(--color-indigo)"
+      ]
+    },
+    {
+      "selector": "h3",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.1875rem",
+        "font-weight:500",
+        "line-height:1.5",
+        "margin:32px 0 12px",
+        "padding-left:12px",
+        "border-left:4px solid var(--color-gold)"
+      ]
+    },
+    {
+      "selector": "p",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 16px"
+      ]
+    },
+    {
+      "selector": "strong",
+      "ancestry": "",
+      "declarations": [
+        "font-weight:500",
+        "color:var(--color-indigo)"
+      ]
+    },
+    {
+      "selector": "ul,\n            ol",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 16px",
+        "padding:0",
+        "list-style:none"
+      ]
+    },
+    {
+      "selector": "ul > li",
+      "ancestry": "",
+      "declarations": [
+        "position:relative",
+        "padding-left:22px",
+        "margin:6px 0"
+      ]
+    },
+    {
+      "selector": "ul > li::before",
+      "ancestry": "",
+      "declarations": [
+        "content:''",
+        "position:absolute",
+        "left:5px",
+        "top:0.8em",
+        "width:7px",
+        "height:7px",
+        "border-radius:50%",
+        "background:var(--color-indigo)"
+      ]
+    },
+    {
+      "selector": "ol",
+      "ancestry": "",
+      "declarations": [
+        "counter-reset:n"
+      ]
+    },
+    {
+      "selector": "ol > li",
+      "ancestry": "",
+      "declarations": [
+        "counter-increment:n",
+        "position:relative",
+        "padding-left:44px",
+        "margin:10px 0"
+      ]
+    },
+    {
+      "selector": "ol > li::before",
+      "ancestry": "",
+      "declarations": [
+        "content:counter(n)",
+        "position:absolute",
+        "left:0",
+        "top:1px",
+        "width:28px",
+        "height:28px",
+        "border-radius:50%",
+        "background:var(--color-indigo)",
+        "color:var(--surface)",
+        "font-weight:500",
+        "line-height:28px",
+        "text-align:center"
+      ]
+    },
+    {
+      "selector": "code",
+      "ancestry": "",
+      "declarations": [
+        "font-family:var(--font-mono)",
+        "font-size:1rem",
+        "background:var(--tint-indigo)",
+        "color:var(--color-indigo)",
+        "padding:1px 6px",
+        "border-radius:4px"
+      ]
+    },
+    {
+      "selector": "pre",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 24px",
+        "padding:16px 20px",
+        "background:var(--surface)",
+        "border:1px solid var(--border)",
+        "border-radius:var(--radius-lg)",
+        "overflow-x:auto",
+        "line-height:1.6"
+      ]
+    },
+    {
+      "selector": "pre code,\n            pre code.hljs",
+      "ancestry": "",
+      "declarations": [
+        "background:transparent",
+        "padding:0",
+        "color:var(--color-ink)",
+        "font-size:1rem",
+        "overflow-wrap:normal"
+      ]
+    },
+    {
+      "selector": ".table-wrap",
+      "ancestry": "",
+      "declarations": [
+        "overflow-x:auto",
+        "margin:0 0 24px",
+        "border:1px solid var(--border)",
+        "border-radius:var(--radius-lg)",
+        "background:var(--surface)"
+      ]
+    },
+    {
+      "selector": "table",
+      "ancestry": "",
+      "declarations": [
+        "width:100%",
+        "border-collapse:collapse",
+        "font-size:1rem",
+        "line-height:1.6"
+      ]
+    },
+    {
+      "selector": "th,\n            td",
+      "ancestry": "",
+      "declarations": [
+        "padding:10px 16px",
+        "text-align:left",
+        "vertical-align:top",
+        "border-bottom:1px solid var(--border)"
+      ]
+    },
+    {
+      "selector": "th",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--tint-indigo)",
+        "color:var(--color-indigo)",
+        "font-weight:500",
+        "white-space:nowrap"
+      ]
+    },
+    {
+      "selector": "tbody tr:last-child td",
+      "ancestry": "",
+      "declarations": [
+        "border-bottom:0"
+      ]
+    },
+    {
+      "selector": "tbody tr:nth-child(even) td",
+      "ancestry": "",
+      "declarations": [
+        "background:#fafbfd"
+      ]
+    },
+    {
+      "selector": "td a",
+      "ancestry": "",
+      "declarations": [
+        "word-break:break-all"
+      ]
+    },
+    {
+      "selector": "td:first-child",
+      "ancestry": "",
+      "declarations": [
+        "min-width:7em"
+      ]
+    },
+    {
+      "selector": ".callout",
+      "ancestry": "",
+      "declarations": [
+        "margin:24px 0",
+        "border:1px solid var(--border)",
+        "border-left-width:5px",
+        "border-radius:var(--radius-lg)",
+        "background:var(--surface)",
+        "overflow:hidden"
+      ]
+    },
+    {
+      "selector": ".callout-title",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "align-items:center",
+        "gap:10px",
+        "padding:12px 20px",
+        "font-weight:500",
+        "line-height:1.4"
+      ]
+    },
+    {
+      "selector": ".callout-title i",
+      "ancestry": "",
+      "declarations": [
+        "font-size:1.375rem",
+        "flex:none"
+      ]
+    },
+    {
+      "selector": ".callout-body",
+      "ancestry": "",
+      "declarations": [
+        "padding:16px 20px 4px",
+        "border-top:1px solid var(--border)",
+        "background:var(--surface)"
+      ]
+    },
+    {
+      "selector": ".callout.note",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--color-plum)"
+      ]
+    },
+    {
+      "selector": ".callout.note .callout-title",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--tint-plum)",
+        "color:var(--plum-ink)"
+      ]
+    },
+    {
+      "selector": ".callout.practice",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--color-gold)"
+      ]
+    },
+    {
+      "selector": ".callout.practice .callout-title",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--tint-gold)",
+        "color:var(--gold-ink)"
+      ]
+    },
+    {
+      "selector": ".callout.source",
+      "ancestry": "",
+      "declarations": [
+        "border-left-color:var(--color-forest)"
+      ]
+    },
+    {
+      "selector": ".callout.source .callout-title",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--tint-forest)",
+        "color:var(--forest-ink)"
+      ]
+    },
+    {
+      "selector": ".diagram",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "justify-content:center",
+        "align-items:flex-start",
+        "margin:24px 0",
+        "padding:24px",
+        "background:var(--surface)",
+        "border:1px solid var(--border)",
+        "border-radius:var(--radius-lg)",
+        "min-height:96px",
+        "overflow-x:auto"
+      ]
+    },
+    {
+      "selector": ".diagram svg",
+      "ancestry": "",
+      "declarations": [
+        "flex:0 1 auto",
+        "max-width:100%",
+        "height:auto",
+        "overflow:visible"
+      ]
+    },
+    {
+      "selector": ".diagram-error",
+      "ancestry": "",
+      "declarations": [
+        "margin:0",
+        "white-space:pre-wrap",
+        "font-family:var(--font-mono)",
+        "font-size:1rem",
+        "color:var(--plum-ink)"
+      ]
+    },
+    {
+      "selector": "details.qa",
+      "ancestry": "",
+      "declarations": [
+        "margin:0 0 24px",
+        "border:1px solid var(--border)",
+        "border-radius:var(--radius-lg)",
+        "background:var(--surface)"
+      ]
+    },
+    {
+      "selector": "details.qa > summary",
+      "ancestry": "",
+      "declarations": [
+        "cursor:pointer",
+        "padding:12px 20px",
+        "font-weight:500",
+        "color:var(--color-indigo)",
+        "background:var(--tint-indigo)",
+        "border-radius:var(--radius-lg)"
+      ]
+    },
+    {
+      "selector": "details.qa[open] > summary",
+      "ancestry": "",
+      "declarations": [
+        "border-bottom:1px solid var(--border)",
+        "border-radius:var(--radius-lg) var(--radius-lg) 0 0"
+      ]
+    },
+    {
+      "selector": ".qa-body",
+      "ancestry": "",
+      "declarations": [
+        "padding:16px 20px 4px"
+      ]
+    },
+    {
+      "selector": "ul.checklist",
+      "ancestry": "",
+      "declarations": [
+        "counter-reset:c"
+      ]
+    },
+    {
+      "selector": "ul.checklist > li",
+      "ancestry": "",
+      "declarations": [
+        "padding:0",
+        "margin:10px 0"
+      ]
+    },
+    {
+      "selector": "ul.checklist > li::before",
+      "ancestry": "",
+      "declarations": [
+        "content:none"
+      ]
+    },
+    {
+      "selector": ".checklist label",
+      "ancestry": "",
+      "declarations": [
+        "display:flex",
+        "gap:14px",
+        "align-items:flex-start",
+        "padding:12px 16px",
+        "border:1px solid var(--border)",
+        "border-radius:var(--radius-md)",
+        "background:var(--surface)",
+        "cursor:pointer"
+      ]
+    },
+    {
+      "selector": ".checklist label:hover",
+      "ancestry": "",
+      "declarations": [
+        "border-color:var(--border-strong)"
+      ]
+    },
+    {
+      "selector": ".ck-n",
+      "ancestry": "",
+      "declarations": [
+        "flex:none",
+        "width:28px",
+        "height:28px",
+        "border-radius:50%",
+        "background:var(--color-indigo)",
+        "color:var(--surface)",
+        "font-weight:500",
+        "line-height:28px",
+        "text-align:center"
+      ]
+    },
+    {
+      "selector": ".ck-n::before",
+      "ancestry": "",
+      "declarations": [
+        "counter-increment:c",
+        "content:counter(c)"
+      ]
+    },
+    {
+      "selector": ".checklist input",
+      "ancestry": "",
+      "declarations": [
+        "appearance:none",
+        "-webkit-appearance:none",
+        "flex:none",
+        "position:relative",
+        "width:24px",
+        "height:24px",
+        "margin:2px 0 0",
+        "border:2px solid var(--color-indigo)",
+        "border-radius:6px",
+        "background:var(--surface)",
+        "cursor:pointer"
+      ]
+    },
+    {
+      "selector": ".checklist input:checked",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--color-forest)",
+        "border-color:var(--color-forest)"
+      ]
+    },
+    {
+      "selector": ".checklist input:checked::after",
+      "ancestry": "",
+      "declarations": [
+        "content:''",
+        "position:absolute",
+        "left:6px",
+        "top:1px",
+        "width:6px",
+        "height:12px",
+        "border:solid var(--surface)",
+        "border-width:0 3px 3px 0",
+        "transform:rotate(45deg)"
+      ]
+    },
+    {
+      "selector": ".ck-text",
+      "ancestry": "",
+      "declarations": [
+        "flex:1 1 auto",
+        "min-width:0"
+      ]
+    },
+    {
+      "selector": ".checklist li:has(input:checked) label",
+      "ancestry": "",
+      "declarations": [
+        "background:var(--tint-forest)",
+        "border-color:var(--color-forest)"
+      ]
+    },
+    {
+      "selector": ".checklist li:has(input:checked) .ck-text",
+      "ancestry": "",
+      "declarations": [
+        "text-decoration:line-through",
+        "color:var(--ink-3)"
+      ]
+    },
+    {
+      "selector": ".footer",
+      "ancestry": "",
+      "declarations": [
+        "margin-top:64px",
+        "padding-top:24px",
+        "border-top:1px solid var(--border)",
+        "color:var(--ink-3)"
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "transform:translateX(-100%)",
+        "transition:transform 0.25s ease",
+        "width:min(320px, 86vw)",
+        "z-index:60"
+      ]
+    },
+    {
+      "selector": ".sidebar.open",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "transform:translateX(0)"
+      ]
+    },
+    {
+      "selector": ".backdrop.show",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "display:block"
+      ]
+    },
+    {
+      "selector": ".menu-btn",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "display:flex"
+      ]
+    },
+    {
+      "selector": "main",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "margin-left:0",
+        "padding:0 24px 112px"
+      ]
+    },
+    {
+      "selector": ".hero",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "padding-top:40px"
+      ]
+    },
+    {
+      "selector": ".hero h1",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "font-size:1.875rem"
+      ]
+    },
+    {
+      "selector": ".chapter > h1",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "font-size:1.5rem",
+        "padding:16px 18px"
+      ]
+    },
+    {
+      "selector": ".sec > h2",
+      "ancestry": "media (max-width: 1024px)",
+      "declarations": [
+        "font-size:1.3125rem"
+      ]
+    },
+    {
+      "selector": "main",
+      "ancestry": "media (max-width: 520px)",
+      "declarations": [
+        "padding:0 16px 112px"
+      ]
+    },
+    {
+      "selector": ".diagram",
+      "ancestry": "media (max-width: 520px)",
+      "declarations": [
+        "padding:12px",
+        "justify-content:flex-start"
+      ]
+    },
+    {
+      "selector": ".diagram svg",
+      "ancestry": "media (max-width: 520px)",
+      "declarations": [
+        "max-width:none"
+      ]
+    },
+    {
+      "selector": "th,\n                td",
+      "ancestry": "media (max-width: 520px)",
+      "declarations": [
+        "padding:8px 12px"
+      ]
+    },
+    {
+      "selector": ".checklist label",
+      "ancestry": "media (max-width: 520px)",
+      "declarations": [
+        "padding:10px 12px"
+      ]
+    },
+    {
+      "selector": "html",
+      "ancestry": "media (prefers-reduced-motion: reduce)",
+      "declarations": [
+        "scroll-behavior:auto"
+      ]
+    },
+    {
+      "selector": ".sidebar",
+      "ancestry": "media (prefers-reduced-motion: reduce)",
+      "declarations": [
+        "transition:none"
+      ]
+    }
+  ],
+  "archive": "archive/security-guides/",
+  "verification": {
+    "date": "2026-11-12",
+    "dedicated": {
+      "pass": 221,
+      "files": 11,
+      "assertions": 2659
+    },
+    "sourceAbsent": {
+      "pass": 118,
+      "skip": 103,
+      "fail": 0
+    },
+    "browser": {
+      "widths": [
+        375,
+        768,
+        1024,
+        1025,
+        1440
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "comparedElementsPerCondition": 1456,
+      "hoveredCellsPerCondition": 865,
+      "pageErrors": 0,
+      "sourceAbsentConditions": 10
+    },
+    "lint": "passed",
+    "types": "passed",
+    "build": "prohibited; not run",
+    "visualReview": "user-owned; pending",
+    "fullSuite": {
+      "pass": 3317,
+      "skip": 0,
+      "fail": 0,
+      "files": 369,
+      "assertions": 587139
+    },
+    "highlighterIsolation": {
+      "red": "eb20542",
+      "green": "15fa8eb",
+      "regressionPass": 12
+    }
+  }
+}
