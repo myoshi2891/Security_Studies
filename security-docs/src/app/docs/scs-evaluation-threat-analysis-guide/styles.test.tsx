@@ -131,7 +131,7 @@ test('closed mobile TOC is hidden from focus while open and desktop sidebars sta
  try{
   w.document.head.innerHTML='<style>'+css()+'</style>';
   w.document.body.innerHTML='<div class="scs-guide scs-guide"><aside class="sidebar"><a href="#s1">link</a></aside></div>';
-  const sidebar=w.document.querySelector<HTMLElement>('.sidebar')!;
+  const sidebar=w.document.querySelector('.sidebar')!;
   for(const width of [375,1024]){
    w.happyDOM.setWindowSize({width,height:900});
    expect(w.getComputedStyle(sidebar).visibility).toBe('hidden');
