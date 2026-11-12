@@ -67,6 +67,12 @@ export function declarations(css: postcss.Root, selector: string) {
   return values;
 }
 
+export function assertFigureDefinitions(section: Element, definitions: Map<string, string>) {
+  for (const figure of section.querySelectorAll('.mermaid-target[id]')) {
+    expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.id) ?? null);
+  }
+}
+
 export function chapterContracts(ids: string[]) {
   for (const id of ids) {
     sourceTest(`${id}: all text, table cells, list hierarchy, code, callouts, diagrams, links and emphasis survive`, async () => {
@@ -80,9 +86,7 @@ export function chapterContracts(ids: string[]) {
         expect(content(migrated!), selector).toEqual(content(original));
       }
       expect([...migrated!.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent)).toEqual([...original.querySelectorAll('pre:not(.mermaid)')].map(el => el.textContent));
-      for (const figure of migrated!.querySelectorAll('.mermaid-target[data-diagram]')) {
-        expect(figure.getAttribute('data-definition')).toBe(definitions.get(figure.getAttribute('data-diagram')!) ?? null);
-      }
+      assertFigureDefinitions(migrated!, definitions);
     });
   }
 }

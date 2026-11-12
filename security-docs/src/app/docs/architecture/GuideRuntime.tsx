@@ -49,7 +49,7 @@ export function GuideRuntime({children}:{children:ReactNode}){
   const change=(e:Event)=>{if(e.target instanceof Element&&e.target.matches('.ck-item input'))update();};update();
   const key=(e:KeyboardEvent)=>{
    if(e.key==='Escape'&&open){drawer(false);return;}
-   if(open&&e.key==='Tab'){const controls=[...links,toggle],first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+   if(open&&e.key==='Tab'){const controls=[toggle,...links],first=controls[0],last=controls.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
    if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key))pinned=false;
   };
   const release=(event:Event)=>{if(event.target instanceof Node&&sidebar.contains(event.target))return;pinned=false;};

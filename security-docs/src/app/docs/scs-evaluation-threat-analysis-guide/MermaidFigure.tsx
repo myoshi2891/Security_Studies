@@ -35,7 +35,7 @@ export function MermaidFigure({id,source,label,renderer=renderDiagram}:{id:strin
   return()=>{active=false;};
  },[near,id,source,renderer,unique,attempt]);
  const current=result?.source===source?result:undefined;
- return <div ref={ref} className="diagram" data-diagram={id} data-definition={source} role="img" aria-label={label}>
-  {current?.svg?<div dangerouslySetInnerHTML={{__html:current.svg}}/>:current?.failed?<div><p className="mermaid-error" role="alert">この図を描画できませんでした。ソースを表示します。</p><pre>{source}</pre><button type="button" onClick={()=>{setResult(undefined);setAttempt(n=>n+1);}}>図の描画を再試行</button></div>:<span role="status">{label} を描画中…</span>}
+ return <div ref={ref} className="diagram" data-diagram={id} data-definition={source}>
+  {current?.svg?<div role="img" aria-label={label} dangerouslySetInnerHTML={{__html:current.svg}}/>:current?.failed?<div><p className="mermaid-error" role="alert">この図を描画できませんでした。ソースを表示します。</p><pre>{source}</pre><button type="button" onClick={()=>{setResult(undefined);setAttempt(n=>n+1);}}>図の描画を再試行</button></div>:<span role="status">{label} を描画中…</span>}
  </div>;
 }
