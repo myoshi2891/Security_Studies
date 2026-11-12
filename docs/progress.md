@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-12（SCS画面置換・全体3317件成功・共有干渉修正と最終検証完了）
+> **最終更新**: 2026-11-12（レビュー7件修正・関連354件成功・全3322テスト定義）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,9 +12,9 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **3317成功 / 0 skip / 0失敗** | 369ファイル・587139 expect。SCS専用221件と共有highlighter干渉回帰を含む最終実測。 |
-| テストファイル数 | **369ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **145/145 (100%)** | 従来141＋SCSの4ロジック。MDX・データは分母外。全369テストファイルとは別集計。 |
+| テストケース総数 | **3322定義** | 今回は関連354成功/0失敗（23ファイル、7274 expect）。前回全体3317成功/0skip/0失敗（369ファイル、587139 expect）。全体再実行は今回未実施。 |
+| テストファイル数 | **371ファイル** | 原本比較・ページ移行・配色回帰を含む |
+| File Unit Coverage | **145/145 (100%)** | 従来141＋SCSの4ロジック。MDX・データは分母外。全371テストファイルとは別集計。 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
@@ -23,25 +23,27 @@
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
-| `src/app/docs/scs-evaluation-threat-analysis-guide/GuideCode.test.tsx` | 1 | ✅ 共有レジストリの非干渉 |
+| `src/app/docs/architecture/GuideCode.test.tsx` | 1 | ✅ 2026-11-12 レビュー回帰追加 |
+| `src/app/docs/architecture/fidelity-helpers.test.tsx` | 2 | ✅ 2026-11-12 レビュー回帰追加 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/GuideCode.test.tsx` | 1 | ✅ 2026-11-12 レビュー回帰検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/foundation.test.tsx` | 11 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/front.test.tsx` | 56 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/middle.test.tsx` | 58 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/rear.test.tsx` | 56 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/page.test.tsx` | 4 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/scs-evaluation-threat-analysis-guide/styles.test.tsx` | 12 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/styles.test.tsx` | 13 | ✅ 2026-11-12 レビュー回帰検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/hydration.test.tsx` | 4 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/scs-evaluation-threat-analysis-guide/interactions.test.tsx` | 6 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/scs-evaluation-threat-analysis-guide/runtime.test.tsx` | 8 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/interactions.test.tsx` | 6 | ✅ 2026-11-12 レビュー回帰検証 |
+| `src/app/docs/scs-evaluation-threat-analysis-guide/runtime.test.tsx` | 8 | ✅ 2026-11-12 レビュー回帰検証 |
 | `src/app/docs/scs-evaluation-threat-analysis-guide/archive.test.ts` | 5 | ✅ 2026-11-12 HTML原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/foundation.test.tsx` | 11 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/front.test.tsx` | 40 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/rear.test.tsx` | 38 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/architecture/styles.test.tsx` | 11 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/styles.test.tsx` | 11 | ✅ 2026-11-12 レビュー回帰検証 |
 | `src/app/docs/architecture/integration.test.tsx` | 4 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/architecture/hydration.test.tsx` | 4 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/architecture/interactions.test.tsx` | 5 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
-| `src/app/docs/architecture/runtime.test.tsx` | 7 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/interactions.test.tsx` | 6 | ✅ 2026-11-12 レビュー回帰検証 |
+| `src/app/docs/architecture/runtime.test.tsx` | 7 | ✅ 2026-11-12 レビュー回帰検証 |
 | `src/app/docs/architecture/archive.test.ts` | 5 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/issep-guide/QuizCard.test.tsx` | 15 | ✅ 2026-11-07 全選択肢判定・原文文字一致・読み上げ・答え直し |
 | `src/app/docs/issep-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
@@ -1669,3 +1671,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 レビュー修正Red: ArchitectureのID図定義照合・構文配色の共有隔離・DOM順Tab循環、SCSの図エラー読み上げ・閉じたモバイル目次を検証。25成功/5失敗/1 module error（図検証ヘルパー未実装）。stale結果はawaited act、Bash probeは実際の描画を検証するよう強化。テスト定義は+5件/2ファイル（全3322定義/371ファイル、Architecture129/SCS222）。前回の全体3317成功は変更前の実測。npm使用・ビルド禁止。
+
+
+2026-11-12 レビュー7件を照合・全件修正（スキップなし）。Architecture: 図定義をIDで照合し未定義IDはnull、JS/JSON/Python/YAMLの専用highlighter、DOM順のTab循環。SCS: 成功図だけ画像ロール、stale完了をawaited actで検証、閉じたモバイル目次をvisibility:hidden（デスクトップ維持）、Bash probeの実描画と共有登録不変を検証。Red 8599610 → Green 53407ba。関連354件/23ファイル成功（Architecture129/SCS222/Kubernetes3、7274 expect）。Chrome375/1024/1025/1440pxの実Tab循環/目次可視性とSCS原本比較5幅×明暗10条件が成功、pageErrors0。npm test・lint・型チェック成功。現在3322定義/371ファイル。全体再実行は今回未実施（前回全体3317成功/369ファイル）。ビルド禁止/未実行・目視はユーザー担当。
