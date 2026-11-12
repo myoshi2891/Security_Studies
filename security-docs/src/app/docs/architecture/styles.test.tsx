@@ -47,7 +47,7 @@ export async function compareCascade(width: number, theme: string, selectors: st
     const resolveClamp = (css: string) => css.replace(/clamp\(([-\d.]+)rem,\s*([-\d.]+)vw,\s*([-\d.]+)rem\)/g,
       (_, min, vw, max) => Math.max(Number(min)*16, Math.min(Number(vw)*width/100, Number(max)*16))+'px');
     original.document.head.innerHTML =
-      '<style>h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}' +
+      '<style>pre{font-family:monospace}h1,h2,h3,h4{font-weight:bold;letter-spacing:0px}ul{list-style-type:disc}ol{list-style-type:decimal}' +
       resolveClamp(sourceStyle()) +
       '</style>';
     original.document.body.innerHTML = sourceDocument.body.innerHTML;
