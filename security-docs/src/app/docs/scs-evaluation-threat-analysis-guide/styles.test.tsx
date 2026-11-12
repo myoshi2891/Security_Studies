@@ -122,6 +122,6 @@ test('custom round dots, ordered counters, checklist counters and hidden TOC dot
 
 test('original GitHub syntax colors and a bundled serif font remain available locally',()=>{
  const tree=postcss.parse(readFileSync(new URL('./scs-guide.css',import.meta.url),'utf8'));
- const found:string[]=[];tree.walkRules(scope+' .hljs-comment',r=>r.walkDecls('color',d=>{found.push(d.value);}));expect(found).toContain('#6a737d');
+ const found:string[]=[];tree.walkRules(r=>{if(r.selector.split(',').map(s=>s.trim()).includes(scope+' .hljs-comment'))r.walkDecls('color',d=>{found.push(d.value);});});expect(found).toContain('#6a737d');
  const faces:string[]=[];tree.walkAtRules('font-face',r=>r.walkDecls('font-family',d=>{faces.push(d.value);}));expect(faces).toContain("'Source Serif 4'");
 });
