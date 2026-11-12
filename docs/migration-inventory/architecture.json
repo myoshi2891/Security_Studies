@@ -233,7 +233,7 @@
     "ti ti-check",
     "ti ti-external-link"
   ],
-  "status": "Red: source inventory captured; migration pending; visual review is user-owned; build prohibited",
+  "status": "Implemented and originals archived byte-exact; dedicated 125 pass; full suite in progress; no build; visual review pending",
   "cssRules": [
     {
       "selector": ":root",
@@ -1516,5 +1516,37 @@
         "grid-column:1 / -1"
       ]
     }
-  ]
+  ],
+  "archive": "archive/security-guides/",
+  "verification": {
+    "date": "2026-11-12",
+    "dedicated": {
+      "pass": 125,
+      "files": 9
+    },
+    "sourceAbsent": {
+      "pass": 68,
+      "skip": 57,
+      "fail": 0
+    },
+    "browser": {
+      "widths": [
+        375,
+        768,
+        1024,
+        1025,
+        1440
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "comparedElementsPerCondition": 1545,
+      "pageErrors": 0
+    },
+    "lint": "passed",
+    "types": "passed",
+    "build": "prohibited; not run",
+    "visualReview": "user-owned; pending"
+  }
 }

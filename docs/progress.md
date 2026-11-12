@@ -1,6 +1,6 @@
 # Security Studies — Progress Tracker
 
-> **最終更新**: 2026-11-12（Codecov patch修正: ISSMP GuideSidebarの未カバー6行へ原本非依存テストを追加）
+> **最終更新**: 2026-11-12（Architecture移行・専用125件成功・原本アーカイブ。全体再検証中）
 > **ブランチ**: `dev` → `main` マージ済み (#34)
 > **デプロイ**: Netlify 自動デプロイ（`main` push トリガー）
 
@@ -12,17 +12,26 @@
 
 | 指標 | 状態 | 詳細 |
 |---|---|---|
-| テストケース総数 | **前回実測2754成功 / 0 skip / 0失敗** | 2026-11-07の全体338ファイル・574,338 expect。現在の全体npm test再検証中。 |
+| テストケース総数 | **全体再検証中** | 開始時2971成功/2失敗（350ファイル、580006 expect）。索引再生成後、Architecture専用125件成功。 |
 | テストファイル数 | **359ファイル** | 原本比較・ページ移行・配色回帰を含む |
-| File Unit Coverage | **134/134 (100%)** | 従来133＋QuizCard。純粋データ・MDXは分母外。全338テストファイルとは別集計 |
+| File Unit Coverage | **141/141 (100%)** | 従来134＋ISSMP3＋Architecture4。データ・MDXは分母外。全359テストファイルとは別集計。 |
 | Strategy Coverage | **17.5%** | 40カテゴリ×ドメインセル中 7セル相当 |
 | CI | ✅ **稼働中** | ISSEP原本なし隔離環境62成功/30skip/0失敗。 SSCP原本なし隔離環境55成功/31skip/0失敗。 CGRC原本なし隔離環境54成功/29skip/0失敗。 ISSAP原本なし隔離環境53成功/31skip/0失敗。 ISO29100原本なし隔離環境58成功/34skip/0失敗。 Hacking原本なし隔離環境52成功/31skip/0失敗。 Ghost原本なし隔離環境は55成功/36 skip/0失敗。 Threat Modeling (Shostack) 原本なし隔離環境は60成功/38 skip/0失敗。CyberOps Professional原本なし隔離環境は173成功/155 skip/0失敗。 CyberOps原本なし隔離環境は51成功/32 skip/0失敗。lint/types/coverage設定は維持。全体の原本なしCI再実行は今回未実施。移行前1052件時点の実測は576成功/476 skip/0失敗。CISSPは原本なし隔離環境で55成功/42skip/0失敗。ISO27001は原本なし隔離環境で59成功/41skip/0失敗。CSSLPは原本なし隔離環境で62成功/34skip/0失敗。ISC2 CCはGit管理外のarchiveへ移動。原本なし隔離環境で専用30成功/29skip/0失敗を確認。 |
 | カバレッジレポート | ✅ **設定済み** | CIはlcov生成・Codecov送信を試行（continue-on-error）。`bunfig.toml` の `coveragePathIgnorePatterns` で原本依存テスト基盤 `fidelity-helpers.ts` を対象外（CIでは構造的に未実行のため）。archive/なしworktreeでISO3ガイドのMermaidFigure未カバー行0を確認 |
 
-#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表およびSSCP完了欄）
+#### ファイル別テスト数（既存行は各移行時の記録。最新実測は上記の指標表）
 
 | ファイル | テスト数 | 備考 |
 |---|---|---|
+| `src/app/docs/architecture/foundation.test.tsx` | 11 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/front.test.tsx` | 40 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/rear.test.tsx` | 38 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/styles.test.tsx` | 11 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/integration.test.tsx` | 4 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/hydration.test.tsx` | 4 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/interactions.test.tsx` | 5 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/runtime.test.tsx` | 7 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
+| `src/app/docs/architecture/archive.test.ts` | 5 | ✅ 2026-11-12 原文/装飾/操作/アーカイブ検証 |
 | `src/app/docs/issep-guide/QuizCard.test.tsx` | 15 | ✅ 2026-11-07 全選択肢判定・原文文字一致・読み上げ・答え直し |
 | `src/app/docs/issep-guide/archive.test.ts` | 4 | ✅ 2026-11-06 ISSEP最終実測 |
 | `src/app/docs/issep-guide/foundation.test.tsx` | 3 | ✅ 2026-11-06 ISSEP最終実測 |
@@ -425,13 +434,13 @@ form-action 'self'
 | `docs/migration-inventory/issep-guide-review.md` | 2026-11-06 | ユーザー目視確認表 |
 | `docs/migration-inventory/ccsp-study-guide.json` | 2026-10-23 | 原本ハッシュ・全件数・アーカイブ先・検証結果 |
 | `docs/migration-inventory/ccsp-study-guide-review.md` | 2026-10-23 | ユーザー目視確認表 |
-| `CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `GEMINI.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `security-docs/CLAUDE.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `security-docs/README.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `docs/test-coverage-dashboard.html` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
-| `docs/progress.md` | 2026-11-07 | ISSEP 11.3の文言保持・クリック判定・全体2740件の実測同期 |
+| `CLAUDE.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `GEMINI.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `README.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `security-docs/CLAUDE.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `security-docs/README.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `docs/test-coverage-dashboard.html` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
+| `docs/progress.md` | 2026-11-12 | Architecture専用125件・原本移動・全体再検証中 |
 | `security-docs/src/app/docs/approach/page.mdx` | 2026-05-27 | P-08 サプライチェーンセキュリティ＆SCS評価制度内容統合 |
 | `.claude/skills/test-dashboard-updater/SKILL.md` | 2026-05-20 | ダッシュボード更新スキル 新規作成 |
 | `.claude/skills/docs-sync/SKILL.md` | 2026-05-27 | 他プロジェクトから移植・本プロジェクト向けに調整 |
@@ -463,6 +472,7 @@ form-action 'self'
 
 | # | タスク | 完了日 |
 |---|---|---|
+| MIG-ARCHITECTURE | `/docs/architecture` 置換・専用125件/Chrome10条件・原本アーカイブ。目視はユーザー担当。 | 2026-11-12 |
 | REVIEW-1107-A11Y | **ISSEP目次・回答UIと2ガイドのレビュー修正** — ページ内検索で目次の固定を解除（Green Red `14e5f87` → Green `b3c4f36`）。クイズに `role="group"` と常設の状態領域を追加（Red `0e06dff` → Green `05ad07a`）。SCSガイド6件・Security Architectureガイド6件を一次情報に合わせて修正。全体2754件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
 | REVIEW-1107-SCS | **ISSEP目次の選択維持とSCSガイドのレビュー修正** — クリックした小節を読者の次のスクロールまで維持（Red `9f957d2` → Green `c676049`）。Docstring 7件を追加。SCSガイド7件を一次情報に合わせて修正（`f1fc85c`）。全体2746件成功、Chrome 1440/375pxで動作確認。目視はユーザー担当。 | 2026-11-07 |
 | ISSEP-QUIZ | **11.3回答UI改善** — 原文を保持した即時判定・答え直し・独立状態・解説表示。専用15件とChrome4条件成功、目視はユーザー担当。 | 2026-11-07 |
@@ -1571,7 +1581,7 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 2026-11-12 Architecture移行開始監査: 43既存ルート・351テストファイル。/docs/architectureを置換予定。原本39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を採取。基盤テストは0成功/10失敗（Red）。全体npm testは実行中で、最新成功総数は未確定。npm使用、ビルド禁止・未実行、目視はユーザー担当。
 
-| `src/app/docs/architecture/foundation.test.tsx` | 10 | Red 10失敗・移行前 |
+
 
 
 2026-11-12 Architecture: 基盤Red 79fbef6 → Green e1bf405（10件成功）。前半20節の固定ハッシュ/原本DOM比較40件が失敗（Red）。全体テストは実行中。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
@@ -1593,3 +1603,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-12 Architecture: 追加の固定CSS台帳テスト11件と装飾/図ライフサイクル18件成功。原本なしでも全CSS宣言/メディア条件を検証可能。Chromeのホバー検証は代表セルで実施（全セルホバー検証ではない）。 npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。
+
+
+2026-11-12 Architecture移行: `/docs/architecture` を原本HTMLへ置換済み。全39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を保持。専用125件/9ファイル成功、原本なし隔離環境68成功/57skip/0失敗。Chrome5幅×明暗10条件で各1545要素の計算済みスタイルと丸点/番号が一致。375/1440px×明暗で11図の実描画/横スクロール・コピー・チェック・モバイル目次を検証しpageErrors0。代表セルのホバーも照合。npm経由のlint・型チェック成功。HTML/Markdownはarchive/security-guides/へ両SHA-256一致で移動済み（Git管理外）。固定構造/CSS台帳: docs/migration-inventory/architecture.json。目視確認表: docs/migration-inventory/architecture-review.md。検索索引44ページ・全79見出しを同期。ロジック単位141/141（従来134＋ISSMP3＋Architecture4。データとMDXは除外）。全体テストは確定状態で再実行中。開始時実測は2971成功/2失敗（350ファイル）で、静的索引と動的索引の比較2件が失敗した。索引再生成後の該当検証は専用テストで成功。npm使用、ビルド禁止/未実行、目視はユーザー担当/未確認。push・公開未実施。
