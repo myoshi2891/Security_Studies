@@ -9,12 +9,12 @@ export const renderDiagram:DiagramRenderer=async(id,source)=>{
  return (await engine).render(id,`---\nconfig: ${JSON.stringify(diagramConfig)}\n---\n${source}`);
 };
 /** Keep natural diagram width so oversized drawings remain reachable from their left edge. */
-export function sizeSvg(markup:string){
+export function sizeSvg(markup:string,source=''){
  const holder=document.createElement('div');holder.innerHTML=markup;
  const svg=holder.querySelector('svg');if(!svg)throw new Error('Mermaid returned no SVG');
  const box=(svg.getAttribute('viewBox')??'').trim().split(/[\s,]+/).map(Number);
  if(box.length===4&&box.every(Number.isFinite)){
-  box[3]+=/sequenceDiagram|stateDiagram/.test(svg.getAttribute('aria-roledescription')??'')?110:15;
+  box[3]+=/^(sequenceDiagram|stateDiagram)/.test(source)||/sequence|stateDiagram/.test(svg.getAttribute('aria-roledescription')??'')?110:15;
   svg.setAttribute('viewBox',box.join(' '));svg.style.width=`${box[2]}px`;
  }
  svg.removeAttribute('width');svg.removeAttribute('height');svg.style.maxWidth='none';svg.style.height='auto';svg.style.overflow='visible';
@@ -31,7 +31,7 @@ export function MermaidFigure({id,source,label,renderer=renderDiagram}:{id:strin
   if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();
  },[near]);
  useEffect(()=>{if(!near)return;let active=true;
-  renderer(`scs-${id}-${unique}`,source).then(({svg})=>{const sized=sizeSvg(svg);if(active)setResult({source,svg:sized});}).catch(()=>{if(active)setResult({source,failed:true});});
+  renderer(`scs-${id}-${unique}`,source).then(({svg})=>{const sized=sizeSvg(svg,source);if(active)setResult({source,svg:sized});}).catch(()=>{if(active)setResult({source,failed:true});});
   return()=>{active=false;};
  },[near,id,source,renderer,unique,attempt]);
  const current=result?.source===source?result:undefined;
