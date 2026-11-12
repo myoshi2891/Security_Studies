@@ -764,16 +764,13 @@
 .docs-main:has(.architecture-guide) { padding:0; }
 .architecture-guide.architecture-guide .sidebar { top:var(--docs-header-height,4rem); }
 .architecture-guide.architecture-guide section { scroll-margin-top:5.5rem; }
-.architecture-guide.architecture-guide h1, .architecture-guide.architecture-guide h2, .architecture-guide.architecture-guide h3, .architecture-guide.architecture-guide h4 { letter-spacing:normal; }
+.architecture-guide.architecture-guide h1, .architecture-guide.architecture-guide h2, .architecture-guide.architecture-guide h3, .architecture-guide.architecture-guide h4 { letter-spacing:0px; }
 .architecture-guide.architecture-guide ul { list-style-type:disc; }
 .architecture-guide.architecture-guide ol { list-style-type:decimal; }
 .architecture-guide.architecture-guide ul ul { list-style-type:circle; }
 .architecture-guide.architecture-guide ul ul ul { list-style-type:square; }
 .architecture-guide.architecture-guide .nav-root, .architecture-guide.architecture-guide .nav-sub { list-style-type:none; }
 .architecture-guide.architecture-guide table { margin:0; }
-.architecture-guide.architecture-guide th { border-bottom:0; }
-.architecture-guide.architecture-guide tr:hover td { background:var(--bg-secondary); }
-.architecture-guide.architecture-guide code { color:var(--text-primary); background:var(--bg-tertiary); border-radius:4px; }
 .architecture-guide.architecture-guide pre { margin:0; border:0; border-radius:0; }
 .architecture-guide.architecture-guide pre code { color:var(--text-primary); }
 .architecture-guide.architecture-guide i { display:inline-flex; vertical-align:middle; font-style:normal; }
@@ -782,3 +779,10 @@
 .architecture-guide.architecture-guide .mermaid-target svg { display:block; margin-inline:auto; max-width:none; }
 @media(prefers-reduced-motion:reduce) { .architecture-guide.architecture-guide, html:has(.architecture-guide) { scroll-behavior:auto; } .architecture-guide.architecture-guide * { transition:none; } }
 html:has(.architecture-guide) { scroll-behavior:smooth; }
+
+.architecture-guide.architecture-guide h1 { color:var(--text-primary); }
+/* Neutralize inherited landing-page typography without changing its global rules. */
+.architecture-guide.architecture-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0; color:var(--text-primary); }
+.architecture-guide.architecture-guide .eyebrow { display:block; font-family:var(--font-sans); font-size:1rem; letter-spacing:.08rem; }
+.architecture-guide.architecture-guide pre { color:var(--text-primary); }
+.architecture-guide.architecture-guide pre code { color:#e2e8f5; }
