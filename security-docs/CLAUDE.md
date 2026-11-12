@@ -1,6 +1,6 @@
 # Includes / Directives
 
-Updated 2026-11-11
+Updated 2026-11-12
 
 The following directive is used to include agent-specific rules and context. This syntax is handled by specific agent-compatible editors/tools.
 
@@ -407,3 +407,6 @@ CSSLPデザイン改善: 第13章の全10問を番号・設問・40選択肢に�
 
 
 2026-11-11 ISSMP移行開始監査: 既存42ルート・338テストファイルを確認。前回の全体実測は2754成功（2026-11-07）；現在の全体npm testを再実行中。ダッシュボードの旧2740件表示を前回実測へ同期。原本の50節・270見出し・116表1814セル・34図・462リスト項目・79注意欄・15問60選択肢を固定台帳へ採取。実装前のRedから段階別コミットする。npm使用・ビルド禁止/未実行・目視はユーザー担当/未確認。移行先予定: /docs/issmp-guide。
+
+
+2026-11-12 Architecture移行開始監査: 43既存ルート・351テストファイル。/docs/architectureを置換予定。原本39節・79見出し・35表670セル・11図・10コード・184リスト項目・18チェック・41参考文献を採取。基盤テストは0成功/10失敗（Red）。全体npm testは実行中で、最新成功総数は未確定。npm使用、ビルド禁止・未実行、目視はユーザー担当。
