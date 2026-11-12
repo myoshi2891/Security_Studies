@@ -777,8 +777,8 @@
 .architecture-guide.architecture-guide i svg { width:1em; height:1em; flex:none; }
 .architecture-guide.architecture-guide .mermaid-target { display:block; overflow-x:auto; }
 .architecture-guide.architecture-guide .mermaid-target svg { display:block; margin-inline:auto; max-width:none; }
-@media(prefers-reduced-motion:reduce) { .architecture-guide.architecture-guide, html:has(.architecture-guide) { scroll-behavior:auto; } .architecture-guide.architecture-guide * { transition:none; } }
 html:has(.architecture-guide) { scroll-behavior:smooth; }
+@media(prefers-reduced-motion:reduce) { .architecture-guide.architecture-guide, html:has(.architecture-guide) { scroll-behavior:auto; } .architecture-guide.architecture-guide * { transition:none; } }
 
 .architecture-guide.architecture-guide h1 { color:var(--text-primary); }
 /* Neutralize inherited landing-page typography without changing its global rules. */
