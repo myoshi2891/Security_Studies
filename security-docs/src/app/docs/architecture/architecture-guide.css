@@ -1,0 +1,784 @@
+
+            .architecture-guide.architecture-guide {
+                --bg-primary: #07111e;
+                --bg-secondary: #0d1b30;
+                --bg-tertiary: #12243f;
+                --bg-code: #0a1626;
+                --text-primary: #f3f5fa;
+                --text-secondary: #c6d0e3;
+                --text-tertiary: #93a1bd;
+                --border-1: #1e2f4d;
+                --border-2: #2d456e;
+                --border-3: #3e5c8f;
+                --accent: #7c9eff;
+                --teal: #5fd3a6;
+                --amber: #f0b955;
+                --coral: #ff8f7a;
+                --purple: #b79cff;
+                --font-sans:
+                    'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic',
+                    'Meiryo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+                --font-mono:
+                    ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas,
+                    'Noto Sans Mono CJK JP', 'Liberation Mono', monospace;
+                --radius-md: 8px;
+                --radius-lg: 12px;
+                --sidebar-w: 320px;
+            }
+            .architecture-guide.architecture-guide * {
+                box-sizing: border-box;
+            }
+            .architecture-guide.architecture-guide {
+                scroll-behavior: smooth;
+                -webkit-text-size-adjust: 100%;
+            }
+            .architecture-guide.architecture-guide {
+                margin: 0;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                font-family: var(--font-sans);
+                font-size: 1rem;
+                line-height: 1.7;
+                font-weight: 400;
+            }
+            .architecture-guide.architecture-guide a {
+                color: var(--accent);
+                text-decoration: none;
+            }
+            .architecture-guide.architecture-guide a:hover {
+                text-decoration: underline;
+            }
+            .architecture-guide.architecture-guide strong {
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .architecture-guide.architecture-guide em {
+                font-style: italic;
+            }
+
+            /* ---------- sidebar ---------- */
+            .architecture-guide.architecture-guide .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: var(--sidebar-w);
+                background: var(--bg-secondary);
+                border-right: 1px solid var(--border-1);
+                display: flex;
+                flex-direction: column;
+                z-index: 50;
+            }
+            .architecture-guide.architecture-guide .brand {
+                display: flex;
+                gap: 0.75rem;
+                align-items: center;
+                padding: 1.25rem 1.25rem 1rem;
+                border-bottom: 1px solid var(--border-1);
+            }
+            .architecture-guide.architecture-guide .brand-mark {
+                flex: none;
+                width: 2.75rem;
+                height: 2.75rem;
+                border-radius: var(--radius-md);
+                background: var(--bg-tertiary);
+                border: 1px solid var(--border-3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--accent);
+                font-size: 1.5rem;
+            }
+            .architecture-guide.architecture-guide .brand-text {
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+            }
+            .architecture-guide.architecture-guide .brand-title {
+                font-weight: 500;
+                line-height: 1.4;
+                color: var(--text-primary);
+            }
+            .architecture-guide.architecture-guide .brand-sub {
+                color: var(--text-tertiary);
+                line-height: 1.4;
+            }
+            .architecture-guide.architecture-guide #nav {
+                flex: 1;
+                overflow-y: auto;
+                padding: 0.75rem 0.75rem 2rem;
+            }
+            .architecture-guide.architecture-guide .nav-root, .architecture-guide.architecture-guide .nav-sub {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .architecture-guide.architecture-guide #nav li {
+                padding-left: 0;
+            }
+            .architecture-guide.architecture-guide #nav li::before {
+                content: none;
+            }
+            .architecture-guide.architecture-guide .nav-ch {
+                margin-top: 0.35rem;
+            }
+            .architecture-guide.architecture-guide .nav-ch > a {
+                display: block;
+                padding: 0.45rem 0.75rem;
+                border-radius: var(--radius-md);
+                color: var(--text-primary);
+                font-weight: 500;
+                border-left: 3px solid transparent;
+                line-height: 1.5;
+            }
+            .architecture-guide.architecture-guide .nav-st > a {
+                display: block;
+                padding: 0.3rem 0.75rem 0.3rem 1.6rem;
+                border-radius: var(--radius-md);
+                color: var(--text-secondary);
+                border-left: 3px solid transparent;
+                line-height: 1.5;
+            }
+            .architecture-guide.architecture-guide #nav a:hover {
+                background: var(--bg-tertiary);
+                text-decoration: none;
+            }
+            .architecture-guide.architecture-guide #nav a.active {
+                background: var(--bg-tertiary);
+                color: var(--accent);
+                border-left-color: var(--accent);
+            }
+            .architecture-guide.architecture-guide .nav-ch.parent-active > a:not(.active) {
+                color: var(--accent);
+            }
+
+            /* ---------- layout ---------- */
+            .architecture-guide.architecture-guide .layout {
+                display: block;
+                margin-left: var(--sidebar-w);
+                padding: 3rem 3.5rem 5rem;
+            }
+            .architecture-guide.architecture-guide .hero {
+                padding-bottom: 1.5rem;
+                border-bottom: 1px solid var(--border-2);
+                margin-bottom: 1rem;
+            }
+            .architecture-guide.architecture-guide .eyebrow {
+                margin: 0 0 0.5rem;
+                color: var(--accent);
+                letter-spacing: 0.08em;
+                font-weight: 500;
+            }
+            .architecture-guide.architecture-guide .hero h1 {
+                margin: 0 0 0.5rem;
+                font-size: 2.25rem;
+                line-height: 1.35;
+                font-weight: 500;
+            }
+            .architecture-guide.architecture-guide .lead {
+                margin: 0 0 1.5rem;
+                color: var(--text-secondary);
+                font-size: 1.25rem;
+            }
+
+            .architecture-guide.architecture-guide section {
+                scroll-margin-top: 1.5rem;
+            }
+            .architecture-guide.architecture-guide section.chapter {
+                margin-top: 3.5rem;
+            }
+            .architecture-guide.architecture-guide h2, .architecture-guide.architecture-guide h3, .architecture-guide.architecture-guide h4 {
+                font-weight: 500;
+                color: var(--text-primary);
+                line-height: 1.4;
+            }
+            .architecture-guide.architecture-guide h2 {
+                font-size: 1.75rem;
+                margin: 0 0 1.25rem;
+                padding-bottom: 0.6rem;
+                border-bottom: 1px solid var(--border-2);
+            }
+            .architecture-guide.architecture-guide section.sub {
+                margin-top: 2.25rem;
+            }
+            .architecture-guide.architecture-guide h3 {
+                font-size: 1.375rem;
+                margin: 0 0 1rem;
+                padding-left: 0.75rem;
+                border-left: 4px solid var(--accent);
+            }
+            .architecture-guide.architecture-guide h4 {
+                font-size: 1.125rem;
+                margin: 1.75rem 0 0.75rem;
+                color: var(--accent);
+            }
+            .architecture-guide.architecture-guide p {
+                margin: 0 0 1rem;
+                line-height: 1.8;
+            }
+            .architecture-guide.architecture-guide ul, .architecture-guide.architecture-guide ol {
+                margin: 0 0 1rem;
+                padding-left: 1.6rem;
+            }
+            .architecture-guide.architecture-guide li {
+                margin: 0.35rem 0;
+                line-height: 1.75;
+            }
+            .architecture-guide.architecture-guide li::marker {
+                color: var(--accent);
+            }
+            .architecture-guide.architecture-guide ol > li::marker {
+                font-weight: 500;
+            }
+
+            /* ---------- callouts ---------- */
+            .architecture-guide.architecture-guide .callout {
+                display: flex;
+                gap: 0.9rem;
+                align-items: flex-start;
+                border-radius: var(--radius-md);
+                padding: 1rem 1.25rem;
+                margin: 0 0 1.5rem;
+                border: 1px solid var(--border-1);
+                border-left-width: 4px;
+            }
+            .architecture-guide.architecture-guide .callout > i {
+                flex: none;
+                font-size: 1.5rem;
+                line-height: 1.5;
+            }
+            .architecture-guide.architecture-guide .callout > div {
+                min-width: 0;
+                line-height: 1.8;
+            }
+            .architecture-guide.architecture-guide .callout.intro {
+                background: var(--bg-secondary);
+                border-left-color: var(--accent);
+            }
+            .architecture-guide.architecture-guide .callout.intro > i {
+                color: var(--accent);
+            }
+            .architecture-guide.architecture-guide .callout.warn {
+                background: #1b170c;
+                border-color: #4a3a14;
+                border-left-color: var(--amber);
+            }
+            .architecture-guide.architecture-guide .callout.warn > i {
+                color: var(--amber);
+            }
+
+            /* ---------- tags ---------- */
+            .architecture-guide.architecture-guide .tag {
+                display: inline-block;
+                padding: 0.05rem 0.6rem;
+                border-radius: 999px;
+                font-weight: 500;
+                line-height: 1.6;
+                border: 1px solid;
+                vertical-align: baseline;
+                white-space: normal;
+            }
+            .architecture-guide.architecture-guide .tag-primary {
+                color: #8fe3c3;
+                border-color: #2a6b57;
+                background: #0c2a24;
+            }
+            .architecture-guide.architecture-guide .tag-dev {
+                color: #cdb9ff;
+                border-color: #5b4a99;
+                background: #1a1533;
+            }
+            .architecture-guide.architecture-guide .tag-secondary {
+                color: #f6cf86;
+                border-color: #6b5420;
+                background: #2a200c;
+            }
+            .architecture-guide.architecture-guide .tag-note {
+                color: var(--text-secondary);
+                border-color: var(--border-3);
+                background: var(--bg-tertiary);
+            }
+
+            /* ---------- tables ---------- */
+            .architecture-guide.architecture-guide .table-wrap {
+                overflow-x: auto;
+                margin: 0 0 1.5rem;
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-md);
+            }
+            .architecture-guide.architecture-guide table {
+                border-collapse: collapse;
+                width: 100%;
+                font-size: 1rem;
+            }
+            .architecture-guide.architecture-guide th, .architecture-guide.architecture-guide td {
+                padding: 0.65rem 0.9rem;
+                text-align: left;
+                vertical-align: top;
+                border-bottom: 1px solid var(--border-1);
+                line-height: 1.65;
+            }
+            .architecture-guide.architecture-guide th {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .architecture-guide.architecture-guide tr:last-child td {
+                border-bottom: none;
+            }
+            .architecture-guide.architecture-guide td {
+                color: var(--text-secondary);
+            }
+            .architecture-guide.architecture-guide td:first-child {
+                color: var(--text-primary);
+            }
+            .architecture-guide.architecture-guide tbody tr:hover td {
+                background: #0a1829;
+            }
+
+            /* ---------- code ---------- */
+            .architecture-guide.architecture-guide code {
+                font-family: var(--font-mono);
+                font-size: 1rem;
+                background: var(--bg-tertiary);
+                color: #cfe0ff;
+                padding: 0.08em 0.4em;
+                border-radius: 4px;
+                overflow-wrap: anywhere;
+            }
+            .architecture-guide.architecture-guide .code-block {
+                margin: 0 0 1.5rem;
+                border: 1px solid var(--border-2);
+                border-radius: var(--radius-md);
+                background: var(--bg-code);
+                overflow: hidden;
+            }
+            .architecture-guide.architecture-guide .code-head {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.4rem 0.9rem;
+                background: var(--bg-secondary);
+                border-bottom: 1px solid var(--border-1);
+            }
+            .architecture-guide.architecture-guide .lang {
+                color: var(--text-tertiary);
+                font-weight: 500;
+                letter-spacing: 0.04em;
+            }
+            .architecture-guide.architecture-guide .copy-btn {
+                display: inline-flex;
+                gap: 0.4rem;
+                align-items: center;
+                font: inherit;
+                font-size: 1rem;
+                color: var(--text-secondary);
+                background: transparent;
+                border: 1px solid var(--border-2);
+                border-radius: 6px;
+                padding: 0.15rem 0.7rem;
+                cursor: pointer;
+            }
+            .architecture-guide.architecture-guide .copy-btn:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+            .architecture-guide.architecture-guide pre {
+                margin: 0;
+                padding: 1rem 1.1rem;
+                overflow-x: auto;
+                background: var(--bg-code);
+            }
+            .architecture-guide.architecture-guide pre code, .architecture-guide.architecture-guide pre code.hljs {
+                display: block;
+                padding: 0;
+                background: transparent;
+                color: #e2e8f5;
+                font-size: 1rem;
+                line-height: 1.65;
+                white-space: pre;
+                overflow-wrap: normal;
+            }
+            .architecture-guide.architecture-guide .hljs-comment, .architecture-guide.architecture-guide .hljs-quote {
+                color: #8393b5;
+                font-style: italic;
+            }
+            .architecture-guide.architecture-guide .hljs-keyword, .architecture-guide.architecture-guide .hljs-selector-tag, .architecture-guide.architecture-guide .hljs-doctag {
+                color: #c9a8ff;
+            }
+            .architecture-guide.architecture-guide .hljs-string, .architecture-guide.architecture-guide .hljs-regexp, .architecture-guide.architecture-guide .hljs-template-string {
+                color: #a5e075;
+            }
+            .architecture-guide.architecture-guide .hljs-number, .architecture-guide.architecture-guide .hljs-symbol, .architecture-guide.architecture-guide .hljs-bullet {
+                color: #f0b955;
+            }
+            .architecture-guide.architecture-guide .hljs-attr, .architecture-guide.architecture-guide .hljs-attribute, .architecture-guide.architecture-guide .hljs-property {
+                color: #7cc7ff;
+            }
+            .architecture-guide.architecture-guide .hljs-title, .architecture-guide.architecture-guide .hljs-title.function_, .architecture-guide.architecture-guide .hljs-section {
+                color: #82a6ff;
+            }
+            .architecture-guide.architecture-guide .hljs-built_in, .architecture-guide.architecture-guide .hljs-literal, .architecture-guide.architecture-guide .hljs-name {
+                color: #ff9e7a;
+            }
+            .architecture-guide.architecture-guide .hljs-type, .architecture-guide.architecture-guide .hljs-class .hljs-title, .architecture-guide.architecture-guide .hljs-title.class_ {
+                color: #5fd3a6;
+            }
+            .architecture-guide.architecture-guide .hljs-meta, .architecture-guide.architecture-guide .hljs-params {
+                color: #b4c1dd;
+            }
+            .architecture-guide.architecture-guide .hljs-variable, .architecture-guide.architecture-guide .hljs-subst {
+                color: #e2e8f5;
+            }
+
+            /* ---------- diagrams ---------- */
+            .architecture-guide.architecture-guide figure.diagram {
+                margin: 0 0 1.5rem;
+                padding: 1.25rem 1rem;
+                background: var(--bg-code);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-lg);
+            }
+            .architecture-guide.architecture-guide .mermaid-target {
+                display: flex;
+                justify-content: center;
+                min-height: 3rem;
+            }
+            .architecture-guide.architecture-guide .mermaid-target svg {
+                overflow: visible;
+                max-width: 100%;
+                height: auto;
+            }
+            .architecture-guide.architecture-guide .mermaid-error {
+                color: var(--coral);
+                margin: 0 0 0.75rem;
+            }
+
+            /* ---------- glossary / legend ---------- */
+            .architecture-guide.architecture-guide .glossary {
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-md);
+                padding: 1rem 1.25rem;
+                margin: 1.5rem 0;
+            }
+            .architecture-guide.architecture-guide .gl-head {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                font-weight: 500;
+                color: var(--teal);
+                margin-bottom: 0.5rem;
+            }
+            .architecture-guide.architecture-guide .gl-head i {
+                font-size: 1.25rem;
+            }
+            .architecture-guide.architecture-guide .glossary ul {
+                margin: 0;
+                padding-left: 1.25rem;
+                column-width: 24rem;
+                column-gap: 2rem;
+            }
+            .architecture-guide.architecture-guide .glossary li {
+                break-inside: avoid;
+                margin: 0.3rem 0;
+            }
+            .architecture-guide.architecture-guide .glossary li::marker {
+                color: var(--teal);
+            }
+            .architecture-guide.architecture-guide .term {
+                font-weight: 500;
+                color: var(--text-primary);
+            }
+            .architecture-guide.architecture-guide .legend {
+                border-left: 3px solid var(--purple);
+                padding: 0.25rem 0 0.25rem 1.1rem;
+                margin: 0 0 1.5rem;
+            }
+            .architecture-guide.architecture-guide .lg-head {
+                font-weight: 500;
+                color: var(--purple);
+                margin-bottom: 0.25rem;
+            }
+            .architecture-guide.architecture-guide .legend ul {
+                margin: 0;
+            }
+            .architecture-guide.architecture-guide .legend li::marker {
+                color: var(--purple);
+            }
+
+            /* ---------- checklist ---------- */
+            .architecture-guide.architecture-guide .checklist {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                margin: 0 0 1.5rem;
+            }
+            .architecture-guide.architecture-guide .ck-progress {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 0.4rem;
+                color: var(--text-secondary);
+            }
+            .architecture-guide.architecture-guide .ck-bar {
+                display: inline-block;
+                flex: 0 1 16rem;
+                height: 0.5rem;
+                background: var(--border-1);
+                border-radius: 999px;
+                overflow: hidden;
+            }
+            .architecture-guide.architecture-guide #ckBar {
+                display: block;
+                height: 100%;
+                width: 0;
+                background: var(--teal);
+                transition: width 0.2s;
+            }
+            .architecture-guide.architecture-guide .ck-item {
+                position: relative;
+                display: grid;
+                grid-template-columns: auto auto auto 1fr;
+                gap: 0.75rem;
+                align-items: center;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-md);
+                padding: 0.7rem 1rem;
+                cursor: pointer;
+            }
+            .architecture-guide.architecture-guide .ck-item:hover {
+                border-color: var(--border-3);
+            }
+            .architecture-guide.architecture-guide .ck-item input {
+                position: absolute;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .architecture-guide.architecture-guide .ck-box {
+                width: 1.5rem;
+                height: 1.5rem;
+                border: 2px solid var(--border-3);
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: transparent;
+                font-size: 1rem;
+            }
+            .architecture-guide.architecture-guide .ck-item input:checked + .ck-box {
+                background: var(--teal);
+                border-color: var(--teal);
+                color: var(--bg-primary);
+            }
+            .architecture-guide.architecture-guide .ck-item input:focus-visible + .ck-box {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .architecture-guide.architecture-guide .ck-num {
+                width: 1.9rem;
+                height: 1.9rem;
+                border-radius: 50%;
+                background: var(--bg-tertiary);
+                border: 1px solid var(--border-3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                color: var(--text-secondary);
+            }
+            .architecture-guide.architecture-guide .ck-step {
+                padding: 0.05rem 0.6rem;
+                border-radius: 999px;
+                background: #162a4a;
+                border: 1px solid var(--border-3);
+                color: #b7c9ff;
+                font-weight: 500;
+                white-space: nowrap;
+            }
+            .architecture-guide.architecture-guide .ck-text {
+                color: var(--text-primary);
+                line-height: 1.6;
+            }
+            .architecture-guide.architecture-guide .ck-item.done {
+                background: #0a1a1a;
+                border-color: #1f4d44;
+            }
+            .architecture-guide.architecture-guide .ck-item.done .ck-text {
+                text-decoration: line-through;
+                color: var(--text-tertiary);
+            }
+
+            /* ---------- references ---------- */
+            .architecture-guide.architecture-guide .refs {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .architecture-guide.architecture-guide .ref-group h4 {
+                margin: 1.5rem 0 0.75rem;
+                padding-left: 0.75rem;
+                border-left: 4px solid var(--accent);
+                color: var(--text-primary);
+            }
+            .architecture-guide.architecture-guide .ref-group.g-primary h4 {
+                border-left-color: var(--teal);
+            }
+            .architecture-guide.architecture-guide .ref-group.g-dev h4 {
+                border-left-color: var(--purple);
+            }
+            .architecture-guide.architecture-guide .ref-group.g-secondary h4 {
+                border-left-color: var(--amber);
+            }
+            .architecture-guide.architecture-guide .ref-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr));
+                gap: 0.7rem;
+            }
+            .architecture-guide.architecture-guide .ref-card {
+                display: flex;
+                gap: 0.9rem;
+                align-items: flex-start;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-1);
+                border-radius: var(--radius-md);
+                padding: 0.85rem 1rem;
+            }
+            .architecture-guide.architecture-guide .ref-card:hover {
+                border-color: var(--border-3);
+            }
+            .architecture-guide.architecture-guide .ref-num {
+                flex: none;
+                min-width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background: var(--bg-tertiary);
+                border: 1px solid var(--border-3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                color: var(--text-secondary);
+            }
+            .architecture-guide.architecture-guide .ref-body {
+                min-width: 0;
+            }
+            .architecture-guide.architecture-guide .ref-title {
+                font-weight: 500;
+                line-height: 1.55;
+                margin-bottom: 0.25rem;
+            }
+            .architecture-guide.architecture-guide .ref-url {
+                display: inline-flex;
+                gap: 0.35rem;
+                align-items: baseline;
+                word-break: break-all;
+                line-height: 1.5;
+            }
+            .architecture-guide.architecture-guide .ref-url i {
+                flex: none;
+            }
+
+            .architecture-guide.architecture-guide .footer {
+                margin-top: 3.5rem;
+                padding-top: 1.25rem;
+                border-top: 1px solid var(--border-2);
+                color: var(--text-tertiary);
+            }
+            .architecture-guide.architecture-guide .footer p {
+                margin: 0;
+            }
+
+            /* ---------- mobile drawer ---------- */
+            .architecture-guide.architecture-guide .nav-toggle {
+                display: none;
+            }
+            .architecture-guide.architecture-guide .backdrop {
+                display: none;
+            }
+            @media (max-width: 1024px) {
+                .architecture-guide.architecture-guide .layout {
+                    margin-left: 0;
+                    padding: 1.5rem 1.1rem 6rem;
+                }
+                .architecture-guide.architecture-guide .sidebar {
+                    width: min(86vw, 340px);
+                    transform: translateX(-100%);
+                    transition: transform 0.25s ease;
+                    z-index: 80;
+                }
+                .architecture-guide.architecture-guide .sidebar.open {
+                    transform: translateX(0);
+                }
+                .architecture-guide.architecture-guide .backdrop {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(3, 8, 16, 0.7);
+                    z-index: 70;
+                }
+                .architecture-guide.architecture-guide .backdrop.show {
+                    display: block;
+                }
+                .architecture-guide.architecture-guide .nav-toggle {
+                    display: flex;
+                    position: fixed;
+                    right: 1.1rem;
+                    bottom: 1.1rem;
+                    z-index: 90;
+                    width: 3.5rem;
+                    height: 3.5rem;
+                    border-radius: 50%;
+                    align-items: center;
+                    justify-content: center;
+                    background: var(--accent);
+                    color: var(--bg-primary);
+                    border: none;
+                    font-size: 1.75rem;
+                    cursor: pointer;
+                }
+                .architecture-guide.architecture-guide .hero h1 {
+                    font-size: 1.75rem;
+                }
+                .architecture-guide.architecture-guide h2 {
+                    font-size: 1.5rem;
+                }
+                .architecture-guide.architecture-guide .ref-cards {
+                    grid-template-columns: 1fr;
+                }
+                .architecture-guide.architecture-guide .ck-item {
+                    grid-template-columns: auto auto 1fr;
+                }
+                .architecture-guide.architecture-guide .ck-item .ck-step {
+                    grid-column: 3;
+                    justify-self: start;
+                }
+                .architecture-guide.architecture-guide .ck-item .ck-text {
+                    grid-column: 1 / -1;
+                }
+            }
+        
+/* Restore browser defaults removed by Tailwind and the surrounding prose. */
+.architecture-guide.architecture-guide { display:block; min-width:0; background:var(--bg-primary); }
+.docs-main:has(.architecture-guide) { padding:0; }
+.architecture-guide.architecture-guide .sidebar { top:var(--docs-header-height,4rem); }
+.architecture-guide.architecture-guide section { scroll-margin-top:5.5rem; }
+.architecture-guide.architecture-guide h1, .architecture-guide.architecture-guide h2, .architecture-guide.architecture-guide h3, .architecture-guide.architecture-guide h4 { letter-spacing:normal; }
+.architecture-guide.architecture-guide ul { list-style-type:disc; }
+.architecture-guide.architecture-guide ol { list-style-type:decimal; }
+.architecture-guide.architecture-guide ul ul { list-style-type:circle; }
+.architecture-guide.architecture-guide ul ul ul { list-style-type:square; }
+.architecture-guide.architecture-guide .nav-root, .architecture-guide.architecture-guide .nav-sub { list-style-type:none; }
+.architecture-guide.architecture-guide table { margin:0; }
+.architecture-guide.architecture-guide th { border-bottom:0; }
+.architecture-guide.architecture-guide tr:hover td { background:var(--bg-secondary); }
+.architecture-guide.architecture-guide code { color:var(--text-primary); background:var(--bg-tertiary); border-radius:4px; }
+.architecture-guide.architecture-guide pre { margin:0; border:0; border-radius:0; }
+.architecture-guide.architecture-guide pre code { color:var(--text-primary); }
+.architecture-guide.architecture-guide i { display:inline-flex; vertical-align:middle; font-style:normal; }
+.architecture-guide.architecture-guide i svg { width:1em; height:1em; flex:none; }
+.architecture-guide.architecture-guide .mermaid-target { display:block; overflow-x:auto; }
+.architecture-guide.architecture-guide .mermaid-target svg { display:block; margin-inline:auto; max-width:none; }
+@media(prefers-reduced-motion:reduce) { .architecture-guide.architecture-guide, html:has(.architecture-guide) { scroll-behavior:auto; } .architecture-guide.architecture-guide * { transition:none; } }
+html:has(.architecture-guide) { scroll-behavior:smooth; }
