@@ -1315,12 +1315,12 @@
   "verification": {
     "date": "2026-11-12",
     "dedicated": {
-      "pass": 220,
-      "files": 10,
-      "assertions": 2656
+      "pass": 221,
+      "files": 11,
+      "assertions": 2659
     },
     "sourceAbsent": {
-      "pass": 117,
+      "pass": 118,
       "skip": 103,
       "fail": 0
     },
