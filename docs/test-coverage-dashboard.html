@@ -1339,3 +1339,5 @@
 <section class="container"><p>2026-11-12 SCS共有highlighter干渉を修正: Red eb20542 → Green 15fa8eb。専用インスタンスにBashだけを登録し、既存ガイドの共有言語登録を維持。専用221件/11ファイル成功（2659 expect）、原本なし118成功/103skip/0失敗、Kubernetesコード表示を含む干渉回帰12件成功。lint・型チェック成功。全体再実行中。ビルド未実行・目視はユーザー担当。</p></section>
 
 <section class="container"><p id="scs-final-verification">2026-11-12 SCS最終検証完了: 全体3317成功/0skip/0失敗（369ファイル、587,139 expect）。専用221件/11ファイル成功、原本なし118成功/103skip/0失敗。修正後のChrome5幅×明暗10条件は各1456要素の構文配色/丸点/番号/カウンターと全865セルのホバーが原本一致、図/操作も成功・pageErrors0。共有highlighter干渉はRed eb20542→Green 15fa8ebで解消。npm test・npm run lint・npm run types:check成功。原本HTML/Markdownの両SHA-256は不変。ビルド禁止/未実行、目視はユーザー担当/未確認、push・公開未実施。</p></section>
+
+<section class="container"><p>2026-11-12 レビュー修正Red: ArchitectureのID図定義照合・構文配色の共有隔離・DOM順Tab循環、SCSの図エラー読み上げ・閉じたモバイル目次を検証。25成功/5失敗/1 module error（図検証ヘルパー未実装）。stale結果はawaited act、Bash probeは実際の描画を検証するよう強化。テスト定義は+5件/2ファイル（全3322定義/371ファイル、Architecture129/SCS222）。前回の全体3317成功は変更前の実測。npm使用・ビルド禁止。</p></section>
