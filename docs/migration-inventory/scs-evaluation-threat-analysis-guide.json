@@ -1344,6 +1344,18 @@
     "lint": "passed",
     "types": "passed",
     "build": "prohibited; not run",
-    "visualReview": "user-owned; pending"
+    "visualReview": "user-owned; pending",
+    "fullSuite": {
+      "pass": 3317,
+      "skip": 0,
+      "fail": 0,
+      "files": 369,
+      "assertions": 587139
+    },
+    "highlighterIsolation": {
+      "red": "eb20542",
+      "green": "15fa8eb",
+      "regressionPass": 12
+    }
   }
 }
