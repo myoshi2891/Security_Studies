@@ -33,6 +33,8 @@ try{
    const copy=page.locator('.copy-btn');for(let i=0;i<10;i++){await copy.nth(i).click();await page.waitForFunction(i=>document.querySelectorAll('.copy-btn')[i].textContent.includes('コピーしました'),i);const text=await page.evaluate(()=>navigator.clipboard.readText());assert.equal(text,await copy.nth(i).evaluate(e=>e.closest('.code-block').querySelector('code').textContent));}
    if(width===375){await page.locator('#navToggle').click();assert.equal(await page.locator('#navToggle').getAttribute('aria-expanded'),'true');await page.keyboard.press('Escape');assert.equal(await page.locator('#navToggle').getAttribute('aria-expanded'),'false');}
   }
+  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior),'auto');
+  await page.emulateMedia({reducedMotion:'no-preference'});assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).scrollBehavior),'smooth');
   results.push({width,theme,compared:a.length});await context.close();
  }
  assert.deepEqual(errors,[]);console.log(JSON.stringify({results,pageErrors:errors},null,2));
