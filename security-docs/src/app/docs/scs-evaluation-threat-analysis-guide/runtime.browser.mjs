@@ -3,13 +3,13 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {resolve} from 'node:path';
-const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright'),postcss=require('postcss');
+const require=createRequire(import.meta.url),{chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH??'playwright'),postcss=require('postcss'),hljs=require('highlight.js');
 const base=process.env.DOCS_BASE_URL??'http://127.0.0.1:3107',route='/docs/scs-evaluation-threat-analysis-guide',root=resolve(import.meta.dirname,'../../../../..');
 const inventory=JSON.parse(fs.readFileSync(resolve(root,'docs/migration-inventory/scs-evaluation-threat-analysis-guide.json'),'utf8'));
 const sourcePath=[resolve(root,'archive/security-guides/Scs-evaluation-threat-analysis-guide.html'),resolve(root,'Scs-evaluation-threat-analysis-guide.html')].find(p=>fs.existsSync(p));
 const theme=fs.readFileSync(require.resolve('highlight.js/styles/github.css'),'utf8');
 const sourceHtml=sourcePath?fs.readFileSync(sourcePath,'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'').replace(/<link\b[^>]*>/g,'').replace('<style>','<style>'+theme+'</style><style>'):null;
-const selectors='h1,h2,h3,th,td,.guide-content p,.guide-content ul,.guide-content ol,.guide-content li,code,strong,.hero,.eyebrow,.brand,.brand-name,.brand-sub,#nav a,.callout,.callout-title,.callout-body,.checklist label,.ck-n,.ck-text,.footer,pre,details.qa,details.qa summary,.qa-body';
+const selectors='h1,h2,h3,th,td,.guide-content p,.guide-content ul,.guide-content ol,.guide-content li,code,strong,pre code span,.hero,.eyebrow,.brand,.brand-name,.brand-sub,#nav a,.callout,.callout-title,.callout-body,.checklist label,.ck-n,.ck-text,.footer,pre,details.qa,details.qa summary,.qa-body';
 const properties=['font-family','font-size','font-weight','letter-spacing','line-height','color','background-color','margin-top','margin-bottom','padding-top','padding-left','padding-right','padding-bottom','border-top-width','border-bottom-width','border-left-width','list-style-type','display','text-transform','text-decoration-line','box-shadow'];
 const pseudos=['content','width','height','border-radius','color','background-color','font-weight','line-height','left','top'];
 const styleFiles=[resolve(import.meta.dirname,'../../globals.css'),resolve(import.meta.dirname,'scs-guide.css')];let hoverRules='';
@@ -20,12 +20,12 @@ try{
  for(const width of [375,768,1024,1025,1440])for(const colorScheme of ['light','dark']){
   const context=await browser.newContext({viewport:{width,height:900},colorScheme});await context.addInitScript(()=>localStorage.setItem('security-docs:disclaimer-acknowledged','1'));
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));const response=await page.goto(base+route,{waitUntil:'networkidle'});assert.equal(response.status(),200);
-  await page.evaluate(()=>document.fonts.ready);
+  await page.evaluate(()=>document.fonts.ready);assert.ok(await page.evaluate(()=>document.fonts.check('600 16px "Source Serif 4"','SCS')),'the local serif face is loaded');
   const initial=await page.locator('.scs-guide').evaluate((guide,inventory)=>({counts:Object.fromEntries(Object.keys(inventory.counts).map(s=>[s,guide.querySelectorAll(s).length])),headings:[...guide.querySelectorAll('h1,h2,h3')].map(e=>e.textContent.replace(/\s+/g,' ').trim())}),inventory);
   assert.deepEqual(initial.counts,inventory.counts);assert.deepEqual(initial.headings,inventory.headings);
   let compared=0;
   if(sourceHtml){
-   const source=await context.newPage();await source.setContent(sourceHtml);await source.locator('pre code').evaluateAll(es=>es.forEach(e=>e.classList.add('hljs')));
+   const source=await context.newPage();await source.setContent(sourceHtml);const code=await source.locator('pre code').evaluateAll(es=>es.map(e=>({text:e.textContent,language:/language-([\w-]+)/.exec(e.className)?.[1]})));const highlighted=code.map(c=>hljs.highlight(c.text,{language:c.language}).value);await source.locator('pre code').evaluateAll((es,html)=>es.forEach((e,i)=>{e.classList.add('hljs');e.innerHTML=html[i];}),highlighted);
    const styles=async(p,actual)=>p.evaluate(({selectors,properties,pseudos,actual})=>{
     const active=[...document.querySelectorAll('#nav a.active')];active.forEach(e=>e.classList.remove('active'));
     const cssSelectors=selectors.split(',').map(s=>actual?'.scs-guide '+s:s.replaceAll('.guide-content','main')).join(',');
