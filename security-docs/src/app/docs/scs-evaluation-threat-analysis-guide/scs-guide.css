@@ -697,7 +697,7 @@
 .scs-guide.scs-guide li { line-height:inherit; }
 .scs-guide.scs-guide table { margin:0; }
 .scs-guide.scs-guide td { color:var(--color-ink); }
-.scs-guide.scs-guide tbody tr:hover td { background:var(--surface); }
+.scs-guide.scs-guide tbody tr:hover td { background:transparent; }
 .scs-guide.scs-guide tbody tr:nth-child(even):hover td { background:#fafbfd; }
 .scs-guide.scs-guide pre { font-family:monospace; color:var(--color-ink); }
 .scs-guide.scs-guide .brand { font-size:1rem; font-weight:400; letter-spacing:0; color:var(--color-ink); text-decoration:none; }
