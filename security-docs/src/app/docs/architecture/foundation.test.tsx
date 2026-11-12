@@ -19,3 +19,12 @@ sourceTest('every original CSS rule, declaration, pseudo selector and media cond
   rule.walkDecls(d=>expect(found,selector).toContain(d.prop+':'+d.value));
  });
 });
+test('fixed inventory protects every source CSS declaration and media rule even without archived HTML',()=>{
+ const tree=postcss.parse(readFileSync(new URL('./architecture-guide.css',import.meta.url),'utf8'));
+ for(const rule of inventory.cssRules){
+  const selector=rule.selector.split(',').map(s=>{s=s.trim();return [':root','html','body'].includes(s)?scope:scope+' '+s;}).join(', ');
+  const found:string[]=[];
+  tree.walkRules(selector,r=>{const ancestry:string[]=[];for(let p=r.parent;p&&p.type==='atrule';p=p.parent)ancestry.unshift((p as postcss.AtRule).name+' '+(p as postcss.AtRule).params);if(ancestry.join('/')===rule.ancestry)r.walkDecls(d=>{found.push(d.prop+':'+d.value);});});
+  expect(found,selector).toEqual(expect.arrayContaining(rule.declarations));
+ }
+});
