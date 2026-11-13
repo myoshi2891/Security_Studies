@@ -114,7 +114,7 @@ ul.checklist>li::before{content:none}
 @media (max-width:520px){
   main{padding:0 16px 112px}
   .diagram{padding:12px;justify-content:flex-start}
-  .diagram svg{max-width:none}
+  .diagram svg{max-width:none;flex-shrink:0}
   th,td{padding:8px 12px}
   .checklist label{padding:10px 12px}
 }
@@ -516,6 +516,8 @@ envelope = {"alg": cfg["sign"], "sig": signature}  # どのアルゴリズムで
 <script>
 window.DIAGRAMS = {
 d1: `flowchart TD
+accTitle: ガイドの全体マップ
+accDescr: ソフトウェア開発セキュリティをSecure SDLC、OWASP Top 10、AI、サプライチェーン、PQCの5領域で学び、それぞれを第7章の統合ロードマップに結び付ける。
 A["ソフトウェア開発セキュリティ"] --> B["第2章 Secure SDLC<br/>いつ・誰が・何をするか"]
 A --> C["第3章 OWASP Top 10:2025<br/>何を防ぐか"]
 A --> D["第4章 AI<br/>AI生成コード・エージェント・MCP"]
@@ -527,6 +529,8 @@ D --> G
 E --> G
 F --> G`,
 d2: `flowchart LR
+accTitle: 攻撃者が狙う開発の手前
+accDescr: 攻撃者はアプリへの直接攻撃に加え、ライブラリ保守者、CI/CDのトークンと秘密情報、AIへの入力を狙う。後者3つへの侵害は多数の下流へ波及しうる。
 X["攻撃者"] --> P1["あなたのアプリを直接攻撃<br/>(難しい・守られている)"]
 X --> P2["あなたが使うライブラリ<br/>の保守者アカウントを攻撃"]
 X --> P3["あなたの CI/CD<br/>トークン・秘密情報を攻撃"]
@@ -535,6 +539,8 @@ P2 --> Y["1回の侵害で<br/>何千もの下流に波及"]
 P3 --> Y
 P4 --> Y`,
 d3: `flowchart LR
+accTitle: セキュリティゲート付き開発ライフサイクル
+accDescr: 要件、設計、実装、ビルドとCI、テスト、リリース、運用の順に進む。ビルドまたはテストに重大な指摘があればゲートで停止して実装へ戻る。指摘がなければ次へ進み、運用の学びは要件に反映する。
 R["1 要件<br/>セキュリティ要件・規制"] --> D["2 設計<br/>脅威モデリング"]
 D --> C["3 実装<br/>安全なコーディング・AI利用ルール"]
 C --> B["4 ビルド/CI<br/>SAST・SCA・秘密情報検査"]
@@ -546,11 +552,15 @@ B -- "重大な指摘" --> G1{"ゲート:<br/>修正するまで止める"}
 T -- "重大な指摘" --> G1
 G1 --> C`,
 d4: `flowchart TD
+accTitle: 脅威モデリングの4つの問い
+accDescr: データフローで何を作るかを整理し、STRIDEで問題を洗い出し、回避・軽減・転嫁・受容を選び、レビューと検証で十分か確認する。設計変更時は最初に戻る。
 Q1["問1: 何を作っているか?<br/>データフロー図を描く"] --> Q2["問2: 何がうまくいかなくなりうるか?<br/>STRIDE で洗い出す"]
 Q2 --> Q3["問3: それにどう対処するか?<br/>回避・軽減・転嫁・受容"]
 Q3 --> Q4["問4: 十分にできたか?<br/>レビューと検証"]
 Q4 -. "設計が変わったら" .-> Q1`,
 d5: `flowchart TD
+accTitle: 監視から脆弱性対応へ
+accDescr: 兆候がなければ監視を続ける。兆候があれば影響範囲と悪用状況をトリアージし、修正・緩和と並行して報告対象か判断する。対象なら期限内に顧客や規制当局へ通知する。対応後に根本原因と再発防止をSDLCへ反映し監視へ戻る。
 M["監視・ログ・アラート"] --> V{"脆弱性/インシデントの<br/>兆候?"}
 V -- "いいえ" --> M
 V -- "はい" --> TR["トリアージ<br/>影響範囲・悪用状況の確認"]
@@ -562,6 +572,8 @@ FX --> RC
 NT --> RC["根本原因分析<br/>再発防止をSDLCへ反映"]
 RC --> M`,
 d6: `flowchart TD
+accTitle: AIセッションの権限と履歴の判断
+accDescr: 機密データやシステムへのアクセスと既読の機密、信頼できない入力の読み取り履歴、外部通信や状態変更の能力をそれぞれ数える。2つ以下ならログと最小権限を条件に自律動作を許可する。3つなら自律動作を禁止し、安全な遷移と新しいコンテキストで再評価するか実行ごとに人間が承認する。
 S["セッション履歴と権限を評価する"] --> Q1{"[B] 機密データへのアクセス・既読の機密、<br/>または本番等の機密システムへの<br/>アクセス・操作があるか?"}
 Q1 -- "はい" --> C1["カウント +1"]
 Q1 -- "いいえ" --> Q2
@@ -575,6 +587,8 @@ C3 --> R{"合計は 3 か?"}
 R -- "いいえ(2以下)" --> OK["自律動作を許可<br/>ログと権限最小化は必須"]
 R -- "はい(3つ全部)" --> FIX["自律動作は禁止<br/>安全な遷移・新しいコンテキストで再評価<br/>または 実行ごとに人間が承認"]`,
 d7: `sequenceDiagram
+accTitle: サプライチェーンワームの拡散順序
+accDescr: 攻撃者が保守者アカウントやCIに侵入し、レジストリへ悪性バージョンを公開する。下流へ通常更新として配布され、インストール時スクリプトが秘密情報を盗む。盗んだ公開権限で別のパッケージを再公開し、さらに下流へ拡散する。
 participant A as 攻撃者
 participant M as 保守者アカウント/CI
 participant R as レジストリ(npm等)
@@ -586,12 +600,16 @@ D->>D: インストール時スクリプトが実行され秘密情報を窃取
 D->>R: 盗んだ公開権限で下流の別パッケージにも再公開
 R->>D: さらに多くの下流へ拡散`,
 d8: `flowchart TD
+accTitle: サプライチェーン防御の6段階
+accDescr: 取り込み前に待機期間・固定・正規性を確認し、導入時にスクリプトを制限・検証する。ビルド時にCI権限とアクションのSHAを固定して隔離し、公開時に二要素認証・Trusted Publishing・署名を使う。利用時にSBOM・来歴・VEXで可視化し、事後の失効・再構築に備える。
 L1["1 取り込む前<br/>待機期間・ロックファイル・実在と正規性の確認"] --> L2["2 取り込む時<br/>インストール時スクリプトの無効化・検証"]
 L2 --> L3["3 ビルド時<br/>CI の権限最小化・SHA固定・隔離"]
 L3 --> L4["4 公開時<br/>二要素認証・Trusted Publishing・署名"]
 L4 --> L5["5 利用時<br/>SBOM・来歴・VEX で可視化"]
 L5 --> L6["6 事後<br/>侵害時の失効・再構築の手順"]`,
 d9: `flowchart TD
+accTitle: 悪性パッケージ判明時の対応手順
+accDescr: 悪性バージョンの情報を得たら、ロックファイル・SBOM・ビルドログで影響を調べる。修正・緩和と並行して報告対象か判断し、対象なら期限内に顧客や規制当局へ報告・通知する。該当版をインストールしていなければ固定と待機期間を維持して監視を続ける。インストール済みなら端末・CIランナーをネットワークから隔離してジョブを停止し、安全な環境から秘密情報を全て失効・再発行する。新しい秘密情報を侵害環境へ置かず、再構築前に証拠を保全し、信頼できるイメージで再構築する。クリーンな版への更新・ロックファイル再生成・再ビルド後に侵害の痕跡を調べ、報告・通知と対応の結果を再発防止へ反映する。
 A["悪性バージョンの情報を入手"] --> B["トリアージ・影響調査<br/>ロックファイル/SBOM/ビルドログで該当版を特定"]
 B -- "修正・緩和と並行" --> RP{"報告・通知の対象か?"}
 RP -- "はい" --> I["期限内に報告・通知<br/>顧客/規制当局(CRA 等)"]
@@ -605,6 +623,8 @@ G --> H["侵害の痕跡調査<br/>不審な公開・ワークフロー変更・
 H --> J
 I --> J["再発防止をSDLCへ反映"]`,
 d10: `flowchart TD
+accTitle: PQC移行の8ステップ
+accDescr: 暗号を棚卸しし、データの寿命と重要度で優先順位を付ける。方式を差し替えられる設計にして鍵交換のハイブリッド化を先行し、署名の移行を計画する。ベンダーと依存の対応確認、性能・サイズ・互換性テストと段階展開を経て、旧暗号を廃止し継続的に見直す。
 S1["Step 1<br/>暗号の棚卸し(CBOM)"] --> S2["Step 2<br/>データの寿命と重要度で優先順位付け"]
 S2 --> S3["Step 3<br/>暗号アジリティの確保<br/>(アルゴリズムを設定で差し替え可能に)"]
 S3 --> S4["Step 4<br/>鍵交換から先行<br/>TLS/VPN/メッセージングをハイブリッド化"]
@@ -614,6 +634,8 @@ S6 --> S7["Step 7<br/>テストと段階展開<br/>性能・サイズ・互換�
 S7 --> S8["Step 8<br/>旧暗号の廃止と継続的な見直し"]`,
 d11: `%%{init: {"flowchart": {"rankSpacing": 12, "nodeSpacing": 24, "padding": 16, "wrappingWidth": 260}}}%%
 flowchart LR
+accTitle: 30日・60日・90日の統合ロードマップ
+accDescr: フェーズ1の0〜30日はCI権限とSHA固定、秘密情報の棚卸しと失効手順、依存固定と待機期間、スクリプト無効化、AI利用ルールに取り組む。フェーズ2の31〜60日はPR検査ゲート、認可・異常系テスト、エージェント権限、SBOMと署名を整える。フェーズ3の61〜90日は脅威モデリング、暗号棚卸し、報告を含む事故対応訓練、振り返りと次四半期計画を行う。
 subgraph P1[" "]
 direction TB
 h1["<b>フェーズ1: 止血</b><br/>0〜30日"]
@@ -663,17 +685,39 @@ style P3 fill:#E4F1EF,stroke:#1B6E6A,stroke-width:2px`
   var sidebar=document.getElementById('sidebar');
   var backdrop=document.getElementById('backdrop');
   var btn=document.getElementById('menuBtn');
+  var mobile=window.matchMedia('(max-width:1024px)');
+  var main=document.querySelector('main');
+  function sidebarLinks(){return sidebar.querySelectorAll('a[href]')}
   function setOpen(o){
+    o=mobile.matches&&o;
+    var restore=mobile.matches&&!o&&(sidebar.classList.contains('open')||sidebar.contains(document.activeElement));
     sidebar.classList.toggle('open',o);
     backdrop.classList.toggle('show',o);
+    sidebar.inert=mobile.matches&&!o;
+    main.inert=o;
     btn.setAttribute('aria-expanded',o?'true':'false');
     btn.setAttribute('aria-label',o?'目次を閉じる':'目次を開く');
     btn.firstElementChild.className=o?'ti ti-x':'ti ti-menu-2';
+    if(o)sidebarLinks()[0].focus();
+    else if(restore)btn.focus();
   }
+  setOpen(false);
+  mobile.addEventListener('change',function(){setOpen(false)});
   btn.addEventListener('click',function(){setOpen(!sidebar.classList.contains('open'))});
   backdrop.addEventListener('click',function(){setOpen(false)});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-  sidebar.addEventListener('click',function(e){if(e.target.closest('a'))setOpen(false)});
+  document.addEventListener('keydown',function(e){
+    if(!mobile.matches||!sidebar.classList.contains('open'))return;
+    if(e.key==='Escape'){e.preventDefault();setOpen(false)}
+    else if(e.key==='Tab'){
+      var items=sidebarLinks(),first=items[0],last=items[items.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+    }
+  });
+  document.addEventListener('focusin',function(e){
+    if(mobile.matches&&sidebar.classList.contains('open')&&!sidebar.contains(e.target))sidebarLinks()[0].focus();
+  });
+  sidebar.addEventListener('click',function(e){if(mobile.matches&&e.target.closest('a'))setOpen(false)});
   var links={};
   document.querySelectorAll('#nav a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
   var current=null;
@@ -739,7 +783,7 @@ style P3 fill:#E4F1EF,stroke:#1B6E6A,stroke-width:2px`
     var extra=/^(sequenceDiagram|stateDiagram)/.test(src)?110:15;
     if(vb&&vb.height){s.setAttribute('viewBox',vb.x+' '+vb.y+' '+vb.width+' '+(vb.height+extra))}
     s.removeAttribute('width');s.removeAttribute('height');
-    s.style.width=w+'px';s.style.maxWidth='100%';s.style.height='auto';s.style.overflow='visible';
+    s.style.width=w+'px';s.style.height='auto';s.style.overflow='visible';
     return w;
   }
   for(var i=0;i<targets.length;i++){
