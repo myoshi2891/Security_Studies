@@ -793,7 +793,8 @@ style P3 fill:#E4F1EF,stroke:#1B6E6A,stroke-width:2px`
     try{
       var w=await draw(el,src);
       var avail=el.clientWidth-(parseFloat(getComputedStyle(el).paddingLeft)*2);
-      if(/^flowchart LR/.test(src)&&w&&w>avail){await draw(el,src.replace(/^flowchart LR/,'flowchart TB'))}
+      var flowchartLR=/^(\s*(?:%%\{\s*init\s*:[\s\S]*?\}%%\s*)*)flowchart[ \t]+LR\b/;
+      if(flowchartLR.test(src)&&w&&w>avail){await draw(el,src.replace(flowchartLR,'$1flowchart TB'))}
     }catch(err){
       console.error('mermaid render failed',id,err);
       el.innerHTML='';
