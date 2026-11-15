@@ -278,8 +278,8 @@ Claude Code では、`.env` などの読み取りをツール権限で拒否で�
 {
   "permissions": {
     "deny": [
-      "Read(./.env)",
-      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
       "Read(./secrets/**)"
     ]
   }
