@@ -484,12 +484,15 @@ flowchart TD
     D -->|"はい"| E{"標準機能や既存依存では代替できない？"}
     E -->|"いいえ"| X4["追加しない"]
     E -->|"はい"| F["人が承認する"]
-    F --> G["npm: npm install --ignore-scripts でlockfileを作成・更新<br/>lockfileに固定"]
-    G --> H["npm: ignore-scriptsで導入<br/>pip: 隔離環境で導入（下記の対策も確認）"]
+    F --> P{"パッケージのエコシステムは？"}
+    P -->|"npm"| G["npm: npm install --ignore-scripts でlockfileを作成・更新<br/>lockfileに固定"]
+    G --> H["npm ci --ignore-scripts で導入"]
     H --> I["脆弱性スキャン（SCA）を実行"]
+    P -->|"pip"| J["pip: 隔離環境で導入（下記の対策も確認）"]
+    J --> I
 ```
 
-Hのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
+Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
 
 lockfileの作成・更新に使うすべての `npm install` に、最初から `--ignore-scripts` を付ける。依存の導入やスキャンの前でも、この制限を外さない。
 
@@ -550,7 +553,7 @@ ignore-scripts=true
 | ファイル・場所 | 何が起きうるか | 確認方法 |
 |---|---|---|
 | `.claude/settings.json`・`.claude/settings.local.json`・ユーザーレベルのClaude Code設定（`~/.claude/settings.json` など） | フックによる自動実行や権限ルールの変更 | 既知のリポジトリでも、コミット済み・未追跡・Gitで無視されるファイルとユーザーレベル設定の現在の内容を直接読み、身に覚えのないフックや権限ルールがないか調べる。加えて `git status --untracked-files=all`、未ステージの差分（`git diff`）、ステージ済みの差分（`git diff --cached`）を確認する |
-| `.vscode/tasks.json` | エディタで開くだけで実行される設定が仕込まれる | 同上 |
+| `.vscode/tasks.json` | エディタで開くだけで実行される設定が仕込まれる | リポジトリをエディタで開く前にファイルの現在の内容を直接読み、各タスクの `command`、`args`、`runOptions.runOn: "folderOpen"` の設定を確認し、身に覚えのないタスクや自動実行がないか調べる |
 | `AGENTS.md`／`CLAUDE.md`／ルールファイル | AIへの指示に悪意ある命令が混ざる | 変更履歴とレビュー |
 | MCPの設定 | 悪意あるサーバー・過剰な権限 | 提供元、バージョン、権限 |
 | `package.json` の scripts／CI設定 | インストール時や実行時のコマンド | 差分レビュー |
