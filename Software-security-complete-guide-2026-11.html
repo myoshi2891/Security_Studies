@@ -731,8 +731,18 @@ style P3 fill:#E4F1EF,stroke:#1B6E6A,stroke-width:2px`
     if(r.top<s.top+70||r.bottom>s.bottom-20){a.scrollIntoView({block:'center'})}
   }
   if('IntersectionObserver' in window){
+    var intersecting=new Set();
     var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){if(en.isIntersecting)activate(en.target.id)});
+      entries.forEach(function(en){
+        if(en.isIntersecting)intersecting.add(en.target);
+        else intersecting.delete(en.target);
+      });
+      var activeSection=null,activeTop=Infinity;
+      intersecting.forEach(function(section){
+        var top=section.getBoundingClientRect().top;
+        if(top<activeTop){activeSection=section;activeTop=top}
+      });
+      if(activeSection)activate(activeSection.id);
     },{rootMargin:'-20% 0px -70% 0px'});
     document.querySelectorAll('section[id]').forEach(function(s){io.observe(s)});
   }
