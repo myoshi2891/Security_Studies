@@ -317,7 +317,9 @@ Anthropic は、Claude Code の許可プロンプトの約93%がそのまま承�
 | 読み取り専用／計画（plan）モード | 調査・計画のために読み取り専用のシェルコマンドを実行する場合があるが、編集は許可しない。Step 4 の隔離環境も併用する | **最初の一歩**。コードレビュー、設計相談に最適 |
 | 都度承認 | 編集・コマンド実行のたびに確認 | **日常の標準**。内容を読んで承認する |
 | 許可リスト方式 | 安全と確認済みのコマンドだけ自動許可 | `npm test` も自動的に安全とはみなさず、実行するスクリプトと依存関係をレビューし、制限された環境で実行・確認してから許可 |
-| 完全自動（YOLO／権限確認のスキップ） | 全承認。生産性は最大、危険も最大 | **サンドボックス内かつ最小資格情報のときだけ** |
+| 完全自動（YOLO／権限確認のスキップ） | 全承認。生産性は最大、危険も最大 | **サンドボックス内かつ最小資格情報のときだけ**。Claude Codeでは `sandbox.allowUnsandboxedCommands: false` も必須（下記の起動失敗・除外設定も確認） |
+
+**Claude Codeの完全自動実行前の確認**: `sandbox.enabled: true` と `sandbox.allowUnsandboxedCommands: false` を設定する。さらに `sandbox.failIfUnavailable: true` を設定し、使用バージョン・環境でサンドボックスの起動が失敗した場合に、隔離なしでコマンドが実行されず、起動またはコマンド実行が拒否されることを、秘密情報のない検証環境で確認する。`sandbox.excludedCommands` に一致するコマンドは `allowUnsandboxedCommands: false` でも隔離外で実行されうるため、適用される設定全体を確認し、完全自動実行では除外を空にする（[起動失敗時の設定](https://code.claude.com/docs/en/settings-reference#sandbox-failifunavailable)、[隔離外への再実行の禁止](https://code.claude.com/docs/en/settings-reference#sandbox-allowunsandboxedcommands)、[除外コマンドの扱い](https://code.claude.com/docs/en/sandboxing#run-commands-outside-the-sandbox-with-excludedcommands)）。
 
 Willison はこの完全自動モードを、生産性の鍵であり同時に非常に危険なものと位置づけ、**安全に使う条件**（隔離環境、最小限の資格情報、予算上限）を整理しています。
 
@@ -485,8 +487,8 @@ flowchart TD
     E -->|"いいえ"| X4["追加しない"]
     E -->|"はい"| F["人が承認する"]
     F --> P{"パッケージのエコシステムは？"}
-    P -->|"npm"| G["npm: npm install --ignore-scripts でlockfileを作成・更新<br/>lockfileに固定"]
-    G --> H["npm ci --ignore-scripts で導入"]
+    P -->|"npm"| G["npm: 秘密情報のない隔離環境で<br/>npm install --ignore-scripts でlockfileを作成・更新<br/>lockfileに固定<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
+    G --> H["秘密情報のない隔離環境で npm ci --ignore-scripts で導入<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     H --> I["脆弱性スキャン（SCA）を実行"]
     P -->|"pip"| J["pip: 隔離環境で導入（下記の対策も確認）"]
     J --> I
@@ -494,7 +496,7 @@ flowchart TD
 
 Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
 
-lockfileの作成・更新に使うすべての `npm install` に、最初から `--ignore-scripts` を付ける。依存の導入やスキャンの前でも、この制限を外さない。
+lockfileの作成・更新に使うすべての `npm install` に、最初から `--ignore-scripts` を付ける。依存の導入やスキャンの前でも、この制限を外さない。作成・更新と `npm ci` による導入はいずれも秘密情報のない隔離環境で行い、Git依存が不要なら、使用するnpmが対応していることを[公式設定資料](https://docs.npmjs.com/cli/v11/using-npm/config/#allow-git)で確認して、両方に `--allow-git=none` も付ける。
 
 #### 6-3. 具体策
 
