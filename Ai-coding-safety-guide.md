@@ -316,8 +316,10 @@ Anthropic は、Claude Code の許可プロンプトの約93%がそのまま承�
 |---|---|---|
 | 読み取り専用／計画（plan）モード | 調査・計画のために読み取り専用のシェルコマンドを実行する場合があるが、編集は許可しない。Step 4 の隔離環境も併用する | **最初の一歩**。コードレビュー、設計相談に最適 |
 | 都度承認 | 編集・コマンド実行のたびに確認 | **日常の標準**。内容を読んで承認する |
-| 許可リスト方式 | 安全と確認済みのコマンドだけ自動許可 | `npm test` も自動的に安全とはみなさず、実行するスクリプトと依存関係をレビューし、制限された環境で実行・確認してから許可 |
+| 許可リスト方式 | 安全と確認済みのコマンドだけ自動許可 | `npm test` も自動的に安全とはみなさず、実行するスクリプトと依存関係をレビューし、制限された環境で実行・確認してから許可。Claude Codeでは `sandbox.allowUnsandboxedCommands: false` を必須とし、サンドボックスで失敗した許可済みコマンドの隔離外への自動再実行を防ぐ（除外設定は下記も確認） |
 | 完全自動（YOLO／権限確認のスキップ） | 全承認。生産性は最大、危険も最大 | **サンドボックス内かつ最小資格情報のときだけ**。Claude Codeでは `sandbox.allowUnsandboxedCommands: false` も必須（下記の起動失敗・除外設定も確認） |
+
+**planモード・都度承認でも隔離は必要**: Claude CodeのBashサンドボックスを隔離層にする場合は、`sandbox.enabled: true` と `sandbox.failIfUnavailable: true` を必須とする。使用バージョン・環境でサンドボックスの起動失敗を再現し、承認済みのコマンドも隔離外で実行されず、起動またはコマンド実行が拒否されることを、秘密情報のない検証環境で確認する。代替としてVMまたは使い捨ての隔離環境でClaude Codeを実行し、読み取り範囲・資格情報・ネットワークなどStep 4の隔離要件を満たす（[起動失敗時の公式仕様](https://code.claude.com/docs/en/settings-reference#sandbox-failifunavailable)）。
 
 **Claude Codeの完全自動実行前の確認**: `sandbox.enabled: true` と `sandbox.allowUnsandboxedCommands: false` を設定する。さらに `sandbox.failIfUnavailable: true` を設定し、使用バージョン・環境でサンドボックスの起動が失敗した場合に、隔離なしでコマンドが実行されず、起動またはコマンド実行が拒否されることを、秘密情報のない検証環境で確認する。`sandbox.excludedCommands` に一致するコマンドは `allowUnsandboxedCommands: false` でも隔離外で実行されうるため、適用される設定全体を確認し、完全自動実行では除外を空にする（[起動失敗時の設定](https://code.claude.com/docs/en/settings-reference#sandbox-failifunavailable)、[隔離外への再実行の禁止](https://code.claude.com/docs/en/settings-reference#sandbox-allowunsandboxedcommands)、[除外コマンドの扱い](https://code.claude.com/docs/en/sandboxing#run-commands-outside-the-sandbox-with-excludedcommands)）。
 
@@ -523,7 +525,7 @@ William Woodruff（Trail of Bits）は2025年11月、**有名なサプライチ�
 | npm（11.10.0以降） | `.npmrc` に `min-release-age=7`（`npm install` によるlockfile作成・更新時に適用。`npm ci` は対象外） | **日** |
 | pnpm（10.16以降） | `pnpm-workspace.yaml` に `minimumReleaseAge: 10080` | **分**（10080分＝7日） |
 | uv | `--exclude-newer` に相対値 `P7D` を指定 | 日（ISO期間形式） |
-| pip（26.1以降） | `--uploaded-prior-to P7D` | 日（ISO期間形式） |
+| pip（26.1以降） | `--uploaded-prior-to P7D`。ローカルファイル（`--find-links` のディレクトリ内も含む）やVCS要件はフィルタ対象外のため、これらの取得元を拒否するか、経過期間と来歴を別途レビューする（[公式の適用範囲](https://pip.pypa.io/en/stable/user_guide/#filtering-by-upload-time)） | 日（ISO期間形式） |
 | Renovate | `minimumReleaseAge`（best-practices では npm に3日がデフォルト） | 設定による |
 
 ```ini
