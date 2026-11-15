@@ -487,7 +487,7 @@ flowchart TD
     E -->|"いいえ"| X4["追加しない"]
     E -->|"はい"| F["人が承認する"]
     F --> P{"パッケージのエコシステムは？"}
-    P -->|"npm"| G["npm: 秘密情報のない隔離環境で<br/>npm install --ignore-scripts でlockfileを作成・更新<br/>lockfileに固定<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
+    P -->|"npm"| G["npm: 秘密情報のない隔離環境で<br/>npm install --ignore-scripts 承認済みパッケージ名@承認済みバージョン で追加<br/>lockfileを作成・更新して固定<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     G --> H["秘密情報のない隔離環境で npm ci --ignore-scripts で導入<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     H --> I["脆弱性スキャン（SCA）を実行"]
     P -->|"pip"| J["pip: 隔離環境で導入（下記の対策も確認）"]
@@ -642,6 +642,7 @@ Simon Willison は、エージェントとの開発で**テストを先に書か
 次の機能を実装してください。
 要件:
 - ユーザー入力は必ず検証し、HTML出力時はエスケープすること。信頼できないURLをhrefやsrcに出力する場合は、スキームの許可リストでhttpとhttpsのみを許可すること
+- イベントハンドラ属性（onclickなど）やJavaScript文字列内のユーザー値には、HTMLエスケープだけでは不十分。ユーザー値をこれらに埋め込まず、信頼できるハンドラをaddEventListener()で登録し、ユーザー値は実行コードではなくデータとして渡すこと
 - SQLはプレースホルダを使い、文字列連結をしないこと
 - 認可チェック（操作権限の確認）を各エンドポイントに入れること
 - 秘密情報はコードに書かず、環境変数から読み込むこと
