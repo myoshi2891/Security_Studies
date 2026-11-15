@@ -493,7 +493,9 @@ flowchart TD
     E -->|"いいえ"| X4["追加しない"]
     E -->|"はい"| F["人が承認する"]
     F --> P{"パッケージのエコシステムは？"}
-    P -->|"npm"| G["npm: 秘密情報のない隔離環境で<br/>npm install --ignore-scripts 承認済みパッケージ名@承認済みバージョン で追加<br/>lockfileを作成・更新して固定<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
+    P -->|"npm"| R{"npm: プロジェクトの .npmrc と<br/>実効レジストリ（スコープ別を含む）が<br/>承認済みの取得元と一致？"}
+    R -->|"いいえ"| X5["導入しない<br/>取得元の設定を確認・修正"]
+    R -->|"はい"| G["npm: 秘密情報のない隔離環境で<br/>npm install --ignore-scripts 承認済みパッケージ名@承認済みバージョン で追加<br/>lockfileを作成・更新して固定<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     G --> H["秘密情報のない隔離環境で npm ci --ignore-scripts で導入<br/>Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     H --> I["脆弱性スキャン（SCA）を実行"]
     P -->|"pip"| J["pip: 隔離環境で導入（下記の対策も確認）"]
@@ -501,6 +503,8 @@ flowchart TD
 ```
 
 Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
+
+`npm install` の前に、プロジェクトの `.npmrc` と、`npm config get registry`・`npm config list` で実効レジストリ（`@scope:registry` などのスコープ別設定を含む）を確認し、承認済みの取得元と一致する場合のみ進む。隔離環境と `--ignore-scripts` は導入時の被害を抑える対策であり、取得した配布物が正しいことは検証しない。
 
 lockfileの作成・更新に使うすべての `npm install` に、最初から `--ignore-scripts` を付ける。依存の導入やスキャンの前でも、この制限を外さない。作成・更新と `npm ci` による導入はいずれも秘密情報のない隔離環境で行い、Git依存が不要なら、使用するnpmが対応していることを[公式設定資料](https://docs.npmjs.com/cli/v11/using-npm/config/#allow-git)で確認して、両方に `--allow-git=none` も付ける。
 
