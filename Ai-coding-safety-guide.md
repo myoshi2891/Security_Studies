@@ -498,15 +498,19 @@ flowchart TD
     R -->|"はい"| G["npm: 秘密情報のない隔離環境で　npm install --package-lock-only --ignore-scripts 承認済みパッケージ名@承認済みバージョン でlockfileのみ作成・更新して固定（この段階ではnode_modulesに導入しない）　Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     G --> H["lockfileの全依存（推移的依存を含む）の　レジストリ依存はresolvedのホストとintegrityを、ローカルのworkspaceリンクは参照先の内容と来歴を個別に確認　秘密情報のない隔離環境で npm ci --ignore-scripts で導入　Git依存が不要なら対応するnpmで --allow-git=none も指定"]
     H --> I["脆弱性スキャン（SCA）を実行"]
-    P -->|"pip"| J["pip: 隔離環境で導入（下記の対策も確認）"]
+    P -->|"pip"| Q{"pip: pip設定ファイル・PIP_ 環境変数・追加インデックス（requirementsファイル内の指定を含む）と　実効の取得元が承認済みの取得元のみと一致？"}
+    Q -->|"いいえ"| X6["導入しない　取得元の設定を確認・修正"]
+    Q -->|"はい"| J["pip: 承認済みの取得元だけを指定し　秘密情報のない隔離環境で導入（下記の対策も確認）"]
     J --> I
 ```
+
+Jのpip導入の前に、Qで取得元を確認する。`pip config list -v` で読み込まれる設定ファイルと値を、`env | grep '^PIP_'` で `PIP_INDEX_URL`・`PIP_EXTRA_INDEX_URL`・`PIP_FIND_LINKS`・`PIP_CONFIG_FILE` などの環境変数を確かめる。requirementsファイル内の `--index-url`・`--extra-index-url`・`--find-links` も確認する。追加インデックスがあると、同名パッケージを承認外の取得元から取得するおそれがある（依存関係の混乱）。導入時は `--isolated`（環境変数とユーザー設定を無視）と承認済みの `--index-url` を明示し、承認外の追加インデックスは指定しない。導入前に `pip install --dry-run --report report.json ...` で、推移的依存を含む各配布物の実際のダウンロードURL（`download_info.url`）を確かめ、承認済みの取得元だけであれば進む。隔離環境と後続の脆弱性スキャン（SCA）は被害の抑制と既知の脆弱性の検出であり、パッケージが正当であることは検証しない。
 
 Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
 
 `npm install` の前に、プロジェクトの `.npmrc` と、`npm config get registry`・`npm config list` で実効レジストリ（`@scope:registry` などのスコープ別設定を含む）を確認し、承認済みの取得元と一致する場合のみ進む。隔離環境と `--ignore-scripts` は導入時の被害を抑える対策であり、取得した配布物が正しいことは検証しない。
 
-レジストリ設定とバージョンの確認だけに頼らず、`npm install` の前には既存のlockfileを、`npm ci` の前には作成・更新後のlockfileを確認する。npmは `npm-shrinkwrap.json` があれば `package-lock.json` より優先して使う（両方ある場合 `package-lock.json` は無視され、`--package-lock-only` による更新も `npm-shrinkwrap.json` 側に入る）。そのため両ファイルの有無を確かめ、npmが実際に使うファイルを確認対象とする。その `packages` にある全依存（推移的依存を含む）のうちレジストリから取得するものについて、`resolved` のホストが承認済みの取得元であることと `integrity` が記録されていることを確かめる。ローカルのworkspaceリンク（`link: true` のエントリ）は取得物ではないため `integrity` がないこと自体は拒否理由にせず、リンク先の内容と来歴（リポジトリ内の承認済みパスか、レビュー済みの変更か）を別途確認する。レジストリ依存で想定外のホスト、Git・tarball URL、`integrity` の欠落があれば導入しない。`integrity` はlockfileに記録された配布物との一致を照合するもので、記録元の正しさは `resolved` のホスト確認で補う。
+レジストリ設定とバージョンの確認だけに頼らず、`npm install` の前には既存のlockfileを、`npm ci` の前には作成・更新後のlockfileを確認する。npmが使うlockfileはバージョンで異なる。npm 11以前は `npm-shrinkwrap.json` があれば `package-lock.json` より優先して使う（両方ある場合 `package-lock.json` は無視され、`--package-lock-only` による更新も `npm-shrinkwrap.json` 側に入る）。npm 12以降は `npm-shrinkwrap.json` を読み書きせず、両方あっても `package-lock.json` だけを使う（`npm-shrinkwrap.json` しかない場合は固定が効かず、依存を新たに解決して `package-lock.json` を作成する）。そのため `npm --version` と両ファイルの有無を確かめ、そのバージョンのnpmが実際に使うファイルを確認対象とする。その `packages` にある全依存（推移的依存を含む）のうちレジストリから取得するものについて、`resolved` のホストが承認済みの取得元であることと `integrity` が記録されていることを確かめる。ローカルのworkspaceリンク（`link: true` のエントリ）は取得物ではないため `integrity` がないこと自体は拒否理由にせず、リンク先の内容と来歴（リポジトリ内の承認済みパスか、レビュー済みの変更か）を別途確認する。レジストリ依存で想定外のホスト、Git・tarball URL、`integrity` の欠落があれば導入しない。`integrity` はlockfileに記録された配布物との一致を照合するもので、記録元の正しさは `resolved` のホスト確認で補う。
 
 lockfileの作成・更新には `npm install --package-lock-only --ignore-scripts` を使い、lockfileの確認後に `npm ci --ignore-scripts` で導入する。すべての `npm install` に、最初から `--ignore-scripts` を付ける。依存の導入やスキャンの前でも、この制限を外さない。作成・更新と `npm ci` による導入はいずれも秘密情報のない隔離環境で行い、Git依存が不要なら、使用するnpmが対応していることを[公式設定資料](https://docs.npmjs.com/cli/v11/using-npm/config/#allow-git)で確認して、両方に `--allow-git=none` も付ける。
 
