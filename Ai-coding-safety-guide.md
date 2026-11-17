@@ -504,9 +504,9 @@ flowchart TD
     J --> I
 ```
 
-Jのpip導入の前に、Qで取得元を確認する。`pip config list -v` で読み込まれる設定ファイルと値を、`env | grep '^PIP_'` で `PIP_INDEX_URL`・`PIP_EXTRA_INDEX_URL`・`PIP_FIND_LINKS`・`PIP_CONFIG_FILE` などの環境変数を確かめる。requirementsファイル内の `--index-url`・`--extra-index-url`・`--find-links` も確認する。追加インデックスがあると、同名パッケージを承認外の取得元から取得するおそれがある（依存関係の混乱）。導入時は `--isolated`（環境変数とユーザー設定を無視）と承認済みの `--index-url` を明示し、承認外の追加インデックスは指定しない。導入前に `pip install --dry-run --report report.json ...` で、推移的依存を含む各配布物の実際のダウンロードURL（`download_info.url`）を確かめ、承認済みの取得元だけであれば進む。隔離環境と後続の脆弱性スキャン（SCA）は被害の抑制と既知の脆弱性の検出であり、パッケージが正当であることは検証しない。
+Jのpip導入の前に、Qで取得元を確認する。`pip config list -v` で読み込まれる設定ファイルと値を、`env | grep '^PIP_'` で `PIP_INDEX_URL`・`PIP_EXTRA_INDEX_URL`・`PIP_FIND_LINKS`・`PIP_CONFIG_FILE` などの環境変数を確かめる。requirementsファイル内の `--index-url`・`--extra-index-url`・`--find-links` も確認する。追加インデックスがあると、同名パッケージを承認外の取得元から取得するおそれがある（依存関係の混乱）。導入時は `--isolated`（環境変数とユーザー設定を無視）と承認済みの `--index-url` を明示し、承認外の追加インデックスは指定しない。導入前の `pip install --dry-run --report report.json ...` も、最初から秘密情報のない隔離環境（使い捨てコンテナなど）で実行する。ソース配布物はメタデータ取得のためにビルドされるため、`--dry-run` でもビルド時のコードが実行されうる。その結果で、推移的依存を含む各配布物の実際のダウンロードURL（`download_info.url`）を確かめ、承認済みの取得元だけであれば進む。`report.json` はlockfileではなく、そのまま導入には使わない。確認した全配布物（推移的依存を含む）のバージョンとハッシュ（`download_info.archive_info.hashes` など）を `パッケージ名==バージョン --hash=sha256:...` の形式でrequirementsファイルに固定し、同じく隔離環境で `pip install --isolated --index-url <承認済みの取得元> --require-hashes -r <固定したファイル>` により、その固定結果から導入する。これにより、確認した配布物と異なるものは導入されない。隔離環境と後続の脆弱性スキャン（SCA）は被害の抑制と既知の脆弱性の検出であり、パッケージが正当であることは検証しない。
 
-Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。別の対策である `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
+Jのpip導入は、使い捨てコンテナなどの**隔離環境で行う**。任意の追加対策として `--only-binary :all:` を指定するとソース配布物を拒否できるが、対応するwheelがないパッケージは導入に失敗する。**wheelもインポート時にはコードを実行しうる**。上記の `--require-hashes` は、推移的依存も含めて固定した各配布物のハッシュを照合し、バージョンやハッシュの固定漏れ・不一致があれば導入を中止する。[pip公式資料](https://pip.pypa.io/en/stable/topics/secure-installs/)も参照。
 
 `npm install` の前に、プロジェクトの `.npmrc` と、`npm config get registry`・`npm config list` で実効レジストリ（`@scope:registry` などのスコープ別設定を含む）を確認し、承認済みの取得元と一致する場合のみ進む。隔離環境と `--ignore-scripts` は導入時の被害を抑える対策であり、取得した配布物が正しいことは検証しない。
 
