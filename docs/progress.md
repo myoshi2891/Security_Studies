@@ -399,6 +399,7 @@
 | dompurify（GHSA-cg2g-xh64-v4q7・GHSA-mrv2-3pqr-j5jr） | ✅ **解消** | 2026-10-23: mermaid 経由の推移依存を overrides で 3.4.17 に固定（mermaid の `^3.2.5` 範囲内） |
 | toml DoS（GHSA-4qx8-w7c3-pj3p・GHSA-9j65-hcg3-gc64・GHSA-9qmh-m7c6-f92p） | ✅ **解消** | 2026-10-23: remark-mdx-frontmatter 経由。overrides の固定値を 4.3.0 → 5.0.1 へ更新し、`parse` の名前付き import が動作することを確認 |
 | braces DoS（GHSA-vfj7-8cjw-p6xm） | ⚠️ **一時除外** | パッチ未提供（<=3.0.3 全版が対象）。`eslint-config-next` 経由の dev 依存のみで、本番バンドル・ユーザー入力経路に含まれない。CI で `--ignore` 指定、**期限 2026-11-05** までに修正版の有無を再確認 |
+| picomatch ReDoS（GHSA-fc5q-39xc-vjpf） | ⚠️ **一時除外** | 2026-11-18: パッチ未提供（<=4.0.7 全版が対象、first_patched_version なし）。`eslint-config-next` › typescript-eslint › tinyglobby › fdir 経由の dev 依存のみ（`bun audit --prod` は検出なし）。CI で `--ignore` 指定、**期限 2026-12-02** までに修正版の有無を再確認 |
 
 #### CSP 現行構成（2026-05-20）
 
