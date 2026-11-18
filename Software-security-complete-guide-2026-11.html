@@ -799,20 +799,59 @@ style P3 fill:#E4F1EF,stroke:#1B6E6A,stroke-width:2px`
     s.style.width=w+'px';s.style.height='auto';s.style.overflow='visible';
     return w;
   }
-  for(var i=0;i<targets.length;i++){
-    var el=targets[i],id=el.getAttribute('data-diagram'),src=window.DIAGRAMS[id];
-    if(!src)continue;
+  var flowchartLR=/^(\s*(?:%%\{\s*init\s*:[\s\S]*?\}%%\s*)*)flowchart[ \t]+LR\b/;
+  function availWidth(el){return el.clientWidth-(parseFloat(getComputedStyle(el).paddingLeft)*2)}
+  function showError(el,id,src,err){
+    console.error('mermaid render failed',id,err);
+    el.innerHTML='';
+    var pre=document.createElement('pre');pre.className='diagram-error';
+    pre.textContent='図の描画に失敗しました ('+id+')\n\n'+src;
+    el.appendChild(pre);
+  }
+  // LR図の状態: 元の定義・LR描画時の自然幅・現在のレイアウト
+  var states=[];
+  // 描画は1本のキューで直列化し、mermaid.render の同時実行を防ぐ
+  var queue=Promise.resolve();
+  function enqueue(fn){queue=queue.then(fn).catch(function(err){console.error('mermaid redraw failed',err)});return queue}
+  async function applyLayout(st){
+    if(st.failed)return;
+    var layout=st.lrWidth>availWidth(st.el)?'TB':'LR';
+    if(layout===st.layout)return;
     try{
-      var w=await draw(el,src);
-      var avail=el.clientWidth-(parseFloat(getComputedStyle(el).paddingLeft)*2);
-      var flowchartLR=/^(\s*(?:%%\{\s*init\s*:[\s\S]*?\}%%\s*)*)flowchart[ \t]+LR\b/;
-      if(flowchartLR.test(src)&&w&&w>avail){await draw(el,src.replace(flowchartLR,'$1flowchart TB'))}
-    }catch(err){
-      console.error('mermaid render failed',id,err);
-      el.innerHTML='';
-      var pre=document.createElement('pre');pre.className='diagram-error';
-      pre.textContent='図の描画に失敗しました ('+id+')\n\n'+src;
-      el.appendChild(pre);
+      // 毎回元の定義から生成し、変換済みの定義を再変換しない
+      await draw(st.el,layout==='TB'?st.src.replace(flowchartLR,'$1flowchart TB'):st.src);
+      st.layout=layout;
+    }catch(err){st.failed=true;showError(st.el,st.id,st.src,err)}
+  }
+  await enqueue(async function(){
+    for(var i=0;i<targets.length;i++){
+      var el=targets[i],id=el.getAttribute('data-diagram'),src=window.DIAGRAMS[id];
+      if(!src)continue;
+      try{
+        var w=await draw(el,src);
+        if(!flowchartLR.test(src)||!w)continue;
+        var st={el:el,id:id,src:src,lrWidth:w,layout:'LR',failed:false};
+        states.push(st);
+        await applyLayout(st);
+      }catch(err){showError(el,id,src,err)}
+    }
+  });
+  // 幅変更時はレイアウト(LR/TB)が切り替わる図だけを再描画する
+  var scheduled=false;
+  function scheduleRelayout(){
+    if(scheduled)return;
+    scheduled=true;
+    requestAnimationFrame(function(){
+      scheduled=false;
+      enqueue(async function(){for(var j=0;j<states.length;j++){await applyLayout(states[j])}});
+    });
+  }
+  if(states.length){
+    if(typeof ResizeObserver==='function'){
+      var ro=new ResizeObserver(scheduleRelayout);
+      states.forEach(function(st){ro.observe(st.el)});
+    }else{
+      window.addEventListener('resize',scheduleRelayout);
     }
   }
   document.documentElement.setAttribute('data-diagrams','done');
