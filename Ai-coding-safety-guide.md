@@ -540,7 +540,7 @@ William Woodruff（Trail of Bits）は2025年11月、**有名なサプライチ�
 
 | ツール | 設定例 | 単位 |
 |---|---|---|
-| npm（11.10.0以降） | `.npmrc` に `min-release-age=7`（`npm install` によるlockfile作成・更新時に適用。`npm ci` は対象外） | **日** |
+| npm（11.10.0以降） | `.npmrc` に `min-release-age=7`（`npm install` によるlockfile作成・更新時に適用。`npm ci` は対象外）。npm 11.17.0以降の `min-release-age-exclude` に一致するパッケージは待機期間の対象外になる（下記） | **日** |
 | pnpm（10.16以降） | `pnpm-workspace.yaml` に `minimumReleaseAge: 10080` | **分**（10080分＝7日） |
 | uv | `--exclude-newer` に相対値 `P7D` を指定 | 日（ISO期間形式） |
 | pip（26.1以降） | `--uploaded-prior-to P7D`。HTTPSの直接URLで指定されたwheel、ローカルファイル（`--find-links` のディレクトリ内も含む）、VCS要件はフィルタをすり抜ける（対象外となる）ため、これらを拒否するか、公開日（経過期間）と来歴を固定前に個別に検証する（[公式の適用範囲](https://pip.pypa.io/en/stable/user_guide/#filtering-by-upload-time)） | 日（ISO期間形式） |
@@ -558,11 +558,19 @@ ignore-scripts=true
 
 **npmの適用範囲**: `npm ci` は `package-lock.json` の固定バージョンをクールダウンを適用せずに導入するため、公開直後の推移的依存もlockfileに含まれていれば導入されます。クールダウンは `npm install` でlockfileを作成・更新するときに適用し、レビューではlockfileの差分に新たに加わったバージョンを推移的依存まで確認してください（[npmの設定資料](https://docs.npmjs.com/cli/v11/using-npm/config/#min-release-age)、[npmメンテナーによる適用範囲の説明](https://github.com/npm/cli/issues/9281)）。
 
+**npmの除外設定（`min-release-age-exclude`）**: npm 11.17.0以降では、`min-release-age-exclude` に指定したパッケージ名または `minimatch` のglobパターン（例：`@myorg/*`）に一致するパッケージは、`min-release-age`（および `before`）の待機期間の対象外となり、公開直後の最新版にも解決されえます。除外されるのは一致したパッケージだけで、その依存は一致しない限り待機期間に従いますが、推移的依存でもパターンに一致すれば待機期間の確認なしに公開直後の版へ解決されうる点に注意してください（[npmの設定資料](https://docs.npmjs.com/cli/v11/using-npm/config/#min-release-age-exclude)）。除外は必要最小限の名前に限定し、広いglobは避けます。
+
+**npmでクールダウンを適用・レビューする手順**:
+
+1. `npm config ls -l` を実行し、ユーザー設定（`~/.npmrc`）・プロジェクト設定（`.npmrc`）・コマンドライン引数（`--min-release-age` などのCLIオプション）から実際に有効になっている `min-release-age` と `min-release-age-exclude`、および `before` の値と、それぞれの設定元を確認する。意図しない除外パターンや、CLIでの上書き・無効化がないか調べる。
+2. 承認していない除外・上書きがあれば削除してから `npm install` を実行する。
+3. lockfileの差分（`git diff -- package-lock.json`）で新たに加わったすべてのバージョンを推移的依存まで洗い出し、それぞれの公開日を `npm view <パッケージ名> time --json` などで確認する。特に除外パターンに一致するパッケージは待機期間が適用されていないため、公開日と来歴を個別に確認する。
+
 **確認チェック**
 
 - [ ] AIが新しい依存を勝手に入れない設定にした
 - [ ] 提案されたパッケージの実在と正当性を人が確認している
-- [ ] クールダウンの単位を確認し、`npm ci` では適用されないことを理解したうえで、`npm install` によるlockfile作成・更新時に適用し、差分の新規バージョンを推移的依存までレビューした
+- [ ] クールダウンの単位を確認し、`npm ci` では適用されないことを理解したうえで、`npm install` によるlockfile作成・更新時に適用し、`npm config ls -l` で有効な除外・上書きを確認したうえで、差分の新規バージョンの公開日を推移的依存までレビューした
 
 ---
 
