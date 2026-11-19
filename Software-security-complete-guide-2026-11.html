@@ -146,7 +146,7 @@ ul.checklist>li::before{content:none}
 <ol role="list"><li><strong>2026年の主戦場は「自分のコード」ではなく「自分が信頼している他人のコードと道具」</strong>です。OWASP Top 10:2025 では <em>ソフトウェアサプライチェーンの失敗</em> が新たに3位に入りました。</li><li><strong>AI は「コードを書く側」にも「攻撃される側（エージェント）」にもなりました。</strong> AI が書いたコードは"未レビューの外部コントリビューション"として扱い、AIエージェントには<strong>最小権限</strong>を与えます。</li><li><strong>暗号の寿命が前倒しされています。</strong> NIST は 2026年10月27日に IR 8547 最終版を公表し、<strong>現在承認されている鍵長・パラメータの RSA/ECC 等</strong>を <strong>2030年を過ぎると非推奨、2035年を過ぎると NIST の標準・ガイドライン上で使用不可</strong>としました。<strong>署名生成で既に禁止されている RSA-1024 等に猶予を与えるものではありません</strong>。さらに Google・Cloudflare は <strong>2029年</strong>を自社の完了目標に設定しています。</li></ol>
 </section>
 <section class="sec" id="s3"><h2>0.2 全体マップ</h2>
-<div class="diagram" data-diagram="d1"></div>
+<div class="diagram" data-diagram="d1" tabindex="0" role="region" aria-label="0.2 全体マップの図"></div>
 </section>
 <section class="sec" id="s4"><h2>0.3 レベル別おすすめ読み順</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="0.3 レベル別おすすめ読み順の表"><table><thead><tr><th>あなたの状況</th><th>最初に読む</th><th>次に読む</th><th>最後に</th></tr></thead><tbody><tr><td>セキュリティ初学者</td><td>第1章 → 第3章</td><td>第2章</td><td>第9章（用語集）</td></tr><tr><td>開発チームのリーダー</td><td>第2章 → 第7章</td><td>第5章</td><td>第6章</td></tr><tr><td>AI/LLMアプリ開発者</td><td>第4章</td><td>第3章（A01/A05）</td><td>第5章</td></tr><tr><td>OSS メンテナ・パッケージ公開者</td><td>第5章</td><td>第2章</td><td>第6章</td></tr><tr><td>基盤・暗号・プラットフォーム担当</td><td>第6章</td><td>第5章</td><td>第7章</td></tr></tbody></table></div>
@@ -165,7 +165,7 @@ ul.checklist>li::before{content:none}
 <div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><div class="callout-body"><p><strong>初学者向けメモ</strong>: 数字は"傾向をつかむ道具"です。調査会社ごとに母集団や基準が違うので、<strong>一つの数字を鵜呑みにしない</strong>のがコツです。</p></div></div>
 </section>
 <section class="sec" id="s9"><h2>1.3 攻撃者の視点: なぜ"手前"を狙うのか</h2>
-<div class="diagram" data-diagram="d2"></div>
+<div class="diagram" data-diagram="d2" tabindex="0" role="region" aria-label="1.3 攻撃者の視点: なぜ&quot;手前&quot;を狙うのかの図"></div>
 <p><strong>ポイント</strong>: 攻撃者は"1社ずつ"より"1か所で大量に"を好みます。だから防御側も、<strong>自分の外側にある信頼の連鎖</strong>を点検する必要があります。</p>
 </section>
 <section class="chapter" id="s10"><h1>第2章 Secure SDLC（安全な開発ライフサイクル）</h1>
@@ -175,7 +175,7 @@ ul.checklist>li::before{content:none}
 <p><strong>SDLC</strong>（Software Development Life Cycle）は「要件 → 設計 → 実装 → テスト → リリース → 運用」という開発の流れです。<strong>Secure SDLC</strong> は、その各段階にセキュリティ活動を組み込むことです。「最後にペンテストをして終わり」ではなく、<strong>早い段階（Shift Left）から継続的に</strong>行います。</p>
 </section>
 <section class="sec" id="s12"><h2>2.2 全体フロー（セキュリティゲート付き）</h2>
-<div class="diagram" data-diagram="d3"></div>
+<div class="diagram" data-diagram="d3" tabindex="0" role="region" aria-label="2.2 全体フロー（セキュリティゲート付き）の図"></div>
 </section>
 <section class="sec" id="s13"><h2>2.3 参考にする"公式の型": NIST SSDF</h2>
 <p><strong>SSDF（Secure Software Development Framework, NIST SP 800-218）</strong> は、安全な開発の実践を4つのグループに整理した枠組みです。</p>
@@ -189,7 +189,7 @@ ul.checklist>li::before{content:none}
 <div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><div class="callout-body"><p><strong>ASVS（Application Security Verification Standard）</strong> は"Webアプリが満たすべきセキュリティ要件のチェックリスト"です。「何をもって安全とするか」を決める物差しになります。</p></div></div>
 <h3>Step 2: 設計 — 脅威モデリングで"壊れ方"を先に考える</h3>
 <p><strong>脅威モデリング</strong>は、コードを書く前に「どう攻撃されるか」を考える作業です。Adam Shostack が広めた4つの問いが定番です。</p>
-<div class="diagram" data-diagram="d4"></div>
+<div class="diagram" data-diagram="d4" tabindex="0" role="region" aria-label="Step 2: 設計 — 脅威モデリングで&quot;壊れ方&quot;を先に考えるの図"></div>
 <p><strong>STRIDE 早見表</strong>（初学者はまずこれだけ）</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Step 2: 設計 — 脅威モデリングで&quot;壊れ方&quot;を先に考えるの表"><table><thead><tr><th>頭文字</th><th>脅威</th><th>一言で</th><th>典型的な対策</th></tr></thead><tbody><tr><td>S</td><td>なりすまし（Spoofing）</td><td>他人のふりをする</td><td>強い認証（パスキー、MFA）</td></tr><tr><td>T</td><td>改ざん（Tampering）</td><td>データを書き換える</td><td>署名、整合性チェック、入力検証</td></tr><tr><td>R</td><td>否認（Repudiation）</td><td>「やっていない」と言える</td><td>監査ログ、改ざん検知</td></tr><tr><td>I</td><td>情報漏えい（Information disclosure）</td><td>見せてはいけないものが見える</td><td>暗号化、アクセス制御</td></tr><tr><td>D</td><td>サービス拒否（Denial of service）</td><td>使えなくする</td><td>レート制限、タイムアウト</td></tr><tr><td>E</td><td>権限昇格（Elevation of privilege）</td><td>本来できないことができる</td><td>最小権限、認可の一元化</td></tr></tbody></table></div>
 <p><strong>AI 機能を含む設計では</strong>、データフロー図に「LLM」「ツール」「ベクトルDB」「外部コンテンツ」を必ず描き込み、<strong>どこに"信頼できない文章"が入ってくるか</strong>を線で示します（第4章）。</p>
@@ -203,7 +203,7 @@ ul.checklist>li::before{content:none}
 <h3>Step 6: リリース — 「これは正規の成果物」と証明できる状態にする</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Step 6: リリース — 「これは正規の成果物」と証明できる状態にするの表"><table><thead><tr><th>項目</th><th>内容</th><th>詳細</th></tr></thead><tbody><tr><td>署名</td><td>成果物（コンテナ、パッケージ）に署名</td><td>第5章</td></tr><tr><td><strong>SBOM</strong></td><td>部品表を成果物と一緒に出す</td><td>第5章（CISA 2026 年版）</td></tr><tr><td>来歴（Provenance）</td><td>どこで・どのソースから・どう作ったかの証明</td><td>第5章（SLSA）</td></tr><tr><td>変更管理</td><td>本番反映は二人承認・ブランチ保護</td><td>全般</td></tr></tbody></table></div>
 <h3>Step 7: 運用 — 見つけて、直して、学ぶ</h3>
-<div class="diagram" data-diagram="d5"></div>
+<div class="diagram" data-diagram="d5" tabindex="0" role="region" aria-label="Step 7: 運用 — 見つけて、直して、学ぶの図"></div>
 <ul role="list"><li><strong>EU CRA（サイバーレジリエンス法）</strong>: EU 市場向けの"デジタル要素を持つ製品"の製造者は、<strong>2026年9月11日から</strong>、悪用が確認された脆弱性と重大インシデントを ENISA の Single Reporting Platform 経由で報告する義務があります。いずれも<strong>早期警告と続報の両方を不当な遅滞なく提出し、認知から早期警告は遅くとも 24 時間以内、続報は遅くとも 72 時間以内</strong>とします（<a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng" rel="noopener noreferrer" target="_blank">CRA 第14条</a>）。最終報告は、<strong>悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内</strong>です。詳細は第5章。</li></ul>
 </section>
 <section class="sec" id="s15"><h2>2.5 Secure SDLC セルフチェック（20問）</h2>
@@ -309,7 +309,7 @@ def can_access(user, resource):
 <h3>Meta の「Agents Rule of Two」（2025年10月31日公表）</h3>
 <p>Willison の 3 要素を発展させ、Meta は <strong>[A] 信頼できない入力の処理、[B] 機密システムまたは非公開データへのアクセス、[C] 状態変更または外部通信</strong>を評価します。<strong>人間の承認なしに動くエージェントは、1 セッション内で満たしてよいのは 2 つまで</strong>とします。現在有効な権限だけでなく、<strong>蓄積したセッション履歴</strong>も含めて判定します。</p>
 <p>一度読んだ機密データは、読み取り権限を外してもコンテキスト内に残ります。そこに信頼できない入力と外部通信を組み合わせる前に、<strong>攻撃経路を断つ安全な遷移</strong>（例: 外部通信を無効化し、同じセッションでは再有効化しない）か、<strong>機密データや未検証の履歴を引き継がない新しいコンテキスト</strong>への切り替えが必要です。権限の切り替えだけでカウントをリセットしてはいけません。</p>
-<div class="diagram" data-diagram="d6"></div>
+<div class="diagram" data-diagram="d6" tabindex="0" role="region" aria-label="Meta の「Agents Rule of Two」（2025年10月31日公表）の図"></div>
 <p>信頼できない入力を読み、本番システムを操作できるエージェントは <strong>[A]・[B]・[C] のすべて</strong>を満たすため、この方針では自律動作を許可しません。根拠: <a href="https://ai.meta.com/blog/practical-ai-agent-security/" rel="noopener noreferrer" target="_blank">Meta の公式解説</a>。</p>
 <h3>OWASP Top 10 for Agentic Applications 2026（2025年12月9日公開）</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="OWASP Top 10 for Agentic Applications 2026（2025年12月9日公開）の表"><table><thead><tr><th>ID</th><th>リスク</th><th>一言で</th><th>主な防御</th></tr></thead><tbody><tr><td>ASI01</td><td>Agent Goal Hijack（目的の乗っ取り）</td><td>読んだ内容で目的や計画を書き換えられる</td><td>取得内容は信頼しない、目的を制約し計画を検証</td></tr><tr><td>ASI02</td><td>Tool Misuse &amp; Exploitation（ツールの悪用）</td><td>許可外の使い方でツールを呼ぶ</td><td>ツールの最小権限（"最小エージェンシー"）、引数検証</td></tr><tr><td>ASI03</td><td>Identity &amp; Privilege Abuse（ID・権限の濫用）</td><td>エージェントの権限が広すぎる/使い回される</td><td>エージェント単位の ID、短寿命・限定スコープの資格情報</td></tr><tr><td>ASI04</td><td>Agentic Supply Chain Vulnerabilities</td><td>ツール・プラグイン・MCP サーバー・モデルの汚染</td><td>承認制、AIBOM（AI 部品表）、バージョン固定</td></tr><tr><td>ASI05</td><td>Unexpected Code Execution</td><td>想定外のコード実行</td><td>サンドボックス、実行前の確認</td></tr><tr><td>ASI06</td><td>Memory &amp; Context Poisoning</td><td>記憶・文脈に毒を仕込まれ、後から発火</td><td>記憶の出所管理、定期的な検査・消去</td></tr><tr><td>ASI07</td><td>Insecure Inter-Agent Communication</td><td>エージェント間通信の盗聴・なりすまし</td><td>相互認証、メッセージ署名</td></tr><tr><td>ASI08</td><td>Cascading Failures</td><td>1 つの誤りが連鎖して拡大</td><td>遮断機構、影響範囲の制限</td></tr><tr><td>ASI09</td><td>Human-Agent Trust Exploitation</td><td>人が AI の出力を過信して危険な操作を承認</td><td>重要操作の確認 UI、根拠の提示</td></tr><tr><td>ASI10</td><td>Rogue Agents</td><td>方針から逸脱して動き続ける</td><td>挙動の監視、キルスイッチ</td></tr></tbody></table></div>
@@ -337,12 +337,12 @@ def can_access(user, resource):
 <div class="callout note"><div class="callout-title"><i class="ti ti-info-circle"></i><span>補足</span></div><div class="callout-body"><p><strong>補足</strong>: 件数や影響は、調査主体や時点により異なります（例: Microsoft は 400 超、Aikido は 444 超など）。<strong>一次情報（各社アドバイザリ）で最新値を確認</strong>してください。</p></div></div>
 </section>
 <section class="sec" id="s29"><h2>5.3 ワームはどう広がるか</h2>
-<div class="diagram" data-diagram="d7"></div>
+<div class="diagram" data-diagram="d7" tabindex="0" role="region" aria-label="5.3 ワームはどう広がるかの図"></div>
 <p><strong>ポイント</strong></p>
 <ul role="list"><li>感染経路は多くの場合 <strong><code>preinstall</code> / <code>postinstall</code> などのインストール時スクリプト</strong>です。アプリが import する前、<strong>インストールした瞬間</strong>に実行されます。</li><li>盗まれる対象は <strong>npm/GitHub トークン、クラウド鍵、SSH 鍵、AI サービスの API キー</strong>などの<strong>秘密情報</strong>です。</li><li>「長寿命トークンをやめて <strong>Trusted Publishing（OIDC）</strong> に移行する」という 2025 年のアドバイスは有効ですが、<strong>CI 自体が侵害されると、その仕組みも悪用される</strong>ことが 2026 年 5 月に示されました。</li></ul>
 </section>
 <section class="sec" id="s30"><h2>5.4 防御の全体像（多層防御）</h2>
-<div class="diagram" data-diagram="d8"></div>
+<div class="diagram" data-diagram="d8" tabindex="0" role="region" aria-label="5.4 防御の全体像（多層防御）の図"></div>
 </section>
 <section class="sec" id="s31"><h2>5.5 ステップバイステップ: 今日からできる 12 の対策</h2>
 <h3>Step 1: 依存関係を固定する（ロックファイル）</h3>
@@ -402,7 +402,7 @@ jobs:
 <div class="table-wrap" tabindex="0" role="region" aria-label="Step 11: 規制への備え（EU CRA）の表"><table><thead><tr><th>日付</th><th>できごと</th></tr></thead><tbody><tr><td>2024-12-10</td><td>CRA 発効</td></tr><tr><td><strong>2026-09-11</strong></td><td><strong>報告義務（第14条）開始</strong>。悪用が確認された脆弱性・重大インシデントを、ENISA の Single Reporting Platform（SRP）から、ENISA と各国 CSIRT に同時通知。SRP は同日に稼働開始</td></tr><tr><td>2027-12-11</td><td>大半の要件が全面適用</td></tr></tbody></table></div>
 <ul role="list"><li>両報告種別とも、<strong>早期警告と続報の両方を不当な遅滞なく提出し、認知から早期警告は遅くとも 24 時間以内、続報は遅くとも 72 時間以内</strong>とします。最終報告は、<strong>悪用が確認された脆弱性は是正・緩和措置が利用可能になってから 14 日以内、重大インシデントは 72 時間の続報から 1 か月以内</strong>です（<a href="https://digital-strategy.ec.europa.eu/en/policies/cra-reporting" rel="noopener noreferrer" target="_blank">欧州委員会の公式説明</a>）。</li><li>9 月 11 日以前に把握していて、<strong>悪用が確認されていなかった</strong>脆弱性は、遡って報告する義務はない、と整理する解説があります。</li><li><strong>OSS スチュワード</strong>には限定的な義務があります。<strong>自社が"製造者"に当たるか</strong>は、プロダクトごとに確認してください（法的助言ではありません）。</li></ul>
 <h3>Step 12: 侵害を知ったときの手順（インシデント対応）</h3>
-<div class="diagram" data-diagram="d9"></div>
+<div class="diagram" data-diagram="d9" tabindex="0" role="region" aria-label="Step 12: 侵害を知ったときの手順（インシデント対応）の図"></div>
 <p>証拠保全と信頼できるイメージからの再構築は、<a href="https://www.cisa.gov/sites/default/files/2024-08/Federal_Government_Cybersecurity_Incident_and_Vulnerability_Response_Playbooks_508C.pdf" rel="noopener noreferrer" target="_blank">CISA インシデント対応プレイブックの「Eradication &amp; Recovery」</a>を参照してください。</p>
 </section>
 <section class="sec" id="s32"><h2>5.6 サプライチェーン セルフチェック</h2>
@@ -435,7 +435,7 @@ jobs:
 <div class="table-wrap" tabindex="0" role="region" aria-label="6.5 &quot;ハイブリッド&quot;か&quot;純粋 PQ&quot;か（専門家の論点）の表"><table><thead><tr><th>用途</th><th>推奨</th></tr></thead><tbody><tr><td>鍵交換</td><td>X25519 + ML-KEM-768（安全な標準プロトコルの中で）</td></tr><tr><td>公開鍵暗号（HPKE）</td><td>MLKEM768-X25519（X-Wing）+ HKDF-SHA256 + AES-128-GCM、または PQ 鍵付き age</td></tr><tr><td>署名</td><td>ML-DSA-44</td></tr></tbody></table></div>
 </section>
 <section class="sec" id="s39"><h2>6.6 ステップバイステップ: PQC 移行計画の作り方</h2>
-<div class="diagram" data-diagram="d10"></div>
+<div class="diagram" data-diagram="d10" tabindex="0" role="region" aria-label="6.6 ステップバイステップ: PQC 移行計画の作り方の図"></div>
 <h3>Step 1: 暗号の棚卸し（CBOM: Cryptographic Bill of Materials）</h3>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Step 1: 暗号の棚卸し（CBOM: Cryptographic Bill of Materials）の表"><table><thead><tr><th>調べること</th><th>例</th><th>方法</th></tr></thead><tbody><tr><td>どこで公開鍵暗号を使っているか</td><td>TLS、SSH、VPN、JWT 署名、コード署名、証明書、データベース暗号化、メール</td><td>コード検索（<code>RSA</code>, <code>ECDSA</code>, <code>secp256r1</code> 等）、設定ファイル、証明書一覧、ネットワーク観測</td></tr><tr><td>誰が管理しているか</td><td>自社コード/OSS/ベンダー製品/クラウドサービス</td><td>資産台帳と SBOM を突き合わせる</td></tr><tr><td>鍵の寿命</td><td>10 年以上保護が必要なデータ</td><td>データ分類</td></tr></tbody></table></div>
 <h3>Step 2: 優先順位付けの考え方</h3>
@@ -471,7 +471,7 @@ envelope = {"alg": cfg["sign"], "sig": signature}  # どのアルゴリズムで
 <div class="table-wrap" tabindex="0" role="region" aria-label="7.1 優先順位の考え方の表"><table><thead><tr><th>優先</th><th>領域</th><th>理由</th></tr></thead><tbody><tr><td>最優先</td><td>CI/CD と秘密情報、依存関係の取り込み方</td><td>2026 年の実害が最も多く、設定変更で効果が出る</td></tr><tr><td>高</td><td>AI エージェントの権限、AI 生成コードのゲート</td><td>導入が急速で、ルールがまだ無い組織が多い</td></tr><tr><td>高</td><td>OWASP A01/A05/A10 のテスト自動化</td><td>影響が大きく、QA で再現しやすい</td></tr><tr><td>中</td><td>SBOM・来歴・VEX の整備、CRA 対応</td><td>仕組みづくりに時間がかかる</td></tr><tr><td>計画的に</td><td>PQC 棚卸しと移行設計</td><td>期限は先だが、棚卸しは今すぐ始められる</td></tr></tbody></table></div>
 </section>
 <section class="sec" id="s43"><h2>7.2 90日ロードマップ</h2>
-<div class="diagram" data-diagram="d11"></div>
+<div class="diagram" data-diagram="d11" tabindex="0" role="region" aria-label="7.2 90日ロードマップの図"></div>
 </section>
 <section class="sec" id="s44"><h2>7.3 役割別チェックリスト</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="7.3 役割別チェックリストの表"><table><thead><tr><th>役割</th><th>今月やること</th><th>来月やること</th></tr></thead><tbody><tr><td><strong>開発者</strong></td><td><code>npm ci --ignore-scripts</code> に切替／AI 生成コードを理解してからマージ／SQL はパラメータ化</td><td>認可を共通部品に集約／アルゴリズム名の設定化</td></tr><tr><td><strong>QA エンジニア</strong></td><td>他人のリソース ID を指定する認可テストを追加／異常系（タイムアウト・巨大入力）を追加</td><td>DAST とファジングを CI に統合／AI 機能のインジェクションテストを追加</td></tr><tr><td><strong>テックリード</strong></td><td>PR ゲートの定義／脅威モデリングの導入／レビュー基準に AI 生成コードを追加</td><td>SBOM・来歴の運用／ASVS レベルの合意</td></tr><tr><td><strong>プラットフォーム/SRE</strong></td><td>Actions の SHA 固定と権限最小化／公開アカウントのパスキー化</td><td>シークレットの短寿命化／TLS のハイブリッド鍵交換の確認</td></tr><tr><td><strong>セキュリティ担当</strong></td><td>失効・ローテーション手順書／MCP・AI ツールの台帳／CRA 報告窓口の整備完了</td><td>PQC 計画</td></tr><tr><td><strong>経営・管理者</strong></td><td>予算と優先順位の承認／責任者の指名</td><td>四半期ごとのレビュー</td></tr></tbody></table></div>
