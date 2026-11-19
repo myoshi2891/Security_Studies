@@ -566,7 +566,7 @@ ignore-scripts=true
 
 1. `npm config ls -l` を実行し、ユーザー設定（`~/.npmrc`）・プロジェクト設定（`.npmrc`）・コマンドライン引数（`--min-release-age` などのCLIオプション）から実際に有効になっている `min-release-age` と `min-release-age-exclude`、および `before` の値と、それぞれの設定元を確認する。意図しない除外パターンや、CLIでの上書き・無効化がないか調べる。
 2. 承認していない除外・上書きがあれば削除してから `npm install` を実行する。
-3. 使用中のlockfile（`npm-shrinkwrap.json` がある場合はそれが優先され、なければ `package-lock.json`）について、ステージ済みと未ステージの両方の変更を `git diff HEAD -- <lockfile>` で確認する（`git diff` 単体ではステージ済みの変更が表示されない）。lockfileが新規作成されて未追跡の場合は差分に表示されないため、ファイル全体を確認する。こうして新たに加わったすべてのバージョンを推移的依存まで洗い出し、それぞれの公開日を `npm view <パッケージ名> time --json` などで、来歴（公開元・provenance）を `npm audit signatures` などで確認する。特に除外パターンに一致するパッケージは待機期間が適用されていないため、公開日と来歴を個別に確認する。
+3. 使用中のlockfile（`npm-shrinkwrap.json` がある場合はそれが優先され、なければ `package-lock.json`）について、ステージ済みと未ステージの両方の変更を `git diff HEAD -- <lockfile>` で確認する（`git diff` 単体ではステージ済みの変更が表示されない）。lockfileが新規作成されて未追跡の場合は差分に表示されないため、ファイル全体を確認する。こうして新たに加わったすべてのバージョンを推移的依存まで洗い出し、それぞれの公開日を `npm view <パッケージ名> time --json` などで、来歴（公開元・provenance）を `npm audit signatures` などで確認する。`npm audit signatures` はlockfileではなく導入済みの依存（`node_modules`）を検証するため、秘密情報のない隔離環境で先に `npm ci --ignore-scripts` を実行してlockfileどおりに導入してから、署名と来歴を検証する。検証が完了するまで、導入した依存をビルド・テスト・実行などに使わない。特に除外パターンに一致するパッケージは待機期間が適用されていないため、公開日と来歴を個別に確認する。
 
 **確認チェック**
 
