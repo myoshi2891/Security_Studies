@@ -107,7 +107,8 @@ jobs:
       #   4. `bun audit` が利用不能な環境では `npm audit --audit-level=high` に切り替える
       - name: Run security audit
         # GHSA-vfj7-8cjw-p6xm (braces <=3.0.3): パッチ未提供・dev 依存のみ（eslint-config-next 経由）。
-        # 見直し期限: 2026-11-05（docs/progress.md 参照）
+        # 見直し期限: GHSA-vfj7-8cjw-p6xm は 2026-11-05。
+        # 除外理由・期限の記録: リポジトリルートの docs/progress.md「🔐 セキュリティ / CSP」の表
         run: bun audit --audit-level=high --ignore=GHSA-vfj7-8cjw-p6xm
 
       # 本番依存のみを除外指定なしで監査し、一時除外が本番依存に波及していないことを保証する
